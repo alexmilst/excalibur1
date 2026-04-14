@@ -959,6 +959,52 @@ function ApplyPage({ setPage }) {
   );
 }
 
+// ── COACH CARD with expandable bio ──
+function CoachCard({ c, i }) {
+  const [expanded, setExpanded] = useState(false);
+  // Show first ~5 lines worth of text (approx 320 chars)
+  const shortBio = c.bio.length > 320 ? c.bio.slice(0, 320).trim() + "…" : c.bio;
+  const needsExpand = c.bio.length > 320;
+
+  return (
+    <div style={{ background: "#080808", borderTop: i === 0 ? `2px solid ${gold}` : "2px solid rgba(199,171,117,.1)", overflow: "hidden" }}>
+      {/* Photo — same height as speakers */}
+      <div style={{ height: 220, overflow: "hidden", position: "relative", background: "#0D0D0B", display: "flex", alignItems: "center", justifyContent: "center" }}>
+        {c.isLogo ? (
+          <>
+            <img src={LOGO_URL} alt="Excalibur Academy" style={{ width: 80, height: 80, objectFit: "contain", opacity: 0.35 }} onError={e => e.target.style.display = "none"} />
+            {c.role === "Role to be confirmed" && (
+              <div style={{ position: "absolute", bottom: 16, left: 24, fontFamily: sans, fontSize: 9, color: "#444", letterSpacing: "0.15em", textTransform: "uppercase" }}>Role to be announced</div>
+            )}
+          </>
+        ) : (
+          <img src={c.img} alt={c.name} style={{ width: "100%", height: "100%", objectFit: "cover", filter: "grayscale(15%)" }} onError={e => { e.target.style.display = "none"; }} />
+        )}
+        <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to bottom, transparent 45%, rgba(0,0,0,.9) 100%)" }} />
+        <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, padding: "16px 24px" }}>
+          <div style={{ fontFamily: serif, fontSize: 20, fontWeight: 600, color: "#E8E0D8", lineHeight: 1.2 }}>{c.name}</div>
+          <div style={{ fontFamily: sans, fontSize: 10, color: gold, marginTop: 3, letterSpacing: "0.08em" }}>{c.role}</div>
+        </div>
+      </div>
+
+      {/* Tags + bio */}
+      <div style={{ padding: "20px 24px 24px" }}>
+        <div style={{ display: "flex", gap: 4, flexWrap: "wrap", marginBottom: 14 }}>
+          {c.tags.map((t, j) => <span key={j} style={{ fontFamily: sans, fontSize: 9, color: "#777", border: "1px solid #1a1a1a", padding: "2px 7px" }}>{t}</span>)}
+        </div>
+        <p style={{ fontFamily: sans, fontSize: 13, lineHeight: 1.85, color: "#B0A8A0", fontWeight: 300, marginBottom: needsExpand ? 12 : 0 }}>
+          {expanded ? c.bio : shortBio}
+        </p>
+        {needsExpand && (
+          <button onClick={() => setExpanded(!expanded)} style={{ fontFamily: sans, fontSize: 11, color: gold, background: "transparent", border: "none", cursor: "pointer", padding: 0, letterSpacing: "0.08em", fontWeight: 600 }}>
+            {expanded ? "Read less ↑" : "Read more ↓"}
+          </button>
+        )}
+      </div>
+    </div>
+  );
+}
+
 // ─────────────────────────────────────────────
 // PAGE: HOME
 // ─────────────────────────────────────────────
@@ -1222,25 +1268,22 @@ function HomePage({ setPage }) {
       {/* SPEAKERS */}
       <section style={{ padding: isMobile ? "60px 16px" : "80px 40px" }}>
         <div style={{ maxWidth: 1100, margin: "0 auto" }}>
-          <Fade><div style={{ textAlign: "center", marginBottom: 48 }}><Eyebrow>GUEST FACULTY</Eyebrow><SectionTitle center>The People in the Room</SectionTitle><Sub center>Every speaker has done the thing they teach. No keynote circuit academics. The real thing — every time.</Sub></div></Fade>
+          <Fade><div style={{ textAlign: "center", marginBottom: 48 }}><Eyebrow>GUEST FACULTY</Eyebrow><SectionTitle center>Academy's Guest Speakers</SectionTitle><Sub center>Every speaker has done the thing they teach. No keynote circuit academics. The real thing — every time.</Sub></div></Fade>
           <Fade d={.08}>
             <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(3, 1fr)", gap: 2, background: "#111", marginBottom: 18 }}>
               {visibleSpeakers().map((s, i) => (
                 <div key={`${speakerIdx}-${i}`} style={{ background: "#080808", overflow: "hidden", borderTop: `2px solid ${i === 0 ? gold : "transparent"}` }}>
-                  {/* Photo */}
-                  <div style={{ height: 220, overflow: "hidden", position: "relative" }}>
-                    <img src={s.img} alt={s.name} style={{ width: "100%", height: "100%", objectFit: "cover", filter: "grayscale(15%)", transition: "transform .4s" }}
-                      onError={e => { e.target.parentElement.style.background = "#111"; e.target.style.display = "none"; }}
-                    />
-                    <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to bottom, transparent 50%, rgba(0,0,0,.85) 100%)" }} />
+                  {/* Logo placeholder instead of photo */}
+                  <div style={{ height: 220, overflow: "hidden", position: "relative", background: "#0D0D0B", display: "flex", alignItems: "center", justifyContent: "center", flexDirection: "column" }}>
+                    <img src={LOGO_URL} alt="Excalibur Academy" style={{ width: 80, height: 80, objectFit: "contain", opacity: 0.35 }} onError={e => e.target.style.display = "none"} />
                     <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, padding: "16px 24px" }}>
-                      <div style={{ fontFamily: serif, fontSize: 20, fontWeight: 600, color: "#fff", lineHeight: 1.2 }}>{s.name}</div>
-                      <div style={{ fontFamily: sans, fontSize: 10, color: gold, marginTop: 3, letterSpacing: 1 }}>{s.role}</div>
+                      <div style={{ fontFamily: serif, fontSize: 20, fontWeight: 600, color: "#E8E0D8", lineHeight: 1.2 }}>{s.name}</div>
+                      <div style={{ fontFamily: sans, fontSize: 10, color: gold, marginTop: 3, letterSpacing: 1 }}>To be confirmed</div>
                     </div>
                   </div>
-                  {/* Bio */}
-                  <div style={{ padding: "20px 24px 28px" }}>
-                    <p style={{ fontFamily: sans, fontSize: 13, lineHeight: 1.75, color: "#888", fontWeight: 300 }}>{s.bio}</p>
+                  {/* Role only — no bio */}
+                  <div style={{ padding: "16px 24px 24px" }}>
+                    <p style={{ fontFamily: sans, fontSize: 12, color: "#555", letterSpacing: "0.08em", textTransform: "uppercase" }}>{s.role}</p>
                   </div>
                 </div>
               ))}
@@ -1266,32 +1309,7 @@ function HomePage({ setPage }) {
           <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 2, background: "#111" }}>
             {coaches.map((c, i) => (
               <Fade key={i} d={i * .04}>
-                <div style={{ background: "#080808", padding: "36px 32px", borderTop: i === 0 ? `2px solid ${gold}` : "2px solid rgba(199,171,117,.1)" }}>
-                  <div style={{ display: "flex", gap: 18, marginBottom: 20, alignItems: "flex-start" }}>
-                    {/* Photo or logo placeholder */}
-                    <div style={{ width: 68, height: 68, flexShrink: 0, border: "1px solid rgba(199,171,117,.12)", overflow: "hidden", background: "#0D0D0B", display: "flex", alignItems: "center", justifyContent: "center" }}>
-                      {c.isLogo ? (
-                        <img src={LOGO_URL} alt="Excalibur Academy" style={{ width: 48, height: 48, objectFit: "contain", opacity: 0.6 }} onError={e => e.target.style.display = "none"} />
-                      ) : (
-                        <img src={c.img} alt={c.name} style={{ width: "100%", height: "100%", objectFit: "cover", filter: "grayscale(15%)" }} onError={e => { e.target.style.display = "none"; e.target.parentElement.innerHTML = `<img src="${LOGO_URL}" style="width:48px;height:48px;objectFit:contain;opacity:0.6" />`; }} />
-                      )}
-                    </div>
-                    <div style={{ flex: 1 }}>
-                      <h3 style={{ fontFamily: serif, fontSize: 20, fontWeight: 600, color: "#E0D8D0", lineHeight: 1.2, marginBottom: 2 }}>{c.name}</h3>
-                      <p style={{ fontFamily: sans, fontSize: 10, color: gold, letterSpacing: "0.05em", marginBottom: 8 }}>{c.role}</p>
-                      <div style={{ display: "flex", gap: 4, flexWrap: "wrap" }}>
-                        {c.tags.map((t, j) => <span key={j} style={{ fontFamily: sans, fontSize: 9, color: "#777", border: "1px solid #1a1a1a", padding: "2px 7px" }}>{t}</span>)}
-                      </div>
-                    </div>
-                  </div>
-                  <p style={{ fontFamily: sans, fontSize: 13, lineHeight: 1.85, color: "#B0A8A0", fontWeight: 300 }}>{c.bio}</p>
-                  {c.isLogo && c.role !== "Role to be confirmed" && (
-                    <p style={{ fontFamily: sans, fontSize: 10, color: "#444", marginTop: 14, letterSpacing: "0.1em" }}>PHOTO COMING SOON</p>
-                  )}
-                  {c.role === "Role to be confirmed" && (
-                    <p style={{ fontFamily: sans, fontSize: 10, color: "#333", marginTop: 14, letterSpacing: "0.1em", fontStyle: "italic" }}>ROLE TO BE ANNOUNCED</p>
-                  )}
-                </div>
+                <CoachCard c={c} i={i} />
               </Fade>
             ))}
           </div>
