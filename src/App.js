@@ -1147,7 +1147,7 @@ function HomePage({ setPage }) {
             <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 2, marginBottom: 2 }}>
               {/* Laguna Beach / Spanish villa photo */}
               <div style={{ position: "relative", height: isMobile ? 240 : 380, overflow: "hidden" }}>
-                <img src="https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=900&h=600&fit=crop" alt="Orange County estate" style={{ width: "100%", height: "100%", objectFit: "cover", filter: "grayscale(20%) brightness(0.75)" }} />
+                <img src="https://i.imgur.com/y5bXKH5.jpeg" alt="Orange County estate" style={{ width: "100%", height: "100%", objectFit: "cover", filter: "brightness(0.8)" }} />
                 <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(0,0,0,.6) 0%, transparent 60%)" }} />
                 <div style={{ position: "absolute", bottom: 20, left: 24 }}>
                   <p style={{ fontFamily: sans, fontSize: 10, color: gold, letterSpacing: "0.2em", textTransform: "uppercase" }}>Orange County, California</p>
@@ -1155,7 +1155,7 @@ function HomePage({ setPage }) {
               </div>
               {/* Students photo */}
               <div style={{ position: "relative", height: isMobile ? 240 : 380, overflow: "hidden" }}>
-                <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=900&h=600&fit=crop" alt="Students collaborating" style={{ width: "100%", height: "100%", objectFit: "cover", filter: "grayscale(20%) brightness(0.75)" }} />
+                <img src="https://i.imgur.com/ryGpllP.jpeg" alt="Students collaborating" style={{ width: "100%", height: "100%", objectFit: "cover", filter: "brightness(0.8)" }} />
                 <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(0,0,0,.6) 0%, transparent 60%)" }} />
                 <div style={{ position: "absolute", bottom: 20, left: 24 }}>
                   <p style={{ fontFamily: sans, fontSize: 10, color: gold, letterSpacing: "0.2em", textTransform: "uppercase" }}>The Excalibur Experience</p>
@@ -1436,12 +1436,12 @@ function HomePage({ setPage }) {
           {/* SIX-WEEK INTENSIVE */}
           <Fade d={.06}>
             <div style={{ marginBottom: 2 }}>
-              <div style={{ background: "#060606", padding: "18px 32px", borderTop: "2px solid rgba(199,171,117,.2)", borderBottom: "1px solid #151515", display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 12 }}>
+              <div style={{ background: "#060606", padding: "18px 32px", borderTop: "2px solid #4DB87A", borderBottom: "1px solid #151515", display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 12 }}>
                 <div>
                   <h3 style={{ fontFamily: serif, fontSize: 20, fontWeight: 600, color: "#E8E0D8", marginBottom: 2 }}>Six-Week Intensive — Four Waves Per Year</h3>
                   <p style={{ fontFamily: sans, fontSize: 11, color: "#AAA", fontWeight: 300 }}>Weekday evenings or full-day Saturdays · $2,500 per wave · 25 seats per cohort</p>
                 </div>
-                <span style={{ fontFamily: sans, fontSize: 9, letterSpacing: 2, padding: "4px 12px", border: `1px solid ${gold}`, color: gold }}>ENROLLING NOW</span>
+                <span style={{ fontFamily: sans, fontSize: 9, letterSpacing: 2, padding: "4px 12px", border: "1px solid #4DB87A", color: "#4DB87A" }}>● ENROLLING NOW</span>
               </div>
               <div style={{ padding: "12px 20px", background: "#060606", borderBottom: "1px solid #111", display: "flex", gap: 8, flexWrap: "wrap" }}>
                 {waves.map((w, i) => <SBtn key={i} active={activeWave === i} onClick={() => setActiveWave(i)}>{w.name} · {w.season}</SBtn>)}
@@ -1472,12 +1472,12 @@ function HomePage({ setPage }) {
           {/* TEN-MONTH FLAGSHIP */}
           <Fade d={.08}>
             <div>
-              <div style={{ background: "#060606", padding: "18px 32px", borderTop: `2px solid ${gold}`, borderBottom: "1px solid #151515", display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 12 }}>
+              <div style={{ background: "#060606", padding: "18px 32px", borderTop: "2px solid #4DB87A", borderBottom: "1px solid #151515", display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 12 }}>
                 <div>
                   <h3 style={{ fontFamily: serif, fontSize: 20, fontWeight: 600, color: "#E8E0D8", marginBottom: 2 }}>Ten-Month Flagship Program — Academic Year 2026–2027</h3>
                   <p style={{ fontFamily: sans, fontSize: 11, color: "#AAA", fontWeight: 300 }}>Begins September 2026 · $1,990/month · 25 seats per track · Two parallel tracks</p>
                 </div>
-                <span style={{ fontFamily: sans, fontSize: 9, letterSpacing: 2, padding: "4px 12px", border: `1px solid ${gold}`, color: gold }}>FLAGSHIP · ENROLLING</span>
+                <span style={{ fontFamily: sans, fontSize: 9, letterSpacing: 2, padding: "4px 12px", border: "1px solid #4DB87A", color: "#4DB87A" }}>● ENROLLING NOW</span>
               </div>
               <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 1, background: "#111" }}>
                 {[
