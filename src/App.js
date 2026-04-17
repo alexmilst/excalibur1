@@ -2130,7 +2130,7 @@ function ComingSoonPage({ onUnlock }) {
 
         {/* Faculty credentials — refined split panels */}
         <div style={{ width: "100%", maxWidth: 880, marginBottom: 52 }}>
-          <p style={{ fontFamily: sans, fontSize: 10, letterSpacing: "0.4em", color: "#AAA", fontWeight: 600, textTransform: "uppercase", marginBottom: 20 }}>Lead Faculty</p>
+          <p style={{ fontFamily: sans, fontSize: 12, letterSpacing: "0.4em", color: "#AAA", fontWeight: 600, textTransform: "uppercase", marginBottom: 20 }}>Lead Faculty</p>
           <div style={{ background: "#08080A", border: "1px solid rgba(199,171,117,.12)", position: "relative", overflow: "hidden" }}>
             {/* Gold top accent line */}
             <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 1, background: `linear-gradient(90deg, transparent, ${gold}, transparent)` }} />
@@ -2166,55 +2166,45 @@ function ComingSoonPage({ onUnlock }) {
           </div>
         </div>
 
-        {/* Email capture — envelope invitation card */}
+        {/* Email capture — invitation card */}
         {!submitted ? (
           <div style={{ width: "100%", maxWidth: 880, marginBottom: 48 }}>
             <p style={{ fontFamily: sans, fontSize: 10, letterSpacing: "0.4em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 20 }}>Family Information Event · May 2026</p>
-            {/* Envelope wrapper */}
-            <div style={{ position: "relative", background: "#040404", border: "1px solid rgba(199,171,117,.2)", padding: isMobile ? "0" : "0" }}>
-              {/* Envelope flap decoration */}
-              <div style={{ height: 4, background: `linear-gradient(90deg, transparent, rgba(199,171,117,.5) 20%, ${gold} 50%, rgba(199,171,117,.5) 80%, transparent)` }} />
-              {/* Wax seal area */}
-              <div style={{ display: "flex", justifyContent: "center", padding: "24px 0 8px" }}>
-                <div style={{ width: 44, height: 44, borderRadius: "50%", background: "#0D0B07", border: `1px solid rgba(199,171,117,.4)`, display: "flex", alignItems: "center", justifyContent: "center" }}>
-                  <span style={{ fontFamily: serif, fontSize: 18, color: gold, lineHeight: 1 }}>✦</span>
-                </div>
+            <div style={{ background: "#050505", border: `1px solid rgba(199,171,117,.55)`, padding: isMobile ? "36px 28px" : "52px 60px", textAlign: "center", position: "relative" }}>
+              {/* Corner ornaments */}
+              <div style={{ position: "absolute", top: 12, left: 12, width: 16, height: 16, borderTop: `1px solid ${gold}`, borderLeft: `1px solid ${gold}` }} />
+              <div style={{ position: "absolute", top: 12, right: 12, width: 16, height: 16, borderTop: `1px solid ${gold}`, borderRight: `1px solid ${gold}` }} />
+              <div style={{ position: "absolute", bottom: 12, left: 12, width: 16, height: 16, borderBottom: `1px solid ${gold}`, borderLeft: `1px solid ${gold}` }} />
+              <div style={{ position: "absolute", bottom: 12, right: 12, width: 16, height: 16, borderBottom: `1px solid ${gold}`, borderRight: `1px solid ${gold}` }} />
+              {/* Card content */}
+              <p style={{ fontFamily: sans, fontSize: 9, letterSpacing: "0.4em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 18 }}>Excalibur Academy · May 2026</p>
+              <p style={{ fontFamily: serif, fontSize: isMobile ? 18 : 23, color: "#E8E0D8", lineHeight: 1.45, marginBottom: 18 }}>
+                Academy Launch and Family Information Soirée<br />at the Mediterranean Estate in San Clemente
+              </p>
+              <div style={{ width: 48, height: 1, background: `linear-gradient(90deg, transparent, ${gold}, transparent)`, margin: "0 auto 20px" }} />
+              <p style={{ fontFamily: sans, fontSize: isMobile ? 12 : 13, color: "#C0B8B0", fontWeight: 300, lineHeight: 1.85, maxWidth: 520, margin: "0 auto 18px" }}>
+                An intimate gathering for a select number of families — featuring faculty introductions, a cocktail reception, a comprehensive information session, and the opportunity to meet the founding team and those leading the programmes.
+              </p>
+              <p style={{ fontFamily: serif, fontSize: 12, color: gold, letterSpacing: "0.18em", marginBottom: 32 }}>By personal invitation only.</p>
+              <div style={{ display: "flex", gap: 8, flexDirection: isMobile ? "column" : "row", maxWidth: 520, margin: "0 auto" }}>
+                <input
+                  type="email"
+                  value={email}
+                  onChange={e => setEmail(e.target.value)}
+                  onKeyDown={e => e.key === "Enter" && email && setSubmitted(true)}
+                  placeholder="Your email address"
+                  style={{ flex: 1, padding: "13px 18px", background: "#000", border: "1px solid rgba(199,171,117,.25)", color: "#E8E0D8", fontFamily: sans, fontSize: 13, outline: "none" }}
+                  onFocus={e => e.target.style.borderColor = gold}
+                  onBlur={e => e.target.style.borderColor = "rgba(199,171,117,.25)"}
+                />
+                <button
+                  onClick={() => email && setSubmitted(true)}
+                  style={{ fontFamily: sans, background: gold, color: "#000", padding: "13px 22px", fontSize: 11, fontWeight: 700, letterSpacing: "0.15em", textTransform: "uppercase", border: "none", cursor: "pointer", flexShrink: 0 }}
+                >
+                  Request Invitation
+                </button>
               </div>
-              {/* Invitation card inside */}
-              <div style={{ margin: isMobile ? "0 16px 24px" : "0 32px 32px", background: "#08080A", border: "1px solid rgba(199,171,117,.15)", padding: isMobile ? "32px 24px" : "44px 52px", textAlign: "center", position: "relative" }}>
-                {/* Inner corner marks */}
-                <div style={{ position: "absolute", top: 10, left: 10, width: 14, height: 14, borderTop: `1px solid rgba(199,171,117,.35)`, borderLeft: `1px solid rgba(199,171,117,.35)` }} />
-                <div style={{ position: "absolute", top: 10, right: 10, width: 14, height: 14, borderTop: `1px solid rgba(199,171,117,.35)`, borderRight: `1px solid rgba(199,171,117,.35)` }} />
-                <div style={{ position: "absolute", bottom: 10, left: 10, width: 14, height: 14, borderBottom: `1px solid rgba(199,171,117,.35)`, borderLeft: `1px solid rgba(199,171,117,.35)` }} />
-                <div style={{ position: "absolute", bottom: 10, right: 10, width: 14, height: 14, borderBottom: `1px solid rgba(199,171,117,.35)`, borderRight: `1px solid rgba(199,171,117,.35)` }} />
-                <p style={{ fontFamily: serif, fontSize: isMobile ? 18 : 22, color: "#E8E0D8", lineHeight: 1.45, marginBottom: 20 }}>
-                  Academy Launch and Family Information Soirée<br />at the Mediterranean Estate in San Clemente
-                </p>
-                <div style={{ width: 48, height: 1, background: `linear-gradient(90deg, transparent, ${gold}, transparent)`, margin: "0 auto 20px" }} />
-                <p style={{ fontFamily: sans, fontSize: 13, color: "#C8C0B8", fontWeight: 300, lineHeight: 1.85, marginBottom: 16, maxWidth: 520, margin: "0 auto 20px" }}>
-                  An intimate gathering for a select number of families — featuring faculty introductions, a cocktail reception, a comprehensive information session, and the opportunity to meet the founding team and those leading the programmes.
-                </p>
-                <p style={{ fontFamily: serif, fontSize: 13, color: gold, letterSpacing: "0.15em", marginBottom: 28 }}>By personal invitation only.</p>
-                <div style={{ display: "flex", gap: 8, flexDirection: isMobile ? "column" : "row", maxWidth: 520, margin: "0 auto" }}>
-                  <input
-                    type="email"
-                    value={email}
-                    onChange={e => setEmail(e.target.value)}
-                    onKeyDown={e => e.key === "Enter" && email && setSubmitted(true)}
-                    placeholder="Your email address"
-                    style={{ flex: 1, padding: "13px 18px", background: "#000", border: "1px solid rgba(199,171,117,.2)", color: "#E8E0D8", fontFamily: sans, fontSize: 13, outline: "none" }}
-                    onFocus={e => e.target.style.borderColor = gold}
-                    onBlur={e => e.target.style.borderColor = "rgba(199,171,117,.2)"}
-                  />
-                  <button
-                    onClick={() => email && setSubmitted(true)}
-                    style={{ fontFamily: sans, background: gold, color: "#000", padding: "13px 22px", fontSize: 11, fontWeight: 700, letterSpacing: "0.15em", textTransform: "uppercase", border: "none", cursor: "pointer", flexShrink: 0 }}
-                  >
-                    Request Invitation
-                  </button>
-                </div>
-                <p style={{ fontFamily: sans, fontSize: 10, color: "#555", marginTop: 14, letterSpacing: "0.06em" }}>We will follow up personally. Your information is never shared.</p>
-              </div>
+              <p style={{ fontFamily: sans, fontSize: 10, color: "#555", marginTop: 14, letterSpacing: "0.06em" }}>We will follow up personally. Your information is never shared.</p>
             </div>
           </div>
         ) : (
