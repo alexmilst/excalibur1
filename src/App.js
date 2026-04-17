@@ -4,7 +4,7 @@ const STRIPE = "https://buy.stripe.com/placeholder";
 const LOGO_URL = "https://i.ibb.co/rKSp526b/upsclae-logo.png";
 const LOGO = LOGO_URL;
 const serif = "'Cormorant Garamond', Georgia, serif";
-const sans = "'Jost', 'DM Sans', sans-serif";
+const sans = "'DM Sans', sans-serif";
 const gold = "#C7AB75";
 
 // ── RESPONSIVE HOOK ──
@@ -2076,18 +2076,17 @@ function ComingSoonPage({ onUnlock }) {
 
   return (
     <div style={{ background: "#000", minHeight: "100vh", display: "flex", flexDirection: "column" }}>
-      <link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=Forum&display=swap" rel="stylesheet" />
+      <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=Forum&display=swap" rel="stylesheet" />
       <style>{`*{margin:0;padding:0;box-sizing:border-box}::selection{background:rgba(199,171,117,.2);color:#fff}@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-8px)}75%{transform:translateX(8px)}}`}</style>
 
-      {/* Background */}
-      <div style={{ position: "fixed", inset: 0, backgroundImage: "url(https://i.imgur.com/y5bXKH5.jpeg)", backgroundSize: "cover", backgroundPosition: "center", opacity: 0.08 }} />
-      <div style={{ position: "fixed", inset: 0, background: "radial-gradient(ellipse 80% 60% at 50% 0%, rgba(199,171,117,.06) 0%, transparent 70%)" }} />
+      {/* Background — pure black with subtle gold glow */}
+      <div style={{ position: "fixed", inset: 0, background: "radial-gradient(ellipse 70% 50% at 50% 0%, rgba(199,171,117,.04) 0%, transparent 65%)" }} />
 
       {/* Content */}
       <div style={{ position: "relative", zIndex: 1, flex: 1, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: isMobile ? "48px 24px" : "80px 40px", textAlign: "center" }}>
 
         {/* Logo */}
-        <img src={LOGO_URL} alt="Excalibur Academy" style={{ width: isMobile ? 120 : 160, height: "auto", objectFit: "contain", marginBottom: 32, filter: "drop-shadow(0 0 40px rgba(199,171,117,.2))" }} onError={e => e.target.style.display = "none"} />
+        <img src={LOGO_URL} alt="Excalibur Academy" style={{ width: isMobile ? 200 : 320, height: "auto", objectFit: "contain", marginBottom: 28, filter: "drop-shadow(0 0 60px rgba(199,171,117,.18))" }} onError={e => e.target.style.display = "none"} />
 
         {/* Eyebrow */}
         <p style={{ fontFamily: sans, fontSize: 10, letterSpacing: "0.4em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 20, borderBottom: "1px solid rgba(199,171,117,.3)", paddingBottom: 8, display: "inline-block" }}>
@@ -2095,7 +2094,7 @@ function ComingSoonPage({ onUnlock }) {
         </p>
 
         {/* Title — uniform uppercase via textTransform to match homepage */}
-        <h1 style={{ fontFamily: "'Forum', Georgia, serif", fontSize: isMobile ? "clamp(36px,8vw,52px)" : "clamp(48px,6vw,80px)", fontWeight: 400, color: "#E8E0D8", lineHeight: 1.05, letterSpacing: "0.28em", textTransform: "uppercase", marginBottom: 12 }}>
+        <h1 style={{ fontFamily: "'Forum', Georgia, serif", fontSize: isMobile ? "clamp(22px,5vw,32px)" : "clamp(28px,3.5vw,44px)", fontWeight: 400, color: "#E8E0D8", lineHeight: 1.05, letterSpacing: "0.28em", textTransform: "uppercase", marginBottom: 12 }}>
           Excalibur Academy
         </h1>
         <p style={{ fontFamily: sans, fontSize: isMobile ? 12 : 14, letterSpacing: "0.22em", color: gold, textTransform: "uppercase", marginBottom: 16, opacity: 0.85 }}>
@@ -2122,7 +2121,7 @@ function ComingSoonPage({ onUnlock }) {
             { label: "SIX-WEEK INTENSIVE", dates: "Four waves · 2026", detail: "Mon & Wed evenings or Saturdays · $3,900 / wave" },
           ].map((p, i) => (
             <div key={i} style={{ background: "#080808", padding: "24px 22px", borderTop: `2px solid ${p.flagship ? gold : "rgba(199,171,117,.2)"}` }}>
-              <p style={{ fontFamily: serif, fontSize: 13, letterSpacing: "0.25em", color: gold, fontWeight: 600, marginBottom: 10, textTransform: "uppercase" }}>{p.label}</p>
+              <p style={{ fontFamily: sans, fontSize: 10, letterSpacing: "0.4em", color: gold, fontWeight: 600, marginBottom: 12, textTransform: "uppercase" }}>{p.label}</p>
               <p style={{ fontFamily: serif, fontSize: 15, color: "#E8E0D8", marginBottom: 6 }}>{p.dates}</p>
               <p style={{ fontFamily: sans, fontSize: 11, color: "#C8C0B8", fontWeight: 300 }}>{p.detail}</p>
             </div>
@@ -2131,9 +2130,9 @@ function ComingSoonPage({ onUnlock }) {
 
         {/* Faculty credentials — summary */}
         <div style={{ width: "100%", maxWidth: 880, marginBottom: 52 }}>
-          <p style={{ fontFamily: serif, fontSize: 13, letterSpacing: "0.3em", color: "#AAA", fontWeight: 600, textTransform: "uppercase", marginBottom: 20 }}>Lead Faculty</p>
-          <div style={{ background: "#080808", borderTop: `2px solid ${gold}`, padding: isMobile ? "28px 24px" : "36px 40px", textAlign: "left" }}>
-            <p style={{ fontFamily: sans, fontSize: isMobile ? 13 : 14, lineHeight: 1.9, color: "#C8C0B8", fontWeight: 300 }}>
+          <p style={{ fontFamily: sans, fontSize: 10, letterSpacing: "0.4em", color: "#AAA", fontWeight: 600, textTransform: "uppercase", marginBottom: 16 }}>Lead Faculty</p>
+          <div style={{ background: "#080808", borderTop: `2px solid ${gold}`, padding: isMobile ? "28px 24px" : "40px 44px", textAlign: "center" }}>
+            <p style={{ fontFamily: sans, fontSize: isMobile ? 14 : 15, lineHeight: 1.95, color: "#C8C0B8", fontWeight: 300, maxWidth: 760, margin: "0 auto" }}>
               {"Excalibur's lead faculty are not educators in the conventional sense. They are people who have operated at the highest levels of their respective fields: from a CEO who built the world's first autonomous racing series, led the Formula BMW program, and oversaw a $13B NASDAQ listing, to a Wall Street veteran — New York Citigroup Managing Director, now a Georgetown MBA Professor and TEDx speaker — who has advised on 100+ M\u0026A transactions and 600+ CEO engagements, and served as EVP/CFO of two NYSE-listed companies. Our faculty and specialists bring that depth of real experience into every session they lead."}
             </p>
           </div>
@@ -2141,10 +2140,10 @@ function ComingSoonPage({ onUnlock }) {
 
         {/* Email capture — launch event */}
         {!submitted ? (
-          <div style={{ width: "100%", maxWidth: 560, marginBottom: 48 }}>
-            <div style={{ background: "#080808", border: "1px solid rgba(199,171,117,.15)", borderTop: `2px solid ${gold}`, padding: isMobile ? "28px 24px" : "36px 36px", marginBottom: 0 }}>
-              <p style={{ fontFamily: serif, fontSize: 13, letterSpacing: "0.3em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 12 }}>Family Information Event · May 2026</p>
-              <p style={{ fontFamily: serif, fontSize: isMobile ? 17 : 20, color: "#E8E0D8", lineHeight: 1.5, marginBottom: 14 }}>RSVP — Excalibur Academy Launch Evening and Family Information Session at the Mediterranean Estate in San Clemente.</p>
+          <div style={{ width: "100%", maxWidth: 880, marginBottom: 48 }}>
+            <div style={{ background: "#080808", border: "1px solid rgba(199,171,117,.15)", borderTop: `2px solid ${gold}`, padding: isMobile ? "28px 24px" : "40px 48px", marginBottom: 0 }}>
+              <p style={{ fontFamily: sans, fontSize: 10, letterSpacing: "0.4em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 14 }}>Family Information Event · May 2026</p>
+              <p style={{ fontFamily: serif, fontSize: isMobile ? 17 : 20, color: "#E8E0D8", lineHeight: 1.5, marginBottom: 14 }}>Academy Launch and Family Information Soirée at the Mediterranean Estate in San Clemente.</p>
               <p style={{ fontFamily: sans, fontSize: 13, color: "#C8C0B8", fontWeight: 300, lineHeight: 1.8, marginBottom: 8 }}>
                 An intimate gathering for a select number of families — featuring faculty introductions, a cocktail reception, a comprehensive information session, and the opportunity to meet the founding team and those leading the programmes.
               </p>
@@ -2171,7 +2170,7 @@ function ComingSoonPage({ onUnlock }) {
             </div>
           </div>
         ) : (
-          <div style={{ width: "100%", maxWidth: 560, marginBottom: 48, padding: "28px 32px", background: "#080808", border: "1px solid rgba(199,171,117,.2)", borderTop: `2px solid ${gold}` }}>
+          <div style={{ width: "100%", maxWidth: 880, marginBottom: 48, padding: "28px 32px", background: "#080808", border: "1px solid rgba(199,171,117,.2)", borderTop: `2px solid ${gold}` }}>
             <p style={{ fontFamily: serif, fontSize: 20, color: "#E8E0D8", marginBottom: 8 }}>Thank you.</p>
             <p style={{ fontFamily: sans, fontSize: 13, color: "#C8C0B8", fontWeight: 300, lineHeight: 1.7 }}>We will be in touch personally with details for the May launch event. We look forward to welcoming your family.</p>
           </div>
@@ -2242,9 +2241,13 @@ export default function ExcaliburApp() {
 
   return (
     <div style={{ background: "#000", color: "#D8D0C8", minHeight: "100vh", fontFamily: sans }}>
-      <link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=Forum&display=swap" rel="stylesheet" />
-      <style>{`*{margin:0;padding:0;box-sizing:border-box}::selection{background:rgba(199,171,117,.2);color:#fff}html{scroll-behavior:smooth}button{cursor:pointer;font-family:'Jost','DM Sans',sans-serif}`}</style>
+      <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=Forum&display=swap" rel="stylesheet" />
+      <style>{`*{margin:0;padding:0;box-sizing:border-box}::selection{background:rgba(199,171,117,.2);color:#fff}html{scroll-behavior:smooth}button{cursor:pointer;font-family:'DM Sans',sans-serif}`}</style>
       <Nav page={page} setPage={setPage} />
+      {/* Dev only: back to coming soon */}
+      <div style={{ position: "fixed", bottom: 16, right: 16, zIndex: 9999 }}>
+        <button onClick={() => { try { sessionStorage.removeItem("ea_unlocked"); } catch(e){} setUnlocked(false); }} style={{ fontFamily: sans, background: "rgba(0,0,0,.85)", border: "1px solid rgba(199,171,117,.3)", color: gold, padding: "8px 14px", fontSize: 10, letterSpacing: "0.1em", cursor: "pointer", textTransform: "uppercase" }}>← Coming Soon</button>
+      </div>
       {renderPage()}
       <Footer setPage={setPage} />
     </div>
