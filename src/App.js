@@ -2108,9 +2108,9 @@ function ComingSoonPage({ onUnlock }) {
 
         {/* Status banner */}
         <div style={{ background: "rgba(199,171,117,.05)", border: "1px solid rgba(199,171,117,.18)", padding: isMobile ? "20px 24px" : "24px 48px", marginBottom: 44, maxWidth: 660 }}>
-          <p style={{ fontFamily: serif, fontSize: 13, letterSpacing: "0.3em", color: "#4DB87A", fontWeight: 600, textTransform: "uppercase", marginBottom: 12 }}>● Admissions Opening Soon</p>
+          <p style={{ fontFamily: sans, fontSize: 10, letterSpacing: "0.4em", color: "#4DB87A", fontWeight: 600, textTransform: "uppercase", marginBottom: 12 }}>● Admissions Opening Soon</p>
           <p style={{ fontFamily: sans, fontSize: isMobile ? 13 : 15, color: "#E8E0D8", lineHeight: 1.75, fontWeight: 300 }}>For junior and high school seniors.</p>
-          <p style={{ fontFamily: sans, fontSize: isMobile ? 13 : 15, color: "#E8E0D8", lineHeight: 1.75, fontWeight: 300, marginTop: 4 }}>Enrollment is limited to 20 students per cohort.</p>
+          <p style={{ fontFamily: sans, fontSize: isMobile ? 13 : 15, color: "#E8E0D8", lineHeight: 1.75, fontWeight: 300, marginTop: 4 }}>Enrollment limited to 20 students per cohort.</p>
         </div>
 
         {/* Program cards — all gold */}
