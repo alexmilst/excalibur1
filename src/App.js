@@ -2128,51 +2128,103 @@ function ComingSoonPage({ onUnlock }) {
           ))}
         </div>
 
-        {/* Faculty credentials — summary */}
+        {/* Faculty credentials — refined split panels */}
         <div style={{ width: "100%", maxWidth: 880, marginBottom: 52 }}>
-          <p style={{ fontFamily: sans, fontSize: 10, letterSpacing: "0.4em", color: "#AAA", fontWeight: 600, textTransform: "uppercase", marginBottom: 16 }}>Lead Faculty</p>
-          <div style={{ background: "#080808", borderTop: `2px solid ${gold}`, padding: isMobile ? "28px 24px" : "40px 44px", textAlign: "center" }}>
-            <p style={{ fontFamily: sans, fontSize: isMobile ? 14 : 15, lineHeight: 1.95, color: "#C8C0B8", fontWeight: 300, maxWidth: 760, margin: "0 auto" }}>
-              {"Excalibur's lead faculty are not educators in the conventional sense. They are people who have operated at the highest levels of their respective fields: from a CEO who built the world's first autonomous racing series, led the Formula BMW program, and oversaw a $13B NASDAQ listing, to a Wall Street veteran — New York Citigroup Managing Director, now a Georgetown MBA Professor and TEDx speaker — who has advised on 100+ M\u0026A transactions and 600+ CEO engagements, and served as EVP/CFO of two NYSE-listed companies. Our faculty and specialists bring that depth of real experience into every session they lead."}
-            </p>
+          <p style={{ fontFamily: sans, fontSize: 10, letterSpacing: "0.4em", color: "#AAA", fontWeight: 600, textTransform: "uppercase", marginBottom: 20 }}>Lead Faculty</p>
+          <div style={{ background: "#08080A", border: "1px solid rgba(199,171,117,.12)", position: "relative", overflow: "hidden" }}>
+            {/* Gold top accent line */}
+            <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 1, background: `linear-gradient(90deg, transparent, ${gold}, transparent)` }} />
+            {/* Corner ornaments */}
+            <div style={{ position: "absolute", top: 12, left: 12, width: 18, height: 18, borderTop: `1px solid rgba(199,171,117,.4)`, borderLeft: `1px solid rgba(199,171,117,.4)` }} />
+            <div style={{ position: "absolute", top: 12, right: 12, width: 18, height: 18, borderTop: `1px solid rgba(199,171,117,.4)`, borderRight: `1px solid rgba(199,171,117,.4)` }} />
+            <div style={{ position: "absolute", bottom: 12, left: 12, width: 18, height: 18, borderBottom: `1px solid rgba(199,171,117,.4)`, borderLeft: `1px solid rgba(199,171,117,.4)` }} />
+            <div style={{ position: "absolute", bottom: 12, right: 12, width: 18, height: 18, borderBottom: `1px solid rgba(199,171,117,.4)`, borderRight: `1px solid rgba(199,171,117,.4)` }} />
+            <div style={{ padding: isMobile ? "36px 28px" : "52px 60px", display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1px 1fr", gap: isMobile ? 32 : 0 }}>
+              {/* Faculty 1 */}
+              <div style={{ padding: isMobile ? "0" : "0 40px 0 0", textAlign: "center" }}>
+                <div style={{ width: 32, height: 1, background: `linear-gradient(90deg, transparent, ${gold})`, margin: "0 auto 20px" }} />
+                <p style={{ fontFamily: serif, fontSize: isMobile ? 14 : 15, lineHeight: 1.9, color: "#C8C0B8", fontWeight: 400 }}>
+                  A CEO who built the world's first autonomous racing series, led the Formula BMW program — developing multiple Formula 1 World Champions — and oversaw a $13B NASDAQ listing. Secured over $100M in institutional funding. Guinness World Record holder and professional racing driver.
+                </p>
+                <div style={{ width: 32, height: 1, background: `linear-gradient(90deg, ${gold}, transparent)`, margin: "20px auto 0" }} />
+              </div>
+              {/* Divider */}
+              {!isMobile && <div style={{ background: "rgba(199,171,117,.15)", margin: "0 0" }} />}
+              {/* Faculty 2 */}
+              <div style={{ padding: isMobile ? "0" : "0 0 0 40px", textAlign: "center" }}>
+                <div style={{ width: 32, height: 1, background: `linear-gradient(90deg, transparent, ${gold})`, margin: "0 auto 20px" }} />
+                <p style={{ fontFamily: serif, fontSize: isMobile ? 14 : 15, lineHeight: 1.9, color: "#C8C0B8", fontWeight: 400 }}>
+                  A former Citigroup Managing Director with 100+ M&A transactions and 600+ CEO advisory engagements. EVP and CFO of two NYSE-listed companies. Georgetown MBA Professor, TEDx speaker, published author, and member of three corporate boards.
+                </p>
+                <div style={{ width: 32, height: 1, background: `linear-gradient(90deg, ${gold}, transparent)`, margin: "20px auto 0" }} />
+              </div>
+            </div>
+            {/* Bottom ornament */}
+            <div style={{ textAlign: "center", paddingBottom: 20 }}>
+              <span style={{ fontFamily: serif, fontSize: 16, color: "rgba(199,171,117,.3)", letterSpacing: "0.3em" }}>✦</span>
+            </div>
           </div>
         </div>
 
-        {/* Email capture — launch event */}
+        {/* Email capture — envelope invitation card */}
         {!submitted ? (
           <div style={{ width: "100%", maxWidth: 880, marginBottom: 48 }}>
-            <div style={{ background: "#080808", border: "1px solid rgba(199,171,117,.15)", borderTop: `2px solid ${gold}`, padding: isMobile ? "28px 24px" : "40px 48px", marginBottom: 0 }}>
-              <p style={{ fontFamily: sans, fontSize: 10, letterSpacing: "0.4em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 14 }}>Family Information Event · May 2026</p>
-              <p style={{ fontFamily: serif, fontSize: isMobile ? 17 : 20, color: "#E8E0D8", lineHeight: 1.5, marginBottom: 14 }}>Academy Launch and Family Information Soirée at the Mediterranean Estate in San Clemente.</p>
-              <p style={{ fontFamily: sans, fontSize: 13, color: "#C8C0B8", fontWeight: 300, lineHeight: 1.8, marginBottom: 8 }}>
-                An intimate gathering for a select number of families — featuring faculty introductions, a cocktail reception, a comprehensive information session, and the opportunity to meet the founding team and those leading the programmes.
-              </p>
-              <p style={{ fontFamily: sans, fontSize: 12, color: gold, letterSpacing: "0.08em", marginBottom: 18 }}>By personal invitation only.</p>
-              <div style={{ display: "flex", gap: 8, flexDirection: isMobile ? "column" : "row" }}>
-                <input
-                  type="email"
-                  value={email}
-                  onChange={e => setEmail(e.target.value)}
-                  onKeyDown={e => e.key === "Enter" && email && setSubmitted(true)}
-                  placeholder="Your email address"
-                  style={{ flex: 1, padding: "13px 18px", background: "#000", border: "1px solid rgba(199,171,117,.2)", color: "#E8E0D8", fontFamily: sans, fontSize: 13, outline: "none" }}
-                  onFocus={e => e.target.style.borderColor = gold}
-                  onBlur={e => e.target.style.borderColor = "rgba(199,171,117,.2)"}
-                />
-                <button
-                  onClick={() => email && setSubmitted(true)}
-                  style={{ fontFamily: sans, background: gold, color: "#000", padding: "13px 22px", fontSize: 11, fontWeight: 700, letterSpacing: "0.15em", textTransform: "uppercase", border: "none", cursor: "pointer", flexShrink: 0 }}
-                >
-                  Request Invitation
-                </button>
+            <p style={{ fontFamily: sans, fontSize: 10, letterSpacing: "0.4em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 20 }}>Family Information Event · May 2026</p>
+            {/* Envelope wrapper */}
+            <div style={{ position: "relative", background: "#040404", border: "1px solid rgba(199,171,117,.2)", padding: isMobile ? "0" : "0" }}>
+              {/* Envelope flap decoration */}
+              <div style={{ height: 4, background: `linear-gradient(90deg, transparent, rgba(199,171,117,.5) 20%, ${gold} 50%, rgba(199,171,117,.5) 80%, transparent)` }} />
+              {/* Wax seal area */}
+              <div style={{ display: "flex", justifyContent: "center", padding: "24px 0 8px" }}>
+                <div style={{ width: 44, height: 44, borderRadius: "50%", background: "#0D0B07", border: `1px solid rgba(199,171,117,.4)`, display: "flex", alignItems: "center", justifyContent: "center" }}>
+                  <span style={{ fontFamily: serif, fontSize: 18, color: gold, lineHeight: 1 }}>✦</span>
+                </div>
               </div>
-              <p style={{ fontFamily: sans, fontSize: 10, color: "#888", marginTop: 12, letterSpacing: "0.06em" }}>We will follow up personally. Your information is never shared.</p>
+              {/* Invitation card inside */}
+              <div style={{ margin: isMobile ? "0 16px 24px" : "0 32px 32px", background: "#08080A", border: "1px solid rgba(199,171,117,.15)", padding: isMobile ? "32px 24px" : "44px 52px", textAlign: "center", position: "relative" }}>
+                {/* Inner corner marks */}
+                <div style={{ position: "absolute", top: 10, left: 10, width: 14, height: 14, borderTop: `1px solid rgba(199,171,117,.35)`, borderLeft: `1px solid rgba(199,171,117,.35)` }} />
+                <div style={{ position: "absolute", top: 10, right: 10, width: 14, height: 14, borderTop: `1px solid rgba(199,171,117,.35)`, borderRight: `1px solid rgba(199,171,117,.35)` }} />
+                <div style={{ position: "absolute", bottom: 10, left: 10, width: 14, height: 14, borderBottom: `1px solid rgba(199,171,117,.35)`, borderLeft: `1px solid rgba(199,171,117,.35)` }} />
+                <div style={{ position: "absolute", bottom: 10, right: 10, width: 14, height: 14, borderBottom: `1px solid rgba(199,171,117,.35)`, borderRight: `1px solid rgba(199,171,117,.35)` }} />
+                <p style={{ fontFamily: serif, fontSize: isMobile ? 18 : 22, color: "#E8E0D8", lineHeight: 1.45, marginBottom: 20 }}>
+                  Academy Launch and Family Information Soirée<br />at the Mediterranean Estate in San Clemente
+                </p>
+                <div style={{ width: 48, height: 1, background: `linear-gradient(90deg, transparent, ${gold}, transparent)`, margin: "0 auto 20px" }} />
+                <p style={{ fontFamily: sans, fontSize: 13, color: "#C8C0B8", fontWeight: 300, lineHeight: 1.85, marginBottom: 16, maxWidth: 520, margin: "0 auto 20px" }}>
+                  An intimate gathering for a select number of families — featuring faculty introductions, a cocktail reception, a comprehensive information session, and the opportunity to meet the founding team and those leading the programmes.
+                </p>
+                <p style={{ fontFamily: serif, fontSize: 13, color: gold, letterSpacing: "0.15em", marginBottom: 28 }}>By personal invitation only.</p>
+                <div style={{ display: "flex", gap: 8, flexDirection: isMobile ? "column" : "row", maxWidth: 520, margin: "0 auto" }}>
+                  <input
+                    type="email"
+                    value={email}
+                    onChange={e => setEmail(e.target.value)}
+                    onKeyDown={e => e.key === "Enter" && email && setSubmitted(true)}
+                    placeholder="Your email address"
+                    style={{ flex: 1, padding: "13px 18px", background: "#000", border: "1px solid rgba(199,171,117,.2)", color: "#E8E0D8", fontFamily: sans, fontSize: 13, outline: "none" }}
+                    onFocus={e => e.target.style.borderColor = gold}
+                    onBlur={e => e.target.style.borderColor = "rgba(199,171,117,.2)"}
+                  />
+                  <button
+                    onClick={() => email && setSubmitted(true)}
+                    style={{ fontFamily: sans, background: gold, color: "#000", padding: "13px 22px", fontSize: 11, fontWeight: 700, letterSpacing: "0.15em", textTransform: "uppercase", border: "none", cursor: "pointer", flexShrink: 0 }}
+                  >
+                    Request Invitation
+                  </button>
+                </div>
+                <p style={{ fontFamily: sans, fontSize: 10, color: "#555", marginTop: 14, letterSpacing: "0.06em" }}>We will follow up personally. Your information is never shared.</p>
+              </div>
             </div>
           </div>
         ) : (
-          <div style={{ width: "100%", maxWidth: 880, marginBottom: 48, padding: "28px 32px", background: "#080808", border: "1px solid rgba(199,171,117,.2)", borderTop: `2px solid ${gold}` }}>
-            <p style={{ fontFamily: serif, fontSize: 20, color: "#E8E0D8", marginBottom: 8 }}>Thank you.</p>
-            <p style={{ fontFamily: sans, fontSize: 13, color: "#C8C0B8", fontWeight: 300, lineHeight: 1.7 }}>We will be in touch personally with details for the May launch event. We look forward to welcoming your family.</p>
+          <div style={{ width: "100%", maxWidth: 880, marginBottom: 48 }}>
+            <div style={{ background: "#08080A", border: "1px solid rgba(199,171,117,.2)", padding: "44px 52px", textAlign: "center", position: "relative" }}>
+              <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 1, background: `linear-gradient(90deg, transparent, ${gold}, transparent)` }} />
+              <span style={{ fontFamily: serif, fontSize: 28, color: gold, display: "block", marginBottom: 16 }}>✦</span>
+              <p style={{ fontFamily: serif, fontSize: 22, color: "#E8E0D8", marginBottom: 12 }}>Thank you.</p>
+              <p style={{ fontFamily: sans, fontSize: 14, color: "#C8C0B8", fontWeight: 300, lineHeight: 1.8 }}>We will be in touch personally with details for the May soirée. We look forward to welcoming your family.</p>
+            </div>
           </div>
         )}
 
