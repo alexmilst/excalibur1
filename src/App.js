@@ -4,7 +4,7 @@ const STRIPE = "https://buy.stripe.com/placeholder";
 const LOGO_URL = "https://i.ibb.co/rKSp526b/upsclae-logo.png";
 const LOGO = LOGO_URL;
 const serif = "'Cormorant Garamond', Georgia, serif";
-const sans = "'DM Sans', sans-serif";
+const sans = "'Lato', sans-serif";
 const gold = "#C7AB75";
 
 // ── RESPONSIVE HOOK ──
@@ -65,7 +65,7 @@ function StatCounter({ num, suf, label, inView }) {
   return (
     <div style={{ background: "#080808", padding: "28px 16px", textAlign: "center" }}>
       <div style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: 32, fontWeight: 600, color: "#C7AB75", lineHeight: 1 }}>{counted}{suf}</div>
-      <div style={{ fontFamily: "'DM Sans', sans-serif", color: "#C8C0B8", fontSize: 11, marginTop: 7, fontWeight: 300 }}>{label}</div>
+      <div style={{ fontFamily: "'Lato', sans-serif", color: "#FBF7EE", fontSize: 11, marginTop: 7, fontWeight: 300 }}>{label}</div>
     </div>
   );
 }
@@ -112,7 +112,7 @@ function CountdownTimer({ targetDate }) {
       {[["DAYS", time.d], ["HRS", time.h], ["MIN", time.m], ["SEC", time.s]].map(([label, val]) => (
         <div key={label} style={{ textAlign: "center", background: "rgba(199,171,117,.06)", border: "1px solid rgba(199,171,117,.15)", padding: "14px 18px", minWidth: 68 }}>
           <div style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: 32, fontWeight: 600, color: "#C7AB75", lineHeight: 1 }}>{String(val).padStart(2, "0")}</div>
-          <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 9, color: "#908880", letterSpacing: "0.2em", marginTop: 4 }}>{label}</div>
+          <div style={{ fontFamily: "'Lato', sans-serif", fontSize: 9, color: "#908880", letterSpacing: "0.2em", marginTop: 4 }}>{label}</div>
         </div>
       ))}
     </div>
@@ -147,7 +147,7 @@ function FAQ({ q, a }) {
         <span style={{ color: gold, fontSize: 18, flexShrink: 0, marginTop: 3, transform: open ? "rotate(45deg)" : "none", transition: "transform .4s", display: "inline-block" }}>+</span>
       </div>
       <div style={{ maxHeight: open ? 600 : 0, overflow: "hidden", transition: "max-height .6s cubic-bezier(.22,1,.36,1)" }}>
-        <p style={{ fontFamily: sans, color: "#C8C0B8", fontSize: 15, lineHeight: 1.9, marginTop: 16, fontWeight: 300, maxWidth: 680 }}>{a}</p>
+        <p style={{ fontFamily: sans, color: "#FBF7EE", fontSize: 15, lineHeight: 1.9, marginTop: 16, fontWeight: 300, maxWidth: 680 }}>{a}</p>
       </div>
     </div>
   );
@@ -311,7 +311,7 @@ function SectionTitle({ children, center = false }) {
   return <h2 style={{ fontFamily: serif, fontSize: "clamp(26px,4vw,52px)", fontWeight: 600, color: "#E8E0D8", lineHeight: 1.05, textAlign: center ? "center" : "left" }}>{children}</h2>;
 }
 function Sub({ children, center = false }) {
-  return <p style={{ fontFamily: serif, fontSize: "clamp(15px,2vw,18px)", color: "#C8C0B8", fontStyle: "italic", lineHeight: 1.7, textAlign: center ? "center" : "left", maxWidth: center ? 580 : "100%", margin: center ? "12px auto 0" : "12px 0 0" }}>{children}</p>;
+  return <p style={{ fontFamily: serif, fontSize: "clamp(15px,2vw,18px)", color: "#FBF7EE", fontStyle: "italic", lineHeight: 1.7, textAlign: center ? "center" : "left", maxWidth: center ? 580 : "100%", margin: center ? "12px auto 0" : "12px 0 0" }}>{children}</p>;
 }
 function Dot({ solid = false }) {
   return <div style={{ width: 4, height: 4, borderRadius: "50%", background: gold, opacity: solid ? 1 : .4, marginTop: 8, flexShrink: 0 }} />;
@@ -340,7 +340,7 @@ function NavLink({ label, active, onClick }) {
 function Nav({ page, setPage }) {
   const isMobile = useIsMobile();
   const [menuOpen, setMenuOpen] = useState(false);
-  const links = [["PROGRAMS", "programs"], ["CURRICULUM", "curriculum"], ["FACULTY", "faculty"], ["BEYOND", "beyond"], ["ADMISSIONS", "apply"]];
+  const links = [["HOME", "home"], ["ABOUT", "about"], ["PROGRAMS", "programs"], ["CURRICULUM", "curriculum"], ["FACULTY", "faculty"], ["BEYOND", "beyond"], ["ADMISSIONS", "apply"]];
   const go = (p) => { setPage(p); setMenuOpen(false); };
 
   return (
@@ -403,20 +403,20 @@ function Footer({ setPage }) {
       <div style={{ maxWidth: 1200, margin: "0 auto", display: "flex", flexDirection: isMobile ? "column" : "row", justifyContent: "space-between", alignItems: isMobile ? "flex-start" : "center", flexWrap: "wrap", gap: 20 }}>
         <div style={{ display: "flex", alignItems: "center", gap: 14, cursor: "pointer" }} onClick={() => setPage("home")}>
           <div>
-            <div style={{ fontFamily: sans, fontWeight: 600, fontSize: 11, letterSpacing: 3, color: "#C8C0B8" }}>EXCALIBUR ACADEMY</div>
-            <div style={{ fontFamily: serif, fontSize: 12, color: "#C0B8B0", marginTop: 2, fontStyle: "italic" }}>Forging the leaders of tomorrow.</div>
+            <div style={{ fontFamily: sans, fontWeight: 600, fontSize: 11, letterSpacing: 3, color: "#FBF7EE" }}>EXCALIBUR ACADEMY</div>
+            <div style={{ fontFamily: serif, fontSize: 12, color: "#FBF7EE", marginTop: 2, fontStyle: "italic" }}>Forging the leaders of tomorrow.</div>
           </div>
         </div>
         <div style={{ display: "flex", gap: 24 }}>
           {[["PROGRAMS", "programs"], ["CURRICULUM", "curriculum"], ["APPLY", "apply"]].map(([l, p]) => (
-            <span key={p} onClick={() => setPage(p)} style={{ fontFamily: sans, color: "#C0B8B0", fontSize: 10, cursor: "pointer", transition: "color .2s", letterSpacing: "0.2em", fontWeight: 600, textTransform: "uppercase" }} onMouseEnter={e => e.target.style.color = gold} onMouseLeave={e => e.target.style.color = "#555"}>{l}</span>
+            <span key={p} onClick={() => setPage(p)} style={{ fontFamily: sans, color: "#FBF7EE", fontSize: 10, cursor: "pointer", transition: "color .2s", letterSpacing: "0.2em", fontWeight: 600, textTransform: "uppercase" }} onMouseEnter={e => e.target.style.color = gold} onMouseLeave={e => e.target.style.color = "#555"}>{l}</span>
           ))}
         </div>
         <div style={{ width: "100%", borderTop: "1px solid rgba(199,171,117,.08)", marginTop: 24, paddingTop: 24 }}>
           <div style={{ textAlign: "center", marginBottom: 10 }}>
-            <span style={{ fontFamily: serif, fontSize: 13, color: "#C8C0B8", letterSpacing: "0.08em" }}>apply@excaliburacademy.org</span>
+            <span style={{ fontFamily: serif, fontSize: 13, color: "#FBF7EE", letterSpacing: "0.08em" }}>apply@excaliburacademy.org</span>
             <span style={{ fontFamily: sans, fontSize: 11, color: "rgba(199,171,117,.4)", margin: "0 12px" }}>·</span>
-            <span style={{ fontFamily: serif, fontSize: 13, color: "#C8C0B8", letterSpacing: "0.08em" }}>support@excaliburacademy.org</span>
+            <span style={{ fontFamily: serif, fontSize: 13, color: "#FBF7EE", letterSpacing: "0.08em" }}>support@excaliburacademy.org</span>
           </div>
           <div style={{ textAlign: "center", fontFamily: sans, color: "#706860", fontSize: 10, letterSpacing: "0.15em", textTransform: "uppercase" }}>
             © 2026 Excalibur Academy LLC &nbsp;·&nbsp; 23 Corporate Plaza Dr, Newport Beach, CA &nbsp;·&nbsp; Orange County, California
@@ -463,8 +463,8 @@ const sixWeekSchedule = [
 ];
 
 const fieldTrips = [
-  { title: "Daytona & Motorsport Racing", tag: "Speed. Strategy. Pressure.", img: "https://images.unsplash.com/photo-1541348263662-e068662d82af?w=800&q=80", desc: "A professional racing experience at a premier circuit. Students drive, study race strategy, and debrief with Chip on decision-making under extreme pressure. The lessons apply directly to business: reading conditions in real-time, committing under uncertainty, and leading when the stakes are real.", type: "Weekend" },
-  { title: "Silicon Valley — Incubators & Accelerators", tag: "Where the next economy is built.", img: "https://images.unsplash.com/photo-1541963463532-d68292c34b19?w=800&q=80", desc: "Behind-the-scenes visits to leading venture capital firms, startup incubators, and accelerators across the Bay Area. Students walk through the environments where the world's most consequential companies began. A curated dinner with a VC partner closes the day.", type: "2-Day" },
+  { title: "Daytona & Motorsport Racing", tag: "Speed. Strategy. Pressure.", img: "https://images.unsplash.com/photo-1504707748692-419802cf939d?w=800&q=80", desc: "A professional racing experience at a premier circuit. Students drive, study race strategy, and debrief with Chip on decision-making under extreme pressure. The lessons apply directly to business: reading conditions in real-time, committing under uncertainty, and leading when the stakes are real.", type: "Weekend" },
+  { title: "Silicon Valley — Incubators & Accelerators", tag: "Where the next economy is built.", img: "https://images.unsplash.com/photo-1449034446853-66c86144b0ad?w=800&q=80", desc: "Behind-the-scenes visits to leading venture capital firms, startup incubators, and accelerators across the Bay Area. Students walk through the environments where the world's most consequential companies began. A curated dinner with a VC partner closes the day.", type: "2-Day" },
   { title: "NYSE — New York Stock Exchange Floor", tag: "The center of global capital.", img: "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=800&q=80", desc: "Access to the NYSE trading floor — one of the most exclusive rooms in American finance. Students meet with market professionals, observe live trading operations, and receive a briefing on how capital markets actually function. Followed by an executive dinner in Manhattan.", type: "3-Day NYC" },
   { title: "Anthropic AI Headquarters", tag: "The frontier of artificial intelligence.", img: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=800&q=80", desc: "A rare visit to one of the world's leading AI safety and research organizations. Students engage with researchers and engineers at the forefront of large language model development — the technology reshaping every industry they will enter.", type: "Day Trip" },
   { title: "SpaceX — Launch & Engineering", tag: "The ambition that changes the species.", img: "https://images.unsplash.com/photo-1516849677043-ef67c9557e16?w=800&q=80", desc: "Behind-the-scenes access to SpaceX's engineering and manufacturing operations. Students see how the world's most ambitious engineering programme is organized, staffed, and executed. A reminder that the biggest ideas in history are built by small teams who refused to accept limits.", type: "Day Trip" },
@@ -481,8 +481,8 @@ function ScheduleDetail({ block }) {
     <div className="mod-content" style={{ padding: "20px 20px", background: "rgba(199,171,117,.03)", borderTop: "1px solid rgba(199,171,117,.1)", borderBottom: "1px solid rgba(199,171,117,.05)" }}>
       {isBreak ? (
         <>
-          <p style={{ fontFamily: serif, fontSize: 16, color: "#D8D0C8", marginBottom: 8 }}>{block.block}</p>
-          <p style={{ fontFamily: sans, fontSize: 13, color: "#B0A8A0", fontWeight: 300, lineHeight: 1.75 }}>{block.desc}</p>
+          <p style={{ fontFamily: serif, fontSize: 16, color: "#FBF7EE", marginBottom: 8 }}>{block.block}</p>
+          <p style={{ fontFamily: sans, fontSize: 13, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.75 }}>{block.desc}</p>
         </>
       ) : (
         <>
@@ -502,7 +502,7 @@ function ScheduleDetail({ block }) {
             </div>
           </div>
           <p style={{ fontFamily: serif, fontSize: 15, color: gold, fontStyle: "italic", marginBottom: 10 }}>{block.block}</p>
-          <p style={{ fontFamily: sans, fontSize: 13, lineHeight: 1.85, color: "#C0B8B0", fontWeight: 300 }}>{block.desc}</p>
+          <p style={{ fontFamily: sans, fontSize: 13, lineHeight: 1.85, color: "#FBF7EE", fontWeight: 300 }}>{block.desc}</p>
         </>
       )}
     </div>
@@ -520,7 +520,7 @@ function DailyScheduleBlock({ schedule, title, subtitle }) {
       {/* Title */}
       <div style={{ padding: isMobile ? "20px 20px 14px" : "28px 36px 20px", borderBottom: "1px solid rgba(199,171,117,.07)" }}>
         <p style={{ fontFamily: sans, fontSize: 10, letterSpacing: "0.35em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 6 }}>{title}</p>
-        <p style={{ fontFamily: serif, fontSize: isMobile ? 13 : 15, color: "#B0A8A0", fontStyle: "italic" }}>{subtitle}</p>
+        <p style={{ fontFamily: serif, fontSize: isMobile ? 13 : 15, color: "#FBF7EE", fontStyle: "italic" }}>{subtitle}</p>
       </div>
 
       {isMobile ? (
@@ -591,7 +591,7 @@ function ModulePage({ slug, setPage }) {
         <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
           {[["Home", "home"], ["Curriculum", "curriculum"]].map(([l, p]) => (
             <span key={p} style={{ display: "flex", alignItems: "center", gap: 8 }}>
-              <span onClick={() => setPage(p)} style={{ fontFamily: sans, fontSize: 11, color: "#C0B8B0", cursor: "pointer", letterSpacing: 1 }} onMouseEnter={e => e.target.style.color = gold} onMouseLeave={e => e.target.style.color = "#555"}>{l}</span>
+              <span onClick={() => setPage(p)} style={{ fontFamily: sans, fontSize: 11, color: "#FBF7EE", cursor: "pointer", letterSpacing: 1 }} onMouseEnter={e => e.target.style.color = gold} onMouseLeave={e => e.target.style.color = "#555"}>{l}</span>
               <span style={{ color: "#222" }}>/</span>
             </span>
           ))}
@@ -604,7 +604,7 @@ function ModulePage({ slug, setPage }) {
         <Fade>
           <Eyebrow>{mod.months.toUpperCase()}</Eyebrow>
           <h1 style={{ fontFamily: serif, fontSize: "clamp(38px,5vw,68px)", fontWeight: 600, color: "#E8E0D8", lineHeight: 1.05, marginBottom: 16, maxWidth: 800 }}>{mod.title}</h1>
-          <p style={{ fontFamily: serif, fontSize: 22, color: "#C8C0B8", fontStyle: "italic", lineHeight: 1.6, maxWidth: 680 }}>{mod.tagline}</p>
+          <p style={{ fontFamily: serif, fontSize: 22, color: "#FBF7EE", fontStyle: "italic", lineHeight: 1.6, maxWidth: 680 }}>{mod.tagline}</p>
         </Fade>
       </div>
       <Hr />
@@ -615,16 +615,16 @@ function ModulePage({ slug, setPage }) {
           <div>
             <Fade>
               <Eyebrow>ABOUT THIS MODULE</Eyebrow>
-              <p style={{ fontFamily: sans, fontSize: 16, lineHeight: 1.95, color: "#C8C0B8", fontWeight: 300, marginBottom: 44 }}>{mod.body}</p>
+              <p style={{ fontFamily: sans, fontSize: 16, lineHeight: 1.95, color: "#FBF7EE", fontWeight: 300, marginBottom: 44 }}>{mod.body}</p>
             </Fade>
             <Fade d={.08}>
               <div style={{ background: "#080808", border: "1px solid #151515", borderLeft: `3px solid ${gold}`, padding: "32px 32px", marginBottom: 44 }}>
-                <p style={{ fontFamily: serif, fontSize: 21, fontStyle: "italic", color: "#C0B8B0", lineHeight: 1.6 }}>"{mod.quote}"</p>
+                <p style={{ fontFamily: serif, fontSize: 21, fontStyle: "italic", color: "#FBF7EE", lineHeight: 1.6 }}>"{mod.quote}"</p>
               </div>
             </Fade>
             <Fade d={.12}>
               <Eyebrow>WHY THIS MATTERS</Eyebrow>
-              <p style={{ fontFamily: sans, fontSize: 15, lineHeight: 1.95, color: "#C8C0B8", fontWeight: 300, marginBottom: 48 }}>{mod.why}</p>
+              <p style={{ fontFamily: sans, fontSize: 15, lineHeight: 1.95, color: "#FBF7EE", fontWeight: 300, marginBottom: 48 }}>{mod.why}</p>
             </Fade>
             <Fade d={.16}>
               <Eyebrow>WHAT YOU WILL LEARN</Eyebrow>
@@ -632,7 +632,7 @@ function ModulePage({ slug, setPage }) {
                 {mod.whatYouLearn.map((item, i) => (
                   <div key={i} style={{ padding: "16px 22px", borderBottom: i < mod.whatYouLearn.length - 1 ? "1px solid #0E0E0E" : "none", display: "flex", gap: 16, alignItems: "flex-start", background: i % 2 === 0 ? "#080808" : "#060606" }}>
                     <span style={{ fontFamily: sans, fontSize: 10, color: gold, opacity: .5, letterSpacing: 1, marginTop: 3, flexShrink: 0, fontWeight: 500 }}>0{i + 1}</span>
-                    <span style={{ fontFamily: sans, fontSize: 14, color: "#C8C0B8", lineHeight: 1.65, fontWeight: 300 }}>{item}</span>
+                    <span style={{ fontFamily: sans, fontSize: 14, color: "#FBF7EE", lineHeight: 1.65, fontWeight: 300 }}>{item}</span>
                   </div>
                 ))}
               </div>
@@ -644,14 +644,14 @@ function ModulePage({ slug, setPage }) {
             <Fade d={.04}>
               <div style={{ background: "#080808", border: "1px solid #151515", borderTop: `2px solid ${gold}`, padding: "32px 28px", marginBottom: 2 }}>
                 <Eyebrow>OUTCOMES</Eyebrow>
-                <p style={{ fontFamily: serif, fontSize: 15, color: "#C8C0B8", fontStyle: "italic", marginBottom: 16, lineHeight: 1.5 }}>By the end of this module, every student will:</p>
+                <p style={{ fontFamily: serif, fontSize: 15, color: "#FBF7EE", fontStyle: "italic", marginBottom: 16, lineHeight: 1.5 }}>By the end of this module, every student will:</p>
                 {mod.outcomes.map((o, i) => <Li key={i} solid>{o}</Li>)}
               </div>
               <div style={{ background: "#060606", border: "1px solid #151515", borderTop: "none", padding: "22px 28px", marginBottom: 14 }}>
                 {[["Schedule", mod.months], ["Program", "Intensive & Full"], ["Location", "Orange County, CA"]].map(([k, v]) => (
                   <div key={k} style={{ display: "flex", justifyContent: "space-between", marginBottom: 10 }}>
-                    <span style={{ fontFamily: sans, fontSize: 11, color: "#C8C0B8", letterSpacing: 1 }}>{k}</span>
-                    <span style={{ fontFamily: serif, fontSize: 13, color: "#C8C0B8" }}>{v}</span>
+                    <span style={{ fontFamily: sans, fontSize: 11, color: "#FBF7EE", letterSpacing: 1 }}>{k}</span>
+                    <span style={{ fontFamily: serif, fontSize: 13, color: "#FBF7EE" }}>{v}</span>
                   </div>
                 ))}
               </div>
@@ -659,10 +659,10 @@ function ModulePage({ slug, setPage }) {
             </Fade>
             <Fade d={.1}>
               <div style={{ marginTop: 24 }}>
-                <p style={{ fontFamily: sans, fontSize: 10, letterSpacing: 3, color: "#C0B8B0", marginBottom: 10, fontWeight: 500 }}>OTHER MODULES</p>
+                <p style={{ fontFamily: sans, fontSize: 10, letterSpacing: 3, color: "#FBF7EE", marginBottom: 10, fontWeight: 500 }}>OTHER MODULES</p>
                 {currMods.filter(m => m.slug !== slug).slice(0, 5).map((m, i) => (
                   <div key={i} onClick={() => setPage(`module:${m.slug}`)} style={{ padding: "11px 0", borderBottom: "1px solid #0E0E0E", cursor: "pointer" }}>
-                    <span style={{ fontFamily: serif, fontSize: 14, color: "#C8C0B8", transition: "color .2s" }} onMouseEnter={e => e.target.style.color = gold} onMouseLeave={e => e.target.style.color = "#666"}>{m.title} →</span>
+                    <span style={{ fontFamily: serif, fontSize: 14, color: "#FBF7EE", transition: "color .2s" }} onMouseEnter={e => e.target.style.color = gold} onMouseLeave={e => e.target.style.color = "#666"}>{m.title} →</span>
                   </div>
                 ))}
               </div>
@@ -703,7 +703,7 @@ function SoireeInviteBlock() {
               <p style={{ fontFamily: sans, fontSize: 10, letterSpacing: "0.4em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 14 }}>Family Information Event · May 23, 2026</p>
               <p style={{ fontFamily: serif, fontSize: isMobile ? 20 : 26, color: "#E8E0D8", lineHeight: 1.35, marginBottom: 14 }}>Academy Launch and Family Information Soirée<br />at the Mediterranean Estate in San Clemente</p>
               <div style={{ width: 44, height: 1, background: `linear-gradient(90deg, transparent, ${gold}, transparent)`, margin: "0 auto 18px" }} />
-              <p style={{ fontFamily: sans, fontSize: 13, color: "#C0B8B0", fontWeight: 300, lineHeight: 1.8, maxWidth: 540, margin: "0 auto 18px" }}>An intimate gathering for a select number of families — faculty introductions, a cocktail reception, a comprehensive information session, and the opportunity to meet the founding team and those leading the programmes.</p>
+              <p style={{ fontFamily: sans, fontSize: 13, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.8, maxWidth: 540, margin: "0 auto 18px" }}>An intimate gathering for a select number of families — faculty introductions, a cocktail reception, a comprehensive information session, and the opportunity to meet the founding team and those leading the programmes.</p>
               <p style={{ fontFamily: serif, fontSize: 12, color: gold, letterSpacing: "0.18em", marginBottom: 28 }}>By personal invitation only.</p>
               <div style={{ display: "flex", gap: 8, flexDirection: isMobile ? "column" : "row", maxWidth: 520, margin: "0 auto" }}>
                 <input type="email" value={email} onChange={e => setEmail(e.target.value)} onKeyDown={e => e.key === "Enter" && email && setSubmitted(true)} placeholder="Your email address" style={{ flex: 1, padding: "13px 18px", background: "#000", border: "1px solid rgba(199,171,117,.25)", color: "#E8E0D8", fontFamily: sans, fontSize: 13, outline: "none" }} onFocus={e => e.target.style.borderColor = gold} onBlur={e => e.target.style.borderColor = "rgba(199,171,117,.25)"} />
@@ -715,7 +715,7 @@ function SoireeInviteBlock() {
             <div style={{ textAlign: "center" }}>
               <span style={{ fontFamily: serif, fontSize: 28, color: gold, display: "block", marginBottom: 14 }}>✦</span>
               <p style={{ fontFamily: serif, fontSize: 22, color: "#E8E0D8", marginBottom: 10 }}>Thank you.</p>
-              <p style={{ fontFamily: sans, fontSize: 13, color: "#C0B8B0", fontWeight: 300, lineHeight: 1.8 }}>We will be in touch personally. We look forward to welcoming your family.</p>
+              <p style={{ fontFamily: sans, fontSize: 13, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.8 }}>We will be in touch personally. We look forward to welcoming your family.</p>
             </div>
           )}
         </div>
@@ -744,8 +744,8 @@ function CurriculumPage({ setPage }) {
                 onMouseLeave={e => { e.currentTarget.style.background = "#080808"; e.currentTarget.style.borderTopColor = "transparent"; }}>
                 <Eyebrow>{m.months.toUpperCase()}</Eyebrow>
                 <h3 style={{ fontFamily: serif, fontSize: 24, fontWeight: 600, color: "#E8E0D8", lineHeight: 1.2, marginBottom: 8 }}>{m.title}</h3>
-                <p style={{ fontFamily: serif, fontSize: 16, fontStyle: "italic", color: "#C8C0B8", marginBottom: 12 }}>{m.tagline}</p>
-                <p style={{ fontFamily: sans, fontSize: 13, lineHeight: 1.7, color: "#C8C0B8", fontWeight: 300, marginBottom: 16 }}>{m.summary}</p>
+                <p style={{ fontFamily: serif, fontSize: 16, fontStyle: "italic", color: "#FBF7EE", marginBottom: 12 }}>{m.tagline}</p>
+                <p style={{ fontFamily: sans, fontSize: 13, lineHeight: 1.7, color: "#FBF7EE", fontWeight: 300, marginBottom: 16 }}>{m.summary}</p>
                 <span style={{ fontFamily: sans, fontSize: 11, color: gold, letterSpacing: 2, fontWeight: 500 }}>Explore module →</span>
               </div>
             </Fade>
@@ -770,7 +770,7 @@ function FullProgramPage({ setPage }) {
         <Fade style={{ position: "relative", zIndex: 1 }}>
           <Eyebrow>THE FLAGSHIP PROGRAM</Eyebrow>
           <h1 style={{ fontFamily: serif, fontSize: "clamp(40px,5.5vw,70px)", fontWeight: 600, color: "#E8E0D8", lineHeight: 1.05, marginBottom: 16 }}>The Ten-Month Formation</h1>
-          <p style={{ fontFamily: serif, fontSize: 20, color: "#C8C0B8", fontStyle: "italic", lineHeight: 1.7, maxWidth: 640, margin: "0 auto 40px" }}>Not a course. Not a workshop. A complete transformation across ten months of deliberate formation.</p>
+          <p style={{ fontFamily: serif, fontSize: 20, color: "#FBF7EE", fontStyle: "italic", lineHeight: 1.7, maxWidth: 640, margin: "0 auto 40px" }}>Not a course. Not a workshop. A complete transformation across ten months of deliberate formation.</p>
           <div style={{ display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap" }}>
             <button onClick={() => setPage("apply")} style={{ fontFamily: sans, background: gold, color: "#000", padding: "13px 40px", fontSize: 12, fontWeight: 700, letterSpacing: 2, border: "none", cursor: "pointer" }}>Apply for Full Program</button>
             <button onClick={() => setPage("intensive")} style={{ fontFamily: sans, border: `1px solid rgba(199,171,117,.3)`, color: gold, padding: "13px 28px", fontSize: 12, fontWeight: 500, letterSpacing: 1.5, background: "transparent", cursor: "pointer" }}>View 6-Week Intensive</button>
@@ -786,7 +786,7 @@ function FullProgramPage({ setPage }) {
             {[["10 Months", "of deliberate formation"], ["8 Modules", "full curriculum depth"], ["12 Sectors", "one industry per month"], ["3 Engagements", "real-world experiences"]].map(([v, l], i) => (
               <div key={i} style={{ background: "#080808", padding: "28px 20px", textAlign: "center" }}>
                 <div style={{ fontFamily: serif, fontSize: 32, fontWeight: 600, color: gold, lineHeight: 1 }}>{v}</div>
-                <div style={{ fontFamily: sans, fontSize: 11, color: "#C0B8B0", marginTop: 6, fontWeight: 300 }}>{l}</div>
+                <div style={{ fontFamily: sans, fontSize: 11, color: "#FBF7EE", marginTop: 6, fontWeight: 300 }}>{l}</div>
               </div>
             ))}
           </div>
@@ -800,8 +800,8 @@ function FullProgramPage({ setPage }) {
           <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 60 }}>
             <div>
               <Eyebrow>WHAT THIS IS</Eyebrow>
-              <p style={{ fontFamily: sans, fontSize: 15, lineHeight: 1.95, color: "#C8C0B8", fontWeight: 300, marginBottom: 18 }}>The Full Program is the complete Excalibur formation — ten months of deliberate development across every discipline that defines a consequential career. It is not a series of workshops. It is a year-long transformation built around a cohort of 25 students who challenge each other and graduate with documented, professional-grade experience.</p>
-              <p style={{ fontFamily: sans, fontSize: 15, lineHeight: 1.95, color: "#C8C0B8", fontWeight: 300 }}>Available as Weekday Track (Tue & Thu, 4–7pm) or Weekend Track (every Saturday, 9am–3pm). Both tracks are identical in curriculum and depth. Both share the same milestone events: Monthly Pitch Nights, the consulting project, the externship, the micro-business launch, and Demo Day.</p>
+              <p style={{ fontFamily: sans, fontSize: 15, lineHeight: 1.95, color: "#FBF7EE", fontWeight: 300, marginBottom: 18 }}>The Full Program is the complete Excalibur formation — ten months of deliberate development across every discipline that defines a consequential career. It is not a series of workshops. It is a year-long transformation built around a cohort of 25 students who challenge each other and graduate with documented, professional-grade experience.</p>
+              <p style={{ fontFamily: sans, fontSize: 15, lineHeight: 1.95, color: "#FBF7EE", fontWeight: 300 }}>Available as Weekday Track (Tue & Thu, 4–7pm) or Weekend Track (every Saturday, 9am–3pm). Both tracks are identical in curriculum and depth. Both share the same milestone events: Monthly Pitch Nights, the consulting project, the externship, the micro-business launch, and Demo Day.</p>
             </div>
             <div>
               <Eyebrow>WHO IT'S FOR</Eyebrow>
@@ -834,7 +834,7 @@ function FullProgramPage({ setPage }) {
               <div key={i} style={{ background: "#080808", padding: "24px 20px", borderTop: i < 4 ? `2px solid rgba(199,171,117,.15)` : "none" }}>
                 <p style={{ fontFamily: sans, fontSize: 9, letterSpacing: 2, color: gold, marginBottom: 5, fontWeight: 500 }}>{row.m}</p>
                 <h4 style={{ fontFamily: serif, fontSize: 16, fontWeight: 600, color: "#D0C8C0", marginBottom: 10, lineHeight: 1.2 }}>{row.t}</h4>
-                {row.items.map((item, j) => <div key={j} style={{ fontFamily: sans, fontSize: 11, color: "#C8C0B8", marginBottom: 3, fontWeight: 300 }}>— {item}</div>)}
+                {row.items.map((item, j) => <div key={j} style={{ fontFamily: sans, fontSize: 11, color: "#FBF7EE", marginBottom: 3, fontWeight: 300 }}>— {item}</div>)}
               </div>
             ))}
           </div>
@@ -850,7 +850,7 @@ function FullProgramPage({ setPage }) {
               {currMods.map((m, i) => (
                 <div key={i} onClick={() => setActiveMod(i)} style={{ padding: "17px 24px", cursor: "pointer", borderBottom: "1px solid #0E0E0E", borderLeft: `2px solid ${activeMod === i ? gold : "transparent"}`, background: activeMod === i ? "rgba(199,171,117,.03)" : "transparent", transition: "all .25s" }}>
                   <div style={{ fontFamily: serif, fontSize: 19, fontWeight: activeMod === i ? 600 : 400, color: activeMod === i ? gold : "#D8D0C8", lineHeight: 1.3 }}>{m.title}</div>
-                  <div style={{ fontFamily: sans, fontSize: 10, color: "#C0B8B0", marginTop: 2 }}>{m.months}</div>
+                  <div style={{ fontFamily: sans, fontSize: 10, color: "#FBF7EE", marginTop: 2 }}>{m.months}</div>
                 </div>
               ))}
             </div>
@@ -858,7 +858,7 @@ function FullProgramPage({ setPage }) {
               <Eyebrow>{currMods[activeMod].months.toUpperCase()}</Eyebrow>
               <h3 style={{ fontFamily: serif, fontSize: 26, fontWeight: 600, color: "#E8E0D8", marginBottom: 6, lineHeight: 1.2 }}>{currMods[activeMod].title}</h3>
               <p style={{ fontFamily: serif, fontSize: 16, color: gold, fontStyle: "italic", marginBottom: 18 }}>{currMods[activeMod].tagline}</p>
-              <div style={{ marginBottom: 24 }}>{currMods[activeMod].summary.split("\n\n").map((para, pi) => (<p key={pi} style={{ fontFamily: sans, fontSize: 15, lineHeight: 1.9, color: "#C8C0B8", fontWeight: 300, marginBottom: 16 }}>{para}</p>))}</div>
+              <div style={{ marginBottom: 24 }}>{currMods[activeMod].summary.split("\n\n").map((para, pi) => (<p key={pi} style={{ fontFamily: sans, fontSize: 15, lineHeight: 1.9, color: "#FBF7EE", fontWeight: 300, marginBottom: 16 }}>{para}</p>))}</div>
               <button onClick={() => setPage(`module:${currMods[activeMod].slug}`)} style={{ fontFamily: sans, fontSize: 11, color: gold, letterSpacing: 2, fontWeight: 600, border: `1px solid rgba(199,171,117,.25)`, padding: "9px 18px", background: "transparent", cursor: "pointer", transition: "all .2s" }} onMouseEnter={e => e.target.style.background = "rgba(199,171,117,.06)"} onMouseLeave={e => e.target.style.background = "transparent"}>READ FULL MODULE →</button>
             </div>
           </div>
@@ -877,7 +877,7 @@ function FullProgramPage({ setPage }) {
                   <span style={{ fontFamily: sans, fontSize: 10, letterSpacing: 1.5, color: gold, opacity: .5, fontWeight: 500 }}>{s.n}</span>
                   <h4 style={{ fontFamily: serif, fontSize: 16, fontWeight: 600, color: "#D0C8C0" }}>{s.name}</h4>
                 </div>
-                <p style={{ fontFamily: sans, fontSize: 12, lineHeight: 1.65, color: "#C8C0B8", fontWeight: 300 }}>{s.desc}</p>
+                <p style={{ fontFamily: sans, fontSize: 12, lineHeight: 1.65, color: "#FBF7EE", fontWeight: 300 }}>{s.desc}</p>
               </div>
             ))}
           </div>
@@ -918,7 +918,7 @@ function FullProgramPage({ setPage }) {
                 <Eyebrow>{t.tier}</Eyebrow>
                 <div style={{ marginBottom: 24 }}>
                   <span style={{ fontFamily: serif, fontSize: 44, fontWeight: 600, color: "#E8E0D8" }}>{t.price}</span>
-                  <span style={{ fontFamily: sans, fontSize: 13, color: "#C0B8B0" }}>{t.period}</span>
+                  <span style={{ fontFamily: sans, fontSize: 13, color: "#FBF7EE" }}>{t.period}</span>
                 </div>
                 {t.features.map((f, j) => <Li key={j} solid={t.accent}>{f}</Li>)}
                 <button onClick={() => setPage("apply")} style={{ fontFamily: sans, width: "100%", marginTop: 24, padding: "12px 0", background: t.accent ? gold : "transparent", border: t.accent ? "none" : `1px solid rgba(199,171,117,.25)`, color: t.accent ? "#000" : gold, fontSize: 11, fontWeight: t.accent ? 700 : 600, letterSpacing: 2, cursor: "pointer" }}>{t.accent ? "APPLY — ELITE" : "APPLY — CORE"}</button>
@@ -926,7 +926,7 @@ function FullProgramPage({ setPage }) {
             ))}
           </div>
         </Fade>
-        <Fade d={.12}><p style={{ textAlign: "center", fontFamily: sans, color: "#C0B8B0", fontSize: 12, marginTop: 18 }}>Annual prepayment at 10% reduction. Sibling discount: 15%. Need-based scholarships available.</p></Fade>
+        <Fade d={.12}><p style={{ textAlign: "center", fontFamily: sans, color: "#FBF7EE", fontSize: 12, marginTop: 18 }}>Annual prepayment at 10% reduction. Sibling discount: 15%. Need-based scholarships available.</p></Fade>
       </div>
 
       <div style={{ padding: isMobile ? "48px 16px" : "72px 40px", textAlign: "center" }}>
@@ -953,7 +953,7 @@ function IntensivePage({ setPage }) {
         <Fade style={{ position: "relative", zIndex: 1 }}>
           <Eyebrow>SIX-WEEK INTENSIVE</Eyebrow>
           <h1 style={{ fontFamily: serif, fontSize: "clamp(40px,5.5vw,68px)", fontWeight: 600, color: "#E8E0D8", lineHeight: 1.05, marginBottom: 16 }}>The Ignition.</h1>
-          <p style={{ fontFamily: serif, fontSize: 20, color: "#C8C0B8", fontStyle: "italic", lineHeight: 1.7, maxWidth: 600, margin: "0 auto 36px" }}>Six weeks of concentrated formation — the full Excalibur curriculum, compressed into a single intensive sprint. The best entry point into the academy and a powerful standalone experience.</p>
+          <p style={{ fontFamily: serif, fontSize: 20, color: "#FBF7EE", fontStyle: "italic", lineHeight: 1.7, maxWidth: 600, margin: "0 auto 36px" }}>Six weeks of concentrated formation — the full Excalibur curriculum, compressed into a single intensive sprint. The best entry point into the academy and a powerful standalone experience.</p>
           <div style={{ display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap" }}>
             <button onClick={() => setPage("apply")} style={{ fontFamily: sans, background: gold, color: "#000", padding: "13px 40px", fontSize: 12, fontWeight: 700, letterSpacing: 2, border: "none", cursor: "pointer" }}>Apply for Intensive</button>
             <button onClick={() => setPage("full-program")} style={{ fontFamily: sans, border: `1px solid rgba(199,171,117,.3)`, color: gold, padding: "13px 28px", fontSize: 12, fontWeight: 500, letterSpacing: 1.5, background: "transparent", cursor: "pointer" }}>View Full Program</button>
@@ -969,7 +969,7 @@ function IntensivePage({ setPage }) {
             {[["6 Weeks", "intensive program"], ["2 Tracks", "weekday & weekend"], ["25 Seats", "per cohort"], ["4 Waves", "launching in 2026"]].map(([v, l], i) => (
               <div key={i} style={{ background: "#080808", padding: "24px 18px", textAlign: "center" }}>
                 <div style={{ fontFamily: serif, fontSize: 30, fontWeight: 600, color: gold }}>{v}</div>
-                <div style={{ fontFamily: sans, fontSize: 11, color: "#C8C0B8", marginTop: 5, fontWeight: 300 }}>{l}</div>
+                <div style={{ fontFamily: sans, fontSize: 11, color: "#FBF7EE", marginTop: 5, fontWeight: 300 }}>{l}</div>
               </div>
             ))}
           </div>
@@ -989,7 +989,7 @@ function IntensivePage({ setPage }) {
               <div key={i} style={{ background: "#080808", padding: "36px 32px", borderTop: `2px solid ${i === 0 ? gold : "rgba(199,171,117,.2)"}` }}>
                 <Eyebrow>{t.label}</Eyebrow>
                 <h3 style={{ fontFamily: serif, fontSize: 24, color: "#E8E0D8", fontWeight: 600, marginBottom: 6 }}>{t.schedule}</h3>
-                <p style={{ fontFamily: sans, fontSize: 12, color: "#C0B8B0", marginBottom: 20 }}>{t.detail}</p>
+                <p style={{ fontFamily: sans, fontSize: 12, color: "#FBF7EE", marginBottom: 20 }}>{t.detail}</p>
                 {t.items.map((d, j) => <Li key={j}>{d}</Li>)}
               </div>
             ))}
@@ -1014,7 +1014,7 @@ function IntensivePage({ setPage }) {
               <div key={i} style={{ background: row.hi ? "#0A0A08" : "#080808", padding: "24px 16px", borderTop: `2px solid ${row.hi ? gold : "transparent"}` }}>
                 <p style={{ fontFamily: sans, fontSize: 9, letterSpacing: 2, color: gold, marginBottom: 6, fontWeight: 500 }}>{row.w}</p>
                 <h4 style={{ fontFamily: serif, fontSize: 15, fontWeight: 600, color: "#D0C8C0", marginBottom: 10, lineHeight: 1.2 }}>{row.t}</h4>
-                {row.items.map((item, j) => <div key={j} style={{ fontFamily: sans, fontSize: 11, color: "#C8C0B8", marginBottom: 3, fontWeight: 300 }}>— {item}</div>)}
+                {row.items.map((item, j) => <div key={j} style={{ fontFamily: sans, fontSize: 11, color: "#FBF7EE", marginBottom: 3, fontWeight: 300 }}>— {item}</div>)}
               </div>
             ))}
           </div>
@@ -1032,7 +1032,7 @@ function IntensivePage({ setPage }) {
             <div style={{ background: "#060606", padding: "22px 32px", borderBottom: "1px solid #151515", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
               <div>
                 <h3 style={{ fontFamily: serif, fontSize: 20, fontWeight: 600, color: "#E8E0D8", marginBottom: 3 }}>{waves[activeWave].name} — {waves[activeWave].season} 2026</h3>
-                <p style={{ fontFamily: sans, fontSize: 12, color: "#C8C0B8", fontWeight: 300 }}>{waves[activeWave].dates} · Applications close {waves[activeWave].deadline}</p>
+                <p style={{ fontFamily: sans, fontSize: 12, color: "#FBF7EE", fontWeight: 300 }}>{waves[activeWave].dates} · Applications close {waves[activeWave].deadline}</p>
               </div>
               <span style={{ fontFamily: sans, fontSize: 10, letterSpacing: 2, padding: "5px 12px", border: `1px solid ${sc(waves[activeWave].status)}`, color: sc(waves[activeWave].status) }}>{sl(waves[activeWave].status)}</span>
             </div>
@@ -1044,10 +1044,10 @@ function IntensivePage({ setPage }) {
                     <Eyebrow>{label}</Eyebrow>
                     <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12, marginBottom: 20 }}>
                       {[["Days", t.days], ["Time", t.time], ["Duration", "6 Weeks"], ["Location", "Orange County"]].map(([k, v]) => (
-                        <div key={k}><div style={{ fontFamily: sans, fontSize: 9, letterSpacing: 1.5, color: "#C0B8B0", marginBottom: 3 }}>{k}</div><div style={{ fontFamily: serif, fontSize: 14, color: "#A8A0A0" }}>{v}</div></div>
+                        <div key={k}><div style={{ fontFamily: sans, fontSize: 9, letterSpacing: 1.5, color: "#FBF7EE", marginBottom: 3 }}>{k}</div><div style={{ fontFamily: serif, fontSize: 14, color: "#A8A0A0" }}>{v}</div></div>
                       ))}
                     </div>
-                    <div style={{ fontFamily: sans, fontSize: 11, color: "#C0B8B0", marginBottom: 5, display: "flex", justifyContent: "space-between" }}>
+                    <div style={{ fontFamily: sans, fontSize: 11, color: "#FBF7EE", marginBottom: 5, display: "flex", justifyContent: "space-between" }}>
                       <span>{filled} enrolled</span>
                       <span style={{ color: t.left < 8 ? gold : "#555" }}>{t.left} remaining</span>
                     </div>
@@ -1068,9 +1068,9 @@ function IntensivePage({ setPage }) {
           <Eyebrow>TUITION</Eyebrow>
           <div style={{ background: "#080808", border: "1px solid #151515", borderTop: `2px solid ${gold}`, padding: "44px 36px" }}>
             <div style={{ fontFamily: serif, fontSize: 48, fontWeight: 600, color: "#E8E0D8", lineHeight: 1 }}>$2,500</div>
-            <div style={{ fontFamily: sans, fontSize: 13, color: "#C0B8B0", marginBottom: 24 }}>per wave · all-inclusive</div>
-            <p style={{ fontFamily: sans, fontSize: 14, color: "#C8C0B8", lineHeight: 1.8, fontWeight: 300, marginBottom: 20 }}>Includes all six sessions, guest speaker access, materials, and bound graduation portfolio. Lunch included on Weekend Track Demo Day.</p>
-            <p style={{ fontFamily: sans, fontSize: 12, color: "#C8C0B8", marginBottom: 28 }}>Intensive graduates who enroll in the Full Program receive a $500 credit toward their first month's tuition.</p>
+            <div style={{ fontFamily: sans, fontSize: 13, color: "#FBF7EE", marginBottom: 24 }}>per wave · all-inclusive</div>
+            <p style={{ fontFamily: sans, fontSize: 14, color: "#FBF7EE", lineHeight: 1.8, fontWeight: 300, marginBottom: 20 }}>Includes all six sessions, guest speaker access, materials, and bound graduation portfolio. Lunch included on Weekend Track Demo Day.</p>
+            <p style={{ fontFamily: sans, fontSize: 12, color: "#FBF7EE", marginBottom: 28 }}>Intensive graduates who enroll in the Full Program receive a $500 credit toward their first month's tuition.</p>
             <button onClick={() => setPage("apply")} style={{ fontFamily: sans, background: gold, color: "#000", padding: "13px 44px", fontSize: 12, fontWeight: 700, letterSpacing: 2, border: "none", cursor: "pointer" }}>APPLY FOR THE INTENSIVE</button>
           </div>
         </Fade>
@@ -1126,11 +1126,11 @@ function SummerContent({ setPage, isMobile, summerLeft }) {
               <Eyebrow>{t.label}</Eyebrow>
               <span style={{ fontFamily: sans, fontSize: 9, color: "#4DB87A", letterSpacing: "0.1em", fontWeight: 600, border: "1px solid #4DB87A", padding: "2px 8px" }}>ENROLLING NOW</span>
             </div>
-            <p style={{ fontFamily: serif, fontSize: 15, color: "#C8C0B8", marginBottom: 16 }}>{t.dates}</p>
+            <p style={{ fontFamily: serif, fontSize: 15, color: "#FBF7EE", marginBottom: 16 }}>{t.dates}</p>
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10, marginBottom: 16 }}>
-              {t.items.map(([k, v]) => (<div key={k}><div style={{ fontFamily: sans, fontSize: 9, color: "#A8A098", marginBottom: 3, letterSpacing: "0.1em", textTransform: "uppercase" }}>{k}</div><div style={{ fontFamily: sans, fontSize: 12, color: "#C8C0B8" }}>{v}</div></div>))}
+              {t.items.map(([k, v]) => (<div key={k}><div style={{ fontFamily: sans, fontSize: 9, color: "#A8A098", marginBottom: 3, letterSpacing: "0.1em", textTransform: "uppercase" }}>{k}</div><div style={{ fontFamily: sans, fontSize: 12, color: "#FBF7EE" }}>{v}</div></div>))}
             </div>
-            <div style={{ fontFamily: sans, fontSize: 11, color: "#C8C0B8", marginBottom: 6, display: "flex", justifyContent: "space-between" }}>
+            <div style={{ fontFamily: sans, fontSize: 11, color: "#FBF7EE", marginBottom: 6, display: "flex", justifyContent: "space-between" }}>
               <span>{filled} enrolled</span><span style={{ color: t.left < 8 ? gold : "#C8C0B8" }}>{t.left} remaining</span>
             </div>
             <div style={{ height: 2, background: "#1a1a1a", marginBottom: 14 }}><div style={{ height: "100%", width: `${(filled/25)*100}%`, background: "#4DB87A" }} /></div>
@@ -1156,11 +1156,11 @@ function FlagshipContent({ setPage, isMobile, flagshipLeft }) {
               <Eyebrow>{t.label}</Eyebrow>
               <span style={{ fontFamily: sans, fontSize: 9, color: "#4DB87A", letterSpacing: "0.1em", fontWeight: 600, border: "1px solid #4DB87A", padding: "2px 8px" }}>ENROLLING NOW</span>
             </div>
-            <p style={{ fontFamily: serif, fontSize: 15, color: "#C8C0B8", marginBottom: 16 }}>{t.schedule}</p>
+            <p style={{ fontFamily: serif, fontSize: 15, color: "#FBF7EE", marginBottom: 16 }}>{t.schedule}</p>
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10, marginBottom: 16 }}>
-              {t.items.map(([k, v]) => (<div key={k}><div style={{ fontFamily: sans, fontSize: 9, color: "#A8A098", marginBottom: 3, letterSpacing: "0.1em", textTransform: "uppercase" }}>{k}</div><div style={{ fontFamily: sans, fontSize: 12, color: "#C8C0B8" }}>{v}</div></div>))}
+              {t.items.map(([k, v]) => (<div key={k}><div style={{ fontFamily: sans, fontSize: 9, color: "#A8A098", marginBottom: 3, letterSpacing: "0.1em", textTransform: "uppercase" }}>{k}</div><div style={{ fontFamily: sans, fontSize: 12, color: "#FBF7EE" }}>{v}</div></div>))}
             </div>
-            <div style={{ fontFamily: sans, fontSize: 11, color: "#C8C0B8", marginBottom: 6, display: "flex", justifyContent: "space-between" }}>
+            <div style={{ fontFamily: sans, fontSize: 11, color: "#FBF7EE", marginBottom: 6, display: "flex", justifyContent: "space-between" }}>
               <span>{filled} enrolled</span><span style={{ color: t.left < 8 ? gold : "#C8C0B8" }}>{t.left} remaining</span>
             </div>
             <div style={{ height: 2, background: "#1a1a1a", marginBottom: 14 }}><div style={{ height: "100%", width: `${(filled/25)*100}%`, background: "#4DB87A" }} /></div>
@@ -1185,7 +1185,7 @@ function IntensiveContent({ setPage, isMobile, waves, activeWave, setActiveWave 
             <div key={i} style={{ background: "#080808", padding: "24px 24px" }}>
               <Eyebrow>{label}</Eyebrow>
               <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10, marginBottom: 16, marginTop: 12 }}>
-                {[["Days", t.days], ["Time", t.time], ["Dates", waves[activeWave].dates], ["Location", "Orange County, CA"]].map(([k, v]) => (<div key={k}><div style={{ fontFamily: sans, fontSize: 9, color: "#A8A098", marginBottom: 3, letterSpacing: "0.1em", textTransform: "uppercase" }}>{k}</div><div style={{ fontFamily: sans, fontSize: 12, color: "#C8C0B8" }}>{v}</div></div>))}
+                {[["Days", t.days], ["Time", t.time], ["Dates", waves[activeWave].dates], ["Location", "Orange County, CA"]].map(([k, v]) => (<div key={k}><div style={{ fontFamily: sans, fontSize: 9, color: "#A8A098", marginBottom: 3, letterSpacing: "0.1em", textTransform: "uppercase" }}>{k}</div><div style={{ fontFamily: sans, fontSize: 12, color: "#FBF7EE" }}>{v}</div></div>))}
               </div>
               <p style={{ fontFamily: sans, fontSize: 11, color: isOpen ? "#4DB87A" : gold, letterSpacing: "0.1em", marginBottom: 14 }}>{isOpen ? "● Enrolling Now" : "Coming Soon — Join Waitlist"}</p>
               <button onClick={() => setPage("apply")} style={{ fontFamily: sans, width: "100%", padding: "9px 0", border: "1px solid rgba(199,171,117,.25)", color: gold, fontSize: 10, fontWeight: 600, letterSpacing: "0.15em", background: "transparent", cursor: "pointer" }}>{isOpen ? "APPLY NOW →" : "JOIN WAITLIST →"}</button>
@@ -1265,12 +1265,12 @@ function ProgramsPage({ setPage }) {
                     </div>
                     <h2 style={{ fontFamily: serif, fontSize: isMobile ? 28 : 36, fontWeight: 600, color: "#E8E0D8", lineHeight: 1, marginBottom: 6 }}>{p.title}</h2>
                     <p style={{ fontFamily: serif, fontSize: 16, color: gold, fontStyle: "italic", marginBottom: 20 }}>{p.tagline}</p>
-                    <p style={{ fontFamily: sans, fontSize: 14, lineHeight: 1.85, color: "#C8C0B8", fontWeight: 300, marginBottom: 24 }}>{p.desc}</p>
+                    <p style={{ fontFamily: sans, fontSize: 14, lineHeight: 1.85, color: "#FBF7EE", fontWeight: 300, marginBottom: 24 }}>{p.desc}</p>
                     <div style={{ display: "flex", flexDirection: "column", gap: 8, padding: "16px 0", borderTop: "1px solid #111", borderBottom: "1px solid #111", marginBottom: 24 }}>
                       {[["Schedule", p.schedule], ["Class Size", p.students], ["Tuition", p.price]].map(([k, v]) => (
                         <div key={k} style={{ display: "flex", gap: 12 }}>
                           <span style={{ fontFamily: sans, fontSize: 10, color: "#908880", letterSpacing: "0.1em", textTransform: "uppercase", minWidth: 64, paddingTop: 1 }}>{k}</span>
-                          <span style={{ fontFamily: sans, fontSize: 13, color: "#C8C0B8" }}>{v}</span>
+                          <span style={{ fontFamily: sans, fontSize: 13, color: "#FBF7EE" }}>{v}</span>
                         </div>
                       ))}
                     </div>
@@ -1279,11 +1279,11 @@ function ProgramsPage({ setPage }) {
                   </div>
                   {/* Right: features */}
                   <div style={{ padding: isMobile ? "0 24px 36px" : "48px 44px", background: "#060606" }}>
-                    <p style={{ fontFamily: sans, fontSize: 10, letterSpacing: "0.25em", color: "#C8C0B8", textTransform: "uppercase", marginBottom: 20, fontWeight: 600 }}>What's included</p>
+                    <p style={{ fontFamily: sans, fontSize: 10, letterSpacing: "0.25em", color: "#FBF7EE", textTransform: "uppercase", marginBottom: 20, fontWeight: 600 }}>What's included</p>
                     {p.features.map((f, j) => (
                       <div key={j} style={{ display: "flex", gap: 14, marginBottom: 13, alignItems: "flex-start" }}>
                         <div style={{ width: 16, height: 1.5, background: p.flagship ? gold : "rgba(199,171,117,.4)", marginTop: 8, flexShrink: 0 }} />
-                        <span style={{ fontFamily: sans, fontSize: 13, color: "#C8C0B8", fontWeight: 300, lineHeight: 1.65 }}>{f}</span>
+                        <span style={{ fontFamily: sans, fontSize: 13, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.65 }}>{f}</span>
                       </div>
                     ))}
                   </div>
@@ -1301,7 +1301,7 @@ function ProgramsPage({ setPage }) {
         <Fade>
           <Eyebrow>THE SESSION MODEL</Eyebrow>
           <SectionTitle>Every session. Every program.</SectionTitle>
-          <p style={{ fontFamily: sans, fontSize: 14, lineHeight: 1.85, color: "#C8C0B8", fontWeight: 300, marginTop: 12, marginBottom: 36, maxWidth: 680 }}>Every session at Excalibur follows the same three-block structure, regardless of the program or the week. This is not incidental — it is the architecture. Students practice public speaking before any other content is delivered, every single time.</p>
+          <p style={{ fontFamily: sans, fontSize: 14, lineHeight: 1.85, color: "#FBF7EE", fontWeight: 300, marginTop: 12, marginBottom: 36, maxWidth: 680 }}>Every session at Excalibur follows the same three-block structure, regardless of the program or the week. This is not incidental — it is the architecture. Students practice public speaking before any other content is delivered, every single time.</p>
         </Fade>
         <Fade d={.08}>
           <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(3,1fr)", gap: 2, background: "#111" }}>
@@ -1314,7 +1314,7 @@ function ProgramsPage({ setPage }) {
                 <div style={{ fontFamily: sans, fontSize: 9, letterSpacing: "0.2em", color: b.star ? gold : "#AAA", marginBottom: 8, fontWeight: 600 }}>{b.star ? "★ " : ""}{b.n}</div>
                 <h3 style={{ fontFamily: serif, fontSize: 20, fontWeight: 600, color: "#E8E0D8", marginBottom: 4, lineHeight: 1.2 }}>{b.title}</h3>
                 <p style={{ fontFamily: sans, fontSize: 10, color: gold, letterSpacing: "0.1em", marginBottom: 16 }}>{b.sub}</p>
-                <p style={{ fontFamily: sans, fontSize: 13, lineHeight: 1.8, color: "#C8C0B8", fontWeight: 300 }}>{b.desc}</p>
+                <p style={{ fontFamily: sans, fontSize: 13, lineHeight: 1.8, color: "#FBF7EE", fontWeight: 300 }}>{b.desc}</p>
               </div>
             ))}
           </div>
@@ -1360,7 +1360,7 @@ function ApplyPage({ setPage }) {
         <Fade>
           <Eyebrow>ADMISSIONS · FOUNDING CLASS 2026</Eyebrow>
           <h1 style={{ fontFamily: serif, fontSize: "clamp(38px,5vw,64px)", fontWeight: 600, color: "#E8E0D8", lineHeight: 1.05, marginBottom: 16 }}>An invitation worth earning.</h1>
-          <p style={{ fontFamily: serif, fontSize: 20, color: "#C8C0B8", fontStyle: "italic", lineHeight: 1.7, maxWidth: 600, margin: "0 auto" }}>Excalibur is selective because it has to be. Twenty-five students per cohort. One founding class. The process is designed not to intimidate — but to ensure every student who joins is ready to make the most of what we offer.</p>
+          <p style={{ fontFamily: serif, fontSize: 20, color: "#FBF7EE", fontStyle: "italic", lineHeight: 1.7, maxWidth: 600, margin: "0 auto" }}>Excalibur is selective because it has to be. Twenty-five students per cohort. One founding class. The process is designed not to intimidate — but to ensure every student who joins is ready to make the most of what we offer.</p>
         </Fade>
       </div>
 
@@ -1372,8 +1372,8 @@ function ApplyPage({ setPage }) {
           <Fade>
             <Eyebrow>WHO WE ARE LOOKING FOR</Eyebrow>
             <SectionTitle>Readiness. Not résumés.</SectionTitle>
-            <p style={{ fontFamily: sans, fontSize: 14, lineHeight: 1.9, color: "#C8C0B8", fontWeight: 300, marginTop: 18, marginBottom: 16 }}>We are not looking for the most polished teenager or the one with the longest list of activities. We are looking for the student who is genuinely curious — about business, about leadership, about how the world actually works — and who is ready to be challenged in a way most programs would never dare to attempt.</p>
-            <p style={{ fontFamily: sans, fontSize: 14, lineHeight: 1.9, color: "#C8C0B8", fontWeight: 300 }}>Excalibur admits students based on intellectual engagement, genuine motivation, and — most importantly — the sense that this particular program will change something real for them. We do not require prior business experience. We require genuine readiness to grow.</p>
+            <p style={{ fontFamily: sans, fontSize: 14, lineHeight: 1.9, color: "#FBF7EE", fontWeight: 300, marginTop: 18, marginBottom: 16 }}>We are not looking for the most polished teenager or the one with the longest list of activities. We are looking for the student who is genuinely curious — about business, about leadership, about how the world actually works — and who is ready to be challenged in a way most programs would never dare to attempt.</p>
+            <p style={{ fontFamily: sans, fontSize: 14, lineHeight: 1.9, color: "#FBF7EE", fontWeight: 300 }}>Excalibur admits students based on intellectual engagement, genuine motivation, and — most importantly — the sense that this particular program will change something real for them. We do not require prior business experience. We require genuine readiness to grow.</p>
           </Fade>
           <Fade d={.08}>
             <div style={{ display: "flex", flexDirection: "column", gap: 2 }}>
@@ -1387,7 +1387,7 @@ function ApplyPage({ setPage }) {
                   <div style={{ fontFamily: serif, fontSize: 32, fontWeight: 600, color: gold, flexShrink: 0, minWidth: 56 }}>{s.n}</div>
                   <div>
                     <div style={{ fontFamily: sans, fontSize: 13, fontWeight: 600, color: "#E0D8D0", marginBottom: 3 }}>{s.label}</div>
-                    <div style={{ fontFamily: sans, fontSize: 12, color: "#C8C0B8", fontWeight: 300, lineHeight: 1.5 }}>{s.sub}</div>
+                    <div style={{ fontFamily: sans, fontSize: 12, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.5 }}>{s.sub}</div>
                   </div>
                 </div>
               ))}
@@ -1414,7 +1414,7 @@ function ApplyPage({ setPage }) {
                   <div style={{ fontFamily: serif, fontSize: 38, fontWeight: 600, color: gold, opacity: .4, lineHeight: 1, marginBottom: 16 }}>{s.n}</div>
                   <h4 style={{ fontFamily: serif, fontSize: 18, fontWeight: 600, color: "#E8E0D8", marginBottom: 6, lineHeight: 1.2 }}>{s.title}</h4>
                   <p style={{ fontFamily: sans, fontSize: 10, color: gold, letterSpacing: "0.1em", marginBottom: 14 }}>{s.time}</p>
-                  <p style={{ fontFamily: sans, fontSize: 13, lineHeight: 1.75, color: "#C8C0B8", fontWeight: 300 }}>{s.desc}</p>
+                  <p style={{ fontFamily: sans, fontSize: 13, lineHeight: 1.75, color: "#FBF7EE", fontWeight: 300 }}>{s.desc}</p>
                 </div>
               ))}
             </div>
@@ -1450,7 +1450,7 @@ function ApplyPage({ setPage }) {
                 ].map((f, i) => <Li key={i} solid>{f}</Li>)}
               </div>
               <div style={{ background: "#060606", padding: "36px 36px", borderTop: "2px solid rgba(199,171,117,.1)" }}>
-                <p style={{ fontFamily: sans, fontSize: 10, letterSpacing: "0.25em", color: "#C8C0B8", textTransform: "uppercase", marginBottom: 20, fontWeight: 600 }}>What we don't require</p>
+                <p style={{ fontFamily: sans, fontSize: 10, letterSpacing: "0.25em", color: "#FBF7EE", textTransform: "uppercase", marginBottom: 20, fontWeight: 600 }}>What we don't require</p>
                 {[
                   "Prior business experience or entrepreneurship background",
                   "Perfect grades or a strong academic transcript",
@@ -1488,7 +1488,7 @@ function ApplyPage({ setPage }) {
                   <Eyebrow>{p.label}</Eyebrow>
                   <h3 style={{ fontFamily: serif, fontSize: 20, fontWeight: 600, color: "#E8E0D8", marginBottom: 6, lineHeight: 1.2 }}>{p.title}</h3>
                   <p style={{ fontFamily: serif, fontSize: 15, color: gold, marginBottom: 10 }}>{p.price}</p>
-                  <p style={{ fontFamily: sans, fontSize: 12, color: "#C8C0B8", fontWeight: 300, lineHeight: 1.6 }}>{p.desc}</p>
+                  <p style={{ fontFamily: sans, fontSize: 12, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.6 }}>{p.desc}</p>
                   {prog === p.id && <p style={{ fontFamily: sans, fontSize: 10, color: gold, letterSpacing: 2, marginTop: 12 }}>✓ SELECTED</p>}
                 </div>
               ))}
@@ -1513,7 +1513,7 @@ function ApplyPage({ setPage }) {
                     <Eyebrow>{t.label}</Eyebrow>
                     <h3 style={{ fontFamily: serif, fontSize: 22, fontWeight: 600, color: "#E8E0D8", marginBottom: 4 }}>{t.title}</h3>
                     <p style={{ fontFamily: serif, fontSize: 17, color: gold, marginBottom: 10 }}>{t.sub}</p>
-                    <p style={{ fontFamily: sans, fontSize: 13, color: "#C8C0B8", fontWeight: 300 }}>{t.detail}</p>
+                    <p style={{ fontFamily: sans, fontSize: 13, color: "#FBF7EE", fontWeight: 300 }}>{t.detail}</p>
                     {track === t.id && <p style={{ fontFamily: sans, fontSize: 10, color: gold, letterSpacing: 2, marginTop: 12 }}>✓ SELECTED</p>}
                   </div>
                 ))}
@@ -1538,7 +1538,7 @@ function ApplyPage({ setPage }) {
                     <div key={w.name} onClick={() => { if (w.status !== "future") setWave(w.name); }} style={{ background: wave === w.name ? "#0C0C0A" : "#080808", padding: "24px 18px", cursor: w.status === "future" ? "not-allowed" : "pointer", opacity: w.status === "future" ? .35 : 1, borderTop: `2px solid ${wave === w.name ? gold : "transparent"}`, transition: "all .25s" }}>
                       <p style={{ fontFamily: sans, fontSize: 9, letterSpacing: 2, color: sc(w.status), fontWeight: 500, marginBottom: 6 }}>{w.season.toUpperCase()}</p>
                       <h4 style={{ fontFamily: serif, fontSize: 16, fontWeight: 600, color: "#E8E0D8", marginBottom: 3 }}>{w.name}</h4>
-                      <p style={{ fontFamily: sans, fontSize: 11, color: "#C8C0B8", marginBottom: 12 }}>{w.dates}</p>
+                      <p style={{ fontFamily: sans, fontSize: 11, color: "#FBF7EE", marginBottom: 12 }}>{w.dates}</p>
                       <p style={{ fontFamily: sans, fontSize: 11, color: t.left < 8 ? gold : "#777", marginBottom: 5 }}>{t.left} seats left</p>
                       <div style={{ height: 2, background: "#151515" }}><div style={{ height: "100%", width: `${(filled / 25) * 100}%`, background: "#4DB87A" }} /></div>
                       {wave === w.name && <p style={{ fontFamily: sans, fontSize: 10, color: gold, letterSpacing: 2, marginTop: 10 }}>✓ SELECTED</p>}
@@ -1560,13 +1560,13 @@ function ApplyPage({ setPage }) {
               </div>
               <div style={{ background: "#080808", padding: "36px 32px", borderTop: `2px solid ${gold}` }}>
                 <Eyebrow>TEN-MONTH FLAGSHIP</Eyebrow>
-                <div style={{ fontFamily: serif, fontSize: 36, fontWeight: 600, color: "#E8E0D8", marginBottom: 6 }}>$1,990 <span style={{ fontFamily: sans, fontSize: 14, color: "#C8C0B8", fontWeight: 300 }}>/ month</span></div>
-                <p style={{ fontFamily: sans, fontSize: 13, color: "#C8C0B8", fontWeight: 300, lineHeight: 1.7, marginBottom: 20 }}>Full 10-month program. All modules, all speakers, all real-world engagements. Bound portfolio and alumni network included.</p>
+                <div style={{ fontFamily: serif, fontSize: 36, fontWeight: 600, color: "#E8E0D8", marginBottom: 6 }}>$1,990 <span style={{ fontFamily: sans, fontSize: 14, color: "#FBF7EE", fontWeight: 300 }}>/ month</span></div>
+                <p style={{ fontFamily: sans, fontSize: 13, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.7, marginBottom: 20 }}>Full 10-month program. All modules, all speakers, all real-world engagements. Bound portfolio and alumni network included.</p>
                 <div style={{ display: "flex", gap: 8, cursor: "pointer" }} onClick={() => setWave("monthly")}>
                   <div style={{ width: 16, height: 16, border: `1px solid ${wave === "monthly" ? gold : "#333"}`, background: wave === "monthly" ? gold : "transparent", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, marginTop: 2 }}>
                     {wave === "monthly" && <span style={{ color: "#000", fontSize: 10, fontWeight: 700 }}>✓</span>}
                   </div>
-                  <p style={{ fontFamily: sans, fontSize: 13, color: "#C0B8B0", fontWeight: 300 }}>I confirm my enrollment in the Ten-Month Flagship Program at $1,990/month.</p>
+                  <p style={{ fontFamily: sans, fontSize: 13, color: "#FBF7EE", fontWeight: 300 }}>I confirm my enrollment in the Ten-Month Flagship Program at $1,990/month.</p>
                 </div>
               </div>
             </div>
@@ -1579,9 +1579,9 @@ function ApplyPage({ setPage }) {
             <div style={{ background: "#080808", border: "1px solid #151515", borderTop: `2px solid ${gold}`, padding: "40px 36px", textAlign: "center" }}>
               <Eyebrow>YOUR APPLICATION IS READY</Eyebrow>
               <h3 style={{ fontFamily: serif, fontSize: 30, fontWeight: 600, color: "#E8E0D8", marginBottom: 10 }}>Your place is waiting.</h3>
-              <p style={{ fontFamily: sans, fontSize: 14, color: "#C8C0B8", fontWeight: 300, lineHeight: 1.7, maxWidth: 500, margin: "0 auto 28px" }}>The application takes 10–15 minutes. Shortlisted students are invited to a brief, friendly admissions interview within 3 days. Final decisions within 5 business days. Your seat is held for 72 hours upon acceptance.</p>
+              <p style={{ fontFamily: sans, fontSize: 14, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.7, maxWidth: 500, margin: "0 auto 28px" }}>The application takes 10–15 minutes. Shortlisted students are invited to a brief, friendly admissions interview within 3 days. Final decisions within 5 business days. Your seat is held for 72 hours upon acceptance.</p>
               <a href={STRIPE} style={{ fontFamily: sans, background: gold, color: "#000", padding: "14px 48px", fontSize: 13, fontWeight: 700, letterSpacing: 2.5, textDecoration: "none", display: "inline-block", boxShadow: "0 4px 32px rgba(199,171,117,.15)" }}>COMPLETE APPLICATION →</a>
-              <p style={{ fontFamily: sans, fontSize: 11, color: "#C8C0B8", marginTop: 16 }}>apply@excaliburacademy.org · We reply within one business day.</p>
+              <p style={{ fontFamily: sans, fontSize: 11, color: "#FBF7EE", marginTop: 16 }}>apply@excaliburacademy.org · We reply within one business day.</p>
             </div>
           </Fade>
         )}
@@ -1658,16 +1658,16 @@ function ScheduleTabs({ setPage, isMobile, waves, gold }) {
                   <Eyebrow>{t.label}</Eyebrow>
                   <span style={{ fontFamily: sans, fontSize: 9, color: "#4DB87A", letterSpacing: "0.1em", fontWeight: 600, border: "1px solid #4DB87A", padding: "2px 8px" }}>ENROLLING NOW</span>
                 </div>
-                <p style={{ fontFamily: serif, fontSize: 16, color: "#C8C0B8", marginBottom: 20 }}>{t.dates}</p>
+                <p style={{ fontFamily: serif, fontSize: 16, color: "#FBF7EE", marginBottom: 20 }}>{t.dates}</p>
                 <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14, marginBottom: 20 }}>
                   {t.items.map(([k, v]) => (
                     <div key={k}>
                       <div style={{ fontFamily: sans, fontSize: 9, color: "#A8A098", marginBottom: 3, letterSpacing: "0.1em", textTransform: "uppercase" }}>{k}</div>
-                      <div style={{ fontFamily: sans, fontSize: 13, color: "#C8C0B8" }}>{v}</div>
+                      <div style={{ fontFamily: sans, fontSize: 13, color: "#FBF7EE" }}>{v}</div>
                     </div>
                   ))}
                 </div>
-                <div style={{ fontFamily: sans, fontSize: 11, color: "#C8C0B8", marginBottom: 6, display: "flex", justifyContent: "space-between" }}>
+                <div style={{ fontFamily: sans, fontSize: 11, color: "#FBF7EE", marginBottom: 6, display: "flex", justifyContent: "space-between" }}>
                   <span>{filled} enrolled</span>
                   <span style={{ color: t.left < 8 ? gold : "#AAA", fontWeight: t.left < 8 ? 600 : 300 }}>{t.left} remaining</span>
                 </div>
@@ -1695,16 +1695,16 @@ function ScheduleTabs({ setPage, isMobile, waves, gold }) {
                   <Eyebrow>{t.label}</Eyebrow>
                   <span style={{ fontFamily: sans, fontSize: 9, color: "#4DB87A", letterSpacing: "0.1em", fontWeight: 600, border: "1px solid #4DB87A", padding: "2px 8px" }}>ENROLLING NOW</span>
                 </div>
-                <p style={{ fontFamily: serif, fontSize: 16, color: "#C8C0B8", marginBottom: 20 }}>{t.schedule}</p>
+                <p style={{ fontFamily: serif, fontSize: 16, color: "#FBF7EE", marginBottom: 20 }}>{t.schedule}</p>
                 <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14, marginBottom: 20 }}>
                   {t.items.map(([k, v]) => (
                     <div key={k}>
                       <div style={{ fontFamily: sans, fontSize: 9, color: "#A8A098", marginBottom: 3, letterSpacing: "0.1em", textTransform: "uppercase" }}>{k}</div>
-                      <div style={{ fontFamily: sans, fontSize: 13, color: "#C8C0B8" }}>{v}</div>
+                      <div style={{ fontFamily: sans, fontSize: 13, color: "#FBF7EE" }}>{v}</div>
                     </div>
                   ))}
                 </div>
-                <div style={{ fontFamily: sans, fontSize: 11, color: "#C8C0B8", marginBottom: 6, display: "flex", justifyContent: "space-between" }}>
+                <div style={{ fontFamily: sans, fontSize: 11, color: "#FBF7EE", marginBottom: 6, display: "flex", justifyContent: "space-between" }}>
                   <span>{filled} enrolled</span>
                   <span style={{ color: t.left < 8 ? gold : "#AAA", fontWeight: t.left < 8 ? 600 : 300 }}>{t.left} remaining</span>
                 </div>
@@ -1739,11 +1739,11 @@ function ScheduleTabs({ setPage, isMobile, waves, gold }) {
                     {[["Days", t.days], ["Time", t.time], ["Dates", waves[activeWave].dates], ["Location", "Orange County"]].map(([k, v]) => (
                       <div key={k}>
                         <div style={{ fontFamily: sans, fontSize: 9, color: "#A8A098", marginBottom: 3, letterSpacing: "0.1em", textTransform: "uppercase" }}>{k}</div>
-                        <div style={{ fontFamily: sans, fontSize: 13, color: "#C8C0B8" }}>{v}</div>
+                        <div style={{ fontFamily: sans, fontSize: 13, color: "#FBF7EE" }}>{v}</div>
                       </div>
                     ))}
                   </div>
-                  <div style={{ fontFamily: sans, fontSize: 11, color: "#C8C0B8", marginBottom: 6, display: "flex", justifyContent: "space-between" }}>
+                  <div style={{ fontFamily: sans, fontSize: 11, color: "#FBF7EE", marginBottom: 6, display: "flex", justifyContent: "space-between" }}>
                     <span>{filled} enrolled</span>
                     <span style={{ color: t.left < 8 ? gold : "#AAA", fontWeight: t.left < 8 ? 600 : 300 }}>{t.left} remaining</span>
                   </div>
@@ -1775,7 +1775,7 @@ function CoachCard({ c, i, setPage }) {
               <img src={LOGO_URL} alt="Excalibur Academy" style={{ width: 80, height: 80, objectFit: "contain", opacity: 0.35 }} onError={e => e.target.style.display = "none"} />
             </div>
             {c.role === "Role to be confirmed" && (
-              <div style={{ position: "absolute", bottom: 16, left: 24, fontFamily: sans, fontSize: 9, color: "#C8C0B8", letterSpacing: "0.15em", textTransform: "uppercase" }}>Role to be announced</div>
+              <div style={{ position: "absolute", bottom: 16, left: 24, fontFamily: sans, fontSize: 9, color: "#FBF7EE", letterSpacing: "0.15em", textTransform: "uppercase" }}>Role to be announced</div>
             )}
           </>
         ) : (
@@ -1791,9 +1791,9 @@ function CoachCard({ c, i, setPage }) {
       {/* Tags + shortBio */}
       <div style={{ padding: "20px 24px 24px" }}>
         <div style={{ display: "flex", gap: 4, flexWrap: "wrap", marginBottom: 14 }}>
-          {c.tags && c.tags.map((t, j) => <span key={j} style={{ fontFamily: sans, fontSize: 9, color: "#C8C0B8", border: "1px solid #1a1a1a", padding: "2px 7px" }}>{t}</span>)}
+          {c.tags && c.tags.map((t, j) => <span key={j} style={{ fontFamily: sans, fontSize: 9, color: "#FBF7EE", border: "1px solid #1a1a1a", padding: "2px 7px" }}>{t}</span>)}
         </div>
-        <p style={{ fontFamily: sans, fontSize: 13, lineHeight: 1.85, color: "#C8C0B8", fontWeight: 300, marginBottom: hasFacultyPage ? 14 : 0 }}>
+        <p style={{ fontFamily: sans, fontSize: 13, lineHeight: 1.85, color: "#FBF7EE", fontWeight: 300, marginBottom: hasFacultyPage ? 14 : 0 }}>
           {c.shortBio || c.bio}
         </p>
         {hasFacultyPage && (
@@ -1865,7 +1865,7 @@ function HomePage({ setPage }) {
         </Fade>
 
         <Fade d={.18} style={{ position: "relative", zIndex: 1 }}>
-          <h1 style={{ fontFamily: serif, fontSize: "clamp(18px,1.8vw,28px)", fontWeight: 500, lineHeight: 1.25, color: "#C8C0B4", maxWidth: 700, marginBottom: 6, fontStyle: "italic" }}>
+          <h1 style={{ fontFamily: serif, fontSize: "clamp(18px,1.8vw,28px)", fontWeight: 500, lineHeight: 1.25, color: "#FBF7EE", maxWidth: 700, marginBottom: 6, fontStyle: "italic" }}>
             School teaches how to take tests.
           </h1>
           <h1 style={{ fontFamily: serif, fontSize: "clamp(18px,1.8vw,28px)", fontWeight: 600, lineHeight: 1.25, color: gold, maxWidth: 700, marginBottom: 24 }}>
@@ -1874,7 +1874,7 @@ function HomePage({ setPage }) {
         </Fade>
 
         <Fade d={.3} style={{ position: "relative", zIndex: 1 }}>
-          <p style={{ fontFamily: serif, fontSize: "clamp(22px,2vw,30px)", lineHeight: 1.7, color: "#C8C0B4", maxWidth: 640, marginBottom: 28, fontWeight: 300 }}>A premier institute where real entrepreneurs, investors, top CEOs and distinguished professionals teach your teenager to lead the world — not follow it.</p>
+          <p style={{ fontFamily: serif, fontSize: "clamp(22px,2vw,30px)", lineHeight: 1.7, color: "#FBF7EE", maxWidth: 640, marginBottom: 28, fontWeight: 300 }}>A premier institute where real entrepreneurs, investors, top executives, keynote speakers and distinguished professionals teach the next generation to lead the world — not follow it.</p>
         </Fade>
 
         <Fade d={.4} style={{ position: "relative", zIndex: 1 }}>
@@ -1882,8 +1882,8 @@ function HomePage({ setPage }) {
             <button onClick={() => setPage("apply")} style={{ fontFamily: sans, background: gold, color: "#000", padding: "13px 36px", fontSize: 11, fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", border: "none", cursor: "pointer", boxShadow: "0 4px 40px rgba(199,171,117,.2)" }}>Join the Founding Class</button>
             <button onClick={() => setPage("programs")} style={{ fontFamily: sans, border: `1px solid rgba(199,171,117,.35)`, color: gold, padding: "13px 28px", fontSize: 11, fontWeight: 600, letterSpacing: "0.15em", textTransform: "uppercase", background: "transparent", cursor: "pointer" }}>Explore Programs</button>
           </div>
-          <p style={{ color: "#C0B8B0", fontSize: 11, letterSpacing: "0.12em", fontFamily: sans, textTransform: "uppercase", marginBottom: 8 }}>Ages 16–17 (Junior & Senior) &nbsp;·&nbsp; 25 students per cohort &nbsp;·&nbsp; Orange County, CA</p>
-          <p style={{ color: "#D8D0C4", fontSize: "clamp(13px,1.2vw,16px)", letterSpacing: "0.04em", fontFamily: serif, fontStyle: "italic", marginBottom: 0, lineHeight: 1.6 }}>Classes hosted in South Orange County's historic villas and venues,<br />inspired by the traditions of European elite education.</p>
+          <p style={{ color: "#FBF7EE", fontSize: 11, letterSpacing: "0.12em", fontFamily: sans, textTransform: "uppercase", marginBottom: 8 }}>Ages 16–17 (Junior & Senior) &nbsp;·&nbsp; 25 students per cohort &nbsp;·&nbsp; Orange County, CA</p>
+          <p style={{ color: "#FBF7EE", fontSize: "clamp(13px,1.2vw,16px)", letterSpacing: "0.04em", fontFamily: serif, fontStyle: "italic", marginBottom: 0, lineHeight: 1.6 }}>Classes hosted in South Orange County's historic villas and venues,<br />inspired by the traditions of European elite education.</p>
         </Fade>
       </section>
 
@@ -1897,16 +1897,16 @@ function HomePage({ setPage }) {
             <div style={{ position: "absolute", top: 12, right: 12, width: 16, height: 16, borderTop: `1px solid rgba(199,171,117,.4)`, borderRight: `1px solid rgba(199,171,117,.4)` }} />
             <div style={{ position: "absolute", bottom: 12, left: 12, width: 16, height: 16, borderBottom: `1px solid rgba(199,171,117,.4)`, borderLeft: `1px solid rgba(199,171,117,.4)` }} />
             <div style={{ position: "absolute", bottom: 12, right: 12, width: 16, height: 16, borderBottom: `1px solid rgba(199,171,117,.4)`, borderRight: `1px solid rgba(199,171,117,.4)` }} />
-            <p style={{ fontFamily: sans, fontSize: 10, letterSpacing: "0.4em", color: "#C0B8B0", fontWeight: 600, textTransform: "uppercase", padding: "20px 28px 0" }}>Lead Faculty</p>
+            <p style={{ fontFamily: sans, fontSize: 10, letterSpacing: "0.4em", color: "#FBF7EE", fontWeight: 600, textTransform: "uppercase", padding: "20px 28px 0" }}>Lead Faculty</p>
             <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1px 1fr", padding: isMobile ? "16px 24px 24px" : "20px 40px 28px", gap: isMobile ? 20 : 0 }}>
               <div style={{ padding: isMobile ? "0" : "0 36px 0 0" }}>
                 <div style={{ width: 28, height: 1, background: `linear-gradient(90deg, ${gold}, transparent)`, marginBottom: 12 }} />
-                <p style={{ fontFamily: sans, fontSize: 12, lineHeight: 1.8, color: "#C0B8B0", fontWeight: 300 }}>A CEO who built the world's first autonomous racing series, directed the Formula BMW programme — developing multiple Formula 1 World Champions — and oversaw a $13 billion NASDAQ listing. Secured over $100M in institutional funding. Guinness World Record holder. Professional Auto & Rally Racer.</p>
+                <p style={{ fontFamily: sans, fontSize: 12, lineHeight: 1.8, color: "#FBF7EE", fontWeight: 300 }}>A CEO who built the world's first autonomous racing series, directed the Formula BMW programme — developing multiple Formula 1 World Champions — and oversaw a $13 billion NASDAQ listing. Secured over $100M in institutional funding. Guinness World Record holder. Professional Auto & Rally Racer.</p>
               </div>
               {!isMobile && <div style={{ background: "rgba(199,171,117,.12)" }} />}
               <div style={{ padding: isMobile ? "0" : "0 0 0 36px" }}>
                 <div style={{ width: 28, height: 1, background: `linear-gradient(90deg, ${gold}, transparent)`, marginBottom: 12 }} />
-                <p style={{ fontFamily: sans, fontSize: 12, lineHeight: 1.8, color: "#C0B8B0", fontWeight: 300 }}>A former Citigroup Managing Director with 100+ M&A transactions and 600+ CEO advisory engagements. EVP and CFO of two NYSE-listed companies. Georgetown MBA Professor and TEDx speaker. Has spoken at institutions from West Point to Stanford.</p>
+                <p style={{ fontFamily: sans, fontSize: 12, lineHeight: 1.8, color: "#FBF7EE", fontWeight: 300 }}>A former Citigroup Managing Director with 100+ M&A transactions and 600+ CEO advisory engagements. EVP and CFO of two NYSE-listed companies. Georgetown MBA Professor and TEDx speaker. Has spoken at institutions from West Point to Stanford.</p>
               </div>
             </div>
             <div style={{ textAlign: "center", paddingBottom: 16 }}>
@@ -1925,7 +1925,7 @@ function HomePage({ setPage }) {
               Summer Intensive 2026
             </h2>
             <p style={{ fontFamily: sans, fontSize: 12, color: gold, letterSpacing: "0.1em", marginBottom: 20 }}>Enrollment Begins May 15, 2026</p>
-            <p style={{ fontFamily: sans, fontSize: 14, lineHeight: 1.85, color: "#C0B8B0", fontWeight: 300, marginBottom: 24 }}>
+            <p style={{ fontFamily: sans, fontSize: 14, lineHeight: 1.85, color: "#FBF7EE", fontWeight: 300, marginBottom: 24 }}>
               Offered in two waves — July and August — this full-day, Monday-through-Friday intensive is led by senior faculty, former Fortune 500 executives, accomplished leaders, top industry specialists, and distinguished guest speakers. The program emphasizes business and leadership curriculum, public speaking mentorship and art of networking, real-world case studies, immersive startup simulations, and live pitch development, culminating in a Shark Tank-style finale. Enrollment is limited to a select cohort of 25 students per wave.
             </p>
             <div style={{ display: "flex", flexDirection: "column", gap: 8, marginBottom: 28 }}>
@@ -1938,7 +1938,7 @@ function HomePage({ setPage }) {
               ].map((f, i) => (
                 <div key={i} style={{ display: "flex", gap: 10, alignItems: "flex-start" }}>
                   <div style={{ width: 14, height: 1.5, background: gold, marginTop: 8, flexShrink: 0 }} />
-                  <span style={{ fontFamily: sans, fontSize: 13, color: "#C8C0B8", fontWeight: 300 }}>{f}</span>
+                  <span style={{ fontFamily: sans, fontSize: 13, color: "#FBF7EE", fontWeight: 300 }}>{f}</span>
                 </div>
               ))}
             </div>
@@ -1952,14 +1952,14 @@ function HomePage({ setPage }) {
               <p style={{ fontFamily: sans, fontSize: 9, letterSpacing: "0.4em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 10 }}>May 23 · Saturday 5:00 PM – 7:00 PM</p>
               <p style={{ fontFamily: serif, fontSize: isMobile ? 18 : 21, color: "#E8E0D8", lineHeight: 1.35, marginBottom: 14 }}>An Invitation to Our Parent Information Soirée</p>
               <div style={{ width: 36, height: 1, background: `linear-gradient(90deg, ${gold}, transparent)`, marginBottom: 16 }} />
-              <p style={{ fontFamily: sans, fontSize: 13, color: "#C0B8B0", fontWeight: 300, lineHeight: 1.8, marginBottom: 16 }}>
+              <p style={{ fontFamily: sans, fontSize: 13, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.8, marginBottom: 16 }}>
                 Join us for an intimate, invitation-only evening organized for families to learn more about the Academy and our full year and short intensive programs. Hosted in a historic 1910s Mediterranean villa overlooking the Pacific in San Clemente, the gathering will feature cocktails and curated charcuterie in an elegant coastal setting.
               </p>
-              <p style={{ fontFamily: sans, fontSize: 13, color: "#C0B8B0", fontWeight: 300, lineHeight: 1.8, marginBottom: 16 }}>
+              <p style={{ fontFamily: sans, fontSize: 13, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.8, marginBottom: 16 }}>
                 Guests will have the opportunity to meet the founder and the leadership team, explore the venue where courses will be held, and hear directly from the Lead Faculty about the curriculum, our extracurricular events, and each of our programs in detail.
               </p>
               <p style={{ fontFamily: serif, fontSize: 12, color: gold, letterSpacing: "0.12em", marginBottom: 20 }}>Attendance is by invitation only.</p>
-              <p style={{ fontFamily: sans, fontSize: 13, color: "#C0B8B0", fontWeight: 300, marginBottom: 18 }}>To receive your exclusive invitation, please leave your email below. Prospective students will be asked to reflect on one simple question: <span style={{ color: gold, fontStyle: "italic" }}>"What is your dream?"</span></p>
+              <p style={{ fontFamily: sans, fontSize: 13, color: "#FBF7EE", fontWeight: 300, marginBottom: 18 }}>To receive your exclusive invitation, please leave your email below. Prospective students will be asked to reflect on one simple question: <span style={{ color: gold, fontStyle: "italic" }}>"What is your dream?"</span></p>
               <div style={{ display: "flex", gap: 8, flexDirection: isMobile ? "column" : "row" }}>
                 <input
                   type="email"
@@ -2006,7 +2006,7 @@ function HomePage({ setPage }) {
                 </div>
               </div>
               <div style={{ borderLeft: `2px solid ${gold}`, paddingLeft: isMobile ? 24 : 40, flex: 1 }}>
-                <p style={{ fontFamily: serif, fontSize: "clamp(18px,2.4vw,26px)", lineHeight: 1.7, color: "#D8D0C4", fontWeight: 400, fontStyle: "italic", marginBottom: 28 }}>
+                <p style={{ fontFamily: serif, fontSize: "clamp(18px,2.4vw,26px)", lineHeight: 1.7, color: "#FBF7EE", fontWeight: 400, fontStyle: "italic", marginBottom: 28 }}>
                   "There are people who walk the path — and people who cut it. At Excalibur Academy, we forge the second kind. The leaders. The innovators. The architects. The warriors. The dreamers. The ones who defy gravity. We are not preparing students to follow the future. We are preparing them to lead it. What sets them apart will not be what they are taught — but what they come to believe about themselves. That is where everything begins."
                 </p>
                 <p style={{ fontFamily: sans, fontSize: 11, color: gold, letterSpacing: "0.22em", textTransform: "uppercase", fontWeight: 500 }}>
@@ -2039,13 +2039,13 @@ function HomePage({ setPage }) {
 
           {/* Left panel — founding statement + session model */}
           <div style={{ padding: isMobile ? "48px 28px" : "64px 72px" }}>
-            <p style={{ fontFamily: serif, fontSize: isMobile ? 17 : 19, lineHeight: 1.85, color: "#C8C0B8", fontWeight: 400, marginBottom: 28, fontStyle: "italic", borderLeft: `2px solid rgba(199,171,117,.3)`, paddingLeft: 20 }}>
+            <p style={{ fontFamily: serif, fontSize: isMobile ? 17 : 19, lineHeight: 1.85, color: "#FBF7EE", fontWeight: 400, marginBottom: 28, fontStyle: "italic", borderLeft: `2px solid rgba(199,171,117,.3)`, paddingLeft: 20 }}>
               Excalibur Leadership Academy is a premier institute for entrepreneurship, business, and leadership for ambitious teenagers aged 16–17 in Orange County, California. We are building the institution we wish had existed when we were young — one where students are mentored by accomplished adults who have built companies, led teams, and operated under real stakes.
             </p>
-            <p style={{ fontFamily: sans, fontSize: 13, lineHeight: 1.9, color: "#B8B0A8", fontWeight: 300, marginBottom: 20 }}>
+            <p style={{ fontFamily: sans, fontSize: 13, lineHeight: 1.9, color: "#FBF7EE", fontWeight: 300, marginBottom: 20 }}>
               Our sessions take place in historic estates and private venues across Newport Beach, Laguna Beach, and San Clemente, inspired by the traditions of European elite education.
             </p>
-            <p style={{ fontFamily: sans, fontSize: 13, lineHeight: 1.9, color: "#B8B0A8", fontWeight: 300, marginBottom: 32 }}>
+            <p style={{ fontFamily: sans, fontSize: 13, lineHeight: 1.9, color: "#FBF7EE", fontWeight: 300, marginBottom: 32 }}>
               Every session follows a rigorous three-block format: rhetoric and public speaking with a speaking coach, real-world business analysis and applied workshops led by senior faculty, and deep domain instruction from a rotating specialist for every industry. No filler. No theory divorced from practice — only formation that builds confidence, judgment, and presence.
             </p>
             {/* Three pillars */}
@@ -2071,10 +2071,10 @@ function HomePage({ setPage }) {
 
           {/* Right panel — outcomes + Why This Matters */}
           <div style={{ padding: isMobile ? "0 28px 48px" : "64px 72px", display: "flex", flexDirection: "column" }}>
-            <p style={{ fontFamily: sans, fontSize: 13, lineHeight: 1.9, color: "#B8B0A8", fontWeight: 300, marginBottom: 24 }}>
+            <p style={{ fontFamily: sans, fontSize: 13, lineHeight: 1.9, color: "#FBF7EE", fontWeight: 300, marginBottom: 24 }}>
               Our faculty are not career academics. They are entrepreneurs, executives, investors, and professionals who teach from lived experience. Students learn public speaking, financial reasoning, business strategy, sales and marketing, leadership, technology and AI, and the social arts through live case studies, startup simulations, consulting projects, and competitive pitch forums.
             </p>
-            <p style={{ fontFamily: sans, fontSize: 13, lineHeight: 1.9, color: "#B8B0A8", fontWeight: 300, marginBottom: 40 }}>
+            <p style={{ fontFamily: sans, fontSize: 13, lineHeight: 1.9, color: "#FBF7EE", fontWeight: 300, marginBottom: 40 }}>
               By the end of the program, every student will have pitched before live audiences, analyzed and advised real businesses, worked in teams under pressure, and competed in Shark Tank-style finals. In our flagship program, students launch revenue-generating micro-ventures and graduate with a bound portfolio of work that sets them apart for university admissions — and beyond.
             </p>
 
@@ -2084,10 +2084,10 @@ function HomePage({ setPage }) {
                 <div style={{ width: 28, height: 1, background: gold, flexShrink: 0 }} />
                 <h3 style={{ fontFamily: serif, fontSize: isMobile ? 20 : 24, fontWeight: 600, color: "#E8E0D8", letterSpacing: "0.02em" }}>Why This Matters Now</h3>
               </div>
-              <p style={{ fontFamily: sans, fontSize: 13, lineHeight: 1.9, color: "#B8B0A8", fontWeight: 300, marginBottom: 16 }}>
+              <p style={{ fontFamily: sans, fontSize: 13, lineHeight: 1.9, color: "#FBF7EE", fontWeight: 300, marginBottom: 16 }}>
                 The skills that determine success — public speaking, strategic thinking, financial judgment, leadership, and the ability to persuade — are largely absent from traditional education. At the same time, AI is rapidly reshaping industries and dissolving career paths once considered secure.
               </p>
-              <p style={{ fontFamily: sans, fontSize: 13, lineHeight: 1.9, color: "#B8B0A8", fontWeight: 300 }}>
+              <p style={{ fontFamily: sans, fontSize: 13, lineHeight: 1.9, color: "#FBF7EE", fontWeight: 300 }}>
                 What cannot be replaced are human capacities: confidence under pressure, ownership of outcomes, the ability to lead, to sell an idea, to recover from failure, and to act when the path is uncertain. Entrepreneurs have powered business revolutions, built modern industry, and are now shaping the age of AI. We exist to prepare the young people who will lead what comes next.
               </p>
             </div>
@@ -2133,7 +2133,7 @@ function HomePage({ setPage }) {
                 <Eyebrow>Summer Programme · 2026</Eyebrow>
                 <h3 style={{ fontFamily: serif, fontSize: isMobile ? 34 : 42, fontWeight: 600, color: "#E8E0D8", lineHeight: 1, marginBottom: 8 }}>Summer Intensive</h3>
                 <p style={{ fontFamily: serif, fontSize: 16, color: gold, fontStyle: "italic", marginBottom: 20 }}>The immersion.</p>
-                <p style={{ fontFamily: sans, fontSize: 13, lineHeight: 1.85, color: "#C0B8B0", fontWeight: 300 }}>Two waves — July 6–17 and August 3–14. Full days, Monday through Friday, led by senior faculty, Fortune 500 executives, and distinguished guest speakers. Every session culminates in a Shark Tank-style finale before real investors.</p>
+                <p style={{ fontFamily: sans, fontSize: 13, lineHeight: 1.85, color: "#FBF7EE", fontWeight: 300 }}>Two waves — July 6–17 and August 3–14. Full days, Monday through Friday, led by senior faculty, Fortune 500 executives, and distinguished guest speakers. Every session culminates in a Shark Tank-style finale before real investors.</p>
               </div>
               {!isMobile && <div style={{ background: "rgba(199,171,117,.08)" }} />}
               {/* Middle: details */}
@@ -2148,7 +2148,7 @@ function HomePage({ setPage }) {
                 ].map(([k, v], i) => (
                   <div key={i} style={{ display: "flex", gap: 16, padding: "11px 0", borderBottom: "1px solid rgba(199,171,117,.06)", alignItems: "flex-start" }}>
                     <span style={{ fontFamily: sans, fontSize: 10, color: gold, letterSpacing: "0.08em", minWidth: 90, paddingTop: 1, fontWeight: 500 }}>{k}</span>
-                    <span style={{ fontFamily: sans, fontSize: 12, color: "#C0B8B0", fontWeight: 300 }}>{v}</span>
+                    <span style={{ fontFamily: sans, fontSize: 12, color: "#FBF7EE", fontWeight: 300 }}>{v}</span>
                   </div>
                 ))}
               </div>
@@ -2158,7 +2158,7 @@ function HomePage({ setPage }) {
                 <div>
                   <p style={{ fontFamily: sans, fontSize: 10, letterSpacing: "0.3em", color: "#4DB87A", fontWeight: 600, textTransform: "uppercase", marginBottom: 12 }}>● Accepting Applications</p>
                   <div style={{ fontFamily: serif, fontSize: 38, color: "#E8E0D8", fontWeight: 600, lineHeight: 1, marginBottom: 4 }}>$4,500</div>
-                  <div style={{ fontFamily: sans, fontSize: 12, color: "#C0B8B0", fontWeight: 300, marginBottom: 28 }}>per wave · includes lunch, field trip, Shark Tank Finale</div>
+                  <div style={{ fontFamily: sans, fontSize: 12, color: "#FBF7EE", fontWeight: 300, marginBottom: 28 }}>per wave · includes lunch, field trip, Shark Tank Finale</div>
                 </div>
                 <button onClick={() => setPage("apply")} style={{ fontFamily: sans, padding: "13px 28px", background: "transparent", border: `1px solid rgba(199,171,117,.4)`, color: gold, fontSize: 11, fontWeight: 600, letterSpacing: "0.18em", textTransform: "uppercase", cursor: "pointer", alignSelf: "flex-start" }}>APPLY NOW →</button>
               </div>
@@ -2174,17 +2174,17 @@ function HomePage({ setPage }) {
                 <Eyebrow>Entry Track</Eyebrow>
                 <h3 style={{ fontFamily: serif, fontSize: 36, fontWeight: 600, color: "#E8E0D8", lineHeight: 1, marginBottom: 6 }}>Six-Week Intensive</h3>
                 <p style={{ fontFamily: serif, fontSize: 15, color: gold, fontStyle: "italic", marginBottom: 20 }}>The ignition.</p>
-                <p style={{ fontFamily: sans, fontSize: 13, lineHeight: 1.85, color: "#C0B8B0", fontWeight: 300, marginBottom: 24 }}>Offered in four waves annually, the Six-Week Intensive distils the complete Excalibur curriculum into a high-impact sprint designed to introduce students to our standards, pace, and expectations. Students choose weekday evenings or Sunday half-day. Concludes with a live judged Demo Day.</p>
+                <p style={{ fontFamily: sans, fontSize: 13, lineHeight: 1.85, color: "#FBF7EE", fontWeight: 300, marginBottom: 24 }}>Offered in four waves annually, the Six-Week Intensive distils the complete Excalibur curriculum into a high-impact sprint designed to introduce students to our standards, pace, and expectations. Students choose weekday evenings or Sunday half-day. Concludes with a live judged Demo Day.</p>
                 <div style={{ height: 1, background: "rgba(199,171,117,.08)", marginBottom: 20 }} />
                 {["Full eight-module curriculum across all disciplines", "Weekday evening or Sunday half-day track", "Weekly guest speaker from business and investment world", "Team-based micro-business project and live pitch", "Judged Demo Day before a live investor audience", "Alumni network access · Priority for Full Formation"].map((f, j) => (
                   <div key={j} style={{ display: "flex", gap: 12, marginBottom: 11, alignItems: "flex-start" }}>
                     <div style={{ width: 14, height: 1, background: "rgba(199,171,117,.4)", marginTop: 8, flexShrink: 0 }} />
-                    <span style={{ fontFamily: sans, fontSize: 13, color: "#C0B8B0", fontWeight: 300, lineHeight: 1.65 }}>{f}</span>
+                    <span style={{ fontFamily: sans, fontSize: 13, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.65 }}>{f}</span>
                   </div>
                 ))}
                 <div style={{ marginTop: 32, display: "flex", alignItems: "baseline", gap: 8, marginBottom: 18 }}>
                   <span style={{ fontFamily: serif, fontSize: 32, color: "#E8E0D8", fontWeight: 600 }}>$3,500</span>
-                  <span style={{ fontFamily: sans, fontSize: 12, color: "#C0B8B0", fontWeight: 300 }}>/ wave</span>
+                  <span style={{ fontFamily: sans, fontSize: 12, color: "#FBF7EE", fontWeight: 300 }}>/ wave</span>
                 </div>
                 <button onClick={() => setPage("intensive")} style={{ fontFamily: sans, padding: "11px 26px", background: "transparent", border: `1px solid rgba(199,171,117,.3)`, color: gold, fontSize: 11, fontWeight: 600, letterSpacing: "0.15em", textTransform: "uppercase", cursor: "pointer" }}>EXPLORE INTENSIVE →</button>
               </div>
@@ -2195,17 +2195,17 @@ function HomePage({ setPage }) {
                 <Eyebrow>Full Formation</Eyebrow>
                 <h3 style={{ fontFamily: serif, fontSize: 36, fontWeight: 600, color: "#E8E0D8", lineHeight: 1, marginBottom: 6 }}>Ten-Month Program</h3>
                 <p style={{ fontFamily: serif, fontSize: 15, color: gold, fontStyle: "italic", marginBottom: 20 }}>The complete formation.</p>
-                <p style={{ fontFamily: sans, fontSize: 13, lineHeight: 1.85, color: "#C0B8B0", fontWeight: 300, marginBottom: 24 }}>The Full Formation is Excalibur's ten-month flagship — a deep, immersive course of study for students ready for complete entrepreneurial, intellectual, and personal formation across all eight modules, ten industry sectors, and three real-world engagements.</p>
+                <p style={{ fontFamily: sans, fontSize: 13, lineHeight: 1.85, color: "#FBF7EE", fontWeight: 300, marginBottom: 24 }}>The Full Formation is Excalibur's ten-month flagship — a deep, immersive course of study for students ready for complete entrepreneurial, intellectual, and personal formation across all eight modules, ten industry sectors, and three real-world engagements.</p>
                 <div style={{ height: 1, background: "rgba(199,171,117,.12)", marginBottom: 20 }} />
                 {["Full ten-month curriculum across all eight core modules", "All ten industry sectors with guest leaders", "Junior Consultant Program — real local business engagement", "Apprentice Externship — 4–6 weeks inside a real company", "Funded micro-business launch with a dedicated mentor", "Monthly Pitch Night and competition pathway to nationals", "Bound graduation portfolio of all academic and professional work", "Eligibility for London and Geneva international programmes"].map((f, j) => (
                   <div key={j} style={{ display: "flex", gap: 12, marginBottom: 11, alignItems: "flex-start" }}>
                     <div style={{ width: 14, height: 1, background: gold, marginTop: 8, flexShrink: 0 }} />
-                    <span style={{ fontFamily: sans, fontSize: 13, color: "#C8C0B8", fontWeight: 300, lineHeight: 1.65 }}>{f}</span>
+                    <span style={{ fontFamily: sans, fontSize: 13, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.65 }}>{f}</span>
                   </div>
                 ))}
                 <div style={{ marginTop: 32, display: "flex", alignItems: "baseline", gap: 8, marginBottom: 18 }}>
                   <span style={{ fontFamily: serif, fontSize: 32, color: "#E8E0D8", fontWeight: 600 }}>$1,990</span>
-                  <span style={{ fontFamily: sans, fontSize: 12, color: "#C0B8B0", fontWeight: 300 }}>/ month</span>
+                  <span style={{ fontFamily: sans, fontSize: 12, color: "#FBF7EE", fontWeight: 300 }}>/ month</span>
                 </div>
                 <button onClick={() => setPage("full-program")} style={{ fontFamily: sans, padding: "11px 26px", background: gold, border: "none", color: "#000", fontSize: 11, fontWeight: 700, letterSpacing: "0.15em", textTransform: "uppercase", cursor: "pointer" }}>EXPLORE FULL PROGRAM →</button>
               </div>
@@ -2232,7 +2232,7 @@ function HomePage({ setPage }) {
                     {activeMod === i && (
                       <div style={{ background: "#080808", padding: "24px 20px 28px" }}>
                         <p style={{ fontFamily: serif, fontSize: 15, color: gold, fontStyle: "italic", marginBottom: 14 }}>{m.tagline}</p>
-                        <div style={{ marginBottom: 18 }}>{m.body.split("\n\n").map((para, pi) => (<p key={pi} style={{ fontFamily: sans, fontSize: 14, lineHeight: 1.9, color: "#C8C0B8", fontWeight: 300, marginBottom: 14 }}>{para}</p>))}</div>
+                        <div style={{ marginBottom: 18 }}>{m.body.split("\n\n").map((para, pi) => (<p key={pi} style={{ fontFamily: sans, fontSize: 14, lineHeight: 1.9, color: "#FBF7EE", fontWeight: 300, marginBottom: 14 }}>{para}</p>))}</div>
                         <button onClick={() => setPage(`module:${m.slug}`)} style={{ fontFamily: sans, fontSize: 10, color: gold, letterSpacing: "0.15em", fontWeight: 700, border: `1px solid rgba(199,171,117,.3)`, padding: "9px 16px", background: "transparent", cursor: "pointer", textTransform: "uppercase" }}>Explore Module →</button>
                       </div>
                     )}
@@ -2255,7 +2255,7 @@ function HomePage({ setPage }) {
                     <p style={{ fontFamily: sans, color: gold, fontSize: 10, letterSpacing: "0.3em", fontWeight: 600, marginBottom: 10, textTransform: "uppercase" }}>{currMods[activeMod].months}</p>
                     <h3 style={{ fontFamily: serif, fontSize: "clamp(26px,3vw,36px)", fontWeight: 600, color: "#E8E0D8", marginBottom: 8, lineHeight: 1.15 }}>{currMods[activeMod].title}</h3>
                     <p style={{ fontFamily: serif, fontSize: 19, color: gold, fontStyle: "italic", marginBottom: 20 }}>{currMods[activeMod].tagline}</p>
-                    <div style={{ marginBottom: 24 }}>{currMods[activeMod].body.split("\n\n").map((para, pi) => (<p key={pi} style={{ fontFamily: sans, fontSize: 15, lineHeight: 1.95, color: "#C8C0B8", fontWeight: 300, marginBottom: 18 }}>{para}</p>))}</div>
+                    <div style={{ marginBottom: 24 }}>{currMods[activeMod].body.split("\n\n").map((para, pi) => (<p key={pi} style={{ fontFamily: sans, fontSize: 15, lineHeight: 1.95, color: "#FBF7EE", fontWeight: 300, marginBottom: 18 }}>{para}</p>))}</div>
                     <button onClick={() => setPage(`module:${currMods[activeMod].slug}`)} style={{ fontFamily: sans, fontSize: 10, color: gold, letterSpacing: "0.2em", fontWeight: 700, border: `1px solid rgba(199,171,117,.3)`, padding: "9px 18px", background: "transparent", cursor: "pointer", textTransform: "uppercase" }}>Explore This Module →</button>
                   </div>
                 </div>
@@ -2264,7 +2264,7 @@ function HomePage({ setPage }) {
           </Fade>
           <Fade d={.12}>
             <div style={{ marginTop: 2, background: "#060606", border: "1px solid #111", borderTop: "none", padding: "17px 32px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-              <span style={{ fontFamily: sans, fontSize: 12, color: "#C8C0B8", fontWeight: 300 }}>All eight modules covered in both the Intensive and the Full Program.</span>
+              <span style={{ fontFamily: sans, fontSize: 12, color: "#FBF7EE", fontWeight: 300 }}>All eight modules covered in both the Intensive and the Full Program.</span>
               <button onClick={() => setPage("curriculum")} style={{ fontFamily: sans, fontSize: 10, color: gold, letterSpacing: 2, background: "transparent", border: "none", cursor: "pointer", fontWeight: 600, flexShrink: 0 }}>VIEW ALL MODULES →</button>
             </div>
           </Fade>
@@ -2281,9 +2281,9 @@ function HomePage({ setPage }) {
                 <div key={i} style={{ background: "#080808", padding: "22px 18px" }}>
                   <div style={{ display: "flex", gap: 8, alignItems: "center", marginBottom: 7 }}>
                     <span style={{ fontFamily: sans, fontSize: 9, color: gold, opacity: .5, letterSpacing: 1.5 }}>{s.n}</span>
-                    <span style={{ fontFamily: serif, fontSize: 15, fontWeight: 600, color: "#C8C0B8" }}>{s.name}</span>
+                    <span style={{ fontFamily: serif, fontSize: 15, fontWeight: 600, color: "#FBF7EE" }}>{s.name}</span>
                   </div>
-                  <p style={{ fontFamily: sans, fontSize: 11, color: "#C8C0B8", lineHeight: 1.6, fontWeight: 300 }}>{s.desc.split(".")[0]}.</p>
+                  <p style={{ fontFamily: sans, fontSize: 11, color: "#FBF7EE", lineHeight: 1.6, fontWeight: 300 }}>{s.desc.split(".")[0]}.</p>
                 </div>
               ))}
             </div>
@@ -2313,7 +2313,7 @@ function HomePage({ setPage }) {
                     <Eyebrow>{p.tag}</Eyebrow>
                     <h3 style={{ fontFamily: serif, fontSize: isMobile ? 26 : 34, fontWeight: 600, color: "#E8E0D8", lineHeight: 1.1, marginBottom: 16, marginTop: 8 }}>{p.title}</h3>
                     <div style={{ width: 36, height: 1, background: `linear-gradient(90deg, ${gold}, transparent)`, marginBottom: 18 }} />
-                    <p style={{ fontFamily: sans, fontSize: 14, lineHeight: 1.9, color: "#C0B8B0", fontWeight: 300 }}>{p.desc}</p>
+                    <p style={{ fontFamily: sans, fontSize: 14, lineHeight: 1.9, color: "#FBF7EE", fontWeight: 300 }}>{p.desc}</p>
                   </div>
                   {(i % 2 === 0 || isMobile) && (
                     <div style={{ background: "#050504", padding: isMobile ? "28px 24px" : "52px 48px", display: "flex", flexDirection: "column", justifyContent: "center", position: "relative", borderTop: `2px solid rgba(199,171,117,.06)` }}>
@@ -2336,8 +2336,8 @@ function HomePage({ setPage }) {
                   <h2 style={{ fontFamily: serif, fontSize: isMobile ? 26 : 36, fontWeight: 600, color: "#E8E0D8", lineHeight: 1.1, marginBottom: 10, marginTop: 8 }}>A college portfolio that speaks for itself.</h2>
                   <p style={{ fontFamily: serif, fontSize: 17, color: gold, fontStyle: "italic", marginBottom: 22, lineHeight: 1.4 }}>Why Excalibur Students Stand Apart</p>
                   <div style={{ width: 36, height: 1, background: `linear-gradient(90deg, rgba(199,171,117,.6), transparent)`, marginBottom: 22 }} />
-                  <p style={{ fontFamily: sans, fontSize: 14, lineHeight: 1.9, color: "#C0B8B0", fontWeight: 300, marginBottom: 16 }}>An Excalibur graduate approaches college admission with proof of applied real-world leadership and work experience. A consulting report. An externship record. A micro-business launch. Competition results. A graduation portfolio. Faculty recommendations written by top executives and professionals who watched them operate, lead, and execute.</p>
-                  <p style={{ fontFamily: sans, fontSize: 14, lineHeight: 1.9, color: "#C0B8B0", fontWeight: 300 }}>College admissions counselors who work with our students help set up this portfolio, craft the narrative that connects it to each application, and prepare students for admissions interviews grounded in real, specific experience. The Excalibur graduate portfolio operates on an entirely different level than the conventional application.</p>
+                  <p style={{ fontFamily: sans, fontSize: 14, lineHeight: 1.9, color: "#FBF7EE", fontWeight: 300, marginBottom: 16 }}>An Excalibur graduate approaches college admission with proof of applied real-world leadership and work experience. A consulting report. An externship record. A micro-business launch. Competition results. A graduation portfolio. Faculty recommendations written by top executives and professionals who watched them operate, lead, and execute.</p>
+                  <p style={{ fontFamily: sans, fontSize: 14, lineHeight: 1.9, color: "#FBF7EE", fontWeight: 300 }}>College admissions counselors who work with our students help set up this portfolio, craft the narrative that connects it to each application, and prepare students for admissions interviews grounded in real, specific experience. The Excalibur graduate portfolio operates on an entirely different level than the conventional application.</p>
                 </div>
                 <div style={{ display: "flex", flexDirection: "column", justifyContent: "center" }}>
                   <p style={{ fontFamily: sans, fontSize: 9, letterSpacing: "0.35em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 24 }}>What This Means in Practice</p>
@@ -2350,7 +2350,7 @@ function HomePage({ setPage }) {
                   ].map((f, i) => (
                     <div key={i} style={{ display: "flex", gap: 14, marginBottom: 16, alignItems: "flex-start" }}>
                       <div style={{ width: 16, height: 1.5, background: gold, marginTop: 9, flexShrink: 0 }} />
-                      <span style={{ fontFamily: sans, fontSize: 13, color: "#C0B8B0", fontWeight: 300, lineHeight: 1.7 }}>{f}</span>
+                      <span style={{ fontFamily: sans, fontSize: 13, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.7 }}>{f}</span>
                     </div>
                   ))}
                 </div>
@@ -2381,7 +2381,7 @@ function HomePage({ setPage }) {
                   <div style={{ padding: "18px 20px 22px" }}>
                     <p style={{ fontFamily: sans, fontSize: 9, color: gold, letterSpacing: "0.2em", textTransform: "uppercase", marginBottom: 6, fontWeight: 600 }}>{f.tag}</p>
                     <h4 style={{ fontFamily: serif, fontSize: 18, fontWeight: 600, color: "#E8E0D8", marginBottom: 10, lineHeight: 1.2 }}>{f.title}</h4>
-                    <p style={{ fontFamily: sans, fontSize: 12, lineHeight: 1.75, color: "#C0B8B0", fontWeight: 300 }}>{f.desc}</p>
+                    <p style={{ fontFamily: sans, fontSize: 12, lineHeight: 1.75, color: "#FBF7EE", fontWeight: 300 }}>{f.desc}</p>
                   </div>
                 </div>
               ))}
@@ -2432,7 +2432,7 @@ function HomePage({ setPage }) {
               ].map((s, i) => (
                 <div key={i} style={{ background: "#080808", padding: "26px 22px" }}>
                   <div style={{ fontFamily: serif, fontSize: 42, fontWeight: 600, color: s.color, lineHeight: 1, marginBottom: 10, opacity: .9 }}>{s.n}</div>
-                  <h4 style={{ fontFamily: serif, fontSize: 17, fontWeight: 600, color: "#D8D0C8", marginBottom: 3 }}>{s.t}</h4>
+                  <h4 style={{ fontFamily: serif, fontSize: 17, fontWeight: 600, color: "#FBF7EE", marginBottom: 3 }}>{s.t}</h4>
                   <p style={{ fontFamily: sans, fontSize: 10, color: s.color, letterSpacing: 1.5, fontWeight: 500, textTransform: "uppercase" }}>{s.s}</p>
                 </div>
               ))}
@@ -2445,7 +2445,7 @@ function HomePage({ setPage }) {
       {/* FAQ */}
       <section style={{ padding: isMobile ? "48px 16px" : "72px 40px" }}>
         <div style={{ maxWidth: 760, margin: "0 auto" }}>
-          <Fade><div style={{ textAlign: "center", marginBottom: 44 }}><Eyebrow>COMMON QUESTIONS</Eyebrow><SectionTitle center>Common Questions</SectionTitle></div></Fade>
+          <Fade><div style={{ textAlign: "center", marginBottom: 44 }}><Eyebrow>COMMON QUESTIONS</Eyebrow><SectionTitle center>FAQ</SectionTitle></div></Fade>
           <Fade d={.06}>
             <FAQ q="Who actually teaches at Excalibur Academy?" a="Every session is led by a practitioner — an entrepreneur who has built and scaled a company, an investor who has allocated real capital, a public speaking coach who has trained executives, or a financial professional who has managed real portfolios. Our full-time coaches are present at every session; guest speakers rotate in weekly. The criterion for every person in the room is identical: they must have done the thing they are teaching." />
             <FAQ q="What is the difference between the Intensive and the Full Program?" a="The Six-Week Intensive is a compressed sprint across all eight curriculum modules — ideal as an entry point or focused development experience. The Full Program is the complete formation: ten months, all ten industry sectors, a real consulting engagement with a live business client, an externship inside a real company, and a funded micro-business launch. Most families begin with an Intensive and enroll in the Full Program for the following year." />
@@ -2462,21 +2462,21 @@ function HomePage({ setPage }) {
         <Fade style={{ position: "relative", zIndex: 1 }}>
           <p style={{ fontFamily: sans, fontSize: 10, letterSpacing: "0.4em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 20, display: "inline-block" }}>LIMITED ENROLLMENT</p>
           <h2 style={{ fontFamily: serif, fontSize: "clamp(28px,4vw,52px)", fontWeight: 600, lineHeight: 1.1, marginBottom: 20, color: "#E8E0D8" }}>Waitlist for Summer Waves<br /><span style={{ color: gold }}>Now Open.</span></h2>
-          <p style={{ fontFamily: sans, fontSize: 12, color: "#C0B8B0", letterSpacing: "0.08em", marginBottom: 20 }}>Wave 1 opens July 6, 2026</p>
+          <p style={{ fontFamily: sans, fontSize: 12, color: "#FBF7EE", letterSpacing: "0.08em", marginBottom: 20 }}>Wave 1 opens July 6, 2026</p>
           <CountdownTimer targetDate="2026-07-06T09:30:00" />
           <div style={{ maxWidth: 640, margin: "0 auto 36px", background: "rgba(199,171,117,.05)", border: "1px solid rgba(199,171,117,.15)", padding: isMobile ? "24px 20px" : "28px 36px" }}>
-            <p style={{ fontFamily: sans, fontSize: 14, lineHeight: 1.85, color: "#C8C0B8", fontWeight: 300, marginBottom: 16 }}>Enrollment is limited to small cohorts to preserve instructional depth and personal attention. Due to high demand, placement is managed through a waitlist. Waitlisted families receive direct communication through a personal enrollment coordinator and early access to Academy events, including the May 23 private family information soirée.</p>
+            <p style={{ fontFamily: sans, fontSize: 14, lineHeight: 1.85, color: "#FBF7EE", fontWeight: 300, marginBottom: 16 }}>Enrollment is limited to small cohorts to preserve instructional depth and personal attention. Due to high demand, placement is managed through a waitlist. Waitlisted families receive direct communication through a personal enrollment coordinator and early access to Academy events, including the May 23 private family information soirée.</p>
             <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
               {["Waitlist for Summer Intensive 2026 — Wave 1 (July) and Wave 2 (August)", "Direct access to personal enrollment coordinator", "Priority invitation to May 23 private family soirée at the Mediterranean Estate"].map((f, i) => (
                 <div key={i} style={{ display: "flex", gap: 12, alignItems: "flex-start" }}>
                   <div style={{ width: 14, height: 1, background: gold, marginTop: 9, flexShrink: 0 }} />
-                  <span style={{ fontFamily: sans, fontSize: 13, color: "#C0B8B0", fontWeight: 300 }}>{f}</span>
+                  <span style={{ fontFamily: sans, fontSize: 13, color: "#FBF7EE", fontWeight: 300 }}>{f}</span>
                 </div>
               ))}
             </div>
           </div>
           <button onClick={() => setPage("apply")} style={{ fontFamily: sans, background: gold, color: "#000", padding: "15px 48px", fontSize: 13, fontWeight: 700, letterSpacing: 2.5, border: "none", cursor: "pointer", boxShadow: "0 4px 40px rgba(199,171,117,.18)" }}>JOIN THE WAITLIST</button>
-          <p style={{ fontFamily: sans, color: "#C0B8B0", fontSize: 11, marginTop: 24, letterSpacing: 1 }}>apply@excaliburacademy.org · support@excaliburacademy.org · Orange County, California</p>
+          <p style={{ fontFamily: sans, color: "#FBF7EE", fontSize: 11, marginTop: 24, letterSpacing: 1 }}>apply@excaliburacademy.org · support@excaliburacademy.org · Orange County, California</p>
         </Fade>
       </section>
     </div>
@@ -2514,11 +2514,11 @@ function BeyondPage({ setPage }) {
                 <div style={{ background: "#080808", padding: "44px 40px", borderTop: i === 0 ? `2px solid ${gold}` : "2px solid rgba(199,171,117,.1)" }}>
                   <Eyebrow>{p.tag}</Eyebrow>
                   <h3 style={{ fontFamily: serif, fontSize: 30, fontWeight: 600, color: "#E8E0D8", lineHeight: 1.1, marginBottom: 18 }}>{p.title}</h3>
-                  <p style={{ fontFamily: sans, fontSize: 14, lineHeight: 1.85, color: "#C8C0B8", fontWeight: 300 }}>{p.desc}</p>
+                  <p style={{ fontFamily: sans, fontSize: 14, lineHeight: 1.85, color: "#FBF7EE", fontWeight: 300 }}>{p.desc}</p>
                 </div>
                 <div style={{ background: "#060606", padding: "44px 40px", display: "flex", flexDirection: "column", justifyContent: "center", borderTop: "2px solid rgba(199,171,117,.04)" }}>
-                  <p style={{ fontFamily: sans, fontSize: 9, letterSpacing: 3, color: "#C8C0B8", fontWeight: 500, marginBottom: 14 }}>THE OUTCOME</p>
-                  <p style={{ fontFamily: serif, fontSize: 18, lineHeight: 1.65, color: "#B8B0A8", fontStyle: "italic" }}>{p.outcome}</p>
+                  <p style={{ fontFamily: sans, fontSize: 9, letterSpacing: 3, color: "#FBF7EE", fontWeight: 500, marginBottom: 14 }}>THE OUTCOME</p>
+                  <p style={{ fontFamily: serif, fontSize: 18, lineHeight: 1.65, color: "#FBF7EE", fontStyle: "italic" }}>{p.outcome}</p>
                 </div>
               </div>
             </Fade>
@@ -2530,11 +2530,11 @@ function BeyondPage({ setPage }) {
               <div style={{ background: "#080808", padding: "44px 40px", borderTop: `2px solid ${gold}` }}>
                 <Eyebrow>COLLEGE ADMISSIONS ADVANTAGE</Eyebrow>
                 <h3 style={{ fontFamily: serif, fontSize: 30, fontWeight: 600, color: "#E8E0D8", lineHeight: 1.1, marginBottom: 18 }}>A portfolio that speaks for itself.</h3>
-                <p style={{ fontFamily: sans, fontSize: 14, lineHeight: 1.85, color: "#C8C0B8", fontWeight: 300, marginBottom: 14 }}>An Excalibur graduate arrives at their college application with something that cannot be manufactured: documented evidence of real-world performance across ten months. A consulting report. An externship record. A funded business. Competition results. A graduation portfolio. Faculty recommendations written by practitioners who watched them operate under genuine pressure, over an extended period, and have something specific to say.</p>
-                <p style={{ fontFamily: sans, fontSize: 14, lineHeight: 1.85, color: "#C8C0B8", fontWeight: 300 }}>Admissions counselors who work with our students help build this portfolio, shape the narrative that connects it to each application, and prepare students for admissions interviews grounded in real, specific experience — not rehearsed answers about hypothetical situations. The experience itself is exceptional. Part of our role is ensuring the story is told as well as it was lived.</p>
+                <p style={{ fontFamily: sans, fontSize: 14, lineHeight: 1.85, color: "#FBF7EE", fontWeight: 300, marginBottom: 14 }}>An Excalibur graduate arrives at their college application with something that cannot be manufactured: documented evidence of real-world performance across ten months. A consulting report. An externship record. A funded business. Competition results. A graduation portfolio. Faculty recommendations written by practitioners who watched them operate under genuine pressure, over an extended period, and have something specific to say.</p>
+                <p style={{ fontFamily: sans, fontSize: 14, lineHeight: 1.85, color: "#FBF7EE", fontWeight: 300 }}>Admissions counselors who work with our students help build this portfolio, shape the narrative that connects it to each application, and prepare students for admissions interviews grounded in real, specific experience — not rehearsed answers about hypothetical situations. The experience itself is exceptional. Part of our role is ensuring the story is told as well as it was lived.</p>
               </div>
               <div style={{ background: "#060606", padding: "44px 40px", display: "flex", flexDirection: "column", justifyContent: "center", borderTop: "2px solid rgba(199,171,117,.04)" }}>
-                <p style={{ fontFamily: sans, fontSize: 9, letterSpacing: 3, color: "#C8C0B8", fontWeight: 500, marginBottom: 20 }}>WHAT THIS MEANS IN PRACTICE</p>
+                <p style={{ fontFamily: sans, fontSize: 9, letterSpacing: 3, color: "#FBF7EE", fontWeight: 500, marginBottom: 20 }}>WHAT THIS MEANS IN PRACTICE</p>
                 {[
                   "Bound graduation portfolio: consulting reports, externship deliverables, pitch recordings, business analyses, Sector Journal, and personal leadership framework",
                   "Faculty letters of recommendation written by practitioners who observed the student across ten months under real conditions — specific, credible, and impossible to confuse with a form letter",
@@ -2544,7 +2544,7 @@ function BeyondPage({ setPage }) {
                 ].map((f, i) => (
                   <div key={i} style={{ display: "flex", gap: 14, marginBottom: 14, alignItems: "flex-start" }}>
                     <div style={{ width: 16, height: 1.5, background: gold, marginTop: 9, flexShrink: 0 }} />
-                    <span style={{ fontFamily: sans, fontSize: 13, color: "#C8C0B8", fontWeight: 300, lineHeight: 1.65 }}>{f}</span>
+                    <span style={{ fontFamily: sans, fontSize: 13, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.65 }}>{f}</span>
                   </div>
                 ))}
               </div>
@@ -2557,7 +2557,7 @@ function BeyondPage({ setPage }) {
 
       {/* COMPETITIONS */}
       <div style={{ maxWidth: 1100, margin: "0 auto", padding: isMobile ? "48px 16px" : "72px 40px", background: "#050505" }}>
-        <Fade><Eyebrow>COMPETITIONS</Eyebrow><SectionTitle>Performance under genuine pressure.</SectionTitle><p style={{ fontFamily: sans, fontSize: 14, lineHeight: 1.85, color: "#C8C0B8", fontWeight: 300, marginTop: 12, maxWidth: 680 }}>Every competition at Excalibur is evaluated by real professionals — entrepreneurs, investors, and executives who have no obligation to be generous. Students know this. That is precisely the point.</p></Fade>
+        <Fade><Eyebrow>COMPETITIONS</Eyebrow><SectionTitle>Performance under genuine pressure.</SectionTitle><p style={{ fontFamily: sans, fontSize: 14, lineHeight: 1.85, color: "#FBF7EE", fontWeight: 300, marginTop: 12, maxWidth: 680 }}>Every competition at Excalibur is evaluated by real professionals — entrepreneurs, investors, and executives who have no obligation to be generous. Students know this. That is precisely the point.</p></Fade>
         <Fade d={.08}>
           <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(2,1fr)", gap: 2, background: "#111", marginTop: 36 }}>
             {[
@@ -2569,7 +2569,7 @@ function BeyondPage({ setPage }) {
               <div key={i} style={{ background: "#080808", padding: "36px 32px", borderTop: `2px solid ${i === 0 ? gold : "rgba(199,171,117,.1)"}` }}>
                 <Eyebrow>{c.tag.toUpperCase()}</Eyebrow>
                 <h3 style={{ fontFamily: serif, fontSize: 24, fontWeight: 600, color: "#E8E0D8", marginBottom: 16, lineHeight: 1.2 }}>{c.title}</h3>
-                <p style={{ fontFamily: sans, fontSize: 13, lineHeight: 1.8, color: "#C8C0B8", fontWeight: 300 }}>{c.desc}</p>
+                <p style={{ fontFamily: sans, fontSize: 13, lineHeight: 1.8, color: "#FBF7EE", fontWeight: 300 }}>{c.desc}</p>
               </div>
             ))}
           </div>
@@ -2587,13 +2587,13 @@ function BeyondPage({ setPage }) {
           </div>
         </Fade>
         <Fade d={.12}>
-          <p style={{ fontFamily: sans, fontSize: 10, color: "#C8C0B8", letterSpacing: 2, textAlign: "center", marginBottom: 18 }}>{distinctions[activeTier].label.toUpperCase()}</p>
+          <p style={{ fontFamily: sans, fontSize: 10, color: "#FBF7EE", letterSpacing: 2, textAlign: "center", marginBottom: 18 }}>{distinctions[activeTier].label.toUpperCase()}</p>
           <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(3, 1fr)", gap: 2, background: "#111" }}>
             {distinctions[activeTier].awards.map((a, i) => (
               <div key={i} style={{ background: "#080808", padding: "36px 28px", borderTop: `2px solid ${i === 0 ? gold : "rgba(199,171,117,.15)"}` }}>
                 <Eyebrow>{a.sub.toUpperCase()}</Eyebrow>
                 <h4 style={{ fontFamily: serif, fontSize: 22, fontWeight: 600, color: "#E8E0D8", marginBottom: 14, lineHeight: 1.2 }}>{a.title}</h4>
-                <p style={{ fontFamily: sans, fontSize: 13, lineHeight: 1.75, color: "#C8C0B8", fontWeight: 300 }}>{a.desc}</p>
+                <p style={{ fontFamily: sans, fontSize: 13, lineHeight: 1.75, color: "#FBF7EE", fontWeight: 300 }}>{a.desc}</p>
               </div>
             ))}
           </div>
@@ -2607,7 +2607,7 @@ function BeyondPage({ setPage }) {
         <Fade>
           <Eyebrow>FIELD TRIPS & EXPEDITIONS</Eyebrow>
           <SectionTitle>The classroom extends beyond the room.</SectionTitle>
-          <p style={{ fontFamily: sans, fontSize: 14, lineHeight: 1.85, color: "#C0B8B0", fontWeight: 300, marginTop: 12, marginBottom: 36, maxWidth: 680 }}>Real places. Real companies. Real people who built something significant. Students visit the environments where consequential things actually happen — and hear from the people who made them happen.</p>
+          <p style={{ fontFamily: sans, fontSize: 14, lineHeight: 1.85, color: "#FBF7EE", fontWeight: 300, marginTop: 12, marginBottom: 36, maxWidth: 680 }}>Real places. Real companies. Real people who built something significant. Students visit the environments where consequential things actually happen — and hear from the people who made them happen.</p>
         </Fade>
         <Fade d={.08}>
           <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(3,1fr)", gap: 2, background: "#111" }}>
@@ -2621,7 +2621,7 @@ function BeyondPage({ setPage }) {
                 <div style={{ padding: "22px 22px 26px" }}>
                   <p style={{ fontFamily: sans, fontSize: 9, color: gold, letterSpacing: "0.2em", textTransform: "uppercase", marginBottom: 8, fontWeight: 600 }}>{f.tag}</p>
                   <h4 style={{ fontFamily: serif, fontSize: 19, fontWeight: 600, color: "#E8E0D8", marginBottom: 12, lineHeight: 1.2 }}>{f.title}</h4>
-                  <p style={{ fontFamily: sans, fontSize: 12, lineHeight: 1.75, color: "#C0B8B0", fontWeight: 300 }}>{f.desc}</p>
+                  <p style={{ fontFamily: sans, fontSize: 12, lineHeight: 1.75, color: "#FBF7EE", fontWeight: 300 }}>{f.desc}</p>
                 </div>
               </div>
             ))}
@@ -2746,7 +2746,7 @@ function FacultyProfilePage({ slug, setPage }) {
   if (!f) {
     return (
       <div style={{ background: "#000", minHeight: "100vh", paddingTop: 120, textAlign: "center" }}>
-        <p style={{ fontFamily: sans, color: "#C8C0B8", fontSize: 14 }}>Faculty profile not found.</p>
+        <p style={{ fontFamily: sans, color: "#FBF7EE", fontSize: 14 }}>Faculty profile not found.</p>
         <button onClick={() => setPage("faculty")} style={{ fontFamily: sans, color: gold, background: "transparent", border: "none", cursor: "pointer", fontSize: 13, marginTop: 16 }}>← Back to Faculty</button>
       </div>
     );
@@ -2767,7 +2767,7 @@ function FacultyProfilePage({ slug, setPage }) {
           <p style={{ fontFamily: sans, fontSize: 10, letterSpacing: "0.4em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 12 }}>{f.role}</p>
           <h1 style={{ fontFamily: serif, fontSize: isMobile ? "clamp(36px,8vw,52px)" : "clamp(48px,5vw,72px)", fontWeight: 600, color: "#F0E8E0", lineHeight: 1.0, marginBottom: 16 }}>{f.name}</h1>
           <div style={{ width: 56, height: 1, background: `linear-gradient(90deg, ${gold}, transparent)`, marginBottom: 16 }} />
-          <p style={{ fontFamily: serif, fontSize: isMobile ? 15 : 18, color: "#C8C0B8", fontStyle: "italic", lineHeight: 1.55 }}>{f.headline}</p>
+          <p style={{ fontFamily: serif, fontSize: isMobile ? 15 : 18, color: "#FBF7EE", fontStyle: "italic", lineHeight: 1.55 }}>{f.headline}</p>
         </div>
       </div>
 
@@ -2778,7 +2778,7 @@ function FacultyProfilePage({ slug, setPage }) {
         <div style={{ background: "#080808", padding: isMobile ? "48px 28px" : "72px 72px" }}>
           <div style={{ width: 36, height: 1, background: `linear-gradient(90deg, ${gold}, transparent)`, marginBottom: 36 }} />
           {f.paras.map((para, i) => (
-            <p key={i} style={{ fontFamily: sans, fontSize: isMobile ? 14 : 15, lineHeight: 1.95, color: "#C0B8B0", fontWeight: 300, marginBottom: 22 }}>{para}</p>
+            <p key={i} style={{ fontFamily: sans, fontSize: isMobile ? 14 : 15, lineHeight: 1.95, color: "#FBF7EE", fontWeight: 300, marginBottom: 22 }}>{para}</p>
           ))}
           <div style={{ marginTop: 48 }}>
             <button onClick={() => setPage("apply")} style={{ fontFamily: sans, background: gold, color: "#000", padding: "13px 36px", fontSize: 11, fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", border: "none", cursor: "pointer" }}>Apply to Study Under {f.name.split(" ")[0]} →</button>
@@ -2792,7 +2792,7 @@ function FacultyProfilePage({ slug, setPage }) {
             {f.credentials.map((cr, i) => (
               <div key={i} style={{ display: "flex", gap: 14, padding: "14px 0", borderBottom: "1px solid rgba(199,171,117,.07)", alignItems: "flex-start" }}>
                 <div style={{ width: 4, height: 4, borderRadius: "50%", background: gold, flexShrink: 0, marginTop: 7 }} />
-                <span style={{ fontFamily: sans, fontSize: 12, color: "#C0B8B0", fontWeight: 300, lineHeight: 1.65 }}>{cr}</span>
+                <span style={{ fontFamily: sans, fontSize: 12, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.65 }}>{cr}</span>
               </div>
             ))}
           </div>
@@ -2800,7 +2800,7 @@ function FacultyProfilePage({ slug, setPage }) {
             <p style={{ fontFamily: sans, fontSize: 10, letterSpacing: "0.35em", color: "#9A9290", fontWeight: 600, textTransform: "uppercase", marginBottom: 16 }}>Expertise</p>
             <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
               {f.tags.map((t, i) => (
-                <span key={i} style={{ fontFamily: sans, fontSize: 9, color: "#C0B8B0", letterSpacing: "0.1em", border: "1px solid rgba(199,171,117,.15)", padding: "4px 10px", textTransform: "uppercase" }}>{t}</span>
+                <span key={i} style={{ fontFamily: sans, fontSize: 9, color: "#FBF7EE", letterSpacing: "0.1em", border: "1px solid rgba(199,171,117,.15)", padding: "4px 10px", textTransform: "uppercase" }}>{t}</span>
               ))}
             </div>
           </div>
@@ -2871,7 +2871,7 @@ function FacultyPage({ setPage }) {
           <h1 style={{ fontFamily: serif, fontSize: isMobile ? "clamp(32px,7vw,48px)" : "clamp(44px,5vw,64px)", fontWeight: 600, color: "#E8E0D8", lineHeight: 1.05, marginBottom: 16 }}>
             The people<br /><span style={{ color: gold }}>behind the programme.</span>
           </h1>
-          <p style={{ fontFamily: sans, fontSize: 15, lineHeight: 1.85, color: "#C0B8B0", fontWeight: 300, maxWidth: 580 }}>
+          <p style={{ fontFamily: sans, fontSize: 15, lineHeight: 1.85, color: "#FBF7EE", fontWeight: 300, maxWidth: 580 }}>
             Every faculty member at Excalibur has operated at the highest levels of their respective field. They are not career academics. They are the people who built, led, and created the things they now teach.
           </p>
         </Fade>
@@ -2895,7 +2895,7 @@ function FacultyPage({ setPage }) {
                 <p style={{ fontFamily: sans, fontSize: 10, color: gold, letterSpacing: "0.2em", textTransform: "uppercase", marginBottom: 16, fontWeight: 600 }}>{f.role}</p>
                 <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
                   {f.tags.map((t, i) => (
-                    <span key={i} style={{ fontFamily: sans, fontSize: 9, color: "#C0B8B0", letterSpacing: "0.1em", border: "1px solid rgba(199,171,117,.15)", padding: "3px 8px", textTransform: "uppercase" }}>{t}</span>
+                    <span key={i} style={{ fontFamily: sans, fontSize: 9, color: "#FBF7EE", letterSpacing: "0.1em", border: "1px solid rgba(199,171,117,.15)", padding: "3px 8px", textTransform: "uppercase" }}>{t}</span>
                   ))}
                 </div>
               </div>
@@ -2904,7 +2904,7 @@ function FacultyPage({ setPage }) {
               <div>
                 <div style={{ width: 32, height: 1, background: `linear-gradient(90deg, ${gold}, transparent)`, marginBottom: 24 }} />
                 {f.bio.split("\n\n").map((para, i) => (
-                  <p key={i} style={{ fontFamily: sans, fontSize: 14, lineHeight: 1.9, color: "#C0B8B0", fontWeight: 300, marginBottom: 18 }}>{para}</p>
+                  <p key={i} style={{ fontFamily: sans, fontSize: 14, lineHeight: 1.9, color: "#FBF7EE", fontWeight: 300, marginBottom: 18 }}>{para}</p>
                 ))}
                 <button onClick={() => setPage("apply")} style={{ fontFamily: sans, background: "transparent", border: `1px solid rgba(199,171,117,.3)`, color: gold, padding: "10px 22px", fontSize: 11, fontWeight: 600, letterSpacing: "0.15em", textTransform: "uppercase", cursor: "pointer", marginTop: 8 }}>Apply to Study Under This Faculty →</button>
               </div>
@@ -2921,6 +2921,60 @@ function FacultyPage({ setPage }) {
           <button onClick={() => setPage("apply")} style={{ fontFamily: sans, background: gold, color: "#000", padding: "14px 44px", fontSize: 13, fontWeight: 700, letterSpacing: 2.5, border: "none", cursor: "pointer", marginTop: 28 }}>APPLY NOW</button>
         </Fade>
       </div>
+    </div>
+  );
+}
+
+
+// ─────────────────────────────────────────────
+// PAGE: ABOUT
+// ─────────────────────────────────────────────
+function AboutPage({ setPage }) {
+  const isMobile = useIsMobile();
+  return (
+    <div style={{ background: "#000", paddingTop: 80 }}>
+      {/* Hero */}
+      <div style={{ position: "relative", height: isMobile ? 340 : 500, overflow: "hidden" }}>
+        <img src="https://i.imgur.com/y5bXKH5.jpeg" alt="Excalibur Academy" style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center 40%", filter: "brightness(0.4)" }} />
+        <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to bottom, rgba(0,0,0,.3) 0%, rgba(0,0,0,.85) 100%)" }} />
+        <div style={{ position: "absolute", bottom: isMobile ? 36 : 64, left: isMobile ? 28 : 72, maxWidth: 620 }}>
+          <Eyebrow>About Excalibur Academy</Eyebrow>
+          <h1 style={{ fontFamily: serif, fontSize: isMobile ? "clamp(32px,7vw,44px)" : "clamp(44px,5vw,64px)", fontWeight: 600, color: "#F0E8E0", lineHeight: 1.05, marginTop: 10, marginBottom: 14 }}>The institution we wish had existed.</h1>
+          <div style={{ width: 48, height: 1, background: `linear-gradient(90deg, ${gold}, transparent)` }} />
+        </div>
+      </div>
+      {/* Content */}
+      <div style={{ maxWidth: 1100, margin: "0 auto", padding: isMobile ? "52px 24px" : "80px 80px" }}>
+        <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: isMobile ? 40 : 80 }}>
+          <div>
+            <Eyebrow>Our Mission</Eyebrow>
+            <SectionTitle>A different kind of formation.</SectionTitle>
+            <p style={{ fontFamily: sans, fontSize: 15, lineHeight: 1.9, color: "#FBF7EE", fontWeight: 300, marginTop: 18, marginBottom: 18 }}>Excalibur Academy is a premier institute for entrepreneurship, business, and leadership for ambitious teenagers aged 16–17 in Orange County, California. We are building the institution we wish had existed when we were young — one where students are mentored by accomplished adults who have built companies, led teams, and operated under real stakes.</p>
+            <p style={{ fontFamily: sans, fontSize: 15, lineHeight: 1.9, color: "#FBF7EE", fontWeight: 300, marginBottom: 18 }}>Our sessions take place in historic estates and private venues across Newport Beach, Laguna Beach, and San Clemente, inspired by the traditions of European elite education. Every session follows a rigorous three-block format: rhetoric and public speaking, real-world business analysis, and deep domain instruction from a rotating specialist.</p>
+            <p style={{ fontFamily: sans, fontSize: 15, lineHeight: 1.9, color: "#FBF7EE", fontWeight: 300 }}>Our faculty are not career academics. They are entrepreneurs, executives, investors, and professionals who teach from lived experience.</p>
+          </div>
+          <div>
+            <Eyebrow>Why This Matters Now</Eyebrow>
+            <SectionTitle>The skills school doesn't teach.</SectionTitle>
+            <p style={{ fontFamily: sans, fontSize: 15, lineHeight: 1.9, color: "#FBF7EE", fontWeight: 300, marginTop: 18, marginBottom: 18 }}>The skills that determine success — public speaking, strategic thinking, financial judgment, leadership, and the ability to persuade — are largely absent from traditional education. At the same time, AI is rapidly reshaping industries and dissolving career paths once considered secure.</p>
+            <p style={{ fontFamily: sans, fontSize: 15, lineHeight: 1.9, color: "#FBF7EE", fontWeight: 300, marginBottom: 32 }}>What cannot be replaced are human capacities: confidence under pressure, ownership of outcomes, the ability to lead, to sell an idea, to recover from failure, and to act when the path is uncertain. We exist to prepare the young people who will lead what comes next.</p>
+            <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
+              <button onClick={() => setPage("programs")} style={{ fontFamily: sans, background: gold, color: "#000", padding: "12px 28px", fontSize: 11, fontWeight: 700, letterSpacing: "0.15em", textTransform: "uppercase", border: "none", cursor: "pointer" }}>EXPLORE PROGRAMS</button>
+              <button onClick={() => setPage("faculty")} style={{ fontFamily: sans, background: "transparent", border: `1px solid rgba(199,171,117,.4)`, color: gold, padding: "12px 28px", fontSize: 11, fontWeight: 600, letterSpacing: "0.15em", textTransform: "uppercase", cursor: "pointer" }}>MEET THE FACULTY</button>
+            </div>
+          </div>
+        </div>
+        {/* Stats */}
+        <div style={{ marginTop: 60, display: "grid", gridTemplateColumns: isMobile ? "repeat(2,1fr)" : "repeat(4,1fr)", gap: 2, background: "#111" }}>
+          {[["16–17", "Age range"], ["25", "Students per cohort"], ["10", "Months flagship"], ["8", "Curriculum modules"]].map(([v, l], i) => (
+            <div key={i} style={{ background: "#080808", padding: "28px 20px", textAlign: "center", borderTop: `2px solid ${i === 0 ? gold : "rgba(199,171,117,.1)"}` }}>
+              <div style={{ fontFamily: serif, fontSize: 36, fontWeight: 600, color: gold, lineHeight: 1 }}>{v}</div>
+              <div style={{ fontFamily: sans, color: "#FBF7EE", fontSize: 11, marginTop: 8 }}>{l}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+      <SoireeInviteBlock />
     </div>
   );
 }
@@ -2952,7 +3006,7 @@ function ComingSoonPage({ onUnlock }) {
 
   return (
     <div style={{ background: "#000", minHeight: "100vh", display: "flex", flexDirection: "column" }}>
-      <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=Forum&display=swap" rel="stylesheet" />
+      <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=Forum&display=swap" rel="stylesheet" />
       <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
       <style>{`*{margin:0;padding:0;box-sizing:border-box}::selection{background:rgba(199,171,117,.2);color:#fff}body{overflow-x:hidden}@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-8px)}75%{transform:translateX(8px)}}`}</style>
 
@@ -2979,8 +3033,8 @@ function ComingSoonPage({ onUnlock }) {
         </p>
 
         {/* Tagline from homepage */}
-        <p style={{ fontFamily: sans, fontSize: isMobile ? 14 : 16, color: "#C8C0B8", lineHeight: 1.75, maxWidth: 640, marginBottom: 40, fontWeight: 300 }}>
-          A premier institute where real entrepreneurs, investors, top CEOs, keynote speakers and distinguished professionals teach the next generation to lead the world — not follow it.
+        <p style={{ fontFamily: sans, fontSize: isMobile ? 14 : 16, color: "#FBF7EE", lineHeight: 1.75, maxWidth: 640, marginBottom: 40, fontWeight: 300 }}>
+          A premier institute where real entrepreneurs, investors, top executives, keynote speakers and distinguished professionals teach the next generation to lead the world — not follow it.
         </p>
 
         {/* Status banner */}
@@ -3000,14 +3054,14 @@ function ComingSoonPage({ onUnlock }) {
             <div key={i} style={{ background: "#080808", padding: "24px 22px", borderTop: `2px solid ${p.flagship ? gold : "rgba(199,171,117,.2)"}` }}>
               <p style={{ fontFamily: sans, fontSize: 10, letterSpacing: "0.4em", color: gold, fontWeight: 600, marginBottom: 12, textTransform: "uppercase" }}>{p.label}</p>
               <p style={{ fontFamily: serif, fontSize: 15, color: "#E8E0D8", marginBottom: 6 }}>{p.dates}</p>
-              <p style={{ fontFamily: sans, fontSize: 11, color: "#C8C0B8", fontWeight: 300 }}>{p.detail}</p>
+              <p style={{ fontFamily: sans, fontSize: 11, color: "#FBF7EE", fontWeight: 300 }}>{p.detail}</p>
             </div>
           ))}
         </div>
 
         {/* Faculty credentials — refined split panels */}
         <div style={{ width: "100%", maxWidth: 880, marginBottom: 52 }}>
-          <p style={{ fontFamily: sans, fontSize: 12, letterSpacing: "0.4em", color: "#C8C0B8", fontWeight: 600, textTransform: "uppercase", marginBottom: 20 }}>Lead Faculty</p>
+          <p style={{ fontFamily: sans, fontSize: 12, letterSpacing: "0.4em", color: "#FBF7EE", fontWeight: 600, textTransform: "uppercase", marginBottom: 20 }}>Lead Faculty</p>
           <div style={{ background: "#08080A", border: "1px solid rgba(199,171,117,.12)", position: "relative", overflow: "hidden" }}>
             {/* Gold top accent line */}
             <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 1, background: `linear-gradient(90deg, transparent, ${gold}, transparent)` }} />
@@ -3020,7 +3074,7 @@ function ComingSoonPage({ onUnlock }) {
               {/* Faculty 1 */}
               <div style={{ padding: isMobile ? "0" : "0 40px 0 0", textAlign: "center" }}>
                 <div style={{ width: 32, height: 1, background: `linear-gradient(90deg, transparent, ${gold})`, margin: "0 auto 20px" }} />
-                <p style={{ fontFamily: serif, fontSize: isMobile ? 14 : 15, lineHeight: 1.9, color: "#C8C0B8", fontWeight: 400 }}>
+                <p style={{ fontFamily: serif, fontSize: isMobile ? 14 : 15, lineHeight: 1.9, color: "#FBF7EE", fontWeight: 400 }}>
                   A CEO who built the world's first autonomous racing series, led the Formula BMW program — developing multiple Formula 1 World Champions — and oversaw a $13B NASDAQ listing. Secured over $100M in institutional funding. Guinness World Record holder and professional racing driver.
                 </p>
                 <div style={{ width: 32, height: 1, background: `linear-gradient(90deg, ${gold}, transparent)`, margin: "20px auto 0" }} />
@@ -3030,7 +3084,7 @@ function ComingSoonPage({ onUnlock }) {
               {/* Faculty 2 */}
               <div style={{ padding: isMobile ? "0" : "0 0 0 40px", textAlign: "center" }}>
                 <div style={{ width: 32, height: 1, background: `linear-gradient(90deg, transparent, ${gold})`, margin: "0 auto 20px" }} />
-                <p style={{ fontFamily: serif, fontSize: isMobile ? 14 : 15, lineHeight: 1.9, color: "#C8C0B8", fontWeight: 400 }}>
+                <p style={{ fontFamily: serif, fontSize: isMobile ? 14 : 15, lineHeight: 1.9, color: "#FBF7EE", fontWeight: 400 }}>
                   A former Citigroup Managing Director with 100+ M&A transactions and 600+ CEO advisory engagements. EVP and CFO of two NYSE-listed companies. Georgetown MBA Professor, TEDx speaker, published author, and member of three corporate boards.
                 </p>
                 <div style={{ width: 32, height: 1, background: `linear-gradient(90deg, ${gold}, transparent)`, margin: "20px auto 0" }} />
@@ -3059,7 +3113,7 @@ function ComingSoonPage({ onUnlock }) {
                 Academy Launch and Family Information Soirée<br />at the Mediterranean Estate in San Clemente
               </p>
               <div style={{ width: 48, height: 1, background: `linear-gradient(90deg, transparent, ${gold}, transparent)`, margin: "0 auto 20px" }} />
-              <p style={{ fontFamily: sans, fontSize: isMobile ? 12 : 13, color: "#C0B8B0", fontWeight: 300, lineHeight: 1.85, maxWidth: 520, margin: "0 auto 18px" }}>
+              <p style={{ fontFamily: sans, fontSize: isMobile ? 12 : 13, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.85, maxWidth: 520, margin: "0 auto 18px" }}>
                 An intimate gathering for a select number of families — featuring faculty introductions, a cocktail reception, a comprehensive information session, and the opportunity to meet the founding team and those leading the programmes.
               </p>
               <p style={{ fontFamily: serif, fontSize: 12, color: gold, letterSpacing: "0.18em", marginBottom: 32 }}>By personal invitation only.</p>
@@ -3090,7 +3144,7 @@ function ComingSoonPage({ onUnlock }) {
               <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 1, background: `linear-gradient(90deg, transparent, ${gold}, transparent)` }} />
               <span style={{ fontFamily: serif, fontSize: 28, color: gold, display: "block", marginBottom: 16 }}>✦</span>
               <p style={{ fontFamily: serif, fontSize: 22, color: "#E8E0D8", marginBottom: 12 }}>Thank you.</p>
-              <p style={{ fontFamily: sans, fontSize: 14, color: "#C8C0B8", fontWeight: 300, lineHeight: 1.8 }}>We will be in touch personally with details for the May soirée. We look forward to welcoming your family.</p>
+              <p style={{ fontFamily: sans, fontSize: 14, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.8 }}>We will be in touch personally with details for the May soirée. We look forward to welcoming your family.</p>
             </div>
           </div>
         )}
@@ -3160,6 +3214,7 @@ export default function ExcaliburApp() {
     if (page === "full-program") return <FullProgramPage setPage={setPage} />;
     if (page === "intensive") return <IntensivePage setPage={setPage} />;
     if (page === "beyond") return <BeyondPage setPage={setPage} />;
+    if (page === "about") return <AboutPage setPage={setPage} />;
     if (page === "faculty") return <FacultyPage setPage={setPage} />;
     if (page.startsWith("faculty:")) return <FacultyProfilePage slug={page.replace("faculty:", "")} setPage={setPage} />;
     if (page === "apply") return <ApplyPage setPage={setPage} />;
@@ -3168,12 +3223,12 @@ export default function ExcaliburApp() {
   };
 
   return (
-    <div style={{ background: "#000", color: "#D8D0C8", minHeight: "100vh", fontFamily: sans }}>
+    <div style={{ background: "#000", color: "#FBF7EE", minHeight: "100vh", fontFamily: sans }}>
       <ScrollProgress />
       <ShimmerStyle />
-      <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=Forum&display=swap" rel="stylesheet" />
+      <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=Forum&display=swap" rel="stylesheet" />
       <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
-      <style>{`*{margin:0;padding:0;box-sizing:border-box}::selection{background:rgba(199,171,117,.2);color:#fff}html{scroll-behavior:smooth}body{overflow-x:hidden}button{cursor:pointer;font-family:'DM Sans',sans-serif}img{max-width:100%}`}</style>
+      <style>{`*{margin:0;padding:0;box-sizing:border-box}::selection{background:rgba(199,171,117,.2);color:#fff}html{scroll-behavior:smooth}body{overflow-x:hidden}button{cursor:pointer;font-family:'Lato',sans-serif}img{max-width:100%}`}</style>
       <Nav page={page} setPage={setPage} />
 
       {renderPage()}
