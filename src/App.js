@@ -436,7 +436,7 @@ const summerSchedule = [
   { time: "10:15 AM", dur: "90 min", block: "Specialist Deep Session", instructor: "Rotating Specialist", role: "Industry Expert · Executive", img: null, desc: "A rotating specialist from business, finance, AI, or their sector delivers deep-content instruction. One discipline per week — financial literacy, business models, AI & technology, sales & marketing. Real case studies, applied exercises, and live Q&A with someone who has operated at the highest level of their field.", color: "#A89060" },
   { time: "11:45 AM", dur: "30 min", block: "Snack Break", instructor: null, role: null, img: null, desc: "A structured break. Students debrief with each other and instructors on what they just covered. Often where the most honest conversations happen.", color: "#555" },
   { time: "12:15 PM", dur: "60 min", block: "Distinguished Guest Speaker", instructor: "Guest Expert", role: "Entrepreneur · Executive · Investor", img: null, desc: "A different industry professional every single day. Entrepreneurs, investors, executives, and innovators who share their story, answer real questions, and give students direct access to the kind of perspective most adults never get. Students submit questions in advance. Every speaker is vetted by the Lead Faculty.", color: "#C7AB75" },
-  { time: "1:15 PM", dur: "30 min", block: "Lunch", instructor: null, role: null, img: null, desc: "Catered lunch. Informal networking with guest speakers and faculty. Students practice the social skills they are learning in a real setting.", color: "#555" },
+  { time: "1:15 PM", dur: "30 min", block: "Lunch", instructor: null, role: null, img: null, desc: "Catered lunch from a rotating selection of local restaurants — varied cuisine, served as a first, second, and third course. Informal networking with guest speakers and faculty continues over the table. Students practice the social arts they are learning in a real, relaxed setting.", color: "#555" },
   { time: "1:45 PM", dur: "60 min", block: "The War Room — Real World Block", instructor: "Chip Pankow", role: "Lead Program Director", img: "https://i.imgur.com/Ckny7HG.png", desc: "Chip leads the session's culminating block. Rotating formats: 'What Would You Have Done?' (real crisis scenarios — students decide, then Chip reveals what actually happened), 'Your Move' (startup rescue simulations with real constraints), and 'Apply It Now' (immediate application of the specialist's content under pressure).", color: "#C7AB75" },
   { time: "2:45 PM", dur: "15 min", block: "Debrief & Preview", instructor: "Chip Pankow", role: "Lead Program Director", img: "https://i.imgur.com/Ckny7HG.png", desc: "Each day closes with a structured debrief. What was learned. What surprised you. What you will do differently. A preview of tomorrow. Students leave with one specific thing to think about overnight.", color: "#A89060" },
 ];
@@ -450,7 +450,7 @@ const flagshipWeekdaySchedule = [
 const flagshipSaturdaySchedule = [
   { time: "10:30 AM", dur: "40 min", block: "Public Speaking & Rhetoric — Opening", instructor: "Christopher Sanders", role: "Public Speaking Senior Instructor", img: "https://i.imgur.com/EELzLmn.jpeg", desc: "Saturday opens identically to weekday sessions: Christopher Sanders leads the speaking warm-up and drills. The standard does not change based on the day.", color: "#C7AB75" },
   { time: "11:10 AM", dur: "50 min", block: "The War Room — Real World Block", instructor: "Chip Pankow", role: "Lead Program Director", img: "https://i.imgur.com/Ckny7HG.png", desc: "Chip leads the War Room block immediately following the opening. No wait time. No gaps. The session builds momentum consecutively.", color: "#C7AB75" },
-  { time: "12:00 PM", dur: "30 min", block: "Lunch Break", instructor: null, role: null, img: null, desc: "Structured lunch. Informal conversation between students and faculty. A deliberate part of the Excalibur experience — social intelligence is not separate from the curriculum.", color: "#555" },
+  { time: "12:00 PM", dur: "30 min", block: "Lunch Break", instructor: null, role: null, img: null, desc: "Catered lunch from local restaurants — first, second, and third course, varied cuisine. Informal conversation between students and faculty. A deliberate part of the Excalibur experience — social intelligence is not separate from the curriculum.", color: "#555" },
   { time: "12:30 PM", dur: "60 min", block: "Monthly Specialist — Deep Session", instructor: "Rotating Specialist", role: "Domain Expert · Practitioner", img: null, desc: "Saturday's specialist session is longer than weekday sessions — 60 minutes of deep-content instruction. Students have more time to go further into the material, work through case studies, and engage directly with the specialist.", color: "#A89060" },
   { time: "1:30 PM", dur: "60 min", block: "Public Speaking — Advanced Session", instructor: "Christopher Sanders", role: "Public Speaking Senior Instructor", img: "https://i.imgur.com/EELzLmn.jpeg", desc: "Saturday's second speaking block. Advanced rhetoric, formal pitch structure, debate formats, and persuasive communication. Christopher returns to take students deeper — from mechanics to mastery. The Saturday session is the program's most intensive speaking training of the week.", color: "#C7AB75" },
 ];
@@ -474,68 +474,106 @@ const fieldTrips = [
 // ─────────────────────────────────────────────
 // INTERACTIVE DAILY SCHEDULE COMPONENT
 // ─────────────────────────────────────────────
-function DailyScheduleBlock({ schedule, title, subtitle }) {
-  const [active, setActive] = useState(0);
-  const isMobile = useIsMobile();
-  const safeActive = Math.min(active, (schedule || []).length - 1);
-  const block = (schedule || [])[safeActive] || {};
+function ScheduleDetail({ block }) {
+  if (!block || !block.block) return null;
   const isBreak = !block.instructor;
+  return (
+    <div className="mod-content" style={{ padding: "20px 20px", background: "rgba(199,171,117,.03)", borderTop: "1px solid rgba(199,171,117,.1)", borderBottom: "1px solid rgba(199,171,117,.05)" }}>
+      {isBreak ? (
+        <>
+          <p style={{ fontFamily: serif, fontSize: 16, color: "#D8D0C8", marginBottom: 8 }}>{block.block}</p>
+          <p style={{ fontFamily: sans, fontSize: 13, color: "#B0A8A0", fontWeight: 300, lineHeight: 1.75 }}>{block.desc}</p>
+        </>
+      ) : (
+        <>
+          <div style={{ display: "flex", gap: 12, alignItems: "flex-start", marginBottom: 14 }}>
+            {block.img ? (
+              <div style={{ width: 44, height: 44, flexShrink: 0, overflow: "hidden", border: "1px solid rgba(199,171,117,.2)", borderRadius: "50%" }}>
+                <img src={block.img} alt={block.instructor || ""} style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center top" }} onError={e => e.target.style.display = "none"} />
+              </div>
+            ) : (
+              <div style={{ width: 44, height: 44, flexShrink: 0, border: "1px solid rgba(199,171,117,.15)", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                <span style={{ fontFamily: serif, fontSize: 16, color: "rgba(199,171,117,.3)" }}>✦</span>
+              </div>
+            )}
+            <div>
+              <p style={{ fontFamily: serif, fontSize: 15, color: "#E8E0D8", fontWeight: 600, marginBottom: 2 }}>{block.instructor}</p>
+              <p style={{ fontFamily: sans, fontSize: 9, color: gold, letterSpacing: "0.1em", textTransform: "uppercase" }}>{block.role}</p>
+            </div>
+          </div>
+          <p style={{ fontFamily: serif, fontSize: 15, color: gold, fontStyle: "italic", marginBottom: 10 }}>{block.block}</p>
+          <p style={{ fontFamily: sans, fontSize: 13, lineHeight: 1.85, color: "#C0B8B0", fontWeight: 300 }}>{block.desc}</p>
+        </>
+      )}
+    </div>
+  );
+}
+
+function DailyScheduleBlock({ schedule, title, subtitle }) {
+  const [active, setActive] = useState(null);
+  const isMobile = useIsMobile();
+
+  const toggle = (i) => setActive(active === i ? null : i);
 
   return (
     <div style={{ background: "#07060A", border: "1px solid rgba(199,171,117,.1)" }}>
       {/* Title */}
-      <div style={{ padding: isMobile ? "24px 20px 16px" : "28px 36px 20px", borderBottom: "1px solid rgba(199,171,117,.07)" }}>
+      <div style={{ padding: isMobile ? "20px 20px 14px" : "28px 36px 20px", borderBottom: "1px solid rgba(199,171,117,.07)" }}>
         <p style={{ fontFamily: sans, fontSize: 10, letterSpacing: "0.35em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 6 }}>{title}</p>
         <p style={{ fontFamily: serif, fontSize: isMobile ? 13 : 15, color: "#B0A8A0", fontStyle: "italic" }}>{subtitle}</p>
       </div>
-      <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "280px 1fr" }}>
-        {/* Timeline list */}
-        <div style={{ borderRight: isMobile ? "none" : "1px solid rgba(199,171,117,.08)", borderBottom: isMobile ? "1px solid rgba(199,171,117,.08)" : "none" }}>
-          {schedule.map((s, i) => (
-            <div key={i} onClick={() => setActive(i)} style={{ padding: isMobile ? "12px 20px" : "14px 24px", cursor: "pointer", borderLeft: `3px solid ${active === i ? gold : "transparent"}`, background: active === i ? "rgba(199,171,117,.04)" : "transparent", borderBottom: "1px solid rgba(199,171,117,.05)", transition: "all .2s", display: "flex", gap: 12, alignItems: "flex-start" }}>
-              <div style={{ flexShrink: 0, paddingTop: 2 }}>
-                <div style={{ fontFamily: sans, fontSize: 10, color: active === i ? gold : "#706860", fontWeight: 600, letterSpacing: "0.05em", whiteSpace: "nowrap" }}>{s.time}</div>
-                <div style={{ fontFamily: sans, fontSize: 9, color: "#504840", marginTop: 2 }}>{s.dur}</div>
+
+      {isMobile ? (
+        /* MOBILE: each row is an accordion — detail expands inline directly below */
+        <div>
+          {(schedule || []).map((s, i) => (
+            <div key={i}>
+              <div onClick={() => toggle(i)} style={{ padding: "14px 20px", cursor: "pointer", borderLeft: `3px solid ${active === i ? gold : "transparent"}`, background: active === i ? "rgba(199,171,117,.05)" : "transparent", borderBottom: "1px solid rgba(199,171,117,.05)", display: "flex", gap: 12, alignItems: "flex-start", transition: "all .2s" }}>
+                <div style={{ flexShrink: 0, minWidth: 52 }}>
+                  <div style={{ fontFamily: sans, fontSize: 10, color: active === i ? gold : "#706860", fontWeight: 600, letterSpacing: "0.04em" }}>{s.time}</div>
+                  <div style={{ fontFamily: sans, fontSize: 9, color: "#504840", marginTop: 1 }}>{s.dur}</div>
+                </div>
+                <div style={{ flex: 1 }}>
+                  <div style={{ fontFamily: serif, fontSize: 14, color: active === i ? gold : "#C8C0B8", fontWeight: active === i ? 600 : 400, lineHeight: 1.3 }}>{s.block}</div>
+                  {s.instructor && <div style={{ fontFamily: sans, fontSize: 9, color: active === i ? "rgba(199,171,117,.6)" : "#605850", marginTop: 2 }}>{s.instructor}</div>}
+                </div>
+                <span style={{ color: active === i ? gold : "#504840", fontSize: 16, transition: "transform .2s", transform: active === i ? "rotate(45deg)" : "none", display: "inline-block", flexShrink: 0 }}>+</span>
               </div>
-              <div>
-                <div style={{ fontFamily: serif, fontSize: isMobile ? 13 : 14, color: active === i ? gold : "#C8C0B8", fontWeight: active === i ? 600 : 400, lineHeight: 1.3 }}>{s.block}</div>
-                {s.instructor && <div style={{ fontFamily: sans, fontSize: 9, color: active === i ? "rgba(199,171,117,.6)" : "#605850", marginTop: 2, letterSpacing: "0.06em" }}>{s.instructor}</div>}
-              </div>
+              {/* Detail expands DIRECTLY below this row */}
+              {active === i && <ScheduleDetail block={s} />}
             </div>
           ))}
         </div>
-        {/* Detail panel */}
-        <div key={active} className="mod-content" style={{ padding: isMobile ? "24px 20px" : "36px 40px", minHeight: isMobile ? "auto" : 280 }}>
-          {isBreak ? (
-            <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", height: "100%" }}>
-              <p style={{ fontFamily: serif, fontSize: isMobile ? 18 : 22, color: "#D8D0C8", marginBottom: 12 }}>{block.block}</p>
-              <p style={{ fontFamily: sans, fontSize: 13, color: "#B0A8A0", fontWeight: 300, lineHeight: 1.8 }}>{block.desc}</p>
-            </div>
-          ) : (
-            <>
-              <div style={{ display: "flex", gap: 16, alignItems: "flex-start", marginBottom: 20 }}>
-                {block.img && (
-                  <div style={{ width: 52, height: 52, flexShrink: 0, overflow: "hidden", border: "1px solid rgba(199,171,117,.2)", borderRadius: "50%" }}>
-                    <img src={block.img} alt={block.instructor} style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center top" }} onError={e => e.target.style.display = "none"} />
-                  </div>
-                )}
-                {!block.img && (
-                  <div style={{ width: 52, height: 52, flexShrink: 0, border: "1px solid rgba(199,171,117,.2)", display: "flex", alignItems: "center", justifyContent: "center" }}>
-                    <span style={{ fontFamily: serif, fontSize: 18, color: "rgba(199,171,117,.3)" }}>✦</span>
-                  </div>
-                )}
+      ) : (
+        /* DESKTOP: sidebar + right detail panel */
+        <div style={{ display: "grid", gridTemplateColumns: "280px 1fr" }}>
+          <div style={{ borderRight: "1px solid rgba(199,171,117,.08)" }}>
+            {(schedule || []).map((s, i) => (
+              <div key={i} onClick={() => toggle(i)} style={{ padding: "14px 24px", cursor: "pointer", borderLeft: `3px solid ${active === i ? gold : "transparent"}`, background: active === i ? "rgba(199,171,117,.04)" : "transparent", borderBottom: "1px solid rgba(199,171,117,.05)", transition: "all .2s", display: "flex", gap: 12, alignItems: "flex-start" }}>
+                <div style={{ flexShrink: 0, paddingTop: 2 }}>
+                  <div style={{ fontFamily: sans, fontSize: 10, color: active === i ? gold : "#706860", fontWeight: 600, letterSpacing: "0.05em", whiteSpace: "nowrap" }}>{s.time}</div>
+                  <div style={{ fontFamily: sans, fontSize: 9, color: "#504840", marginTop: 2 }}>{s.dur}</div>
+                </div>
                 <div>
-                  <p style={{ fontFamily: serif, fontSize: isMobile ? 16 : 19, color: "#E8E0D8", fontWeight: 600, marginBottom: 3 }}>{block.instructor}</p>
-                  <p style={{ fontFamily: sans, fontSize: 9, color: gold, letterSpacing: "0.12em", textTransform: "uppercase" }}>{block.role}</p>
+                  <div style={{ fontFamily: serif, fontSize: 14, color: active === i ? gold : "#C8C0B8", fontWeight: active === i ? 600 : 400, lineHeight: 1.3 }}>{s.block}</div>
+                  {s.instructor && <div style={{ fontFamily: sans, fontSize: 9, color: active === i ? "rgba(199,171,117,.6)" : "#605850", marginTop: 2, letterSpacing: "0.06em" }}>{s.instructor}</div>}
                 </div>
               </div>
-              <div style={{ width: 28, height: 1, background: `linear-gradient(90deg, ${gold}, transparent)`, marginBottom: 16 }} />
-              <p style={{ fontFamily: serif, fontSize: isMobile ? 16 : 19, color: gold, fontStyle: "italic", marginBottom: 14 }}>{block.block}</p>
-              <p style={{ fontFamily: sans, fontSize: isMobile ? 13 : 14, lineHeight: 1.85, color: "#C0B8B0", fontWeight: 300 }}>{block.desc}</p>
-            </>
-          )}
+            ))}
+          </div>
+          <div style={{ background: "#080808" }}>
+            {active !== null && (schedule || [])[active] ? (
+              <div key={active} className="mod-content" style={{ padding: "36px 40px", minHeight: 280 }}>
+                <ScheduleDetail block={(schedule || [])[active]} />
+              </div>
+            ) : (
+              <div style={{ padding: "36px 40px", display: "flex", alignItems: "center", justifyContent: "center", minHeight: 280 }}>
+                <p style={{ fontFamily: serif, fontSize: 15, color: "rgba(199,171,117,.25)", fontStyle: "italic" }}>Select a time block to see details</p>
+              </div>
+            )}
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 }
@@ -644,6 +682,45 @@ function ModulePage({ slug, setPage }) {
         </Fade>
       </div>
     </div>
+  );
+}
+
+// ── SOIRÉE INVITE BLOCK — reusable across pages ──
+function SoireeInviteBlock() {
+  const [email, setEmail] = useState("");
+  const [submitted, setSubmitted] = useState(false);
+  const isMobile = useIsMobile();
+  return (
+    <section style={{ padding: isMobile ? "60px 16px" : "80px 40px", background: "#060506" }}>
+      <div style={{ maxWidth: 880, margin: "0 auto" }}>
+        <div style={{ background: "#050505", border: `1px solid rgba(199,171,117,.55)`, padding: isMobile ? "36px 28px" : "52px 60px", position: "relative" }} className="soiree-card">
+          <div style={{ position: "absolute", top: 12, left: 12, width: 16, height: 16, borderTop: `1px solid ${gold}`, borderLeft: `1px solid ${gold}` }} />
+          <div style={{ position: "absolute", top: 12, right: 12, width: 16, height: 16, borderTop: `1px solid ${gold}`, borderRight: `1px solid ${gold}` }} />
+          <div style={{ position: "absolute", bottom: 12, left: 12, width: 16, height: 16, borderBottom: `1px solid ${gold}`, borderLeft: `1px solid ${gold}` }} />
+          <div style={{ position: "absolute", bottom: 12, right: 12, width: 16, height: 16, borderBottom: `1px solid ${gold}`, borderRight: `1px solid ${gold}` }} />
+          {!submitted ? (
+            <div style={{ textAlign: "center" }}>
+              <p style={{ fontFamily: sans, fontSize: 10, letterSpacing: "0.4em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 14 }}>Family Information Event · May 23, 2026</p>
+              <p style={{ fontFamily: serif, fontSize: isMobile ? 20 : 26, color: "#E8E0D8", lineHeight: 1.35, marginBottom: 14 }}>Academy Launch and Family Information Soirée<br />at the Mediterranean Estate in San Clemente</p>
+              <div style={{ width: 44, height: 1, background: `linear-gradient(90deg, transparent, ${gold}, transparent)`, margin: "0 auto 18px" }} />
+              <p style={{ fontFamily: sans, fontSize: 13, color: "#C0B8B0", fontWeight: 300, lineHeight: 1.8, maxWidth: 540, margin: "0 auto 18px" }}>An intimate gathering for a select number of families — faculty introductions, a cocktail reception, a comprehensive information session, and the opportunity to meet the founding team and those leading the programmes.</p>
+              <p style={{ fontFamily: serif, fontSize: 12, color: gold, letterSpacing: "0.18em", marginBottom: 28 }}>By personal invitation only.</p>
+              <div style={{ display: "flex", gap: 8, flexDirection: isMobile ? "column" : "row", maxWidth: 520, margin: "0 auto" }}>
+                <input type="email" value={email} onChange={e => setEmail(e.target.value)} onKeyDown={e => e.key === "Enter" && email && setSubmitted(true)} placeholder="Your email address" style={{ flex: 1, padding: "13px 18px", background: "#000", border: "1px solid rgba(199,171,117,.25)", color: "#E8E0D8", fontFamily: sans, fontSize: 13, outline: "none" }} onFocus={e => e.target.style.borderColor = gold} onBlur={e => e.target.style.borderColor = "rgba(199,171,117,.25)"} />
+                <button onClick={() => email && setSubmitted(true)} style={{ fontFamily: sans, background: gold, color: "#000", padding: "13px 22px", fontSize: 11, fontWeight: 700, letterSpacing: "0.15em", textTransform: "uppercase", border: "none", cursor: "pointer", flexShrink: 0 }}>Request Invitation</button>
+              </div>
+              <p style={{ fontFamily: sans, fontSize: 10, color: "#555", marginTop: 12 }}>We will contact you with event details and exclusive invitation.</p>
+            </div>
+          ) : (
+            <div style={{ textAlign: "center" }}>
+              <span style={{ fontFamily: serif, fontSize: 28, color: gold, display: "block", marginBottom: 14 }}>✦</span>
+              <p style={{ fontFamily: serif, fontSize: 22, color: "#E8E0D8", marginBottom: 10 }}>Thank you.</p>
+              <p style={{ fontFamily: sans, fontSize: 13, color: "#C0B8B0", fontWeight: 300, lineHeight: 1.8 }}>We will be in touch personally. We look forward to welcoming your family.</p>
+            </div>
+          )}
+        </div>
+      </div>
+    </section>
   );
 }
 
@@ -1754,24 +1831,6 @@ function HomePage({ setPage }) {
 
   return (
     <div style={{ background: "#000" }}>
-      {/* SUMMER INTERACTIVE SCHEDULE — homepage */}
-      <section style={{ background: "#07060A", borderBottom: "1px solid rgba(199,171,117,.08)", padding: isMobile ? "48px 16px" : "64px 40px" }}>
-        <div style={{ maxWidth: 1100, margin: "0 auto" }}>
-          <Fade>
-            <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", marginBottom: 28, flexWrap: "wrap", gap: 12 }}>
-              <div>
-                <Eyebrow>A DAY AT EXCALIBUR</Eyebrow>
-                <h2 style={{ fontFamily: serif, fontSize: isMobile ? 24 : 32, fontWeight: 600, color: "#E8E0D8", marginTop: 6 }}>Summer Intensive — Daily Schedule</h2>
-              </div>
-              <button onClick={() => setPage("programs")} style={{ fontFamily: sans, background: "transparent", border: `1px solid rgba(199,171,117,.3)`, color: gold, padding: "9px 20px", fontSize: 10, fontWeight: 600, letterSpacing: "0.15em", cursor: "pointer", textTransform: "uppercase", flexShrink: 0 }}>VIEW ALL PROGRAMS →</button>
-            </div>
-          </Fade>
-          <Fade d={.06}>
-            <DailyScheduleBlock schedule={summerSchedule} title="Summer Intensive" subtitle="Monday – Friday · 9:30 AM – 3:00 PM · July 6–17 & August 3–14, 2026" />
-          </Fade>
-        </div>
-      </section>
-
       {/* FOUNDING BANNER */}
       <div style={{ background: gold, padding: isMobile ? "10px 16px" : "10px 40px", textAlign: "center" }}>
         <p style={{ fontFamily: sans, fontSize: isMobile ? 9 : 11, letterSpacing: isMobile ? "0.1em" : "0.22em", color: "#000", fontWeight: 700, textTransform: "uppercase", lineHeight: 1.5 }}>
@@ -1917,6 +1976,24 @@ function HomePage({ setPage }) {
         </div>
       </section>
 
+
+      {/* SUMMER INTERACTIVE SCHEDULE — after enrollment banner */}
+      <section style={{ background: "#07060A", borderTop: "1px solid rgba(199,171,117,.06)", borderBottom: "1px solid rgba(199,171,117,.06)", padding: isMobile ? "48px 16px" : "64px 40px" }}>
+        <div style={{ maxWidth: 1100, margin: "0 auto" }}>
+          <Fade>
+            <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", marginBottom: 28, flexWrap: "wrap", gap: 12 }}>
+              <div>
+                <Eyebrow>A DAY AT EXCALIBUR</Eyebrow>
+                <h2 style={{ fontFamily: serif, fontSize: isMobile ? 24 : 32, fontWeight: 600, color: "#E8E0D8", marginTop: 6 }}>Summer Intensive — Daily Schedule</h2>
+              </div>
+              <button onClick={() => setPage("programs")} style={{ fontFamily: sans, background: "transparent", border: `1px solid rgba(199,171,117,.3)`, color: gold, padding: "9px 20px", fontSize: 10, fontWeight: 600, letterSpacing: "0.15em", cursor: "pointer", textTransform: "uppercase", flexShrink: 0 }}>VIEW ALL PROGRAMS →</button>
+            </div>
+          </Fade>
+          <Fade d={.06}>
+            <DailyScheduleBlock schedule={summerSchedule} title="Summer Intensive" subtitle="Monday – Friday · 9:30 AM – 3:00 PM · July 6–17 & August 3–14, 2026" />
+          </Fade>
+        </div>
+      </section>
 
       {/* FOUNDER QUOTE */}
       <section style={{ background: "#080808", borderTop: "1px solid rgba(199,171,117,.07)", borderBottom: "1px solid rgba(199,171,117,.07)", padding: isMobile ? "60px 24px" : "80px 40px" }}>
