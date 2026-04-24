@@ -463,12 +463,12 @@ const sixWeekSchedule = [
 ];
 
 const fieldTrips = [
-  { title: "Daytona & Motorsport Racing", tag: "Speed. Strategy. Pressure.", img: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=80", desc: "A professional racing experience at a premier circuit. Students drive, study race strategy, and debrief with Chip on decision-making under extreme pressure. The lessons apply directly to business: reading conditions in real-time, committing under uncertainty, and leading when the stakes are real.", type: "Weekend" },
-  { title: "Silicon Valley — Incubators & Accelerators", tag: "Where the next economy is built.", img: "https://images.unsplash.com/photo-1573804633927-bfcbcd909acd?w=800&q=80", desc: "Behind-the-scenes visits to leading venture capital firms, startup incubators, and accelerators across the Bay Area. Students walk through the environments where the world's most consequential companies began. A curated dinner with a VC partner closes the day.", type: "2-Day" },
+  { title: "Daytona & Motorsport Racing", tag: "Speed. Strategy. Pressure.", img: "https://images.unsplash.com/photo-1541348263662-e068662d82af?w=800&q=80", desc: "A professional racing experience at a premier circuit. Students drive, study race strategy, and debrief with Chip on decision-making under extreme pressure. The lessons apply directly to business: reading conditions in real-time, committing under uncertainty, and leading when the stakes are real.", type: "Weekend" },
+  { title: "Silicon Valley — Incubators & Accelerators", tag: "Where the next economy is built.", img: "https://images.unsplash.com/photo-1541963463532-d68292c34b19?w=800&q=80", desc: "Behind-the-scenes visits to leading venture capital firms, startup incubators, and accelerators across the Bay Area. Students walk through the environments where the world's most consequential companies began. A curated dinner with a VC partner closes the day.", type: "2-Day" },
   { title: "NYSE — New York Stock Exchange Floor", tag: "The center of global capital.", img: "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=800&q=80", desc: "Access to the NYSE trading floor — one of the most exclusive rooms in American finance. Students meet with market professionals, observe live trading operations, and receive a briefing on how capital markets actually function. Followed by an executive dinner in Manhattan.", type: "3-Day NYC" },
-  { title: "Anthropic AI Headquarters", tag: "The frontier of artificial intelligence.", img: "https://images.unsplash.com/photo-1677442135968-6db3b0025e95?w=800&q=80", desc: "A rare visit to one of the world's leading AI safety and research organizations. Students engage with researchers and engineers at the forefront of large language model development — the technology reshaping every industry they will enter.", type: "Day Trip" },
+  { title: "Anthropic AI Headquarters", tag: "The frontier of artificial intelligence.", img: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=800&q=80", desc: "A rare visit to one of the world's leading AI safety and research organizations. Students engage with researchers and engineers at the forefront of large language model development — the technology reshaping every industry they will enter.", type: "Day Trip" },
   { title: "SpaceX — Launch & Engineering", tag: "The ambition that changes the species.", img: "https://images.unsplash.com/photo-1516849677043-ef67c9557e16?w=800&q=80", desc: "Behind-the-scenes access to SpaceX's engineering and manufacturing operations. Students see how the world's most ambitious engineering programme is organized, staffed, and executed. A reminder that the biggest ideas in history are built by small teams who refused to accept limits.", type: "Day Trip" },
-  { title: "Newport Beach — Ocean & Wellness", tag: "Recovery is part of performance.", img: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&q=80", desc: "A structured outdoor day along the Orange County coastline. Water sports, recovery sessions, and an evening debrief at a private venue in Laguna Beach. A deliberate reminder that the best performers are also intentional about recovery, renewal, and the quality of their lives outside work.", type: "Weekend" },
+  { title: "Yosemite — Nature, Clarity & Team Building", tag: "Connection. Clarity. Renewal.", img: "https://images.unsplash.com/photo-1472396961693-142e6e269027?w=800&q=80", desc: "A weekend in Yosemite National Park — hiking, outdoor leadership challenges, and evening team sessions under the stars. A deliberate reminder that mental clarity, resilience, and the ability to lead under pressure are forged as much outside the boardroom as within it.", type: "Weekend" },
 ];
 
 // ─────────────────────────────────────────────
@@ -477,7 +477,8 @@ const fieldTrips = [
 function DailyScheduleBlock({ schedule, title, subtitle }) {
   const [active, setActive] = useState(0);
   const isMobile = useIsMobile();
-  const block = schedule[active];
+  const safeActive = Math.min(active, (schedule || []).length - 1);
+  const block = (schedule || [])[safeActive] || {};
   const isBreak = !block.instructor;
 
   return (
@@ -674,6 +675,7 @@ function CurriculumPage({ setPage }) {
           ))}
         </div>
       </div>
+    <SoireeInviteBlock />
     </div>
   );
 }
@@ -1000,33 +1002,122 @@ function IntensivePage({ setPage }) {
   );
 }
 
-// ── Day Schedule Tab + Content — stateful at module level ──
-const daySchedState = { active: "summer-sched" };
-function DaySchedBtn({ id, label }) {
-  const [, forceUpdate] = useState(0);
-  const isActive = daySchedState.active === id;
+// ── Standalone schedule section for ProgramsPage ──
+function DailyScheduleSection() {
+  const isMobile = useIsMobile();
+  const [activeTab, setActiveTab] = useState("summer");
+  const [activeBlock, setActiveBlock] = useState(0);
+  const tabs = [
+    { id: "summer", label: "Summer Intensive", sched: summerSchedule, subtitle: "Monday – Friday · 9:30 AM – 3:00 PM · July 6–17 & Aug 3–14, 2026" },
+    { id: "flagship-wd", label: "Flagship — Weekday", sched: flagshipWeekdaySchedule, subtitle: "Tuesday & Thursday · 4:00–6:15 PM · September 2026 – June 2027" },
+    { id: "flagship-sat", label: "Flagship — Saturday", sched: flagshipSaturdaySchedule, subtitle: "Every Saturday · 10:30 AM–3:00 PM · September 2026 – June 2027" },
+    { id: "six-week", label: "Six-Week Intensive", sched: sixWeekSchedule, subtitle: "Monday & Wednesday · 4:00–7:00 PM · Four waves per year" },
+  ];
+  const current = tabs.find(t => t.id === activeTab) || tabs[0];
   return (
-    <button onClick={() => { daySchedState.active = id; forceUpdate(n => n + 1); document.querySelectorAll("[data-daysched]").forEach(el => el.dispatchEvent(new Event("daysched"))); }} style={{ fontFamily: sans, padding: "9px 18px", background: isActive ? "rgba(199,171,117,.08)" : "transparent", border: `1px solid ${isActive ? "rgba(199,171,117,.4)" : "rgba(199,171,117,.12)"}`, color: isActive ? gold : "#C8C0B8", fontSize: 11, cursor: "pointer", letterSpacing: "0.1em", textTransform: "uppercase", fontWeight: isActive ? 600 : 400, transition: "all .2s" }}>{label}</button>
+    <div style={{ maxWidth: 1100, margin: "0 auto", padding: isMobile ? "48px 16px" : "72px 40px" }}>
+      <Fade>
+        <div style={{ textAlign: "center", marginBottom: 40 }}>
+          <Eyebrow>A DAY AT EXCALIBUR</Eyebrow>
+          <SectionTitle center>What a real session looks like.</SectionTitle>
+          <Sub center>Click any block to meet the instructor and see exactly what happens in that session.</Sub>
+        </div>
+      </Fade>
+      <Fade d={.06}>
+        <div style={{ display: "flex", justifyContent: "center", gap: 8, marginBottom: 24, flexWrap: "wrap" }}>
+          {tabs.map(t => (
+            <button key={t.id} onClick={() => setActiveTab(t.id)} style={{ fontFamily: sans, padding: "9px 18px", background: activeTab === t.id ? "rgba(199,171,117,.08)" : "transparent", border: `1px solid ${activeTab === t.id ? "rgba(199,171,117,.4)" : "rgba(199,171,117,.12)"}`, color: activeTab === t.id ? gold : "#C8C0B8", fontSize: 11, cursor: "pointer", letterSpacing: "0.1em", textTransform: "uppercase", fontWeight: activeTab === t.id ? 600 : 400, transition: "all .2s" }}>{t.label}</button>
+          ))}
+        </div>
+        <DailyScheduleBlock schedule={current.sched} title={current.label} subtitle={current.subtitle} />
+      </Fade>
+    </div>
   );
 }
-function DaySchedContent() {
-  const isMobile = useIsMobile();
-  const [active, setActive] = useState("summer-sched");
-  useEffect(() => {
-    const el = document.querySelector("[data-daysched]");
-    if (!el) return;
-    const h = () => setActive(daySchedState.active);
-    el.addEventListener("daysched", h);
-    return () => el.removeEventListener("daysched", h);
-  }, []);
-  const map = {
-    "summer-sched": { sched: summerSchedule, title: "Summer Intensive", subtitle: "Monday – Friday · 9:30 AM – 3:00 PM · July 6–17 & August 3–14, 2026" },
-    "flagship-wd": { sched: flagshipWeekdaySchedule, title: "Ten-Month Flagship — Weekday Track", subtitle: "Tuesday & Thursday · 4:00–6:15 PM · September 2026 – June 2027" },
-    "flagship-sat": { sched: flagshipSaturdaySchedule, title: "Ten-Month Flagship — Saturday Track", subtitle: "Every Saturday · 10:30 AM–3:00 PM · September 2026 – June 2027" },
-    "six-week": { sched: sixWeekSchedule, title: "Six-Week Intensive", subtitle: "Monday & Wednesday · 4:00–7:00 PM · Four waves per year" },
-  };
-  const entry = map[active] || map["summer-sched"];
-  return <div data-daysched="1"><DailyScheduleBlock schedule={entry.sched} title={entry.title} subtitle={entry.subtitle} /></div>;
+
+function SummerContent({ setPage, isMobile, summerLeft }) {
+  return (
+    <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 1, background: "#111" }}>
+      {[
+        { label: "WAVE 1 — JULY", dates: "July 6 – 18, 2026", left: summerLeft[0], items: [["Schedule", "Mon–Fri · 9:30 AM–3:00 PM"], ["Duration", "2 weeks"], ["Guest Speakers", "Daily"], ["Finale", "Shark Tank · July 18"]] },
+        { label: "WAVE 2 — AUGUST", dates: "Aug 3 – 15, 2026", left: summerLeft[1], items: [["Schedule", "Mon–Fri · 9:30 AM–3:00 PM"], ["Duration", "2 weeks"], ["Guest Speakers", "Daily"], ["Finale", "Shark Tank · Aug 15"]] },
+      ].map((t, i) => {
+        const filled = 25 - t.left;
+        return (
+          <div key={i} style={{ background: "#080808", padding: "24px 24px" }}>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 4 }}>
+              <Eyebrow>{t.label}</Eyebrow>
+              <span style={{ fontFamily: sans, fontSize: 9, color: "#4DB87A", letterSpacing: "0.1em", fontWeight: 600, border: "1px solid #4DB87A", padding: "2px 8px" }}>ENROLLING NOW</span>
+            </div>
+            <p style={{ fontFamily: serif, fontSize: 15, color: "#C8C0B8", marginBottom: 16 }}>{t.dates}</p>
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10, marginBottom: 16 }}>
+              {t.items.map(([k, v]) => (<div key={k}><div style={{ fontFamily: sans, fontSize: 9, color: "#A8A098", marginBottom: 3, letterSpacing: "0.1em", textTransform: "uppercase" }}>{k}</div><div style={{ fontFamily: sans, fontSize: 12, color: "#C8C0B8" }}>{v}</div></div>))}
+            </div>
+            <div style={{ fontFamily: sans, fontSize: 11, color: "#C8C0B8", marginBottom: 6, display: "flex", justifyContent: "space-between" }}>
+              <span>{filled} enrolled</span><span style={{ color: t.left < 8 ? gold : "#C8C0B8" }}>{t.left} remaining</span>
+            </div>
+            <div style={{ height: 2, background: "#1a1a1a", marginBottom: 14 }}><div style={{ height: "100%", width: `${(filled/25)*100}%`, background: "#4DB87A" }} /></div>
+            <button onClick={() => setPage("apply")} style={{ fontFamily: sans, width: "100%", padding: "9px 0", border: "1px solid rgba(199,171,117,.25)", color: gold, fontSize: 10, fontWeight: 600, letterSpacing: "0.15em", background: "transparent", cursor: "pointer" }}>APPLY NOW →</button>
+          </div>
+        );
+      })}
+    </div>
+  );
+}
+
+function FlagshipContent({ setPage, isMobile, flagshipLeft }) {
+  return (
+    <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 1, background: "#111" }}>
+      {[
+        { label: "WEEKDAY TRACK", schedule: "Tue & Thu · 4:00–6:15 PM", left: flagshipLeft[0], items: [["Starts", "September 2026"], ["Duration", "10 Months"], ["Sessions", "Tue & Thu evenings"], ["Ends", "June 2027"], ["Price", "$1,990/month"], ["Seats", "25 per cohort"]] },
+        { label: "SATURDAY TRACK", schedule: "Saturday · 10:30 AM–3:00 PM", left: flagshipLeft[1], items: [["Starts", "September 2026"], ["Duration", "10 Months"], ["Sessions", "Full-day Saturdays"], ["Ends", "June 2027"], ["Price", "$1,990/month"], ["Seats", "25 per cohort"]] },
+      ].map((t, i) => {
+        const filled = 25 - t.left;
+        return (
+          <div key={i} style={{ background: "#080808", padding: "24px 24px" }}>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 4 }}>
+              <Eyebrow>{t.label}</Eyebrow>
+              <span style={{ fontFamily: sans, fontSize: 9, color: "#4DB87A", letterSpacing: "0.1em", fontWeight: 600, border: "1px solid #4DB87A", padding: "2px 8px" }}>ENROLLING NOW</span>
+            </div>
+            <p style={{ fontFamily: serif, fontSize: 15, color: "#C8C0B8", marginBottom: 16 }}>{t.schedule}</p>
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10, marginBottom: 16 }}>
+              {t.items.map(([k, v]) => (<div key={k}><div style={{ fontFamily: sans, fontSize: 9, color: "#A8A098", marginBottom: 3, letterSpacing: "0.1em", textTransform: "uppercase" }}>{k}</div><div style={{ fontFamily: sans, fontSize: 12, color: "#C8C0B8" }}>{v}</div></div>))}
+            </div>
+            <div style={{ fontFamily: sans, fontSize: 11, color: "#C8C0B8", marginBottom: 6, display: "flex", justifyContent: "space-between" }}>
+              <span>{filled} enrolled</span><span style={{ color: t.left < 8 ? gold : "#C8C0B8" }}>{t.left} remaining</span>
+            </div>
+            <div style={{ height: 2, background: "#1a1a1a", marginBottom: 14 }}><div style={{ height: "100%", width: `${(filled/25)*100}%`, background: "#4DB87A" }} /></div>
+            <button onClick={() => setPage("apply")} style={{ fontFamily: sans, width: "100%", padding: "9px 0", background: gold, color: "#000", fontSize: 10, fontWeight: 700, letterSpacing: "0.15em", border: "none", cursor: "pointer" }}>APPLY →</button>
+          </div>
+        );
+      })}
+    </div>
+  );
+}
+
+function IntensiveContent({ setPage, isMobile, waves, activeWave, setActiveWave }) {
+  return (
+    <div>
+      <div style={{ display: "flex", gap: 8, padding: "12px 16px", background: "#060606", borderBottom: "1px solid #111", flexWrap: "wrap" }}>
+        {waves.map((w, i) => <button key={i} onClick={() => setActiveWave(i)} style={{ fontFamily: sans, padding: "7px 16px", background: activeWave === i ? "rgba(199,171,117,.08)" : "transparent", border: `1px solid ${activeWave === i ? "rgba(199,171,117,.3)" : "#1a1a1a"}`, color: activeWave === i ? gold : "#C8C0B8", fontSize: 12, cursor: "pointer", transition: "all .25s" }}>{w.name} · {w.season}</button>)}
+      </div>
+      <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 1, background: "#111" }}>
+        {[{ label: "WEEKDAY TRACK", t: waves[activeWave].wd }, { label: "WEEKEND TRACK", t: waves[activeWave].we }].map(({ label, t }, i) => {
+          const isOpen = waves[activeWave].status === "open";
+          return (
+            <div key={i} style={{ background: "#080808", padding: "24px 24px" }}>
+              <Eyebrow>{label}</Eyebrow>
+              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10, marginBottom: 16, marginTop: 12 }}>
+                {[["Days", t.days], ["Time", t.time], ["Dates", waves[activeWave].dates], ["Location", "Orange County, CA"]].map(([k, v]) => (<div key={k}><div style={{ fontFamily: sans, fontSize: 9, color: "#A8A098", marginBottom: 3, letterSpacing: "0.1em", textTransform: "uppercase" }}>{k}</div><div style={{ fontFamily: sans, fontSize: 12, color: "#C8C0B8" }}>{v}</div></div>))}
+              </div>
+              <p style={{ fontFamily: sans, fontSize: 11, color: isOpen ? "#4DB87A" : gold, letterSpacing: "0.1em", marginBottom: 14 }}>{isOpen ? "● Enrolling Now" : "Coming Soon — Join Waitlist"}</p>
+              <button onClick={() => setPage("apply")} style={{ fontFamily: sans, width: "100%", padding: "9px 0", border: "1px solid rgba(199,171,117,.25)", color: gold, fontSize: 10, fontWeight: 600, letterSpacing: "0.15em", background: "transparent", cursor: "pointer" }}>{isOpen ? "APPLY NOW →" : "JOIN WAITLIST →"}</button>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
 }
 
 // ─────────────────────────────────────────────
@@ -1064,15 +1155,7 @@ function ProgramsPage({ setPage }) {
       students: "15–25 per track · 30–50 total",
       features: ["All 8 modules at full depth across a structured 4-phase arc", "10 industry sector rotations — one guest professional per month", "Three-block session model: Speaking Coach + Lead Instructor + Specialist", "Junior Consultant Program — 3-week real business engagement", "Apprentice Externship — 4–6 weeks inside a real company", "Funded Micro-Business Launch with a dedicated mentor", "Monthly Pitch Night before live judges and parents", "City Championship (biannual) and National Championship pipeline", "Bound graduation portfolio + faculty letters of recommendation", "College admissions counseling and portfolio review"],
     },
-    {
-      tag: "LAUNCHPAD DAY", id: "launchpad", flagship: false, status: "● ENROLLING NOW", statusColor: "#4DB87A",
-      title: "Launchpad Day", tagline: "The tasting menu.",
-      price: "$349", priceNote: "Single Saturday · 10:30 AM – 2:30 PM · ~6–8 events per year",
-      desc: "A single Saturday that reveals what your teenager is capable of when given a serious challenge and a serious audience. The Speaking Coach runs a 45-minute warm-up. The Lead Instructor runs a 90-minute interactive workshop — business model deconstruction or a mini Shark Tank. A guest entrepreneur tells their story. Students leave different from how they arrived.",
-      schedule: "Saturday · 10:30 AM – 2:30 PM",
-      students: "15 students per event",
-      features: ["45-minute Speaking Coach warm-up — impromptu pitching, partner drills", "90-minute Lead Instructor workshop — business deconstruction or mini Shark Tank", "Guest entrepreneur: real story, real questions, real conversation", "Closing debrief: what you learned, what surprised you, what's next", "$500 credit toward Six-Week Intensive, $350 credit toward Full Program", "The fastest way to know if Excalibur is right for your student"],
-    },
+
   ];
 
   return (
@@ -1164,23 +1247,7 @@ function ProgramsPage({ setPage }) {
       <Hr />
 
       {/* INTERACTIVE DAILY SCHEDULE */}
-      <div style={{ maxWidth: 1100, margin: "0 auto", padding: isMobile ? "48px 16px" : "72px 40px" }}>
-        <Fade>
-          <div style={{ textAlign: "center", marginBottom: 48 }}>
-            <Eyebrow>A DAY AT EXCALIBUR</Eyebrow>
-            <SectionTitle center>What a real session looks like.</SectionTitle>
-            <Sub center>Click each block to meet the instructor, read the session description, and understand exactly what your student will experience.</Sub>
-          </div>
-        </Fade>
-        <Fade d={.06}>
-          <div style={{ display: "flex", justifyContent: "center", gap: 8, marginBottom: 24, flexWrap: "wrap" }}>
-            {[["SUMMER INTENSIVE", "summer-sched"], ["FLAGSHIP — WEEKDAY", "flagship-wd"], ["FLAGSHIP — SATURDAY", "flagship-sat"], ["SIX-WEEK INTENSIVE", "six-week"]].map(([label, id]) => (
-              <DaySchedBtn key={id} id={id} label={label} />
-            ))}
-          </div>
-          <DaySchedContent />
-        </Fade>
-      </div>
+      <DailyScheduleSection />
 
       <Hr />
 
@@ -1192,19 +1259,7 @@ function ProgramsPage({ setPage }) {
         </div>
       </div>
 
-      <Hr />
-
-      {/* LAUNCHPAD */}
-      <div style={{ maxWidth: 900, margin: "0 auto", padding: isMobile ? "48px 16px" : "72px 40px", textAlign: "center" }}>
-        <Fade>
-          <Eyebrow>NOT SURE WHERE TO START?</Eyebrow>
-          <SectionTitle center>Try the Launchpad Day first.</SectionTitle>
-          <p style={{ fontFamily: sans, fontSize: 14, lineHeight: 1.85, color: "#C8C0B8", fontWeight: 300, marginTop: 12, marginBottom: 28, maxWidth: 600, margin: "12px auto 28px" }}>One Saturday. 15 students. Four hours of real Excalibur — speaking drills, a business challenge, a guest entrepreneur, and a debrief that leaves every student with something to think about. The family who attends usually enrols. The student who attends always remembers it.</p>
-          <div style={{ display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap" }}>
-            <button onClick={() => setPage("apply")} style={{ fontFamily: sans, background: gold, color: "#000", padding: "13px 36px", fontSize: 11, fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", border: "none", cursor: "pointer" }}>RESERVE A LAUNCHPAD SPOT — $349</button>
-          </div>
-        </Fade>
-      </div>
+    <SoireeInviteBlock />
     </div>
   );
 }
@@ -1635,8 +1690,8 @@ function CoachCard({ c, i, setPage }) {
 
   return (
     <div style={{ background: "#080808", borderTop: i === 0 ? `2px solid ${gold}` : "2px solid rgba(199,171,117,.1)", overflow: "hidden" }}>
-      {/* Photo */}
-      <div style={{ height: 0, paddingBottom: "100%", overflow: "hidden", position: "relative", background: "#0D0D0B" }}>
+      {/* Photo — smaller landscape format */}
+      <div style={{ height: 0, paddingBottom: "60%", overflow: "hidden", position: "relative", background: "#0D0D0B" }}>
         {c.isLogo ? (
           <>
             <div style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center" }}>
@@ -1699,6 +1754,24 @@ function HomePage({ setPage }) {
 
   return (
     <div style={{ background: "#000" }}>
+      {/* SUMMER INTERACTIVE SCHEDULE — homepage */}
+      <section style={{ background: "#07060A", borderBottom: "1px solid rgba(199,171,117,.08)", padding: isMobile ? "48px 16px" : "64px 40px" }}>
+        <div style={{ maxWidth: 1100, margin: "0 auto" }}>
+          <Fade>
+            <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", marginBottom: 28, flexWrap: "wrap", gap: 12 }}>
+              <div>
+                <Eyebrow>A DAY AT EXCALIBUR</Eyebrow>
+                <h2 style={{ fontFamily: serif, fontSize: isMobile ? 24 : 32, fontWeight: 600, color: "#E8E0D8", marginTop: 6 }}>Summer Intensive — Daily Schedule</h2>
+              </div>
+              <button onClick={() => setPage("programs")} style={{ fontFamily: sans, background: "transparent", border: `1px solid rgba(199,171,117,.3)`, color: gold, padding: "9px 20px", fontSize: 10, fontWeight: 600, letterSpacing: "0.15em", cursor: "pointer", textTransform: "uppercase", flexShrink: 0 }}>VIEW ALL PROGRAMS →</button>
+            </div>
+          </Fade>
+          <Fade d={.06}>
+            <DailyScheduleBlock schedule={summerSchedule} title="Summer Intensive" subtitle="Monday – Friday · 9:30 AM – 3:00 PM · July 6–17 & August 3–14, 2026" />
+          </Fade>
+        </div>
+      </section>
+
       {/* FOUNDING BANNER */}
       <div style={{ background: gold, padding: isMobile ? "10px 16px" : "10px 40px", textAlign: "center" }}>
         <p style={{ fontFamily: sans, fontSize: isMobile ? 9 : 11, letterSpacing: isMobile ? "0.1em" : "0.22em", color: "#000", fontWeight: 700, textTransform: "uppercase", lineHeight: 1.5 }}>
@@ -2481,6 +2554,7 @@ function BeyondPage({ setPage }) {
 
       <Hr />
 
+      <SoireeInviteBlock />
       {/* CTA */}
       <div style={{ padding: isMobile ? "60px 16px" : "80px 40px", textAlign: "center" }}>
         <Fade>
