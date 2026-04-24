@@ -38,7 +38,95 @@ function Fade({ children, d = 0, style = {} }) {
   );
 }
 
-// ── FAQ COMPONENT ──
+
+// ── ANIMATED COUNTER (stats bar) ──
+function useCountUp(target, inView, duration = 1800) {
+  const [val, setVal] = useState(0);
+  useEffect(() => {
+    if (!inView) return;
+    let start = null;
+    const num = parseInt(target.replace(/\D/g, "")) || 0;
+    const suffix = target.replace(/[\d]/g, "");
+    const step = (ts) => {
+      if (!start) start = ts;
+      const pct = Math.min((ts - start) / duration, 1);
+      const ease = 1 - Math.pow(1 - pct, 3);
+      setVal(Math.round(ease * num) + suffix);
+      if (pct < 1) requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+  }, [inView, target]);
+  return val || "0";
+}
+
+// ── SCROLL PROGRESS BAR ──
+function ScrollProgress() {
+  const [pct, setPct] = useState(0);
+  useEffect(() => {
+    const update = () => {
+      const el = document.documentElement;
+      const top = el.scrollTop || document.body.scrollTop;
+      const height = el.scrollHeight - el.clientHeight;
+      setPct(height > 0 ? (top / height) * 100 : 0);
+    };
+    window.addEventListener("scroll", update, { passive: true });
+    return () => window.removeEventListener("scroll", update);
+  }, []);
+  return (
+    <div style={{ position: "fixed", top: 0, left: 0, right: 0, height: 2, zIndex: 9999, background: "rgba(199,171,117,.1)" }}>
+      <div style={{ height: "100%", width: `${pct}%`, background: "linear-gradient(90deg, rgba(199,171,117,.6), #C7AB75)", transition: "width .1s linear" }} />
+    </div>
+  );
+}
+
+// ── COUNTDOWN TIMER ──
+function CountdownTimer({ targetDate }) {
+  const [time, setTime] = useState({ d: 0, h: 0, m: 0, s: 0 });
+  useEffect(() => {
+    const update = () => {
+      const diff = new Date(targetDate) - new Date();
+      if (diff <= 0) return setTime({ d: 0, h: 0, m: 0, s: 0 });
+      const d = Math.floor(diff / 86400000);
+      const h = Math.floor((diff % 86400000) / 3600000);
+      const m = Math.floor((diff % 3600000) / 60000);
+      const s = Math.floor((diff % 60000) / 1000);
+      setTime({ d, h, m, s });
+    };
+    update();
+    const t = setInterval(update, 1000);
+    return () => clearInterval(t);
+  }, [targetDate]);
+  return (
+    <div style={{ display: "flex", gap: 12, justifyContent: "center", marginBottom: 28, flexWrap: "wrap" }}>
+      {[["DAYS", time.d], ["HRS", time.h], ["MIN", time.m], ["SEC", time.s]].map(([label, val]) => (
+        <div key={label} style={{ textAlign: "center", background: "rgba(199,171,117,.06)", border: "1px solid rgba(199,171,117,.15)", padding: "14px 18px", minWidth: 68 }}>
+          <div style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: 32, fontWeight: 600, color: "#C7AB75", lineHeight: 1 }}>{String(val).padStart(2, "0")}</div>
+          <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 9, color: "#908880", letterSpacing: "0.2em", marginTop: 4 }}>{label}</div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+// ── SHIMMER KEYFRAME INJECTION ──
+function ShimmerStyle() {
+  useEffect(() => {
+    const id = "excalibur-shimmer-style";
+    if (document.getElementById(id)) return;
+    const s = document.createElement("style");
+    s.id = id;
+    s.textContent = `
+      @keyframes shimmer { 0%,100%{box-shadow:0 0 0 0 rgba(199,171,117,0)} 50%{box-shadow:0 0 18px 2px rgba(199,171,117,.18)} }
+      @keyframes modFade { from{opacity:0;transform:translateX(12px)} to{opacity:1;transform:translateX(0)} }
+      .mod-content { animation: modFade .35s cubic-bezier(.22,1,.36,1) both; }
+      .soiree-card { animation: shimmer 3.5s ease-in-out infinite; }
+    `;
+    document.head.appendChild(s);
+  }, []);
+  return null;
+}
+
+
 function FAQ({ q, a }) {
   const [open, setOpen] = useState(false);
   return (
@@ -98,7 +186,7 @@ const coaches = [
     role: "Founder & CEO",
     img: "https://i.imgur.com/F23ULHv.jpeg",
     isLogo: false,
-    shortBio: "Founder of Excalibur Academy. Designed the full architecture of the academy — curriculum structure, faculty model, real-world engagement programmes, and the competition pipeline from Orange County to national and international stages.",
+    shortBio: "Founder & CEO of Excalibur Academy. Designed the full architecture of the academy — curriculum structure, faculty model, real-world engagement programmes, competitions and international pipeline. Built Excalibur on a single conviction: the most consequential thing a young person can develop is an identity forged through real pressure and real achievement.",
     tags: ["Academy Founder", "Program Architect", "Entrepreneurship", "Vision & Strategy"],
     bio: "Alexander founded Excalibur Academy on a single conviction: the most consequential thing a young person can develop is not a skill set — it is an identity. The bone-deep knowledge, earned through real pressure and real achievement, that they are capable of more than the world expects of them. As Founder and CEO, he designed the full architecture of the academy — its curriculum structure, faculty model, real-world engagement programs, competition pipeline, and standard of instruction. He built Excalibur not as a course or a workshop, but as a complete formation experience: a place where young people are taken seriously, held to real standards, and given the kind of experiences that most adults never receive. Every element of the program — from the three-block session format to the Junior Consultant Program to the international distinctions — reflects his conviction that what separates those who lead from those who follow is almost always the quality of their early experiences, and that the right environment, provided early enough, changes everything."
   },
@@ -107,7 +195,7 @@ const coaches = [
     role: "Academy Director & Senior Instructor",
     img: "https://i.imgur.com/GDkTAdw.jpeg",
     isLogo: false,
-    shortBio: "Became a Wall Street executive at age 30, heading International Finance and Operations for Kidder Peabody across London, Paris, Geneva, Zurich, Hong Kong and Tokyo. Former EVP and CFO of Media Arts Group (NYSE). Former Citigroup Managing Director — 100+ M&A transactions, 600+ CEO advisory engagements. Adjunct Professor at Georgetown University and UC Irvine. TEDx speaker, published author, three corporate boards. Has spoken at West Point and Stanford.",
+    shortBio: "Program Director. Lead Faculty. Became a Wall Street executive at age 30, heading International Finance and Operations for investment bank Kidder Peabody in London, Paris, Geneva, Zurich, Hong Kong and Tokyo. Former Executive Vice President and Chief Financial Officer of Media Arts Group (NYSE Company). Former Citigroup Managing Director with over 100 M&A transactions and 600+ CEO advisory engagements, EVP/CFO of two NYSE-listed companies, TEDx speaker, and published author. Adjunct professor at Georgetown University and UC Irvine's Paul Merage School of Business. Sits on three corporate boards. Has spoken at institutions from West Point to Stanford.",
     tags: ["M&A Strategy", "Finance", "Leadership", "TEDx Speaker", "Author", "Georgetown MBA Professor"],
     bio: "William Morris is a transformational finance and strategy executive with over 30 years of experience at the highest levels of Wall Street, corporate leadership, and executive education. He began his career at Exxon Corporation, earning four promotions in five years, before heading international finance and operations for Kidder Peabody across London, Paris, Geneva, Zurich, Hong Kong, and Tokyo. As Senior Vice President and Managing Director at Geneva Capital Markets — then a division of Citigroup — he completed over 100 closed middle-market M&A transactions and advised more than 600 private-company CEOs on valuation, exits, and strategy. He later served as Executive Vice President and Chief Financial Officer of Media Arts Group, a NYSE-listed company, overseeing financial operations, investor relations, and the company's $450M brand portfolio. A sought-after educator and speaker, Bill is currently an Adjunct Professor at Georgetown University's McDonough School of Business, where he teaches advanced MBA courses on strategic behavior and competitive dynamics. He is the author of The Formula for Success, a TEDx speaker, and the holder of a Guinness World Record — 20,100 consecutive sit-ups in 11 hours and 32 minutes — achieved while raising over $150,000 for the Make-A-Wish Foundation. At Excalibur Academy, Bill serves as Academy Director, overseeing curriculum strategy, faculty coordination, guest speaker programming, and academic standards across all programs."
   },
@@ -116,7 +204,7 @@ const coaches = [
     role: "Lead Program Director",
     img: "https://i.imgur.com/Ckny7HG.png",
     isLogo: false,
-    shortBio: "Former CEO who created the world's first autonomous racing series, co-founded a global motorsport franchise broadcast on ESPN and NBC, and directed Formula 1 BMW's global programme — developing multiple Formula 1 World Champions including Sebastian Vettel and Nico Rosberg. Oversaw a $13 billion NASDAQ listing. Secured over $100M in institutional funding. Guinness World Record holder. Professional Auto & Rally Racer.",
+    shortBio: "Program Director. Lead Faculty. Former CEO who created the world's first autonomous racing series, co-founded a global motorsport franchise broadcast on ESPN and NBC, directed Formula 1 BMW's global program, which developed multiple Formula 1 World Champions including Sebastian Vettel and Nico Rosberg. Secured over $100M in institutional funding. Oversaw a $13 billion NASDAQ listing, establishing a key innovation hub for next-generation electric vehicle platforms. As CEO of Roborace, transformed a conceptual initiative into the world's first autonomous racing competition, achieving a Guinness World Record for autonomous performance. Professional Auto & Rally Racer.",
     tags: ["Entrepreneurship", "Autonomous Systems", "EV Technology", "Global Motorsport", "Startup Scaling", "Institutional Funding"],
     bio: "Chip Pankow is an entrepreneur and chief executive known for building and scaling ventures across technology, mobility, and global sports. Guided by a passion for the projects he pursues, he has consistently translated bold ideas into high-impact platforms through a combination of technical fluency, operational discipline, and decisive execution. In the technology sector, Pankow has led complex, multidisciplinary teams working at the forefront of innovation. As CEO of Roborace, he transformed a conceptual initiative into the world's first autonomous racing competition, delivering industry-first advancements in AI vehicle control, race logic, and real-time digital twin environments. The program achieved a Guinness World Record for autonomous performance and a record-setting run at the Goodwood Festival of Speed. He later led U.S. operations for Arrival, overseeing engineering, software, and simulation teams and contributing to the company's NASDAQ listing, establishing a key innovation hub for next-generation electric vehicle platforms. Pankow's entrepreneurial foundation was built through the creation of globally recognized sports properties. As Founder and CEO of Global Rallycross, he introduced modern rallycross to the United States at X-Games and scaled it into a premier motorsport with drivers including Ken Block, Travis Pastrana and Tanner Foust, featuring broadcast distribution in over 130 countries and partnerships with leading media organizations. Earlier, as Series Director of Formula BMW, he built a leading international driver development platform that became the proven pathway to Formula 1 before its successful transition to new ownership. He also founded Emotive, an experiential marketing company that became a trusted partner to global automotive brands including Ferrari, BMW, Audi, Michelin, and General Motors. Currently, as Chief Executive Officer of SparrowBid, Pankow is leading the development of a next-generation travel marketplace designed to redefine how consumers access and price hotel inventory in this highly competitive $400 billion industry. His success is rooted in his ability to identify opportunity, align stakeholders, and execute at speed — consistently turning passion-driven ideas into scalable, enduring platforms."
   },
@@ -125,7 +213,7 @@ const coaches = [
     role: "Senior Program Director",
     img: "https://i.imgur.com/vAvvZud.jpeg",
     isLogo: false,
-    shortBio: "Founder and CEO of an international educational institute serving over 6,000 students across 25 franchises worldwide. Former advisor to a national Ministry of Education. Published textbook author and international academic accreditor. U.S. Youth National Soccer team player.",
+    shortBio: "Program Director. MBA professor. Founder and CEO of international educational institute serving over 6,000 students across 25 franchises worldwide with campuses in Huntington Beach and Czech Republic, former advisor to a national Ministry of Education of Czech Republic, played for the U.S. Youth National Soccer team, published textbook author, and international academic accreditor.",
     tags: ["Education Systems", "Curriculum Design", "International Accreditation", "Franchise Development", "Entrepreneurship"],
     bio: "Erik Dostal is the founder and president of CA Institute, a comprehensive educational institution he built from the ground up into a leading international provider of English language, business, and professional education — serving over 6,000 students across 25 international franchise locations. Over nearly three decades, Erik has demonstrated what it means to build an educational institution that operates at genuine scale: generating $4.8M in annual revenues, sustaining 20% year-over-year growth, and closing franchise deals spanning multiple continents. He holds an MA in TESOL from the University of Chichester and NILE, an MBA from IDRAC Business School, and a BA in Cultural Anthropology from Chapman University, where he was also a collegiate athlete. A former U.S. Youth National Team soccer player, Erik has channeled his competitive background into youth development, coaching, and the design of high-performance learning environments. He has authored multiple textbooks and publications on teaching methodology, language acquisition, and business education, and has organized international language symposiums attracting thousands of delegates from around the world. A former advisor to the Czech Ministry of Education and a certified international academic accreditor, his work has received recognition including European Small Business Awards recognition across multiple years. At Excalibur Academy, Erik brings the rare combination of deep pedagogical expertise, proven franchise and systems-building experience, and a practitioner's understanding of what it takes to build educational institutions that last."
   },
@@ -134,7 +222,7 @@ const coaches = [
     role: "Public Speaking Senior Instructor",
     img: "https://i.imgur.com/EELzLmn.jpeg",
     isLogo: false,
-    shortBio: "Servant leader, keynote speaker, and doctoral candidate. Deputy Sheriff with the Orange County Sheriff's Department. Adjunct professor teaching criminal justice. MBA background, doctorate in progress. Keynote speaker and mindset coach — focused on discipline, self-mastery, and personal transformation.",
+    shortBio: "Servant Leader, Keynote Speaker, Doctoral Candidate. Public safety professional and leadership-focused educator currently serving as a Deputy Sheriff with the Orange County Sheriff's Department. Alongside his law enforcement role, he teaches criminal justice as an instructor and adjunct professor, and is a doctoral candidate with an MBA background. A keynote speaker and mindset coach, focused on discipline, self-mastery, and personal transformation — bridging real-world public service experience with leadership development and community impact.",
     tags: ["Public Speaking", "Leadership Development", "Mindset Coaching", "Criminal Justice", "MBA", "Doctoral Candidate"],
     bio: "Christopher Sanders is a servant leader, keynote speaker, and doctoral candidate whose career spans law enforcement, higher education, and transformational personal development. A Deputy Sheriff II with the Orange County Sheriff's Department, he brings to every session the clarity, composure, and command presence that comes from operating under genuine high-stakes pressure. He holds an MBA in Strategic Management from Davenport University — graduating with a 3.95 GPA — and is completing a Doctorate in Public Administration at the University of La Verne. He has served as an Adjunct Professor at Rancho Santiago Community College District and at Davenport University, where he taught across multiple disciplines for nearly four years. Beyond the classroom, Christopher runs his own leadership and mindset development seminars — most recently his Living Life Unchained series in Irvine, California — focused on breaking limiting beliefs, building discipline-based systems, and creating lasting behavioral change in adults and young professionals. His StrengthsFinder profile reflects the qualities that define his teaching: Achiever, Futuristic, Focus, Strategic, and Positivity. At Excalibur Academy, Christopher owns the public speaking block that runs through every single session — developing voice mechanics, physical presence, impromptu delivery, advanced rhetoric, and the kind of composure under pressure that most teenagers have never been asked to find."
   },
@@ -313,7 +401,16 @@ function Footer({ setPage }) {
             <span key={p} onClick={() => setPage(p)} style={{ fontFamily: sans, color: "#C0B8B0", fontSize: 10, cursor: "pointer", transition: "color .2s", letterSpacing: "0.2em", fontWeight: 600, textTransform: "uppercase" }} onMouseEnter={e => e.target.style.color = gold} onMouseLeave={e => e.target.style.color = "#555"}>{l}</span>
           ))}
         </div>
-        <div style={{ width: "100%", textAlign: "center", fontFamily: sans, color: "#222", fontSize: 11, marginTop: 8 }}>© 2026 Black Rabbit Group Inc. · Orange County, California · apply@excaliburacademy.org · support@excaliburacademy.org</div>
+        <div style={{ width: "100%", borderTop: "1px solid rgba(199,171,117,.08)", marginTop: 24, paddingTop: 24 }}>
+          <div style={{ textAlign: "center", marginBottom: 10 }}>
+            <span style={{ fontFamily: serif, fontSize: 13, color: "#C8C0B8", letterSpacing: "0.08em" }}>apply@excaliburacademy.org</span>
+            <span style={{ fontFamily: sans, fontSize: 11, color: "rgba(199,171,117,.4)", margin: "0 12px" }}>·</span>
+            <span style={{ fontFamily: serif, fontSize: 13, color: "#C8C0B8", letterSpacing: "0.08em" }}>support@excaliburacademy.org</span>
+          </div>
+          <div style={{ textAlign: "center", fontFamily: sans, color: "#706860", fontSize: 10, letterSpacing: "0.15em", textTransform: "uppercase" }}>
+            © 2026 Excalibur Academy LLC &nbsp;·&nbsp; 23 Corporate Plaza Dr, Newport Beach, CA &nbsp;·&nbsp; Orange County, California
+          </div>
+        </div>
       </div>
     </footer>
   );
@@ -550,8 +647,8 @@ function FullProgramPage({ setPage }) {
           <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "260px 1fr", border: "1px solid #151515", overflow: "hidden", marginTop: 36 }}>
             <div style={{ background: "#060606", borderRight: "1px solid #151515" }}>
               {currMods.map((m, i) => (
-                <div key={i} onClick={() => setActiveMod(i)} style={{ padding: "15px 22px", cursor: "pointer", borderBottom: "1px solid #0E0E0E", borderLeft: `2px solid ${activeMod === i ? gold : "transparent"}`, background: activeMod === i ? "rgba(199,171,117,.03)" : "transparent", transition: "all .25s" }}>
-                  <div style={{ fontFamily: serif, fontSize: 14, fontWeight: activeMod === i ? 600 : 400, color: activeMod === i ? gold : "#666", lineHeight: 1.3 }}>{m.title}</div>
+                <div key={i} onClick={() => setActiveMod(i)} style={{ padding: "17px 24px", cursor: "pointer", borderBottom: "1px solid #0E0E0E", borderLeft: `2px solid ${activeMod === i ? gold : "transparent"}`, background: activeMod === i ? "rgba(199,171,117,.03)" : "transparent", transition: "all .25s" }}>
+                  <div style={{ fontFamily: serif, fontSize: 16, fontWeight: activeMod === i ? 600 : 400, color: activeMod === i ? gold : "#D8D0C8", lineHeight: 1.3 }}>{m.title}</div>
                   <div style={{ fontFamily: sans, fontSize: 10, color: "#C0B8B0", marginTop: 2 }}>{m.months}</div>
                 </div>
               ))}
@@ -1343,17 +1440,13 @@ function ScheduleTabs({ setPage, isMobile, waves, gold }) {
   );
 }
 
-// ── COACH CARD with expandable bio ──
-function CoachCard({ c, i }) {
-  const [expanded, setExpanded] = useState(false);
-  const displayBio = c.shortBio || c.bio;
-  // Show first ~5 lines worth of text (approx 320 chars)
-  const shortBio = c.bio.length > 320 ? c.bio.slice(0, 320).trim() + "…" : c.bio;
-  const needsExpand = c.bio.length > 320;
+// ── COACH CARD — uses shortBio, Read More → faculty profile page ──
+function CoachCard({ c, i, setPage }) {
+  const hasFacultyPage = ["Chip Pankow", "Bill Morris", "Erik Dostal", "Christopher Sanders"].includes(c.name);
 
   return (
     <div style={{ background: "#080808", borderTop: i === 0 ? `2px solid ${gold}` : "2px solid rgba(199,171,117,.1)", overflow: "hidden" }}>
-      {/* Photo — square like speakers */}
+      {/* Photo */}
       <div style={{ height: 0, paddingBottom: "100%", overflow: "hidden", position: "relative", background: "#0D0D0B" }}>
         {c.isLogo ? (
           <>
@@ -1374,17 +1467,20 @@ function CoachCard({ c, i }) {
         </div>
       </div>
 
-      {/* Tags + bio */}
+      {/* Tags + shortBio */}
       <div style={{ padding: "20px 24px 24px" }}>
         <div style={{ display: "flex", gap: 4, flexWrap: "wrap", marginBottom: 14 }}>
-          {c.tags.map((t, j) => <span key={j} style={{ fontFamily: sans, fontSize: 9, color: "#C8C0B8", border: "1px solid #1a1a1a", padding: "2px 7px" }}>{t}</span>)}
+          {c.tags && c.tags.map((t, j) => <span key={j} style={{ fontFamily: sans, fontSize: 9, color: "#C8C0B8", border: "1px solid #1a1a1a", padding: "2px 7px" }}>{t}</span>)}
         </div>
-        <p style={{ fontFamily: sans, fontSize: 13, lineHeight: 1.85, color: "#C8C0B8", fontWeight: 300, marginBottom: needsExpand ? 12 : 0 }}>
-          {expanded ? c.bio : shortBio}
+        <p style={{ fontFamily: sans, fontSize: 13, lineHeight: 1.85, color: "#C8C0B8", fontWeight: 300, marginBottom: hasFacultyPage ? 14 : 0 }}>
+          {c.shortBio || c.bio}
         </p>
-        {needsExpand && (
-          <button onClick={() => setExpanded(!expanded)} style={{ fontFamily: sans, fontSize: 11, color: gold, background: "transparent", border: "none", cursor: "pointer", padding: 0, letterSpacing: "0.08em", fontWeight: 600 }}>
-            {expanded ? "Read less ↑" : "Read more ↓"}
+        {hasFacultyPage && (
+          <button
+            onClick={() => setPage(`faculty:${c.name.toLowerCase().replace(/ /g, "-")}`)}
+            style={{ fontFamily: sans, fontSize: 11, color: gold, background: "transparent", border: "none", cursor: "pointer", padding: 0, letterSpacing: "0.08em", fontWeight: 600 }}
+          >
+            Read Full Profile →
           </button>
         )}
       </div>
@@ -1403,6 +1499,13 @@ function HomePage({ setPage }) {
   const [speakerIdx, setSpeakerIdx] = useState(0);
   const [activeWave, setActiveWave] = useState(0);
   const isMobile = useIsMobile();
+  const [statsInView, setStatsInView] = useState(false);
+  const statsRef = useRef(null);
+  useEffect(() => {
+    const el = statsRef.current; if (!el) return;
+    const o = new IntersectionObserver(([e]) => { if (e.isIntersecting) { setStatsInView(true); o.disconnect(); } }, { threshold: 0.3 });
+    o.observe(el); return () => o.disconnect();
+  }, []);
   const visibleSpeakers = () => isMobile ? [speakers[speakerIdx]] : [0, 1, 2].map(offset => speakers[(speakerIdx + offset) % speakers.length]);
 
   return (
@@ -1459,7 +1562,7 @@ function HomePage({ setPage }) {
             <button onClick={() => setPage("programs")} style={{ fontFamily: sans, border: `1px solid rgba(199,171,117,.35)`, color: gold, padding: "13px 28px", fontSize: 11, fontWeight: 600, letterSpacing: "0.15em", textTransform: "uppercase", background: "transparent", cursor: "pointer" }}>Explore Programs</button>
           </div>
           <p style={{ color: "#C0B8B0", fontSize: 11, letterSpacing: "0.12em", fontFamily: sans, textTransform: "uppercase", marginBottom: 8 }}>Ages 16–17 (Junior & Senior) &nbsp;·&nbsp; 25 students per cohort &nbsp;·&nbsp; Orange County, CA</p>
-          <p style={{ color: "#C0B8B0", fontSize: 11, letterSpacing: "0.08em", fontFamily: sans, fontStyle: "italic", marginBottom: 0 }}>Classes hosted in South Orange County's historic villas and venues, inspired by the traditions of European elite education.</p>
+          <p style={{ color: "#D8D0C4", fontSize: "clamp(13px,1.2vw,16px)", letterSpacing: "0.04em", fontFamily: serif, fontStyle: "italic", marginBottom: 0, lineHeight: 1.6 }}>Classes hosted in South Orange County's historic villas and venues,<br />inspired by the traditions of European elite education.</p>
         </Fade>
       </section>
 
@@ -1520,7 +1623,7 @@ function HomePage({ setPage }) {
             </div>
           </Fade>
           <Fade d={.1}>
-            <div style={{ background: "#050505", border: `1px solid rgba(199,171,117,.55)`, padding: isMobile ? "32px 28px" : "40px 36px", position: "relative" }}>
+            <div style={{ background: "#050505", border: `1px solid rgba(199,171,117,.55)`, padding: isMobile ? "32px 28px" : "40px 36px", position: "relative" }} className="soiree-card">
               <div style={{ position: "absolute", top: 10, left: 10, width: 14, height: 14, borderTop: `1px solid ${gold}`, borderLeft: `1px solid ${gold}` }} />
               <div style={{ position: "absolute", top: 10, right: 10, width: 14, height: 14, borderTop: `1px solid ${gold}`, borderRight: `1px solid ${gold}` }} />
               <div style={{ position: "absolute", bottom: 10, left: 10, width: 14, height: 14, borderBottom: `1px solid ${gold}`, borderLeft: `1px solid ${gold}` }} />
@@ -1589,9 +1692,7 @@ function HomePage({ setPage }) {
             <h2 style={{ fontFamily: serif, fontSize: isMobile ? "clamp(28px,6vw,38px)" : "clamp(36px,4vw,54px)", fontWeight: 600, color: "#F0E8E0", lineHeight: 1.1, marginBottom: 14 }}>The Academy</h2>
             <div style={{ width: 48, height: 1, background: `linear-gradient(90deg, ${gold}, transparent)` }} />
           </div>
-          <div style={{ position: "absolute", bottom: isMobile ? 28 : 52, right: isMobile ? 28 : 72 }}>
-            <p style={{ fontFamily: sans, fontSize: 10, color: "rgba(199,171,117,.6)", letterSpacing: "0.2em", textTransform: "uppercase" }}>Newport Beach · Laguna Beach · San Clemente</p>
-          </div>
+
         </div>
 
         {/* Main content — asymmetric grid */}
@@ -1671,17 +1772,18 @@ function HomePage({ setPage }) {
         </Fade>
       </section>
 
-      {/* STATS */}
+      {/* STATS — animated counter */}
       <section style={{ padding: isMobile ? "40px 16px" : "56px 40px" }}>
-        <div style={{ maxWidth: 1100, margin: "0 auto", display: "grid", gridTemplateColumns: isMobile ? "repeat(2, 1fr)" : "repeat(5, 1fr)", gap: 2, background: "#111" }}>
-          {[["10 Months", "academic year program"], ["6 Weeks", "intensive track"], ["10", "industry sectors"], ["25", "students per cohort"], ["8", "curriculum modules"]].map(([v, l], i) => (
-            <Fade key={i} d={i * .06}>
-              <div style={{ background: "#080808", padding: "28px 16px", textAlign: "center" }}>
-                <div style={{ fontFamily: serif, fontSize: 32, fontWeight: 600, color: gold, lineHeight: 1 }}>{v}</div>
+        <div ref={statsRef} style={{ maxWidth: 1100, margin: "0 auto", display: "grid", gridTemplateColumns: isMobile ? "repeat(2, 1fr)" : "repeat(5, 1fr)", gap: 2, background: "#111" }}>
+          {[["10", " Months", "academic year program"], ["6", " Weeks", "intensive track"], ["10", "", "industry sectors"], ["25", "", "students per cohort"], ["8", "", "curriculum modules"]].map(([num, suf, l], i) => {
+            const counted = useCountUp(num, statsInView);
+            return (
+              <div key={i} style={{ background: "#080808", padding: "28px 16px", textAlign: "center" }}>
+                <div style={{ fontFamily: serif, fontSize: 32, fontWeight: 600, color: gold, lineHeight: 1 }}>{counted}{suf}</div>
                 <div style={{ fontFamily: sans, color: "#C8C0B8", fontSize: 11, marginTop: 7, fontWeight: 300 }}>{l}</div>
               </div>
-            </Fade>
-          ))}
+            );
+          })}
         </div>
       </section>
 
@@ -1791,7 +1893,7 @@ function HomePage({ setPage }) {
                 {currMods.map((m, i) => (
                   <div key={i} style={{ borderBottom: "1px solid #0E0E0E" }}>
                     <div onClick={() => setActiveMod(activeMod === i ? -1 : i)} style={{ padding: "18px 20px", cursor: "pointer", borderLeft: `3px solid ${activeMod === i ? gold : "transparent"}`, background: activeMod === i ? "rgba(199,171,117,.04)" : "#060606", display: "flex", justifyContent: "space-between", alignItems: "center", transition: "all .2s" }}>
-                      <div style={{ fontFamily: serif, fontSize: 15, fontWeight: activeMod === i ? 600 : 400, color: activeMod === i ? gold : "#C8C0B8", lineHeight: 1.3 }}>{m.title}</div>
+                      <div style={{ fontFamily: serif, fontSize: 17, fontWeight: activeMod === i ? 600 : 400, color: activeMod === i ? gold : "#D8D0C8", lineHeight: 1.3 }}>{m.title}</div>
                       <div style={{ fontFamily: sans, fontSize: 16, color: activeMod === i ? gold : "#555", transition: "transform .25s", transform: activeMod === i ? "rotate(45deg)" : "none", lineHeight: 1 }}>+</div>
                     </div>
                     {activeMod === i && (
@@ -1809,14 +1911,14 @@ function HomePage({ setPage }) {
               <div style={{ display: "grid", gridTemplateColumns: "320px 1fr", border: "1px solid #151515", overflow: "hidden" }}>
                 <div style={{ background: "#060606", borderRight: "1px solid #151515" }}>
                   {currMods.map((m, i) => (
-                    <div key={i} onClick={() => setActiveMod(i)} style={{ padding: "18px 26px", cursor: "pointer", borderBottom: "1px solid #0E0E0E", borderLeft: `3px solid ${activeMod === i ? gold : "transparent"}`, background: activeMod === i ? "rgba(199,171,117,.04)" : "transparent", transition: "all .25s" }}>
-                      <div style={{ fontFamily: serif, fontSize: activeMod === i ? 17 : 16, fontWeight: activeMod === i ? 600 : 400, color: activeMod === i ? gold : "#C8C0B8", lineHeight: 1.3 }}>{m.title}</div>
-                      <div style={{ fontFamily: sans, fontSize: 10, color: activeMod === i ? "rgba(199,171,117,.5)" : "#555", marginTop: 3, letterSpacing: 1 }}>{m.months}</div>
+                    <div key={i} onClick={() => setActiveMod(i)} style={{ padding: "20px 28px", cursor: "pointer", borderBottom: "1px solid #0E0E0E", borderLeft: `3px solid ${activeMod === i ? gold : "transparent"}`, background: activeMod === i ? "rgba(199,171,117,.05)" : "transparent", transition: "all .25s" }}>
+                      <div style={{ fontFamily: serif, fontSize: activeMod === i ? 18 : 17, fontWeight: activeMod === i ? 600 : 400, color: activeMod === i ? gold : "#D8D0C8", lineHeight: 1.3 }}>{m.title}</div>
+                      <div style={{ fontFamily: sans, fontSize: 10, color: activeMod === i ? "rgba(199,171,117,.5)" : "#706860", marginTop: 3, letterSpacing: 1 }}>{m.months}</div>
                     </div>
                   ))}
                 </div>
                 <div style={{ background: "#080808" }}>
-                  <div style={{ padding: "36px 44px 44px" }}>
+                  <div key={activeMod} className="mod-content" style={{ padding: "36px 44px 44px" }}>
                     <p style={{ fontFamily: sans, color: gold, fontSize: 10, letterSpacing: "0.3em", fontWeight: 600, marginBottom: 10, textTransform: "uppercase" }}>{currMods[activeMod].months}</p>
                     <h3 style={{ fontFamily: serif, fontSize: "clamp(26px,3vw,36px)", fontWeight: 600, color: "#E8E0D8", marginBottom: 8, lineHeight: 1.15 }}>{currMods[activeMod].title}</h3>
                     <p style={{ fontFamily: serif, fontSize: 19, color: gold, fontStyle: "italic", marginBottom: 20 }}>{currMods[activeMod].tagline}</p>
@@ -1862,17 +1964,31 @@ function HomePage({ setPage }) {
           <Fade><div style={{ textAlign: "center", marginBottom: 52 }}><Eyebrow>REAL-WORLD ENGAGEMENT</Eyebrow><SectionTitle center>Where Theory Meets Reality</SectionTitle><Sub center>The curriculum is the foundation. These four engagements are what make an Excalibur education unlike anything else available to a young person.</Sub></div></Fade>
           <div style={{ display: "flex", flexDirection: "column", gap: 2 }}>
             {handson.map((p, i) => (
-              <Fade key={i} d={i * .04}>
-                <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", background: "#111" }}>
-                  <div style={{ background: "#080808", padding: "44px 40px", borderTop: "2px solid rgba(199,171,117,.1)" }}>
+              <Fade key={i} d={i * .05}>
+                <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : i % 2 === 0 ? "3fr 2fr" : "2fr 3fr", background: "#111", minHeight: isMobile ? "auto" : 220 }}>
+                  {/* Reverse order for alternating layout */}
+                  {i % 2 !== 0 && !isMobile && (
+                    <div style={{ background: "#050504", padding: "52px 48px", display: "flex", flexDirection: "column", justifyContent: "center", position: "relative", borderTop: `2px solid rgba(199,171,117,.06)` }}>
+                      <div style={{ width: 28, height: 1, background: `linear-gradient(90deg, rgba(199,171,117,.4), transparent)`, marginBottom: 18 }} />
+                      <p style={{ fontFamily: sans, fontSize: 9, letterSpacing: "0.35em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 14 }}>The Outcome</p>
+                      <p style={{ fontFamily: serif, fontSize: 20, lineHeight: 1.65, color: "#D0C8C0", fontStyle: "italic" }}>{p.outcome}</p>
+                      <div style={{ position: "absolute", top: 20, right: 20, fontFamily: serif, fontSize: 52, color: "rgba(199,171,117,.04)", lineHeight: 1 }}>{String(i + 1).padStart(2, "0")}</div>
+                    </div>
+                  )}
+                  <div style={{ background: "#09090B", padding: isMobile ? "40px 24px" : "52px 56px", borderTop: `2px solid ${i < 2 ? gold : "rgba(199,171,117,.18)"}`, position: "relative" }}>
+                    <div style={{ position: "absolute", top: 20, right: 20, fontFamily: serif, fontSize: isMobile ? 32 : 52, color: "rgba(199,171,117,.05)", lineHeight: 1, fontWeight: 700 }}>{String(i + 1).padStart(2, "0")}</div>
                     <Eyebrow>{p.tag}</Eyebrow>
-                    <h3 style={{ fontFamily: serif, fontSize: 30, fontWeight: 600, color: "#E8E0D8", lineHeight: 1.1, marginBottom: 18 }}>{p.title}</h3>
-                    <p style={{ fontFamily: sans, fontSize: 14, lineHeight: 1.85, color: "#C8C0B8", fontWeight: 300 }}>{p.desc}</p>
+                    <h3 style={{ fontFamily: serif, fontSize: isMobile ? 26 : 34, fontWeight: 600, color: "#E8E0D8", lineHeight: 1.1, marginBottom: 16, marginTop: 8 }}>{p.title}</h3>
+                    <div style={{ width: 36, height: 1, background: `linear-gradient(90deg, ${gold}, transparent)`, marginBottom: 18 }} />
+                    <p style={{ fontFamily: sans, fontSize: 14, lineHeight: 1.9, color: "#C0B8B0", fontWeight: 300 }}>{p.desc}</p>
                   </div>
-                  <div style={{ background: "#060606", padding: "44px 40px", display: "flex", flexDirection: "column", justifyContent: "center", borderTop: "2px solid rgba(199,171,117,.04)" }}>
-                    <p style={{ fontFamily: sans, fontSize: 9, letterSpacing: 3, color: "#C8C0B8", fontWeight: 500, marginBottom: 14 }}>THE OUTCOME</p>
-                    <p style={{ fontFamily: serif, fontSize: 18, lineHeight: 1.65, color: "#B8B0A8", fontStyle: "italic" }}>{p.outcome}</p>
-                  </div>
+                  {(i % 2 === 0 || isMobile) && (
+                    <div style={{ background: "#050504", padding: isMobile ? "28px 24px" : "52px 48px", display: "flex", flexDirection: "column", justifyContent: "center", position: "relative", borderTop: `2px solid rgba(199,171,117,.06)` }}>
+                      <div style={{ width: 28, height: 1, background: `linear-gradient(90deg, rgba(199,171,117,.4), transparent)`, marginBottom: 18 }} />
+                      <p style={{ fontFamily: sans, fontSize: 9, letterSpacing: "0.35em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 14 }}>The Outcome</p>
+                      <p style={{ fontFamily: serif, fontSize: isMobile ? 16 : 20, lineHeight: 1.65, color: "#D0C8C0", fontStyle: "italic" }}>{p.outcome}</p>
+                    </div>
+                  )}
                 </div>
               </Fade>
             ))}
@@ -1913,7 +2029,7 @@ function HomePage({ setPage }) {
           <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 2, background: "#111" }}>
             {coaches.map((c, i) => (
               <Fade key={i} d={i * .04}>
-                <CoachCard c={c} i={i} />
+                <CoachCard c={c} i={i} setPage={setPage} />
               </Fade>
             ))}
           </div>
@@ -2002,6 +2118,8 @@ function HomePage({ setPage }) {
         <Fade style={{ position: "relative", zIndex: 1 }}>
           <p style={{ fontFamily: sans, fontSize: 10, letterSpacing: "0.4em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 20, display: "inline-block" }}>LIMITED ENROLLMENT</p>
           <h2 style={{ fontFamily: serif, fontSize: "clamp(28px,4vw,52px)", fontWeight: 600, lineHeight: 1.1, marginBottom: 20, color: "#E8E0D8" }}>Waitlist for Summer Waves<br /><span style={{ color: gold }}>Now Open.</span></h2>
+          <p style={{ fontFamily: sans, fontSize: 12, color: "#C0B8B0", letterSpacing: "0.08em", marginBottom: 20 }}>Wave 1 opens July 6, 2026</p>
+          <CountdownTimer targetDate="2026-07-06T09:30:00" />
           <div style={{ maxWidth: 640, margin: "0 auto 36px", background: "rgba(199,171,117,.05)", border: "1px solid rgba(199,171,117,.15)", padding: isMobile ? "24px 20px" : "28px 36px" }}>
             <p style={{ fontFamily: sans, fontSize: 14, lineHeight: 1.85, color: "#C8C0B8", fontWeight: 300, marginBottom: 16 }}>Enrollment is limited to small cohorts to preserve instructional depth and personal attention. Due to high demand, placement is managed through a waitlist. Waitlisted families receive direct communication through a personal enrollment coordinator and early access to Academy events, including the May 23 private family information soirée.</p>
             <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
@@ -2179,8 +2297,186 @@ function BeyondPage({ setPage }) {
 }
 
 // ─────────────────────────────────────────────
-// PAGE: OUR FACULTY
+// PAGE: INDIVIDUAL FACULTY PROFILE
 // ─────────────────────────────────────────────
+const facultyProfiles = {
+  "chip-pankow": {
+    name: "Chip Pankow",
+    role: "Lead Program Director",
+    img: "https://i.imgur.com/Ckny7HG.png",
+    tags: ["Entrepreneurship", "Autonomous Systems", "EV Technology", "Global Motorsport", "Startup Scaling", "Institutional Funding"],
+    headline: "The operator who builds what others only imagine.",
+    paras: [
+      "Chip Pankow is an entrepreneur and chief executive known for building and scaling ventures across technology, mobility, and global sports. Guided by a passion for the projects he pursues, he has consistently translated bold ideas into high-impact platforms through a combination of technical fluency, operational discipline, and decisive execution.",
+      "As CEO of Roborace, he transformed a conceptual initiative into the world's first autonomous racing competition — delivering industry-first advancements in AI vehicle control, race logic, and real-time digital twin environments. The program achieved a Guinness World Record for autonomous performance and a record-setting run at the Goodwood Festival of Speed.",
+      "He later led U.S. operations for Arrival, overseeing engineering, software, and simulation teams and contributing to the company's $13 billion NASDAQ listing, establishing a key innovation hub for next-generation electric vehicle platforms.",
+      "Pankow's entrepreneurial foundation was built through the creation of globally recognized sports properties. As Founder and CEO of Global Rallycross, he introduced modern rallycross to the United States at X-Games and scaled it into a premier motorsport with drivers including Ken Block, Travis Pastrana and Tanner Foust, broadcast in over 130 countries. Earlier, as Series Director of Formula BMW, he built a leading international driver development platform whose graduates include Formula 1 World Champions Sebastian Vettel and Nico Rosberg.",
+      "He also founded Emotive, an experiential marketing company that became a trusted partner to global automotive brands including Ferrari, BMW, Audi, Michelin, and General Motors. Across multiple ventures, he has secured over $100M in institutional funding.",
+      "Currently, as Chief Executive Officer of SparrowBid, Pankow is leading the development of a next-generation travel marketplace designed to redefine how consumers access and price hotel inventory in the highly competitive $400 billion industry. A professional Auto & Rally Racer, his success is rooted in his ability to identify opportunity, align stakeholders, and execute at speed.",
+    ],
+    credentials: [
+      "CEO of Roborace — world's first autonomous racing series · Guinness World Record holder",
+      "Led Arrival USA through $13B NASDAQ listing",
+      "Founder & CEO of Global Rallycross — ESPN & NBC · 130+ countries",
+      "Series Director Formula BMW — developed Sebastian Vettel & Nico Rosberg",
+      "$100M+ in institutional funding secured across multiple ventures",
+      "Professional Auto & Rally Racer",
+    ],
+  },
+  "bill-morris": {
+    name: "Bill Morris",
+    role: "Academy Director & Senior Instructor",
+    img: "https://i.imgur.com/GDkTAdw.jpeg",
+    tags: ["M&A Strategy", "Finance", "Leadership", "TEDx Speaker", "Author", "Georgetown MBA Professor"],
+    headline: "Wall Street veteran. Boardroom strategist. The rarest kind of educator.",
+    paras: [
+      "William Morris is a transformational finance and strategy executive with over 30 years of experience at the highest levels of Wall Street, corporate leadership, and executive education. He began his career at Exxon Corporation, earning four promotions in five years, before heading international finance and operations for Kidder Peabody across London, Paris, Geneva, Zurich, Hong Kong, and Tokyo.",
+      "Becoming a Wall Street executive at age 30, Bill led international operations across five continents, navigating complex cross-border transactions and managing institutional relationships that span decades. His international experience gave him a rare command of how capital, culture, and leadership intersect in the real world.",
+      "As Senior Vice President and Managing Director at Geneva Capital Markets — then a division of Citigroup — he completed over 100 closed middle-market M&A transactions and advised more than 600 private-company CEOs on valuation, exits, and strategy. He later served as Executive Vice President and Chief Financial Officer of Media Arts Group, a NYSE-listed company, overseeing financial operations, investor relations, and the company's $450M brand portfolio.",
+      "A sought-after educator and speaker, Bill is currently an Adjunct Professor at Georgetown University's McDonough School of Business, where he teaches advanced MBA courses on strategic behavior and competitive dynamics. He is also a professor at UC Irvine's Paul Merage School of Business.",
+      "Bill is the author of The Formula for Success, a TEDx speaker, sits on three corporate boards, and has spoken at institutions from West Point to Stanford. He holds a Guinness World Record — 20,100 consecutive sit-ups in 11 hours and 32 minutes — achieved while raising over $150,000 for the Make-A-Wish Foundation.",
+    ],
+    credentials: [
+      "Wall Street executive at age 30 — Kidder Peabody: London, Paris, Geneva, Zurich, Hong Kong, Tokyo",
+      "Former Citigroup Managing Director — 100+ M&A transactions · 600+ CEO advisory engagements",
+      "EVP & CFO of two NYSE-listed companies",
+      "Adjunct Professor: Georgetown McDonough MBA · UC Irvine Paul Merage School of Business",
+      "TEDx speaker · Author: The Formula for Success · Three corporate board seats",
+      "Has spoken at West Point, Stanford, and institutions across the United States",
+    ],
+  },
+  "erik-dostal": {
+    name: "Erik Dostal",
+    role: "Senior Program Director",
+    img: "https://i.imgur.com/vAvvZud.jpeg",
+    tags: ["Education Systems", "Curriculum Design", "International Accreditation", "Franchise Development", "Entrepreneurship"],
+    headline: "Built an educational institution. Then franchised it across 25 locations.",
+    paras: [
+      "Erik Dostal is the founder and president of CA Institute, a comprehensive educational institution he built from the ground up into a leading international provider of English language, business, and professional education — serving over 6,000 students across 25 international franchise locations.",
+      "Over nearly three decades, Erik has demonstrated what it means to build an educational institution that operates at genuine scale: generating $4.8M in annual revenues, sustaining 20% year-over-year growth, and closing franchise deals spanning multiple continents, with campuses in Huntington Beach, California and Czech Republic.",
+      "He holds an MA in TESOL from the University of Chichester and NILE, an MBA from IDRAC Business School, and a BA in Cultural Anthropology from Chapman University, where he was also a collegiate athlete. A former U.S. Youth National Team soccer player, Erik has channeled his competitive background into youth development, coaching, and the design of high-performance learning environments.",
+      "He has authored multiple textbooks and publications on teaching methodology, language acquisition, and business education, and has organized international language symposiums attracting thousands of delegates from around the world. A former advisor to the Czech Ministry of Education and a certified international academic accreditor, his work has received European Small Business Awards recognition across multiple years.",
+      "At Excalibur Academy, Erik brings the rare combination of deep pedagogical expertise, proven franchise and systems-building experience, and a practitioner's understanding of what it takes to build educational institutions that last.",
+    ],
+    credentials: [
+      "Founder & CEO — CA Institute: 6,000+ students · 25 international franchises",
+      "Campuses in Huntington Beach, CA and Czech Republic",
+      "Former advisor to the Czech Ministry of Education",
+      "Published textbook author · International academic accreditor",
+      "European Small Business Awards recognition",
+      "U.S. Youth National Soccer Team player",
+    ],
+  },
+  "christopher-sanders": {
+    name: "Christopher Sanders",
+    role: "Public Speaking Senior Instructor",
+    img: "https://i.imgur.com/EELzLmn.jpeg",
+    tags: ["Public Speaking", "Leadership Development", "Mindset Coaching", "Criminal Justice", "MBA", "Doctoral Candidate"],
+    headline: "Command presence forged in the field. Delivered in every session.",
+    paras: [
+      "Christopher Sanders is a servant leader, keynote speaker, and doctoral candidate whose career spans law enforcement, higher education, and transformational personal development. A Deputy Sheriff II with the Orange County Sheriff's Department, he brings to every session the clarity, composure, and command presence that comes from operating under genuine high-stakes pressure.",
+      "He holds an MBA in Strategic Management from Davenport University — graduating with a 3.95 GPA — and is completing a Doctorate in Public Administration at the University of La Verne. He has served as an Adjunct Professor at Rancho Santiago Community College District and at Davenport University, where he taught across multiple disciplines for nearly four years.",
+      "Beyond the classroom, Christopher runs his own leadership and mindset development seminars — most recently his Living Life Unchained series in Irvine, California — focused on breaking limiting beliefs, building discipline-based systems, and creating lasting behavioral change in adults and young professionals.",
+      "A keynote speaker and mindset coach, his work centers on helping individuals break limiting patterns, build structure, and operate with clarity and accountability — bridging real-world public service experience with leadership development and community impact.",
+      "At Excalibur Academy, Christopher owns the public speaking block that runs through every single session — developing voice mechanics, physical presence, impromptu delivery, advanced rhetoric, and the kind of composure under pressure that most teenagers have never been asked to find.",
+    ],
+    credentials: [
+      "Deputy Sheriff II — Orange County Sheriff's Department",
+      "MBA in Strategic Management, Davenport University (3.95 GPA)",
+      "Doctoral Candidate, Public Administration — University of La Verne",
+      "Adjunct Professor: Rancho Santiago CCD · Davenport University",
+      "Keynote speaker · Mindset coach · Living Life Unchained seminar leader",
+    ],
+  },
+};
+
+function FacultyProfilePage({ slug, setPage }) {
+  const isMobile = useIsMobile();
+  const f = facultyProfiles[slug];
+
+  if (!f) {
+    return (
+      <div style={{ background: "#000", minHeight: "100vh", paddingTop: 120, textAlign: "center" }}>
+        <p style={{ fontFamily: sans, color: "#C8C0B8", fontSize: 14 }}>Faculty profile not found.</p>
+        <button onClick={() => setPage("faculty")} style={{ fontFamily: sans, color: gold, background: "transparent", border: "none", cursor: "pointer", fontSize: 13, marginTop: 16 }}>← Back to Faculty</button>
+      </div>
+    );
+  }
+
+  return (
+    <div style={{ background: "#000", paddingTop: 80 }}>
+
+      {/* Hero — full bleed photo */}
+      <div style={{ position: "relative", height: isMobile ? 400 : 580, overflow: "hidden" }}>
+        <img src={f.img} alt={f.name} style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center top", filter: "brightness(0.4) grayscale(10%)" }} onError={e => e.target.style.display = "none"} />
+        <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to right, rgba(0,0,0,.85) 0%, rgba(0,0,0,.3) 60%, transparent 100%)" }} />
+        <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(0,0,0,.95) 0%, transparent 55%)" }} />
+        {/* Back button */}
+        <button onClick={() => setPage("faculty")} style={{ position: "absolute", top: 24, left: isMobile ? 20 : 60, fontFamily: sans, background: "transparent", border: "none", color: "rgba(199,171,117,.6)", fontSize: 11, cursor: "pointer", letterSpacing: "0.15em", display: "flex", alignItems: "center", gap: 6 }}>← OUR FACULTY</button>
+        {/* Name + role overlay */}
+        <div style={{ position: "absolute", bottom: isMobile ? 36 : 64, left: isMobile ? 28 : 72, maxWidth: 620 }}>
+          <p style={{ fontFamily: sans, fontSize: 10, letterSpacing: "0.4em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 12 }}>{f.role}</p>
+          <h1 style={{ fontFamily: serif, fontSize: isMobile ? "clamp(36px,8vw,52px)" : "clamp(48px,5vw,72px)", fontWeight: 600, color: "#F0E8E0", lineHeight: 1.0, marginBottom: 16 }}>{f.name}</h1>
+          <div style={{ width: 56, height: 1, background: `linear-gradient(90deg, ${gold}, transparent)`, marginBottom: 16 }} />
+          <p style={{ fontFamily: serif, fontSize: isMobile ? 15 : 18, color: "#C8C0B8", fontStyle: "italic", lineHeight: 1.55 }}>{f.headline}</p>
+        </div>
+      </div>
+
+      {/* Main content */}
+      <div style={{ maxWidth: 1100, margin: "0 auto", display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 320px", gap: isMobile ? 0 : 2, background: "#111" }}>
+
+        {/* Bio — left */}
+        <div style={{ background: "#080808", padding: isMobile ? "48px 28px" : "72px 72px" }}>
+          <div style={{ width: 36, height: 1, background: `linear-gradient(90deg, ${gold}, transparent)`, marginBottom: 36 }} />
+          {f.paras.map((para, i) => (
+            <p key={i} style={{ fontFamily: sans, fontSize: isMobile ? 14 : 15, lineHeight: 1.95, color: "#C0B8B0", fontWeight: 300, marginBottom: 22 }}>{para}</p>
+          ))}
+          <div style={{ marginTop: 48 }}>
+            <button onClick={() => setPage("apply")} style={{ fontFamily: sans, background: gold, color: "#000", padding: "13px 36px", fontSize: 11, fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", border: "none", cursor: "pointer" }}>Apply to Study Under {f.name.split(" ")[0]} →</button>
+          </div>
+        </div>
+
+        {/* Credentials sidebar — right */}
+        <div style={{ background: "#07060A", padding: isMobile ? "40px 28px" : "72px 40px" }}>
+          <p style={{ fontFamily: sans, fontSize: 10, letterSpacing: "0.35em", color: "#9A9290", fontWeight: 600, textTransform: "uppercase", marginBottom: 24 }}>Credentials</p>
+          <div style={{ display: "flex", flexDirection: "column", gap: 0 }}>
+            {f.credentials.map((cr, i) => (
+              <div key={i} style={{ display: "flex", gap: 14, padding: "14px 0", borderBottom: "1px solid rgba(199,171,117,.07)", alignItems: "flex-start" }}>
+                <div style={{ width: 4, height: 4, borderRadius: "50%", background: gold, flexShrink: 0, marginTop: 7 }} />
+                <span style={{ fontFamily: sans, fontSize: 12, color: "#C0B8B0", fontWeight: 300, lineHeight: 1.65 }}>{cr}</span>
+              </div>
+            ))}
+          </div>
+          <div style={{ marginTop: 40 }}>
+            <p style={{ fontFamily: sans, fontSize: 10, letterSpacing: "0.35em", color: "#9A9290", fontWeight: 600, textTransform: "uppercase", marginBottom: 16 }}>Expertise</p>
+            <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
+              {f.tags.map((t, i) => (
+                <span key={i} style={{ fontFamily: sans, fontSize: 9, color: "#C0B8B0", letterSpacing: "0.1em", border: "1px solid rgba(199,171,117,.15)", padding: "4px 10px", textTransform: "uppercase" }}>{t}</span>
+              ))}
+            </div>
+          </div>
+          <div style={{ marginTop: 40, paddingTop: 32, borderTop: "1px solid rgba(199,171,117,.08)" }}>
+            <p style={{ fontFamily: sans, fontSize: 10, letterSpacing: "0.35em", color: "#9A9290", fontWeight: 600, textTransform: "uppercase", marginBottom: 16 }}>Also Meet</p>
+            {Object.values(facultyProfiles).filter(p => p.name !== f.name).slice(0, 3).map((p, i) => (
+              <div key={i} onClick={() => setPage(`faculty:${p.name.toLowerCase().replace(/ /g, "-")}`)} style={{ display: "flex", gap: 12, marginBottom: 14, cursor: "pointer", alignItems: "center" }}>
+                <div style={{ width: 40, height: 40, overflow: "hidden", border: "1px solid rgba(199,171,117,.15)", flexShrink: 0 }}>
+                  <img src={p.img} alt={p.name} style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center top" }} />
+                </div>
+                <div>
+                  <p style={{ fontFamily: serif, fontSize: 13, color: "#E8E0D8" }}>{p.name}</p>
+                  <p style={{ fontFamily: sans, fontSize: 9, color: gold, letterSpacing: "0.08em" }}>{p.role}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ─────────────────────────────────────────────
+// PAGE: OUR FACULTY (listing)
 function FacultyPage({ setPage }) {
   const isMobile = useIsMobile();
   const [expanded, setExpanded] = useState({});
@@ -2522,6 +2818,7 @@ export default function ExcaliburApp() {
     if (page === "intensive") return <IntensivePage setPage={setPage} />;
     if (page === "beyond") return <BeyondPage setPage={setPage} />;
     if (page === "faculty") return <FacultyPage setPage={setPage} />;
+    if (page.startsWith("faculty:")) return <FacultyProfilePage slug={page.replace("faculty:", "")} setPage={setPage} />;
     if (page === "apply") return <ApplyPage setPage={setPage} />;
     if (page.startsWith("module:")) return <ModulePage slug={page.replace("module:", "")} setPage={setPage} />;
     return <HomePage setPage={setPage} />;
@@ -2529,6 +2826,8 @@ export default function ExcaliburApp() {
 
   return (
     <div style={{ background: "#000", color: "#D8D0C8", minHeight: "100vh", fontFamily: sans }}>
+      <ScrollProgress />
+      <ShimmerStyle />
       <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=Forum&display=swap" rel="stylesheet" />
       <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
       <style>{`*{margin:0;padding:0;box-sizing:border-box}::selection{background:rgba(199,171,117,.2);color:#fff}html{scroll-behavior:smooth}body{overflow-x:hidden}button{cursor:pointer;font-family:'DM Sans',sans-serif}img{max-width:100%}`}</style>
