@@ -105,12 +105,13 @@ function CountdownTimer({ targetDate }) {
     const t = setInterval(update, 1000);
     return () => clearInterval(t);
   }, [targetDate]);
+  const isMob = window.innerWidth < 600;
   return (
-    <div style={{ display: "flex", justifyContent: "center", marginBottom: 52 }}>
+    <div style={{ display: "flex", justifyContent: "center", marginBottom: 52, padding: "0 8px" }}>
       {[["DAYS", time.d], ["HRS", time.h], ["MIN", time.m], ["SEC", time.s]].map(([label, val], i) => (
-        <div key={label} style={{ textAlign: "center", padding: "0 32px", borderRight: i < 3 ? "1px solid rgba(199,171,117,.15)" : "none" }}>
-          <div style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: 64, fontWeight: 300, color: "#F0E8E0", lineHeight: 1, letterSpacing: "-0.02em" }}>{String(val).padStart(2, "0")}</div>
-          <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 9, color: "rgba(199,171,117,.5)", letterSpacing: "0.3em", marginTop: 10, textTransform: "uppercase" }}>{label}</div>
+        <div key={label} style={{ textAlign: "center", padding: isMob ? "0 14px" : "0 32px", borderRight: i < 3 ? "1px solid rgba(199,171,117,.15)" : "none", flex: 1 }}>
+          <div style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: isMob ? 40 : 64, fontWeight: 300, color: "#F0E8E0", lineHeight: 1, letterSpacing: "-0.02em" }}>{String(val).padStart(2, "0")}</div>
+          <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 8, color: "rgba(199,171,117,.5)", letterSpacing: "0.2em", marginTop: 8, textTransform: "uppercase" }}>{label}</div>
         </div>
       ))}
     </div>
@@ -2420,7 +2421,7 @@ function HomePage({ setPage }) {
           </h2>
           {/* Countdown — clean, minimal, no boxes */}
           <div style={{ marginBottom: 56 }}>
-            <p style={{ fontFamily: eyebrow_font, fontSize: 10, letterSpacing: "0.3em", color: "rgba(199,171,117,.5)", textTransform: "uppercase", marginBottom: 20 }}>Wave 1 opens July 6, 2026</p>
+            <p style={{ fontFamily: eyebrow_font, fontSize: 10, letterSpacing: "0.3em", color: "rgba(199,171,117,.5)", textTransform: "uppercase", marginBottom: 20 }}>Wave 1 starts July 6, 2026</p>
             <CountdownTimer targetDate="2026-07-06T09:30:00" />
           </div>
           {/* Three bold statements */}
@@ -2921,7 +2922,7 @@ function AboutPage({ setPage }) {
 
       {/* HERO — H7T1wmI background, main heading */}
       <div style={{ position: "relative", height: isMobile ? 420 : 620, overflow: "hidden" }}>
-        <img src="https://i.imgur.com/H7T1wmI.png" alt="Excalibur Academy" style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center", filter: "brightness(0.22)" }} />
+        <img src="https://i.imgur.com/H7T1wmI.png" alt="Excalibur Academy" style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center", filter: "brightness(0.45)" }} />
         <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to bottom, rgba(0,0,0,.2) 0%, rgba(0,0,0,.85) 100%)" }} />
         <div style={{ position: "absolute", inset: 0, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", textAlign: "center", padding: isMobile ? "0 24px" : "0 80px" }}>
           <p style={{ fontFamily: eyebrow_font, fontSize: 10, letterSpacing: "0.4em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 24 }}>About Excalibur Academy</p>
