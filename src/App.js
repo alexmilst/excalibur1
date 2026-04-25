@@ -738,7 +738,7 @@ function SoireeInviteBlock() {
   return (
     <section style={{ padding: isMobile ? "60px 16px" : "80px 40px", background: "#060506" }}>
       <div style={{ maxWidth: 880, margin: "0 auto" }}>
-        <div style={{ background: "#050505", border: `1px solid rgba(199,171,117,.55)`, padding: isMobile ? "36px 28px" : "52px 60px", position: "relative" }} className="soiree-card">
+        <div style={{ background: "#050505", border: `1px solid rgba(199,171,117,.55)`, padding: isMobile ? "28px 24px" : "36px 44px", position: "relative" }} className="soiree-card">
           <div style={{ position: "absolute", top: 12, left: 12, width: 16, height: 16, borderTop: `1px solid ${gold}`, borderLeft: `1px solid ${gold}` }} />
           <div style={{ position: "absolute", top: 12, right: 12, width: 16, height: 16, borderTop: `1px solid ${gold}`, borderRight: `1px solid ${gold}` }} />
           <div style={{ position: "absolute", bottom: 12, left: 12, width: 16, height: 16, borderBottom: `1px solid ${gold}`, borderLeft: `1px solid ${gold}` }} />
@@ -746,9 +746,9 @@ function SoireeInviteBlock() {
           {!submitted ? (
             <div style={{ textAlign: "center" }}>
               <p style={{ fontFamily: eyebrow_font, fontSize: 10, letterSpacing: "0.4em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 20 }}>Family Information Event</p>
-              <p style={{ fontFamily: serif, fontSize: isMobile ? 48 : 72, color: "#E8E0D8", lineHeight: 1.0, fontWeight: 600, marginBottom: 4 }}>May 23</p>
-              <p style={{ fontFamily: serif, fontSize: isMobile ? 16 : 22, color: gold, fontWeight: 400, letterSpacing: "0.08em", marginBottom: 20 }}>Saturday &nbsp;·&nbsp; 5:00 PM – 7:00 PM</p>
-              <p style={{ fontFamily: serif, fontSize: isMobile ? 15 : 19, color: "#C8C0B8", lineHeight: 1.4, marginBottom: 16, fontStyle: "italic" }}>Academy Launch and Family Information Soirée<br />at the Mediterranean Estate in San Clemente</p>
+              <p style={{ fontFamily: serif, fontSize: isMobile ? 32 : 48, color: "#E8E0D8", lineHeight: 1.0, fontWeight: 600, marginBottom: 4 }}>May 23</p>
+              <p style={{ fontFamily: serif, fontSize: isMobile ? 13 : 16, color: gold, fontWeight: 400, letterSpacing: "0.08em", marginBottom: 14 }}>Saturday &nbsp;·&nbsp; 5:00 PM – 7:00 PM</p>
+              <p style={{ fontFamily: serif, fontSize: isMobile ? 13 : 16, color: "#C8C0B8", lineHeight: 1.4, marginBottom: 14, fontStyle: "italic" }}>Academy Launch and Family Information Soirée<br />at the Mediterranean Estate in San Clemente</p>
               <div style={{ width: 44, height: 1, background: `linear-gradient(90deg, transparent, ${gold}, transparent)`, margin: "0 auto 18px" }} />
               <p style={{ fontFamily: sans, fontSize: 13, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.8, maxWidth: 540, margin: "0 auto 18px" }}>An intimate gathering for a select number of families — faculty introductions, a cocktail reception, a comprehensive information session, and the opportunity to meet the founding team and those leading the programmes.</p>
               <p style={{ fontFamily: serif, fontSize: 12, color: gold, letterSpacing: "0.18em", marginBottom: 20 }}>By personal invitation only.</p>
@@ -1935,7 +1935,7 @@ function HomePage({ setPage }) {
 
       {/* SUMMER ENROLLMENT BANNER */}
       <section style={{ background: "#000", borderBottom: `1px solid rgba(199,171,117,.15)`, padding: isMobile ? "48px 24px" : "64px 80px" }}>
-        <div style={{ maxWidth: 1100, margin: "0 auto", display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: isMobile ? 40 : 80, alignItems: "center" }}>
+        <div style={{ maxWidth: 900, margin: "0 auto" }}>
           <Fade>
             <p style={{ fontFamily: eyebrow_font, fontSize: 10, letterSpacing: "0.35em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 16 }}>⚡ Waitlist Now Open</p>
             <h2 style={{ fontFamily: serif, fontSize: isMobile ? "clamp(28px,5vw,36px)" : "clamp(32px,3.5vw,48px)", fontWeight: 600, color: "#E8E0D8", lineHeight: 1.1, marginBottom: 8 }}>
@@ -2373,32 +2373,7 @@ function HomePage({ setPage }) {
         </div>
       </section>
 
-      {/* ADMISSIONS — BOTH PROGRAMS */}
-      <section style={{ padding: isMobile ? "60px 16px" : "80px 40px", background: "#050505" }}>
-        <div style={{ maxWidth: 1000, margin: "0 auto" }}>
-          <Fade><div style={{ textAlign: "center", marginBottom: 52 }}><Eyebrow>ADMISSIONS</Eyebrow><SectionTitle center>How to Apply</SectionTitle></div></Fade>
-          <Fade d={.08}>
-            <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr 1fr" : "repeat(4, 1fr)", gap: 2, background: "#111", marginBottom: 2 }}>
-              {[
-                { n: "01", t: "Apply Online", s: "15 minutes", color: gold },
-                { n: "02", t: "Interview", s: "Admissions Committee", color: gold },
-                { n: "03", t: "Decision", s: "Within 5 days", color: gold },
-                { n: "04", t: "Enrollment", s: "72-hour hold", color: "#5DB075" }
-              ].map((s, i) => (
-                <div key={i} style={{ background: "#080808", padding: "26px 22px" }}>
-                  <div style={{ fontFamily: serif, fontSize: 38, fontWeight: 600, color: s.color, lineHeight: 1, marginBottom: 8, opacity: .9 }}>{s.n}</div>
-                  <h4 style={{ fontFamily: serif, fontSize: isMobile ? 15 : 18, fontWeight: 600, color: "#FBF7EE", marginBottom: 3, letterSpacing: "0.02em" }}>{s.t}</h4>
-                  <p style={{ fontFamily: sans, fontSize: 10, color: s.color, letterSpacing: 1.5, fontWeight: 500, textTransform: "uppercase" }}>{s.s}</p>
-                </div>
-              ))}
-            </div>
-          </Fade>
-
-        </div>
-      </section>
-
-
-      {/* EXCALIBUR IVY PORTFOLIO */}
+            {/* EXCALIBUR IVY PORTFOLIO */}
       <section style={{ background: "#000", padding: isMobile ? "0" : "0" }}>
         {/* Header — full width dark panel */}
         <div style={{ background: "#07060A", borderTop: `2px solid ${gold}`, padding: isMobile ? "52px 24px 40px" : "72px 80px 56px" }}>
@@ -3014,7 +2989,7 @@ We teach how to lead.</h2>
       {/* WHAT IS BEHIND A NAME — text left, image right */}
       <Fade>
         <div style={{ background: "#07060A", padding: isMobile ? "56px 24px" : "80px 80px" }}>
-          <div style={{ maxWidth: 1100, margin: "0 auto", display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: isMobile ? 40 : 80, alignItems: "center" }}>
+          <div style={{ maxWidth: 900, margin: "0 auto" }}>
             <div>
               <p style={{ fontFamily: eyebrow_font, fontSize: 10, letterSpacing: "0.4em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 16 }}>What is Behind a Name?</p>
               <h2 style={{ fontFamily: serif, fontSize: isMobile ? 30 : 44, fontWeight: 600, color: "#F0E8E0", lineHeight: 1.1, marginBottom: 28 }}>The Sword in the Stone.</h2>
@@ -3204,7 +3179,7 @@ function ComingSoonPage({ onUnlock }) {
             <div style={{ position: "absolute", top: 12, right: 12, width: 18, height: 18, borderTop: `1px solid rgba(199,171,117,.4)`, borderRight: `1px solid rgba(199,171,117,.4)` }} />
             <div style={{ position: "absolute", bottom: 12, left: 12, width: 18, height: 18, borderBottom: `1px solid rgba(199,171,117,.4)`, borderLeft: `1px solid rgba(199,171,117,.4)` }} />
             <div style={{ position: "absolute", bottom: 12, right: 12, width: 18, height: 18, borderBottom: `1px solid rgba(199,171,117,.4)`, borderRight: `1px solid rgba(199,171,117,.4)` }} />
-            <div style={{ padding: isMobile ? "36px 28px" : "52px 60px", display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1px 1fr", gap: isMobile ? 32 : 0 }}>
+            <div style={{ padding: isMobile ? "28px 24px" : "36px 44px", display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1px 1fr", gap: isMobile ? 32 : 0 }}>
               {/* Faculty 1 */}
               <div style={{ padding: isMobile ? "0" : "0 40px 0 0", textAlign: "center" }}>
                 <div style={{ width: 32, height: 1, background: `linear-gradient(90deg, transparent, ${gold})`, margin: "0 auto 20px" }} />
@@ -3235,7 +3210,7 @@ function ComingSoonPage({ onUnlock }) {
         {!submitted ? (
           <div style={{ width: "100%", maxWidth: 880, marginBottom: 48 }}>
             <p style={{ fontFamily: eyebrow_font, fontSize: 10, letterSpacing: "0.4em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 20 }}>Family Information Event · May 2026</p>
-            <div style={{ background: "#050505", border: `1px solid rgba(199,171,117,.55)`, padding: isMobile ? "36px 28px" : "52px 60px", textAlign: "center", position: "relative" }}>
+            <div style={{ background: "#050505", border: `1px solid rgba(199,171,117,.55)`, padding: isMobile ? "28px 24px" : "36px 44px", textAlign: "center", position: "relative" }}>
               {/* Corner ornaments */}
               <div style={{ position: "absolute", top: 12, left: 12, width: 16, height: 16, borderTop: `1px solid ${gold}`, borderLeft: `1px solid ${gold}` }} />
               <div style={{ position: "absolute", top: 12, right: 12, width: 16, height: 16, borderTop: `1px solid ${gold}`, borderRight: `1px solid ${gold}` }} />
