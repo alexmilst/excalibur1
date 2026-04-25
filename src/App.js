@@ -10,7 +10,7 @@ const gold = "#C7AB75";
 
 // ── RESPONSIVE HOOK ──
 function useIsMobile() {
-  const [mobile, setMobile] = useState(window.innerWidth < 900);
+  const [mobile, setMobile] = useState(typeof window !== "undefined" ? window.innerWidth < 900 : false);
   useEffect(() => {
     const h = () => setMobile(window.innerWidth < 900);
     window.addEventListener("resize", h);
@@ -105,7 +105,7 @@ function CountdownTimer({ targetDate }) {
     const t = setInterval(update, 1000);
     return () => clearInterval(t);
   }, [targetDate]);
-  const isMob = window.innerWidth < 600;
+  const isMob = typeof window !== "undefined" && window.innerWidth < 600;
   return (
     <div style={{ display: "flex", justifyContent: "center", marginBottom: 52, padding: "0 8px" }}>
       {[["DAYS", time.d], ["HRS", time.h], ["MIN", time.m], ["SEC", time.s]].map(([label, val], i) => (
