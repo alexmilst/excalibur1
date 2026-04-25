@@ -392,18 +392,31 @@ const portfolioItems = [
 ];
 
 function PortfolioFolder({ isMobile }) {
-  const [active, setActive] = useState(null);
+  const [openSet, setOpenSet] = React.useState(new Set([0,1,2,3,4,5,6,7]));
+  React.useEffect(() => {
+    if (isMobile) setOpenSet(new Set([0]));
+    else setOpenSet(new Set([0,1,2,3,4,5,6,7]));
+  }, [isMobile]);
+  const toggle = (i) => {
+    if (!isMobile) return;
+    setOpenSet(prev => {
+      const next = new Set([i]);
+      if (prev.has(i) && prev.size === 1) next.clear();
+      return next;
+    });
+  };
+  const isOpen = (i) => openSet.has(i);
   return (
     <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(4, 1fr)", gap: 2, background: "#111" }}>
       {portfolioItems.map((item, i) => (
-        <div key={i} onClick={() => setActive(active === i ? null : i)} style={{ background: active === i ? "#09080C" : "#080808", borderTop: `2px solid ${active === i ? gold : "rgba(199,171,117,.1)"}`, padding: "28px 24px", cursor: "pointer", transition: "all .25s", position: "relative" }}>
+        <div key={i} onClick={() => isMobile && toggle(i)} style={{ background: "#080808", borderTop: `2px solid ${i === 0 ? gold : "rgba(199,171,117,.1)"}`, padding: "28px 24px", cursor: isMobile ? "pointer" : "default", transition: "all .25s" }}>
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 12 }}>
             <span style={{ fontFamily: serif, fontSize: 11, color: "rgba(199,171,117,.4)", letterSpacing: "0.1em" }}>{item.n}</span>
-            <span style={{ fontFamily: sans, fontSize: 14, color: active === i ? gold : "#555", transition: "transform .25s", display: "inline-block", transform: active === i ? "rotate(45deg)" : "none" }}>+</span>
+            {isMobile && <span style={{ fontFamily: sans, fontSize: 14, color: isOpen(i) ? gold : "#555", transition: "transform .25s", display: "inline-block", transform: isOpen(i) ? "rotate(45deg)" : "none" }}>+</span>}
           </div>
-          <h4 style={{ fontFamily: serif, fontSize: isMobile ? 15 : 16, fontWeight: 600, color: active === i ? gold : "#E8E0D8", lineHeight: 1.3, marginBottom: active === i ? 14 : 0 }}>{item.title}</h4>
-          {active === i && (
-            <div className="mod-content">
+          <h4 style={{ fontFamily: serif, fontSize: isMobile ? 15 : 16, fontWeight: 600, color: isOpen(i) ? gold : "#E8E0D8", lineHeight: 1.3, marginBottom: 14 }}>{item.title}</h4>
+          {isOpen(i) && (
+            <div className={isMobile ? "mod-content" : ""}>
               <div style={{ width: 24, height: 1, background: `linear-gradient(90deg, ${gold}, transparent)`, marginBottom: 12 }} />
               <p style={{ fontFamily: serif, fontSize: 13, color: gold, fontStyle: "italic", lineHeight: 1.5, marginBottom: 12 }}>{item.tagline}</p>
               <p style={{ fontFamily: sans, fontSize: 13, lineHeight: 1.8, color: "#FBF7EE", fontWeight: 300 }}>{item.body}</p>
@@ -1817,13 +1830,14 @@ function CoachCard({ c, i, setPage }) {
 // PAGE: HOME
 // ─────────────────────────────────────────────
 function HomePage({ setPage }) {
-  const [activeMod, setActiveMod] = useState(null);
+  const isMobile = useIsMobile();
+  const [activeMod, setActiveMod] = useState(0);
+  React.useEffect(() => { if (isMobile) setActiveMod(null); }, [isMobile]);
   const [activeCat, setActiveCat] = useState(0);
   const [expandedCard, setExpandedCard] = useState(null);
   const [activeTier, setActiveTier] = useState(0);
   const [speakerIdx, setSpeakerIdx] = useState(0);
   const [activeWave, setActiveWave] = useState(0);
-  const isMobile = useIsMobile();
   const [statsInView, setStatsInView] = useState(false);
   const statsRef = useRef(null);
   useEffect(() => {
