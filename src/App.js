@@ -2246,11 +2246,11 @@ function HomePage({ setPage }) {
                 </div>
                 <div style={{ background: "#080808" }}>
                   <div key={activeMod} className="mod-content" style={{ padding: "36px 44px 44px" }}>
-                    <p style={{ fontFamily: sans, color: gold, fontSize: 10, letterSpacing: "0.3em", fontWeight: 600, marginBottom: 10, textTransform: "uppercase" }}>{currMods[activeMod].months}</p>
-                    <h3 style={{ fontFamily: serif, fontSize: "clamp(26px,3vw,36px)", fontWeight: 600, color: "#E8E0D8", marginBottom: 8, lineHeight: 1.15 }}>{currMods[activeMod].title}</h3>
-                    <p style={{ fontFamily: serif, fontSize: 19, color: gold, fontStyle: "italic", marginBottom: 20 }}>{currMods[activeMod].tagline}</p>
-                    <div style={{ marginBottom: 24 }}>{currMods[activeMod].body.split("\n\n").map((para, pi) => (<p key={pi} style={{ fontFamily: sans, fontSize: 15, lineHeight: 1.95, color: "#FBF7EE", fontWeight: 300, marginBottom: 18 }}>{para}</p>))}</div>
-                    <button onClick={() => setPage(`module:${currMods[activeMod].slug}`)} style={{ fontFamily: sans, fontSize: 10, color: gold, letterSpacing: "0.2em", fontWeight: 700, border: `1px solid rgba(199,171,117,.3)`, padding: "9px 18px", background: "transparent", cursor: "pointer", textTransform: "uppercase" }}>Explore This Module →</button>
+                    {activeMod !== null && <p style={{ fontFamily: sans, color: gold, fontSize: 10, letterSpacing: "0.3em", fontWeight: 600, marginBottom: 10, textTransform: "uppercase" }}>{currMods[activeMod].months}</p>}
+                    {activeMod !== null && <h3 style={{ fontFamily: serif, fontSize: "clamp(26px,3vw,36px)", fontWeight: 600, color: "#E8E0D8", marginBottom: 8, lineHeight: 1.15 }}>{currMods[activeMod].title}</h3>}
+                    {activeMod !== null && <p style={{ fontFamily: serif, fontSize: 19, color: gold, fontStyle: "italic", marginBottom: 20 }}>{currMods[activeMod].tagline}</p>}
+                    {activeMod !== null && <div style={{ marginBottom: 24 }}>{currMods[activeMod].body.split("\n\n").map((para, pi) => (<p key={pi} style={{ fontFamily: sans, fontSize: 15, lineHeight: 1.95, color: "#FBF7EE", fontWeight: 300, marginBottom: 18 }}>{para}</p>))}</div>}
+                    {activeMod !== null && <button onClick={() => setPage(`module:${currMods[activeMod].slug}`)} style={{ fontFamily: sans, fontSize: 10, color: gold, letterSpacing: "0.2em", fontWeight: 700, border: `1px solid rgba(199,171,117,.3)`, padding: "9px 18px", background: "transparent", cursor: "pointer", textTransform: "uppercase" }}>Explore This Module →</button>}
                   </div>
                 </div>
               </div>
