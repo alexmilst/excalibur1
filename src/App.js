@@ -196,9 +196,9 @@ const coaches = [
     role: "Founder & CEO",
     img: "https://i.imgur.com/F23ULHv.jpeg",
     isLogo: false,
-    shortBio: "Founder & CEO of Excalibur Academy. Designed the full architecture of the academy — curriculum structure, faculty model, real-world engagement programmes, competitions and international pipeline. Built Excalibur on a single conviction: the most consequential thing a young person can develop is an identity forged through real pressure and real achievement.",
+    shortBio: "Founder & CEO of Excalibur Academy. A serial entrepreneur whose first startup launched in the final year of high school. Educated at elite UK boarding school from age 12, pursued undergraduate studies at Tufts University with a double major in History and Political Science. Founded ventures and led initiatives across Italy, Spain, the USA, and multiple cities across Eastern Europe — including one of St Petersburg's largest art salon programmes, inviting leading academics to lecture in historic venues.",
     tags: ["Academy Founder", "Program Architect", "Entrepreneurship", "Vision & Strategy"],
-    bio: "Alexander founded Excalibur Academy on a single conviction: the most consequential thing a young person can develop is not a skill set — it is an identity. The bone-deep knowledge, earned through real pressure and real achievement, that they are capable of more than the world expects of them. As Founder and CEO, he designed the full architecture of the academy — its curriculum structure, faculty model, real-world engagement programs, competition pipeline, and standard of instruction. He built Excalibur not as a course or a workshop, but as a complete formation experience: a place where young people are taken seriously, held to real standards, and given the kind of experiences that most adults never receive. Every element of the program — from the three-block session format to the Junior Consultant Program to the international distinctions — reflects his conviction that what separates those who lead from those who follow is almost always the quality of their early experiences, and that the right environment, provided early enough, changes everything."
+    bio: "Alexander Milstein is a serial entrepreneur whose first startup launched in the final year of high school. He received an elite private education in London from the age of 12 — living independently at a UK boarding school — before pursuing undergraduate studies at Tufts University in Boston, earning a double major in History and Political Science, and later attending Duke University before leaving to focus on already-successful ventures.\n\nA mission-driven entrepreneur and advocate, he has launched ventures and led initiatives across Italy, Spain, the USA, and multiple cities in Eastern Europe. From a young age, he has been guided by a deep commitment to justice and community care — founding an international youth political debate and leadership club, and playing a key role in national humanitarian efforts across Eastern Europe, helping raise millions for critically ill children in need of life-saving treatment.\n\nHe produced one of the largest art salon events in St Petersburg history — creating an 18th-century Paris salon environment, inviting leading academics and cultural figures to give lectures in historic venues across St Petersburg, Italy, and France.\n\nAs Founder and CEO of Excalibur Academy, he designed the full architecture of the programme — curriculum structure, faculty model, real-world engagements, competition pipeline, and the standard of instruction. He built Excalibur on a single conviction: the most consequential thing a young person can develop is an identity forged through real pressure and real achievement."
   },
   {
     name: "Bill Morris",
@@ -221,7 +221,7 @@ const coaches = [
   {
     name: "Erik Dostal",
     role: "Senior Program Director",
-    img: "https://i.imgur.com/vAvvZud.jpeg",
+    img: "https://i.imgur.com/HV7hqca.jpeg",
     isLogo: false,
     shortBio: "Program Director. MBA professor. Founder and CEO of international educational institute serving over 6,000 students across 25 franchises worldwide with campuses in Huntington Beach and Czech Republic, former advisor to a national Ministry of Education of Czech Republic, played for the U.S. Youth National Soccer team, published textbook author, and international academic accreditor.",
     tags: ["Education Systems", "Curriculum Design", "International Accreditation", "Franchise Development", "Entrepreneurship"],
@@ -392,39 +392,25 @@ const portfolioItems = [
 ];
 
 function PortfolioFolder({ isMobile }) {
-  const [active, setActive] = useState(0);
-  const item = portfolioItems[active];
+  const [active, setActive] = useState(null);
   return (
-    <div style={{ background: "#0A0907", border: "1px solid rgba(199,171,117,.15)", overflow: "hidden" }}>
-      {/* Tab bar */}
-      <div style={{ display: "flex", overflowX: "auto", background: "#050403", borderBottom: "1px solid rgba(199,171,117,.12)", scrollbarWidth: "none" }}>
-        {portfolioItems.map((p, i) => (
-          <button key={i} onClick={() => setActive(i)} style={{ flexShrink: 0, fontFamily: eyebrow_font, fontSize: isMobile ? 9 : 10, letterSpacing: "0.2em", textTransform: "uppercase", fontWeight: 600, padding: isMobile ? "14px 14px" : "16px 22px", background: active === i ? "#0A0907" : "transparent", color: active === i ? gold : "#666", border: "none", borderRight: "1px solid rgba(199,171,117,.08)", borderTop: `2px solid ${active === i ? gold : "transparent"}`, cursor: "pointer", transition: "all .2s", whiteSpace: "nowrap" }}>
-            <span style={{ fontFamily: serif, fontSize: 9, color: active === i ? gold : "#444", marginRight: 5 }}>{p.n}</span>{p.tab}
-          </button>
-        ))}
-      </div>
-      {/* Content panel */}
-      <div key={active} className="mod-content" style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", minHeight: isMobile ? "auto" : 340 }}>
-        <div style={{ padding: isMobile ? "40px 28px" : "52px 60px", borderRight: isMobile ? "none" : "1px solid rgba(199,171,117,.08)", display: "flex", flexDirection: "column", justifyContent: "center" }}>
-          <p style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.3em", color: "#555", fontWeight: 600, textTransform: "uppercase", marginBottom: 14 }}>Section {item.n} of 08</p>
-          <h3 style={{ fontFamily: serif, fontSize: isMobile ? 22 : 32, fontWeight: 600, color: "#F0E8E0", lineHeight: 1.15, marginBottom: 18 }}>{item.title}</h3>
-          <div style={{ width: 36, height: 1, background: `linear-gradient(90deg, ${gold}, transparent)`, marginBottom: 18 }} />
-          <p style={{ fontFamily: serif, fontSize: isMobile ? 15 : 19, color: gold, fontStyle: "italic", lineHeight: 1.5, marginBottom: 36 }}>{item.tagline}</p>
-          <div style={{ display: "flex", gap: 6, alignItems: "center" }}>
-            {portfolioItems.map((_, i) => (
-              <div key={i} onClick={() => setActive(i)} style={{ width: i === active ? 20 : 5, height: 4, background: i === active ? gold : "#2A2A2A", cursor: "pointer", transition: "all .3s" }} />
-            ))}
+    <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(4, 1fr)", gap: 2, background: "#111" }}>
+      {portfolioItems.map((item, i) => (
+        <div key={i} onClick={() => setActive(active === i ? null : i)} style={{ background: active === i ? "#09080C" : "#080808", borderTop: `2px solid ${active === i ? gold : "rgba(199,171,117,.1)"}`, padding: "28px 24px", cursor: "pointer", transition: "all .25s", position: "relative" }}>
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 12 }}>
+            <span style={{ fontFamily: serif, fontSize: 11, color: "rgba(199,171,117,.4)", letterSpacing: "0.1em" }}>{item.n}</span>
+            <span style={{ fontFamily: sans, fontSize: 14, color: active === i ? gold : "#555", transition: "transform .25s", display: "inline-block", transform: active === i ? "rotate(45deg)" : "none" }}>+</span>
           </div>
+          <h4 style={{ fontFamily: serif, fontSize: isMobile ? 15 : 16, fontWeight: 600, color: active === i ? gold : "#E8E0D8", lineHeight: 1.3, marginBottom: active === i ? 14 : 0 }}>{item.title}</h4>
+          {active === i && (
+            <div className="mod-content">
+              <div style={{ width: 24, height: 1, background: `linear-gradient(90deg, ${gold}, transparent)`, marginBottom: 12 }} />
+              <p style={{ fontFamily: serif, fontSize: 13, color: gold, fontStyle: "italic", lineHeight: 1.5, marginBottom: 12 }}>{item.tagline}</p>
+              <p style={{ fontFamily: sans, fontSize: 13, lineHeight: 1.8, color: "#FBF7EE", fontWeight: 300 }}>{item.body}</p>
+            </div>
+          )}
         </div>
-        <div style={{ padding: isMobile ? "0 28px 44px" : "52px 60px", display: "flex", flexDirection: "column", justifyContent: "space-between", background: "#090808" }}>
-          <p style={{ fontFamily: sans, fontSize: isMobile ? 14 : 16, lineHeight: 1.9, color: "#FBF7EE", fontWeight: 300, marginBottom: 32 }}>{item.body}</p>
-          <div style={{ display: "flex", gap: 10 }}>
-            <button onClick={() => setActive(Math.max(0, active - 1))} disabled={active === 0} style={{ fontFamily: eyebrow_font, fontSize: 10, letterSpacing: "0.15em", color: active === 0 ? "#333" : gold, background: "transparent", border: `1px solid ${active === 0 ? "#222" : "rgba(199,171,117,.4)"}`, padding: "9px 18px", cursor: active === 0 ? "default" : "pointer" }}>← PREV</button>
-            <button onClick={() => setActive(Math.min(portfolioItems.length - 1, active + 1))} disabled={active === portfolioItems.length - 1} style={{ fontFamily: eyebrow_font, fontSize: 10, letterSpacing: "0.15em", color: active === portfolioItems.length - 1 ? "#333" : gold, background: "transparent", border: `1px solid ${active === portfolioItems.length - 1 ? "#222" : "rgba(199,171,117,.4)"}`, padding: "9px 18px", cursor: active === portfolioItems.length - 1 ? "default" : "pointer" }}>NEXT →</button>
-          </div>
-        </div>
-      </div>
+      ))}
     </div>
   );
 }
@@ -631,7 +617,7 @@ function ModulePage({ slug, setPage }) {
   const mod = currMods.find(m => m.slug === slug);
   if (!mod) return null;
   return (
-    <div style={{ background: "#000", paddingTop: 80 }}>
+    <div style={{ background: "#000", paddingTop: 64 }}>
       {/* Breadcrumb */}
       <div style={{ maxWidth: 1100, margin: "0 auto", padding: isMobile ? "24px 16px 0" : "32px 40px 0" }}>
         <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
@@ -782,7 +768,7 @@ function SoireeInviteBlock() {
 function CurriculumPage({ setPage }) {
   const isMobile = useIsMobile();
   return (
-    <div style={{ background: "#000", paddingTop: 80 }}>
+    <div style={{ background: "#000", paddingTop: 64 }}>
       <div style={{ maxWidth: 900, margin: "0 auto", padding: isMobile ? "60px 16px 40px" : "80px 40px 60px", textAlign: "center" }}>
         <Fade><Eyebrow>THE CURRICULUM</Eyebrow></Fade>
         <Fade d={.06}><SectionTitle center>Eight Disciplines. One Formation.</SectionTitle><Sub center>Delivered exclusively by those who have built, led, and created in the real world. No career academics. No textbook theory divorced from practice.</Sub></Fade>
@@ -814,9 +800,9 @@ function CurriculumPage({ setPage }) {
 // ─────────────────────────────────────────────
 function FullProgramPage({ setPage }) {
   const isMobile = useIsMobile();
-  const [activeMod, setActiveMod] = useState(0);
+  const [activeMod, setActiveMod] = useState(null);
   return (
-    <div style={{ background: "#000", paddingTop: 80 }}>
+    <div style={{ background: "#000", paddingTop: 64 }}>
       <div style={{ maxWidth: 900, margin: "0 auto", padding: isMobile ? "60px 16px 40px" : "80px 40px 56px", textAlign: "center", position: "relative" }}>
         <div style={{ position: "absolute", inset: 0, background: "radial-gradient(ellipse 60% 60% at 50% 0%, rgba(199,171,117,.04) 0%, transparent 70%)" }} />
         <Fade>
@@ -999,7 +985,7 @@ function IntensivePage({ setPage }) {
   const isMobile = useIsMobile();
   const [activeWave, setActiveWave] = useState(0);
   return (
-    <div style={{ background: "#000", paddingTop: 80 }}>
+    <div style={{ background: "#000", paddingTop: 64 }}>
       <div style={{ maxWidth: 900, margin: "0 auto", padding: isMobile ? "60px 16px 40px" : "80px 40px 56px", textAlign: "center", position: "relative" }}>
         <div style={{ position: "absolute", inset: 0, background: "radial-gradient(ellipse 60% 60% at 50% 0%, rgba(199,171,117,.03) 0%, transparent 70%)" }} />
         <Fade>
@@ -1276,7 +1262,7 @@ function ProgramsPage({ setPage }) {
   ];
 
   return (
-    <div style={{ background: "#000", paddingTop: 80 }}>
+    <div style={{ background: "#000", paddingTop: 64 }}>
 
       {/* HERO */}
       <div style={{ maxWidth: 900, margin: "0 auto", padding: isMobile ? "60px 16px 40px" : "80px 40px 56px", textAlign: "center" }}>
@@ -1393,7 +1379,7 @@ function ApplyPage({ setPage }) {
   const ready = prog === "launchpad" || (prog && track && wave);
 
   return (
-    <div style={{ background: "#000", paddingTop: 80 }}>
+    <div style={{ background: "#000", paddingTop: 64 }}>
 
       {/* HERO */}
       <div style={{ maxWidth: 900, margin: "0 auto", padding: isMobile ? "60px 16px 40px" : "80px 40px 56px", textAlign: "center" }}>
@@ -1831,7 +1817,7 @@ function CoachCard({ c, i, setPage }) {
 // PAGE: HOME
 // ─────────────────────────────────────────────
 function HomePage({ setPage }) {
-  const [activeMod, setActiveMod] = useState(0);
+  const [activeMod, setActiveMod] = useState(null);
   const [activeCat, setActiveCat] = useState(0);
   const [expandedCard, setExpandedCard] = useState(null);
   const [activeTier, setActiveTier] = useState(0);
@@ -2229,11 +2215,11 @@ function HomePage({ setPage }) {
           <Fade><div style={{ textAlign: "center", marginBottom: 52 }}><Eyebrow>THE CURRICULUM</Eyebrow><SectionTitle center>Inside the Classroom</SectionTitle><Sub center>Eight disciplines — taught by executive business leaders, distinguished keynote speakers, and professors from leading universities.</Sub></div></Fade>
           <Fade d={.08}>
             {isMobile ? (
-              /* MOBILE: accordion — each module expands inline */
+              /* MOBILE: accordion — all closed initially */
               <div style={{ border: "1px solid #151515" }}>
                 {currMods.map((m, i) => (
                   <div key={i} style={{ borderBottom: "1px solid #0E0E0E" }}>
-                    <div onClick={() => setActiveMod(activeMod === i ? -1 : i)} style={{ padding: "18px 20px", cursor: "pointer", borderLeft: `3px solid ${activeMod === i ? gold : "transparent"}`, background: activeMod === i ? "rgba(199,171,117,.04)" : "#060606", display: "flex", justifyContent: "space-between", alignItems: "center", transition: "all .2s" }}>
+                    <div onClick={() => setActiveMod(activeMod === i ? null : i)} style={{ padding: "18px 20px", cursor: "pointer", borderLeft: `3px solid ${activeMod === i ? gold : "transparent"}`, background: activeMod === i ? "rgba(199,171,117,.04)" : "#060606", display: "flex", justifyContent: "space-between", alignItems: "center", transition: "all .2s" }}>
                       <div style={{ fontFamily: serif, fontSize: 19, fontWeight: activeMod === i ? 600 : 400, color: activeMod === i ? gold : "#D8D0C8", lineHeight: 1.3 }}>{m.title}</div>
                       <div style={{ fontFamily: sans, fontSize: 16, color: activeMod === i ? gold : "#555", transition: "transform .25s", transform: activeMod === i ? "rotate(45deg)" : "none", lineHeight: 1 }}>+</div>
                     </div>
@@ -2322,9 +2308,9 @@ function HomePage({ setPage }) {
       <section style={{ background: "#F5F3EE", padding: isMobile ? "60px 16px" : "80px 40px" }}>
         <div style={{ maxWidth: 1100, margin: "0 auto" }}>
           <Fade><div style={{ textAlign: "center", marginBottom: 48 }}>
-            <p style={{ fontFamily: eyebrow_font, fontSize: 10, letterSpacing: "0.4em", color: "#C7AB75", fontWeight: 600, textTransform: "uppercase", marginBottom: 12 }}>FACULTY & LEADERSHIP</p>
+            <p style={{ fontFamily: eyebrow_font, fontSize: 10, letterSpacing: "0.4em", color: "#111", fontWeight: 600, textTransform: "uppercase", marginBottom: 12 }}>FACULTY & LEADERSHIP</p>
             <h2 style={{ fontFamily: serif, fontSize: isMobile ? 26 : 36, fontWeight: 600, color: "#000", lineHeight: 1.1, marginBottom: 16 }}>The people behind the programme.</h2>
-            <p style={{ fontFamily: sans, fontSize: 14, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.7, maxWidth: 680, margin: "0 auto" }}>From a CEO who built the world's first autonomous racing series, directed the Formula BMW program, and oversaw a $13B NASDAQ listing, to a former Citigroup Managing Director with over 100 M&A transactions and 600+ CEO advisory engagements, EVP/CFO of two NYSE-listed companies, TEDx speaker and Georgetown Professor.</p>
+            <p style={{ fontFamily: sans, fontSize: 14, color: "#111", fontWeight: 300, lineHeight: 1.7, maxWidth: 680, margin: "0 auto" }}>From a CEO who built the world's first autonomous racing series, directed the Formula BMW program, and oversaw a $13B NASDAQ listing, to a former Citigroup Managing Director with over 100 M&A transactions and 600+ CEO advisory engagements, EVP/CFO of two NYSE-listed companies, TEDx speaker and Georgetown Professor.</p>
           </div></Fade>
           <Fade d={.08}>
             <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(3, 1fr)", gap: 2, background: "#E8E4DC" }}>
@@ -2335,7 +2321,7 @@ function HomePage({ setPage }) {
               ))}
             </div>
           </Fade>
-          <Fade d={.12}><div style={{ textAlign: "center", marginTop: 32 }}><button onClick={() => setPage("faculty")} style={{ fontFamily: sans, background: "transparent", border: "1px solid #1A1A1A", color: "#FBF7EE", padding: "11px 28px", fontSize: 11, fontWeight: 600, letterSpacing: "0.15em", textTransform: "uppercase", cursor: "pointer", background: "transparent" }}>VIEW ALL FACULTY →</button></div></Fade>
+          <Fade d={.12}><div style={{ textAlign: "center", marginTop: 32 }}><button onClick={() => setPage("faculty")} style={{ fontFamily: sans, background: "transparent", border: "1px solid #000", color: "#000", padding: "11px 28px", fontSize: 11, fontWeight: 600, letterSpacing: "0.15em", textTransform: "uppercase", cursor: "pointer" }}>VIEW ALL FACULTY →</button></div></Fade>
         </div>
       </section>
       {/* FIELD TRIPS — Outside the Classroom */}
@@ -2380,7 +2366,7 @@ function HomePage({ setPage }) {
         <div style={{ background: "#07060A", borderTop: `2px solid ${gold}`, padding: isMobile ? "52px 24px 40px" : "72px 80px 56px" }}>
           <div style={{ maxWidth: 1100, margin: "0 auto", display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: isMobile ? 24 : 80, alignItems: "end" }}>
             <div>
-              <Eyebrow>The Excalibur Graduate</Eyebrow>
+              <Eyebrow>THE EXCALIBUR GRADUATE</Eyebrow>
               <h2 style={{ fontFamily: serif, fontSize: isMobile ? "clamp(30px,6vw,44px)" : "clamp(36px,4vw,56px)", fontWeight: 600, color: "#F0E8E0", lineHeight: 1.05, marginTop: 10 }}>
                 Excalibur "Ivy" Portfolio
               </h2>
@@ -2453,7 +2439,7 @@ function BeyondPage({ setPage }) {
   const [activeTier, setActiveTier] = useState(0);
 
   return (
-    <div style={{ background: "#000", paddingTop: 80 }}>
+    <div style={{ background: "#000", paddingTop: 64 }}>
 
       {/* HERO */}
       <div style={{ maxWidth: 900, margin: "0 auto", padding: isMobile ? "60px 16px 40px" : "80px 40px 56px", textAlign: "center" }}>
@@ -2659,7 +2645,7 @@ const facultyProfiles = {
   "erik-dostal": {
     name: "Erik Dostal",
     role: "Senior Program Director",
-    img: "https://i.imgur.com/vAvvZud.jpeg",
+    img: "https://i.imgur.com/HV7hqca.jpeg",
     tags: ["Education Systems", "Curriculum Design", "International Accreditation", "Franchise Development", "Entrepreneurship"],
     headline: "Built an educational institution. Then franchised it across 25 locations.",
     paras: [
@@ -2738,21 +2724,28 @@ function FacultyProfilePage({ slug, setPage }) {
   }
 
   return (
-    <div style={{ background: "#000", paddingTop: 80 }}>
+    <div style={{ background: "#000", paddingTop: 64 }}>
 
-      {/* Hero — full bleed photo */}
-      <div style={{ position: "relative", height: isMobile ? 400 : 580, overflow: "hidden" }}>
-        <img src={f.img} alt={f.name} style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center top", filter: "brightness(0.4) grayscale(10%)" }} onError={e => e.target.style.display = "none"} />
-        <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to right, rgba(0,0,0,.85) 0%, rgba(0,0,0,.3) 60%, transparent 100%)" }} />
-        <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(0,0,0,.95) 0%, transparent 55%)" }} />
-        {/* Back button */}
-        <button onClick={() => setPage("faculty")} style={{ position: "absolute", top: 24, left: isMobile ? 20 : 60, fontFamily: sans, background: "transparent", border: "none", color: "rgba(199,171,117,.6)", fontSize: 11, cursor: "pointer", letterSpacing: "0.15em", display: "flex", alignItems: "center", gap: 6 }}>← OUR FACULTY</button>
-        {/* Name + role overlay */}
-        <div style={{ position: "absolute", bottom: isMobile ? 36 : 64, left: isMobile ? 28 : 72, maxWidth: 620 }}>
-          <p style={{ fontFamily: eyebrow_font, fontSize: 10, letterSpacing: "0.4em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 12 }}>{f.role}</p>
-          <h1 style={{ fontFamily: serif, fontSize: isMobile ? "clamp(36px,8vw,52px)" : "clamp(48px,5vw,72px)", fontWeight: 600, color: "#F0E8E0", lineHeight: 1.0, marginBottom: 16 }}>{f.name}</h1>
-          <div style={{ width: 56, height: 1, background: `linear-gradient(90deg, ${gold}, transparent)`, marginBottom: 16 }} />
-          <p style={{ fontFamily: serif, fontSize: isMobile ? 15 : 18, color: "#FBF7EE", fontStyle: "italic", lineHeight: 1.55 }}>{f.headline}</p>
+      {/* Hero — photo beside info, no crop */}
+      <div style={{ background: "#07060A", borderBottom: "1px solid rgba(199,171,117,.1)" }}>
+        <button onClick={() => setPage("faculty")} style={{ display: "block", padding: isMobile ? "16px 20px" : "20px 60px", fontFamily: sans, background: "transparent", border: "none", color: "rgba(199,171,117,.6)", fontSize: 11, cursor: "pointer", letterSpacing: "0.15em" }}>← OUR FACULTY</button>
+        <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "360px 1fr", maxWidth: 1100, margin: "0 auto", padding: isMobile ? "0 0 40px" : "0 40px 64px", gap: isMobile ? 28 : 64, alignItems: "start" }}>
+          {/* Photo — full show, no crop */}
+          <div style={{ overflow: "hidden", border: "1px solid rgba(199,171,117,.12)" }}>
+            <img src={f.img} alt={f.name} style={{ width: "100%", height: "auto", objectFit: "contain", display: "block" }} onError={e => e.target.style.display = "none"} />
+          </div>
+          {/* Info */}
+          <div style={{ padding: isMobile ? "0 24px" : "32px 0 0" }}>
+            <p style={{ fontFamily: eyebrow_font, fontSize: 10, letterSpacing: "0.4em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 12 }}>{f.role}</p>
+            <h1 style={{ fontFamily: serif, fontSize: isMobile ? "clamp(32px,7vw,48px)" : "clamp(40px,4vw,60px)", fontWeight: 600, color: "#F0E8E0", lineHeight: 1.05, marginBottom: 16 }}>{f.name}</h1>
+            <div style={{ width: 48, height: 1, background: `linear-gradient(90deg, ${gold}, transparent)`, marginBottom: 16 }} />
+            <p style={{ fontFamily: serif, fontSize: isMobile ? 15 : 18, color: "#FBF7EE", fontStyle: "italic", lineHeight: 1.6 }}>{f.headline}</p>
+            <div style={{ display: "flex", flexWrap: "wrap", gap: 6, marginTop: 24 }}>
+              {f.tags.map((t, i) => (
+                <span key={i} style={{ fontFamily: sans, fontSize: 9, color: "#FBF7EE", letterSpacing: "0.1em", border: "1px solid rgba(199,171,117,.2)", padding: "3px 10px", textTransform: "uppercase" }}>{t}</span>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
 
@@ -2833,7 +2826,7 @@ function FacultyPage({ setPage }) {
     {
       name: "Erik Dostal",
       role: "Senior Program Director",
-      img: "https://i.imgur.com/vAvvZud.jpeg",
+      img: "https://i.imgur.com/HV7hqca.jpeg",
       tags: ["Education Systems", "Curriculum Design", "International Accreditation", "Franchise Development"],
       bio: "Erik Dostal is the founder and president of CA Institute, a comprehensive educational institution he built from the ground up into a leading international provider of English language, business, and professional education — serving over 6,000 students across 25 international franchise locations.\n\nOver nearly three decades, Erik has demonstrated what it means to build an educational institution that operates at genuine scale: generating $4.8M in annual revenues, sustaining 20% year-over-year growth, and closing franchise deals spanning multiple continents.\n\nHe holds an MA in TESOL from the University of Chichester and NILE, an MBA from IDRAC Business School, and a BA in Cultural Anthropology from Chapman University. A former U.S. Youth National Team soccer player, he has authored multiple textbooks and publications on teaching methodology and business education.\n\nA former advisor to the Czech Ministry of Education and a certified international academic accreditor, his work has received European Small Business Awards recognition across multiple years."
     },
@@ -2847,7 +2840,7 @@ function FacultyPage({ setPage }) {
   ];
 
   return (
-    <div style={{ background: "#000", paddingTop: 80 }}>
+    <div style={{ background: "#000", paddingTop: 64 }}>
 
       {/* Hero */}
       <div style={{ padding: isMobile ? "60px 24px 48px" : "88px 80px 64px", maxWidth: 1100, margin: "0 auto" }}>
@@ -2918,7 +2911,7 @@ function AboutPage({ setPage }) {
   const isMobile = useIsMobile();
 
   return (
-    <div style={{ background: "#000", paddingTop: 80 }}>
+    <div style={{ background: "#000", paddingTop: 64 }}>
 
       {/* HERO — H7T1wmI background, main heading */}
       <div style={{ position: "relative", height: isMobile ? 420 : 620, overflow: "hidden" }}>
@@ -3327,7 +3320,7 @@ export default function ExcaliburApp() {
 
   const setPage = useCallback((p) => {
     setPageRaw(p);
-    try { window.scrollTo({ top: 0, behavior: "smooth" }); } catch (e) {}
+    window.scrollTo(0, 0);
   }, []);
 
   const renderPage = () => {
