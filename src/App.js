@@ -2057,7 +2057,7 @@ function HomePage({ setPage, openInquiry }) {
       </section>
 
       {/* ACADEMY ABOUT — luxury editorial layout */}
-      <section style={{ background: "#F5F3EE", padding: isMobile ? "60px 0" : "0" }}>
+      <section style={{ background: "#F5F3EE", padding: 0 }}>
         <Fade>
         {/* Full-width photo strip with text overlay */}
         <div style={{ position: "relative", height: isMobile ? 260 : 440, overflow: "hidden" }}>
@@ -2259,13 +2259,13 @@ function HomePage({ setPage, openInquiry }) {
 
       {/* COLLEGE ADMISSIONS — right after programs */}
       <section style={{ padding: isMobile ? "60px 16px" : "0", background: "#F5F3EE" }}>
-        <div style={{ maxWidth: 1100, margin: "0 auto", background: "#F5F3EE", borderTop: `2px solid #8B6914`, padding: isMobile ? "44px 28px" : "64px 72px" }}>
+        <div style={{ maxWidth: 1100, margin: "0 auto", background: "#F5F3EE", borderTop: "2px solid #000", padding: isMobile ? "44px 28px" : "64px 72px" }}>
           <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: isMobile ? 36 : 80 }}>
             <div>
               <p style={{ fontFamily: eyebrow_font, fontSize: 10, letterSpacing: "0.4em", color: "#000", fontWeight: 600, textTransform: "uppercase", marginBottom: 14 }}>COLLEGE ADMISSIONS ADVISOR</p>
               <h2 style={{ fontFamily: serif, fontSize: isMobile ? 26 : 36, fontWeight: 600, color: "#000", lineHeight: 1.1, marginBottom: 10, marginTop: 8 }}>A college portfolio that speaks for itself.</h2>
               <p style={{ fontFamily: serif, fontSize: 17, color: "#000", fontStyle: "italic", marginBottom: 22, lineHeight: 1.4 }}>Why Excalibur Students Stand Apart</p>
-              <div style={{ width: 36, height: 1, background: `linear-gradient(90deg, #8B6914, transparent)`, marginBottom: 22 }} />
+              <div style={{ width: 36, height: 1, background: "linear-gradient(90deg, #000, transparent)", marginBottom: 22 }} />
               <p style={{ fontFamily: sans, fontSize: 14, lineHeight: 1.9, color: "#1a1a1a", fontWeight: 300, marginBottom: 16 }}>An Excalibur graduate approaches college admission with proof of applied real-world leadership and work experience. A consulting report. An externship record. A micro-business launch. Competition results. A graduation portfolio. Faculty recommendations written by top executives and professionals who watched them operate, lead, and execute.</p>
               <p style={{ fontFamily: sans, fontSize: 14, lineHeight: 1.9, color: "#1a1a1a", fontWeight: 300 }}>The Excalibur graduate portfolio operates on an entirely different level than the conventional application.</p>
             </div>
@@ -2273,7 +2273,7 @@ function HomePage({ setPage, openInquiry }) {
               <p style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.35em", color: "#000", fontWeight: 600, textTransform: "uppercase", marginBottom: 24 }}>What This Means in Practice</p>
               {["Portfolio reviewed and built by admissions counselors specifically for university applications", "Faculty letters grounded in ten months of direct observation — not form letters", "Verified competition results and externship documentation", "Interview preparation built around real, specific experience", "A narrative unavailable to most students due to lack of comparable experience"].map((f, i) => (
                 <div key={i} style={{ display: "flex", gap: 14, marginBottom: 16, alignItems: "flex-start" }}>
-                  <div style={{ width: 16, height: 1.5, background: "#8B6914", marginTop: 9, flexShrink: 0 }} />
+                  <div style={{ width: 16, height: 1.5, background: "#000", marginTop: 9, flexShrink: 0 }} />
                   <span style={{ fontFamily: sans, fontSize: 13, color: "#1a1a1a", fontWeight: 300, lineHeight: 1.7 }}>{f}</span>
                 </div>
               ))}
