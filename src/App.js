@@ -1629,60 +1629,59 @@ function ProgramsPage({ setPage, openInquiry }) {
         <div key={activeProgram}>
 
           {prog.photo ? (
-            /* ── SUMMER: full photo + white content below ── */
+            /* ── SUMMER: tracker above photo, then white content below ── */
             <div>
-              {/* Photo — full width, show entire image, no crop */}
-              <div style={{ position: "relative", background: "#000" }}>
-                <img src={prog.photo} alt={prog.title} style={{ width: "100%", display: "block", maxHeight: isMobile ? 320 : 520, objectFit: "contain", objectPosition: "center" }} />
+              {/* ENROLLMENT TRACKER — full width black strip, right under the tabs */}
+              <div style={{ background: "#000", padding: isMobile ? "24px 24px" : "28px 52px", borderBottom: "1px solid rgba(199,171,117,.08)" }}>
+                <p style={{ fontFamily: eyebrow_font, fontSize: 8, letterSpacing: "0.45em", color: "rgba(199,171,117,.55)", fontWeight: 600, textTransform: "uppercase", marginBottom: 20 }}>Enrollment Status · Summer 2026</p>
+                <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: isMobile ? 20 : 48 }}>
+                  {[
+                    { wave: "Wave I", dates: "July 6–18", days: "Mon–Fri · 9:30 AM–3 PM", enrolled: 14, total: 20 },
+                    { wave: "Wave II", dates: "August 3–15", days: "Mon–Fri · 9:30 AM–3 PM", enrolled: 9, total: 20 },
+                  ].map((w, i) => (
+                    <div key={i}>
+                      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: 10 }}>
+                        <div>
+                          <span style={{ fontFamily: serif, fontSize: 16, fontWeight: 600, color: "#FBF7EE", marginRight: 10 }}>{w.wave}</span>
+                          <span style={{ fontFamily: sans, fontSize: 11, color: "rgba(251,247,238,.4)", fontWeight: 300 }}>{w.dates} · {w.days}</span>
+                        </div>
+                        <div style={{ textAlign: "right", flexShrink: 0, marginLeft: 12 }}>
+                          <span style={{ fontFamily: serif, fontSize: 13, color: "#4DB87A" }}>{w.enrolled} enrolled</span>
+                          <span style={{ fontFamily: sans, fontSize: 10, color: "rgba(251,247,238,.25)", marginLeft: 8 }}>{w.total - w.enrolled} spots left</span>
+                        </div>
+                      </div>
+                      <div style={{ height: 2, background: "rgba(255,255,255,.06)", borderRadius: 1 }}>
+                        <div style={{ height: "100%", width: `${(w.enrolled / w.total) * 100}%`, background: "linear-gradient(90deg, #4DB87A, rgba(77,184,122,.5))", borderRadius: 1 }} />
+                      </div>
+                      <div style={{ display: "flex", justifyContent: "space-between", marginTop: 5 }}>
+                        <span style={{ fontFamily: sans, fontSize: 8, color: "rgba(251,247,238,.2)", letterSpacing: "0.08em" }}>0 / 20 students</span>
+                        <span style={{ fontFamily: sans, fontSize: 8, color: "rgba(251,247,238,.2)", letterSpacing: "0.08em" }}>Limited cohort</span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Photo — full width, show entire image */}
+              <div style={{ background: "#000" }}>
+                <img src="https://i.ibb.co/Rr2zhXD" alt="Summer Intensive at Excalibur" style={{ width: "100%", display: "block", objectFit: "contain" }} />
               </div>
 
               {/* Content below photo — white background, two columns */}
               <div style={{ background: "#fff", display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 0 }}>
 
-                {/* LEFT — heading, desc, status, details */}
+                {/* LEFT — heading, desc, details */}
                 <div style={{ padding: isMobile ? "36px 24px" : "52px 52px", borderRight: isMobile ? "none" : "1px solid rgba(0,0,0,.07)" }}>
-                  {/* Status + tag */}
                   <div style={{ display: "flex", gap: 10, alignItems: "center", marginBottom: 20, flexWrap: "wrap" }}>
                     <span style={{ fontFamily: sans, fontSize: 9, color: prog.statusColor, border: `1px solid ${prog.statusColor}`, padding: "3px 10px", letterSpacing: "0.15em", fontWeight: 600 }}>{prog.status}</span>
                     <span style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.3em", color: "rgba(0,0,0,.35)", textTransform: "uppercase" }}>{prog.tag}</span>
                   </div>
                   <h2 style={{ fontFamily: serif, fontSize: isMobile ? 28 : 42, fontWeight: 600, color: "#000", lineHeight: 1.0, marginBottom: 8 }}>{prog.title}</h2>
-                  <p style={{ fontFamily: serif, fontSize: 16, color: "#8B6914", fontStyle: "italic", marginBottom: 24, lineHeight: 1.4 }}>{prog.tagline}</p>
-
-                  {/* ENROLLMENT TRACKER — luxury hotel style */}
-                  <div style={{ background: "#000", padding: "24px 28px", marginBottom: 28 }}>
-                    <p style={{ fontFamily: eyebrow_font, fontSize: 8, letterSpacing: "0.4em", color: "rgba(199,171,117,.55)", fontWeight: 600, textTransform: "uppercase", marginBottom: 18 }}>Enrollment Status · Summer 2026</p>
-                    {[
-                      { wave: "Wave I", dates: "July 6–18", days: "Mon–Fri · 9:30 AM–3 PM", enrolled: 14, total: 20 },
-                      { wave: "Wave II", dates: "August 3–15", days: "Mon–Fri · 9:30 AM–3 PM", enrolled: 9, total: 20 },
-                    ].map((w, i) => (
-                      <div key={i} style={{ marginBottom: i === 0 ? 20 : 0, paddingBottom: i === 0 ? 20 : 0, borderBottom: i === 0 ? "1px solid rgba(199,171,117,.08)" : "none" }}>
-                        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: 8 }}>
-                          <div>
-                            <span style={{ fontFamily: serif, fontSize: 15, fontWeight: 600, color: "#FBF7EE", marginRight: 10 }}>{w.wave}</span>
-                            <span style={{ fontFamily: sans, fontSize: 11, color: "rgba(251,247,238,.45)", fontWeight: 300 }}>{w.dates} · {w.days}</span>
-                          </div>
-                          <div style={{ textAlign: "right" }}>
-                            <span style={{ fontFamily: serif, fontSize: 13, color: "#4DB87A" }}>{w.enrolled} enrolled</span>
-                            <span style={{ fontFamily: sans, fontSize: 10, color: "rgba(251,247,238,.3)", marginLeft: 8 }}>{w.total - w.enrolled} remaining</span>
-                          </div>
-                        </div>
-                        <div style={{ height: 2, background: "rgba(255,255,255,.06)", borderRadius: 1 }}>
-                          <div style={{ height: "100%", width: `${(w.enrolled / w.total) * 100}%`, background: `linear-gradient(90deg, #4DB87A, rgba(77,184,122,.6))`, transition: "width .8s ease", borderRadius: 1 }} />
-                        </div>
-                        <div style={{ display: "flex", justifyContent: "space-between", marginTop: 5 }}>
-                          <span style={{ fontFamily: sans, fontSize: 9, color: "rgba(251,247,238,.25)", letterSpacing: "0.05em" }}>0</span>
-                          <span style={{ fontFamily: sans, fontSize: 9, color: "rgba(251,247,238,.25)", letterSpacing: "0.05em" }}>{w.total} max</span>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-
+                  <p style={{ fontFamily: serif, fontSize: 16, color: "#8B6914", fontStyle: "italic", marginBottom: 28, lineHeight: 1.4 }}>{prog.tagline}</p>
                   <div style={{ width: 32, height: 1, background: "linear-gradient(90deg, #000, transparent)", marginBottom: 24 }} />
                   {prog.desc.split("\n\n").map((para, i) => (
                     <p key={i} style={{ fontFamily: sans, fontSize: 14, lineHeight: 1.9, color: "#1a1a1a", fontWeight: 300, marginBottom: 14 }}>{para}</p>
                   ))}
-                  {/* Details */}
                   <div style={{ marginTop: 28, display: "flex", flexDirection: "column", gap: 0, borderTop: "1px solid rgba(0,0,0,.08)", paddingTop: 20 }}>
                     {prog.details.map(([k, v]) => (
                       <div key={k} style={{ display: "grid", gridTemplateColumns: "90px 1fr", gap: 16, padding: "10px 0", borderBottom: "1px solid rgba(0,0,0,.05)" }}>
@@ -1708,7 +1707,6 @@ function ProgramsPage({ setPage, openInquiry }) {
                       </div>
                     ))}
                   </div>
-                  {/* Day at Excalibur CTA */}
                   <div style={{ borderTop: "1px solid rgba(0,0,0,.1)", paddingTop: 32 }}>
                     <p style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.4em", color: "#8B6914", fontWeight: 600, textTransform: "uppercase", marginBottom: 12 }}>A Day at Excalibur</p>
                     <h3 style={{ fontFamily: serif, fontSize: isMobile ? 20 : 26, fontWeight: 600, color: "#000", lineHeight: 1.15, marginBottom: 10 }}>What a real session looks like.</h3>
