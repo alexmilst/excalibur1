@@ -9,6 +9,21 @@ const eyebrow_font = "'DM Sans', sans-serif";
 const gold = "#C7AB75";
 
 // ── RESPONSIVE HOOK ──
+
+// ── Formspree submit helper ──
+async function submitToFormspree(data) {
+  try {
+    const res = await fetch("https://formspree.io/f/xwvaglyg", {
+      method: "POST",
+      headers: { "Accept": "application/json", "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    });
+    return res.ok;
+  } catch (e) {
+    return false;
+  }
+}
+
 function useIsMobile() {
   const [mobile, setMobile] = useState(typeof window !== "undefined" ? window.innerWidth < 900 : false);
   useEffect(() => {
@@ -982,8 +997,8 @@ function SoireeInviteBlock({ openInquiry }) {
                 <p style={{ fontFamily: serif, fontSize: isMobile ? 36 : 52, color: gold, fontWeight: 600, lineHeight: 1.3, fontStyle: "italic" }}>“What is your dream?”</p>
               </div>
               <div style={{ display: "flex", gap: 8, flexDirection: isMobile ? "column" : "row", maxWidth: 520, margin: "0 auto 14px" }}>
-                <input type="email" value={email} onChange={e => setEmail(e.target.value)} onKeyDown={e => e.key === "Enter" && email && setSubmitted(true)} placeholder="Your email address" style={{ flex: 1, padding: "13px 18px", background: "#000", border: "1px solid rgba(199,171,117,.3)", color: "#FBF7EE", fontFamily: sans, fontSize: 13, outline: "none" }} onFocus={e => e.target.style.borderColor = gold} onBlur={e => e.target.style.borderColor = "rgba(199,171,117,.3)"} />
-                <button onClick={() => { openInquiry && openInquiry(); email && setSubmitted(true); }} style={{ fontFamily: sans, background: gold, color: "#000", padding: "13px 22px", fontSize: 11, fontWeight: 700, letterSpacing: "0.15em", textTransform: "uppercase", border: "none", cursor: "pointer", flexShrink: 0 }}>Request Invitation</button>
+                <input type="email" value={email} onChange={e => setEmail(e.target.value)} onKeyDown={async e => { if (e.key === "Enter" && email) { await submitToFormspree({ type: "soiree_invite", email }); setSubmitted(true); }}} placeholder="Your email address" style={{ flex: 1, padding: "13px 18px", background: "#000", border: "1px solid rgba(199,171,117,.3)", color: "#FBF7EE", fontFamily: sans, fontSize: 13, outline: "none" }} onFocus={e => e.target.style.borderColor = gold} onBlur={e => e.target.style.borderColor = "rgba(199,171,117,.3)"} />
+                <button onClick={async () => { if (!email) return; await submitToFormspree({ type: "soiree_invite", email }); setSubmitted(true); }} style={{ fontFamily: sans, background: gold, color: "#000", padding: "13px 22px", fontSize: 11, fontWeight: 700, letterSpacing: "0.15em", textTransform: "uppercase", border: "none", cursor: "pointer", flexShrink: 0 }}>Request Invitation</button>
               </div>
               <p style={{ fontFamily: sans, fontSize: 9, letterSpacing: "0.14em", color: "#C7AB75", marginTop: 8, textTransform: "uppercase" }}>Invitations are extended personally by the Excalibur team.</p>
             </div>
@@ -4264,14 +4279,14 @@ function ComingSoonPage({ onUnlock }) {
                   type="email"
                   value={email}
                   onChange={e => setEmail(e.target.value)}
-                  onKeyDown={e => e.key === "Enter" && email && setSubmitted(true)}
+                  onKeyDown={async e => { if (e.key === "Enter" && email) { await submitToFormspree({ type: "soiree_invite", email }); setSubmitted(true); }}}
                   placeholder="Your email address"
                   style={{ flex: 1, padding: "13px 18px", background: "#000", border: "1px solid rgba(199,171,117,.25)", color: "#FBF7EE", fontFamily: sans, fontSize: 13, outline: "none" }}
                   onFocus={e => e.target.style.borderColor = gold}
                   onBlur={e => e.target.style.borderColor = "rgba(199,171,117,.25)"}
                 />
                 <button
-                  onClick={() => email && setSubmitted(true)}
+                  onClick={async () => { if (!email) return; await submitToFormspree({ type: "soiree_invite", email }); setSubmitted(true); }}
                   style={{ fontFamily: sans, background: gold, color: "#000", padding: "13px 22px", fontSize: 11, fontWeight: 700, letterSpacing: "0.15em", textTransform: "uppercase", border: "none", cursor: "pointer", flexShrink: 0 }}
                 >
                   Request Invitation
@@ -4628,7 +4643,7 @@ function InquiryModal({ open, onClose, defaultProgram }) {
             {step < 3 ? (
               <button onClick={() => setStep(s => s + 1)} style={{ fontFamily: sans, background: gold, color: "#000", padding: "13px 36px", fontSize: 12, fontWeight: 700, letterSpacing: "0.18em", border: "none", cursor: "pointer", textTransform: "uppercase" }}>Continue →</button>
             ) : (
-              <button onClick={async () => { try { await fetch("https://formspree.io/f/xwvaglyg", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(form) }); } catch(e) {} setSubmitted(true); }} style={{ fontFamily: sans, background: gold, color: "#000", padding: "13px 36px", fontSize: 12, fontWeight: 700, letterSpacing: "0.18em", border: "none", cursor: "pointer", textTransform: "uppercase" }}>Submit — We'll Be in Touch Within 24 Hours</button>
+              <button onClick={async () => { await submitToFormspree({ ...form, type: "inquiry", students: JSON.stringify(form.students), programs: form.programs.join(", "), tracks: form.tracks.join(", ") }); setSubmitted(true); }} style={{ fontFamily: sans, background: gold, color: "#000", padding: "13px 36px", fontSize: 12, fontWeight: 700, letterSpacing: "0.18em", border: "none", cursor: "pointer", textTransform: "uppercase" }}>Submit — We'll Be in Touch Within 24 Hours</button>
             )}
           </div>
         )}
