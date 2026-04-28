@@ -11,6 +11,28 @@ const gold = "#C7AB75";
 // ── RESPONSIVE HOOK ──
 
 
+// ─────────────────────────────────────────────────────────
+// WEB3FORMS SUBMIT
+// Get your free access key at web3forms.com (takes 30 sec)
+// Enter your Microsoft 365 email → get key → paste below
+// ─────────────────────────────────────────────────────────
+const WEB3FORMS_KEY = "a1a5e781-b29e-449e-b08d-3447d8f8900f";
+
+async function sendEmail(data) {
+  try {
+    const res = await fetch("https://api.web3forms.com/submit", {
+      method: "POST",
+      headers: { "Content-Type": "application/json", "Accept": "application/json" },
+      body: JSON.stringify({ access_key: WEB3FORMS_KEY, ...data }),
+    });
+    const json = await res.json();
+    return json.success;
+  } catch (e) {
+    console.error("Web3Forms error:", e);
+    return false;
+  }
+}
+
 function useIsMobile() {
   const [mobile, setMobile] = useState(typeof window !== "undefined" ? window.innerWidth < 900 : false);
   useEffect(() => {
@@ -984,19 +1006,11 @@ function SoireeInviteBlock({ openInquiry }) {
                 <p style={{ fontFamily: serif, fontSize: isMobile ? 36 : 52, color: gold, fontWeight: 600, lineHeight: 1.3, fontStyle: "italic" }}>“What is your dream?”</p>
               </div>
               <div style={{ display: "flex", gap: 8, flexDirection: isMobile ? "column" : "row", maxWidth: 520, margin: "0 auto 14px" }}>
-                <input type="email" value={email} onChange={e => setEmail(e.target.value)} onKeyDown={e => { if (e.key === "Enter" && email) { document.querySelector('form[target="soiree_iframe"]').submit(); }}} placeholder="Your email address" style={{ flex: 1, padding: "13px 18px", background: "#000", border: "1px solid rgba(199,171,117,.3)", color: "#FBF7EE", fontFamily: sans, fontSize: 13, outline: "none" }} onFocus={e => e.target.style.borderColor = gold} onBlur={e => e.target.style.borderColor = "rgba(199,171,117,.3)"} />
-                <>
-                <form action="https://formspree.io/f/xwvaglyg" method="POST" target="soiree_iframe" style={{ display: "none" }} onSubmit={() => setTimeout(() => setSubmitted(true), 600)}>
-                  <input name="_subject" value="Soiree Invitation Request" readOnly />
-                  <input name="type" value="soiree_invite" readOnly />
-                  <input name="email" value={email} readOnly />
-                </form>
-                <iframe name="soiree_iframe" style={{ display: "none" }} title="soiree" />
+                <input type="email" value={email} onChange={e => setEmail(e.target.value)} onKeyDown={async e => { if (e.key === "Enter" && email) { await sendEmail({ "Email": email, "Type": "Soirée Invitation Request", "Message": "Soirée invitation request from: " + email }); setSubmitted(true); }}} placeholder="Your email address" style={{ flex: 1, padding: "13px 18px", background: "#000", border: "1px solid rgba(199,171,117,.3)", color: "#FBF7EE", fontFamily: sans, fontSize: 13, outline: "none" }} onFocus={e => e.target.style.borderColor = gold} onBlur={e => e.target.style.borderColor = "rgba(199,171,117,.3)"} />
                 <button
-                  onClick={() => { if (!email) return; document.querySelector('form[target="soiree_iframe"]').submit(); }}
+                  onClick={async () => { if (!email) return; await sendEmail({ "Email": email, "Type": "Soirée Invitation Request", "Message": "Soirée invitation request from: " + email }); setSubmitted(true); }}
                   style={{ fontFamily: sans, background: gold, color: "#000", padding: "13px 22px", fontSize: 11, fontWeight: 700, letterSpacing: "0.15em", textTransform: "uppercase", border: "none", cursor: "pointer", flexShrink: 0 }}
                 >Request Invitation</button>
-              </>
               </div>
               <p style={{ fontFamily: sans, fontSize: 9, letterSpacing: "0.14em", color: "#C7AB75", marginTop: 8, textTransform: "uppercase" }}>Invitations are extended personally by the Excalibur team.</p>
             </div>
@@ -4277,14 +4291,14 @@ function ComingSoonPage({ onUnlock }) {
                   type="email"
                   value={email}
                   onChange={e => setEmail(e.target.value)}
-                  onKeyDown={e => { if (e.key === "Enter" && email) { document.querySelector('[data-soiree-form]') && document.querySelector('[data-soiree-form]').submit(); }}}
+                  onKeyDown={async e => { if (e.key === "Enter" && email) { await sendEmail({ "Email": email, "Type": "Soirée Invitation Request", "Message": "Soirée invitation request from: " + email }); setSubmitted(true); }}}
                   placeholder="Your email address"
                   style={{ flex: 1, padding: "13px 18px", background: "#000", border: "1px solid rgba(199,171,117,.25)", color: "#FBF7EE", fontFamily: sans, fontSize: 13, outline: "none" }}
                   onFocus={e => e.target.style.borderColor = gold}
                   onBlur={e => e.target.style.borderColor = "rgba(199,171,117,.25)"}
                 />
                 <button
-                  onClick={() => { if (!email) return; document.querySelector('[data-soiree-form]') && document.querySelector('[data-soiree-form]').submit(); }}
+                  onClick={async () => { if (!email) return; await sendEmail({ "Email": email, "Type": "Soirée Invitation Request", "Message": "Soirée invitation request from: " + email }); setSubmitted(true); }}
                   style={{ fontFamily: sans, background: gold, color: "#000", padding: "13px 22px", fontSize: 11, fontWeight: 700, letterSpacing: "0.15em", textTransform: "uppercase", border: "none", cursor: "pointer", flexShrink: 0 }}
                 >
                   Request Invitation
@@ -4632,33 +4646,7 @@ function InquiryModal({ open, onClose, defaultProgram }) {
           )}
         </div>
 
-        {/* Hidden native form — submits to Formspree on step 3 */}
-        <form
-          id="excalibur-inquiry-form"
-          action="https://formspree.io/f/xwvaglyg"
-          method="POST"
-          target="formspree_iframe"
-          style={{ display: "none" }}
-          onSubmit={() => setTimeout(() => setSubmitted(true), 800)}
-        >
-          <input name="_subject" value="New Excalibur Academy Inquiry" readOnly />
-          <input name="type" value="inquiry" readOnly />
-          <input name="parentFirst" value={form.parentFirst} readOnly />
-          <input name="parentLast" value={form.parentLast} readOnly />
-          <input name="email" value={form.email} readOnly />
-          <input name="phone" value={form.phone} readOnly />
-          <input name="city" value={form.city} readOnly />
-          <input name="state" value={form.state} readOnly />
-          <input name="contactMethod" value={form.contactMethod} readOnly />
-          <input name="contactTime" value={form.contactTime} readOnly />
-          <input name="programs" value={form.programs.join(", ")} readOnly />
-          <input name="tracks" value={(form.tracks||[]).join(", ")} readOnly />
-          <input name="sendPackage" value={form.sendPackage} readOnly />
-          <input name="hearAbout" value={form.hearAbout} readOnly />
-          <input name="students" value={form.students.map(s => `${s.firstName} ${s.lastName}, Grade: ${s.grade}, Age: ${s.age}`).join(" | ")} readOnly />
-        </form>
-        {/* Target iframe so page doesn't navigate */}
-        <iframe name="formspree_iframe" style={{ display: "none" }} title="formspree" />
+
 
         {/* Footer nav */}
         {!submitted && (
@@ -4670,8 +4658,22 @@ function InquiryModal({ open, onClose, defaultProgram }) {
               <button onClick={() => setStep(s => s + 1)} style={{ fontFamily: sans, background: gold, color: "#000", padding: "13px 36px", fontSize: 12, fontWeight: 700, letterSpacing: "0.18em", border: "none", cursor: "pointer", textTransform: "uppercase" }}>Continue →</button>
             ) : (
               <button
-                type="submit"
-                form="excalibur-inquiry-form"
+                onClick={async () => {
+                  await sendEmail({
+                    "Parent Name":    form.parentFirst + " " + form.parentLast,
+                    "Email":          form.email,
+                    "Phone":          form.phone,
+                    "City":           form.city + ", " + form.state,
+                    "Contact Method": form.contactMethod,
+                    "Contact Time":   form.contactTime,
+                    "Programs":       form.programs.join(", "),
+                    "Schedule Track": (form.tracks||[]).join(", "),
+                    "Send Package":   form.sendPackage,
+                    "Heard About Us": form.hearAbout,
+                    "Students":       form.students.map(s => s.firstName + " " + s.lastName + " — Grade: " + s.grade + ", Age: " + s.age).join(" | "),
+                  });
+                  setSubmitted(true);
+                }}
                 style={{ fontFamily: sans, background: gold, color: "#000", padding: "13px 36px", fontSize: 12, fontWeight: 700, letterSpacing: "0.18em", border: "none", cursor: "pointer", textTransform: "uppercase" }}
               >Submit — We'll Be in Touch Within 24 Hours</button>
             )}
