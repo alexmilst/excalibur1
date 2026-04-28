@@ -2456,21 +2456,10 @@ function HomePage({ setPage, openInquiry }) {
       {/* HERO */}
       <section style={{ minHeight: "100vh", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", textAlign: "center", padding: isMobile ? "80px 24px 60px" : "60px 80px", position: "relative", overflow: "hidden", background: "#000" }}>
 
-        {/* Corner marks — luxury hotel menu feel */}
-        <div style={{ position: "absolute", top: 32, left: 32, width: 20, height: 20, borderTop: `1px solid rgba(199,171,117,.35)`, borderLeft: `1px solid rgba(199,171,117,.35)` }} />
-        <div style={{ position: "absolute", top: 32, right: 32, width: 20, height: 20, borderTop: `1px solid rgba(199,171,117,.35)`, borderRight: `1px solid rgba(199,171,117,.35)` }} />
-        <div style={{ position: "absolute", bottom: 32, left: 32, width: 20, height: 20, borderBottom: `1px solid rgba(199,171,117,.35)`, borderLeft: `1px solid rgba(199,171,117,.35)` }} />
-        <div style={{ position: "absolute", bottom: 32, right: 32, width: 20, height: 20, borderBottom: `1px solid rgba(199,171,117,.35)`, borderRight: `1px solid rgba(199,171,117,.35)` }} />
-
         {/* Faint EXCALIBUR wordmark — gallery watermark */}
         <div style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center", pointerEvents: "none", overflow: "hidden" }}>
           <span style={{ fontFamily: "'Forum', serif", fontSize: "clamp(80px,14vw,180px)", color: "rgba(199,171,117,.03)", letterSpacing: "0.3em", textTransform: "uppercase", userSelect: "none", whiteSpace: "nowrap" }}>EXCALIBUR</span>
         </div>
-
-        {/* Thin horizontal rule — top */}
-        <div style={{ position: "absolute", top: 72, left: 72, right: 72, height: "1px", background: "linear-gradient(90deg, transparent, rgba(199,171,117,.2), transparent)" }} />
-        {/* Thin horizontal rule — bottom */}
-        <div style={{ position: "absolute", bottom: 72, left: 72, right: 72, height: "1px", background: "linear-gradient(90deg, transparent, rgba(199,171,117,.2), transparent)" }} />
 
         {/* CONTENT */}
         <div style={{ position: "relative", zIndex: 1, display: "flex", flexDirection: "column", alignItems: "center", maxWidth: 820 }}>
@@ -2529,6 +2518,46 @@ function HomePage({ setPage, openInquiry }) {
             <p style={{ fontFamily: eyebrow_font, fontSize: 9, color: "rgba(199,171,117,.5)", letterSpacing: "0.3em", textTransform: "uppercase" }}>Ages 16–17 &nbsp;·&nbsp; 25 Students Per Cohort &nbsp;·&nbsp; Orange County, CA</p>
           </Fade>
 
+        </div>
+      </section>
+
+      {/* STATS — Soho House luxury */}
+      <section style={{ background: "#050504", padding: isMobile ? "64px 24px" : "96px 80px", borderTop: "1px solid rgba(199,171,117,.10)", borderBottom: "1px solid rgba(199,171,117,.10)" }}>
+        {/* top ornament rule */}
+        <div style={{ display: "flex", alignItems: "center", gap: 18, maxWidth: 1100, margin: "0 auto 64px" }}>
+          <div style={{ flex: 1, height: "1px", background: "linear-gradient(90deg, transparent, rgba(199,171,117,.30))" }} />
+          <span style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: 11, letterSpacing: "0.45em", color: "rgba(199,171,117,.45)", textTransform: "uppercase", whiteSpace: "nowrap" }}>By the Numbers</span>
+          <div style={{ flex: 1, height: "1px", background: "linear-gradient(90deg, rgba(199,171,117,.30), transparent)" }} />
+        </div>
+
+        <div ref={statsRef} style={{ maxWidth: 1100, margin: "0 auto", display: "grid", gridTemplateColumns: isMobile ? "1fr 1fr" : "repeat(6, 1fr)" }}>
+          {[["10", " Months", "academic year program"], ["6", " Weeks", "intensive track"], ["25", "", "students per cohort"], ["8", "", "curriculum modules"], ["30+", "", "guest speakers / year"], ["2", "", "summer waves"]].map(([num, suf, l], i) => (
+            <div key={i} style={{
+              padding: isMobile ? "32px 12px 36px" : "0 16px",
+              textAlign: "center",
+              borderLeft: i === 0 ? "none" : (isMobile ? (i % 2 === 0 ? "none" : "1px solid rgba(199,171,117,.10)") : "1px solid rgba(199,171,117,.10)"),
+              borderTop: isMobile && i >= 2 ? "1px solid rgba(199,171,117,.10)" : "none",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              gap: 0,
+            }}>
+              {/* tiny top accent line */}
+              <div style={{ width: 20, height: 1, background: "rgba(199,171,117,.35)", marginBottom: 16 }} />
+              <div style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: isMobile ? 48 : "clamp(36px,3.8vw,52px)", fontWeight: 300, color: "#FBF7EE", lineHeight: 1, letterSpacing: "-0.01em" }}>
+                <StatCounter num={num} suf={suf} label="" inView={statsInView} lightMode={false} />
+              </div>
+              <div style={{ width: 24, height: "1px", background: `linear-gradient(90deg, transparent, rgba(199,171,117,.5), transparent)`, margin: "14px auto 12px" }} />
+              <p style={{ fontFamily: "'Lato', sans-serif", fontSize: 8, letterSpacing: "0.25em", color: "rgba(199,171,117,.55)", textTransform: "uppercase", fontWeight: 400, lineHeight: 1.6 }}>{l}</p>
+            </div>
+          ))}
+        </div>
+
+        {/* bottom ornament rule */}
+        <div style={{ display: "flex", alignItems: "center", gap: 18, maxWidth: 1100, margin: "64px auto 0" }}>
+          <div style={{ flex: 1, height: "1px", background: "linear-gradient(90deg, transparent, rgba(199,171,117,.15))" }} />
+          <div style={{ width: 4, height: 4, borderRadius: "50%", background: "rgba(199,171,117,.3)" }} />
+          <div style={{ flex: 1, height: "1px", background: "linear-gradient(90deg, rgba(199,171,117,.15), transparent)" }} />
         </div>
       </section>
 
@@ -2714,20 +2743,6 @@ function HomePage({ setPage, openInquiry }) {
           </div>
         </div>
         </Fade>
-      </section>
-
-            {/* STATS — black background, gold numbers */}
-      <section style={{ padding: isMobile ? "40px 16px" : "56px 40px", background: "#000" }}>
-        <div ref={statsRef} style={{ maxWidth: 1100, margin: "0 auto", display: "grid", gridTemplateColumns: isMobile ? "repeat(2, 1fr)" : "repeat(6, 1fr)", gap: 2, background: "#111" }}>
-          {[["10", " Months", "academic year program"], ["6", " Weeks", "intensive track"], ["25", "", "students per cohort"], ["8", "", "curriculum modules"], ["30+", "", "guest speakers / year"], ["2", "", "summer waves"]].map(([num, suf, l], i) => (
-            <div key={i} style={{ background: "#080808", padding: "28px 16px", textAlign: "center" }}>
-              <div style={{ fontFamily: serif, fontSize: 32, fontWeight: 600, color: gold, lineHeight: 1 }}>
-                <StatCounter num={num} suf={suf} label="" inView={statsInView} lightMode={false} />
-              </div>
-              <p style={{ fontFamily: sans, color: "#FBF7EE", fontSize: 11, marginTop: 7, fontWeight: 300 }}>{l}</p>
-            </div>
-          ))}
-        </div>
       </section>
 
       {/* THREE PROGRAMS */}
