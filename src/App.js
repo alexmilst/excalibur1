@@ -10,18 +10,45 @@ const gold = "#C7AB75";
 
 // ── RESPONSIVE HOOK ──
 
-// ── Formspree submit helper ──
-async function submitToFormspree(data) {
-  try {
-    const res = await fetch("https://formspree.io/f/xwvaglyg", {
-      method: "POST",
-      headers: { "Accept": "application/json", "Content-Type": "application/json" },
-      body: JSON.stringify(data),
-    });
-    return res.ok;
-  } catch (e) {
-    return false;
-  }
+// ── Formspree submit helper — hidden form POST (CSP-safe) ──
+function submitToFormspree(data) {
+  return new Promise((resolve) => {
+    try {
+      const iframe = document.createElement("iframe");
+      iframe.name = "formspree_target_" + Date.now();
+      iframe.style.cssText = "display:none;position:absolute;width:1px;height:1px;";
+      document.body.appendChild(iframe);
+
+      const form = document.createElement("form");
+      form.method = "POST";
+      form.action = "https://formspree.io/f/xwvaglyg";
+      form.target = iframe.name;
+      form.style.display = "none";
+
+      // Flatten data into hidden inputs
+      Object.entries(data).forEach(([key, val]) => {
+        const input = document.createElement("input");
+        input.type = "hidden";
+        input.name = key;
+        input.value = String(val ?? "");
+        form.appendChild(input);
+      });
+
+      document.body.appendChild(form);
+      iframe.onload = () => {
+        setTimeout(() => {
+          document.body.removeChild(form);
+          document.body.removeChild(iframe);
+        }, 1000);
+        resolve(true);
+      };
+      form.submit();
+      // Resolve after 3s regardless
+      setTimeout(() => resolve(true), 3000);
+    } catch (e) {
+      resolve(false);
+    }
+  });
 }
 
 function useIsMobile() {
