@@ -1483,7 +1483,7 @@ function DarkProgramContent({ prog, openInquiry, setPage, isMobile }) {
       {prog.features.map((f, j) => <div key={j} style={{ display: "flex", gap: 14, padding: "10px 0", borderBottom: "1px solid rgba(199,171,117,.06)", alignItems: "flex-start" }}><span style={{ fontFamily: serif, fontSize: 10, color: "rgba(199,171,117,.3)", fontStyle: "italic", flexShrink: 0 }}>{String(j+1).padStart(2,"0")}</span><span style={{ fontFamily: sans, fontSize: 12, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.7 }}>{f}</span></div>)}
       <div style={{ marginTop: 24, display: "flex", gap: 10, flexWrap: "wrap" }}>
         <button onClick={() => openInquiry && openInquiry(prog.id)} style={{ fontFamily: sans, padding: "12px 28px", background: gold, border: "none", color: "#000", fontSize: 11, fontWeight: 700, letterSpacing: "0.15em", textTransform: "uppercase", cursor: "pointer" }}>{prog.flagship ? "APPLY — FLAGSHIP →" : "APPLY NOW →"}</button>
-        {!prog.flagship && <button onClick={() => setPage(prog.id)} style={{ fontFamily: sans, padding: "12px 20px", background: "transparent", border: `1px solid ${gold}`, color: gold, fontSize: 11, fontWeight: 500, letterSpacing: "0.1em", textTransform: "uppercase", cursor: "pointer" }}>LEARN MORE →</button>}
+        <button onClick={() => setPage(prog.flagship ? "flagship-detail" : prog.id)} style={{ fontFamily: sans, padding: "12px 20px", background: "transparent", border: `1px solid ${gold}`, color: gold, fontSize: 11, fontWeight: 500, letterSpacing: "0.1em", textTransform: "uppercase", cursor: "pointer" }}>LEARN MORE →</button>
       </div>
     </div>
   );
@@ -1528,16 +1528,29 @@ function ProgramsPage({ setPage, openInquiry }) {
       tag: "TEN-MONTH FLAGSHIP", id: "full-program", flagship: true, status: "ENROLLING SOON", statusColor: gold,
       title: "Ten-Month Program",
       tagline: "The complete formation.",
-      photo: null,
-      desc: "The complete Excalibur formation — ten months across all eight disciplines, all twelve industry sectors, and three real-world engagements. Two parallel tracks give families scheduling flexibility. The same curriculum, the same faculty, the same standard.",
+      photo: "https://i.postimg.cc/1Vfq1Szf/flagship.jpg",
+      desc: "The Excalibur Ten-Month Flagship is the Academy’s primary program — a complete, ten-month course of formation for ambitious high school students aged 16–17 in Orange County, California.\n\nOffered in two parallel tracks — Weekday (Tuesday & Thursday evenings) and Saturday (full-day) — both deliver identical curriculum, the same faculty, and the same standard of instruction. Students choose the track that fits their schedule; the formation they receive is the same.\n\nAcross ten months, students progress through all eight core disciplines: Public Speaking & Rhetoric, Financial Literacy, Business Model Analysis, The Art of Selling & Marketing, AI & Technology, Leadership & Influence, Intellectual Depth & The Art of Class, and Industry Sectors Rotation. Each month, a dedicated specialist — a working executive, investor, or entrepreneur — leads the core curriculum block. The Lead Instructor runs the War Room in every session. The Speaking Coach opens every class.\n\nBeyond the classroom, students complete three real-world engagements: the Junior Consultant Program (advising a real local business), the Apprentice Externship (4–6 weeks embedded inside a company), and the Funded Micro-Business Launch (building and launching a revenue-generating venture with a dedicated mentor and seed support).\n\nThe program concludes in June with Demo Day & Graduation — the Flagship capstone — where students present their operating businesses to an audience of parents, investors, mentors, and press.",
       details: [
         ["Schedule", "Weekday: Tue & Thu · 4:00–6:25 PM (Group B)\nor Saturday: 10:30 AM–3:45 PM (Group A)"],
-        ["Class Size", "15–25 per track · 30–50 total"],
+        ["Class Size", "25 per track · Founding Class"],
         ["Tuition", "$1,990 / month"],
-        ["Dates", "September 2026 – June 2027 · Founding Class"],
+        ["Dates", "September 2026 – June 2027"],
       ],
-      features: ["All 8 modules at full depth across a structured 4-phase arc", "10 industry sector rotations — one guest professional per month", "Three-block session model: Speaking Coach + Lead Instructor + Specialist", "Junior Consultant Program — 3-week real business engagement", "Apprentice Externship — 4–6 weeks inside a real company", "Funded Micro-Business Launch with a dedicated mentor", "Monthly Pitch Night before live judges and parents", "City Championship (biannual) and National Championship pipeline", "Bound graduation portfolio + faculty letters of recommendation", "College admissions counseling and portfolio review"],
-      featuresLabel: "The Experience",
+      features: [
+        "All 8 core modules at full depth across a structured 4-phase arc",
+        "12 industry sector rotations — one dedicated guest professional per month",
+        "Three-block session model: Speaking Coach + War Room + Specialist",
+        "Junior Consultant Program — 3-week advisory engagement with a real local business",
+        "Apprentice Externship — 4–6 weeks embedded inside a company in your chosen industry",
+        "Funded Micro-Business Launch — seed-supported venture with a dedicated mentor",
+        "Monthly Pitch Night before live judges, investors, and parents",
+        "OC Championship (biannual) — competitive pitch event at a premium venue",
+        "Bound Excalibur Portfolio — every analysis, report, and competition result, professionally compiled",
+        "Faculty letters of recommendation from lead executives and practitioners",
+        "College admissions strategy and portfolio review with a dedicated advisor",
+        "Alumni network access — graduates, faculty, mentors, and guest speakers",
+      ],
+      featuresLabel: "The Formation",
     },
     {
       tag: "SIX-WEEK INTENSIVE", id: "intensive", flagship: false, status: "ENROLLING SOON", statusColor: gold,
@@ -1630,7 +1643,7 @@ function ProgramsPage({ setPage, openInquiry }) {
         {/* Program detail */}
         <div key={activeProgram}>
 
-          {prog.photo ? (
+          {prog.id === "summer" ? (
             /* ── SUMMER: tracker above photo, then white content below ── */
             <div>
               {/* ENROLLMENT TRACKER — full width black strip, right under the tabs */}
@@ -1694,7 +1707,7 @@ function ProgramsPage({ setPage, openInquiry }) {
                   </div>
                   <div style={{ marginTop: 28, display: "flex", gap: 12, flexWrap: "wrap" }}>
                     <button onClick={() => openInquiry && openInquiry(prog.id)} style={{ fontFamily: sans, padding: "13px 32px", background: "#000", border: "none", color: "#fff", fontSize: 11, fontWeight: 700, letterSpacing: "0.15em", textTransform: "uppercase", cursor: "pointer" }}>APPLY NOW →</button>
-                    <button onClick={() => setPage(prog.id)} style={{ fontFamily: sans, padding: "13px 28px", background: "transparent", border: "1px solid rgba(0,0,0,.25)", color: "#000", fontSize: 11, fontWeight: 500, letterSpacing: "0.12em", textTransform: "uppercase", cursor: "pointer" }}>LEARN MORE →</button>
+                    <button onClick={() => setPage("summer-detail")} style={{ fontFamily: sans, padding: "13px 28px", background: "transparent", border: "1px solid rgba(0,0,0,.25)", color: "#000", fontSize: 11, fontWeight: 500, letterSpacing: "0.12em", textTransform: "uppercase", cursor: "pointer" }}>LEARN MORE →</button>
                   </div>
                 </div>
 
@@ -1720,8 +1733,67 @@ function ProgramsPage({ setPage, openInquiry }) {
               </div>
             </div>
 
+          ) : prog.id === "full-program" ? (
+            /* ── FLAGSHIP: mirrors summer layout but black background ── */
+            <div>
+              {/* Photo strip */}
+              <div style={{ background: "#000", overflow: "hidden", height: isMobile ? 200 : 320 }}>
+                <img src={prog.photo} alt={prog.title} style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center" }} />
+              </div>
+
+              {/* Content — black background, two columns */}
+              <div style={{ background: "#000", display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 0 }}>
+
+                {/* LEFT */}
+                <div style={{ padding: isMobile ? "36px 24px" : "52px 52px", borderRight: isMobile ? "none" : "1px solid rgba(199,171,117,.07)" }}>
+                  <div style={{ display: "flex", gap: 10, alignItems: "center", marginBottom: 20, flexWrap: "wrap" }}>
+                    <span style={{ fontFamily: sans, fontSize: 9, color: prog.statusColor, border: `1px solid ${prog.statusColor}`, padding: "3px 10px", letterSpacing: "0.15em", fontWeight: 600 }}>{prog.status}</span>
+                    <span style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.3em", color: "rgba(199,171,117,.4)", textTransform: "uppercase" }}>{prog.tag}</span>
+                  </div>
+                  <h2 style={{ fontFamily: serif, fontSize: isMobile ? 28 : 42, fontWeight: 600, color: "#FBF7EE", lineHeight: 1.0, marginBottom: 8 }}>{prog.title}</h2>
+                  <p style={{ fontFamily: serif, fontSize: 16, color: gold, fontStyle: "italic", marginBottom: 28, lineHeight: 1.4 }}>{prog.tagline}</p>
+                  <div style={{ width: 32, height: 1, background: `linear-gradient(90deg, ${gold}, transparent)`, marginBottom: 24 }} />
+                  {prog.desc.split("\n\n").map((para, i) => (
+                    <p key={i} style={{ fontFamily: sans, fontSize: 14, lineHeight: 1.9, color: "#FBF7EE", fontWeight: 300, marginBottom: 14 }}>{para}</p>
+                  ))}
+                  <div style={{ marginTop: 28, display: "flex", flexDirection: "column", gap: 0, borderTop: "1px solid rgba(199,171,117,.08)", paddingTop: 20 }}>
+                    {prog.details.map(([k, v]) => (
+                      <div key={k} style={{ display: "grid", gridTemplateColumns: "90px 1fr", gap: 16, padding: "10px 0", borderBottom: "1px solid rgba(199,171,117,.06)" }}>
+                        <span style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.2em", color: "rgba(199,171,117,.45)", textTransform: "uppercase", paddingTop: 2 }}>{k}</span>
+                        <span style={{ fontFamily: sans, fontSize: 12, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.6, whiteSpace: "pre-line" }}>{v}</span>
+                      </div>
+                    ))}
+                  </div>
+                  <div style={{ marginTop: 28, display: "flex", gap: 12, flexWrap: "wrap" }}>
+                    <button onClick={() => openInquiry && openInquiry(prog.id)} style={{ fontFamily: sans, padding: "13px 32px", background: gold, border: "none", color: "#000", fontSize: 11, fontWeight: 700, letterSpacing: "0.15em", textTransform: "uppercase", cursor: "pointer" }}>APPLY — FLAGSHIP →</button>
+                    <button onClick={() => setPage("flagship-detail")} style={{ fontFamily: sans, padding: "13px 28px", background: "transparent", border: `1px solid rgba(199,171,117,.35)`, color: gold, fontSize: 11, fontWeight: 500, letterSpacing: "0.12em", textTransform: "uppercase", cursor: "pointer" }}>LEARN MORE →</button>
+                  </div>
+                </div>
+
+                {/* RIGHT — features + Day at Excalibur */}
+                <div style={{ padding: isMobile ? "36px 24px" : "52px 52px", background: "#080808" }}>
+                  <p style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.35em", color: gold, textTransform: "uppercase", fontWeight: 600, marginBottom: 20 }}>{prog.featuresLabel}</p>
+                  <div style={{ display: "flex", flexDirection: "column", gap: 0, marginBottom: 36 }}>
+                    {prog.features.map((f, j) => (
+                      <div key={j} style={{ display: "flex", gap: 16, padding: "11px 0", borderBottom: "1px solid rgba(199,171,117,.06)", alignItems: "flex-start" }}>
+                        <span style={{ fontFamily: serif, fontSize: 11, color: "rgba(199,171,117,.3)", fontStyle: "italic", flexShrink: 0, paddingTop: 2 }}>{String(j + 1).padStart(2, "0")}</span>
+                        <span style={{ fontFamily: sans, fontSize: 13, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.7 }}>{f}</span>
+                      </div>
+                    ))}
+                  </div>
+                  {/* Day at Excalibur */}
+                  <div style={{ background: "#06050A", border: "1px solid rgba(199,171,117,.12)", padding: "28px 28px" }}>
+                    <p style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.4em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 10 }}>A Day at Excalibur</p>
+                    <h3 style={{ fontFamily: serif, fontSize: 22, fontWeight: 600, color: "#FBF7EE", lineHeight: 1.1, marginBottom: 8 }}>What a real session looks like.</h3>
+                    <p style={{ fontFamily: sans, fontSize: 12, color: "rgba(251,247,238,.6)", fontWeight: 300, lineHeight: 1.8, marginBottom: 18 }}>Click any block to meet the instructor and see exactly what happens in that session. Flagship Program.</p>
+                    <button onClick={scrollToSchedule} style={{ fontFamily: sans, background: gold, border: "none", color: "#000", padding: "11px 22px", fontSize: 10, fontWeight: 700, letterSpacing: "0.15em", textTransform: "uppercase", cursor: "pointer" }}>VIEW FULL DAY SCHEDULE →</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
           ) : (
-            /* ── SIX-WEEK / FLAGSHIP: original dark two-column layout ── */
+            /* ── SIX-WEEK: dark two-column layout ── */
             <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 0, minHeight: isMobile ? "auto" : 640 }}>
               <div style={{ background: "#06050A", padding: isMobile ? "44px 28px" : "64px 52px", display: "flex", flexDirection: "column", justifyContent: "space-between", borderRight: "1px solid rgba(199,171,117,.06)" }}>
                 <div>
@@ -1759,9 +1831,7 @@ function ProgramsPage({ setPage, openInquiry }) {
                   <button onClick={() => openInquiry && openInquiry(prog.id)} style={{ fontFamily: sans, padding: "13px 32px", background: gold, border: "none", color: "#000", fontSize: 11, fontWeight: 700, letterSpacing: "0.15em", textTransform: "uppercase", cursor: "pointer" }}>
                     {prog.flagship ? "APPLY — FLAGSHIP →" : "APPLY NOW →"}
                   </button>
-                  {!prog.flagship && (
-                    <button onClick={() => setPage(prog.id)} style={{ fontFamily: sans, padding: "13px 28px", background: "transparent", border: `1px solid ${gold}`, color: gold, fontSize: 11, fontWeight: 600, letterSpacing: "0.12em", textTransform: "uppercase", cursor: "pointer" }}>LEARN MORE →</button>
-                  )}
+                  <button onClick={() => setPage(prog.flagship ? "flagship-detail" : prog.id)} style={{ fontFamily: sans, padding: "13px 28px", background: "transparent", border: `1px solid ${gold}`, color: gold, fontSize: 11, fontWeight: 600, letterSpacing: "0.12em", textTransform: "uppercase", cursor: "pointer" }}>LEARN MORE →</button>
                 </div>
               </div>
             </div>
@@ -4079,6 +4149,314 @@ function InquiryModal({ open, onClose, defaultProgram }) {
   );
 }
 
+// ─────────────────────────────────────────────
+// PAGE: FLAGSHIP DETAIL
+// ─────────────────────────────────────────────
+function FlagshipDetailPage({ setPage, openInquiry }) {
+  const isMobile = useIsMobile();
+
+  const modules = [
+    { n: "01", title: "Public Speaking & Rhetoric", tagline: "Presence. Persuasion. Command.", slug: "public-speaking", phase: "Phase 1 — Foundations", desc: "Every session opens with speaking. Voice mechanics, impromptu drills, rhetorical strategy, Aristotelian persuasion. By graduation, students will have completed 120+ individual speaking reps." },
+    { n: "02", title: "Financial Literacy & Business Acumen", tagline: "Understand money. Think like an owner.", slug: "financial-literacy", phase: "Phase 1 — Foundations", desc: "Reading a P&L, unit economics, pricing strategy, equity structures, and investor-grade financial analysis of real companies." },
+    { n: "03", title: "Business Model Analysis", tagline: "Break down any business. Find the logic.", slug: "business-models", phase: "Phase 1 — Foundations", desc: "The eight business model archetypes, competitive advantage mapping, vulnerability analysis, and live deconstruction of real companies." },
+    { n: "04", title: "The Art of Selling & Marketing", tagline: "Persuasion with integrity. Influence with purpose.", slug: "art-of-selling", phase: "Phase 2 — Skills", desc: "Consultative selling, Cialdini's principles, objection handling, brand strategy, and live roleplay with recorded feedback." },
+    { n: "05", title: "AI, Technology & Innovation", tagline: "Wield the tools reshaping every work process.", slug: "ai-technology", phase: "Phase 2 — Skills", desc: "AI as a working instrument across research, modeling, and strategy. Prompt engineering, no-code tools, and critical evaluation of AI output." },
+    { n: "06", title: "Leadership, Ownership & Influence", tagline: "Lead with earned authority, not borrowed title.", slug: "leadership", phase: "Phase 2 — Skills", desc: "The five forms of power, emotional intelligence, crisis communication, team dynamics, and a live CEO crisis simulation." },
+    { n: "07", title: "Intellectual Depth & The Art of Class", tagline: "Think deeply. Move effortlessly among ideas.", slug: "intellectual-depth", phase: "Phase 3 — Application", desc: "Classical philosophy applied to modern leadership, social fluency, cultural literacy, and the habits of the most accomplished people." },
+    { n: "08", title: "Industry Sectors Rotation", tagline: "Know every industry. Own any room.", slug: "industry-sectors", phase: "Phase 4 — Mastery", desc: "Twelve industries across ten months — technology, finance, real estate, healthcare, media, luxury, and more. One dedicated guest speaker per sector." },
+  ];
+
+  const tracks = [
+    { label: "WEEKDAY TRACK — GROUP B", days: "Tuesday & Thursday", time: "4:00–6:25 PM", block1: "4:00–4:40 PM · Public Speaking Instructor", block2: "4:55–5:35 PM · Specialist / Academy Dean", block3: "5:45–6:25 PM · Lead Instructor — War Room" },
+    { label: "SATURDAY TRACK — GROUP A", days: "Every Saturday", time: "10:30 AM–3:45 PM", block1: "10:30–11:10 AM & 11:25 AM–12:05 PM · Speaking Coach", block2: "12:35–1:55 PM · Specialist / Academy Dean", block3: "2:10–2:50 PM & 3:00–3:40 PM · Lead Instructor — War Room" },
+  ];
+
+  const engagements = [
+    { n: "I", title: "Junior Consultant Program", tag: "TEAMS OF 4 · REAL BUSINESS CONSULTING", desc: "Student teams are paired with a real local business facing a real challenge. Over three weeks, each team conducts on-site observation, customer interviews, competitive analysis, and financial diagnostics. Culminates in a formal Boardroom Finale — a fifteen-minute presentation to the business owner, with parents and mentors in attendance.", outcome: "A client-facing consulting report and a documented example of applied business judgment." },
+    { n: "II", title: "Apprentice Externship", tag: "WORK EXPERIENCE · REAL COMPANY", desc: "Students complete a 4–6 week externship embedded within a company in their chosen industry sector, sourced from the Academy's network. They observe, contribute, build professional references, and produce a written reflection included in the graduation portfolio.", outcome: "Professional references, externship documentation, and direct industry experience." },
+    { n: "III", title: "Funded Micro-Business Launch", tag: "TEAMS · SEED-FUNDED · REVENUE-DRIVEN", desc: "In the program's penultimate month, student teams build and launch micro-ventures designed to reach actual customers and generate revenue. Each team receives faculty guidance, seed support through the Excalibur network, and structured accountability.", outcome: "A micro-business brought from idea to launch — with mentor support, real customers, and documented revenue." },
+  ];
+
+  return (
+    <div style={{ background: "#000", paddingTop: 0 }}>
+
+      {/* HERO — photo full bleed */}
+      <div style={{ position: "relative", height: isMobile ? 280 : 480, overflow: "hidden" }}>
+        <img src="https://i.postimg.cc/1Vfq1Szf/flagship.jpg" alt="Ten-Month Flagship" style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center" }} />
+        <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(0,0,0,.9) 0%, rgba(0,0,0,.3) 60%, transparent 100%)" }} />
+        <div style={{ position: "absolute", bottom: isMobile ? 28 : 52, left: isMobile ? 24 : 72, maxWidth: 640 }}>
+          <p style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.4em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 10 }}>Ten-Month Flagship · September 2026 – June 2027</p>
+          <h1 style={{ fontFamily: serif, fontSize: isMobile ? "clamp(32px,7vw,44px)" : "clamp(44px,5vw,64px)", fontWeight: 600, color: "#FBF7EE", lineHeight: 1.0, marginBottom: 10 }}>The Complete Formation.</h1>
+          <p style={{ fontFamily: serif, fontSize: isMobile ? 15 : 18, color: gold, fontStyle: "italic", lineHeight: 1.4 }}>The same curriculum, the same faculty, the same standard.</p>
+        </div>
+        <div style={{ position: "absolute", top: 24, left: 24 }}>
+          <button onClick={() => setPage("programs")} style={{ fontFamily: sans, background: "rgba(0,0,0,.5)", border: "1px solid rgba(199,171,117,.3)", color: gold, padding: "8px 16px", fontSize: 10, letterSpacing: "0.15em", cursor: "pointer", textTransform: "uppercase" }}>← OUR PROGRAMS</button>
+        </div>
+      </div>
+
+      {/* OVERVIEW */}
+      <div style={{ background: "#F5F3EE", padding: isMobile ? "48px 24px" : "72px 80px" }}>
+        <div style={{ maxWidth: 1100, margin: "0 auto", display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: isMobile ? 36 : 80 }}>
+          <div>
+            <p style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.4em", color: "#8B6914", fontWeight: 600, textTransform: "uppercase", marginBottom: 16 }}>Program Overview</p>
+            <h2 style={{ fontFamily: serif, fontSize: isMobile ? 28 : 38, fontWeight: 600, color: "#000", lineHeight: 1.1, marginBottom: 20 }}>Ten months. Eight disciplines. Three real-world engagements.</h2>
+            <p style={{ fontFamily: sans, fontSize: 14, lineHeight: 1.9, color: "#1a1a1a", fontWeight: 300, marginBottom: 16 }}>The Excalibur Ten-Month Flagship is the Academy's primary program — a complete course of formation for ambitious high school students aged 16–17 in Orange County, California. Two parallel tracks give families scheduling flexibility. The formation they receive is the same.</p>
+            <p style={{ fontFamily: sans, fontSize: 14, lineHeight: 1.9, color: "#1a1a1a", fontWeight: 300 }}>The program concludes in June with Demo Day & Graduation — the Flagship capstone — where students present their operating businesses to an audience of parents, investors, mentors, and press.</p>
+          </div>
+          <div style={{ display: "flex", flexDirection: "column", gap: 0 }}>
+            {[["Program", "Ten-Month Flagship"], ["Dates", "September 2026 – June 2027"], ["Weekday Track", "Tue & Thu · 4:00–6:25 PM"], ["Saturday Track", "Saturday · 10:30 AM–3:45 PM"], ["Class Size", "25 students per track"], ["Tuition", "$1,990 / month"], ["Eligibility", "Ages 16–17 · High School Juniors & Seniors"]].map(([k, v]) => (
+              <div key={k} style={{ display: "grid", gridTemplateColumns: "120px 1fr", gap: 16, padding: "12px 0", borderBottom: "1px solid rgba(0,0,0,.08)" }}>
+                <span style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.2em", color: "#8B6914", textTransform: "uppercase", paddingTop: 2 }}>{k}</span>
+                <span style={{ fontFamily: sans, fontSize: 13, color: "#1a1a1a", fontWeight: 300, lineHeight: 1.5 }}>{v}</span>
+              </div>
+            ))}
+            <div style={{ marginTop: 28, display: "flex", gap: 12 }}>
+              <button onClick={() => openInquiry && openInquiry("full-program")} style={{ fontFamily: sans, padding: "13px 32px", background: "#000", border: "none", color: "#fff", fontSize: 11, fontWeight: 700, letterSpacing: "0.15em", textTransform: "uppercase", cursor: "pointer" }}>APPLY — FLAGSHIP →</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* SESSION STRUCTURE */}
+      <div style={{ background: "#07060A", padding: isMobile ? "52px 24px" : "72px 80px" }}>
+        <div style={{ maxWidth: 1100, margin: "0 auto" }}>
+          <p style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.4em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 16 }}>Session Structure</p>
+          <h2 style={{ fontFamily: serif, fontSize: isMobile ? 26 : 36, fontWeight: 600, color: "#FBF7EE", lineHeight: 1.1, marginBottom: 36 }}>Two tracks. One standard.</h2>
+          <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 2, background: "#111" }}>
+            {tracks.map((t, i) => (
+              <div key={i} style={{ background: "#080808", padding: isMobile ? "32px 24px" : "44px 44px", borderTop: `2px solid ${i === 0 ? gold : "rgba(199,171,117,.15)"}` }}>
+                <p style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.3em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 12 }}>{t.label}</p>
+                <p style={{ fontFamily: serif, fontSize: 20, fontWeight: 600, color: "#FBF7EE", marginBottom: 4 }}>{t.days}</p>
+                <p style={{ fontFamily: serif, fontSize: 15, color: gold, fontStyle: "italic", marginBottom: 24 }}>{t.time}</p>
+                <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+                  {[["Block 1", t.block1], ["Block 2", t.block2], ["Block 3", t.block3]].map(([b, v]) => (
+                    <div key={b} style={{ display: "grid", gridTemplateColumns: "56px 1fr", gap: 12 }}>
+                      <span style={{ fontFamily: eyebrow_font, fontSize: 8, letterSpacing: "0.15em", color: "rgba(199,171,117,.4)", textTransform: "uppercase", paddingTop: 2 }}>{b}</span>
+                      <span style={{ fontFamily: sans, fontSize: 12, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.5 }}>{v}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* EIGHT MODULES */}
+      <div style={{ background: "#000", padding: isMobile ? "52px 24px" : "72px 80px" }}>
+        <div style={{ maxWidth: 1100, margin: "0 auto" }}>
+          <p style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.4em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 16 }}>The Curriculum</p>
+          <h2 style={{ fontFamily: serif, fontSize: isMobile ? 26 : 36, fontWeight: 600, color: "#FBF7EE", lineHeight: 1.1, marginBottom: 8 }}>Eight disciplines. Ten months. All depth.</h2>
+          <p style={{ fontFamily: sans, fontSize: 14, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.8, marginBottom: 40, maxWidth: 640 }}>Each module is delivered by a dedicated specialist — a working executive, investor, or entrepreneur with direct experience in the discipline they teach. Click any module to read the full description.</p>
+          <div style={{ display: "flex", flexDirection: "column", gap: 0 }}>
+            {modules.map((m, i) => (
+              <div key={i} onClick={() => setPage(`module:${m.slug}`)} style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "48px 1fr 120px", gap: isMobile ? 8 : 28, padding: isMobile ? "20px 0" : "24px 0", borderBottom: "1px solid rgba(199,171,117,.07)", cursor: "pointer", alignItems: "center", transition: "background .2s" }}
+                onMouseEnter={e => e.currentTarget.style.background = "rgba(199,171,117,.03)"}
+                onMouseLeave={e => e.currentTarget.style.background = "transparent"}
+              >
+                <span style={{ fontFamily: serif, fontSize: 13, color: "rgba(199,171,117,.3)", fontStyle: "italic" }}>{m.n}</span>
+                <div>
+                  <p style={{ fontFamily: eyebrow_font, fontSize: 8, letterSpacing: "0.2em", color: "rgba(199,171,117,.4)", textTransform: "uppercase", marginBottom: 5 }}>{m.phase}</p>
+                  <p style={{ fontFamily: serif, fontSize: isMobile ? 18 : 22, fontWeight: 600, color: "#FBF7EE", lineHeight: 1.2, marginBottom: 4 }}>{m.title}</p>
+                  <p style={{ fontFamily: serif, fontSize: 13, color: gold, fontStyle: "italic", marginBottom: 6 }}>{m.tagline}</p>
+                  <p style={{ fontFamily: sans, fontSize: 12, color: "rgba(251,247,238,.5)", fontWeight: 300, lineHeight: 1.6 }}>{m.desc}</p>
+                </div>
+                {!isMobile && <span style={{ fontFamily: sans, fontSize: 10, color: gold, letterSpacing: "0.12em", textAlign: "right" }}>READ MORE →</span>}
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* THREE REAL-WORLD ENGAGEMENTS */}
+      <div style={{ background: "#F5F3EE", padding: isMobile ? "52px 24px" : "72px 80px" }}>
+        <div style={{ maxWidth: 1100, margin: "0 auto" }}>
+          <p style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.4em", color: "#8B6914", fontWeight: 600, textTransform: "uppercase", marginBottom: 16 }}>Beyond the Classroom</p>
+          <h2 style={{ fontFamily: serif, fontSize: isMobile ? 26 : 36, fontWeight: 600, color: "#000", lineHeight: 1.1, marginBottom: 40 }}>Three real-world engagements.</h2>
+          <div style={{ display: "flex", flexDirection: "column", gap: 0 }}>
+            {engagements.map((e, i) => (
+              <div key={i} style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "48px 1fr", gap: isMobile ? 12 : 36, padding: isMobile ? "28px 0" : "36px 0", borderBottom: "1px solid rgba(0,0,0,.08)", alignItems: "flex-start" }}>
+                <span style={{ fontFamily: serif, fontSize: 20, fontWeight: 300, color: "rgba(0,0,0,.15)", fontStyle: "italic" }}>{e.n}</span>
+                <div>
+                  <p style={{ fontFamily: eyebrow_font, fontSize: 8, letterSpacing: "0.25em", color: "#8B6914", fontWeight: 600, textTransform: "uppercase", marginBottom: 8 }}>{e.tag}</p>
+                  <p style={{ fontFamily: serif, fontSize: isMobile ? 20 : 24, fontWeight: 600, color: "#000", lineHeight: 1.2, marginBottom: 10 }}>{e.title}</p>
+                  <p style={{ fontFamily: sans, fontSize: 14, color: "#1a1a1a", fontWeight: 300, lineHeight: 1.85, marginBottom: 12 }}>{e.desc}</p>
+                  <div style={{ display: "flex", gap: 12, alignItems: "flex-start" }}>
+                    <div style={{ width: 16, height: 1.5, background: "#000", marginTop: 8, flexShrink: 0 }} />
+                    <span style={{ fontFamily: sans, fontSize: 12, color: "#444", fontWeight: 300, lineHeight: 1.7, fontStyle: "italic" }}>{e.outcome}</span>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* FIELD TRIPS & EXPEDITIONS */}
+      <div style={{ background: "#07060A", padding: isMobile ? "52px 24px" : "72px 80px" }}>
+        <div style={{ maxWidth: 1100, margin: "0 auto" }}>
+          <p style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.4em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 16 }}>Outside the Classroom</p>
+          <h2 style={{ fontFamily: serif, fontSize: isMobile ? 26 : 36, fontWeight: 600, color: "#FBF7EE", lineHeight: 1.1, marginBottom: 40 }}>Field Trips & Expeditions.</h2>
+          <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 2, background: "#111" }}>
+            {fieldTrips.map((f, i) => (
+              <div key={i} style={{ background: "#080808", borderTop: `2px solid ${i === 0 ? gold : "rgba(199,171,117,.12)"}`, overflow: "hidden" }}>
+                {f.img && <div style={{ height: 220, overflow: "hidden" }}><img src={f.img} alt={f.title} style={{ width: "100%", height: "100%", objectFit: "cover", filter: "brightness(.8)" }} /></div>}
+                <div style={{ padding: "28px 28px" }}>
+                  <p style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.3em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 8 }}>{f.tag}</p>
+                  <h3 style={{ fontFamily: serif, fontSize: 22, fontWeight: 600, color: "#FBF7EE", lineHeight: 1.2, marginBottom: 10 }}>{f.title}</h3>
+                  <p style={{ fontFamily: sans, fontSize: 13, lineHeight: 1.85, color: "#FBF7EE", fontWeight: 300 }}>{f.desc}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* APPLY CTA */}
+      <div style={{ background: "#000", padding: isMobile ? "60px 24px" : "80px 80px", textAlign: "center" }}>
+        <p style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.4em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 20 }}>Founding Class · September 2026</p>
+        <h2 style={{ fontFamily: serif, fontSize: isMobile ? "clamp(32px,7vw,52px)" : "clamp(40px,5vw,60px)", fontWeight: 600, color: "#FBF7EE", lineHeight: 1.0, marginBottom: 12 }}>Twenty-five students.</h2>
+        <p style={{ fontFamily: serif, fontSize: isMobile ? 18 : 22, color: gold, fontStyle: "italic", marginBottom: 40 }}>One year of real formation.</p>
+        <div style={{ display: "flex", gap: 14, justifyContent: "center", flexWrap: "wrap" }}>
+          <button onClick={() => openInquiry && openInquiry("full-program")} style={{ fontFamily: sans, padding: "14px 44px", background: gold, border: "none", color: "#000", fontSize: 12, fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", cursor: "pointer" }}>APPLY NOW →</button>
+          <button onClick={() => setPage("programs")} style={{ fontFamily: sans, padding: "14px 32px", background: "transparent", border: `1px solid rgba(199,171,117,.3)`, color: gold, fontSize: 11, fontWeight: 500, letterSpacing: "0.15em", textTransform: "uppercase", cursor: "pointer" }}>← Back to Programs</button>
+        </div>
+      </div>
+
+    </div>
+  );
+}
+
+// ─────────────────────────────────────────────
+// PAGE: SUMMER INTENSIVE DETAIL
+// ─────────────────────────────────────────────
+function SummerDetailPage({ setPage, openInquiry }) {
+  const isMobile = useIsMobile();
+
+  const schedule = [
+    { time: "9:30 AM", dur: "45 min", block: "Public Speaking & Rhetoric", desc: "Every morning opens with the Speaking Coach. Voice projection, eye contact, impromptu drills, pitch practice, and rhetoric training. The arc is deliberate — from foundational mechanics in Week 1 to advanced rhetoric and Shark Tank rehearsal by Day 10." },
+    { time: "10:15 AM", dur: "15 min", block: "Break" },
+    { time: "10:30 AM", dur: "90 min", block: "Business & Leadership Instruction", desc: "Led by senior faculty and rotating specialists. Content covers business model analysis, financial literacy, marketing, leadership, AI, and entrepreneurship — one focused discipline per day, with applied case studies and workshops." },
+    { time: "12:00 PM", dur: "30 min", block: "Catered Lunch", desc: "Catered from local Orange County restaurants. Courtyard time between blocks." },
+    { time: "12:30 PM", dur: "60 min", block: "Distinguished Guest Speaker", desc: "A different senior professional joins every single day. Entrepreneurs who have built and sold companies. Investors who have backed consequential ventures. Executives who have led thousands. Every speaker is hand-selected. Students submit questions in advance." },
+    { time: "1:45 PM", dur: "60 min", block: "War Room — Applied Workshop", desc: "Teams work on their Shark Tank pitch concepts with faculty guidance. Real-time feedback, competitive simulations, and business challenge exercises. This is where the day's learning becomes judgment." },
+    { time: "2:45 PM", dur: "15 min", block: "Debrief & Close", desc: "Structured daily debrief: what was learned, what will be applied. One specific idea to take home. The program builds toward the Shark Tank–inspired Venture Finale on the final day." },
+  ];
+
+  const modules = [
+    { n: "01", title: "Public Speaking & Rhetoric", slug: "public-speaking", desc: "Voice, posture, impromptu speaking, Aristotelian persuasion, pitch development." },
+    { n: "02", title: "Financial Literacy & Business Acumen", slug: "financial-literacy", desc: "How companies make money, unit economics, pricing, and investor-grade analysis." },
+    { n: "03", title: "Business Model Analysis", slug: "business-models", desc: "The eight archetypes, competitive advantage, vulnerability mapping, live company deconstructions." },
+    { n: "04", title: "The Art of Selling & Marketing", slug: "art-of-selling", desc: "Consultative selling, Cialdini's principles, objection handling, live roleplay." },
+    { n: "05", title: "AI, Technology & Innovation", slug: "ai-technology", desc: "AI as a working instrument across research, modeling, strategy, and pitch development." },
+    { n: "06", title: "Leadership, Ownership & Influence", slug: "leadership", desc: "The five forms of power, emotional intelligence, team dynamics, CEO crisis simulation." },
+    { n: "07", title: "Intellectual Depth & The Art of Class", slug: "intellectual-depth", desc: "Classical philosophy applied to modern leadership, cultural fluency, social intelligence." },
+    { n: "08", title: "Industry Sectors Rotation", slug: "industry-sectors", desc: "Ten industries, ten perspectives — technology, finance, real estate, luxury, and more." },
+  ];
+
+  return (
+    <div style={{ background: "#000" }}>
+
+      {/* HERO */}
+      <div style={{ position: "relative", background: "#000", overflow: "hidden", height: isMobile ? 260 : 420 }}>
+        <img src="https://i.postimg.cc/kgY6kRv8/Untitled-design.png" alt="Summer Intensive" style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center" }} />
+        <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(0,0,0,.9) 0%, rgba(0,0,0,.2) 60%)" }} />
+        <div style={{ position: "absolute", bottom: isMobile ? 24 : 48, left: isMobile ? 24 : 72 }}>
+          <p style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.4em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 10 }}>Summer Intensive · July & August 2026</p>
+          <h1 style={{ fontFamily: serif, fontSize: isMobile ? 36 : 56, fontWeight: 600, color: "#FBF7EE", lineHeight: 1.0, marginBottom: 8 }}>Two Weeks. Full Days.</h1>
+          <p style={{ fontFamily: serif, fontSize: isMobile ? 15 : 18, color: gold, fontStyle: "italic" }}>Serious momentum.</p>
+        </div>
+        <div style={{ position: "absolute", top: 24, left: 24 }}>
+          <button onClick={() => setPage("programs")} style={{ fontFamily: sans, background: "rgba(0,0,0,.5)", border: "1px solid rgba(199,171,117,.3)", color: gold, padding: "8px 16px", fontSize: 10, letterSpacing: "0.15em", cursor: "pointer", textTransform: "uppercase" }}>← OUR PROGRAMS</button>
+        </div>
+      </div>
+
+      {/* OVERVIEW — white */}
+      <div style={{ background: "#F5F3EE", padding: isMobile ? "48px 24px" : "72px 80px" }}>
+        <div style={{ maxWidth: 1100, margin: "0 auto", display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: isMobile ? 36 : 80 }}>
+          <div>
+            <p style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.4em", color: "#8B6914", fontWeight: 600, textTransform: "uppercase", marginBottom: 16 }}>Program Overview</p>
+            <h2 style={{ fontFamily: serif, fontSize: isMobile ? 26 : 36, fontWeight: 600, color: "#000", lineHeight: 1.1, marginBottom: 20 }}>Excalibur's complete model. Concentrated into two weeks.</h2>
+            <p style={{ fontFamily: sans, fontSize: 14, lineHeight: 1.9, color: "#1a1a1a", fontWeight: 300, marginBottom: 14 }}>The Summer Intensive is a two-week, full-day program offered in July and August for high school juniors and seniors ready to experience Excalibur's core model in a concentrated format.</p>
+            <p style={{ fontFamily: sans, fontSize: 14, lineHeight: 1.9, color: "#1a1a1a", fontWeight: 300, marginBottom: 14 }}>Each day combines public speaking training, business and leadership instruction, applied workshops, and sessions with distinguished guest speakers. Students rotate through all major curricular areas and engage daily with guest lecturers drawn from a range of professional fields.</p>
+            <p style={{ fontFamily: sans, fontSize: 14, lineHeight: 1.9, color: "#1a1a1a", fontWeight: 300 }}>The program culminates in The Excalibur Venture Finale — a Shark Tank–inspired pitch finale where student teams present original business concepts to a panel of experienced judges and real investors. Selected projects receive rewards and prizes ranging from top business tech accessories to real seed funding support.</p>
+          </div>
+          <div>
+            {[["Waves", "Wave I: July 6–18, 2026\nWave II: August 3–15, 2026"], ["Schedule", "Monday–Friday · 9:30 AM–3:00 PM"], ["Class Size", "Limited to 20 students per wave"], ["Tuition", "$4,500+ per wave"], ["Eligibility", "Ages 15–17 · Rising juniors and seniors"], ["Included", "Catered lunches, guest speakers, workshops, Shark Tank–inspired Finale"], ["Location", "Private venues · South Orange County, CA"]].map(([k, v]) => (
+              <div key={k} style={{ display: "grid", gridTemplateColumns: "90px 1fr", gap: 16, padding: "11px 0", borderBottom: "1px solid rgba(0,0,0,.08)" }}>
+                <span style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.2em", color: "#8B6914", textTransform: "uppercase", paddingTop: 2 }}>{k}</span>
+                <span style={{ fontFamily: sans, fontSize: 13, color: "#1a1a1a", fontWeight: 300, lineHeight: 1.6, whiteSpace: "pre-line" }}>{v}</span>
+              </div>
+            ))}
+            <div style={{ marginTop: 28, display: "flex", gap: 12, flexWrap: "wrap" }}>
+              <button onClick={() => openInquiry && openInquiry("summer")} style={{ fontFamily: sans, padding: "13px 32px", background: "#000", border: "none", color: "#fff", fontSize: 11, fontWeight: 700, letterSpacing: "0.15em", textTransform: "uppercase", cursor: "pointer" }}>APPLY NOW →</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* DAILY SCHEDULE */}
+      <div style={{ background: "#000", padding: isMobile ? "52px 24px" : "72px 80px" }}>
+        <div style={{ maxWidth: 1100, margin: "0 auto" }}>
+          <p style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.4em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 16 }}>A Day at Excalibur</p>
+          <h2 style={{ fontFamily: serif, fontSize: isMobile ? 26 : 36, fontWeight: 600, color: "#FBF7EE", lineHeight: 1.1, marginBottom: 8 }}>What a real session looks like.</h2>
+          <p style={{ fontFamily: sans, fontSize: 14, color: "rgba(251,247,238,.6)", fontWeight: 300, lineHeight: 1.8, marginBottom: 40, maxWidth: 540 }}>Monday through Friday. 9:30 AM to 3:00 PM. Every day follows the same disciplined structure.</p>
+          <div style={{ display: "flex", flexDirection: "column", gap: 0 }}>
+            {schedule.map((s, i) => (
+              <div key={i} style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "120px 1fr", gap: isMobile ? 8 : 28, padding: isMobile ? "20px 0" : "24px 0", borderBottom: "1px solid rgba(199,171,117,.07)", alignItems: "flex-start" }}>
+                <div style={{ flexShrink: 0 }}>
+                  <p style={{ fontFamily: serif, fontSize: 14, fontWeight: 600, color: gold, marginBottom: 2 }}>{s.time}</p>
+                  {s.dur && <p style={{ fontFamily: sans, fontSize: 10, color: "rgba(199,171,117,.4)", letterSpacing: "0.08em" }}>{s.dur}</p>}
+                </div>
+                <div>
+                  <p style={{ fontFamily: serif, fontSize: isMobile ? 17 : 20, fontWeight: 600, color: "#FBF7EE", lineHeight: 1.2, marginBottom: s.desc ? 8 : 0 }}>{s.block}</p>
+                  {s.desc && <p style={{ fontFamily: sans, fontSize: 13, color: "rgba(251,247,238,.6)", fontWeight: 300, lineHeight: 1.8 }}>{s.desc}</p>}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* EIGHT MODULES */}
+      <div style={{ background: "#F5F3EE", padding: isMobile ? "52px 24px" : "72px 80px" }}>
+        <div style={{ maxWidth: 1100, margin: "0 auto" }}>
+          <p style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.4em", color: "#8B6914", fontWeight: 600, textTransform: "uppercase", marginBottom: 16 }}>Curriculum</p>
+          <h2 style={{ fontFamily: serif, fontSize: isMobile ? 26 : 36, fontWeight: 600, color: "#000", lineHeight: 1.1, marginBottom: 8 }}>All eight disciplines. Two weeks.</h2>
+          <p style={{ fontFamily: sans, fontSize: 14, color: "#444", fontWeight: 300, lineHeight: 1.8, marginBottom: 40, maxWidth: 540 }}>Every Summer Intensive covers all eight Excalibur disciplines. Click any module to read the full description.</p>
+          <div style={{ display: "flex", flexDirection: "column", gap: 0 }}>
+            {modules.map((m, i) => (
+              <div key={i} onClick={() => setPage(`module:${m.slug}`)} style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "48px 1fr 100px", gap: isMobile ? 8 : 24, padding: isMobile ? "18px 0" : "22px 0", borderBottom: "1px solid rgba(0,0,0,.08)", cursor: "pointer", alignItems: "center" }}
+                onMouseEnter={e => e.currentTarget.style.background = "rgba(0,0,0,.03)"}
+                onMouseLeave={e => e.currentTarget.style.background = "transparent"}
+              >
+                <span style={{ fontFamily: serif, fontSize: 13, color: "rgba(0,0,0,.2)", fontStyle: "italic" }}>{m.n}</span>
+                <div>
+                  <p style={{ fontFamily: serif, fontSize: isMobile ? 17 : 20, fontWeight: 600, color: "#000", lineHeight: 1.2, marginBottom: 4 }}>{m.title}</p>
+                  <p style={{ fontFamily: sans, fontSize: 12, color: "#555", fontWeight: 300, lineHeight: 1.6 }}>{m.desc}</p>
+                </div>
+                {!isMobile && <span style={{ fontFamily: sans, fontSize: 10, color: "#8B6914", letterSpacing: "0.12em", textAlign: "right" }}>READ MORE →</span>}
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* APPLY */}
+      <div style={{ background: "#000", padding: isMobile ? "60px 24px" : "80px 80px", textAlign: "center" }}>
+        <p style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.4em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 20 }}>Enrollment Open · Summer 2026</p>
+        <h2 style={{ fontFamily: serif, fontSize: isMobile ? 36 : 52, fontWeight: 600, color: "#FBF7EE", lineHeight: 1.0, marginBottom: 12 }}>Twenty students per wave.</h2>
+        <p style={{ fontFamily: serif, fontSize: 18, color: gold, fontStyle: "italic", marginBottom: 40 }}>Two weeks that change everything.</p>
+        <div style={{ display: "flex", gap: 14, justifyContent: "center", flexWrap: "wrap" }}>
+          <button onClick={() => openInquiry && openInquiry("summer")} style={{ fontFamily: sans, padding: "14px 44px", background: gold, border: "none", color: "#000", fontSize: 12, fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", cursor: "pointer" }}>APPLY NOW →</button>
+          <button onClick={() => setPage("programs")} style={{ fontFamily: sans, padding: "14px 32px", background: "transparent", border: `1px solid rgba(199,171,117,.3)`, color: gold, fontSize: 11, fontWeight: 500, letterSpacing: "0.15em", textTransform: "uppercase", cursor: "pointer" }}>← Back to Programs</button>
+        </div>
+      </div>
+
+    </div>
+  );
+}
+
 export default function ExcaliburApp() {
   const [page, setPageRaw] = useState("home");
   const [inquiryOpen, setInquiryOpen] = useState(false);
@@ -4119,6 +4497,8 @@ export default function ExcaliburApp() {
     if (page === "faculty") return <FacultyPage setPage={setPage} openInquiry={openInquiry} />;
     if (page.startsWith("faculty:")) return <FacultyProfilePage slug={page.replace("faculty:", "")} setPage={setPage} />;
     if (page === "apply") return <ApplyPage setPage={setPage} openInquiry={openInquiry} />;
+    if (page === "flagship-detail") return <FlagshipDetailPage setPage={setPage} openInquiry={openInquiry} />;
+    if (page === "summer-detail") return <SummerDetailPage setPage={setPage} openInquiry={openInquiry} />;
     if (page.startsWith("module:")) return <ModulePage slug={page.replace("module:", "")} setPage={setPage} />;
     return <HomePage setPage={setPage} openInquiry={openInquiry} />;
   };
