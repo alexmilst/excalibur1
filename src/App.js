@@ -334,8 +334,8 @@ function Nav({ page, setPage }) {
 
           {/* LEFT — logo */}
           <div style={{ width: isMobile ? "auto" : 160, display: "flex", alignItems: "center" }}>
-            <div onClick={() => go("home")} style={{ cursor: "pointer", width: 44, height: 44, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
-              <img src={LOGO_URL} alt="Excalibur Academy" style={{ width: 44, height: 44, objectFit: "contain" }} />
+            <div onClick={() => go("home")} style={{ cursor: "pointer", width: 56, height: 56, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+              <img src={LOGO_URL} alt="Excalibur Academy" style={{ width: 56, height: 56, objectFit: "contain" }} />
             </div>
           </div>
 
@@ -418,7 +418,7 @@ function Nav({ page, setPage }) {
             {/* Bottom label */}
             <div style={{ position: "absolute", bottom: 48, left: 40 }}>
               <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 13, color: "rgba(251,247,238,.5)", letterSpacing: "0.2em", textTransform: "uppercase", marginBottom: 8 }}>Orange County · California</p>
-              <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 18, color: gold, fontStyle: "italic", lineHeight: 1.5 }}>Forging the Leaders<br />of Tomorrow.</p>
+              <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 16, color: gold, fontStyle: "italic", lineHeight: 1.4, whiteSpace: "nowrap" }}>Forging the Leaders of Tomorrow.</p>
             </div>
             {/* Oxford-style CTA card — top right of photo */}
             <div style={{
@@ -2670,13 +2670,13 @@ function HomePage({ setPage, openInquiry }) {
               <div style={{ position: "absolute", inset: 0, background: "rgba(0,0,0,.18)" }} />
             </div>
             <div style={{ overflow: "hidden", position: "relative" }}>
-              <img src="https://i.imgur.com/GFLk5gZ.jpeg" alt="" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+              <img src="https://i.imgur.com/sWnhc5H.jpeg" alt="" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
               <div style={{ position: "absolute", inset: 0, background: "rgba(0,0,0,.18)" }} />
               {/* Overlay title on right photo */}
               <div style={{ position: "absolute", bottom: 32, left: 32 }}>
-                <p style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.4em", color: "rgba(251,247,238,.7)", fontWeight: 600, textTransform: "uppercase", marginBottom: 8 }}>The Excalibur Graduate</p>
-                <h2 style={{ fontFamily: serif, fontSize: 32, fontWeight: 600, color: "#FBF7EE", lineHeight: 1.05 }}>Excalibur "Ivy" Portfolio</h2>
-                <p style={{ fontFamily: serif, fontSize: 15, color: "rgba(199,171,117,.85)", fontStyle: "italic", marginTop: 6 }}>A record that speaks for itself.</p>
+                <p style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.45em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 12 }}>The Excalibur Graduate</p>
+                <h2 style={{ fontFamily: serif, fontSize: "clamp(36px,4vw,52px)", fontWeight: 600, color: "#FBF7EE", lineHeight: 1.0, marginBottom: 10 }}>Excalibur “Ivy” Portfolio</h2>
+                <p style={{ fontFamily: serif, fontSize: 18, color: gold, fontStyle: "italic", lineHeight: 1.4 }}>A record that speaks for itself.</p>
               </div>
             </div>
           </div>
@@ -2685,8 +2685,8 @@ function HomePage({ setPage, openInquiry }) {
             <img src="https://i.imgur.com/f87iq9i.jpeg" alt="" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
             <div style={{ position: "absolute", inset: 0, background: "rgba(0,0,0,.35)" }} />
             <div style={{ position: "absolute", bottom: 24, left: 24 }}>
-              <h2 style={{ fontFamily: serif, fontSize: 26, fontWeight: 600, color: "#FBF7EE", lineHeight: 1.1 }}>Excalibur "Ivy" Portfolio</h2>
-              <p style={{ fontFamily: serif, fontSize: 13, color: "rgba(199,171,117,.85)", fontStyle: "italic", marginTop: 4 }}>A record that speaks for itself.</p>
+              <h2 style={{ fontFamily: serif, fontSize: 30, fontWeight: 600, color: "#FBF7EE", lineHeight: 1.05, marginBottom: 8 }}>Excalibur “Ivy” Portfolio</h2>
+              <p style={{ fontFamily: serif, fontSize: 15, color: gold, fontStyle: "italic" }}>A record that speaks for itself.</p>
             </div>
           </div>
         )}
@@ -2698,7 +2698,7 @@ function HomePage({ setPage, openInquiry }) {
             <p style={{ fontFamily: sans, fontSize: isMobile ? 14 : 15, lineHeight: 1.85, color: "#1a1a1a", fontWeight: 300 }}>Every Excalibur student graduates with a portfolio of documented, verifiable work — one that no other programme in the country offers. This portfolio reflects sustained performance, leadership under pressure, and accountability for outcomes.</p>
           </div>
           <div style={{ display: "flex", alignItems: isMobile ? "flex-start" : "center" }}>
-            <p style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.3em", color: "#8B6914", fontWeight: 600, textTransform: "uppercase" }}>Eight documented components · Verified · Professionally assembled · Submitted with university applications</p>
+            <div style={{ width: 24, height: 1, background: "#000", marginBottom: 16 }} /><p style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: isMobile ? 14 : 18, color: "#000", fontWeight: 400, lineHeight: 1.75, fontStyle: "italic" }}>Eight documented components · Verified · Professionally assembled · Submitted with university applications</p>
           </div>
         </div>
 
