@@ -983,31 +983,217 @@ function SoireeInviteBlock({ openInquiry }) {
 // ─────────────────────────────────────────────
 function CurriculumPage({ setPage, openInquiry }) {
   const isMobile = useIsMobile();
-  // Breadcrumb added below
+  const [activeModule, setActiveModule] = useState(null);
+
+  const industries = [
+    { n: "01", sector: "Technology & AI", desc: "Platform economics, software margins, how the most valuable companies were built." },
+    { n: "02", sector: "Finance & Venture Capital", desc: "Equity, debt, cap tables, term sheets, how investors decide." },
+    { n: "03", sector: "Real Estate", desc: "Development economics, cap rates, wealth-building mechanics." },
+    { n: "04", sector: "Food & Hospitality", desc: "Unit economics, brand-building in a commoditized market." },
+    { n: "05", sector: "E-Commerce & Retail", desc: "Customer acquisition, lifetime value, supply chains, DTC brands." },
+    { n: "06", sector: "Healthcare & Biotech", desc: "FDA pathways, healthcare economics, why it requires unusual patience." },
+    { n: "07", sector: "Media & Entertainment", desc: "Attention economics, the creator economy, IP valuation." },
+    { n: "08", sector: "Legal & Professional Services", desc: "Contracts, IP, equity agreements every entrepreneur needs to understand." },
+    { n: "09", sector: "Manufacturing & Supply Chain", desc: "How physical things are made, moved, and sold at scale." },
+    { n: "10", sector: "Energy & Sustainability", desc: "Renewable economics, carbon markets, the greatest entrepreneurial opportunity ahead." },
+    { n: "11", sector: "Sports, Fitness & Wellness", desc: "Athlete branding, sponsorship, franchise valuation." },
+    { n: "12", sector: "Luxury & Premium Brands", desc: "Psychology of desire, scarcity, heritage, and premium pricing." },
+  ];
+
+  const tenMonthArc = [
+    { m: "Month 1–2", t: "Foundation", items: ["Public Speaking I & II", "Mindset & identity", "First pitch night", "Business model primer"] },
+    { m: "Month 3", t: "Financial Literacy", items: ["Reading a P&L", "Unit economics", "Pricing strategy", "Guest: Finance pro"] },
+    { m: "Month 4", t: "The Art of Selling", items: ["Consultative selling", "Psychology of persuasion", "Objection handling", "Live roleplay"] },
+    { m: "Month 5", t: "AI & Technology", items: ["How AI works", "No-code tools", "AI-powered research", "Build a tool"] },
+    { m: "Month 6", t: "Speaking III + Finance II", items: ["Advanced rhetoric", "Investor Briefing I", "Mid-year competition", "Sector: Finance"] },
+    { m: "Month 7–8", t: "Junior Consultant", items: ["Assigned to real business", "On-site observation", "Customer research", "Boardroom Finale"] },
+    { m: "Month 9", t: "Public Speaking IV", items: ["Advanced narrative", "Sector speaker series", "Externship begins", "City Champ prep"] },
+    { m: "Month 10", t: "Leadership", items: ["Five forms of power", "Emotional intelligence", "CEO crisis simulation", "Conflict resolution"] },
+    { m: "Month 11", t: "Micro-Business Launch", items: ["Assigned mentor & funding", "Build real venture", "Weekly check-ins", "Revenue target"] },
+    { m: "Month 12", t: "Graduation", items: ["Financial Literacy III", "Investor Briefing II", "Demo Day prep", "Portfolio & ceremony"] },
+    { m: "Throughout", t: "Sector Rotation", items: ["12 industries, 12 speakers", "Sector Journal", "One case study/month", "Real practitioner every time"] },
+    { m: "Throughout", t: "Intellectual Depth", items: ["Stoic philosophy", "Literary analysis", "Social arts", "Writing with precision"] },
+  ];
+
   return (
     <div style={{ background: "#000", paddingTop: 0 }}>
-      <div style={{ maxWidth: 900, margin: "0 auto", padding: isMobile ? "36px 16px 32px" : "60px 40px 52px", textAlign: "center" }}>
-        <Fade><Eyebrow>THE CURRICULUM</Eyebrow></Fade>
-        <Fade d={.06}><SectionTitle center>Eight Disciplines. One Formation.</SectionTitle><Sub center>Delivered exclusively by those who have built, led, and created in the real world. No career academics. No textbook theory divorced from practice.</Sub></Fade>
+      <Breadcrumb items={[{label:"Curriculum",page:"curriculum"}]} setPage={setPage} />
+
+      {/* ── HERO ── */}
+      <div style={{ position: "relative", overflow: "hidden", height: isMobile ? 400 : 560 }}>
+        <img src="https://i.imgur.com/xuGMBF0.jpeg" alt="Excalibur Curriculum" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "center" }} />
+        <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to bottom, rgba(0,0,0,.3) 0%, rgba(0,0,0,.85) 100%)" }} />
+        <div style={{ position: "absolute", bottom: isMobile ? 36 : 60, left: isMobile ? 24 : 72, maxWidth: 620 }}>
+          <Fade>
+            <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 8, letterSpacing: "0.55em", color: gold, fontWeight: 700, textTransform: "uppercase", marginBottom: 16 }}>The Curriculum · Excalibur Academy</p>
+            <h1 style={{ fontFamily: serif, fontSize: isMobile ? "clamp(36px,7vw,52px)" : "clamp(48px,5vw,72px)", fontWeight: 300, color: "#FBF7EE", lineHeight: 1.0, marginBottom: 14, letterSpacing: "0.02em" }}>Eight Disciplines.<br />One Formation.</h1>
+            <p style={{ fontFamily: serif, fontSize: isMobile ? 14 : 17, color: gold, fontStyle: "italic", lineHeight: 1.4 }}>Delivered by practitioners who have built, led, and created at the highest level.</p>
+          </Fade>
+        </div>
       </div>
-      <div style={{ maxWidth: 1100, margin: "0 auto", padding: isMobile ? "0 16px 60px" : "0 40px 80px" }}>
-        <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 2, background: "#111" }}>
-          {currMods.map((m, i) => (
-            <Fade key={i} d={i * .04}>
-              <div onClick={() => setPage(`module:${m.slug}`)} style={{ background: "#080808", padding: "40px 36px", cursor: "pointer", borderTop: "2px solid transparent", transition: "all .3s" }}
-                onMouseEnter={e => { e.currentTarget.style.background = "#0D0D0B"; e.currentTarget.style.borderTopColor = gold; }}
-                onMouseLeave={e => { e.currentTarget.style.background = "#080808"; e.currentTarget.style.borderTopColor = "transparent"; }}>
-                <Eyebrow>{m.months.toUpperCase()}</Eyebrow>
-                <h3 style={{ fontFamily: serif, fontSize: 24, fontWeight: 600, color: "#FBF7EE", lineHeight: 1.2, marginBottom: 8 }}>{m.title}</h3>
-                <p style={{ fontFamily: serif, fontSize: 16, fontStyle: "italic", color: "#FBF7EE", marginBottom: 12 }}>{m.tagline}</p>
-                <p style={{ fontFamily: sans, fontSize: 13, lineHeight: 1.7, color: "#FBF7EE", fontWeight: 300, marginBottom: 16 }}>{m.summary}</p>
-                <span style={{ fontFamily: sans, fontSize: 11, color: gold, letterSpacing: 2, fontWeight: 500 }}>Explore module →</span>
-              </div>
-            </Fade>
+
+      {/* ── INTRO STRIP ── */}
+      <div style={{ background: "#000", padding: isMobile ? "40px 24px" : "52px 80px", borderBottom: "1px solid rgba(199,171,117,.1)" }}>
+        <div style={{ maxWidth: 1100, margin: "0 auto", display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr 1fr", gap: isMobile ? 24 : 0 }}>
+          {[
+            { n: "8", label: "Core Disciplines", sub: "Across all three programs" },
+            { n: "12", label: "Industry Sectors", sub: "One per month with a guest professional" },
+            { n: "30+", label: "Guest Speakers / Year", sub: "Real executives, investors, founders" },
+          ].map((s, i) => (
+            <div key={i} style={{ padding: isMobile ? "0" : "0 48px", textAlign: "center", borderLeft: !isMobile && i > 0 ? "1px solid rgba(199,171,117,.1)" : "none" }}>
+              <div style={{ fontFamily: serif, fontSize: isMobile ? 48 : 58, fontWeight: 300, color: "#FBF7EE", lineHeight: 1, letterSpacing: "-0.02em", marginBottom: 8 }}>{s.n}</div>
+              <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 10, fontWeight: 700, color: gold, letterSpacing: "0.2em", textTransform: "uppercase", marginBottom: 4 }}>{s.label}</p>
+              <p style={{ fontFamily: sans, fontSize: 11, color: "rgba(199,171,117,.55)", fontWeight: 300 }}>{s.sub}</p>
+            </div>
           ))}
         </div>
       </div>
-    <SoireeInviteBlock openInquiry={openInquiry} />
+
+      {/* ── EIGHT MODULES ── */}
+      <div style={{ background: "#050505", padding: isMobile ? "52px 24px" : "72px 80px" }}>
+        <div style={{ maxWidth: 1100, margin: "0 auto" }}>
+          <Fade>
+            <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 9, letterSpacing: "0.45em", color: gold, fontWeight: 700, textTransform: "uppercase", marginBottom: 16 }}>The Curriculum</p>
+            <h2 style={{ fontFamily: serif, fontSize: isMobile ? 28 : 44, fontWeight: 600, color: "#FBF7EE", lineHeight: 1.05, marginBottom: 8 }}>Inside the Classroom</h2>
+            <p style={{ fontFamily: sans, fontSize: 14, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.8, marginBottom: 40, maxWidth: 600 }}>Eight disciplines — taught by executive business leaders, distinguished keynote speakers, and professors from leading universities. Click any module to go deep.</p>
+          </Fade>
+          <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 2, background: "#111" }}>
+            {currMods.map((m, i) => (
+              <Fade key={i} d={i * .03}>
+                <div onClick={() => setPage(`module:${m.slug}`)} style={{ background: "#080808", padding: isMobile ? "32px 24px" : "44px 40px", cursor: "pointer", borderTop: "2px solid transparent", transition: "all .3s", position: "relative" }}
+                  onMouseEnter={e => { e.currentTarget.style.background = "#0D0D0B"; e.currentTarget.style.borderTopColor = gold; }}
+                  onMouseLeave={e => { e.currentTarget.style.background = "#080808"; e.currentTarget.style.borderTopColor = "transparent"; }}>
+                  <div style={{ position: "absolute", top: 20, right: 20, fontFamily: serif, fontSize: 48, color: "rgba(199,171,117,.04)", lineHeight: 1, fontWeight: 700 }}>{m.n}</div>
+                  <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 8, letterSpacing: "0.3em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 12 }}>{m.phase || "Core Module"}</p>
+                  <h3 style={{ fontFamily: serif, fontSize: isMobile ? 20 : 24, fontWeight: 600, color: "#FBF7EE", lineHeight: 1.2, marginBottom: 6 }}>{m.title}</h3>
+                  <p style={{ fontFamily: serif, fontSize: 14, fontStyle: "italic", color: gold, marginBottom: 14, lineHeight: 1.4 }}>{m.tagline}</p>
+                  <div style={{ width: 28, height: 1, background: "linear-gradient(90deg, " + gold + ", transparent)", marginBottom: 14 }} />
+                  <p style={{ fontFamily: sans, fontSize: 12, lineHeight: 1.8, color: "#FBF7EE", fontWeight: 300, marginBottom: 18 }}>{m.summary}</p>
+                  <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                    <span style={{ fontFamily: sans, fontSize: 10, color: gold, letterSpacing: "0.18em", fontWeight: 600 }}>DEEP DIVE</span>
+                    <span style={{ color: gold, fontSize: 14 }}>→</span>
+                  </div>
+                </div>
+              </Fade>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* ── INDUSTRY ROTATION ── */}
+      <div style={{ background: "#FAF8F4", padding: isMobile ? "52px 24px" : "72px 80px", borderTop: "1px solid rgba(0,0,0,.07)" }}>
+        <div style={{ maxWidth: 1100, margin: "0 auto" }}>
+          <Fade>
+            <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 9, letterSpacing: "0.45em", color: "#8B6914", fontWeight: 700, textTransform: "uppercase", marginBottom: 16 }}>Industry Sectors Rotation</p>
+            <h2 style={{ fontFamily: serif, fontSize: isMobile ? 28 : 44, fontWeight: 600, color: "#111", lineHeight: 1.05, marginBottom: 8 }}>Know Every Industry. Own Any Room.</h2>
+            <p style={{ fontFamily: sans, fontSize: 14, color: "#444", fontWeight: 300, lineHeight: 1.8, marginBottom: 40, maxWidth: 600 }}>Each month features a dedicated guest speaker from a different industry, a sector-specific case study, and an analytical exercise. By graduation, every student holds a Sector Journal documenting all twelve.</p>
+          </Fade>
+          <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(4,1fr)", gap: 0 }}>
+            {industries.map((ind, i) => (
+              <div key={i} style={{ padding: isMobile ? "20px 0" : "24px 24px", borderBottom: "1px solid rgba(0,0,0,.07)", borderLeft: !isMobile && i % 4 !== 0 ? "1px solid rgba(0,0,0,.07)" : "none", display: "flex", gap: 16, alignItems: "flex-start" }}>
+                <span style={{ fontFamily: serif, fontSize: 12, color: "rgba(0,0,0,.2)", fontStyle: "italic", flexShrink: 0, paddingTop: 2 }}>{ind.n}</span>
+                <div>
+                  <p style={{ fontFamily: serif, fontSize: 15, fontWeight: 600, color: "#111", lineHeight: 1.2, marginBottom: 4 }}>{ind.sector}</p>
+                  <p style={{ fontFamily: sans, fontSize: 11, color: "#555", fontWeight: 300, lineHeight: 1.6 }}>{ind.desc}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* ── 10-MONTH ARC ── */}
+      <div style={{ background: "#050505", padding: isMobile ? "52px 24px" : "72px 80px" }}>
+        <div style={{ maxWidth: 1100, margin: "0 auto" }}>
+          <Fade>
+            <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 9, letterSpacing: "0.45em", color: gold, fontWeight: 700, textTransform: "uppercase", marginBottom: 16 }}>The Ten-Month Arc</p>
+            <h2 style={{ fontFamily: serif, fontSize: isMobile ? 28 : 44, fontWeight: 600, color: "#FBF7EE", lineHeight: 1.05, marginBottom: 8 }}>What a Year Looks Like.</h2>
+            <p style={{ fontFamily: sans, fontSize: 14, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.8, marginBottom: 40, maxWidth: 600 }}>Ten months, structured across four phases. Every month builds on the last.</p>
+          </Fade>
+          <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr 1fr" : "repeat(4, 1fr)", gap: 2, background: "#111" }}>
+            {tenMonthArc.map((row, i) => (
+              <div key={i} style={{ background: "#080808", padding: "24px 20px", borderTop: `2px solid ${i === 0 ? gold : "rgba(199,171,117,.06)"}` }}>
+                <p style={{ fontFamily: sans, fontSize: 9, letterSpacing: "0.18em", color: gold, marginBottom: 6, fontWeight: 600 }}>{row.m}</p>
+                <h4 style={{ fontFamily: serif, fontSize: 16, fontWeight: 600, color: "#FBF7EE", marginBottom: 10, lineHeight: 1.2 }}>{row.t}</h4>
+                {row.items.map((item, j) => <div key={j} style={{ fontFamily: sans, fontSize: 11, color: "#FBF7EE", marginBottom: 4, fontWeight: 300 }}>— {item}</div>)}
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* ── EXCALIBUR IVY PORTFOLIO ── */}
+      <section style={{ background: "#F5F3EE", padding: 0 }}>
+        {!isMobile ? (
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 0, height: 420 }}>
+            <div style={{ overflow: "hidden", position: "relative" }}>
+              <img src="https://i.imgur.com/f87iq9i.jpeg" alt="" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+              <div style={{ position: "absolute", inset: 0, background: "rgba(0,0,0,.35)" }} />
+              <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, background: "#000", padding: "28px 36px" }}>
+                <p style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.45em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 10 }}>The Excalibur Graduate</p>
+                <h2 style={{ fontFamily: serif, fontSize: "clamp(28px,3vw,42px)", fontWeight: 600, color: "#FBF7EE", lineHeight: 1.0, marginBottom: 8 }}>Excalibur "Ivy" Portfolio</h2>
+                <p style={{ fontFamily: serif, fontSize: 16, color: gold, fontStyle: "italic" }}>A record that speaks for itself.</p>
+              </div>
+            </div>
+            <div style={{ overflow: "hidden", position: "relative" }}>
+              <img src="https://i.imgur.com/sWnhc5H.jpeg" alt="" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+              <div style={{ position: "absolute", inset: 0, background: "rgba(0,0,0,.3)" }} />
+              <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, background: "rgba(0,0,0,.85)", padding: "28px 36px" }}>
+                <p style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.35em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 8 }}>College Admissions Advisor</p>
+                <p style={{ fontFamily: serif, fontSize: 16, color: "#FBF7EE", fontStyle: "italic" }}>Why Excalibur Students Stand Apart</p>
+              </div>
+            </div>
+          </div>
+        ) : (
+          <div style={{ height: 280, overflow: "hidden", position: "relative" }}>
+            <img src="https://i.imgur.com/f87iq9i.jpeg" alt="" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+            <div style={{ position: "absolute", inset: 0, background: "rgba(0,0,0,.5)" }} />
+            <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, background: "#000", padding: "20px 24px" }}>
+              <h2 style={{ fontFamily: serif, fontSize: 26, fontWeight: 600, color: "#FBF7EE", lineHeight: 1.05, marginBottom: 6 }}>Excalibur "Ivy" Portfolio</h2>
+              <p style={{ fontFamily: serif, fontSize: 14, color: gold, fontStyle: "italic" }}>A record that speaks for itself.</p>
+            </div>
+          </div>
+        )}
+        <div style={{ maxWidth: 1100, margin: "0 auto", padding: isMobile ? "36px 24px 0" : "52px 80px 0", display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: isMobile ? 20 : 80 }}>
+          <div>
+            <div style={{ width: 36, height: 1, background: "linear-gradient(90deg, #000, transparent)", marginBottom: 16 }} />
+            <p style={{ fontFamily: sans, fontSize: isMobile ? 14 : 15, lineHeight: 1.85, color: "#1a1a1a", fontWeight: 300 }}>Every Excalibur student graduates with a portfolio of documented, verifiable work — one that no other programme in the country offers. This portfolio reflects sustained performance, leadership under pressure, and accountability for outcomes.</p>
+          </div>
+          <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", gap: 16 }}>
+            <div style={{ width: 24, height: 1, background: "#000" }} />
+            <p style={{ fontFamily: serif, fontSize: isMobile ? 14 : 18, color: "#000", fontWeight: 400, lineHeight: 1.75, fontStyle: "italic" }}>Eight documented components · Verified · Professionally assembled · Submitted with university applications.</p>
+          </div>
+        </div>
+        <PortfolioIndexWhite isMobile={isMobile} setPage={setPage} />
+      </section>
+
+      {/* ── BEYOND THE CLASSROOM CTA ── */}
+      <div style={{ background: "#000", padding: isMobile ? "52px 24px" : "64px 80px", borderTop: "1px solid rgba(199,171,117,.1)", borderBottom: "1px solid rgba(199,171,117,.1)" }}>
+        <div style={{ maxWidth: 1100, margin: "0 auto", display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: isMobile ? 24 : 80, alignItems: "center" }}>
+          <div>
+            <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 8, letterSpacing: "0.5em", color: gold, fontWeight: 700, textTransform: "uppercase", marginBottom: 16 }}>Beyond the Classroom</p>
+            <h2 style={{ fontFamily: serif, fontSize: isMobile ? 26 : 38, fontWeight: 600, color: "#FBF7EE", lineHeight: 1.05, marginBottom: 12 }}>The curriculum is only the beginning.</h2>
+            <p style={{ fontFamily: sans, fontSize: 14, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.85, marginBottom: 28 }}>Junior Consulting. Apprentice Externships. Micro-Business Launches. Field trips to Silicon Valley, SpaceX, Anthropic, Daytona, and more. Competitions judged by real investors. Discover what Excalibur students do beyond the classroom.</p>
+          </div>
+          <div style={{ display: "flex", flexDirection: "column", gap: 12, alignItems: isMobile ? "flex-start" : "flex-end" }}>
+            <button onClick={() => setPage("beyond")} style={{ fontFamily: sans, padding: "14px 40px", background: gold, border: "none", color: "#000", fontSize: 11, fontWeight: 700, letterSpacing: "0.2em", textTransform: "uppercase", cursor: "pointer" }}>What's Beyond the Classroom →</button>
+            <button onClick={() => setPage("flagship-detail")} style={{ fontFamily: sans, padding: "13px 32px", background: "transparent", border: "1px solid rgba(199,171,117,.35)", color: gold, fontSize: 11, fontWeight: 500, letterSpacing: "0.15em", textTransform: "uppercase", cursor: "pointer" }}>Explore Flagship Program →</button>
+          </div>
+        </div>
+      </div>
+
+      {/* ── APPLY / CHOOSE PROGRAM ── */}
+      <div style={{ background: "#050505", padding: isMobile ? "52px 24px" : "72px 80px" }}>
+        <div style={{ maxWidth: 1100, margin: "0 auto" }}>
+          <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 9, letterSpacing: "0.45em", color: gold, fontWeight: 700, textTransform: "uppercase", marginBottom: 20 }}>Enrollment</p>
+          <h2 style={{ fontFamily: serif, fontSize: isMobile ? 28 : 40, fontWeight: 600, color: "#FBF7EE", lineHeight: 1.05, marginBottom: 36 }}>Choose Your Program</h2>
+          <FlagshipEnrollSelector openInquiry={openInquiry} isMobile={isMobile} />
+        </div>
+      </div>
+
+      {/* ── SOIREE ── */}
+      <SoireeInviteBlock openInquiry={openInquiry} />
+
     </div>
   );
 }
