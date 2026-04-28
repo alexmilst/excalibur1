@@ -342,6 +342,25 @@ function Nav({ page, setPage }) {
   const isMobile = useIsMobile();
   const [menuOpen, setMenuOpen] = useState(false);
   const [programsOpen, setProgramsOpen] = useState(false);
+  const [hoveredNav, setHoveredNav] = useState(null);
+
+  const pagePhotos = {
+    home: "https://i.imgur.com/mkQ2Nde.jpeg",
+    about: "https://i.imgur.com/bBYXZXX.jpeg",
+    programs: "https://i.imgur.com/1clG3YB.jpeg",
+    "summer-detail": "https://i.imgur.com/9WVUpXH.jpeg",
+    "flagship-detail": "https://i.imgur.com/eyeb9rX.jpeg",
+    intensive: "https://i.imgur.com/P86gddQ.png",
+    curriculum: "https://i.imgur.com/hoAucHu.jpeg",
+    faculty: "https://i.imgur.com/Cv3LTsu.jpeg",
+    beyond: "https://i.imgur.com/1QP3p5p.jpeg",
+    apply: "https://i.imgur.com/aDzpYsK.jpeg",
+    contact: "https://i.imgur.com/5xUqLbH.jpeg",
+    events: "https://i.imgur.com/SjLpa14.jpeg",
+    Contact: "https://i.imgur.com/5xUqLbH.jpeg",
+    Events: "https://i.imgur.com/SjLpa14.jpeg",
+  };
+
   const allLinks = [
     ["Home", "home", null],
     ["The Academy", "about", null],
@@ -358,7 +377,9 @@ function Nav({ page, setPage }) {
     ["Contact", "apply", null],
     ["Events", "apply", null],
   ];
-  const go = (p) => { setPage(p); setMenuOpen(false); setProgramsOpen(false); };
+  const go = (p) => { setPage(p); setMenuOpen(false); setProgramsOpen(false); setHoveredNav(null); };
+
+  const activePhoto = hoveredNav ? (pagePhotos[hoveredNav] || pagePhotos.home) : pagePhotos.home;
 
   return (
     <>
@@ -428,8 +449,8 @@ function Nav({ page, setPage }) {
                 borderBottom: "1px solid rgba(199,171,117,.07)",
                 cursor: "pointer",
               }}
-                onMouseEnter={e => { const ml = e.currentTarget.querySelector(".ml"); const arr = e.currentTarget.querySelector(".arr"); if(ml) ml.style.color = gold; if(arr) { arr.style.opacity = "1"; arr.style.transform = "translateX(6px)"; } }}
-                onMouseLeave={e => { const ml = e.currentTarget.querySelector(".ml"); const arr = e.currentTarget.querySelector(".arr"); if(ml) ml.style.color = "#FBF7EE"; if(arr) { arr.style.opacity = "0.3"; arr.style.transform = "translateX(0)"; } }}
+                onMouseEnter={e => { const ml = e.currentTarget.querySelector(".ml"); const arr = e.currentTarget.querySelector(".arr"); if(ml) ml.style.color = gold; if(arr) { arr.style.opacity = "1"; arr.style.transform = "translateX(6px)"; } setHoveredNav(pagePhotos[p] ? p : l); }}
+                onMouseLeave={e => { const ml = e.currentTarget.querySelector(".ml"); const arr = e.currentTarget.querySelector(".arr"); if(ml) ml.style.color = "#FBF7EE"; if(arr) { arr.style.opacity = "0.3"; arr.style.transform = "translateX(0)"; } setHoveredNav(null); }}
               >
                 <div style={{ display: "flex", alignItems: "baseline", gap: 20 }}>
                   <span style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 11, color: "rgba(199,171,117,.3)", fontStyle: "italic" }}>0{i + 1}</span>
@@ -463,7 +484,7 @@ function Nav({ page, setPage }) {
         {/* RIGHT — photo panel (desktop only) */}
         {!isMobile && (
           <div style={{ width: "38%", position: "relative", flexShrink: 0 }}>
-            <img src="https://i.imgur.com/mkQ2Nde.jpeg" alt="Excalibur Academy" style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center" }} />
+            <img src={activePhoto} alt="Excalibur Academy" style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center", transition: "opacity .35s ease" }} />
             <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to right, #000 0%, rgba(0,0,0,.3) 40%, transparent 100%)" }} />
             {/* Bottom label */}
             <div style={{ position: "absolute", bottom: 48, left: 40 }}>
@@ -477,9 +498,9 @@ function Nav({ page, setPage }) {
               cursor: "pointer",
             }} onClick={() => go("apply")}>
               <p style={{ fontFamily: sans, fontSize: 9, letterSpacing: "0.25em", color: "rgba(0,0,0,.55)", textTransform: "uppercase", fontWeight: 600, marginBottom: 10 }}>Summer 2026</p>
-              <p style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: 18, fontWeight: 600, color: "#000", lineHeight: 1.25, marginBottom: 14 }}>Waitlist for Summer 2026 Waves Now Open.</p>
+              <p style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: 18, fontWeight: 600, color: "#000", lineHeight: 1.25, marginBottom: 14 }}>Now Accepting Applications.</p>
               <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-                <span style={{ fontFamily: sans, fontSize: 11, fontWeight: 700, color: "#000", letterSpacing: "0.08em" }}>Learn More</span>
+                <span style={{ fontFamily: sans, fontSize: 11, fontWeight: 700, color: "#000", letterSpacing: "0.08em" }}>Apply Now</span>
                 <span style={{ fontSize: 14, color: "#000", transition: "transform .2s" }}>→</span>
               </div>
             </div>
@@ -1021,7 +1042,7 @@ function CurriculumPage({ setPage, openInquiry }) {
 
       {/* ── HERO ── */}
       <div style={{ position: "relative", overflow: "hidden", height: isMobile ? 400 : 560 }}>
-        <img src="https://i.imgur.com/xuGMBF0.jpeg" alt="Excalibur Curriculum" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "center" }} />
+        <img src="https://i.imgur.com/hoAucHu.jpeg" alt="Excalibur Curriculum" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "center" }} />
         <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to bottom, rgba(0,0,0,.3) 0%, rgba(0,0,0,.85) 100%)" }} />
         <div style={{ position: "absolute", bottom: isMobile ? 36 : 60, left: isMobile ? 24 : 72, maxWidth: 620 }}>
           <Fade>
@@ -1860,7 +1881,7 @@ function ProgramsPage({ setPage, openInquiry }) {
       tag: "TEN-MONTH FLAGSHIP", id: "full-program", flagship: true, status: "ENROLLING SOON", statusColor: gold,
       title: "Ten-Month Program",
       tagline: "The complete formation.",
-      photo: "https://i.imgur.com/PB9loUJ.jpeg",
+      photo: "https://i.imgur.com/eyeb9rX.jpeg",
       desc: "The Excalibur Ten-Month Flagship is the Academy’s primary program — a complete, ten-month course of excellence for ambitious high school students in Orange County, California.\n\nOffered in two parallel tracks — Weekday (Tuesday & Thursday evenings) and Saturday (morning) — both deliver identical curriculum, the same faculty, and the same standard of instruction. Students choose the track that fits their schedule; the formation they receive is the same.\n\nAcross ten months, students progress through all eight core disciplines: Public Speaking & Rhetoric, Financial Literacy, Business Model Analysis, The Art of Selling & Marketing, AI & Technology, Leadership & Influence, Intellectual Depth & The Art of Class, and Industry Sectors Rotation.\n\nEach month, a dedicated specialist — a working executive, investor, or entrepreneur — leads the core curriculum block. The Lead Instructor runs the applied workshops and executive business simulations in every session. The Public Speaking Instructor opens every class.\n\nBeyond the classroom, students complete three real-world engagements: the Junior Consultant Program (advising a real local business), the Apprentice Externship (4–6 weeks embedded inside a company), and the Funded Micro-Business Launch (building and launching a micro venture with a dedicated mentor and seed support).\n\nThe program concludes in June with Excalibur Gala & Graduation — the Flagship capstone — where students present their venture concepts before families, mentors, investors, invited guests, and judges.\n\nGraduates leave with the Excalibur Academy Portfolio — a professionally assembled record designed to support college applications — along with real-world experience, lasting friendships, greater confidence, and skills for every arena ahead.",
       details: [
         ["Schedule", "Weekday: Tue & Thu · 4:00–6:25 PM (Group B)\nor Saturday: 10:30 AM–3:45 PM (Group A)"],
@@ -1981,7 +2002,7 @@ function ProgramsPage({ setPage, openInquiry }) {
 
               {/* Photo — controlled height strip */}
               <div style={{ background: "#000", overflow: "hidden", height: isMobile ? 200 : 320 }}>
-                <img src="https://i.imgur.com/CuztLC5.jpeg" alt="Summer Intensive at Excalibur" style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center" }} />
+                <img src="https://i.imgur.com/9WVUpXH.jpeg" alt="Summer Intensive at Excalibur" style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center" }} />
               </div>
 
               {/* Content below photo — white background, two columns */}
@@ -2191,247 +2212,246 @@ function ProgramsPage({ setPage, openInquiry }) {
 // ─────────────────────────────────────────────
 function ApplyPage({ setPage, openInquiry }) {
   const isMobile = useIsMobile();
-  const [prog, setProg] = useState(null);
-  const [track, setTrack] = useState(null);
-  const [wave, setWave] = useState(null);
+  const [openFaq, setOpenFaq] = useState(null);
 
-  const ready = prog === "launchpad" || (prog && track && wave);
+  const faqs = [
+    { q: "Is Excalibur only for students who already have business experience?", a: "No. Excalibur is designed for motivated students with curiosity, maturity, and readiness to grow. Prior business experience is not the point. The program is built to develop communication, judgment, leadership, and execution." },
+    { q: "Is the application difficult?", a: "No. The application is intentionally straightforward. The process is selective, but not complicated." },
+    { q: "How quickly will families hear back?", a: "A member of the admissions team will follow up within 24 hours after an inquiry or application submission." },
+    { q: "Are parents involved?", a: "Yes. Families receive onboarding information, access to the family portal, invitations to key events, and communication from the Excalibur team. Families are also invited to selected presentations, final events, and the Family Information Session." },
+    { q: "What makes the program selective?", a: "Cohort size, student readiness, and fit. Excalibur is designed around direct feedback, discussion, public speaking, team work, and applied challenges. The admissions process helps ensure students are ready to participate fully." },
+    { q: "What happens after acceptance?", a: "Accepted families receive onboarding materials, portal access, schedule details, dietary forms, event information, and preparation materials before the program begins." },
+  ];
+
+  const divider = <div style={{ width: 48, height: "1px", background: `linear-gradient(90deg, ${gold}, transparent)`, marginBottom: 28 }} />;
 
   return (
     <div style={{ background: "#000", paddingTop: 0 }}>
-      <Breadcrumb items={[{label:"Our Programs",page:"programs"}]} setPage={setPage} />
-      {/* HERO */}
-      <div style={{ maxWidth: 900, margin: "0 auto", padding: isMobile ? "36px 16px 32px" : "60px 40px 48px", textAlign: "center" }}>
-        <Fade>
-          <Eyebrow>ADMISSIONS · INAUGURAL CLASS 2026</Eyebrow>
-          <h1 style={{ fontFamily: serif, fontSize: "clamp(38px,5vw,64px)", fontWeight: 600, color: "#FBF7EE", lineHeight: 1.05, marginBottom: 16 }}>A place for students ready to be challenged.</h1>
-          <p style={{ fontFamily: serif, fontSize: 20, color: "#FBF7EE", fontStyle: "italic", lineHeight: 1.7, maxWidth: 600, margin: "0 auto" }}>Excalibur is Admission to Excalibur is intentionally limited. With twenty-five students per cohort, the process is designed to preserve the quality of the room: students who are curious, engaged, motivated, and prepared to take the work seriously. The small cohort model allows faculty to work closely with each student, offering individual feedback, personal guidance, and meaningful attention throughout the program — not occasional observation from the back of the room.</p>
-        </Fade>
+
+      {/* ── HERO ── */}
+      <div style={{ position: "relative", overflow: "hidden", height: isMobile ? 420 : 580 }}>
+        <img src="https://i.imgur.com/aDzpYsK.jpeg" alt="Excalibur Admissions" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "center top" }} />
+        <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to bottom, rgba(0,0,0,.25) 0%, rgba(0,0,0,.88) 100%)" }} />
+        <div style={{ position: "absolute", bottom: isMobile ? 36 : 64, left: isMobile ? 24 : 72, maxWidth: 680 }}>
+          <Fade>
+            <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 8, letterSpacing: "0.55em", color: gold, fontWeight: 700, textTransform: "uppercase", marginBottom: 18 }}>Admissions · Excalibur Academy</p>
+            <h1 style={{ fontFamily: serif, fontSize: isMobile ? "clamp(34px,7vw,48px)" : "clamp(44px,5vw,68px)", fontWeight: 300, color: "#FBF7EE", lineHeight: 1.0, marginBottom: 14, letterSpacing: "0.02em" }}>For students ready to<br />think, speak, and build.</h1>
+            <div style={{ width: 48, height: "1px", background: `linear-gradient(90deg, ${gold}, transparent)`, marginBottom: 16 }} />
+            <p style={{ fontFamily: sans, fontSize: isMobile ? 13 : 15, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.8, maxWidth: 560 }}>Excalibur Academy admits a limited number of students into each cohort to preserve the quality of instruction, discussion, mentorship, and feedback. The admissions process is personal, selective, and intentionally straightforward.</p>
+          </Fade>
+        </div>
       </div>
 
-      <Hr />
-
-      {/* ADMISSIONS PHILOSOPHY */}
-      <section style={{ padding: isMobile ? "60px 16px" : "80px 40px" }}>
-        <div style={{ maxWidth: 1100, margin: "0 auto", display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: isMobile ? 40 : 72 }}>
+      {/* ── PROGRAMS ACCEPTING APPLICATIONS ── */}
+      <div style={{ background: "#FAF8F4", padding: isMobile ? "52px 24px" : "72px 80px" }}>
+        <div style={{ maxWidth: 1100, margin: "0 auto" }}>
           <Fade>
-            <Eyebrow>WHO WE ARE LOOKING FOR</Eyebrow>
-            <SectionTitle>Readiness. Not résumés.</SectionTitle>
-            <p style={{ fontFamily: sans, fontSize: 14, lineHeight: 1.9, color: "#FBF7EE", fontWeight: 300, marginTop: 18, marginBottom: 16 }}>We are Excalibur is not looking for the most polished resume, or the student with the longest list of activities. The Academy looks for curiosity, maturity, motivation, and a genuine interest in business, leadership, communication, and how the world actually works.</p>
-            <p style={{ fontFamily: sans, fontSize: 14, lineHeight: 1.9, color: "#FBF7EE", fontWeight: 300 }}>Excalibur The right applicant does not need a perfect résumé. The right applicant arrives ready to think, speak, listen, make mistakes, build, receive feedback, and grow.</p>
+            <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 8, letterSpacing: "0.55em", color: "#8B6914", fontWeight: 700, textTransform: "uppercase", marginBottom: 16 }}>Programs Accepting Applications</p>
+            <h2 style={{ fontFamily: serif, fontSize: isMobile ? 28 : 44, fontWeight: 600, color: "#111", lineHeight: 1.0, marginBottom: 48 }}>Summer 2026 & Beyond</h2>
           </Fade>
-          <Fade d={.08}>
-            <div style={{ display: "flex", flexDirection: "column", gap: 2 }}>
-              {[
-                { n: "25", label: "Students per cohort", sub: "Every student is known by name. Every student is held to account." },
-                { n: "2", label: "Tracks per program", sub: "Weekday and Weekend — same faculty, same standard, same depth." },
-                { n: "5", label: "Days to a decision", sub: "We review every application carefully and respond within five business days." },
-                { n: "72h", label: "Enrollment hold", sub: "Upon acceptance, your seat is held for 72 hours while you confirm." },
-              ].map((s, i) => (
-                <div key={i} style={{ background: "#080808", padding: "22px 28px", borderLeft: `2px solid ${i === 0 ? gold : "rgba(199,171,117,.12)"}`, display: "flex", gap: 24, alignItems: "center" }}>
-                  <div style={{ fontFamily: serif, fontSize: 32, fontWeight: 600, color: gold, flexShrink: 0, minWidth: 56 }}>{s.n}</div>
-                  <div>
-                    <div style={{ fontFamily: sans, fontSize: 13, fontWeight: 600, color: "#FBF7EE", marginBottom: 3 }}>{s.label}</div>
-                    <div style={{ fontFamily: sans, fontSize: 12, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.5 }}>{s.sub}</div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </Fade>
-        </div>
-      </section>
-
-      <Hr />
-
-      {/* ADMISSIONS PROCESS */}
-      <section style={{ padding: isMobile ? "60px 16px" : "80px 40px", background: "#050505" }}>
-        <div style={{ maxWidth: 1100, margin: "0 auto" }}>
-          <Fade><div style={{ textAlign: "center", marginBottom: 52 }}><Eyebrow>THE PROCESS</Eyebrow><SectionTitle center>Four steps.</SectionTitle><Sub center>The admissions process is intentionally personal and respectful of each family’s time. Its purpose is not to overwhelm with unnecessary formality, but to understand the student, answer the family’s questions, and ensure a strong fit for the Excalibur cohort.</Sub></div></Fade>
-          <Fade d={.06}>
-            <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(4,1fr)", gap: 2, background: "#111", marginBottom: 2 }}>
-              {[
-                { n: "01", title: "Submit Your Application", time: "10–15 minutes", desc: "A short online form covering your background, interests, and what draws you to Excalibur. No essays. No transcripts. Just an honest picture of who your student is." },
-                { n: "02", title: "Admissions Committee Review", time: "Within 3 days", desc: "Every application is reviewed by the Excalibur admissions committee — not an algorithm. We read each one carefully, looking for the qualities that define a student who will thrive here." },
-                { n: "03", title: "Admissions Interview", time: "15–20 minutes", desc: "Shortlisted students are invited to a brief, relaxed conversation with a member of our admissions team. This is not a test. It is a chance for us to understand your student — and for them to understand us." },
-                { n: "04", title: "Decision & Enrollment", time: "Within 5 days total", desc: "Decisions are delivered promptly. Upon acceptance, your seat is held for 72 hours. Enrollment is confirmed with a deposit, and you become part of the founding class." },
-              ].map((s, i) => (
-                <div key={i} style={{ background: "#080808", padding: "32px 26px", borderTop: `2px solid ${i === 0 ? gold : "rgba(199,171,117,.1)"}` }}>
-                  <div style={{ fontFamily: serif, fontSize: 38, fontWeight: 600, color: gold, opacity: .4, lineHeight: 1, marginBottom: 16 }}>{s.n}</div>
-                  <h4 style={{ fontFamily: serif, fontSize: 18, fontWeight: 600, color: "#FBF7EE", marginBottom: 6, lineHeight: 1.2 }}>{s.title}</h4>
-                  <p style={{ fontFamily: sans, fontSize: 10, color: gold, letterSpacing: "0.1em", marginBottom: 14 }}>{s.time}</p>
-                  <p style={{ fontFamily: sans, fontSize: 13, lineHeight: 1.75, color: "#FBF7EE", fontWeight: 300 }}>{s.desc}</p>
-                </div>
-              ))}
-            </div>
-          </Fade>
-
-          {/* Interview note */}
-          <Fade d={.1}>
-            <div style={{ background: "#080808", border: "1px solid #151515", borderLeft: `3px solid ${gold}`, padding: "28px 36px", marginTop: 2 }}>
-              <p style={{ fontFamily: serif, fontSize: 17, color: "#FBF7EE", fontStyle: "italic", lineHeight: 1.6, marginBottom: 8 }}>"The interview is the part of our process we value most — not because we are testing students, but because it is the only way to genuinely understand who they are."</p>
-              <p style={{ fontFamily: sans, fontSize: 10, color: gold, letterSpacing: "0.15em" }}>EXCALIBUR ADMISSIONS COMMITTEE</p>
-            </div>
-          </Fade>
-        </div>
-      </section>
-
-      <Hr />
-
-      {/* WHAT WE LOOK FOR */}
-      <section style={{ padding: isMobile ? "60px 16px" : "80px 40px" }}>
-        <div style={{ maxWidth: 1100, margin: "0 auto" }}>
-          <Fade><Eyebrow>WHAT THE COMMITTEE CONSIDERS</Eyebrow><SectionTitle>What matters. What doesn't.</SectionTitle></Fade>
-          <Fade d={.08}>
-            <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 2, background: "#111", marginTop: 36 }}>
-              <div style={{ background: "#080808", padding: "36px 36px", borderTop: `2px solid ${gold}` }}>
-                <p style={{ fontFamily: sans, fontSize: 10, letterSpacing: "0.25em", color: gold, textTransform: "uppercase", marginBottom: 20, fontWeight: 600 }}>What we look for</p>
-                {[
-                  "Genuine curiosity about business, leadership, or how the world works",
-                  "A willingness to be challenged — and to challenge themselves",
-                  "The self-awareness to know what they want to improve",
-                  "Honesty in how they describe themselves and their ambitions",
-                  "A sense that Excalibur is specifically right for them — not just any program",
-                  "Readiness to contribute to a cohort, not just receive from one",
-                ].map((f, i) => <Li key={i} solid>{f}</Li>)}
+          <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr 1fr", gap: 1, background: "#D8D4CC" }}>
+            {[
+              {
+                tag: "Accepting Applications Now", tagColor: "#4DB87A",
+                eyebrow: "Summer Intensive · July & August 2026",
+                title: "Summer Intensive",
+                price: "$4,500 per wave",
+                desc: "A two-week intensive for high school juniors and seniors who want to experience Excalibur's core model in a concentrated format. Students train in public speaking, business, leadership, AI, sales, venture development, and applied strategy — culminating in The Excalibur Venture Court, a Shark Tank–inspired pitch finale before families, investors, entrepreneurs, and invited judges.",
+                detail: "Limited enrollment per wave. 20 per cohort.",
+                page: "summer-detail",
+              },
+              {
+                tag: "Enrolling Soon", tagColor: "#C7AB75",
+                eyebrow: "Six-Week Intensive",
+                title: "Six-Week Intensive",
+                price: "$3,900 per wave",
+                desc: "A focused version of Excalibur's core curriculum, offered in weekday evening or Sunday half-day formats. Students progress through the Academy's core disciplines, practice public speaking in every class, work with guest speakers and specialist instructors, develop a team venture project, and conclude with a judged Demo Day.",
+                detail: "Priority consideration may be given to students applying later for the Ten-Month Flagship.",
+                page: "intensive",
+              },
+              {
+                tag: "Enrolling Soon", tagColor: "#C7AB75",
+                eyebrow: "Ten-Month Flagship",
+                title: "Ten-Month Flagship",
+                price: "$1,990 per month",
+                desc: "Excalibur's complete September-to-June program for ambitious high school juniors and seniors. Students move through all eight core disciplines, complete real-world engagements, participate in selected expeditions, present at Excalibur Gala & Graduation Day, and graduate with the Excalibur Academy Portfolio — a professionally assembled record of work designed to support college applications.",
+                detail: "Includes admissions interview with the Excalibur Admissions Committee.",
+                page: "flagship-detail",
+              },
+            ].map((prog, i) => (
+              <div key={i} style={{ background: "#fff", padding: isMobile ? "32px 24px" : "44px 40px", display: "flex", flexDirection: "column" }}>
+                <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 9, letterSpacing: "0.2em", color: prog.tagColor, fontWeight: 700, textTransform: "uppercase", marginBottom: 20 }}>● {prog.tag}</p>
+                <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 8, letterSpacing: "0.3em", color: "#8B6914", fontWeight: 600, textTransform: "uppercase", marginBottom: 12 }}>{prog.eyebrow}</p>
+                <h3 style={{ fontFamily: serif, fontSize: isMobile ? 22 : 28, fontWeight: 600, color: "#000", lineHeight: 1.1, marginBottom: 6 }}>{prog.title}</h3>
+                <p style={{ fontFamily: serif, fontSize: 15, color: "#8B6914", fontStyle: "italic", marginBottom: 20 }}>{prog.price}</p>
+                <div style={{ width: 28, height: 1, background: "#000", marginBottom: 20 }} />
+                <p style={{ fontFamily: sans, fontSize: 13, lineHeight: 1.85, color: "#1a1a1a", fontWeight: 300, flex: 1, marginBottom: 16 }}>{prog.desc}</p>
+                <p style={{ fontFamily: sans, fontSize: 11, color: "#666", fontStyle: "italic", marginBottom: 24, lineHeight: 1.6 }}>{prog.detail}</p>
+                <button onClick={() => setPage(prog.page)} style={{ fontFamily: sans, padding: "11px 0", background: "transparent", border: "1px solid rgba(0,0,0,.2)", color: "#111", fontSize: 10, fontWeight: 600, letterSpacing: "0.18em", textTransform: "uppercase", cursor: "pointer" }}>Learn More →</button>
               </div>
-              <div style={{ background: "#060606", padding: "36px 36px", borderTop: "2px solid rgba(199,171,117,.1)" }}>
-                <p style={{ fontFamily: sans, fontSize: 10, letterSpacing: "0.25em", color: "#FBF7EE", textTransform: "uppercase", marginBottom: 20, fontWeight: 600 }}>What we don't require</p>
-                {[
-                  "Prior business experience or entrepreneurship background",
-                  "Perfect grades or a strong academic transcript",
-                  "A long list of extracurricular activities",
-                  "Polished answers or rehearsed responses in the interview",
-                  "A clear business idea or entrepreneurial plan",
-                  "Formal recommendations or teacher letters at this stage",
-                ].map((f, i) => <Li key={i}>{f}</Li>)}
-              </div>
-            </div>
-          </Fade>
-        </div>
-      </section>
-
-      <Hr />
-
-      {/* APPLICATION SELECTOR */}
-      <div style={{ maxWidth: 900, margin: "0 auto", padding: isMobile ? "60px 16px" : "80px 40px" }}>
-        <Fade><div style={{ textAlign: "center", marginBottom: 48 }}><Eyebrow>BEGIN YOUR APPLICATION</Eyebrow><SectionTitle center>Choose your program.</SectionTitle></div></Fade>
-
-        {/* Step 1 */}
-        <Fade>
-          <div style={{ marginBottom: 48 }}>
-            <div style={{ display: "flex", alignItems: "center", gap: 14, marginBottom: 24 }}>
-              <div style={{ width: 30, height: 30, background: prog ? gold : "#111", border: `1px solid ${prog ? gold : "rgba(199,171,117,0.25)"}`, display: "flex", alignItems: "center", justifyContent: "center", fontFamily: sans, fontSize: 12, fontWeight: 700, color: prog ? "#000" : "#FBF7EE", transition: "all .3s" }}>1</div>
-              <h2 style={{ fontFamily: serif, fontSize: 26, fontWeight: 600, color: "#FBF7EE" }}>Choose Your Program</h2>
-            </div>
-            <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr 1fr", gap: 2, background: "#111" }}>
-              {[
-                { id: "launchpad", label: "LAUNCHPAD", title: "Launchpad Intensive", price: "$349", desc: "One Saturday. Four hours. The first taste of what Excalibur is." },
-                { id: "intensive", label: "INTENSIVE", title: "Six-Week Intensive", price: "$2,500 / wave", desc: "Six weeks. Full curriculum. Demo Day before live investors." },
-                { id: "full", label: "FULL PROGRAM", title: "Ten-Month Program", price: "$1,900 / month", desc: "Ten months. Complete formation. The flagship." },
-              ].map((p) => (
-                <div key={p.id} onClick={() => { setProg(p.id); setTrack(null); setWave(null); }} style={{ background: prog === p.id ? "#0C0C0A" : "#080808", padding: "28px 24px", cursor: "pointer", borderTop: `2px solid ${prog === p.id ? gold : "transparent"}`, transition: "all .25s" }}>
-                  <Eyebrow>{p.label}</Eyebrow>
-                  <h3 style={{ fontFamily: serif, fontSize: 20, fontWeight: 600, color: "#FBF7EE", marginBottom: 6, lineHeight: 1.2 }}>{p.title}</h3>
-                  <p style={{ fontFamily: serif, fontSize: 15, color: gold, marginBottom: 10 }}>{p.price}</p>
-                  <p style={{ fontFamily: sans, fontSize: 12, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.6 }}>{p.desc}</p>
-                  {prog === p.id && <p style={{ fontFamily: sans, fontSize: 10, color: gold, letterSpacing: 2, marginTop: 12 }}>✓ SELECTED</p>}
-                </div>
-              ))}
-            </div>
+            ))}
           </div>
-        </Fade>
-
-        {/* Step 2 — Track */}
-        {prog && prog !== "launchpad" && (
-          <Fade>
-            <div style={{ marginBottom: 48 }}>
-              <div style={{ display: "flex", alignItems: "center", gap: 14, marginBottom: 24 }}>
-                <div style={{ width: 30, height: 30, background: track ? gold : "#111", border: `1px solid ${track ? gold : "rgba(199,171,117,0.25)"}`, display: "flex", alignItems: "center", justifyContent: "center", fontFamily: sans, fontSize: 12, fontWeight: 700, color: track ? "#000" : "#FBF7EE", transition: "all .3s" }}>2</div>
-                <h2 style={{ fontFamily: serif, fontSize: 26, fontWeight: 600, color: "#FBF7EE" }}>Choose Your Track</h2>
-              </div>
-              <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 2, background: "#111" }}>
-                {[
-                  { id: "weekday", label: "WEEKDAY TRACK", title: "Tuesday & Thursday", sub: "4:00–7:00 PM", detail: "3 hours per session after school. Fits any weekend schedule." },
-                  { id: "weekend", label: "WEEKEND TRACK", title: "Every Saturday", sub: "9:00 AM–3:00 PM", detail: "Full-day immersion. More time with speakers and deeper workshops." },
-                ].map((t) => (
-                  <div key={t.id} onClick={() => { setTrack(t.id); setWave(null); }} style={{ background: track === t.id ? "#0C0C0A" : "#080808", padding: "28px 24px", cursor: "pointer", borderTop: `2px solid ${track === t.id ? gold : "transparent"}`, transition: "all .25s" }}>
-                    <Eyebrow>{t.label}</Eyebrow>
-                    <h3 style={{ fontFamily: serif, fontSize: 22, fontWeight: 600, color: "#FBF7EE", marginBottom: 4 }}>{t.title}</h3>
-                    <p style={{ fontFamily: serif, fontSize: 17, color: gold, marginBottom: 10 }}>{t.sub}</p>
-                    <p style={{ fontFamily: sans, fontSize: 13, color: "#FBF7EE", fontWeight: 300 }}>{t.detail}</p>
-                    {track === t.id && <p style={{ fontFamily: sans, fontSize: 10, color: gold, letterSpacing: 2, marginTop: 12 }}>✓ SELECTED</p>}
-                  </div>
-                ))}
-              </div>
-            </div>
-          </Fade>
-        )}
-
-        {/* Step 3 — Wave */}
-        {prog === "intensive" && track && (
-          <Fade>
-            <div style={{ marginBottom: 48 }}>
-              <div style={{ display: "flex", alignItems: "center", gap: 14, marginBottom: 24 }}>
-                <div style={{ width: 30, height: 30, background: wave ? gold : "#111", border: `1px solid ${wave ? gold : "rgba(199,171,117,0.25)"}`, display: "flex", alignItems: "center", justifyContent: "center", fontFamily: sans, fontSize: 12, fontWeight: 700, color: wave ? "#000" : "#FBF7EE", transition: "all .3s" }}>3</div>
-                <h2 style={{ fontFamily: serif, fontSize: 26, fontWeight: 600, color: "#FBF7EE" }}>Choose Your Wave</h2>
-              </div>
-              <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr 1fr" : "repeat(4, 1fr)", gap: 2, background: "#111" }}>
-                {waves.map((w) => {
-                  const t = track === "weekday" ? w.wd : w.we;
-                  return (
-                    <div key={w.name} onClick={() => { if (w.status !== "future") setWave(w.name); }} style={{ background: wave === w.name ? "#0C0C0A" : "#080808", padding: "24px 18px", cursor: w.status === "future" ? "not-allowed" : "pointer", opacity: w.status === "future" ? .35 : 1, borderTop: `2px solid ${wave === w.name ? gold : "transparent"}`, transition: "all .25s" }}>
-                      <p style={{ fontFamily: sans, fontSize: 9, letterSpacing: 2, color: sc(w.status), fontWeight: 500, marginBottom: 6 }}>{w.season.toUpperCase()}</p>
-                      <h4 style={{ fontFamily: serif, fontSize: 16, fontWeight: 600, color: "#FBF7EE", marginBottom: 3 }}>{w.name}</h4>
-                      <p style={{ fontFamily: sans, fontSize: 11, color: "#FBF7EE", marginBottom: 12 }}>{w.dates}</p>
-                      <p style={{ fontFamily: sans, fontSize: 11, color: t.left < 8 ? gold : "#777", marginBottom: 5 }}>{t.left} seats left</p>
-                      {wave === w.name && <p style={{ fontFamily: sans, fontSize: 10, color: gold, letterSpacing: 2, marginTop: 10 }}>✓ SELECTED</p>}
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-          </Fade>
-        )}
-
-        {/* Step 3 — Tier */}
-        {prog === "full" && track && (
-          <Fade>
-            <div style={{ marginBottom: 48 }}>
-              <div style={{ display: "flex", alignItems: "center", gap: 14, marginBottom: 24 }}>
-                <div style={{ width: 30, height: 30, background: wave ? gold : "#111", border: `1px solid ${wave ? gold : "rgba(199,171,117,0.25)"}`, display: "flex", alignItems: "center", justifyContent: "center", fontFamily: sans, fontSize: 12, fontWeight: 700, color: wave ? "#000" : "#FBF7EE", transition: "all .3s" }}>3</div>
-                <h2 style={{ fontFamily: serif, fontSize: 26, fontWeight: 600, color: "#FBF7EE" }}>Confirm Your Enrollment</h2>
-              </div>
-              <div style={{ background: "#080808", padding: "36px 32px", borderTop: `2px solid ${gold}` }}>
-                <Eyebrow>TEN-MONTH FLAGSHIP</Eyebrow>
-                <div style={{ fontFamily: serif, fontSize: 36, fontWeight: 600, color: "#FBF7EE", marginBottom: 6 }}>$1,900 <span style={{ fontFamily: sans, fontSize: 14, color: "#FBF7EE", fontWeight: 300 }}>/ month</span></div>
-                <p style={{ fontFamily: sans, fontSize: 13, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.7, marginBottom: 20 }}>The complete Excalibur experience: all eight modules, sector rotations, pitch nights, consulting-style work, externship exposure, micro-venture development, the Excalibur Portfolio, and alumni network access.</p>
-                <div style={{ display: "flex", gap: 8, cursor: "pointer" }} onClick={() => setWave("monthly")}>
-                  <div style={{ width: 16, height: 16, border: `1px solid ${wave === "monthly" ? gold : "#333"}`, background: wave === "monthly" ? gold : "transparent", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, marginTop: 2 }}>
-                    {wave === "monthly" && <span style={{ color: "#000", fontSize: 10, fontWeight: 700 }}>✓</span>}
-                  </div>
-                  <p style={{ fontFamily: sans, fontSize: 13, color: "#FBF7EE", fontWeight: 300 }}>Request the information and admissions package for the Ten-Month Flagship Program.</p>
-                </div>
-              </div>
-            </div>
-          </Fade>
-        )}
-
-        {/* Final CTA */}
-        {ready && (
-          <Fade>
-            <div style={{ background: "#080808", border: "1px solid #151515", borderTop: `2px solid ${gold}`, padding: "40px 36px", textAlign: "center" }}>
-              <Eyebrow>YOUR APPLICATION IS READY</Eyebrow>
-              <h3 style={{ fontFamily: serif, fontSize: 30, fontWeight: 600, color: "#FBF7EE", marginBottom: 10 }}>Your place is waiting.</h3>
-              <p style={{ fontFamily: sans, fontSize: 14, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.7, maxWidth: 500, margin: "0 auto 28px" }}>The application takes 10–15 minutes. Shortlisted students are invited to an admissions interview. Final decisions within 5 business days. Your seat is held for 72 hours upon acceptance. Your seat is held for 72 hours upon acceptance.</p>
-              <a href={STRIPE} style={{ fontFamily: sans, background: gold, color: "#000", padding: "14px 48px", fontSize: 13, fontWeight: 700, letterSpacing: 2.5, textDecoration: "none", display: "inline-block", boxShadow: "0 4px 32px rgba(199,171,117,.15)" }}>COMPLETE APPLICATION →</a>
-              <p style={{ fontFamily: sans, fontSize: 11, color: "#FBF7EE", marginTop: 16 }}>apply@excaliburacademy.org · We reply within one business day.</p>
-            </div>
-          </Fade>
-        )}
+        </div>
       </div>
+
+      {/* ── HOW TO APPLY ── */}
+      <div style={{ background: "#000", padding: isMobile ? "52px 24px" : "72px 80px", borderTop: "1px solid rgba(199,171,117,.1)" }}>
+        <div style={{ maxWidth: 1100, margin: "0 auto" }}>
+          <Fade>
+            <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 8, letterSpacing: "0.55em", color: gold, fontWeight: 700, textTransform: "uppercase", marginBottom: 16 }}>The Process</p>
+            <h2 style={{ fontFamily: serif, fontSize: isMobile ? 28 : 44, fontWeight: 300, color: "#FBF7EE", lineHeight: 1.0, marginBottom: 52, letterSpacing: "0.02em" }}>How to Apply</h2>
+          </Fade>
+          {/* Five horizontal steps */}
+          <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(5,1fr)", position: "relative" }}>
+            {!isMobile && <div style={{ position: "absolute", top: 22, left: 44, right: 44, height: "1px", background: `linear-gradient(90deg, rgba(199,171,117,.08), rgba(199,171,117,.4), rgba(199,171,117,.08))`, zIndex: 0 }} />}
+            {[
+              { n: "01", title: "Submit the Program Application", desc: "The application is short, clear, and designed to be respectful of each family's time. Excalibur is selective, and every application is reviewed personally by the admissions team." },
+              { n: "02", title: "Admissions Follow-Up", desc: "A member of the admissions team will contact the family within 24 hours to answer questions, discuss the student's interests, and confirm availability for the selected program or wave. This conversation is personal, not bureaucratic." },
+              { n: "03", title: "Admissions Review", desc: "The Academy reviews each application for readiness, motivation, maturity, and fit with the selected cohort. When appropriate, a student conversation may be scheduled to better understand the student's goals." },
+              { n: "04", title: "Secure Enrollment", desc: "Once accepted, families may secure the student's seat with a deposit. Enrollment is limited, and seats are confirmed in the order of acceptance and deposit completion." },
+              { n: "05", title: "Pre-Program Onboarding", desc: "Confirmed families receive a welcome packet, program overview, schedule details, dietary preference form, and an invitation to a Family Information Session held before the wave or program start." },
+            ].map((step, i) => (
+              <div key={i} style={{ padding: isMobile ? "28px 0" : "0 20px 0 0", borderTop: isMobile ? "1px solid rgba(199,171,117,.1)" : "none", borderLeft: !isMobile && i > 0 ? "1px solid rgba(199,171,117,.1)" : "none", paddingLeft: !isMobile && i > 0 ? 20 : 0, position: "relative", zIndex: 1 }}>
+                <div style={{ width: 44, height: 44, border: "1px solid rgba(199,171,117,.35)", display: "flex", alignItems: "center", justifyContent: "center", marginBottom: 20, background: "#000" }}>
+                  <span style={{ fontFamily: serif, fontSize: 16, fontWeight: 300, color: gold }}>{step.n}</span>
+                </div>
+                <p style={{ fontFamily: serif, fontSize: isMobile ? 16 : 15, fontWeight: 600, color: "#FBF7EE", lineHeight: 1.25, marginBottom: 10 }}>{step.title}</p>
+                <p style={{ fontFamily: sans, fontSize: 11, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.8 }}>{step.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* ── FAMILY INFORMATION SESSION ── */}
+      <div style={{ background: "#FAF8F4", padding: isMobile ? "52px 24px" : "72px 80px", borderTop: "1px solid rgba(0,0,0,.07)" }}>
+        <div style={{ maxWidth: 1100, margin: "0 auto", display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: isMobile ? 40 : 80, alignItems: "start" }}>
+          <Fade>
+            <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 8, letterSpacing: "0.55em", color: "#8B6914", fontWeight: 700, textTransform: "uppercase", marginBottom: 20 }}>The Family Information Session</p>
+            <h2 style={{ fontFamily: serif, fontSize: isMobile ? 26 : 38, fontWeight: 600, color: "#111", lineHeight: 1.05, marginBottom: 8 }}>Before the program begins, families are brought inside the experience.</h2>
+            <div style={{ width: 36, height: 1, background: "#111", margin: "24px 0" }} />
+            <p style={{ fontFamily: sans, fontSize: 14, color: "#1a1a1a", fontWeight: 300, lineHeight: 1.9, marginBottom: 16 }}>Confirmed families will receive an invitation to a Family Information Session before the start of the program. The session is designed to introduce families to the Academy's structure, schedule, expectations, faculty model, student experience, final events, safety and logistics, and communication systems.</p>
+            <p style={{ fontFamily: sans, fontSize: 14, color: "#1a1a1a", fontWeight: 300, lineHeight: 1.9 }}>Families will have the opportunity to ask questions, meet members of the Excalibur team, and understand how the program is designed to support each student from the first day through the final presentation.</p>
+          </Fade>
+          <Fade d={.08}>
+            <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 8, letterSpacing: "0.55em", color: "#8B6914", fontWeight: 700, textTransform: "uppercase", marginBottom: 20 }}>What Happens After Acceptance</p>
+            <h3 style={{ fontFamily: serif, fontSize: isMobile ? 22 : 28, fontWeight: 600, color: "#111", lineHeight: 1.1, marginBottom: 24 }}>A clear path before the first day.</h3>
+            <p style={{ fontFamily: sans, fontSize: 13, color: "#444", fontWeight: 300, lineHeight: 1.8, marginBottom: 20 }}>Accepted students and families receive everything needed to prepare for the program:</p>
+            {["Welcome packet", "Program schedule", "Faculty and instructor overview", "Family Information Session invitation", "Portal access", "Dietary preference and allergy form", "Lunch selection system", "Shuttle request options, if available", "Event calendar", "Student expectations", "Communication channels with the Excalibur team"].map((item, i) => (
+              <div key={i} style={{ display: "flex", gap: 14, padding: "9px 0", borderBottom: "1px solid rgba(0,0,0,.06)", alignItems: "center" }}>
+                <span style={{ fontFamily: serif, fontSize: 10, color: "#8B6914" }}>—</span>
+                <span style={{ fontFamily: sans, fontSize: 12, color: "#1a1a1a", fontWeight: 300 }}>{item}</span>
+              </div>
+            ))}
+            <p style={{ fontFamily: serif, fontSize: 14, color: "#555", fontStyle: "italic", marginTop: 20, lineHeight: 1.7 }}>The goal is to make the process polished, organized, and personal from the beginning.</p>
+          </Fade>
+        </div>
+      </div>
+
+      {/* ── STANDARD OF THE ROOM + COLLEGE ADMISSIONS ── */}
+      <div style={{ background: "#050505", padding: isMobile ? "52px 24px" : "72px 80px" }}>
+        <div style={{ maxWidth: 1100, margin: "0 auto", display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: isMobile ? 48 : 80 }}>
+          <Fade>
+            <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 8, letterSpacing: "0.55em", color: gold, fontWeight: 700, textTransform: "uppercase", marginBottom: 20 }}>The Standard of the Room</p>
+            <h3 style={{ fontFamily: serif, fontSize: isMobile ? 22 : 32, fontWeight: 600, color: "#FBF7EE", lineHeight: 1.1, marginBottom: 8 }}>The cohort matters.</h3>
+            {divider}
+            <p style={{ fontFamily: sans, fontSize: 14, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.9, marginBottom: 16 }}>At Excalibur, the people in the room shape the experience. Students are expected to show up prepared, participate seriously, treat others with respect, and contribute to a culture of ambition, curiosity, and excellence.</p>
+            <p style={{ fontFamily: sans, fontSize: 14, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.9, marginBottom: 24 }}>The Academy is not built around passive attendance. It is built around active participation: speaking, listening, building, questioning, presenting, receiving feedback, and improving.</p>
+            <p style={{ fontFamily: serif, fontSize: 16, color: gold, fontStyle: "italic", lineHeight: 1.6 }}>The standard is high because the opportunity is serious.</p>
+          </Fade>
+          <Fade d={.08}>
+            <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 8, letterSpacing: "0.55em", color: gold, fontWeight: 700, textTransform: "uppercase", marginBottom: 20 }}>College Admissions & The Excalibur Portfolio</p>
+            <h3 style={{ fontFamily: serif, fontSize: isMobile ? 22 : 32, fontWeight: 600, color: "#FBF7EE", lineHeight: 1.1, marginBottom: 8 }}>A record that speaks with evidence.</h3>
+            {divider}
+            <p style={{ fontFamily: sans, fontSize: 14, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.9, marginBottom: 16 }}>Excalibur is not only designed to give students a memorable experience. It is designed to give them a record of work. Depending on the program, students may leave with presentations, pitch materials, business analyses, competition results, faculty observations, consulting-style work, venture concepts, externship reflections, and portfolio materials.</p>
+            <p style={{ fontFamily: sans, fontSize: 14, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.9, marginBottom: 16 }}>For Ten-Month Flagship students, this becomes the Excalibur Academy Portfolio: a professionally assembled record that can support college applications and help distinguish students through evidence of leadership, communication, execution, and real-world experience.</p>
+            <p style={{ fontFamily: serif, fontSize: 16, color: gold, fontStyle: "italic", lineHeight: 1.6 }}>The goal is not to manufacture a story. The goal is to help students show the work they actually completed.</p>
+          </Fade>
+        </div>
+      </div>
+
+      {/* ── TUITION ── */}
+      <div style={{ background: "#FAF8F4", padding: isMobile ? "52px 24px" : "72px 80px", borderTop: "1px solid rgba(0,0,0,.07)" }}>
+        <div style={{ maxWidth: 1100, margin: "0 auto" }}>
+          <Fade>
+            <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 8, letterSpacing: "0.55em", color: "#8B6914", fontWeight: 700, textTransform: "uppercase", marginBottom: 16 }}>Tuition & Enrollment</p>
+            <h2 style={{ fontFamily: serif, fontSize: isMobile ? 28 : 42, fontWeight: 600, color: "#111", lineHeight: 1.0, marginBottom: 8 }}>Program tuition varies by track.</h2>
+            <p style={{ fontFamily: sans, fontSize: 14, color: "#444", fontWeight: 300, lineHeight: 1.8, marginBottom: 48, maxWidth: 580 }}>Tuition depends on the selected program and schedule. Families receive complete tuition details, deposit information, and payment options during the admissions process.</p>
+          </Fade>
+          <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(3,1fr)", gap: 1, background: "#D8D4CC" }}>
+            {[
+              { label: "Summer Intensive", price: "$4,500+", period: "per two-week wave", detail: "Two waves — July & August 2026. 20 students per wave." },
+              { label: "Six-Week Intensive", price: "$3,900", period: "per wave", detail: "Four waves per year. Weekday evening or weekend formats." },
+              { label: "Ten-Month Flagship", price: "$1,990", period: "per month", detail: "September 2026 – June 2027. Weekday or Saturday track." },
+            ].map((t, i) => (
+              <div key={i} style={{ background: "#fff", padding: isMobile ? "32px 24px" : "44px 40px", borderTop: i === 0 ? "2px solid #111" : "2px solid rgba(0,0,0,.1)" }}>
+                <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 8, letterSpacing: "0.3em", color: "#8B6914", fontWeight: 600, textTransform: "uppercase", marginBottom: 16 }}>{t.label}</p>
+                <div style={{ fontFamily: serif, fontSize: isMobile ? 42 : 52, fontWeight: 300, color: "#111", lineHeight: 1, letterSpacing: "-0.02em", marginBottom: 4 }}>{t.price}</div>
+                <p style={{ fontFamily: sans, fontSize: 12, color: "#555", fontWeight: 300, marginBottom: 20 }}>{t.period}</p>
+                <div style={{ width: 24, height: 1, background: "#111", marginBottom: 16 }} />
+                <p style={{ fontFamily: sans, fontSize: 12, color: "#333", fontWeight: 300, lineHeight: 1.7 }}>{t.detail}</p>
+              </div>
+            ))}
+          </div>
+          <p style={{ fontFamily: sans, fontSize: 12, color: "#555", fontWeight: 300, marginTop: 16, fontStyle: "italic" }}>Enrollment is confirmed only after acceptance and deposit completion.</p>
+        </div>
+      </div>
+
+      {/* ── TEN-MONTH INTERVIEW NOTE ── */}
+      <div style={{ background: "#000", padding: isMobile ? "52px 24px" : "64px 80px", borderTop: "1px solid rgba(199,171,117,.1)" }}>
+        <div style={{ maxWidth: 860, margin: "0 auto" }}>
+          <div style={{ paddingLeft: isMobile ? 20 : 36, borderLeft: `2px solid ${gold}` }}>
+            <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 8, letterSpacing: "0.55em", color: gold, fontWeight: 700, textTransform: "uppercase", marginBottom: 16 }}>Ten-Month Flagship · Admissions Interview</p>
+            <p style={{ fontFamily: serif, fontSize: isMobile ? 18 : 24, fontWeight: 300, color: "#FBF7EE", lineHeight: 1.6, marginBottom: 20 }}>Admission to the Ten-Month Flagship includes a brief admissions interview with the Excalibur Admissions Committee.</p>
+            <p style={{ fontFamily: sans, fontSize: 13, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.9, marginBottom: 16 }}>Interviews are approximately 15–20 minutes and are held on alternating Saturdays. Students meet with members of the Academy leadership team, which may include the Academy Dean, Dean of Admissions, lead faculty, and admissions committee members.</p>
+            <p style={{ fontFamily: sans, fontSize: 13, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.9 }}>The interview is not designed to test perfection. Excalibur looks for students with curiosity, drive, resilience, critical thinking, and the readiness to step into the real world — intellectually, socially, and practically. We are looking for dreamers with discipline, builders with courage, and students prepared to think seriously, work hard, receive feedback, and take responsibility for their growth.</p>
+          </div>
+        </div>
+      </div>
+
+      {/* ── FAQ ── */}
+      <div style={{ background: "#FAF8F4", padding: isMobile ? "52px 24px" : "72px 80px", borderTop: "1px solid rgba(0,0,0,.07)" }}>
+        <div style={{ maxWidth: 860, margin: "0 auto" }}>
+          <Fade>
+            <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 8, letterSpacing: "0.55em", color: "#8B6914", fontWeight: 700, textTransform: "uppercase", marginBottom: 16 }}>Frequently Asked Questions</p>
+            <h2 style={{ fontFamily: serif, fontSize: isMobile ? 28 : 40, fontWeight: 600, color: "#111", lineHeight: 1.0, marginBottom: 40 }}>Common Questions</h2>
+          </Fade>
+          <div>
+            {faqs.map((faq, i) => (
+              <div key={i} style={{ borderBottom: "1px solid rgba(0,0,0,.08)" }}>
+                <div onClick={() => setOpenFaq(openFaq === i ? null : i)} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "20px 0", cursor: "pointer" }}>
+                  <h4 style={{ fontFamily: serif, fontSize: isMobile ? 16 : 18, fontWeight: 600, color: "#111", lineHeight: 1.3, paddingRight: 24 }}>{faq.q}</h4>
+                  <span style={{ fontFamily: sans, fontSize: 20, color: "#8B6914", flexShrink: 0, transition: "transform .2s", transform: openFaq === i ? "rotate(45deg)" : "none", display: "inline-block" }}>+</span>
+                </div>
+                {openFaq === i && (
+                  <div style={{ paddingBottom: 20 }}>
+                    <p style={{ fontFamily: sans, fontSize: 13, color: "#333", fontWeight: 300, lineHeight: 1.85 }}>{faq.a}</p>
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* ── REQUEST INFORMATION / APPLY ── */}
+      <div style={{ background: "#000", padding: isMobile ? "60px 24px" : "80px 80px", borderTop: "1px solid rgba(199,171,117,.1)", textAlign: "center" }}>
+        <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 8, letterSpacing: "0.55em", color: gold, fontWeight: 700, textTransform: "uppercase", marginBottom: 20 }}>Admissions Open · 2026</p>
+        <h2 style={{ fontFamily: serif, fontSize: isMobile ? 32 : 52, fontWeight: 300, color: "#FBF7EE", lineHeight: 1.0, marginBottom: 10, letterSpacing: "0.02em" }}>Admissions begins with a conversation.</h2>
+        <p style={{ fontFamily: serif, fontSize: isMobile ? 15 : 18, color: gold, fontStyle: "italic", marginBottom: 40 }}>A member of the admissions team will respond personally within 24 hours.</p>
+        <div style={{ display: "flex", gap: 14, justifyContent: "center", flexWrap: "wrap" }}>
+          <button onClick={() => openInquiry && openInquiry("summer")} style={{ fontFamily: sans, padding: "14px 40px", background: gold, border: "none", color: "#000", fontSize: 11, fontWeight: 700, letterSpacing: "0.2em", textTransform: "uppercase", cursor: "pointer" }}>Apply for Summer 2026 →</button>
+          <button onClick={() => openInquiry && openInquiry("full")} style={{ fontFamily: sans, padding: "14px 32px", background: "transparent", border: `1px solid rgba(199,171,117,.4)`, color: gold, fontSize: 11, fontWeight: 500, letterSpacing: "0.15em", textTransform: "uppercase", cursor: "pointer" }}>Request Flagship Package →</button>
+          <button onClick={() => openInquiry && openInquiry()} style={{ fontFamily: sans, padding: "14px 32px", background: "transparent", border: `1px solid rgba(199,171,117,.2)`, color: gold, fontSize: 11, fontWeight: 400, letterSpacing: "0.15em", textTransform: "uppercase", cursor: "pointer" }}>Request Information →</button>
+        </div>
+      </div>
+
+      <SoireeInviteBlock openInquiry={openInquiry} />
+
     </div>
   );
 }
+
 
 // ── SCHEDULE TABS ──
 function ScheduleTabs({ setPage, isMobile, waves, gold }) {
@@ -3363,7 +3383,7 @@ function BeyondPage({ setPage, openInquiry }) {
       {/* ── HERO — Man in the Arena ── */}
       <div style={{ position: "relative", overflow: "hidden", minHeight: isMobile ? 480 : 640 }}>
         {/* Full-bleed image */}
-        <img src="https://i.imgur.com/qoGFjhQ.jpeg" alt="Man in the Arena" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "center" }} />
+        <img src="https://i.imgur.com/1QP3p5p.jpeg" alt="Man in the Arena" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "center" }} />
         <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to bottom, rgba(0,0,0,.55) 0%, rgba(0,0,0,.75) 50%, rgba(0,0,0,.97) 100%)" }} />
         <div style={{ position: "relative", zIndex: 1, display: "flex", flexDirection: "column", justifyContent: "flex-end", minHeight: isMobile ? 480 : 640, padding: isMobile ? "48px 24px" : "72px 80px" }}>
           <div style={{ maxWidth: 900 }}>
@@ -4793,7 +4813,7 @@ function FlagshipDetailPage({ setPage, openInquiry }) {
 
       {/* HERO — photo full bleed */}
       <div style={{ position: "relative", height: isMobile ? 280 : 480, overflow: "hidden" }}>
-        <img src="https://i.imgur.com/PB9loUJ.jpeg" alt="Ten-Month Flagship" style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center" }} />
+        <img src="https://i.imgur.com/eyeb9rX.jpeg" alt="Ten-Month Flagship" style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center" }} />
         <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(0,0,0,.9) 0%, rgba(0,0,0,.3) 60%, transparent 100%)" }} />
         <div style={{ position: "absolute", bottom: isMobile ? 28 : 52, left: isMobile ? 24 : 72, maxWidth: 640 }}>
           <p style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.4em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 10 }}>Ten-Month Flagship · September 2026 – June 2027</p>
