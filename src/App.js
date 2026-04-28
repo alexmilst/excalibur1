@@ -133,7 +133,7 @@ function Breadcrumb({ items, setPage }) {
   return (
     <div style={{ background: "#000", borderBottom: "1px solid rgba(199,171,117,.08)", padding: "10px 48px" }}>
       <div style={{ maxWidth: 1400, margin: "0 auto", display: "flex", alignItems: "center", gap: 8 }}>
-        <span onClick={() => setPage("home")} style={{ fontFamily: sans, fontSize: 10, color: "rgba(199,171,117,.5)", letterSpacing: "0.12em", textTransform: "uppercase", cursor: "pointer", transition: "color .2s" }}
+        <span onClick={() => setPage("home")} style={{ fontFamily: sans, fontSize: 10, color: "#C7AB75", letterSpacing: "0.12em", textTransform: "uppercase", cursor: "pointer", transition: "color .2s" }}
           onMouseEnter={e => e.target.style.color = gold} onMouseLeave={e => e.target.style.color = "rgba(199,171,117,.5)"}>Home</span>
         {items.map((item, i) => (
           <React.Fragment key={i}>
@@ -141,7 +141,7 @@ function Breadcrumb({ items, setPage }) {
             {i === items.length - 1 ? (
               <span style={{ fontFamily: sans, fontSize: 10, color: "rgba(199,171,117,.8)", letterSpacing: "0.12em", textTransform: "uppercase" }}>{item.label}</span>
             ) : (
-              <span onClick={() => setPage(item.page)} style={{ fontFamily: sans, fontSize: 10, color: "rgba(199,171,117,.5)", letterSpacing: "0.12em", textTransform: "uppercase", cursor: "pointer", transition: "color .2s" }}
+              <span onClick={() => setPage(item.page)} style={{ fontFamily: sans, fontSize: 10, color: "#C7AB75", letterSpacing: "0.12em", textTransform: "uppercase", cursor: "pointer", transition: "color .2s" }}
                 onMouseEnter={e => e.target.style.color = gold} onMouseLeave={e => e.target.style.color = "rgba(199,171,117,.5)"}>{item.label}</span>
             )}
           </React.Fragment>
@@ -544,7 +544,7 @@ function PortfolioFolder({ isMobile }) {
       {portfolioItems.map((item, i) => (
         <div key={i} onClick={() => isMobile && toggle(i)} style={{ background: "#080808", borderTop: `2px solid ${i === 0 ? gold : "rgba(199,171,117,.1)"}`, padding: "28px 24px", cursor: isMobile ? "pointer" : "default", transition: "all .25s" }}>
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 12 }}>
-            <span style={{ fontFamily: serif, fontSize: 11, color: "rgba(199,171,117,.4)", letterSpacing: "0.1em" }}>{item.n}</span>
+            <span style={{ fontFamily: serif, fontSize: 11, color: "#C7AB75", letterSpacing: "0.1em" }}>{item.n}</span>
             {isMobile && <span style={{ fontFamily: sans, fontSize: 14, color: isOpen(i) ? gold : "#FBF7EE", transition: "transform .25s", display: "inline-block", transform: isOpen(i) ? "rotate(45deg)" : "none" }}>+</span>}
           </div>
           <h4 style={{ fontFamily: serif, fontSize: isMobile ? 22 : 24, fontWeight: 600, color: isOpen(i) ? gold : "#E8E0D8", lineHeight: 1.3, marginBottom: 14 }}>{item.title}</h4>
@@ -671,7 +671,7 @@ function Footer({ setPage }) {
       </div>
       {/* Copyright */}
       <div style={{ maxWidth: 1200, margin: "0 auto", padding: isMobile ? "20px 24px" : "20px 60px", display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 8 }}>
-        <p style={{ fontFamily: sans, fontSize: 9, color: "rgba(199,171,117,.5)", letterSpacing: "0.08em", textTransform: "uppercase" }}>© 2026 Excalibur Academy LLC · Orange County, California</p>
+        <p style={{ fontFamily: sans, fontSize: 9, color: "#C7AB75", letterSpacing: "0.08em", textTransform: "uppercase" }}>© 2026 Excalibur Academy LLC · Orange County, California</p>
         <p style={{ fontFamily: sans, fontSize: 9, color: "rgba(251,247,238,.4)", letterSpacing: "0.06em" }}>23 Corporate Plaza Dr, Newport Beach, CA</p>
       </div>
     </footer>
@@ -985,7 +985,7 @@ function SoireeInviteBlock({ openInquiry }) {
                 <input type="email" value={email} onChange={e => setEmail(e.target.value)} onKeyDown={e => e.key === "Enter" && email && setSubmitted(true)} placeholder="Your email address" style={{ flex: 1, padding: "13px 18px", background: "#000", border: "1px solid rgba(199,171,117,.3)", color: "#FBF7EE", fontFamily: sans, fontSize: 13, outline: "none" }} onFocus={e => e.target.style.borderColor = gold} onBlur={e => e.target.style.borderColor = "rgba(199,171,117,.3)"} />
                 <button onClick={() => { openInquiry && openInquiry(); email && setSubmitted(true); }} style={{ fontFamily: sans, background: gold, color: "#000", padding: "13px 22px", fontSize: 11, fontWeight: 700, letterSpacing: "0.15em", textTransform: "uppercase", border: "none", cursor: "pointer", flexShrink: 0 }}>Request Invitation</button>
               </div>
-              <p style={{ fontFamily: sans, fontSize: 9, letterSpacing: "0.14em", color: "rgba(199,171,117,.4)", marginTop: 8, textTransform: "uppercase" }}>Invitations are extended personally by the Excalibur team.</p>
+              <p style={{ fontFamily: sans, fontSize: 9, letterSpacing: "0.14em", color: "#C7AB75", marginTop: 8, textTransform: "uppercase" }}>Invitations are extended personally by the Excalibur team.</p>
             </div>
           ) : (
             <div style={{ padding: isMobile ? "52px 28px" : "80px 72px", textAlign: "center" }}>
@@ -2072,7 +2072,7 @@ function ProgramsPage({ setPage, openInquiry }) {
                 <div style={{ padding: isMobile ? "36px 24px" : "52px 52px", borderRight: isMobile ? "none" : "1px solid rgba(199,171,117,.07)" }}>
                   <div style={{ display: "flex", gap: 10, alignItems: "center", marginBottom: 20, flexWrap: "wrap" }}>
                     <span style={{ fontFamily: sans, fontSize: 9, color: prog.statusColor, border: `1px solid ${prog.statusColor}`, padding: "3px 10px", letterSpacing: "0.15em", fontWeight: 600 }}>{prog.status}</span>
-                    <span style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.3em", color: "rgba(199,171,117,.4)", textTransform: "uppercase" }}>{prog.tag}</span>
+                    <span style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.3em", color: "#C7AB75", textTransform: "uppercase" }}>{prog.tag}</span>
                   </div>
                   <h2 style={{ fontFamily: serif, fontSize: isMobile ? 28 : 42, fontWeight: 600, color: "#FBF7EE", lineHeight: 1.0, marginBottom: 8 }}>{prog.title}</h2>
                   <p style={{ fontFamily: serif, fontSize: 16, color: gold, fontStyle: "italic", marginBottom: 28, lineHeight: 1.4 }}>{prog.tagline}</p>
@@ -2135,7 +2135,7 @@ function ProgramsPage({ setPage, openInquiry }) {
                 <div style={{ marginTop: 32, display: "flex", flexDirection: "column", gap: 0, borderTop: "1px solid rgba(199,171,117,.08)", paddingTop: 28 }}>
                   {prog.details.map(([k, v]) => (
                     <div key={k} style={{ display: "grid", gridTemplateColumns: "100px 1fr", gap: 16, padding: "10px 0", borderBottom: "1px solid rgba(199,171,117,.05)" }}>
-                      <span style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.2em", color: "rgba(199,171,117,.5)", textTransform: "uppercase", paddingTop: 2 }}>{k}</span>
+                      <span style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.2em", color: "#C7AB75", textTransform: "uppercase", paddingTop: 2 }}>{k}</span>
                       <span style={{ fontFamily: sans, fontSize: 12, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.6, whiteSpace: "pre-line" }}>{v}</span>
                     </div>
                   ))}
@@ -2263,7 +2263,7 @@ function ApplyPage({ setPage, openInquiry }) {
         <div style={{ position: "absolute", bottom: isMobile ? 36 : 64, left: isMobile ? 24 : 72, maxWidth: 720 }}>
           <Fade>
             <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 8, letterSpacing: "0.55em", color: gold, fontWeight: 700, textTransform: "uppercase", marginBottom: 18 }}>Admissions · Excalibur Academy</p>
-            <h1 style={{ fontFamily: serif, fontSize: isMobile ? "clamp(34px,7vw,48px)" : "clamp(48px,5vw,72px)", fontWeight: 300, color: "#FBF7EE", lineHeight: 1.0, marginBottom: 16, letterSpacing: "0.02em" }}>For students ready to<br />think, speak, and build.</h1>
+            <h1 style={{ fontFamily: serif, fontSize: isMobile ? "clamp(34px,7vw,48px)" : "clamp(48px,5vw,72px)", fontWeight: 300, color: "#FBF7EE", lineHeight: 1.0, marginBottom: 16, letterSpacing: "0.02em" }}>For students ready to<br />turn dreams into reality.</h1>
             <div style={{ width: 48, height: "1px", background: `linear-gradient(90deg, ${gold}, transparent)`, marginBottom: 18 }} />
             <p style={{ fontFamily: sans, fontSize: isMobile ? 13 : 15, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.85, maxWidth: 580 }}>Excalibur Academy admits a limited number of students into each cohort to preserve the quality of instruction, discussion, mentorship, and feedback. The admissions process is personal, selective, and intentionally straightforward. It is designed to understand the student, answer the family's questions, and ensure a strong fit for the Academy.</p>
             <p style={{ fontFamily: serif, fontSize: isMobile ? 13 : 15, color: gold, fontStyle: "italic", marginTop: 16 }}>Applications are now open for Summer 2026.</p>
@@ -2275,7 +2275,7 @@ function ApplyPage({ setPage, openInquiry }) {
       <div style={{ background: "#000", padding: isMobile ? "60px 24px" : "80px 80px", borderBottom: "1px solid rgba(199,171,117,.1)" }}>
         <div style={{ maxWidth: 1100, margin: "0 auto" }}>
           <Fade>
-            <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 8, letterSpacing: "0.55em", color: gold, fontWeight: 700, textTransform: "uppercase", marginBottom: 52 }}>Programs Accepting Applications</p>
+            <h2 style={{ fontFamily: serif, fontSize: isMobile ? 32 : 52, fontWeight: 300, color: "#FBF7EE", lineHeight: 1.0, marginBottom: 52, letterSpacing: "0.02em" }}>Programs Accepting Applications</h2>
           </Fade>
           <div style={{ display: "flex", flexDirection: "column", gap: 0 }}>
             {[
@@ -2288,17 +2288,17 @@ function ApplyPage({ setPage, openInquiry }) {
               },
               {
                 status: "ENROLLING SOON", statusColor: gold,
-                label: "Six-Week Intensive", dates: "Four waves per year",
-                price: "$3,900", period: "per wave",
-                desc: "A focused version of Excalibur's core curriculum, offered in weekday evening or Sunday half-day formats.\n\nStudents progress through the Academy's core disciplines, practice public speaking in every class, work with guest speakers and specialist instructors, develop a team venture project, and conclude with a judged Demo Day.\n\nPriority consideration may be given to students applying later for the Ten-Month Flagship.",
-                page: "intensive",
-              },
-              {
-                status: "ENROLLING SOON", statusColor: gold,
                 label: "Ten-Month Flagship", dates: "September 2026 – June 2027",
                 price: "$1,990", period: "per month",
                 desc: "Excalibur's complete September-to-June program for ambitious high school juniors and seniors.\n\nStudents move through all eight core disciplines, complete real-world engagements, participate in selected expeditions, present at Excalibur Gala & Graduation Day, and graduate with the Excalibur Academy Portfolio — a professionally assembled record of work designed to support college applications and distinguish students through evidence of leadership, communication, execution, and real-world experience.",
                 page: "flagship-detail",
+              },
+              {
+                status: "ENROLLING SOON", statusColor: gold,
+                label: "Six-Week Intensive", dates: "Four waves per year",
+                price: "$3,900", period: "per wave",
+                desc: "A focused version of Excalibur's core curriculum, offered in weekday evening or Sunday half-day formats.\n\nStudents progress through the Academy's core disciplines, practice public speaking in every class, work with guest speakers and specialist instructors, develop a team venture project, and conclude with a judged Demo Day.\n\nPriority consideration may be given to students applying later for the Ten-Month Flagship.",
+                page: "intensive",
               },
             ].map((prog, i) => (
               <div key={i} style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 0, borderTop: "1px solid rgba(199,171,117,.1)", padding: isMobile ? "36px 0" : "52px 0", alignItems: "start" }}>
@@ -2309,10 +2309,10 @@ function ApplyPage({ setPage, openInquiry }) {
                     <span style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 9, letterSpacing: "0.22em", color: prog.statusColor, fontWeight: 700, textTransform: "uppercase" }}>{prog.status}</span>
                   </div>
                   <h3 style={{ fontFamily: serif, fontSize: isMobile ? 32 : 48, fontWeight: 300, color: "#FBF7EE", lineHeight: 1.0, marginBottom: 4, letterSpacing: "0.01em" }}>{prog.label}</h3>
-                  <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 10, letterSpacing: "0.2em", color: "rgba(199,171,117,.6)", textTransform: "uppercase", marginBottom: 32, fontWeight: 400 }}>{prog.dates}</p>
+                  <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 10, letterSpacing: "0.2em", color: gold, textTransform: "uppercase", marginBottom: 32, fontWeight: 400 }}>{prog.dates}</p>
                   <div>
                     <span style={{ fontFamily: serif, fontSize: isMobile ? 40 : 52, fontWeight: 300, color: gold, letterSpacing: "-0.02em", lineHeight: 1 }}>{prog.price}</span>
-                    <span style={{ fontFamily: sans, fontSize: 12, color: "rgba(199,171,117,.6)", fontWeight: 300, marginLeft: 8 }}>{prog.period}</span>
+                    <span style={{ fontFamily: sans, fontSize: 12, color: gold, fontWeight: 300, marginLeft: 8 }}>{prog.period}</span>
                   </div>
                   <div style={{ marginTop: 32, display: "flex", gap: 12, flexWrap: "wrap" }}>
                     <button onClick={() => openInquiry && openInquiry()} style={{ fontFamily: sans, padding: "13px 32px", background: gold, border: "none", color: "#000", fontSize: 10, fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", cursor: "pointer" }}>Apply Now →</button>
@@ -2336,7 +2336,7 @@ function ApplyPage({ setPage, openInquiry }) {
         <div style={{ maxWidth: 1100, margin: "0 auto" }}>
           <Fade>
             <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 8, letterSpacing: "0.55em", color: "#8B6914", fontWeight: 700, textTransform: "uppercase", marginBottom: 16 }}>How to Apply</p>
-            <h2 style={{ fontFamily: serif, fontSize: isMobile ? 28 : 48, fontWeight: 300, color: "#111", lineHeight: 1.0, marginBottom: 52, letterSpacing: "0.01em" }}>Five steps. Straightforward.</h2>
+            <h2 style={{ fontFamily: serif, fontSize: isMobile ? 28 : 48, fontWeight: 300, color: "#111", lineHeight: 1.0, marginBottom: 52, letterSpacing: "0.01em" }}>Five steps. Admissions Process.</h2>
           </Fade>
           <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: isMobile ? 0 : 80, alignItems: "start" }}>
             {/* Left — step list */}
@@ -2381,7 +2381,21 @@ function ApplyPage({ setPage, openInquiry }) {
             )}
           </div>
         </div>
+
+      {/* ── TEN-MONTH INTERVIEW NOTE ── */}
+      <div style={{ background: "#FAF8F4", padding: isMobile ? "60px 24px" : "80px 80px", borderTop: "1px solid rgba(0,0,0,.07)" }}>
+        <div style={{ maxWidth: 860, margin: "0 auto" }}>
+          <div style={{ paddingLeft: isMobile ? 20 : 44, borderLeft: "3px solid #111" }}>
+            <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 8, letterSpacing: "0.55em", color: "#8B6914", fontWeight: 700, textTransform: "uppercase", marginBottom: 16 }}>Ten-Month Flagship · Admissions Interview</p>
+            <h3 style={{ fontFamily: serif, fontSize: isMobile ? 22 : 32, fontWeight: 300, color: "#111", lineHeight: 1.15, marginBottom: 24 }}>Admission to the Ten-Month Flagship includes a brief admissions interview with the Excalibur Admissions Committee.</h3>
+            <p style={{ fontFamily: sans, fontSize: 14, color: "#222", fontWeight: 300, lineHeight: 1.9, marginBottom: 16 }}>Interviews are approximately 15–20 minutes and are held on alternating Saturdays. Students meet with members of the Academy leadership team, which may include the Academy Dean, Dean of Admissions, lead faculty, and admissions committee members.</p>
+            <p style={{ fontFamily: sans, fontSize: 14, color: "#222", fontWeight: 300, lineHeight: 1.9, marginBottom: 16 }}>The interview is not designed to test perfection. Excalibur is not looking for the flawless résumé, the highest grades alone, or the most rehearsed answers. The Academy looks for students with curiosity, drive, resilience, critical thinking, and the readiness to step into the real world — intellectually, socially, and practically.</p>
+            <p style={{ fontFamily: serif, fontSize: 16, color: "#8B6914", fontStyle: "italic", lineHeight: 1.7 }}>We are looking for dreamers with discipline, builders with courage, and students prepared to think seriously, work hard, receive feedback, and take responsibility for their growth.</p>
+          </div>
+        </div>
       </div>
+
+      }      </div>
 
       {/* ── FAMILY INFORMATION SESSION + WHAT HAPPENS AFTER ── */}
       <div style={{ background: "#000", padding: isMobile ? "60px 24px" : "80px 80px" }}>
@@ -2417,7 +2431,7 @@ function ApplyPage({ setPage, openInquiry }) {
         <div style={{ maxWidth: 1100, margin: "0 auto", display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: isMobile ? 52 : 80 }}>
           <Fade>
             <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 8, letterSpacing: "0.55em", color: "#8B6914", fontWeight: 700, textTransform: "uppercase", marginBottom: 20 }}>The Standard of the Room</p>
-            <h3 style={{ fontFamily: serif, fontSize: isMobile ? 24 : 34, fontWeight: 300, color: "#111", lineHeight: 1.1, marginBottom: 24 }}>The cohort matters.</h3>
+            <h3 style={{ fontFamily: serif, fontSize: isMobile ? 24 : 34, fontWeight: 300, color: "#111", lineHeight: 1.1, marginBottom: 24 }}>Limited Cohort.</h3>
             <div style={{ width: 36, height: 1, background: "#111", marginBottom: 24 }} />
             <p style={{ fontFamily: sans, fontSize: 14, color: "#222", fontWeight: 300, lineHeight: 1.9, marginBottom: 16 }}>At Excalibur, the people in the room shape the experience.</p>
             <p style={{ fontFamily: sans, fontSize: 14, color: "#222", fontWeight: 300, lineHeight: 1.9, marginBottom: 16 }}>Students are expected to show up prepared, participate seriously, treat others with respect, and contribute to a culture of ambition, curiosity, and excellence.</p>
@@ -2425,14 +2439,13 @@ function ApplyPage({ setPage, openInquiry }) {
             <p style={{ fontFamily: serif, fontSize: 16, color: "#8B6914", fontStyle: "italic", lineHeight: 1.6 }}>The standard is high because the opportunity is serious.</p>
           </Fade>
           <Fade d={.08}>
-            <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 8, letterSpacing: "0.55em", color: "#8B6914", fontWeight: 700, textTransform: "uppercase", marginBottom: 20 }}>College Admissions & The Excalibur Portfolio</p>
-            <h3 style={{ fontFamily: serif, fontSize: isMobile ? 24 : 34, fontWeight: 300, color: "#111", lineHeight: 1.1, marginBottom: 24 }}>A record that speaks with evidence.</h3>
+            <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 8, letterSpacing: "0.55em", color: "#8B6914", fontWeight: 700, textTransform: "uppercase", marginBottom: 20 }}>The Excalibur Graduate</p>
+            <h3 style={{ fontFamily: serif, fontSize: isMobile ? 24 : 34, fontWeight: 300, color: "#111", lineHeight: 1.1, marginBottom: 8 }}>Excalibur "Ivy" Portfolio</h3>
+            <p style={{ fontFamily: serif, fontSize: 16, color: "#8B6914", fontStyle: "italic", marginBottom: 24 }}>A record that speaks for itself.</p>
             <div style={{ width: 36, height: 1, background: "#111", marginBottom: 24 }} />
-            <p style={{ fontFamily: sans, fontSize: 14, color: "#222", fontWeight: 300, lineHeight: 1.9, marginBottom: 16 }}>Excalibur is not only designed to give students a memorable experience. It is designed to give them a record of work.</p>
-            <p style={{ fontFamily: sans, fontSize: 14, color: "#222", fontWeight: 300, lineHeight: 1.9, marginBottom: 16 }}>Depending on the program, students may leave with presentations, pitch materials, business analyses, competition results, faculty observations, consulting-style work, venture concepts, externship reflections, and portfolio materials.</p>
-            <p style={{ fontFamily: sans, fontSize: 14, color: "#222", fontWeight: 300, lineHeight: 1.9, marginBottom: 24 }}>For Ten-Month Flagship students, this becomes the Excalibur Academy Portfolio: a professionally assembled record of work that can support college applications and help distinguish students through evidence of leadership, communication, execution, and real-world experience.</p>
-            <p style={{ fontFamily: sans, fontSize: 14, color: "#222", fontWeight: 300, lineHeight: 1.9, marginBottom: 24 }}>With support from college admissions advisors, students learn how to organize this record, strengthen their application narrative, prepare recommendation materials, and present their experience with clarity and confidence.</p>
-            <p style={{ fontFamily: serif, fontSize: 16, color: "#8B6914", fontStyle: "italic", lineHeight: 1.6 }}>The goal is not to manufacture a story. The goal is to help students show the work they actually completed.</p>
+            <p style={{ fontFamily: sans, fontSize: 14, color: "#222", fontWeight: 300, lineHeight: 1.9, marginBottom: 16 }}>Every Excalibur student graduates with a portfolio of documented, verifiable work — one that no other programme in the country offers. This portfolio reflects sustained performance, leadership under pressure, and accountability for outcomes.</p>
+            <p style={{ fontFamily: serif, fontSize: 16, color: "#111", fontWeight: 400, lineHeight: 1.75, fontStyle: "italic", marginBottom: 20 }}>Eight documented components · Verified · Professionally assembled · Submitted with university applications.</p>
+            <PortfolioIndexWhite isMobile={isMobile} setPage={setPage} />
           </Fade>
         </div>
       </div>
@@ -2452,56 +2465,18 @@ function ApplyPage({ setPage, openInquiry }) {
               { label: "Ten-Month Flagship", price: "$1,990", period: "per month", detail: "September 2026 – June 2027.\nWeekday or Saturday track." },
             ].map((t, i) => (
               <div key={i} style={{ padding: isMobile ? "36px 0" : "0 48px", borderLeft: !isMobile && i > 0 ? "1px solid rgba(199,171,117,.1)" : "none", borderTop: isMobile && i > 0 ? "1px solid rgba(199,171,117,.1)" : "none" }}>
-                <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 8, letterSpacing: "0.35em", color: "rgba(199,171,117,.6)", fontWeight: 600, textTransform: "uppercase", marginBottom: 20 }}>{t.label}</p>
+                <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 8, letterSpacing: "0.35em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 20 }}>{t.label}</p>
                 <div style={{ fontFamily: serif, fontSize: isMobile ? 48 : 60, fontWeight: 300, color: "#FBF7EE", lineHeight: 1, letterSpacing: "-0.02em", marginBottom: 4 }}>{t.price}</div>
-                <p style={{ fontFamily: sans, fontSize: 12, color: "rgba(199,171,117,.5)", fontWeight: 300, marginBottom: 24 }}>{t.period}</p>
+                <p style={{ fontFamily: sans, fontSize: 12, color: gold, fontWeight: 300, marginBottom: 24 }}>{t.period}</p>
                 <div style={{ width: 24, height: 1, background: `linear-gradient(90deg, ${gold}, transparent)`, marginBottom: 16 }} />
                 <p style={{ fontFamily: sans, fontSize: 12, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.8 }}>{t.detail}</p>
               </div>
             ))}
           </div>
-          <p style={{ fontFamily: serif, fontSize: 14, color: "rgba(199,171,117,.5)", fontWeight: 300, marginTop: 48, fontStyle: "italic" }}>Enrollment is confirmed only after acceptance and deposit completion.</p>
+          <p style={{ fontFamily: serif, fontSize: 14, color: gold, fontWeight: 300, marginTop: 48, fontStyle: "italic" }}>Enrollment is confirmed only after acceptance and deposit completion.</p>
         </div>
       </div>
 
-      {/* ── TEN-MONTH INTERVIEW NOTE ── */}
-      <div style={{ background: "#FAF8F4", padding: isMobile ? "60px 24px" : "80px 80px", borderTop: "1px solid rgba(0,0,0,.07)" }}>
-        <div style={{ maxWidth: 860, margin: "0 auto" }}>
-          <div style={{ paddingLeft: isMobile ? 20 : 44, borderLeft: "3px solid #111" }}>
-            <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 8, letterSpacing: "0.55em", color: "#8B6914", fontWeight: 700, textTransform: "uppercase", marginBottom: 16 }}>Ten-Month Flagship · Admissions Interview</p>
-            <h3 style={{ fontFamily: serif, fontSize: isMobile ? 22 : 32, fontWeight: 300, color: "#111", lineHeight: 1.15, marginBottom: 24 }}>Admission to the Ten-Month Flagship includes a brief admissions interview with the Excalibur Admissions Committee.</h3>
-            <p style={{ fontFamily: sans, fontSize: 14, color: "#222", fontWeight: 300, lineHeight: 1.9, marginBottom: 16 }}>Interviews are approximately 15–20 minutes and are held on alternating Saturdays. Students meet with members of the Academy leadership team, which may include the Academy Dean, Dean of Admissions, lead faculty, and admissions committee members.</p>
-            <p style={{ fontFamily: sans, fontSize: 14, color: "#222", fontWeight: 300, lineHeight: 1.9, marginBottom: 16 }}>The interview is not designed to test perfection. Excalibur is not looking for the flawless résumé, the highest grades alone, or the most rehearsed answers. The Academy looks for students with curiosity, drive, resilience, critical thinking, and the readiness to step into the real world — intellectually, socially, and practically.</p>
-            <p style={{ fontFamily: serif, fontSize: 16, color: "#8B6914", fontStyle: "italic", lineHeight: 1.7 }}>We are looking for dreamers with discipline, builders with courage, and students prepared to think seriously, work hard, receive feedback, and take responsibility for their growth.</p>
-          </div>
-        </div>
-      </div>
-
-      {/* ── FAQ ── */}
-      <div style={{ background: "#000", padding: isMobile ? "60px 24px" : "80px 80px", borderTop: "1px solid rgba(199,171,117,.1)" }}>
-        <div style={{ maxWidth: 860, margin: "0 auto" }}>
-          <Fade>
-            <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 8, letterSpacing: "0.55em", color: gold, fontWeight: 700, textTransform: "uppercase", marginBottom: 16 }}>FAQ</p>
-            <h2 style={{ fontFamily: serif, fontSize: isMobile ? 28 : 44, fontWeight: 300, color: "#FBF7EE", lineHeight: 1.0, marginBottom: 52, letterSpacing: "0.01em" }}>Common Questions</h2>
-          </Fade>
-          <div>
-            {faqs.map((faq, i) => (
-              <div key={i} style={{ borderTop: "1px solid rgba(199,171,117,.1)" }}>
-                <div onClick={() => setOpenFaq(openFaq === i ? null : i)} style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", padding: "24px 0", cursor: "pointer", gap: 24 }}>
-                  <h4 style={{ fontFamily: serif, fontSize: isMobile ? 17 : 20, fontWeight: 400, color: openFaq === i ? gold : "#FBF7EE", lineHeight: 1.3, transition: "color .2s", flex: 1 }}>{faq.q}</h4>
-                  <span style={{ fontFamily: sans, fontSize: 22, color: gold, flexShrink: 0, transition: "transform .25s", transform: openFaq === i ? "rotate(45deg)" : "none", display: "inline-block", marginTop: 2 }}>+</span>
-                </div>
-                {openFaq === i && (
-                  <div style={{ paddingBottom: 28 }}>
-                    <p style={{ fontFamily: sans, fontSize: 14, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.9 }}>{faq.a}</p>
-                  </div>
-                )}
-              </div>
-            ))}
-            <div style={{ borderTop: "1px solid rgba(199,171,117,.1)" }} />
-          </div>
-        </div>
-      </div>
 
       {/* ── REQUEST INFORMATION / APPLY ── */}
       <div style={{ background: "#FAF8F4", padding: isMobile ? "60px 24px" : "80px 80px", borderTop: "1px solid rgba(0,0,0,.07)", textAlign: "center" }}>
@@ -2510,6 +2485,7 @@ function ApplyPage({ setPage, openInquiry }) {
         <p style={{ fontFamily: serif, fontSize: isMobile ? 15 : 18, color: "#8B6914", fontStyle: "italic", marginBottom: 40, lineHeight: 1.5 }}>A member of the admissions team will respond personally within 24 hours.</p>
         <div style={{ display: "flex", gap: 14, justifyContent: "center", flexWrap: "wrap" }}>
           <button onClick={() => openInquiry && openInquiry("summer")} style={{ fontFamily: sans, padding: "14px 40px", background: "#111", border: "none", color: "#fff", fontSize: 11, fontWeight: 700, letterSpacing: "0.2em", textTransform: "uppercase", cursor: "pointer" }}>Apply for Summer 2026 →</button>
+          <button onClick={() => openInquiry && openInquiry("summer-pkg")} style={{ fontFamily: sans, padding: "14px 32px", background: "transparent", border: "1px solid rgba(0,0,0,.25)", color: "#111", fontSize: 11, fontWeight: 600, letterSpacing: "0.15em", textTransform: "uppercase", cursor: "pointer" }}>Request Summer Program Package →</button>
           <button onClick={() => openInquiry && openInquiry("full")} style={{ fontFamily: sans, padding: "14px 32px", background: "transparent", border: "1px solid rgba(0,0,0,.25)", color: "#111", fontSize: 11, fontWeight: 500, letterSpacing: "0.15em", textTransform: "uppercase", cursor: "pointer" }}>Request Ten-Month Flagship Package →</button>
           <button onClick={() => openInquiry && openInquiry()} style={{ fontFamily: sans, padding: "14px 32px", background: "transparent", border: "1px solid rgba(0,0,0,.12)", color: "#555", fontSize: 11, fontWeight: 400, letterSpacing: "0.15em", textTransform: "uppercase", cursor: "pointer" }}>Request Admissions Information →</button>
         </div>
@@ -2784,7 +2760,7 @@ function HomePage({ setPage, openInquiry }) {
           <Fade d={.18}>
             <div style={{ display: "flex", alignItems: "center", gap: 16, marginBottom: 40, width: "100%" }}>
               <div style={{ flex: 1, height: 1, background: "linear-gradient(90deg, transparent, rgba(199,171,117,.3))" }} />
-              <span style={{ fontFamily: serif, fontSize: 14, color: "rgba(199,171,117,.5)" }}>✦</span>
+              <span style={{ fontFamily: serif, fontSize: 14, color: "#C7AB75" }}>✦</span>
               <div style={{ flex: 1, height: 1, background: "linear-gradient(270deg, transparent, rgba(199,171,117,.3))" }} />
             </div>
           </Fade>
@@ -3411,7 +3387,7 @@ function HomePage({ setPage, openInquiry }) {
           </h2>
           {/* Countdown — clean, minimal, no boxes */}
           <div style={{ marginBottom: 56 }}>
-            <p style={{ fontFamily: eyebrow_font, fontSize: 10, letterSpacing: "0.3em", color: "rgba(199,171,117,.5)", textTransform: "uppercase", marginBottom: 20 }}>Wave 1 starts July 6, 2026</p>
+            <p style={{ fontFamily: eyebrow_font, fontSize: 10, letterSpacing: "0.3em", color: "#C7AB75", textTransform: "uppercase", marginBottom: 20 }}>Wave 1 starts July 6, 2026</p>
             <CountdownTimer targetDate="2026-07-06T09:30:00" label="Days Until Summer July Wave Begins" />
           </div>
           {/* Three bold statements */}
@@ -3469,7 +3445,7 @@ function BeyondPage({ setPage, openInquiry }) {
       <div style={{ background: "#050505", borderBottom: "1px solid rgba(199,171,117,.12)", padding: isMobile ? "52px 24px" : "72px 80px" }}>
         <div style={{ maxWidth: 860, margin: "0 auto" }}>
           <Fade>
-            <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 8, letterSpacing: "0.5em", color: "rgba(199,171,117,.6)", fontWeight: 600, textTransform: "uppercase", marginBottom: 24 }}>Theodore Roosevelt · Paris · April 23, 1910</p>
+            <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 8, letterSpacing: "0.5em", color: "#C7AB75", fontWeight: 600, textTransform: "uppercase", marginBottom: 24 }}>Theodore Roosevelt · Paris · April 23, 1910</p>
             <blockquote style={{ fontFamily: serif, fontSize: isMobile ? 16 : 20, color: "#FBF7EE", fontWeight: 400, lineHeight: 1.85, textAlign: "left", paddingLeft: isMobile ? 20 : 36, borderLeft: `2px solid ${gold}`, margin: 0 }}>
               "It is not the critic who counts; not the man who points out how the strong man stumbles, or where the doer of deeds could have done them better. The credit belongs to the man who is actually in the arena, whose face is marred by dust and sweat and blood; who strives valiantly; who errs, who comes short again and again, because there is no effort without error and shortcoming; but who does actually strive to do the deeds; who knows great enthusiasms, the great devotions; who spends himself in a worthy cause; who at the best knows in the end the triumph of high achievement, and who at the worst, if he fails, at least fails while daring greatly, so that his place shall never be with those cold and timid souls who neither know victory nor defeat."
             </blockquote>
@@ -3720,7 +3696,7 @@ function FacultyProfilePage({ slug, setPage }) {
 
       {/* Hero — photo beside info, no crop */}
       <div style={{ background: "#07060A", borderBottom: "1px solid rgba(199,171,117,.1)" }}>
-        <button onClick={() => setPage("faculty")} style={{ display: "block", padding: isMobile ? "16px 20px" : "20px 60px", fontFamily: sans, background: "transparent", border: "none", color: "rgba(199,171,117,.6)", fontSize: 11, cursor: "pointer", letterSpacing: "0.15em" }}>← OUR FACULTY</button>
+        <button onClick={() => setPage("faculty")} style={{ display: "block", padding: isMobile ? "16px 20px" : "20px 60px", fontFamily: sans, background: "transparent", border: "none", color: "#C7AB75", fontSize: 11, cursor: "pointer", letterSpacing: "0.15em" }}>← OUR FACULTY</button>
         <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "360px 1fr", maxWidth: 1100, margin: "0 auto", padding: isMobile ? "0 0 40px" : "0 40px 64px", gap: isMobile ? 28 : 64, alignItems: "start" }}>
           {/* Photo — full show, no crop */}
           <div style={{ overflow: "hidden", border: "1px solid rgba(199,171,117,.12)" }}>
@@ -4500,7 +4476,7 @@ function InquiryModal({ open, onClose, defaultProgram }) {
                   <input className={inputClass} style={inputStyle} value={form.state} onChange={e=>set("state",e.target.value)} onFocus={focusStyle} onBlur={blurStyle} placeholder="State" />
                   <input className={inputClass} style={inputStyle} value={form.zip} onChange={e=>set("zip",e.target.value)} onFocus={focusStyle} onBlur={blurStyle} placeholder="ZIP *" required />
                 </div>
-                <Label style={{ marginTop: 8 }}>Home Address <span style={{ fontWeight: 300, letterSpacing: "0.1em", textTransform: "none", fontSize: 9, color: "rgba(199,171,117,.5)" }}>(optional)</span></Label>
+                <Label style={{ marginTop: 8 }}>Home Address <span style={{ fontWeight: 300, letterSpacing: "0.1em", textTransform: "none", fontSize: 9, color: "#C7AB75" }}>(optional)</span></Label>
                 <input style={{ ...inputStyle }} value={form.address} onChange={e=>set("address",e.target.value)} onFocus={focusStyle} onBlur={blurStyle} placeholder="Street address (optional)" />
               </div>
               {/* Preferred program / wave / track */}
@@ -4529,7 +4505,7 @@ function InquiryModal({ open, onClose, defaultProgram }) {
                 </div>
               ))}
               {form.students.length < 5 && (
-                <button onClick={addStudent} style={{ fontFamily: sans, background: "transparent", border: "1px dashed rgba(199,171,117,.25)", color: "rgba(199,171,117,.6)", padding: "12px", fontSize: 12, fontWeight: 500, letterSpacing: "0.1em", cursor: "pointer", textAlign: "center" }}>+ Add Another Student</button>
+                <button onClick={addStudent} style={{ fontFamily: sans, background: "transparent", border: "1px dashed rgba(199,171,117,.25)", color: "#C7AB75", padding: "12px", fontSize: 12, fontWeight: 500, letterSpacing: "0.1em", cursor: "pointer", textAlign: "center" }}>+ Add Another Student</button>
               )}
             </div>
           ) : (
@@ -4955,7 +4931,7 @@ function FlagshipDetailPage({ setPage, openInquiry }) {
                     ["13", "Weekend & day trips — local businesses, Silicon Valley, SpaceX, Anthropic AI HQ, Yosemite, Daytona Racing, Napa and Mavericks – Half Moon Bay"],
                   ].map(([n, text]) => (
                     <div key={n} style={{ display: "flex", gap: 14, padding: "10px 0", borderBottom: "1px solid rgba(199,171,117,.06)", alignItems: "flex-start" }}>
-                      <span style={{ fontFamily: serif, fontSize: 11, color: "rgba(199,171,117,.4)", fontWeight: 300, flexShrink: 0, paddingTop: 1, minWidth: 18 }}>{n}</span>
+                      <span style={{ fontFamily: serif, fontSize: 11, color: "#C7AB75", fontWeight: 300, flexShrink: 0, paddingTop: 1, minWidth: 18 }}>{n}</span>
                       <span style={{ fontFamily: sans, fontSize: 12, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.6 }}>{text}</span>
                     </div>
                   ))}
@@ -5511,7 +5487,7 @@ function SummerDetailPage({ setPage, openInquiry }) {
               "Priority consideration for the Ten-Month Flagship Program",
             ].map((item, i) => (
               <div key={i} style={{ display: "flex", gap: 12, padding: "9px 0", borderBottom: "1px solid rgba(199,171,117,.06)", alignItems: "flex-start" }}>
-                <span style={{ fontFamily: serif, fontSize: 10, color: "rgba(199,171,117,.5)", flexShrink: 0, paddingTop: 1 }}>—</span>
+                <span style={{ fontFamily: serif, fontSize: 10, color: "#C7AB75", flexShrink: 0, paddingTop: 1 }}>—</span>
                 <span style={{ fontFamily: sans, fontSize: 13, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.6 }}>{item}</span>
               </div>
             ))}
