@@ -348,10 +348,10 @@ function Nav({ page, setPage }) {
     home: "https://i.imgur.com/mkQ2Nde.jpeg",
     about: "https://i.imgur.com/bBYXZXX.jpeg",
     programs: "https://i.imgur.com/1clG3YB.jpeg",
-    "summer-detail": "https://i.imgur.com/9WVUpXH.jpeg",
+    "summer-detail": "https://i.imgur.com/N4OB8dS.jpeg",
     "flagship-detail": "https://i.imgur.com/eyeb9rX.jpeg",
     intensive: "https://i.imgur.com/P86gddQ.png",
-    curriculum: "https://i.imgur.com/hoAucHu.jpeg",
+    curriculum: "https://i.imgur.com/vG8mtVQ.jpeg",
     faculty: "https://i.imgur.com/Cv3LTsu.jpeg",
     beyond: "https://i.imgur.com/1QP3p5p.jpeg",
     apply: "https://i.imgur.com/aDzpYsK.jpeg",
@@ -396,7 +396,7 @@ function Nav({ page, setPage }) {
           </div>
 
           {/* CENTER — brand name + motto */}
-          <div onClick={() => go("home")} style={{ textAlign: "center", cursor: "pointer", flex: 1 }}>
+          <div onClick={() => go("home")} style={{ textAlign: isMobile ? "left" : "center", cursor: "pointer", flex: 1, paddingLeft: isMobile ? 12 : 0 }}>
             <div style={{ fontFamily: "'Forum', 'Copperplate', Georgia, serif", fontSize: isMobile ? 18 : 22, letterSpacing: "0.28em", color: "#FBF7EE", textTransform: "uppercase", lineHeight: 1.15, whiteSpace: "nowrap" }}>Excalibur Academy</div>
             {!isMobile && <div style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: 11, letterSpacing: "0.16em", color: gold, fontStyle: "italic", marginTop: 3, whiteSpace: "nowrap" }}>Forging the Leaders of Tomorrow</div>}
           </div>
@@ -1043,7 +1043,7 @@ function CurriculumPage({ setPage, openInquiry }) {
 
       {/* ── HERO ── */}
       <div style={{ position: "relative", overflow: "hidden", height: isMobile ? 400 : 560 }}>
-        <img src="https://i.imgur.com/xuGMBF0.jpeg" alt="Excalibur Curriculum" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "center" }} />
+        <img src="https://i.imgur.com/vG8mtVQ.jpeg" alt="Excalibur Curriculum" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "center" }} />
         <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to bottom, rgba(0,0,0,.3) 0%, rgba(0,0,0,.85) 100%)" }} />
         <div style={{ position: "absolute", bottom: isMobile ? 36 : 60, left: isMobile ? 24 : 72, maxWidth: 620 }}>
           <Fade>
@@ -2003,7 +2003,7 @@ function ProgramsPage({ setPage, openInquiry }) {
 
               {/* Photo — controlled height strip */}
               <div style={{ background: "#000", overflow: "hidden", height: isMobile ? 200 : 320 }}>
-                <img src="https://i.imgur.com/CuztLC5.jpeg" alt="Summer Intensive at Excalibur" style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center" }} />
+                <img src="https://i.imgur.com/N4OB8dS.jpeg" alt="Summer Intensive at Excalibur" style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center" }} />
               </div>
 
               {/* Content below photo — white background, two columns */}
@@ -2787,7 +2787,7 @@ function HomePage({ setPage, openInquiry }) {
             <p style={{ fontFamily: "'Forum', 'Copperplate', Georgia, serif", fontWeight: 400, fontSize: isMobile ? "clamp(28px,6vw,40px)" : "clamp(36px,4vw,58px)", letterSpacing: "0.26em", color: "#FBF7EE", textTransform: "uppercase", marginBottom: 6, lineHeight: 1.1 }}>
               Excalibur Academy
             </p>
-            <p style={{ fontFamily: serif, fontSize: isMobile ? 13 : 16, letterSpacing: "0.18em", color: gold, fontStyle: "italic", marginBottom: 40, opacity: 0.9 }}>
+            <p style={{ fontFamily: serif, fontSize: isMobile ? 17 : 16, letterSpacing: "0.18em", color: gold, fontStyle: "italic", marginBottom: 40, opacity: 0.9 }}>
               Forging the Leaders of Tomorrow
             </p>
           </Fade>
@@ -2805,7 +2805,7 @@ function HomePage({ setPage, openInquiry }) {
             <h1 style={{ fontFamily: serif, fontStyle: "italic", fontSize: isMobile ? "clamp(20px,4.5vw,30px)" : "clamp(22px,2.2vw,34px)", fontWeight: 300, lineHeight: 1.4, color: "#FBF7EE", maxWidth: 660, marginBottom: 10 }}>
               School teaches how to take tests.
             </h1>
-            <h1 style={{ fontFamily: serif, fontSize: isMobile ? "clamp(22px,5vw,34px)" : "clamp(26px,2.6vw,40px)", fontWeight: 600, lineHeight: 1.25, color: "#FBF7EE", maxWidth: 660, marginBottom: 36 }}>
+            <h1 style={{ fontFamily: serif, fontSize: isMobile ? "clamp(22px,5vw,34px)" : "clamp(26px,2.6vw,40px)", fontWeight: 600, lineHeight: 1.25, color: gold, maxWidth: 660, marginBottom: 36 }}>
               We teach how to take the lead.
             </h1>
           </Fade>
@@ -5477,7 +5477,7 @@ function SummerDetailPage({ setPage, openInquiry }) {
       <Breadcrumb items={[{label:"Our Programs",page:"programs"},{label:"Summer Intensive",page:"summer-detail"}]} setPage={setPage} />
       {/* HERO */}
       <div style={{ position: "relative", background: "#000", overflow: "hidden", height: isMobile ? 260 : 420 }}>
-        <img src="https://i.imgur.com/CuztLC5.jpeg" alt="Summer Intensive" style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center" }} />
+        <img src="https://i.imgur.com/N4OB8dS.jpeg" alt="Summer Intensive" style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center" }} />
         <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(0,0,0,.9) 0%, rgba(0,0,0,.2) 60%)" }} />
         <div style={{ position: "absolute", bottom: isMobile ? 24 : 48, left: isMobile ? 24 : 72 }}>
           <p style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.4em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 10 }}>Summer Intensive · July & August 2026</p>
