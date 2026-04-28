@@ -1425,6 +1425,70 @@ function IntensiveContent({ setPage, isMobile, waves, activeWave, setActiveWave 
   );
 }
 
+// ── MOBILE PROGRAM CONTENT HELPERS ──
+function SummerProgramContent({ prog, openInquiry, setPage, isMobile }) {
+  const gold = "#C7AB75";
+  const serif = "'Cormorant Garamond', Georgia, serif";
+  const sans = "'Lato', 'DM Sans', sans-serif";
+  const eyebrow_font = "'Lato', sans-serif";
+  return (
+    <div>
+      <div style={{ position: "relative", background: "#000" }}>
+        <img src={prog.photo} alt={prog.title} style={{ width: "100%", display: "block", objectFit: "contain" }} />
+      </div>
+      <div style={{ background: "#fff", padding: "32px 24px" }}>
+        {/* Enrollment tracker */}
+        <div style={{ background: "#000", padding: "20px 22px", marginBottom: 24 }}>
+          <p style={{ fontFamily: eyebrow_font, fontSize: 8, letterSpacing: "0.4em", color: "rgba(199,171,117,.55)", fontWeight: 600, textTransform: "uppercase", marginBottom: 14 }}>Enrollment Status · Summer 2026</p>
+          {[{ wave: "Wave I", dates: "July 6–18", enrolled: 14, total: 20 }, { wave: "Wave II", dates: "Aug 3–15", enrolled: 9, total: 20 }].map((w, i) => (
+            <div key={i} style={{ marginBottom: i === 0 ? 16 : 0, paddingBottom: i === 0 ? 16 : 0, borderBottom: i === 0 ? "1px solid rgba(199,171,117,.08)" : "none" }}>
+              <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 6 }}>
+                <span style={{ fontFamily: serif, fontSize: 13, fontWeight: 600, color: "#FBF7EE" }}>{w.wave} · {w.dates}</span>
+                <span style={{ fontFamily: sans, fontSize: 11, color: "#4DB87A" }}>{w.enrolled}/{w.total}</span>
+              </div>
+              <div style={{ height: 2, background: "rgba(255,255,255,.06)" }}><div style={{ height: "100%", width: `${(w.enrolled/w.total)*100}%`, background: "#4DB87A" }} /></div>
+            </div>
+          ))}
+        </div>
+        {prog.desc.split("\n\n").map((p, i) => <p key={i} style={{ fontFamily: sans, fontSize: 14, lineHeight: 1.9, color: "#1a1a1a", fontWeight: 300, marginBottom: 14 }}>{p}</p>)}
+        <div style={{ marginTop: 16, marginBottom: 16, borderTop: "1px solid rgba(0,0,0,.08)", paddingTop: 16 }}>
+          {prog.details.map(([k, v]) => <div key={k} style={{ display: "grid", gridTemplateColumns: "80px 1fr", gap: 12, padding: "8px 0", borderBottom: "1px solid rgba(0,0,0,.05)" }}><span style={{ fontFamily: eyebrow_font, fontSize: 8, letterSpacing: "0.2em", color: "rgba(0,0,0,.4)", textTransform: "uppercase" }}>{k}</span><span style={{ fontFamily: sans, fontSize: 12, color: "#1a1a1a", fontWeight: 300, lineHeight: 1.5, whiteSpace: "pre-line" }}>{v}</span></div>)}
+        </div>
+        <p style={{ fontFamily: eyebrow_font, fontSize: 8, letterSpacing: "0.3em", color: "#8B6914", textTransform: "uppercase", fontWeight: 600, marginBottom: 14 }}>{prog.featuresLabel}</p>
+        {prog.features.map((f, j) => <div key={j} style={{ display: "flex", gap: 14, padding: "10px 0", borderBottom: "1px solid rgba(0,0,0,.06)", alignItems: "flex-start" }}><span style={{ fontFamily: serif, fontSize: 10, color: "rgba(0,0,0,.2)", fontStyle: "italic", flexShrink: 0 }}>{String(j+1).padStart(2,"0")}</span><span style={{ fontFamily: sans, fontSize: 12, color: "#1a1a1a", fontWeight: 300, lineHeight: 1.7 }}>{f}</span></div>)}
+        <div style={{ marginTop: 24, display: "flex", gap: 10, flexWrap: "wrap" }}>
+          <button onClick={() => openInquiry && openInquiry(prog.id)} style={{ fontFamily: sans, padding: "13px 28px", background: "#000", border: "none", color: "#fff", fontSize: 11, fontWeight: 700, letterSpacing: "0.15em", textTransform: "uppercase", cursor: "pointer" }}>APPLY NOW →</button>
+          <button onClick={() => setPage(prog.id)} style={{ fontFamily: sans, padding: "13px 22px", background: "transparent", border: "1px solid rgba(0,0,0,.2)", color: "#000", fontSize: 11, fontWeight: 500, letterSpacing: "0.1em", textTransform: "uppercase", cursor: "pointer" }}>LEARN MORE →</button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function DarkProgramContent({ prog, openInquiry, setPage, isMobile }) {
+  const gold = "#C7AB75";
+  const serif = "'Cormorant Garamond', Georgia, serif";
+  const sans = "'Lato', 'DM Sans', sans-serif";
+  const eyebrow_font = "'Lato', sans-serif";
+  return (
+    <div style={{ background: "#06050A", padding: "32px 24px" }}>
+      <h2 style={{ fontFamily: serif, fontSize: 32, fontWeight: 600, color: "#FBF7EE", lineHeight: 1.0, marginBottom: 8 }}>{prog.title}</h2>
+      <p style={{ fontFamily: serif, fontSize: 15, color: gold, fontStyle: "italic", marginBottom: 24, lineHeight: 1.4 }}>{prog.tagline}</p>
+      <div style={{ width: 28, height: 1, background: `linear-gradient(90deg, ${gold}, transparent)`, marginBottom: 20 }} />
+      {prog.desc.split("\n\n").map((p, i) => <p key={i} style={{ fontFamily: sans, fontSize: 13, lineHeight: 1.9, color: "#FBF7EE", fontWeight: 300, marginBottom: 14 }}>{p}</p>)}
+      <div style={{ borderTop: "1px solid rgba(199,171,117,.08)", paddingTop: 16, marginTop: 8, marginBottom: 16 }}>
+        {prog.details.map(([k, v]) => <div key={k} style={{ display: "grid", gridTemplateColumns: "80px 1fr", gap: 12, padding: "8px 0", borderBottom: "1px solid rgba(199,171,117,.05)" }}><span style={{ fontFamily: eyebrow_font, fontSize: 8, letterSpacing: "0.2em", color: "rgba(199,171,117,.4)", textTransform: "uppercase" }}>{k}</span><span style={{ fontFamily: sans, fontSize: 12, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.5, whiteSpace: "pre-line" }}>{v}</span></div>)}
+      </div>
+      <p style={{ fontFamily: eyebrow_font, fontSize: 8, letterSpacing: "0.3em", color: gold, textTransform: "uppercase", fontWeight: 600, marginBottom: 14 }}>{prog.featuresLabel}</p>
+      {prog.features.map((f, j) => <div key={j} style={{ display: "flex", gap: 14, padding: "10px 0", borderBottom: "1px solid rgba(199,171,117,.06)", alignItems: "flex-start" }}><span style={{ fontFamily: serif, fontSize: 10, color: "rgba(199,171,117,.3)", fontStyle: "italic", flexShrink: 0 }}>{String(j+1).padStart(2,"0")}</span><span style={{ fontFamily: sans, fontSize: 12, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.7 }}>{f}</span></div>)}
+      <div style={{ marginTop: 24, display: "flex", gap: 10, flexWrap: "wrap" }}>
+        <button onClick={() => openInquiry && openInquiry(prog.id)} style={{ fontFamily: sans, padding: "12px 28px", background: gold, border: "none", color: "#000", fontSize: 11, fontWeight: 700, letterSpacing: "0.15em", textTransform: "uppercase", cursor: "pointer" }}>{prog.flagship ? "APPLY — FLAGSHIP →" : "APPLY NOW →"}</button>
+        {!prog.flagship && <button onClick={() => setPage(prog.id)} style={{ fontFamily: sans, padding: "12px 20px", background: "transparent", border: `1px solid ${gold}`, color: gold, fontSize: 11, fontWeight: 500, letterSpacing: "0.1em", textTransform: "uppercase", cursor: "pointer" }}>LEARN MORE →</button>}
+      </div>
+    </div>
+  );
+}
+
 // ─────────────────────────────────────────────
 // PAGE: PROGRAMS OVERVIEW
 // ─────────────────────────────────────────────
@@ -1438,7 +1502,7 @@ function ProgramsPage({ setPage, openInquiry }) {
       tag: "SUMMER INTENSIVE", id: "summer", flagship: false, status: "WAITLIST NOW OPEN", statusColor: "#4DB87A",
       title: "Summer Intensive",
       tagline: "Two weeks. Full days. Serious momentum.",
-      photo: "https://i.imgur.com/tNLUieD.jpeg",
+      photo: "https://i.imgur.com/ua2WSIA.jpeg",
       desc: "The Summer Intensive is a two-week, full-day program offered in July and August for high school juniors and seniors ready to experience Excalibur's core model in a concentrated format.\n\nEach day combines public speaking training, business, innovation, marketing and leadership instruction, applied workshops, and sessions with distinguished guest speakers. Students rotate through all major curricular areas and engage daily with guest lecturers and specialists drawn from a range of professional fields.\n\nThe program culminates in The Excalibur Venture Finale — a Shark Tank–inspired pitch finale where student teams present original business concepts to a panel of experienced judges and real investors. Selected projects receive rewards and prizes ranging from top business tech accessories to real seed funding support.",
       details: [
         ["Schedule", "Wave I: July 6–18, 2026  ·  Wave II: August 3–15, 2026\nMonday–Friday · 9:30 AM–3:00 PM"],
@@ -1459,21 +1523,6 @@ function ProgramsPage({ setPage, openInquiry }) {
       featuresLabel: "The Experience",
     },
     {
-      tag: "SIX-WEEK INTENSIVE", id: "intensive", flagship: false, status: "ENROLLING SOON", statusColor: gold,
-      title: "Six-Week Intensive",
-      tagline: "The compressed formation.",
-      photo: null,
-      desc: "A compressed version of the flagship curriculum. One discipline per week, building toward a Shark Tank–style Finale. Two tracks — Monday & Wednesday evenings or Sunday mornings. Twelve total sessions, structured as 12 sessions of three hours each.",
-      details: [
-        ["Schedule", "Mon & Wed evenings · 4:00–6:25 PM (Group A)\nor Sunday (Group B)"],
-        ["Class Size", "20 students per wave"],
-        ["Tuition", "$3,900 / wave"],
-        ["Waves", "Four per year · Spring, Summer, Fall, Winter"],
-      ],
-      features: ["Full curriculum across six weeks — one module per week", "Weekday evening or Sunday morning track", "Guest speaker every week from a different industry", "Shark Tank–style Finale closes each wave with live investor panel"],
-      featuresLabel: "The Experience",
-    },
-    {
       tag: "TEN-MONTH FLAGSHIP", id: "full-program", flagship: true, status: "ENROLLING SOON", statusColor: gold,
       title: "Ten-Month Program",
       tagline: "The complete formation.",
@@ -1486,6 +1535,21 @@ function ProgramsPage({ setPage, openInquiry }) {
         ["Dates", "September 2026 – June 2027 · Founding Class"],
       ],
       features: ["All 8 modules at full depth across a structured 4-phase arc", "10 industry sector rotations — one guest professional per month", "Three-block session model: Speaking Coach + Lead Instructor + Specialist", "Junior Consultant Program — 3-week real business engagement", "Apprentice Externship — 4–6 weeks inside a real company", "Funded Micro-Business Launch with a dedicated mentor", "Monthly Pitch Night before live judges and parents", "City Championship (biannual) and National Championship pipeline", "Bound graduation portfolio + faculty letters of recommendation", "College admissions counseling and portfolio review"],
+      featuresLabel: "The Experience",
+    },
+    {
+      tag: "SIX-WEEK INTENSIVE", id: "intensive", flagship: false, status: "ENROLLING SOON", statusColor: gold,
+      title: "Six-Week Intensive",
+      tagline: "The compressed formation.",
+      photo: null,
+      desc: "A compressed version of the flagship curriculum. One discipline per week, building toward a Shark Tank–style Finale. Two tracks — Monday & Wednesday evenings or Sunday mornings. Twelve total sessions, structured as 12 sessions of three hours each.",
+      details: [
+        ["Schedule", "Mon & Wed evenings · 4:00–6:25 PM (Group A)\nor Sunday (Group B)"],
+        ["Class Size", "20 students per wave"],
+        ["Tuition", "$3,900 / wave"],
+        ["Waves", "Four per year · Spring, Summer, Fall, Winter"],
+      ],
+      features: ["Full curriculum across six weeks — one module per week", "Weekday evening or Sunday morning track", "Guest speaker every week from a different industry", "Shark Tank–style Finale closes each wave with live investor panel"],
       featuresLabel: "The Experience",
     },
   ];
@@ -1509,19 +1573,57 @@ function ProgramsPage({ setPage, openInquiry }) {
       {/* LUXURY PROGRAM SHOWCASE */}
       <div style={{ maxWidth: 1200, margin: "0 auto", padding: isMobile ? "0" : "0 0 80px" }}>
 
-        {/* Tab selector — minimal hotel menu style */}
-        <div style={{ display: "flex", borderBottom: "1px solid rgba(199,171,117,.1)", padding: isMobile ? "0 16px" : "0 40px" }}>
-          {programs.map((p, i) => (
-            <button key={i} onClick={() => setActiveProgram(i)} style={{
-              fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: isMobile ? 12 : 14,
-              letterSpacing: "0.12em", textTransform: "uppercase", fontWeight: activeProgram === i ? 600 : 300,
-              color: activeProgram === i ? gold : "rgba(251,247,238,.45)",
-              background: "none", border: "none", borderBottom: activeProgram === i ? `2px solid ${gold}` : "2px solid transparent",
-              padding: isMobile ? "18px 12px" : "22px 28px", cursor: "pointer", transition: "all .25s",
-              marginBottom: -1, whiteSpace: "nowrap",
-            }}>{p.tag}</button>
-          ))}
-        </div>
+        {/* Program selector — luxury three-panel cards */}
+        {isMobile ? (
+          /* MOBILE — accordion: click card, content drops below that card */
+          <div style={{ display: "flex", flexDirection: "column", gap: 2, background: "#111" }}>
+            {programs.map((p, i) => (
+              <div key={i}>
+                <button onClick={() => setActiveProgram(activeProgram === i ? -1 : i)} style={{
+                  width: "100%", background: activeProgram === i ? "#080808" : "#050505",
+                  border: "none", borderTop: activeProgram === i ? `2px solid ${gold}` : "2px solid rgba(199,171,117,.12)",
+                  padding: "22px 20px", cursor: "pointer", textAlign: "left", display: "flex", justifyContent: "space-between", alignItems: "center",
+                }}>
+                  <div>
+                    <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 6 }}>
+                      <span style={{ fontFamily: sans, fontSize: 8, letterSpacing: "0.15em", fontWeight: 700, color: p.statusColor, border: `1px solid ${p.statusColor}`, padding: "2px 7px" }}>{p.status}</span>
+                    </div>
+                    <p style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: 22, fontWeight: 600, color: activeProgram === i ? "#FBF7EE" : "rgba(251,247,238,.5)", lineHeight: 1.1, marginBottom: 4 }}>{p.title}</p>
+                    <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 13, color: activeProgram === i ? gold : "rgba(199,171,117,.4)", fontStyle: "italic" }}>{p.tagline}</p>
+                  </div>
+                  <span style={{ fontFamily: sans, fontSize: 20, color: activeProgram === i ? gold : "rgba(199,171,117,.3)", transform: activeProgram === i ? "rotate(45deg)" : "none", transition: "transform .3s", flexShrink: 0, marginLeft: 12 }}>+</span>
+                </button>
+                {/* Content drops right below this card on mobile */}
+                {activeProgram === i && (
+                  <div style={{ background: "#000" }}>
+                    {p.photo ? <SummerProgramContent prog={p} openInquiry={openInquiry} setPage={setPage} isMobile={true} /> : <DarkProgramContent prog={p} openInquiry={openInquiry} setPage={setPage} isMobile={true} />}
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+        ) : (
+          /* DESKTOP — three side-by-side cards */
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 2, background: "#111", marginBottom: 2 }}>
+            {programs.map((p, i) => (
+              <button key={i} onClick={() => setActiveProgram(i)} style={{
+                background: activeProgram === i ? "#080808" : "#050505",
+                border: "none", borderTop: activeProgram === i ? `2px solid ${gold}` : "2px solid rgba(199,171,117,.12)",
+                padding: "32px 36px", cursor: "pointer", transition: "all .3s", textAlign: "left",
+              }}>
+                <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 12 }}>
+                  <span style={{ fontFamily: sans, fontSize: 8, letterSpacing: "0.15em", fontWeight: 700,
+                    color: p.statusColor, border: `1px solid ${p.statusColor}`, padding: "2px 8px",
+                    opacity: activeProgram === i ? 1 : 0.5 }}>{p.status}</span>
+                </div>
+                <p style={{ fontFamily: eyebrow_font, fontSize: 8, letterSpacing: "0.35em", color: activeProgram === i ? gold : "rgba(199,171,117,.3)", fontWeight: 600, textTransform: "uppercase", marginBottom: 8 }}>{p.tag}</p>
+                <p style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: 28, fontWeight: 600, color: activeProgram === i ? "#FBF7EE" : "rgba(251,247,238,.3)", lineHeight: 1.05, marginBottom: 8, transition: "color .3s" }}>{p.title}</p>
+                <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 14, color: activeProgram === i ? gold : "rgba(199,171,117,.2)", fontStyle: "italic", lineHeight: 1.3, transition: "color .3s" }}>{p.tagline}</p>
+                {activeProgram === i && <div style={{ width: 28, height: 1, background: gold, marginTop: 18 }} />}
+              </button>
+            ))}
+          </div>
+        )}
 
         {/* Program detail */}
         <div key={activeProgram}>
@@ -1545,7 +1647,37 @@ function ProgramsPage({ setPage, openInquiry }) {
                     <span style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.3em", color: "rgba(0,0,0,.35)", textTransform: "uppercase" }}>{prog.tag}</span>
                   </div>
                   <h2 style={{ fontFamily: serif, fontSize: isMobile ? 28 : 42, fontWeight: 600, color: "#000", lineHeight: 1.0, marginBottom: 8 }}>{prog.title}</h2>
-                  <p style={{ fontFamily: serif, fontSize: 16, color: "#8B6914", fontStyle: "italic", marginBottom: 28, lineHeight: 1.4 }}>{prog.tagline}</p>
+                  <p style={{ fontFamily: serif, fontSize: 16, color: "#8B6914", fontStyle: "italic", marginBottom: 24, lineHeight: 1.4 }}>{prog.tagline}</p>
+
+                  {/* ENROLLMENT TRACKER — luxury hotel style */}
+                  <div style={{ background: "#000", padding: "24px 28px", marginBottom: 28 }}>
+                    <p style={{ fontFamily: eyebrow_font, fontSize: 8, letterSpacing: "0.4em", color: "rgba(199,171,117,.55)", fontWeight: 600, textTransform: "uppercase", marginBottom: 18 }}>Enrollment Status · Summer 2026</p>
+                    {[
+                      { wave: "Wave I", dates: "July 6–18", days: "Mon–Fri · 9:30 AM–3 PM", enrolled: 14, total: 20 },
+                      { wave: "Wave II", dates: "August 3–15", days: "Mon–Fri · 9:30 AM–3 PM", enrolled: 9, total: 20 },
+                    ].map((w, i) => (
+                      <div key={i} style={{ marginBottom: i === 0 ? 20 : 0, paddingBottom: i === 0 ? 20 : 0, borderBottom: i === 0 ? "1px solid rgba(199,171,117,.08)" : "none" }}>
+                        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: 8 }}>
+                          <div>
+                            <span style={{ fontFamily: serif, fontSize: 15, fontWeight: 600, color: "#FBF7EE", marginRight: 10 }}>{w.wave}</span>
+                            <span style={{ fontFamily: sans, fontSize: 11, color: "rgba(251,247,238,.45)", fontWeight: 300 }}>{w.dates} · {w.days}</span>
+                          </div>
+                          <div style={{ textAlign: "right" }}>
+                            <span style={{ fontFamily: serif, fontSize: 13, color: "#4DB87A" }}>{w.enrolled} enrolled</span>
+                            <span style={{ fontFamily: sans, fontSize: 10, color: "rgba(251,247,238,.3)", marginLeft: 8 }}>{w.total - w.enrolled} remaining</span>
+                          </div>
+                        </div>
+                        <div style={{ height: 2, background: "rgba(255,255,255,.06)", borderRadius: 1 }}>
+                          <div style={{ height: "100%", width: `${(w.enrolled / w.total) * 100}%`, background: `linear-gradient(90deg, #4DB87A, rgba(77,184,122,.6))`, transition: "width .8s ease", borderRadius: 1 }} />
+                        </div>
+                        <div style={{ display: "flex", justifyContent: "space-between", marginTop: 5 }}>
+                          <span style={{ fontFamily: sans, fontSize: 9, color: "rgba(251,247,238,.25)", letterSpacing: "0.05em" }}>0</span>
+                          <span style={{ fontFamily: sans, fontSize: 9, color: "rgba(251,247,238,.25)", letterSpacing: "0.05em" }}>{w.total} max</span>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+
                   <div style={{ width: 32, height: 1, background: "linear-gradient(90deg, #000, transparent)", marginBottom: 24 }} />
                   {prog.desc.split("\n\n").map((para, i) => (
                     <p key={i} style={{ fontFamily: sans, fontSize: 14, lineHeight: 1.9, color: "#1a1a1a", fontWeight: 300, marginBottom: 14 }}>{para}</p>
@@ -2708,9 +2840,9 @@ function HomePage({ setPage, openInquiry }) {
         <div style={{ background: "#EDEAE3", padding: isMobile ? "48px 24px" : "64px 80px" }}>
           <div style={{ maxWidth: 1100, margin: "0 auto", display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: isMobile ? 36 : 80 }}>
             <div>
-              <p style={{ fontFamily: serif, fontSize: 17, color: "#000", fontStyle: "italic", marginBottom: 10, lineHeight: 1.3 }}>Why Excalibur Students Stand Apart</p>
-              <p style={{ fontFamily: eyebrow_font, fontSize: 10, letterSpacing: "0.4em", color: "#000", fontWeight: 600, textTransform: "uppercase", marginBottom: 16 }}>COLLEGE ADMISSIONS ADVISOR</p>
-              <h2 style={{ fontFamily: serif, fontSize: isMobile ? 26 : 36, fontWeight: 600, color: "#000", lineHeight: 1.1, marginBottom: 22 }}>A college portfolio that speaks for itself.</h2>
+              <p style={{ fontFamily: eyebrow_font, fontSize: 10, letterSpacing: "0.4em", color: "#000", fontWeight: 600, textTransform: "uppercase", marginBottom: 14 }}>PORTFOLIO THAT SPEAKS FOR ITSELF</p>
+              <h2 style={{ fontFamily: serif, fontSize: isMobile ? 26 : 36, fontWeight: 600, color: "#000", lineHeight: 1.1, marginBottom: 12 }}>College Admissions Advisor</h2>
+              <p style={{ fontFamily: serif, fontSize: 17, color: "#000", fontStyle: "italic", marginBottom: 22, lineHeight: 1.3 }}>Why Excalibur Students Stand Apart</p>
               <div style={{ width: 36, height: 1, background: "linear-gradient(90deg, #000, transparent)", marginBottom: 22 }} />
               <p style={{ fontFamily: sans, fontSize: 14, lineHeight: 1.9, color: "#1a1a1a", fontWeight: 300, marginBottom: 16 }}>An Excalibur graduate approaches college admission with proof of applied real-world leadership and work experience. A consulting report. An externship record. A micro-business launch. Competition results. A graduation portfolio. Faculty recommendations written by top executives and professionals who watched them operate, lead, and execute.</p>
               <p style={{ fontFamily: sans, fontSize: 14, lineHeight: 1.9, color: "#1a1a1a", fontWeight: 300 }}>College admissions advisors help translate that record into a serious admissions strategy — shaping the student’s academic and personal narrative, advising on school positioning, preparing for interviews, and helping present the portfolio in a way that strengthens applications to highly selective colleges and universities.</p>
