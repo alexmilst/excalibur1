@@ -652,7 +652,7 @@ const sixWeekSchedule = [
 ];
 
 const fieldTrips = [
-  { title: "Daytona & Motorsport Racing", tag: "Speed. Strategy. Performance.", img: "https://i.imgur.com/aq7BsSv.jpeg", desc: "At Daytona, students step inside one of the most intense environments in the world: elite motorsport. But Motorsport is more than competition & speed. It is a global business built on capital, engineering, sponsorship, logistics, risk, media, and human decision-making under extraordinary pressure. Guided by one of our Lead Faculty instructors — also a former professional racing driver and the director of Formula BMW — students examine the economics of elite racing, the innovation forces shaping the automotive world, and — yes, might even have the chance to experience the legendary circuit with a professional driver. This is not a field trip. It is a masterclass with someone who built the industry.", type: "Weekend" },
+  { title: "Daytona & Motorsport Racing", tag: "Speed. Strategy. Performance.", img: "https://i.imgur.com/aq7BsSv.jpeg", desc: "At Daytona, students enter the world of elite motorsport — a global business of speed, capital, engineering, sponsorship, risk, media, and high-pressure decision-making. Led by our lead faculty member — a former professional racing driver and Formula BMW director — this is not just a field trip; it is a rare masterclass inside one of the world's most elite and intense industries.", type: "Weekend" },
   { title: "Silicon Valley — Incubators & Accelerators", tag: "Where the next business revolution is built.", img: "https://images.unsplash.com/photo-1449034446853-66c86144b0ad?w=800&q=80", desc: "Behind-the-scenes visits to leading venture capital firms, startup incubators, and accelerators across the Bay Area. Students walk through the environments where the world’s most consequential companies began. A curated dinner with a VC partner closes the day.", type: "2-Day" },
   { title: "NYSE — New York Stock Exchange Floor", tag: "The center of global capital.", img: "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=800&q=80", desc: "Access to the NYSE trading floor — one of the most exclusive rooms in American finance. Students meet with market professionals, observe live trading operations, and receive a briefing on how capital markets actually function. Followed by an executive dinner in Manhattan.", type: "3-Day NYC" },
   { title: "Anthropic AI Headquarters", tag: "The frontier of artificial intelligence.", img: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=800&q=80", desc: "A rare visit to one of the world's leading AI safety and research organizations. Students engage with researchers and engineers at the forefront of large language model development — the technology reshaping every industry they will enter.", type: "Day Trip" },
@@ -2521,44 +2521,47 @@ function HomePage({ setPage, openInquiry }) {
         </div>
       </section>
 
-      {/* STATS — Soho House luxury */}
-      <section style={{ background: "#050504", padding: isMobile ? "64px 24px" : "96px 80px", borderTop: "1px solid rgba(199,171,117,.10)", borderBottom: "1px solid rgba(199,171,117,.10)" }}>
-        {/* top ornament rule */}
-        <div style={{ display: "flex", alignItems: "center", gap: 18, maxWidth: 1100, margin: "0 auto 64px" }}>
-          <div style={{ flex: 1, height: "1px", background: "linear-gradient(90deg, transparent, rgba(199,171,117,.30))" }} />
-          <span style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: 11, letterSpacing: "0.45em", color: "rgba(199,171,117,.45)", textTransform: "uppercase", whiteSpace: "nowrap" }}>By the Numbers</span>
-          <div style={{ flex: 1, height: "1px", background: "linear-gradient(90deg, rgba(199,171,117,.30), transparent)" }} />
-        </div>
-
-        <div ref={statsRef} style={{ maxWidth: 1100, margin: "0 auto", display: "grid", gridTemplateColumns: isMobile ? "1fr 1fr" : "repeat(6, 1fr)" }}>
-          {[["10", " Months", "academic year program"], ["6", " Weeks", "intensive track"], ["25", "", "students per cohort"], ["8", "", "curriculum modules"], ["30+", "", "guest speakers / year"], ["2", "", "summer waves"]].map(([num, suf, l], i) => (
-            <div key={i} style={{
-              padding: isMobile ? "32px 12px 36px" : "0 16px",
-              textAlign: "center",
-              borderLeft: i === 0 ? "none" : (isMobile ? (i % 2 === 0 ? "none" : "1px solid rgba(199,171,117,.10)") : "1px solid rgba(199,171,117,.10)"),
-              borderTop: isMobile && i >= 2 ? "1px solid rgba(199,171,117,.10)" : "none",
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              gap: 0,
-            }}>
-              {/* tiny top accent line */}
-              <div style={{ width: 20, height: 1, background: "rgba(199,171,117,.35)", marginBottom: 16 }} />
-              <div style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: isMobile ? 48 : "clamp(36px,3.8vw,52px)", fontWeight: 300, color: "#FBF7EE", lineHeight: 1, letterSpacing: "-0.01em" }}>
-                <StatCounter num={num} suf={suf} label="" inView={statsInView} lightMode={false} />
+      {/* STATS — chessboard scatter */}
+      <section style={{ background: "#050504", borderTop: "1px solid rgba(199,171,117,.10)", borderBottom: "1px solid rgba(199,171,117,.10)", overflow: "hidden" }}>
+        {isMobile ? (
+          <div ref={statsRef} style={{ display: "grid", gridTemplateColumns: "1fr 1fr" }}>
+            {[["10", " Months", "academic year program"], ["6", " Weeks", "intensive track"], ["25", "", "students per cohort"], ["8", "", "curriculum modules"], ["30+", "", "guest speakers / year"], ["2", "", "summer waves"]].map(([num, suf, l], i) => (
+              <div key={i} style={{ padding: "28px 16px", textAlign: "center", borderLeft: i % 2 === 1 ? "1px solid rgba(199,171,117,.10)" : "none", borderTop: i >= 2 ? "1px solid rgba(199,171,117,.10)" : "none", display: "flex", flexDirection: "column", alignItems: "center" }}>
+                <div style={{ width: 16, height: 1, background: "rgba(199,171,117,.35)", marginBottom: 12 }} />
+                <div style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: 44, fontWeight: 300, color: "#FBF7EE", lineHeight: 1 }}>
+                  <StatCounter num={num} suf={suf} label="" inView={statsInView} lightMode={false} />
+                </div>
+                <div style={{ width: 20, height: "1px", background: "linear-gradient(90deg, transparent, rgba(199,171,117,.5), transparent)", margin: "10px auto 8px" }} />
+                <p style={{ fontFamily: "'Lato', sans-serif", fontSize: 8, letterSpacing: "0.22em", color: "rgba(199,171,117,.55)", textTransform: "uppercase" }}>{l}</p>
               </div>
-              <div style={{ width: 24, height: "1px", background: `linear-gradient(90deg, transparent, rgba(199,171,117,.5), transparent)`, margin: "14px auto 12px" }} />
-              <p style={{ fontFamily: "'Lato', sans-serif", fontSize: 8, letterSpacing: "0.25em", color: "rgba(199,171,117,.55)", textTransform: "uppercase", fontWeight: 400, lineHeight: 1.6 }}>{l}</p>
-            </div>
-          ))}
-        </div>
-
-        {/* bottom ornament rule */}
-        <div style={{ display: "flex", alignItems: "center", gap: 18, maxWidth: 1100, margin: "64px auto 0" }}>
-          <div style={{ flex: 1, height: "1px", background: "linear-gradient(90deg, transparent, rgba(199,171,117,.15))" }} />
-          <div style={{ width: 4, height: 4, borderRadius: "50%", background: "rgba(199,171,117,.3)" }} />
-          <div style={{ flex: 1, height: "1px", background: "linear-gradient(90deg, rgba(199,171,117,.15), transparent)" }} />
-        </div>
+            ))}
+          </div>
+        ) : (
+          <div ref={statsRef} style={{ maxWidth: 1200, margin: "0 auto", display: "grid", gridTemplateColumns: "repeat(6, 1fr)" }}>
+            {[["10", " Months", "academic year program"], ["6", " Weeks", "intensive track"], ["25", "", "students per cohort"], ["8", "", "curriculum modules"], ["30+", "", "guest speakers / year"], ["2", "", "summer waves"]].map(([num, suf, l], i) => {
+              const isHigh = i % 2 === 0;
+              return (
+                <div key={i} style={{
+                  padding: isHigh ? "44px 20px 20px" : "20px 20px 44px",
+                  textAlign: "center",
+                  borderLeft: i === 0 ? "none" : "1px solid rgba(199,171,117,.08)",
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  background: isHigh ? "rgba(255,255,255,.013)" : "transparent",
+                  borderBottom: isHigh ? "1px solid rgba(199,171,117,.08)" : "none",
+                }}>
+                  <div style={{ width: 16, height: 1, background: "rgba(199,171,117,.35)", marginBottom: 14 }} />
+                  <div style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: "clamp(36px,3.2vw,48px)", fontWeight: 300, color: "#FBF7EE", lineHeight: 1, letterSpacing: "-0.01em" }}>
+                    <StatCounter num={num} suf={suf} label="" inView={statsInView} lightMode={false} />
+                  </div>
+                  <div style={{ width: 22, height: "1px", background: "linear-gradient(90deg, transparent, rgba(199,171,117,.5), transparent)", margin: "12px auto 10px" }} />
+                  <p style={{ fontFamily: "'Lato', sans-serif", fontSize: 8, letterSpacing: "0.26em", color: "rgba(199,171,117,.50)", textTransform: "uppercase", lineHeight: 1.7 }}>{l}</p>
+                </div>
+              );
+            })}
+          </div>
+        )}
       </section>
 
 
@@ -2571,7 +2574,7 @@ function HomePage({ setPage, openInquiry }) {
             <div style={{ position: "absolute", top: 12, right: 12, width: 16, height: 16, borderTop: `1px solid rgba(199,171,117,.4)`, borderRight: `1px solid rgba(199,171,117,.4)` }} />
             <div style={{ position: "absolute", bottom: 12, left: 12, width: 16, height: 16, borderBottom: `1px solid rgba(199,171,117,.4)`, borderLeft: `1px solid rgba(199,171,117,.4)` }} />
             <div style={{ position: "absolute", bottom: 12, right: 12, width: 16, height: 16, borderBottom: `1px solid rgba(199,171,117,.4)`, borderRight: `1px solid rgba(199,171,117,.4)` }} />
-            <p style={{ fontFamily: sans, fontSize: 10, letterSpacing: "0.4em", color: "#FBF7EE", fontWeight: 600, textTransform: "uppercase", padding: "20px 28px 0" }}>Lead Faculty</p>
+            <p style={{ fontFamily: sans, fontSize: 10, letterSpacing: "0.4em", color: "#FBF7EE", fontWeight: 600, textTransform: "uppercase", padding: "20px 28px 0", textAlign: "center" }}>Top Leaders — Your Mentors</p>
             <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1px 1fr", padding: isMobile ? "16px 24px 24px" : "20px 40px 28px", gap: isMobile ? 20 : 0 }}>
               <div style={{ padding: isMobile ? "0" : "0 36px 0 0" }}>
                 <div style={{ width: 28, height: 1, background: `linear-gradient(90deg, ${gold}, transparent)`, marginBottom: 12 }} />
@@ -2591,40 +2594,56 @@ function HomePage({ setPage, openInquiry }) {
       </section>
 
       {/* SUMMER ENROLLMENT BANNER */}
-      <section style={{ background: "#000", borderBottom: `1px solid rgba(199,171,117,.15)`, padding: isMobile ? "48px 24px" : "64px 80px" }}>
-        <div style={{ maxWidth: 900, margin: "0 auto" }}>
+      <section style={{ background: "#FAF8F4", borderBottom: `1px solid rgba(0,0,0,.08)`, padding: isMobile ? "64px 24px" : "88px 80px", position: "relative", overflow: "hidden" }}>
+        {/* background watermark numeral */}
+        <div style={{ position: "absolute", right: isMobile ? -20 : 60, top: "50%", transform: "translateY(-50%)", fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: "clamp(180px,22vw,320px)", fontWeight: 300, color: "rgba(0,0,0,.03)", lineHeight: 1, userSelect: "none", pointerEvents: "none", letterSpacing: "-0.05em" }}>2026</div>
+
+        <div style={{ maxWidth: 860, margin: "0 auto", position: "relative", zIndex: 1 }}>
           <Fade>
-            <p style={{ fontFamily: eyebrow_font, fontSize: 10, letterSpacing: "0.35em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 16 }}>⚡ Waitlist Now Open</p>
-            <h2 style={{ fontFamily: serif, fontSize: isMobile ? "clamp(28px,5vw,36px)" : "clamp(32px,3.5vw,48px)", fontWeight: 600, color: "#FBF7EE", lineHeight: 1.1, marginBottom: 8 }}>
+            {/* eyebrow — black color block with gold text */}
+            <div style={{ marginBottom: 32 }}>
+              <span style={{ display: "inline-block", background: "#000", color: gold, fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.45em", fontWeight: 700, textTransform: "uppercase", padding: "8px 18px" }}>Enrollment Now Open · Summer 2026</span>
+            </div>
+
+            {/* heading */}
+            <h2 style={{ fontFamily: serif, fontSize: isMobile ? "clamp(30px,6vw,40px)" : "clamp(38px,4vw,58px)", fontWeight: 300, color: "#0a0a0a", lineHeight: 1.05, marginBottom: 6, letterSpacing: "-0.01em" }}>
               Summer Intensive 2026
             </h2>
-            <p style={{ fontFamily: sans, fontSize: 12, color: gold, letterSpacing: "0.1em", marginBottom: 20 }}>Enrollment Begins May 15, 2026</p>
-            {/* You Asked. We Listened. */}
-            <div style={{ marginBottom: 24, background: "#09090B", border: `1px solid rgba(199,171,117,.3)`, padding: "20px 24px", position: "relative" }}>
-              <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 2, background: `linear-gradient(90deg, ${gold}, rgba(199,171,117,.2), transparent)` }} />
-              <p style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.3em", color: gold, fontWeight: 700, textTransform: "uppercase", marginBottom: 8 }}>You Asked. We Listened.</p>
-              <p style={{ fontFamily: serif, fontSize: isMobile ? 18 : 22, color: "#FBF7EE", fontWeight: 600, lineHeight: 1.35 }}>Due to high demand and our commitment to keeping cohort sizes small — a personalised, real experience — we are introducing a second two-week intensive wave in August 2026.</p>
+            <h3 style={{ fontFamily: serif, fontSize: isMobile ? 16 : 20, fontWeight: 400, color: "#222", fontStyle: "italic", marginBottom: 36, letterSpacing: "0.04em" }}>
+              July &amp; August Waves
+            </h3>
+
+            {/* ornament rule */}
+            <div style={{ width: 48, height: "1px", background: "rgba(0,0,0,.2)", marginBottom: 36 }} />
+
+            {/* "You Asked. We Listened." pull quote */}
+            <div style={{ marginBottom: 36, paddingLeft: 24, borderLeft: `2px solid rgba(0,0,0,.15)` }}>
+              <p style={{ fontFamily: eyebrow_font, fontSize: 8, letterSpacing: "0.38em", color: "#555", fontWeight: 600, textTransform: "uppercase", marginBottom: 10 }}>You Asked. We Listened.</p>
+              <p style={{ fontFamily: serif, fontSize: isMobile ? 17 : 21, color: "#111", fontWeight: 400, lineHeight: 1.5, fontStyle: "italic" }}>Due to high demand and our commitment to keeping cohort sizes small — a personalised, real experience — we are introducing a second two-week intensive wave in August 2026.</p>
             </div>
-            <p style={{ fontFamily: sans, fontSize: 14, lineHeight: 1.85, color: "#FBF7EE", fontWeight: 300, marginBottom: 24 }}>
-              Offered in two waves — July and August — this full-day, Monday-through-Friday intensive is led by senior faculty, former Fortune 500 executives, accomplished leaders, top industry specialists, and distinguished guest speakers. The program emphasizes business and leadership curriculum, public speaking, real-world case studies, immersive startup simulations, and live pitch development, culminating in a Shark Tank-style finale. Enrollment is limited to 20 students per cohort.
+
+            <p style={{ fontFamily: sans, fontSize: 13, lineHeight: 1.9, color: "#444", fontWeight: 300, marginBottom: 36, maxWidth: 680 }}>
+              Offered in two waves — July and August — this full-day, Monday-through-Friday intensive is led by senior faculty, former Fortune 500 executives, accomplished leaders, top industry specialists, and distinguished guest speakers. The program emphasises business and leadership curriculum, public speaking, real-world case studies, immersive startup simulations, and live pitch development, culminating in a Shark Tank-style finale.
             </p>
-            <div style={{ display: "flex", flexDirection: "column", gap: 8, marginBottom: 28 }}>
+
+            {/* details list — editorial style */}
+            <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: isMobile ? 0 : "0 48px" }}>
               {[
-                "Sessions: 9:30 AM – 3:00 PM · Mon–Fri",
-                "Wave 1: July 6 – 18, 2026",
-                "Wave 2: August 3 – 15, 2026",
-                "Guest Speakers: Distinguished speaker rotating daily",
-                "Finale: Shark Tank-inspired start-up competition with real investors and judges",
-                "Eligibility: Ages 15–17 (rising juniors and seniors) · 25 students per wave",
-              ].map((f, i) => (
-                <div key={i} style={{ display: "flex", gap: 10, alignItems: "flex-start" }}>
-                  <div style={{ width: 14, height: 1.5, background: gold, marginTop: 8, flexShrink: 0 }} />
-                  <span style={{ fontFamily: sans, fontSize: 13, color: "#FBF7EE", fontWeight: 300 }}>{f}</span>
+                ["Sessions", "9:30 AM – 3:00 PM · Mon–Fri"],
+                ["Wave 1", "July 6 – 18, 2026"],
+                ["Wave 2", "August 3 – 15, 2026"],
+                ["Guest Speakers", "Distinguished speaker rotating daily"],
+                ["Finale", "Shark Tank–inspired with real investors"],
+                ["Eligibility", "Ages 15–17 · 25 students per wave"],
+              ].map(([k, v], i) => (
+                <div key={i} style={{ display: "flex", gap: 16, padding: "13px 0", borderBottom: "1px solid rgba(0,0,0,.07)", alignItems: "flex-start" }}>
+                  <span style={{ fontFamily: sans, fontSize: 8, letterSpacing: "0.28em", color: "#666", textTransform: "uppercase", minWidth: 80, paddingTop: 2, flexShrink: 0 }}>{k}</span>
+                  <span style={{ fontFamily: sans, fontSize: 12, color: "#222", fontWeight: 300, lineHeight: 1.6 }}>{v}</span>
                 </div>
               ))}
             </div>
-          </Fade>
 
+          </Fade>
         </div>
       </section>
 
@@ -2659,7 +2678,7 @@ function HomePage({ setPage, openInquiry }) {
         <Fade>
         {/* Full-width photo strip with text overlay */}
         <div style={{ position: "relative", height: isMobile ? 260 : 440, overflow: "hidden" }}>
-          <img src="https://i.imgur.com/y5bXKH5.jpeg" alt="Orange County estate" style={{ width: "100%", height: "100%", objectFit: "cover", filter: "brightness(0.55)" }} />
+          <img src="https://i.imgur.com/bBYXZXX.jpeg" alt="Orange County estate" style={{ width: "100%", height: "100%", objectFit: "cover", filter: "brightness(0.55)" }} />
           <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to right, rgba(0,0,0,.75) 0%, rgba(0,0,0,.2) 60%, transparent 100%)" }} />
           <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(0,0,0,.85) 0%, transparent 55%)" }} />
           <div style={{ position: "absolute", bottom: isMobile ? 28 : 52, left: isMobile ? 28 : 72, maxWidth: 540 }}>
