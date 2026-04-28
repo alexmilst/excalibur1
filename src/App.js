@@ -4552,10 +4552,44 @@ function InquiryModal({ open, onClose, defaultProgram }) {
                 <Label style={{ marginTop: 8 }}>Home Address <span style={{ fontWeight: 300, letterSpacing: "0.1em", textTransform: "none", fontSize: 9, color: "#C7AB75" }}>(optional)</span></Label>
                 <input style={{ ...inputStyle }} value={form.address} onChange={e=>set("address",e.target.value)} onFocus={focusStyle} onBlur={blurStyle} placeholder="Street address (optional)" />
               </div>
-              {/* Preferred program / wave / track */}
+
+              {/* Program Interest */}
               <div>
-                <Label>Preferred Program / Wave / Track</Label>
-                <input className={inputClass} style={inputStyle} value={form.preferredProgram || ""} onChange={e=>set("preferredProgram",e.target.value)} onFocus={focusStyle} onBlur={blurStyle} placeholder="e.g. Ten-Month Flagship · Weekday Track" />
+                <Label>Program Interest (select all that apply)</Label>
+                <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+                  {programs.map(p => (
+                    <button key={p.id} onClick={() => toggleProgram(p.id)} style={{
+                      fontFamily: sans, fontSize: 13, padding: "14px 20px", cursor: "pointer", textAlign: "left",
+                      background: form.programs.includes(p.id) ? "rgba(199,171,117,.08)" : "transparent",
+                      color: form.programs.includes(p.id) ? gold : "#FBF7EE",
+                      border: `1px solid ${form.programs.includes(p.id) ? gold : "rgba(199,171,117,.18)"}`,
+                      transition: "all .2s", fontWeight: form.programs.includes(p.id) ? 500 : 300,
+                      display: "flex", justifyContent: "space-between", alignItems: "center",
+                    }}>
+                      {p.label}
+                      {form.programs.includes(p.id) && <span style={{ fontSize: 14 }}>✦</span>}
+                    </button>
+                  ))}
+                </div>
+              </div>
+              {/* Schedule Track */}
+              <div>
+                <Label>Schedule Track (select all that apply)</Label>
+                <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+                  {tracks.map(t => (
+                    <button key={t} onClick={() => toggleTrack(t)} style={{
+                      fontFamily: sans, fontSize: 13, padding: "14px 20px", cursor: "pointer", textAlign: "left",
+                      background: form.tracks.includes(t) ? "rgba(199,171,117,.08)" : "transparent",
+                      color: form.tracks.includes(t) ? gold : "#FBF7EE",
+                      border: `1px solid ${form.tracks.includes(t) ? gold : "rgba(199,171,117,.18)"}`,
+                      transition: "all .2s", fontWeight: form.tracks.includes(t) ? 500 : 300,
+                      display: "flex", justifyContent: "space-between", alignItems: "center",
+                    }}>
+                      {t}
+                      {form.tracks.includes(t) && <span style={{ fontSize: 14 }}>✦</span>}
+                    </button>
+                  ))}
+                </div>
               </div>
             </div>
           ) : step === 2 ? (
@@ -4583,44 +4617,6 @@ function InquiryModal({ open, onClose, defaultProgram }) {
             </div>
           ) : (
             <div style={{ display: "flex", flexDirection: "column", gap: 28 }}>
-              {/* Program interest */}
-              <div>
-                <Label>Program Interest (select all that apply)</Label>
-                <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
-                  {programs.map(p => (
-                    <button key={p.id} onClick={() => toggleProgram(p.id)} style={{
-                      fontFamily: sans, fontSize: 13, padding: "14px 20px", cursor: "pointer", textAlign: "left",
-                      background: form.programs.includes(p.id) ? "rgba(199,171,117,.08)" : "transparent",
-                      color: form.programs.includes(p.id) ? gold : "#FBF7EE",
-                      border: `1px solid ${form.programs.includes(p.id) ? gold : "rgba(199,171,117,.18)"}`,
-                      transition: "all .2s", fontWeight: form.programs.includes(p.id) ? 500 : 300,
-                      display: "flex", justifyContent: "space-between", alignItems: "center",
-                    }}>
-                      {p.label}
-                      {form.programs.includes(p.id) && <span style={{ fontSize: 14 }}>✦</span>}
-                    </button>
-                  ))}
-                </div>
-              </div>
-              {/* Track preference */}
-              <div>
-                <Label>Schedule Track (select all that apply)</Label>
-                <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
-                  {tracks.map(t => (
-                    <button key={t} onClick={() => toggleTrack(t)} style={{
-                      fontFamily: sans, fontSize: 13, padding: "14px 20px", cursor: "pointer", textAlign: "left",
-                      background: form.tracks.includes(t) ? "rgba(199,171,117,.08)" : "transparent",
-                      color: form.tracks.includes(t) ? gold : "#FBF7EE",
-                      border: `1px solid ${form.tracks.includes(t) ? gold : "rgba(199,171,117,.18)"}`,
-                      transition: "all .2s", fontWeight: form.tracks.includes(t) ? 500 : 300,
-                      display: "flex", justifyContent: "space-between", alignItems: "center",
-                    }}>
-                      {t}
-                      {form.tracks.includes(t) && <span style={{ fontSize: 14 }}>✦</span>}
-                    </button>
-                  ))}
-                </div>
-              </div>
               {/* Private invitation + package */}
               <div>
                 <Label>Admissions Package & Private Invitation</Label>
@@ -5914,7 +5910,7 @@ export default function ExcaliburApp() {
   }, []);
 
   const setPage = useCallback((p) => {
-    if (p === "apply") { setPageRaw("admissions"); window.scrollTo(0,0); return; }
+    if (p === "apply") { openInquiry(); return; }
     setPageRaw(p);
     window.scrollTo(0, 0);
   }, [openInquiry]);
