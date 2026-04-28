@@ -5889,6 +5889,269 @@ function EventsPage({ setPage, openInquiry }) {
   );
 }
 
+// ─────────────────────────────────────────────
+// PAGE: APPLICATION
+// ─────────────────────────────────────────────
+function ApplicationPage({ setPage, defaultProgram }) {
+  const isMobile = useIsMobile();
+  const [prog, setProg] = React.useState(defaultProgram || null);
+  const [wave, setWave] = React.useState(null);
+  const [track, setTrack] = React.useState(null);
+  const [submitted, setSubmitted] = React.useState(false);
+  const [sending, setSending] = React.useState(false);
+  const [students, setStudents] = React.useState([{ firstName: "", lastName: "", age: "", grade: "" }]);
+  const [form, setForm] = React.useState({
+    parentFirst: "", parentLast: "", email: "", phone: "",
+    city: "", state: "", zip: "",
+    contactMethod: "", contactTime: "",
+    sendPackage: "", hearAbout: "",
+  });
+  const set = (k, v) => setForm(f => ({ ...f, [k]: v }));
+  const addStudent = () => { if (students.length < 5) setStudents(s => [...s, { firstName: "", lastName: "", age: "", grade: "" }]); };
+  const updateStudent = (i, k, v) => { const s = [...students]; s[i] = { ...s[i], [k]: v }; setStudents(s); };
+
+  const programs = [
+    { id: "summer", label: "SUMMER INTENSIVE", title: "Summer Intensive", price: "$4,500 / wave", desc: "Two weeks, full days, Mon–Fri. Public speaking, business, AI, sales and a Shark Tank–style Venture Court finale. 20 students per wave.", page: "summer-detail" },
+    { id: "six-week", label: "SIX-WEEK INTENSIVE", title: "Six-Week Intensive", price: "$3,900 / wave", desc: "Full curriculum in six concentrated weeks. Weekday evening or Sunday half-day formats. Judged Demo Day finale.", page: "intensive" },
+    { id: "flagship", label: "TEN-MONTH FLAGSHIP", title: "Ten-Month Program", price: "From $1,990 / month", desc: "All eight disciplines, real-world engagements, competitions, field trips, and the Excalibur Academy Portfolio. September–June.", page: "flagship-detail" },
+  ];
+  const waves = [
+    { id: "wave1", label: "WAVE 1", title: "July 6–18, 2026", sub: "Monday through Friday", detail: "Two weeks. Full days. Limited to 20 students." },
+    { id: "wave2", label: "WAVE 2", title: "August 3–15, 2026", sub: "Monday through Friday", detail: "Identical structure to Wave 1. August availability." },
+  ];
+  const tracks = [
+    { id: "weekday", label: "WEEKDAY TRACK", title: "Tuesday & Thursday", sub: "4:00 – 7:00 PM", detail: "Evening sessions. Fits any weekend schedule." },
+    { id: "saturday", label: "SATURDAY TRACK", title: "Every Saturday", sub: "9:00 AM – 3:00 PM", detail: "Full-day immersion. Deeper workshops and extended speaker time." },
+    { id: "either", label: "NO PREFERENCE", title: "Either Track", sub: "", detail: "The admissions team will confirm availability with you." },
+  ];
+  const grades = ["9th Grade", "10th Grade", "11th Grade", "12th Grade"];
+  const contactMethods = ["Phone Call", "Email", "Text Message", "WhatsApp"];
+  const contactTimes = ["Morning (9–12)", "Afternoon (12–5)", "Evening (5–8)", "Weekends"];
+
+  const isSummer = prog === "summer";
+  const needsWave = isSummer;
+  const needsTrack = prog === "six-week" || prog === "flagship";
+  const readyToFill = prog && (needsWave ? wave : true) && (needsTrack ? track : true);
+
+  const iStyle = { background: "#000", border: "1px solid rgba(199,171,117,.2)", color: "#FBF7EE", padding: "13px 16px", fontFamily: "'Lato',sans-serif", fontSize: 15, fontWeight: 300, outline: "none", width: "100%" };
+  const focus = e => e.target.style.borderColor = gold;
+  const blur  = e => e.target.style.borderColor = "rgba(199,171,117,.2)";
+
+  const StepNum = ({ n, done }) => (
+    <div style={{ width: 30, height: 30, background: done ? gold : "#111", border: `1px solid ${done ? gold : "rgba(199,171,117,.25)"}`, display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "'Lato',sans-serif", fontSize: 12, fontWeight: 700, color: done ? "#000" : "#FBF7EE", flexShrink: 0 }}>{n}</div>
+  );
+  const SectionHead = ({ n, done, label }) => (
+    <div style={{ display: "flex", alignItems: "center", gap: 14, marginBottom: 24 }}>
+      <StepNum n={n} done={done} />
+      <h3 style={{ fontFamily: "'Cormorant Garamond',Georgia,serif", fontSize: 24, fontWeight: 600, color: "#FBF7EE" }}>{label}</h3>
+    </div>
+  );
+  const Label = ({ children }) => (
+    <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 11, letterSpacing: "0.22em", color: gold, fontWeight: 700, textTransform: "uppercase", marginBottom: 12 }}>{children}</p>
+  );
+  const Chip = ({ label, active, onClick }) => (
+    <button onClick={onClick} style={{ fontFamily: "'Lato',sans-serif", fontSize: 15, padding: "11px 20px", cursor: "pointer", background: active ? gold : "transparent", color: active ? "#000" : "#FBF7EE", border: `1px solid ${active ? gold : "rgba(199,171,117,.2)"}`, transition: "all .2s", fontWeight: active ? 700 : 300, whiteSpace: "nowrap" }}>{label}</button>
+  );
+
+  const handleSubmit = async () => {
+    if (!form.email || !form.city) return;
+    setSending(true);
+    const p = programs.find(x => x.id === prog);
+    const w = waves.find(x => x.id === wave);
+    const t = tracks.find(x => x.id === track);
+    await sendEmail({
+      subject: "New Application — " + form.parentFirst + " " + form.parentLast,
+      name: form.parentFirst + " " + form.parentLast,
+      email: form.email,
+      phone: form.phone,
+      city: form.city + (form.state ? ", " + form.state : "") + (form.zip ? " " + form.zip : ""),
+      program: p ? p.title : "",
+      wave: w ? w.title : "",
+      track: t ? t.label + " · " + t.title : "",
+      contact_method: form.contactMethod,
+      contact_time: form.contactTime,
+      send_package: form.sendPackage,
+      heard_about: form.hearAbout,
+      students: students.map(s => s.firstName + " " + s.lastName + " | Grade: " + s.grade + " | Age: " + s.age).join(" / "),
+      message: "Program: " + (p ? p.title : "") + (w ? " · " + w.title : "") + (t ? " · " + t.label : ""),
+    });
+    setSending(false);
+    setSubmitted(true);
+    window.scrollTo(0, 0);
+  };
+
+  return (
+    <div style={{ background: "#000", minHeight: "100vh" }}>
+      <Breadcrumb items={[{ label: "Admissions", page: "admissions" }]} setPage={setPage} />
+
+      {/* HEADER */}
+      <div style={{ padding: isMobile ? "48px 24px 36px" : "64px 80px 48px", borderBottom: "1px solid rgba(199,171,117,.1)" }}>
+        <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 8, letterSpacing: "0.5em", color: gold, fontWeight: 700, textTransform: "uppercase", marginBottom: 16 }}>Excalibur Academy · 2026</p>
+        <h1 style={{ fontFamily: "'Cormorant Garamond',Georgia,serif", fontSize: isMobile ? 32 : 48, fontWeight: 300, color: "#FBF7EE", lineHeight: 1.0, marginBottom: 14, letterSpacing: "0.02em" }}>Apply for Enrollment</h1>
+        <div style={{ width: 48, height: "1px", background: "linear-gradient(90deg," + gold + ",transparent)", marginBottom: 16 }} />
+        <p style={{ fontFamily: "'Lato',sans-serif", fontSize: 15, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.85, maxWidth: 560 }}>Select your program, choose your schedule, and complete your application. Our admissions team will be in touch personally within 24 hours.</p>
+      </div>
+
+      {submitted ? (
+        <div style={{ padding: isMobile ? "60px 24px" : "80px 80px", textAlign: "center", maxWidth: 600, margin: "0 auto" }}>
+          <div style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: 56, color: gold, marginBottom: 24 }}>✦</div>
+          <h2 style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: isMobile ? 32 : 44, fontWeight: 300, color: "#FBF7EE", marginBottom: 14 }}>Thank You.</h2>
+          <div style={{ width: 48, height: "1px", background: "linear-gradient(90deg,transparent," + gold + ",transparent)", margin: "0 auto 20px" }} />
+          <p style={{ fontFamily: "'Lato',sans-serif", fontSize: 15, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.9, marginBottom: 36 }}>Your application has been received. A member of our admissions team will be in touch within 24 hours. We look forward to welcoming your family to Excalibur Academy.</p>
+          <button onClick={() => setPage("home")} style={{ fontFamily: "'Lato',sans-serif", padding: "13px 36px", background: "transparent", border: "1px solid rgba(199,171,117,.35)", color: gold, fontSize: 11, fontWeight: 600, letterSpacing: "0.18em", textTransform: "uppercase", cursor: "pointer" }}>Return Home →</button>
+        </div>
+      ) : (
+        <div style={{ padding: isMobile ? "36px 24px 80px" : "56px 80px 100px" }}>
+
+          {/* STEP 1 — PROGRAM */}
+          <div style={{ marginBottom: 40 }}>
+            <SectionHead n="1" done={!!prog} label="Choose Your Program" />
+            <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(3,1fr)", gap: 2, background: "#111" }}>
+              {programs.map(p => (
+                <div key={p.id} onClick={() => { setProg(p.id); setWave(null); setTrack(null); }} style={{ background: prog === p.id ? "#0C0C0A" : "#080808", padding: "28px 24px", cursor: "pointer", borderTop: `2px solid ${prog === p.id ? gold : "transparent"}`, transition: "all .25s" }}>
+                  <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 8, letterSpacing: "0.3em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 10 }}>{p.label}</p>
+                  <h4 style={{ fontFamily: "'Cormorant Garamond',Georgia,serif", fontSize: 20, fontWeight: 600, color: "#FBF7EE", marginBottom: 6, lineHeight: 1.2 }}>{p.title}</h4>
+                  <p style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: 30, color: gold, marginBottom: 10 }}>{p.price}</p>
+                  <p style={{ fontFamily: "'Lato',sans-serif", fontSize: 15, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.6, marginBottom: 14 }}>{p.desc}</p>
+                  <button onClick={e => { e.stopPropagation(); setPage(p.page); }} style={{ fontFamily: "'Lato',sans-serif", fontSize: 9, letterSpacing: "0.16em", color: gold, background: "transparent", border: "none", cursor: "pointer", padding: 0, textTransform: "uppercase" }}>Explore Program →</button>
+                  {prog === p.id && <p style={{ fontFamily: "'Lato',sans-serif", fontSize: 10, color: gold, letterSpacing: "0.18em", marginTop: 10 }}>✓ SELECTED</p>}
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* STEP 2 — WAVE (summer only) */}
+          {prog && needsWave && (
+            <div style={{ marginBottom: 40 }}>
+              <SectionHead n="2" done={!!wave} label="Choose Your Wave" />
+              <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 2, background: "#111" }}>
+                {waves.map(w => (
+                  <div key={w.id} onClick={() => setWave(w.id)} style={{ background: wave === w.id ? "#0C0C0A" : "#080808", padding: "28px 24px", cursor: "pointer", borderTop: `2px solid ${wave === w.id ? gold : "transparent"}`, transition: "all .25s" }}>
+                    <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 8, letterSpacing: "0.3em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 10 }}>{w.label}</p>
+                    <h4 style={{ fontFamily: "'Cormorant Garamond',Georgia,serif", fontSize: 22, fontWeight: 600, color: "#FBF7EE", marginBottom: 4 }}>{w.title}</h4>
+                    <p style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: 15, color: gold, marginBottom: 10 }}>{w.sub}</p>
+                    <p style={{ fontFamily: "'Lato',sans-serif", fontSize: 15, color: "#FBF7EE", fontWeight: 300 }}>{w.detail}</p>
+                    {wave === w.id && <p style={{ fontFamily: "'Lato',sans-serif", fontSize: 10, color: gold, letterSpacing: "0.18em", marginTop: 14 }}>✓ SELECTED</p>}
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* STEP 2/3 — TRACK (six-week & flagship) */}
+          {prog && needsTrack && (
+            <div style={{ marginBottom: 40 }}>
+              <SectionHead n="2" done={!!track} label="Choose Your Track" />
+              <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(3,1fr)", gap: 2, background: "#111" }}>
+                {tracks.map(t => (
+                  <div key={t.id} onClick={() => setTrack(t.id)} style={{ background: track === t.id ? "#0C0C0A" : "#080808", padding: "28px 24px", cursor: "pointer", borderTop: `2px solid ${track === t.id ? gold : "transparent"}`, transition: "all .25s" }}>
+                    <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 8, letterSpacing: "0.3em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 10 }}>{t.label}</p>
+                    <h4 style={{ fontFamily: "'Cormorant Garamond',Georgia,serif", fontSize: 22, fontWeight: 600, color: "#FBF7EE", marginBottom: 4 }}>{t.title}</h4>
+                    {t.sub && <p style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: 16, color: gold, marginBottom: 10 }}>{t.sub}</p>}
+                    <p style={{ fontFamily: "'Lato',sans-serif", fontSize: 15, color: "#FBF7EE", fontWeight: 300 }}>{t.detail}</p>
+                    {track === t.id && <p style={{ fontFamily: "'Lato',sans-serif", fontSize: 10, color: gold, letterSpacing: "0.18em", marginTop: 14 }}>✓ SELECTED</p>}
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* STEP 3 — FORM */}
+          {readyToFill && (
+            <div style={{ marginBottom: 40 }}>
+              <SectionHead n={needsWave || needsTrack ? "3" : "2"} done={false} label="Your Information" />
+              <div style={{ background: "#080808", borderTop: `2px solid ${gold}`, padding: isMobile ? "28px 22px" : "36px 40px" }}>
+                <p style={{ fontFamily: "'Lato',sans-serif", fontSize: 15, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.75, marginBottom: 32 }}>Fill in your details and our admissions team will be in touch within 24 hours with your full information package and next steps.</p>
+
+                {/* Selection summary */}
+                <div style={{ background: "#000", padding: "14px 20px", marginBottom: 28, borderLeft: `2px solid ${gold}` }}>
+                  <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 9, letterSpacing: "0.2em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 6 }}>Your Selection</p>
+                  <p style={{ fontFamily: "'Lato',sans-serif", fontSize: 13, color: "#FBF7EE", fontWeight: 300 }}>
+                    {programs.find(x => x.id === prog)?.title}
+                    {wave ? " · " + waves.find(x => x.id === wave)?.title : ""}
+                    {track ? " · " + tracks.find(x => x.id === track)?.title : ""}
+                  </p>
+                </div>
+
+                {/* Parent */}
+                <Label>Parent / Guardian</Label>
+                <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 10, marginBottom: 10 }}>
+                  <input placeholder="First Name *" className="inquiry-input" style={iStyle} value={form.parentFirst} onChange={e => set("parentFirst", e.target.value)} onFocus={focus} onBlur={blur} />
+                  <input placeholder="Last Name" className="inquiry-input" style={iStyle} value={form.parentLast} onChange={e => set("parentLast", e.target.value)} onFocus={focus} onBlur={blur} />
+                </div>
+                <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 10, marginBottom: 24 }}>
+                  <input type="email" placeholder="Email Address *" className="inquiry-input" style={iStyle} value={form.email} onChange={e => set("email", e.target.value)} onFocus={focus} onBlur={blur} />
+                  <input type="tel" placeholder="Phone Number" className="inquiry-input" style={iStyle} value={form.phone} onChange={e => set("phone", e.target.value)} onFocus={focus} onBlur={blur} />
+                </div>
+
+                {/* City */}
+                <Label>Location</Label>
+                <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr 80px", gap: 10, marginBottom: 24 }}>
+                  <input placeholder="City *" className="inquiry-input" style={iStyle} value={form.city} onChange={e => set("city", e.target.value)} onFocus={focus} onBlur={blur} />
+                  <input placeholder="State" className="inquiry-input" style={iStyle} value={form.state} onChange={e => set("state", e.target.value)} onFocus={focus} onBlur={blur} />
+                  <input placeholder="ZIP" className="inquiry-input" style={iStyle} value={form.zip} onChange={e => set("zip", e.target.value)} onFocus={focus} onBlur={blur} />
+                </div>
+
+                {/* Contact */}
+                <Label>Preferred Method of Contact</Label>
+                <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginBottom: 20 }}>
+                  {contactMethods.map(m => <Chip key={m} label={m} active={form.contactMethod === m} onClick={() => set("contactMethod", m)} />)}
+                </div>
+                <Label>Best Time to Reach You</Label>
+                <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginBottom: 28 }}>
+                  {contactTimes.map(t => <Chip key={t} label={t} active={form.contactTime === t} onClick={() => set("contactTime", t)} />)}
+                </div>
+
+                {/* Students */}
+                <Label>Student Information</Label>
+                {students.map((s, i) => (
+                  <div key={i} style={{ background: "#000", border: "1px solid rgba(199,171,117,.15)", padding: "20px 20px", marginBottom: 10 }}>
+                    <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 9, letterSpacing: "0.22em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 12 }}>Student {i + 1}</p>
+                    <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 10, marginBottom: 10 }}>
+                      <input placeholder="First Name" className="inquiry-input" style={iStyle} value={s.firstName} onChange={e => updateStudent(i, "firstName", e.target.value)} onFocus={focus} onBlur={blur} />
+                      <input placeholder="Last Name" className="inquiry-input" style={iStyle} value={s.lastName} onChange={e => updateStudent(i, "lastName", e.target.value)} onFocus={focus} onBlur={blur} />
+                    </div>
+                    <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "80px 1fr", gap: 10 }}>
+                      <input type="number" min="14" max="19" placeholder="Age" className="inquiry-input" style={iStyle} value={s.age} onChange={e => updateStudent(i, "age", e.target.value)} onFocus={focus} onBlur={blur} />
+                      <div style={{ display: "flex", gap: 6, flexWrap: "wrap", alignItems: "center" }}>
+                        {grades.map(g => <Chip key={g} label={g} active={s.grade === g} onClick={() => updateStudent(i, "grade", g)} />)}
+                      </div>
+                    </div>
+                  </div>
+                ))}
+                {students.length < 5 && (
+                  <button onClick={addStudent} style={{ fontFamily: "'Lato',sans-serif", background: "transparent", border: "1px dashed rgba(199,171,117,.25)", color: gold, padding: "12px", fontSize: 15, fontWeight: 500, letterSpacing: "0.1em", cursor: "pointer", textAlign: "center", width: "100%", marginBottom: 28 }}>+ Add Another Student</button>
+                )}
+
+                {/* Package */}
+                <Label>Admissions Package & Private Invitation</Label>
+                <p style={{ fontFamily: "'Lato',sans-serif", fontSize: 15, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.7, marginBottom: 12 }}>Would you like to receive your private invitation to the May 23 family soirée and admissions package by post?</p>
+                <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginBottom: 24 }}>
+                  {["Yes — send by post", "Email only"].map(opt => <Chip key={opt} label={opt} active={form.sendPackage === opt} onClick={() => set("sendPackage", opt)} />)}
+                </div>
+
+                {/* Heard about */}
+                <Label>How Did You Hear About Excalibur?</Label>
+                <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginBottom: 32 }}>
+                  {["Referral", "Social Media", "Search", "Event", "Press / Media", "Other"].map(h => <Chip key={h} label={h} active={form.hearAbout === h} onClick={() => set("hearAbout", h)} />)}
+                </div>
+
+                <button
+                  onClick={handleSubmit}
+                  disabled={sending || !form.email || !form.city}
+                  style={{ fontFamily: "'Lato',sans-serif", padding: "15px 40px", background: (!form.email || !form.city) ? "rgba(199,171,117,.4)" : gold, border: "none", color: "#000", fontSize: 12, fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", cursor: (!form.email || !form.city) ? "not-allowed" : "pointer", width: "100%", transition: "all .2s" }}
+                >{sending ? "Submitting..." : "SUBMIT — WE'LL BE IN TOUCH WITHIN 24 HOURS"}</button>
+              </div>
+            </div>
+          )}
+
+        </div>
+      )}
+    </div>
+  );
+}
+
+
 export default function ExcaliburApp() {
   const [page, setPageRaw] = useState("home");
   const [inquiryOpen, setInquiryOpen] = useState(false);
@@ -5896,7 +6159,8 @@ export default function ExcaliburApp() {
 
   const openInquiry = useCallback((program = "") => {
     setInquiryProgram(program);
-    setInquiryOpen(true);
+    setPageRaw("apply-now");
+    window.scrollTo(0, 0);
   }, []);
 
   // Inject viewport meta into document head for proper mobile rendering
@@ -5913,7 +6177,7 @@ export default function ExcaliburApp() {
   }, []);
 
   const setPage = useCallback((p) => {
-    if (p === "apply") { openInquiry(); return; }
+    if (p === "apply") { setPageRaw("apply-now"); window.scrollTo(0,0); return; }
     setPageRaw(p);
     window.scrollTo(0, 0);
   }, [openInquiry]);
@@ -5931,6 +6195,7 @@ export default function ExcaliburApp() {
     if (page.startsWith("faculty:")) return <FacultyProfilePage slug={page.replace("faculty:", "")} setPage={setPage} />;
     if (page === "apply") return <ApplyPage setPage={setPage} openInquiry={openInquiry} />;
     if (page === "admissions") return <ApplyPage setPage={setPage} openInquiry={openInquiry} />;
+    if (page === "apply-now") return <ApplicationPage setPage={setPage} defaultProgram={inquiryProgram} />;
     if (page === "flagship-detail") return <FlagshipDetailPage setPage={setPage} openInquiry={openInquiry} />;
     if (page === "summer-detail") return <SummerDetailPage setPage={setPage} openInquiry={openInquiry} />;
     if (page.startsWith("module:")) return <ModulePage slug={page.replace("module:", "")} setPage={setPage} />;
@@ -5944,7 +6209,7 @@ export default function ExcaliburApp() {
       <StickyMobileCTA setPage={setPage} openInquiry={openInquiry} />
       <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=Forum&display=swap" rel="stylesheet" />
       <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
-      <style>{`*{margin:0;padding:0;box-sizing:border-box}::selection{background:rgba(199,171,117,.2);color:#fff}html{scroll-behavior:smooth}body{overflow-x:hidden}button{cursor:pointer;font-family:'Lato',sans-serif}img{max-width:100%}.inquiry-input::placeholder{color:rgba(255,255,255,0.8)!important}.inquiry-input{color:#FBF7EE!important}input::placeholder{color:rgba(255,255,255,0.8)!important}textarea::placeholder{color:rgba(255,255,255,0.8)!important}`}</style>
+      <style>{`*{margin:0;padding:0;box-sizing:border-box}::selection{background:rgba(199,171,117,.2);color:#fff}html{scroll-behavior:smooth}body{overflow-x:hidden}button{cursor:pointer;font-family:'Lato',sans-serif}img{max-width:100%}.inquiry-input::placeholder{color:rgba(255,255,255,1)!important}.application-input::placeholder{color:rgba(255,255,255,1)!important}.inquiry-input{color:#FBF7EE!important}input::placeholder{color:#FBF7EE!important}textarea::placeholder{color:#FBF7EE!important}`}</style>
       <Nav page={page} setPage={setPage} />
       <InquiryModal open={inquiryOpen} onClose={() => setInquiryOpen(false)} defaultProgram={inquiryProgram} />
       {renderPage()}
