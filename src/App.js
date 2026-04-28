@@ -306,65 +306,137 @@ function NavLink({ label, active, onClick }) {
   const [hov, setHov] = useState(false);
   return (
     <span onClick={onClick} onMouseEnter={() => setHov(true)} onMouseLeave={() => setHov(false)}
-      style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontWeight: 600, fontSize: 12, letterSpacing: "0.14em", textTransform: "uppercase", color: active ? gold : hov ? "#FBF7EE" : "#FBF7EE", cursor: "pointer", transition: "color .2s", paddingBottom: 2, borderBottom: active ? `1px solid ${gold}` : "1px solid transparent", whiteSpace: "nowrap" }}
+      style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontWeight: 600, fontSize: 11, letterSpacing: "0.13em", textTransform: "uppercase", color: active ? gold : hov ? "#FBF7EE" : "#FBF7EE", cursor: "pointer", transition: "color .2s", paddingBottom: 2, borderBottom: active ? `1px solid ${gold}` : "1px solid transparent", whiteSpace: "nowrap" }}
     >{label}</span>
   );
 }
 function Nav({ page, setPage }) {
   const isMobile = useIsMobile();
   const [menuOpen, setMenuOpen] = useState(false);
-  const links = [["HOME", "home"], ["THE ACADEMY", "about"], ["OUR PROGRAMS", "programs"], ["CURRICULUM", "curriculum"], ["FACULTY", "faculty"], ["THE ARENA", "beyond"], ["ADMISSIONS", "apply"], ["CONTACT", "apply"], ["EVENTS", "apply"]];
+  const allLinks = [
+    ["Home", "home"],
+    ["The Academy", "about"],
+    ["Our Programs", "programs"],
+    ["Curriculum", "curriculum"],
+    ["Faculty", "faculty"],
+    ["The Arena", "beyond"],
+    ["Admissions", "apply"],
+    ["Contact", "apply"],
+    ["Events", "apply"],
+  ];
   const go = (p) => { setPage(p); setMenuOpen(false); };
 
   return (
-    <nav style={{ position: "sticky", top: 0, zIndex: 100, background: "rgba(0,0,0,.98)", backdropFilter: "blur(20px)", borderBottom: "1px solid rgba(199,171,117,.1)" }}>
-      <div style={{ maxWidth: 1280, margin: "0 auto", padding: isMobile ? "0 20px" : "0 48px", display: "flex", justifyContent: "space-between", alignItems: "center", height: 64 }}>
+    <>
+      {/* NAV BAR */}
+      <nav style={{ position: "sticky", top: 0, zIndex: 200, background: "rgba(0,0,0,.97)", backdropFilter: "blur(20px)", borderBottom: "1px solid rgba(199,171,117,.12)" }}>
+        <div style={{ maxWidth: 1400, margin: "0 auto", padding: isMobile ? "0 20px" : "0 48px", display: "flex", alignItems: "center", justifyContent: "space-between", height: 64 }}>
 
-        {/* BRAND — name + motto */}
-        <div style={{ display: "flex", alignItems: "center", gap: 20, cursor: "pointer" }} onClick={() => go("home")}>
-          <div style={{ display: "flex", flexDirection: "column" }}>
-            <span style={{ fontFamily: "'Forum', 'Copperplate', Georgia, serif", fontWeight: 400, fontSize: isMobile ? 13 : 14, letterSpacing: "0.22em", color: "#FBF7EE", textTransform: "uppercase", lineHeight: 1.1, whiteSpace: "nowrap" }}>Excalibur Academy</span>
-            {!isMobile && <span style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: 9, letterSpacing: "0.18em", color: "rgba(199,171,117,.7)", fontStyle: "italic", marginTop: 3, fontWeight: 400, whiteSpace: "nowrap" }}>Forging the Leaders of Tomorrow</span>}
+          {/* LEFT — logo */}
+          <div style={{ width: isMobile ? "auto" : 160, display: "flex", alignItems: "center" }}>
+            <div onClick={() => go("home")} style={{ cursor: "pointer", width: 44, height: 44, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+              <img src={LOGO_URL} alt="Excalibur Academy" style={{ width: 44, height: 44, objectFit: "contain" }} />
+            </div>
+          </div>
+
+          {/* CENTER — brand name + motto */}
+          <div onClick={() => go("home")} style={{ textAlign: "center", cursor: "pointer", flex: 1 }}>
+            <div style={{ fontFamily: "'Forum', 'Copperplate', Georgia, serif", fontSize: isMobile ? 12 : 15, letterSpacing: "0.28em", color: "#FBF7EE", textTransform: "uppercase", lineHeight: 1.15, whiteSpace: "nowrap" }}>Excalibur Academy</div>
+            {!isMobile && <div style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: 9, letterSpacing: "0.16em", color: "rgba(199,171,117,.65)", fontStyle: "italic", marginTop: 3, whiteSpace: "nowrap" }}>Forging the Leaders of Tomorrow</div>}
+          </div>
+
+          {/* RIGHT — APPLY NOW + MENU */}
+          <div style={{ width: isMobile ? "auto" : 160, display: "flex", alignItems: "center", gap: 12, justifyContent: "flex-end" }}>
+            {!isMobile && (
+              <button onClick={() => go("apply")}
+                onMouseEnter={e => { e.currentTarget.style.background = "transparent"; e.currentTarget.style.color = gold; }}
+                onMouseLeave={e => { e.currentTarget.style.background = gold; e.currentTarget.style.color = "#000"; }}
+                style={{ fontFamily: sans, background: gold, color: "#000", padding: "0 16px", height: 32, fontSize: 9, fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", border: `1px solid ${gold}`, cursor: "pointer", transition: "all .25s", whiteSpace: "nowrap" }}>
+                APPLY NOW
+              </button>
+            )}
+            {/* MENU button */}
+            <button onClick={() => setMenuOpen(o => !o)} style={{ background: "none", border: "none", cursor: "pointer", display: "flex", alignItems: "center", gap: 8, padding: "4px 0" }}>
+              {!isMobile && <span style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 13, letterSpacing: "0.2em", color: "#FBF7EE", textTransform: "uppercase", fontWeight: 500 }}>{menuOpen ? "Close" : "Menu"}</span>}
+              <div style={{ display: "flex", flexDirection: "column", gap: 4.5, width: 22 }}>
+                <span style={{ display: "block", height: 1.5, background: menuOpen ? gold : "#FBF7EE", transition: "all .3s", transform: menuOpen ? "rotate(45deg) translate(4px, 4px)" : "none" }} />
+                <span style={{ display: "block", height: 1.5, background: menuOpen ? gold : "#FBF7EE", transition: "all .3s", opacity: menuOpen ? 0 : 1 }} />
+                <span style={{ display: "block", height: 1.5, background: menuOpen ? gold : "#FBF7EE", transition: "all .3s", transform: menuOpen ? "rotate(-45deg) translate(4px, -4px)" : "none" }} />
+              </div>
+            </button>
           </div>
         </div>
+      </nav>
 
-        {/* Desktop links */}
+      {/* MEGA MENU OVERLAY */}
+      <div style={{
+        position: "fixed", top: 64, left: 0, right: 0, bottom: 0, zIndex: 199,
+        background: "#000",
+        transform: menuOpen ? "translateY(0)" : "translateY(-100%)",
+        opacity: menuOpen ? 1 : 0,
+        transition: "transform .45s cubic-bezier(.22,1,.36,1), opacity .35s ease",
+        pointerEvents: menuOpen ? "all" : "none",
+        display: "flex",
+        overflow: "hidden",
+      }}>
+        {/* Background wordmark — very faint */}
+        <div style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center", pointerEvents: "none", overflow: "hidden" }}>
+          <span style={{ fontFamily: "'Forum', serif", fontSize: "clamp(120px,20vw,220px)", color: "rgba(199,171,117,.04)", letterSpacing: "0.15em", textTransform: "uppercase", userSelect: "none", whiteSpace: "nowrap" }}>EXCALIBUR</span>
+        </div>
+
+        {/* LEFT — nav links */}
+        <div style={{ flex: 1, padding: isMobile ? "40px 28px" : "56px 72px", display: "flex", flexDirection: "column", justifyContent: "center", position: "relative", zIndex: 1, overflowY: "auto" }}>
+          <p style={{ fontFamily: sans, fontSize: 9, letterSpacing: "0.4em", color: "rgba(199,171,117,.4)", textTransform: "uppercase", marginBottom: 36, fontWeight: 600 }}>Navigation</p>
+          {allLinks.map(([l, p], i) => (
+            <div key={l} onClick={() => go(p)} style={{
+              display: "flex", alignItems: "center", justifyContent: "space-between",
+              padding: isMobile ? "14px 0" : "16px 0",
+              borderBottom: "1px solid rgba(199,171,117,.07)",
+              cursor: "pointer", group: true,
+            }}
+              onMouseEnter={e => { e.currentTarget.querySelector(".ml").style.color = gold; e.currentTarget.querySelector(".arr").style.opacity = "1"; e.currentTarget.querySelector(".arr").style.transform = "translateX(6px)"; }}
+              onMouseLeave={e => { e.currentTarget.querySelector(".ml").style.color = "#FBF7EE"; e.currentTarget.querySelector(".arr").style.opacity = "0.3"; e.currentTarget.querySelector(".arr").style.transform = "translateX(0)"; }}
+            >
+              <div style={{ display: "flex", alignItems: "baseline", gap: 20 }}>
+                <span style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 11, color: "rgba(199,171,117,.3)", fontStyle: "italic" }}>0{i + 1}</span>
+                <span className="ml" style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: isMobile ? 26 : 36, fontWeight: 500, color: "#FBF7EE", letterSpacing: "0.04em", transition: "color .2s" }}>{l}</span>
+              </div>
+              <span className="arr" style={{ fontFamily: sans, fontSize: 18, color: gold, opacity: 0.3, transition: "all .25s", transform: "translateX(0)" }}>→</span>
+            </div>
+          ))}
+          {/* Apply Now in menu */}
+          <button onClick={() => go("apply")} style={{ marginTop: 40, alignSelf: "flex-start", fontFamily: sans, background: gold, color: "#000", padding: "14px 40px", fontSize: 11, fontWeight: 700, letterSpacing: "0.2em", textTransform: "uppercase", border: "none", cursor: "pointer" }}>
+            APPLY NOW →
+          </button>
+        </div>
+
+        {/* RIGHT — photo panel (desktop only) */}
         {!isMobile && (
-          <div style={{ display: "flex", alignItems: "center", gap: 24 }}>
-            {links.map(([l, p]) => <NavLink key={p} label={l} active={page === p} onClick={() => go(p)} />)}
+          <div style={{ width: "38%", position: "relative", flexShrink: 0 }}>
+            <img src="https://i.imgur.com/mkQ2Nde.jpeg" alt="Excalibur Academy" style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center" }} />
+            <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to right, #000 0%, rgba(0,0,0,.3) 40%, transparent 100%)" }} />
+            {/* Bottom label */}
+            <div style={{ position: "absolute", bottom: 48, left: 40 }}>
+              <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 13, color: "rgba(251,247,238,.5)", letterSpacing: "0.2em", textTransform: "uppercase", marginBottom: 8 }}>Orange County · California</p>
+              <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 18, color: gold, fontStyle: "italic", lineHeight: 1.5 }}>Forging the Leaders<br />of Tomorrow.</p>
+            </div>
+            {/* Oxford-style CTA card — top right of photo */}
+            <div style={{
+              position: "absolute", top: 40, right: 36,
+              background: gold, padding: "24px 28px", maxWidth: 240,
+              cursor: "pointer",
+            }} onClick={() => go("apply")}>
+              <p style={{ fontFamily: sans, fontSize: 9, letterSpacing: "0.25em", color: "rgba(0,0,0,.55)", textTransform: "uppercase", fontWeight: 600, marginBottom: 10 }}>Summer 2026</p>
+              <p style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: 18, fontWeight: 600, color: "#000", lineHeight: 1.25, marginBottom: 14 }}>Waitlist for Summer 2026 Waves Now Open.</p>
+              <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                <span style={{ fontFamily: sans, fontSize: 11, fontWeight: 700, color: "#000", letterSpacing: "0.08em" }}>Learn More</span>
+                <span style={{ fontSize: 14, color: "#000", transition: "transform .2s" }}>→</span>
+              </div>
+            </div>
           </div>
-        )}
-
-        {/* Desktop CTA / Mobile hamburger */}
-        {!isMobile ? (
-          <button onClick={() => go("apply")}
-            onMouseEnter={e => { e.currentTarget.style.background = "transparent"; e.currentTarget.style.color = gold; }}
-            onMouseLeave={e => { e.currentTarget.style.background = gold; e.currentTarget.style.color = "#000"; }}
-            style={{ fontFamily: sans, background: gold, color: "#000", padding: "0 24px", height: 38, fontSize: 11, fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", border: `1px solid ${gold}`, cursor: "pointer", transition: "all .25s" }}>
-            APPLY NOW
-          </button>
-        ) : (
-          <button onClick={() => setMenuOpen(!menuOpen)}
-            style={{ background: "transparent", border: "none", cursor: "pointer", padding: 8, display: "flex", flexDirection: "column", gap: 5 }}>
-            <span style={{ display: "block", width: 24, height: 1.5, background: menuOpen ? gold : "#E8E0D8", transition: "all .3s", transform: menuOpen ? "rotate(45deg) translate(5px, 5px)" : "none" }} />
-            <span style={{ display: "block", width: 24, height: 1.5, background: menuOpen ? gold : "#E8E0D8", transition: "all .3s", opacity: menuOpen ? 0 : 1 }} />
-            <span style={{ display: "block", width: 24, height: 1.5, background: menuOpen ? gold : "#E8E0D8", transition: "all .3s", transform: menuOpen ? "rotate(-45deg) translate(5px, -5px)" : "none" }} />
-          </button>
         )}
       </div>
-
-      {/* Mobile dropdown menu */}
-      {isMobile && (
-        <div style={{ maxHeight: menuOpen ? 400 : 0, overflow: "hidden", transition: "max-height .4s cubic-bezier(.22,1,.36,1)", background: "#080808", borderTop: menuOpen ? "1px solid rgba(199,171,117,.1)" : "none" }}>
-          <div style={{ padding: "20px 24px", display: "flex", flexDirection: "column", gap: 0 }}>
-            {links.map(([l, p]) => (
-              <div key={p} onClick={() => go(p)} style={{ padding: "16px 0", borderBottom: "1px solid #111", fontFamily: sans, fontSize: 13, fontWeight: 600, letterSpacing: "0.2em", textTransform: "uppercase", color: page === p ? gold : "#D8D0C8", cursor: "pointer" }}>{l}</div>
-            ))}
-            <button onClick={() => go("apply")} style={{ marginTop: 20, padding: "14px 0", background: gold, color: "#000", border: "none", fontFamily: sans, fontSize: 12, fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", cursor: "pointer" }}>APPLY NOW</button>
-          </div>
-        </div>
-      )}
-    </nav>
+    </>
   );
 }
 
@@ -1359,36 +1431,66 @@ function IntensiveContent({ setPage, isMobile, waves, activeWave, setActiveWave 
 function ProgramsPage({ setPage, openInquiry }) {
   const isMobile = useIsMobile();
   const [activeWave, setActiveWave] = useState(0);
+  const [activeProgram, setActiveProgram] = useState(0);
 
   const programs = [
     {
-      tag: "SUMMER INTENSIVE", id: "summer", flagship: false, status: "● ENROLLING NOW", statusColor: "#4DB87A",
-      title: "Summer Intensive", tagline: "Two weeks. Full days. Real stakes.",
-      price: "$4,500+ / wave", priceNote: "Includes lunch, guest speakers & Shark Tank–style startup pitch Finale with parents and real investors as guests and judges.",
-      desc: "The Summer Intensive is a two-week, full-day program held Monday through Friday and offered in two waves, July and August. The program provides an immersive introduction to Excalibur's core disciplines through a structured daily schedule led by senior faculty and distinguished guest speakers. Students rotate through all major curricular areas and engage daily with guest lecturers and specialists drawn from a range of professional fields. The program culminates in a formal Shark Tank–style finale, during which students present original business concepts to a panel of experienced judges and real investors. Selected projects receive rewards and prizes ranging from top business tech accessories to real funding support.",
-      schedule: "Monday – Friday · 9:30 AM – 3:00 PM · Two waves: July & August",
-      students: "20 students per wave",
-      features: ["All eight curriculum disciplines across two weeks", "Guest speaker every single day — real entrepreneurs, top executives and notable guest speakers", "Full-day interactive sessions: pitching, debate, case studies, workshops", "Shark Tank Finale: teams pitch live to real judges for startup investment prizes — $2,000 Best Concept, $1,000 Best Pitch, $500 Most Innovative, as well as tech business accessories", "Field trip to local businesses — behind-the-scenes tour and owner conversation", "Bound portfolio awarded at Shark Tank–inspired Finale", "Alumni network access upon completion"],
+      tag: "SUMMER INTENSIVE", id: "summer", flagship: false, status: "WAITLIST NOW OPEN", statusColor: "#4DB87A",
+      title: "Summer Intensive",
+      tagline: "Two weeks. Full days. Serious momentum.",
+      photo: "https://i.imgur.com/YChoxq8.jpeg",
+      desc: "The Summer Intensive is a two-week, full-day program offered in July and August for high school juniors and seniors ready to experience Excalibur's core model in a concentrated format.\n\nEach day combines public speaking training, business, innovation, marketing and leadership instruction, applied workshops, and sessions with distinguished guest speakers. Students rotate through all major curricular areas and engage daily with guest lecturers and specialists drawn from a range of professional fields.\n\nThe program culminates in The Excalibur Venture Finale — a Shark Tank–inspired pitch finale where student teams present original business concepts to a panel of experienced judges and real investors. Selected projects receive rewards and prizes ranging from top business tech accessories to real seed funding support.",
+      details: [
+        ["Schedule", "Wave I: July 6–18, 2026  ·  Wave II: August 3–15, 2026\nMonday–Friday · 9:30 AM–3:00 PM"],
+        ["Class Size", "Limited to 20 students per wave"],
+        ["Tuition", "$4,500+ per wave"],
+        ["Included", "Catered lunches from local restaurants, distinguished guest speakers, faculty-led workshops, pitch development, and The Excalibur Venture Grand Finale before families and invited professionals."],
+      ],
+      features: [
+        "All eight curriculum disciplines across two weeks",
+        "Guest speaker every single day — real entrepreneurs, top executives and notable guest speakers",
+        "Full-day interactive sessions: pitching, debate, case studies, workshops",
+        "Includes catered lunches from local restaurants, refreshments during scheduled breaks, and courtyard time between instructional blocks.",
+        "Shark Tank–inspired Venture Finale: teams pitch live to real judges for startup investment prizes — $2,000 Best Concept, $1,000 Best Pitch, $500 Most Innovative, as well as tech business accessories",
+        "Field trip to local businesses — behind-the-scenes tour and owner conversation",
+        "Bound portfolio awarded at Shark Tank–inspired Finale",
+        "Alumni & Mentors network access upon completion",
+      ],
+      featuresLabel: "The Experience",
     },
     {
       tag: "SIX-WEEK INTENSIVE", id: "intensive", flagship: false, status: "ENROLLING SOON", statusColor: gold,
-      title: "Six-Week Intensive", tagline: "The compressed formation.",
-      price: "$3,900 / wave", priceNote: "Four waves per year · Spring, Summer, Fall, Winter",
+      title: "Six-Week Intensive",
+      tagline: "The compressed formation.",
+      photo: null,
       desc: "A compressed version of the flagship curriculum. One discipline per week, building toward a Shark Tank–style Finale. Two tracks — Monday & Wednesday evenings or Sunday mornings. Twelve total sessions, structured as 12 sessions of three hours each.",
-      schedule: "Mon & Wed evenings · 4:00–6:25 PM (Group A) · or · Sunday (Group B)",
-      students: "20 students per wave",
+      details: [
+        ["Schedule", "Mon & Wed evenings · 4:00–6:25 PM (Group A)\nor Sunday (Group B)"],
+        ["Class Size", "20 students per wave"],
+        ["Tuition", "$3,900 / wave"],
+        ["Waves", "Four per year · Spring, Summer, Fall, Winter"],
+      ],
       features: ["Full curriculum across six weeks — one module per week", "Weekday evening or Sunday morning track", "Guest speaker every week from a different industry", "Shark Tank–style Finale closes each wave with live investor panel"],
+      featuresLabel: "The Experience",
     },
     {
       tag: "TEN-MONTH FLAGSHIP", id: "full-program", flagship: true, status: "ENROLLING SOON", statusColor: gold,
-      title: "Ten-Month Program", tagline: "The complete formation.",
-      price: "$1,990 / month", priceNote: "September 2026 – June 2027 · Founding Class",
+      title: "Ten-Month Program",
+      tagline: "The complete formation.",
+      photo: null,
       desc: "The complete Excalibur formation — ten months across all eight disciplines, all twelve industry sectors, and three real-world engagements. Two parallel tracks give families scheduling flexibility. The same curriculum, the same faculty, the same standard.",
-      schedule: "Weekday: Tue & Thu · 4:00–6:25 PM (Group B) · or · Saturday: 10:30 AM–3:45 PM (Group A)",
-      students: "15–25 per track · 30–50 total",
+      details: [
+        ["Schedule", "Weekday: Tue & Thu · 4:00–6:25 PM (Group B)\nor Saturday: 10:30 AM–3:45 PM (Group A)"],
+        ["Class Size", "15–25 per track · 30–50 total"],
+        ["Tuition", "$1,990 / month"],
+        ["Dates", "September 2026 – June 2027 · Founding Class"],
+      ],
       features: ["All 8 modules at full depth across a structured 4-phase arc", "10 industry sector rotations — one guest professional per month", "Three-block session model: Speaking Coach + Lead Instructor + Specialist", "Junior Consultant Program — 3-week real business engagement", "Apprentice Externship — 4–6 weeks inside a real company", "Funded Micro-Business Launch with a dedicated mentor", "Monthly Pitch Night before live judges and parents", "City Championship (biannual) and National Championship pipeline", "Bound graduation portfolio + faculty letters of recommendation", "College admissions counseling and portfolio review"],
+      featuresLabel: "The Experience",
     },
   ];
+
+  const prog = programs[activeProgram];
 
   return (
     <div style={{ background: "#000", paddingTop: 0 }}>
@@ -1404,48 +1506,114 @@ function ProgramsPage({ setPage, openInquiry }) {
 
       <Hr />
 
-      {/* PROGRAM CARDS */}
-      <div style={{ maxWidth: 1100, margin: "0 auto", padding: isMobile ? "48px 16px" : "72px 40px" }}>
-        <div style={{ display: "flex", flexDirection: "column", gap: 2 }}>
-          {programs.map((p, idx) => (
-            <Fade key={idx} d={idx * .04}>
-              <div style={{ background: "#080808", borderTop: `2px solid ${p.flagship ? gold : "rgba(199,171,117,.12)"}`, position: "relative" }}>
-                {p.flagship && <div style={{ position: "absolute", top: 16, right: 20, fontFamily: sans, background: "rgba(199,171,117,.1)", color: gold, padding: "3px 10px", fontSize: 9, fontWeight: 600, letterSpacing: 1.5 }}>FLAGSHIP</div>}
-                <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 0 }}>
-                  {/* Left: overview */}
-                  <div style={{ padding: isMobile ? "36px 24px" : "48px 44px", borderRight: isMobile ? "none" : "1px solid #111" }}>
-                    <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 16, flexWrap: "wrap" }}>
-                      <Eyebrow>{p.tag}</Eyebrow>
-                      <span style={{ fontFamily: sans, fontSize: 9, color: p.statusColor, border: `1px solid ${p.statusColor}`, padding: "2px 8px", letterSpacing: "0.1em", fontWeight: 600, marginBottom: 14 }}>{p.status}</span>
-                    </div>
-                    <h2 style={{ fontFamily: serif, fontSize: isMobile ? 28 : 36, fontWeight: 600, color: "#FBF7EE", lineHeight: 1, marginBottom: 6 }}>{p.title}</h2>
-                    <p style={{ fontFamily: serif, fontSize: 16, color: gold, fontStyle: "italic", marginBottom: 20 }}>{p.tagline}</p>
-                    <p style={{ fontFamily: sans, fontSize: 14, lineHeight: 1.85, color: "#FBF7EE", fontWeight: 300, marginBottom: 24 }}>{p.desc}</p>
-                    <div style={{ display: "flex", flexDirection: "column", gap: 8, padding: "16px 0", borderTop: "1px solid #111", borderBottom: "1px solid #111", marginBottom: 24 }}>
-                      {[["Schedule", p.schedule], ["Class Size", p.students], ["Tuition", p.price]].map(([k, v]) => (
-                        <div key={k} style={{ display: "flex", gap: 12 }}>
-                          <span style={{ fontFamily: sans, fontSize: 10, color: "rgba(251,247,238,0.6)", letterSpacing: "0.1em", textTransform: "uppercase", minWidth: 64, paddingTop: 1 }}>{k}</span>
-                          <span style={{ fontFamily: sans, fontSize: 13, color: "#FBF7EE" }}>{v}</span>
-                        </div>
-                      ))}
-                    </div>
-                    <p style={{ fontFamily: sans, fontSize: 11, color: "rgba(251,247,238,0.6)", marginBottom: 20 }}>{p.priceNote}</p>
-                    <button onClick={() => setPage(p.id === "launchpad" || p.id === "summer" ? "apply" : p.id)} style={{ fontFamily: sans, padding: "11px 28px", background: p.flagship ? gold : "transparent", border: p.flagship ? "none" : `1px solid rgba(199,171,117,.3)`, color: p.flagship ? "#000" : gold, fontSize: 11, fontWeight: p.flagship ? 700 : 600, letterSpacing: "0.15em", textTransform: "uppercase", cursor: "pointer" }}>{p.flagship ? "EXPLORE FULL PROGRAM →" : p.id === "launchpad" ? "APPLY NOW →" : `EXPLORE ${p.tag} →`}</button>
-                  </div>
-                  {/* Right: features */}
-                  <div style={{ padding: isMobile ? "0 24px 36px" : "48px 44px", background: "#060606" }}>
-                    <p style={{ fontFamily: sans, fontSize: 10, letterSpacing: "0.25em", color: "#FBF7EE", textTransform: "uppercase", marginBottom: 20, fontWeight: 600 }}>What's included</p>
-                    {p.features.map((f, j) => (
-                      <div key={j} style={{ display: "flex", gap: 14, marginBottom: 13, alignItems: "flex-start" }}>
-                        <div style={{ width: 16, height: 1.5, background: p.flagship ? gold : "rgba(199,171,117,.4)", marginTop: 8, flexShrink: 0 }} />
-                        <span style={{ fontFamily: sans, fontSize: 13, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.65 }}>{f}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            </Fade>
+      {/* LUXURY PROGRAM SHOWCASE */}
+      <div style={{ maxWidth: 1200, margin: "0 auto", padding: isMobile ? "0" : "0 0 80px" }}>
+
+        {/* Tab selector — minimal hotel menu style */}
+        <div style={{ display: "flex", borderBottom: "1px solid rgba(199,171,117,.1)", padding: isMobile ? "0 16px" : "0 40px" }}>
+          {programs.map((p, i) => (
+            <button key={i} onClick={() => setActiveProgram(i)} style={{
+              fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: isMobile ? 12 : 14,
+              letterSpacing: "0.12em", textTransform: "uppercase", fontWeight: activeProgram === i ? 600 : 300,
+              color: activeProgram === i ? gold : "rgba(251,247,238,.45)",
+              background: "none", border: "none", borderBottom: activeProgram === i ? `2px solid ${gold}` : "2px solid transparent",
+              padding: isMobile ? "18px 12px" : "22px 28px", cursor: "pointer", transition: "all .25s",
+              marginBottom: -1, whiteSpace: "nowrap",
+            }}>{p.tag}</button>
           ))}
+        </div>
+
+        {/* Program detail — luxury editorial layout */}
+        <div key={activeProgram} style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : prog.photo ? "1fr 1fr" : "1fr 1fr", gap: 0, minHeight: isMobile ? "auto" : 640 }}>
+
+          {/* LEFT — photo or dark panel */}
+          {prog.photo ? (
+            <div style={{ position: "relative", overflow: "hidden", minHeight: isMobile ? 280 : 640 }}>
+              <img src={prog.photo} alt={prog.title} style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center" }} />
+              <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to right, rgba(0,0,0,.15) 0%, rgba(0,0,0,.05) 100%)" }} />
+              <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(0,0,0,.6) 0%, transparent 50%)" }} />
+              {/* Status badge */}
+              <div style={{ position: "absolute", top: 28, left: 28 }}>
+                <span style={{ fontFamily: sans, fontSize: 9, color: prog.statusColor, border: `1px solid ${prog.statusColor}`, padding: "4px 10px", letterSpacing: "0.15em", fontWeight: 600, background: "rgba(0,0,0,.6)" }}>{prog.status}</span>
+              </div>
+              {/* Bottom label */}
+              <div style={{ position: "absolute", bottom: 32, left: 32 }}>
+                <p style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.4em", color: "rgba(251,247,238,.6)", textTransform: "uppercase", marginBottom: 8 }}>{prog.tag}</p>
+                <h2 style={{ fontFamily: serif, fontSize: isMobile ? 28 : 40, fontWeight: 600, color: "#FBF7EE", lineHeight: 1.05, marginBottom: 6 }}>{prog.title}</h2>
+                <p style={{ fontFamily: serif, fontSize: 15, color: gold, fontStyle: "italic" }}>{prog.tagline}</p>
+              </div>
+            </div>
+          ) : (
+            <div style={{ background: "#06050A", padding: isMobile ? "44px 28px" : "64px 52px", display: "flex", flexDirection: "column", justifyContent: "space-between", borderRight: "1px solid rgba(199,171,117,.06)" }}>
+              <div>
+                <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 24, flexWrap: "wrap" }}>
+                  <p style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.4em", color: gold, fontWeight: 600, textTransform: "uppercase" }}>{prog.tag}</p>
+                  <span style={{ fontFamily: sans, fontSize: 9, color: prog.statusColor, border: `1px solid ${prog.statusColor}`, padding: "3px 8px", letterSpacing: "0.1em", fontWeight: 600 }}>{prog.status}</span>
+                </div>
+                <h2 style={{ fontFamily: serif, fontSize: isMobile ? 32 : 48, fontWeight: 600, color: "#FBF7EE", lineHeight: 1.0, marginBottom: 10 }}>{prog.title}</h2>
+                <p style={{ fontFamily: serif, fontSize: 17, color: gold, fontStyle: "italic", marginBottom: 36, lineHeight: 1.4 }}>{prog.tagline}</p>
+                <div style={{ width: 36, height: 1, background: `linear-gradient(90deg, ${gold}, transparent)`, marginBottom: 28 }} />
+                {prog.desc.split("\n\n").map((para, i) => (
+                  <p key={i} style={{ fontFamily: sans, fontSize: 14, lineHeight: 1.9, color: "#FBF7EE", fontWeight: 300, marginBottom: 16 }}>{para}</p>
+                ))}
+              </div>
+              {/* Details grid */}
+              <div style={{ marginTop: 32, display: "flex", flexDirection: "column", gap: 0, borderTop: "1px solid rgba(199,171,117,.08)", paddingTop: 28 }}>
+                {prog.details.map(([k, v]) => (
+                  <div key={k} style={{ display: "grid", gridTemplateColumns: "100px 1fr", gap: 16, padding: "10px 0", borderBottom: "1px solid rgba(199,171,117,.05)" }}>
+                    <span style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.2em", color: "rgba(199,171,117,.5)", textTransform: "uppercase", paddingTop: 2 }}>{k}</span>
+                    <span style={{ fontFamily: sans, fontSize: 12, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.6, whiteSpace: "pre-line" }}>{v}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* RIGHT — content / features */}
+          <div style={{ background: "#080808", padding: isMobile ? "36px 28px" : "64px 52px", display: "flex", flexDirection: "column", overflowY: "auto" }}>
+
+            {/* If photo card — show desc + details first */}
+            {prog.photo && (
+              <>
+                <div style={{ marginBottom: 32 }}>
+                  {prog.desc.split("\n\n").map((para, i) => (
+                    <p key={i} style={{ fontFamily: sans, fontSize: 14, lineHeight: 1.9, color: "#FBF7EE", fontWeight: 300, marginBottom: 16 }}>{para}</p>
+                  ))}
+                </div>
+                <div style={{ display: "flex", flexDirection: "column", gap: 0, borderTop: "1px solid rgba(199,171,117,.08)", borderBottom: "1px solid rgba(199,171,117,.08)", marginBottom: 32 }}>
+                  {prog.details.map(([k, v]) => (
+                    <div key={k} style={{ display: "grid", gridTemplateColumns: "90px 1fr", gap: 16, padding: "10px 0", borderBottom: "1px solid rgba(199,171,117,.05)" }}>
+                      <span style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.2em", color: "rgba(199,171,117,.5)", textTransform: "uppercase", paddingTop: 2 }}>{k}</span>
+                      <span style={{ fontFamily: sans, fontSize: 12, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.6, whiteSpace: "pre-line" }}>{v}</span>
+                    </div>
+                  ))}
+                </div>
+              </>
+            )}
+
+            {/* Features */}
+            <p style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.35em", color: gold, textTransform: "uppercase", fontWeight: 600, marginBottom: 22 }}>{prog.featuresLabel}</p>
+            <div style={{ display: "flex", flexDirection: "column", gap: 0, flex: 1 }}>
+              {prog.features.map((f, j) => (
+                <div key={j} style={{ display: "flex", gap: 16, padding: "12px 0", borderBottom: "1px solid rgba(199,171,117,.06)", alignItems: "flex-start" }}>
+                  <span style={{ fontFamily: serif, fontSize: 11, color: "rgba(199,171,117,.35)", fontStyle: "italic", flexShrink: 0, paddingTop: 2 }}>{String(j + 1).padStart(2, "0")}</span>
+                  <span style={{ fontFamily: sans, fontSize: 13, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.7 }}>{f}</span>
+                </div>
+              ))}
+            </div>
+
+            {/* CTA */}
+            <div style={{ marginTop: 36, display: "flex", gap: 12, flexWrap: "wrap" }}>
+              <button onClick={() => openInquiry && openInquiry(prog.id)} style={{ fontFamily: sans, padding: "13px 32px", background: gold, border: "none", color: "#000", fontSize: 11, fontWeight: 700, letterSpacing: "0.15em", textTransform: "uppercase", cursor: "pointer" }}>
+                {prog.flagship ? "APPLY — FLAGSHIP →" : "APPLY NOW →"}
+              </button>
+              {!prog.flagship && (
+                <button onClick={() => setPage(prog.id)} style={{ fontFamily: sans, padding: "13px 28px", background: "transparent", border: `1px solid ${gold}`, color: gold, fontSize: 11, fontWeight: 600, letterSpacing: "0.12em", textTransform: "uppercase", cursor: "pointer" }}>
+                  LEARN MORE →
+                </button>
+              )}
+            </div>
+          </div>
         </div>
       </div>
 
