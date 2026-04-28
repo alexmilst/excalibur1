@@ -125,6 +125,34 @@ function ShimmerStyle() {
   return null;
 }
 
+function Breadcrumb({ items, setPage }) {
+  // items = [{label, page}] — last item is current page (no link)
+  if (!items || items.length === 0) return null;
+  const gold = "#C7AB75";
+  const sans = "'Lato', sans-serif";
+  return (
+    <div style={{ background: "#000", borderBottom: "1px solid rgba(199,171,117,.08)", padding: "10px 48px" }}>
+      <div style={{ maxWidth: 1400, margin: "0 auto", display: "flex", alignItems: "center", gap: 8 }}>
+        <span onClick={() => setPage("home")} style={{ fontFamily: sans, fontSize: 10, color: "rgba(199,171,117,.5)", letterSpacing: "0.12em", textTransform: "uppercase", cursor: "pointer", transition: "color .2s" }}
+          onMouseEnter={e => e.target.style.color = gold} onMouseLeave={e => e.target.style.color = "rgba(199,171,117,.5)"}>Home</span>
+        {items.map((item, i) => (
+          <React.Fragment key={i}>
+            <span style={{ fontFamily: sans, fontSize: 9, color: "rgba(199,171,117,.25)" }}>›</span>
+            {i === items.length - 1 ? (
+              <span style={{ fontFamily: sans, fontSize: 10, color: "rgba(199,171,117,.8)", letterSpacing: "0.12em", textTransform: "uppercase" }}>{item.label}</span>
+            ) : (
+              <span onClick={() => setPage(item.page)} style={{ fontFamily: sans, fontSize: 10, color: "rgba(199,171,117,.5)", letterSpacing: "0.12em", textTransform: "uppercase", cursor: "pointer", transition: "color .2s" }}
+                onMouseEnter={e => e.target.style.color = gold} onMouseLeave={e => e.target.style.color = "rgba(199,171,117,.5)"}>{item.label}</span>
+            )}
+          </React.Fragment>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+
+
 
 function FAQ({ q, a }) {
   const [open, setOpen] = useState(false);
@@ -274,7 +302,7 @@ const sl = (s) => ({ open: "Enrolling Now", soon: "Opening Soon", future: "Futur
 
 function SBtn({ children, active, onClick }) {
   return (
-    <button onClick={onClick} style={{ fontFamily: sans, padding: "9px 22px", background: active ? "rgba(199,171,117,.08)" : "transparent", border: `1px solid ${active ? "rgba(199,171,117,.3)" : "#1a1a1a"}`, color: active ? gold : "rgba(251,247,238,0.5)", fontSize: 13, cursor: "pointer", transition: "all .25s", fontWeight: 500 }}>{children}</button>
+    <button onClick={onClick} style={{ fontFamily: sans, padding: "9px 22px", background: active ? "rgba(199,171,117,.08)" : "transparent", border: `1px solid ${active ? "rgba(199,171,117,.3)" : "#1a1a1a"}`, color: active ? gold : "#FBF7EE", fontSize: 13, cursor: "pointer", transition: "all .25s", fontWeight: 500 }}>{children}</button>
   );
 }
 function Eyebrow({ children }) {
@@ -293,7 +321,7 @@ function Li({ children, solid = false }) {
   return (
     <div style={{ display: "flex", gap: 14, marginBottom: 13, alignItems: "flex-start" }}>
       <Dot solid={solid} />
-      <span style={{ fontFamily: sans, fontSize: 14, color: solid ? "rgba(251,247,238,0.75)" : "rgba(251,247,238,0.5)", fontWeight: 300, lineHeight: 1.6 }}>{children}</span>
+      <span style={{ fontFamily: sans, fontSize: 14, color: solid ? "#FBF7EE" : "#FBF7EE", fontWeight: 300, lineHeight: 1.6 }}>{children}</span>
     </div>
   );
 }
@@ -313,18 +341,24 @@ function NavLink({ label, active, onClick }) {
 function Nav({ page, setPage }) {
   const isMobile = useIsMobile();
   const [menuOpen, setMenuOpen] = useState(false);
+  const [programsOpen, setProgramsOpen] = useState(false);
   const allLinks = [
-    ["Home", "home"],
-    ["The Academy", "about"],
-    ["Our Programs", "programs"],
-    ["Curriculum", "curriculum"],
-    ["Faculty", "faculty"],
-    ["The Arena", "beyond"],
-    ["Admissions", "apply"],
-    ["Contact", "apply"],
-    ["Events", "apply"],
+    ["Home", "home", null],
+    ["The Academy", "about", null],
+    ["Our Programs", "programs", [
+      { label: "Summer Intensive", page: "summer-detail", sub: "July & August · Two Weeks" },
+      { label: "Flagship 10-Month", page: "flagship-detail", sub: "Full Immersion · Sep–Jun" },
+      { label: "Six-Week Intensive", page: "intensive", sub: "Four Waves Per Year" },
+      { label: "View All Programs", page: "programs", sub: "Compare All Three" },
+    ]],
+    ["Curriculum", "curriculum", null],
+    ["Faculty", "faculty", null],
+    ["The Arena", "beyond", null],
+    ["Admissions", "apply", null],
+    ["Contact", "apply", null],
+    ["Events", "apply", null],
   ];
-  const go = (p) => { setPage(p); setMenuOpen(false); };
+  const go = (p) => { setPage(p); setMenuOpen(false); setProgramsOpen(false); };
 
   return (
     <>
@@ -386,21 +420,38 @@ function Nav({ page, setPage }) {
 
         {/* LEFT — nav links */}
         <div style={{ flex: 1, padding: isMobile ? "36px 28px 48px" : "48px 72px 64px", display: "flex", flexDirection: "column", justifyContent: "flex-start", position: "relative", zIndex: 1 }}>
-          {allLinks.map(([l, p], i) => (
-            <div key={l} onClick={() => go(p)} style={{
-              display: "flex", alignItems: "center", justifyContent: "space-between",
-              padding: isMobile ? "14px 0" : "16px 0",
-              borderBottom: "1px solid rgba(199,171,117,.07)",
-              cursor: "pointer", group: true,
-            }}
-              onMouseEnter={e => { e.currentTarget.querySelector(".ml").style.color = gold; e.currentTarget.querySelector(".arr").style.opacity = "1"; e.currentTarget.querySelector(".arr").style.transform = "translateX(6px)"; }}
-              onMouseLeave={e => { e.currentTarget.querySelector(".ml").style.color = "#FBF7EE"; e.currentTarget.querySelector(".arr").style.opacity = "0.3"; e.currentTarget.querySelector(".arr").style.transform = "translateX(0)"; }}
-            >
-              <div style={{ display: "flex", alignItems: "baseline", gap: 20 }}>
-                <span style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 11, color: "rgba(199,171,117,.3)", fontStyle: "italic" }}>0{i + 1}</span>
-                <span className="ml" style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: isMobile ? 26 : 36, fontWeight: 500, color: "#FBF7EE", letterSpacing: "0.04em", transition: "color .2s" }}>{l}</span>
+          {allLinks.map(([l, p, subs], i) => (
+            <div key={l}>
+              <div onClick={() => subs ? setProgramsOpen(o => !o) : go(p)} style={{
+                display: "flex", alignItems: "center", justifyContent: "space-between",
+                padding: isMobile ? "14px 0" : "16px 0",
+                borderBottom: "1px solid rgba(199,171,117,.07)",
+                cursor: "pointer",
+              }}
+                onMouseEnter={e => { const ml = e.currentTarget.querySelector(".ml"); const arr = e.currentTarget.querySelector(".arr"); if(ml) ml.style.color = gold; if(arr) { arr.style.opacity = "1"; arr.style.transform = "translateX(6px)"; } }}
+                onMouseLeave={e => { const ml = e.currentTarget.querySelector(".ml"); const arr = e.currentTarget.querySelector(".arr"); if(ml) ml.style.color = "#FBF7EE"; if(arr) { arr.style.opacity = "0.3"; arr.style.transform = "translateX(0)"; } }}
+              >
+                <div style={{ display: "flex", alignItems: "baseline", gap: 20 }}>
+                  <span style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 11, color: "rgba(199,171,117,.3)", fontStyle: "italic" }}>0{i + 1}</span>
+                  <span className="ml" style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: isMobile ? 26 : 36, fontWeight: 500, color: "#FBF7EE", letterSpacing: "0.04em", transition: "color .2s" }}>{l}</span>
+                </div>
+                <span className="arr" style={{ fontFamily: sans, fontSize: subs ? 22 : 18, color: gold, opacity: 0.3, transition: "all .25s", transform: "translateX(0)" }}>{subs ? (programsOpen ? "−" : "+") : "→"}</span>
               </div>
-              <span className="arr" style={{ fontFamily: sans, fontSize: 18, color: gold, opacity: 0.3, transition: "all .25s", transform: "translateX(0)" }}>→</span>
+              {subs && programsOpen && (
+                <div style={{ paddingLeft: isMobile ? 20 : 36, paddingBottom: 12, borderBottom: "1px solid rgba(199,171,117,.07)" }}>
+                  {subs.map((sub) => (
+                    <div key={sub.page} onClick={() => go(sub.page)} style={{ display: "flex", alignItems: "center", gap: 16, padding: "10px 0", cursor: "pointer", borderBottom: "1px solid rgba(199,171,117,.04)" }}
+                      onMouseEnter={e => e.currentTarget.querySelector(".sl").style.color = gold}
+                      onMouseLeave={e => e.currentTarget.querySelector(".sl").style.color = "#FBF7EE"}
+                    >
+                      <div>
+                        <div className="sl" style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: isMobile ? 18 : 22, fontWeight: 500, color: "#FBF7EE", lineHeight: 1.2, transition: "color .2s" }}>{sub.label}</div>
+                        <div style={{ fontFamily: "'Lato', sans-serif", fontSize: 9, color: gold, letterSpacing: "0.14em", textTransform: "uppercase", marginTop: 2 }}>{sub.sub}</div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
           ))}
           {/* Apply Now in menu */}
@@ -416,7 +467,7 @@ function Nav({ page, setPage }) {
             <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to right, #000 0%, rgba(0,0,0,.3) 40%, transparent 100%)" }} />
             {/* Bottom label */}
             <div style={{ position: "absolute", bottom: 48, left: 40 }}>
-              <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 13, color: "rgba(251,247,238,.5)", letterSpacing: "0.2em", textTransform: "uppercase", marginBottom: 8 }}>Orange County · California</p>
+              <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 13, color: "#FBF7EE", letterSpacing: "0.2em", textTransform: "uppercase", marginBottom: 8 }}>Orange County · California</p>
               <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 16, color: gold, fontStyle: "italic", lineHeight: 1.4, whiteSpace: "nowrap" }}>Forging the Leaders of Tomorrow.</p>
             </div>
             {/* Oxford-style CTA card — top right of photo */}
@@ -472,7 +523,7 @@ function PortfolioFolder({ isMobile }) {
         <div key={i} onClick={() => isMobile && toggle(i)} style={{ background: "#080808", borderTop: `2px solid ${i === 0 ? gold : "rgba(199,171,117,.1)"}`, padding: "28px 24px", cursor: isMobile ? "pointer" : "default", transition: "all .25s" }}>
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 12 }}>
             <span style={{ fontFamily: serif, fontSize: 11, color: "rgba(199,171,117,.4)", letterSpacing: "0.1em" }}>{item.n}</span>
-            {isMobile && <span style={{ fontFamily: sans, fontSize: 14, color: isOpen(i) ? gold : "rgba(251,247,238,0.5)", transition: "transform .25s", display: "inline-block", transform: isOpen(i) ? "rotate(45deg)" : "none" }}>+</span>}
+            {isMobile && <span style={{ fontFamily: sans, fontSize: 14, color: isOpen(i) ? gold : "#FBF7EE", transition: "transform .25s", display: "inline-block", transform: isOpen(i) ? "rotate(45deg)" : "none" }}>+</span>}
           </div>
           <h4 style={{ fontFamily: serif, fontSize: isMobile ? 22 : 24, fontWeight: 600, color: isOpen(i) ? gold : "#E8E0D8", lineHeight: 1.3, marginBottom: 14 }}>{item.title}</h4>
           {isOpen(i) && (
@@ -610,45 +661,45 @@ function Footer({ setPage }) {
 // INTERACTIVE DAILY SCHEDULE
 // ─────────────────────────────────────────────
 const summerSchedule = [
-  { time: "9:15 AM", dur: "15 min", block: "Arrival", instructor: null, role: null, img: null, desc: "Students arrive and settle into the venue before the day begins. The pace is intentional from the first moment — this is not a summer camp. Every student walks in knowing today will challenge them.", color: "rgba(251,247,238,0.45)" },
-  { time: "9:30 AM", dur: "45 min", block: "Public Speaking & Rhetoric", instructor: "Christopher Sanders", role: "Public Speaking Senior Instructor", img: "https://i.imgur.com/EELzLmn.jpeg", desc: "Every single morning begins the same way: students stand up and speak. Voice projection. Eye contact. Composure under scrutiny. The 10-day arc is deliberately structured — from foundational mechanics in Week 1 to advanced rhetoric, impromptu performance, and Shark Tank pitch rehearsal by Day 10. By the final day, every student has spoken in front of an audience multiple times and received specific, actionable feedback on every performance.", color: "#C7AB75" },
-  { time: "10:15 AM", dur: "15 min", block: "Snack Break", instructor: null, role: null, img: null, desc: "A structured pause. Conversation between students and faculty continues informally. Some of the most interesting exchanges of the day happen here.", color: "rgba(251,247,238,0.45)" },
-  { time: "10:30 AM", dur: "90 min", block: "Block 2 — Specialist · Core Curriculum + Applied", instructor: "Bill Morris / Rotating Specialist", role: "Academy Dean · Domain Expert", img: null, desc: "A senior practitioner delivers the day's core discipline across 90 minutes of instruction, frameworks, and immediate applied drills. Students deploy what they learn before lunch. Across the two-week programme: business model analysis, financial literacy, AI and technology, sales and persuasion, and leadership — each taught by someone with real-world experience at the highest level.", color: "#A89060" },
-  { time: "12:00 PM", dur: "30 min", block: "Lunch", instructor: null, role: null, img: null, desc: "Catered lunch from a rotating selection of local restaurants — varied cuisine, served across courses. Informal conversation continues between students and faculty. Social intelligence is part of the curriculum — how you hold yourself in a room, how you listen, how you make people feel remembered. It is practiced here too.", color: "rgba(251,247,238,0.45)" },
-  { time: "12:30 PM", dur: "60 min", block: "Distinguished Guest Speaker", instructor: "Daily Rotating Guest", role: "Entrepreneur · Executive · Investor", img: null, desc: "A different senior professional joins every single day. Entrepreneurs who have built and sold companies. Investors who have backed the ventures your children will one day read about. Executives who have led organisations of thousands. Every speaker is hand-selected. Students submit questions in advance. By the end of two weeks, your student will have sat in the same room as ten different leaders from ten different industries — and had the chance to ask them anything.", color: "#C7AB75" },
-  { time: "1:30 PM", dur: "15 min", block: "Afternoon Break", instructor: null, role: null, img: null, desc: "A brief reset before the afternoon's final session — the most high-pressure block of the day.", color: "rgba(251,247,238,0.45)" },
-  { time: "1:45 PM", dur: "60 min", block: "Block 3 — The War Room", instructor: "Chip Pankow (Mon/Wed/Fri) · Erik Dostal (Tue/Thu)", role: "Lead Program Director · Senior Instructor", img: "https://i.imgur.com/Ckny7HG.png", desc: "Chip Pankow leads Monday, Wednesday, and Friday — Erik Dostal leads Tuesday and Thursday. Three rotating formats: real crisis scenarios where students must decide before learning what actually happened to the real company; startup rescue simulations where teams pitch turnaround strategies under time pressure; and applied workshops where the specialist's content is immediately stress-tested. This is where the day's learning becomes judgment.", color: "#C7AB75" },
-  { time: "2:45 PM", dur: "15 min", block: "Debrief & Close", instructor: "War Room Lead", role: "Lead Program Director", img: "https://i.imgur.com/Ckny7HG.png", desc: "Every day ends with a structured debrief: what was learned, what surprised you, what you will apply. One specific idea to take home. The Shark Tank Finale closes each wave — student teams pitch before a panel of real investors and entrepreneurs for cash prizes and the first genuine experience of being evaluated by people with no obligation to be kind.", color: "#A89060" },
+  { time: "9:15 AM", dur: "15 min", block: "Arrival", instructor: null, role: null, img: null, desc: "Students are welcomed by the Teaching Assistants, settle in with their cohort, and begin the day in an atmosphere that feels lively, polished, and personal. There is time to connect, get comfortable, and step into the rhythm of the program before the first session begins.", color: "rgba(251,247,238,0.45)" },
+  { time: "9:30 AM", dur: "45 min", block: "Public Speaking & Rhetoric", instructor: "Christopher Sanders", role: "Public Speaking Senior Instructor", img: "https://i.imgur.com/EELzLmn.jpeg", desc: "Public speaking is built into the rhythm of every Excalibur program. Students get on their feet, speak to the room, practice eye contact, strengthen their voice, and learn how to communicate with confidence. The work develops from foundational mechanics into rhetoric, debate, impromptu speaking, persuasive delivery, and pitch preparation. With repeated practice and direct feedback, students build the kind of presence that carries into interviews, presentations, leadership roles, and every room ahead.", color: "#C7AB75" },
+  { time: "10:15 AM", dur: "15 min", block: "Snack Break", instructor: null, role: null, img: null, desc: "A structured pause between sessions, with catered snacks and refreshments provided by the Academy — from light bites and fruit bowls to healthy açaí bowls, smoothies, milkshakes, and seasonal selections. Students recharge, listen to lounge music, and continue conversations informally with classmates, Teaching Assistants, faculty, and instructors. Often, some of the most interesting exchanges of the day happen here — between sessions, in the moments when ideas keep moving.", color: "rgba(251,247,238,0.45)" },
+  { time: "10:30 AM", dur: "90 min", block: "Block 2 — Specialist · Core Curriculum + Applied", instructor: "Bill Morris / Rotating Specialist", role: "Academy Dean · Domain Expert", img: null, desc: "The Specialist Instructor leads the core academic block, introducing the day's discipline through serious instruction, professional frameworks, and guided application. Students engage the material immediately through discussion, analysis, exercises, and applied drills. Subjects include business model analysis, financial literacy, AI and technology, sales and persuasion, leadership, and sector-specific business study — taught by practitioners who bring lived experience into the room.", color: "#A89060" },
+  { time: "12:00 PM", dur: "30 min", block: "Lunch", instructor: null, role: null, img: null, desc: "Students enjoy a catered three-course lunch from a rotating selection of local restaurants, with menus that may include Mediterranean mezze and grilled entrées, coastal California salads and seasonal bowls, Italian pastas, French-inspired plates, Japanese bento-style selections, and modern American favorites. Lunch is also a time for conversation — with classmates, Teaching Assistants, faculty, and instructors — in a relaxed but polished setting. Social intelligence is part of the Excalibur experience: listening well, asking thoughtful questions, carrying oneself with ease, and making others feel seen and remembered. Dietary restrictions and allergies are requested before the program begins.", color: "rgba(251,247,238,0.45)" },
+  { time: "12:30 PM", dur: "60 min", block: "Distinguished Guest Speaker", instructor: "Daily Rotating Guest", role: "Entrepreneur · Executive · Investor", img: null, desc: "Each program day features a senior guest speaker from business, investing, entrepreneurship, technology, leadership, or the arts. Speakers are carefully selected for the substance of their experience: founders who have built companies, investors who understand capital and risk, executives who have led complex organizations, and professionals with serious judgment to share. Students submit questions in advance and take part in a live conversation designed to move beyond biography into decisions, mistakes, lessons, and the realities of leadership. By the end of the program, students will have been in the room with leaders across multiple industries — and had the opportunity to ask thoughtful questions directly.", color: "#C7AB75" },
+  { time: "1:30 PM", dur: "15 min", block: "Afternoon Break", instructor: null, role: null, img: null, desc: "A brief reset before the final session of the day. Students step outside, recharge with a light treat — gelato, smoothies, or freshly pressed juices — and reconnect with classmates, Teaching Assistants, and faculty. With lounge music in the background and the pressure briefly lifted, the break gives students time to reset before the final push.", color: "rgba(251,247,238,0.45)" },
+  { time: "1:45 PM", dur: "60 min", block: "Block 3 — The War Room", instructor: "Chip Pankow (Mon/Wed/Fri) · Erik Dostal (Tue/Thu)", role: "Lead Program Director · Senior Instructor", img: "https://i.imgur.com/Ckny7HG.png", desc: "The War Room is where instruction becomes application. Led by senior faculty, this block places students into structured business scenarios that require analysis, decision-making, communication, and teamwork under pressure, rotating through three formats: (1) What Would You Have Done? — students are placed inside real business moments before knowing the outcome, make the call, defend their reasoning, then learn what actually happened; (2) Your Move — students inherit a company in crisis, build a turnaround strategy, and present their decisions to faculty as if pitching a skeptical investor; (3) Apply It Now — the day’s specialist content is immediately put to work through live exercises, workshops, and team challenges.", color: "#C7AB75" },
+  { time: "2:45 PM", dur: "15 min", block: "Debrief & Close", instructor: "War Room Lead", role: "Lead Program Director", img: "https://i.imgur.com/Ckny7HG.png", desc: "Each day ends with a structured debrief: what was learned, what challenged the group, and what ideas can be carried forward. Students leave with one clear takeaway from the day — a concept, question, habit, or standard to apply beyond the classroom.", color: "#A89060" },
 ];
 
 const flagshipWeekdaySchedule = [
-  { time: "4:00 PM", dur: "40 min", block: "Block 1 — Public Speaking & Rhetoric", instructor: "Christopher Sanders", role: "Public Speaking Senior Instructor", img: "https://i.imgur.com/EELzLmn.jpeg", desc: "Every session — every single one, for ten months — opens with public speaking. Students stand up before any other content is delivered. Voice mechanics. Impromptu drills. Pitch coaching. Advanced rhetoric. The progression is deliberate: by graduation, students will have completed over 120 individual speaking reps. They will be transformed communicators — not because they practiced once, but because they practiced every time.", color: "#C7AB75" },
-  { time: "4:40 PM", dur: "15 min", block: "Snack Break", instructor: null, role: null, img: null, desc: "A brief, structured pause before the specialist block.", color: "rgba(251,247,238,0.45)" },
-  { time: "4:55 PM", dur: "40 min", block: "Block 2 — Specialist / Academy Dean", instructor: "Monthly Specialist or Bill Morris (1×/month)", role: "Domain Expert · Academy Dean", img: null, desc: "The month's specialist — a working executive, investor, or entrepreneur — delivers the core curriculum block. Eight modules across ten months: financial literacy, business model analysis, sales and marketing, AI and technology, advanced rhetoric, leadership and intellectual depth, and the real-world engagement trilogy. Every specialist has done the thing they teach. Bill Morris takes this block once per month as the Director's Block.", color: "#A89060" },
-  { time: "5:35 PM", dur: "10 min", block: "Short Break", instructor: null, role: null, img: null, desc: "A ten-minute reset before the War Room.", color: "rgba(251,247,238,0.45)" },
-  { time: "5:45 PM", dur: "40 min", block: "Block 3 — The War Room", instructor: "Chip Pankow", role: "Lead Program Director", img: "https://i.imgur.com/Ckny7HG.png", desc: "The programme's signature closing block, rotating weekly across four formats: real-world crisis scenario deconstructions where students decide before learning the outcome; weekly case study analysis — 30 to 40 companies deconstructed across ten months; a live industry guest speaker once per month; and applied workshops where students immediately stress-test the specialist's content under competitive conditions.", color: "#C7AB75" },
-  { time: "6:25 PM", dur: "—", block: "Session Close", instructor: null, role: null, img: null, desc: "Sessions conclude. Students leave with a specific assignment, a question to sit with, or a task to execute before the next session. Formation does not stop when the room empties.", color: "rgba(251,247,238,0.45)" },
+  { time: "4:00 PM", dur: "40 min", block: "Block 1 — Public Speaking & Rhetoric", instructor: "Christopher Sanders", role: "Public Speaking Senior Instructor", img: "https://i.imgur.com/EELzLmn.jpeg", desc: "Public speaking is built into the rhythm of every Excalibur program. Students get on their feet, speak to the room, practice eye contact, strengthen their voice, and learn how to communicate with confidence. The work develops from foundational mechanics into rhetoric, debate, impromptu speaking, persuasive delivery, and pitch preparation. With repeated practice and direct feedback, students build the kind of presence that carries into interviews, presentations, leadership roles, and every room ahead.", color: "#C7AB75" },
+  { time: "4:40 PM", dur: "15 min", block: "Snack Break", instructor: null, role: null, img: null, desc: "A structured pause between sessions, with catered snacks and refreshments provided by the Academy — from light bites and fruit bowls to healthy açaí bowls, smoothies, milkshakes, and seasonal selections. Students recharge, listen to lounge music, and continue conversations informally with classmates, Teaching Assistants, faculty, and instructors. Often, some of the most interesting exchanges of the day happen here — between sessions, in the moments when ideas keep moving.", color: "rgba(251,247,238,0.45)" },
+  { time: "4:55 PM", dur: "40 min", block: "Block 2 — Specialist / Academy Dean", instructor: "Monthly Specialist or Bill Morris (1×/month)", role: "Domain Expert · Academy Dean", img: null, desc: "The Specialist Instructor leads the core academic block, introducing the day’s discipline through serious instruction, professional frameworks, and guided application. Students engage the material immediately through discussion, analysis, exercises, and applied drills. Subjects include business model analysis, financial literacy, AI and technology, sales and persuasion, leadership, and sector-specific business study — taught by practitioners who bring lived experience into the room.", color: "#A89060" },
+  { time: "5:35 PM", dur: "10 min", block: "Short Break", instructor: null, role: null, img: null, desc: "A brief reset. Students step out, recharge, and return ready for the War Room.", color: "rgba(251,247,238,0.45)" },
+  { time: "5:45 PM", dur: "40 min", block: "Block 3 — The War Room", instructor: "Chip Pankow", role: "Lead Program Director", img: "https://i.imgur.com/Ckny7HG.png", desc: "The War Room is where instruction becomes application. Led by senior faculty, this block places students into structured business scenarios that require analysis, decision-making, communication, and teamwork under pressure, rotating through three formats: (1) What Would You Have Done? — students are placed inside real business moments before knowing the outcome, make the call, defend their reasoning, then learn what actually happened; (2) Your Move — students inherit a company in crisis, build a turnaround strategy, and present their decisions to faculty as if pitching a skeptical investor; (3) Apply It Now — the day’s specialist content is immediately put to work through live exercises, workshops, and team challenges.", color: "#C7AB75" },
+  { time: "6:25 PM", dur: "—", block: "Session Close", instructor: null, role: null, img: null, desc: "Each day ends with a structured debrief: what was learned, what challenged the group, and what ideas can be carried forward. Students leave with one clear takeaway from the day — a concept, question, habit, or standard to apply beyond the classroom.", color: "rgba(251,247,238,0.45)" },
 ];
 
 const flagshipSaturdaySchedule = [
-  { time: "10:30 AM", dur: "40 min", block: "Block 1a — Public Speaking · Opening", instructor: "Christopher Sanders", role: "Public Speaking Senior Instructor", img: "https://i.imgur.com/EELzLmn.jpeg", desc: "Saturday opens identically to every weekday session: students stand up and speak before anything else happens. The standard does not change because the day changed. Speaking warm-up, vocal mechanics, and impromptu drills. Christopher teaches 1a and then immediately continues into 1b — no gap, no wait.", color: "#C7AB75" },
-  { time: "11:10 AM", dur: "15 min", block: "Snack Break", instructor: null, role: null, img: null, desc: "A brief pause between the two speaking blocks.", color: "rgba(251,247,238,0.45)" },
+  { time: "10:30 AM", dur: "40 min", block: "Block 1a — Public Speaking · Opening", instructor: "Christopher Sanders", role: "Public Speaking Senior Instructor", img: "https://i.imgur.com/EELzLmn.jpeg", desc: "Saturday opens identically to every other Excalibur session: students stand up and speak before anything else happens. Speaking warm-up, vocal mechanics, and impromptu drills. Christopher teaches 1a and immediately continues into 1b — no gap, no wait, no idle time between blocks.", color: "#C7AB75" },
+  { time: "11:10 AM", dur: "15 min", block: "Snack Break", instructor: null, role: null, img: null, desc: "A structured pause between sessions, with catered snacks and refreshments provided by the Academy — from light bites and fruit bowls to healthy açaí bowls, smoothies, milkshakes, and seasonal selections. Students recharge, listen to lounge music, and continue conversations informally with classmates, Teaching Assistants, faculty, and instructors. Often, some of the most interesting exchanges of the day happen here — between sessions, in the moments when ideas keep moving.", color: "rgba(251,247,238,0.45)" },
   { time: "11:25 AM", dur: "40 min", block: "Block 1b — Public Speaking · Rhetoric & Pitch", instructor: "Christopher Sanders", role: "Public Speaking Senior Instructor", img: "https://i.imgur.com/EELzLmn.jpeg", desc: "The second speaking block, consecutive to 1a. Advanced rhetoric, formal pitch architecture, high-stakes debate formats, and Aristotelian persuasion applied to modern business scenarios. Saturday is the most intensive speaking training of the week — nearly two hours with one of the programme's senior instructors, dedicated entirely to communication at the highest level.", color: "#C7AB75" },
-  { time: "12:05 PM", dur: "30 min", block: "Lunch Break", instructor: null, role: null, img: null, desc: "Catered lunch from local restaurants — first, second, and third course. Social intelligence is part of the curriculum. How you hold a conversation over a meal, how you listen, how you carry yourself in an informal setting — these are skills that are observed, and quietly taught.", color: "rgba(251,247,238,0.45)" },
-  { time: "12:35 PM", dur: "80 min", block: "Block 2 — Specialist / Academy Dean", instructor: "Monthly Specialist or Bill Morris (1×/month)", role: "Domain Expert · Academy Dean", img: null, desc: "Saturday's specialist block runs 80 minutes — the deepest module session of the week. The month's specialist delivers their full curriculum content with time for extended case work and Q&A. Bill Morris takes this block once per month as the Director's Block, covering finance strategy and leadership frameworks at depth.", color: "#A89060" },
-  { time: "1:55 PM", dur: "15 min", block: "Snack Break", instructor: null, role: null, img: null, desc: "A structured pause before the War Room.", color: "rgba(251,247,238,0.45)" },
-  { time: "2:10 PM", dur: "40 min", block: "Block 3a — War Room · Case Study", instructor: "Chip Pankow", role: "Lead Program Director", img: "https://i.imgur.com/Ckny7HG.png", desc: "Chip teaches 3a and then immediately 3b — no gap between blocks. Block 3a: current events deconstruction or real crisis case study. Students are dropped into the decision cold — they must read the situation, make the call, and defend it. Then Chip reveals what actually happened. Because they already committed to a position, it lands.", color: "#C7AB75" },
-  { time: "2:50 PM", dur: "10 min", block: "Short Break", instructor: null, role: null, img: null, desc: "A ten-minute reset between War Room sub-blocks.", color: "rgba(251,247,238,0.45)" },
-  { time: "3:00 PM", dur: "40 min", block: "Block 3b — War Room · Applied Workshop", instructor: "Chip Pankow", role: "Lead Program Director", img: "https://i.imgur.com/Ckny7HG.png", desc: "The applied workshop: the specialist's content from Block 2 is immediately deployed under pressure. Teams compete, present, and defend their work in front of the group. This is where knowledge becomes capability — where students discover not just what they learned, but whether they can use it when it counts. On guest speaker Saturdays (1×/month), both cohorts attend together.", color: "#C7AB75" },
-  { time: "3:40 PM", dur: "5 min", block: "Debrief & Close", instructor: "Chip Pankow", role: "Lead Program Director", img: "https://i.imgur.com/Ckny7HG.png", desc: "Chip closes the session: preview of next week, key takeaway, students depart. Formation does not stop when the room empties.", color: "#A89060" },
+  { time: "12:05 PM", dur: "30 min", block: "Lunch Break", instructor: null, role: null, img: null, desc: "Students enjoy a catered three-course lunch from a rotating selection of local restaurants, with menus that may include Mediterranean mezze and grilled entrées, coastal California salads and seasonal bowls, Italian pastas, French-inspired plates, Japanese bento-style selections, and modern American favorites. Lunch is also a time for conversation — with classmates, Teaching Assistants, faculty, and instructors — in a relaxed but polished setting. Social intelligence is part of the Excalibur experience: listening well, asking thoughtful questions, carrying oneself with ease, and making others feel seen and remembered. Dietary restrictions and allergies are requested before the program begins.", color: "rgba(251,247,238,0.45)" },
+  { time: "12:35 PM", dur: "80 min", block: "Block 2 — Specialist / Academy Dean", instructor: "Monthly Specialist or Bill Morris (1×/month)", role: "Domain Expert · Academy Dean", img: null, desc: "The Specialist Instructor leads the core academic block, introducing the day’s discipline through serious instruction, professional frameworks, and guided application. Students engage the material immediately through discussion, analysis, exercises, and applied drills. Subjects include business model analysis, financial literacy, AI and technology, sales and persuasion, leadership, and sector-specific business study — taught by practitioners who bring lived experience into the room.", color: "#A89060" },
+  { time: "1:55 PM", dur: "15 min", block: "Snack Break", instructor: null, role: null, img: null, desc: "A structured pause between sessions, with catered snacks and refreshments provided by the Academy — from light bites and fruit bowls to healthy açaí bowls, smoothies, milkshakes, and seasonal selections. Students recharge, listen to lounge music, and continue conversations informally with classmates, Teaching Assistants, faculty, and instructors. Often, some of the most interesting exchanges of the day happen here — between sessions, in the moments when ideas keep moving.", color: "rgba(251,247,238,0.45)" },
+  { time: "2:10 PM", dur: "40 min", block: "Block 3a — War Room · Case Study", instructor: "Chip Pankow", role: "Lead Program Director", img: "https://i.imgur.com/Ckny7HG.png", desc: "Current events deconstruction or real crisis case study. Students are placed inside real business moments before knowing the outcome. They analyze the situation, make the call, defend their reasoning, and then learn what actually happened.", color: "#C7AB75" },
+  { time: "2:50 PM", dur: "10 min", block: "Short Break", instructor: null, role: null, img: null, desc: "A brief reset between War Room sub-blocks.", color: "rgba(251,247,238,0.45)" },
+  { time: "3:00 PM", dur: "40 min", block: "Block 3b — War Room · Applied Workshop", instructor: "Chip Pankow", role: "Lead Program Director", img: "https://i.imgur.com/Ckny7HG.png", desc: "The specialist's content from Block 2 is immediately deployed under pressure. Teams compete, present, and defend their work in front of the group. Finance, AI, sales, leadership, branding, strategy, and industry analysis become active tools rather than abstract concepts.", color: "#C7AB75" },
+  { time: "3:40 PM", dur: "5 min", block: "Debrief & Close", instructor: "Chip Pankow", role: "Lead Program Director", img: "https://i.imgur.com/Ckny7HG.png", desc: "Each day ends with a structured debrief: what was learned, what challenged the group, and what ideas can be carried forward. Students leave with one clear takeaway from the day — a concept, question, habit, or standard to apply beyond the classroom.", color: "#A89060" },
 ];
 
 const sixWeekSchedule = [
-  { time: "4:00 PM", dur: "40 min", block: "Block 1 — Public Speaking & Rhetoric", instructor: "Christopher Sanders", role: "Public Speaking Senior Instructor", img: "https://i.imgur.com/EELzLmn.jpeg", desc: "Every session opens with speaking — without exception. Twelve sessions. Twelve openings. Voice, presence, composure, and rhetorical precision built session by session across six weeks. Week 1 is dedicated entirely to public speaking foundations. From Week 2 onward, the opening block continues to build on each prior session, culminating in Shark Tank pitch rehearsal in Week 6.", color: "#C7AB75" },
-  { time: "4:40 PM", dur: "15 min", block: "Snack Break", instructor: null, role: null, img: null, desc: "A brief, structured pause before the specialist block.", color: "rgba(251,247,238,0.45)" },
-  { time: "4:55 PM", dur: "40 min", block: "Block 2 — Specialist / Academy Dean", instructor: "Bill Morris or Rotating Specialist", role: "Academy Dean · Domain Expert", img: null, desc: "One discipline per week, taught by a specialist with direct professional experience in that field. Six weeks, six disciplines: public speaking and rhetoric, financial literacy and business acumen, business model analysis, AI and technology, sales and marketing, and leadership with Shark Tank preparation. Compressed but complete — the full Excalibur curriculum delivered in a high-intensity format.", color: "#A89060" },
-  { time: "5:35 PM", dur: "10 min", block: "Short Break", instructor: null, role: null, img: null, desc: "A ten-minute reset before the War Room.", color: "rgba(251,247,238,0.45)" },
-  { time: "5:45 PM", dur: "40 min", block: "Block 3 — The War Room", instructor: "Chip Pankow", role: "Lead Program Director", img: "https://i.imgur.com/Ckny7HG.png", desc: "Every session closes with the War Room — no exceptions. Applied workshop, simulation, or case study deploying the evening's specialist content under live competitive pressure. The wave closes with a judged Shark Tank Finale before a panel of entrepreneurs and investors. Cash prizes: Best Business Concept ($2,000), Best Pitch ($1,000), Most Innovative ($500).", color: "#C7AB75" },
+  { time: "4:00 PM", dur: "40 min", block: "Block 1 — Public Speaking & Rhetoric", instructor: "Christopher Sanders", role: "Public Speaking Senior Instructor", img: "https://i.imgur.com/EELzLmn.jpeg", desc: "Public speaking is built into the rhythm of every Excalibur program. Students get on their feet, speak to the room, practice eye contact, strengthen their voice, and learn how to communicate with confidence. The work develops from foundational mechanics into rhetoric, debate, impromptu speaking, persuasive delivery, and pitch preparation. With repeated practice and direct feedback, students build the kind of presence that carries into interviews, presentations, leadership roles, and every room ahead.", color: "#C7AB75" },
+  { time: "4:40 PM", dur: "15 min", block: "Snack Break", instructor: null, role: null, img: null, desc: "A structured pause between sessions, with catered snacks and refreshments provided by the Academy — from light bites and fruit bowls to healthy açaí bowls, smoothies, milkshakes, and seasonal selections. Students recharge, listen to lounge music, and continue conversations informally with classmates, Teaching Assistants, faculty, and instructors. Often, some of the most interesting exchanges of the day happen here — between sessions, in the moments when ideas keep moving.", color: "rgba(251,247,238,0.45)" },
+  { time: "4:55 PM", dur: "40 min", block: "Block 2 — Specialist / Academy Dean", instructor: "Bill Morris or Rotating Specialist", role: "Academy Dean · Domain Expert", img: null, desc: "The Specialist Instructor leads the core academic block, introducing the day’s discipline through serious instruction, professional frameworks, and guided application. Students engage the material immediately through discussion, analysis, exercises, and applied drills. Subjects include business model analysis, financial literacy, AI and technology, sales and persuasion, leadership, and sector-specific business study — taught by practitioners who bring lived experience into the room.", color: "#A89060" },
+  { time: "5:35 PM", dur: "10 min", block: "Short Break", instructor: null, role: null, img: null, desc: "A brief reset. Students step out, recharge, and return ready for the War Room.", color: "rgba(251,247,238,0.45)" },
+  { time: "5:45 PM", dur: "40 min", block: "Block 3 — The War Room", instructor: "Chip Pankow", role: "Lead Program Director", img: "https://i.imgur.com/Ckny7HG.png", desc: "The War Room is where instruction becomes application. Led by senior faculty, this block places students into structured business scenarios that require analysis, decision-making, communication, and teamwork under pressure, rotating through three formats: (1) What Would You Have Done? — students are placed inside real business moments before knowing the outcome, make the call, defend their reasoning, then learn what actually happened; (2) Your Move — students inherit a company in crisis, build a turnaround strategy, and present their decisions to faculty as if pitching a skeptical investor; (3) Apply It Now — the day’s specialist content is immediately put to work through live exercises, workshops, and team challenges.", color: "#C7AB75" },
 ];
 
 const fieldTrips = [
@@ -667,31 +718,31 @@ function ScheduleDetail({ block }) {
   if (!block || !block.block) return null;
   const isBreak = !block.instructor;
   return (
-    <div className="mod-content" style={{ padding: "20px 20px", background: "rgba(199,171,117,.03)", borderTop: "1px solid rgba(199,171,117,.1)", borderBottom: "1px solid rgba(199,171,117,.05)" }}>
+    <div className="mod-content" style={{ padding: "32px 36px", background: "#FAF8F4", borderTop: "1px solid rgba(0,0,0,.07)" }}>
       {isBreak ? (
         <>
-          <p style={{ fontFamily: serif, fontSize: 16, color: "#FBF7EE", marginBottom: 8 }}>{block.block}</p>
-          <p style={{ fontFamily: sans, fontSize: 13, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.75 }}>{block.desc}</p>
+          <p style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: 22, fontWeight: 600, color: "#111", letterSpacing: "0.01em", marginBottom: 14, lineHeight: 1.1 }}>{block.block}</p>
+          <p style={{ fontFamily: "'Lato', sans-serif", fontSize: 15, color: "#333", fontWeight: 300, lineHeight: 1.85 }}>{block.desc}</p>
         </>
       ) : (
         <>
-          <div style={{ display: "flex", gap: 12, alignItems: "flex-start", marginBottom: 14 }}>
+          <div style={{ display: "flex", gap: 14, alignItems: "center", marginBottom: 20 }}>
             {block.img ? (
-              <div style={{ width: 44, height: 44, flexShrink: 0, overflow: "hidden", border: "1px solid rgba(199,171,117,.2)", borderRadius: "50%" }}>
+              <div style={{ width: 48, height: 48, flexShrink: 0, overflow: "hidden", border: "1px solid rgba(0,0,0,.1)", borderRadius: "50%" }}>
                 <img src={block.img} alt={block.instructor || ""} style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center top" }} onError={e => e.target.style.display = "none"} />
               </div>
             ) : (
-              <div style={{ width: 44, height: 44, flexShrink: 0, border: "1px solid rgba(199,171,117,.15)", display: "flex", alignItems: "center", justifyContent: "center" }}>
-                <span style={{ fontFamily: serif, fontSize: 16, color: "rgba(199,171,117,.3)" }}>✦</span>
+              <div style={{ width: 48, height: 48, flexShrink: 0, border: "1px solid rgba(0,0,0,.1)", display: "flex", alignItems: "center", justifyContent: "center", background: "#fff" }}>
+                <span style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 18, color: "rgba(0,0,0,.2)" }}>✦</span>
               </div>
             )}
             <div>
-              <p style={{ fontFamily: serif, fontSize: 15, color: "#FBF7EE", fontWeight: 600, marginBottom: 2 }}>{block.instructor}</p>
-              <p style={{ fontFamily: sans, fontSize: 9, color: gold, letterSpacing: "0.1em", textTransform: "uppercase" }}>{block.role}</p>
+              <p style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: 17, color: "#111", fontWeight: 600, marginBottom: 2 }}>{block.instructor}</p>
+              <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 9, color: "#8B6914", letterSpacing: "0.18em", textTransform: "uppercase", fontWeight: 600 }}>{block.role}</p>
             </div>
           </div>
-          <p style={{ fontFamily: serif, fontSize: 15, color: gold, fontStyle: "italic", marginBottom: 10 }}>{block.block}</p>
-          <p style={{ fontFamily: sans, fontSize: 13, lineHeight: 1.85, color: "#FBF7EE", fontWeight: 300 }}>{block.desc}</p>
+          <p style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: 22, fontWeight: 600, color: "#111", letterSpacing: "0.01em", marginBottom: 14, lineHeight: 1.1 }}>{block.block}</p>
+          <p style={{ fontFamily: "'Lato', sans-serif", fontSize: 15, color: "#333", fontWeight: 300, lineHeight: 1.9 }}>{block.desc}</p>
         </>
       )}
     </div>
@@ -705,60 +756,57 @@ function DailyScheduleBlock({ schedule, title, subtitle }) {
   const toggle = (i) => setActive(active === i ? null : i);
 
   return (
-    <div style={{ background: "#07060A", border: "1px solid rgba(199,171,117,.1)" }}>
+    <div style={{ background: "#FAF8F4", border: "1px solid rgba(0,0,0,.08)" }}>
       {/* Title */}
-      <div style={{ padding: isMobile ? "20px 20px 14px" : "28px 36px 20px", borderBottom: "1px solid rgba(199,171,117,.07)" }}>
-        <p style={{ fontFamily: eyebrow_font, fontSize: 10, letterSpacing: "0.35em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 6 }}>{title}</p>
-        <p style={{ fontFamily: serif, fontSize: isMobile ? 13 : 15, color: "#FBF7EE", fontStyle: "italic" }}>{subtitle}</p>
+      <div style={{ padding: isMobile ? "20px 20px 16px" : "28px 36px 22px", borderBottom: "1px solid rgba(0,0,0,.07)", background: "#fff" }}>
+        <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 9, letterSpacing: "0.4em", color: "#8B6914", fontWeight: 700, textTransform: "uppercase", marginBottom: 8 }}>{title}</p>
+        <p style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: isMobile ? 14 : 17, color: "#222", fontWeight: 400, letterSpacing: "0.01em" }}>{subtitle}</p>
       </div>
 
       {isMobile ? (
-        /* MOBILE: each row is an accordion — detail expands inline directly below */
         <div>
           {(schedule || []).map((s, i) => (
             <div key={i}>
-              <div onClick={() => toggle(i)} style={{ padding: "14px 20px", cursor: "pointer", borderLeft: `3px solid ${active === i ? gold : "transparent"}`, background: active === i ? "rgba(199,171,117,.05)" : "transparent", borderBottom: "1px solid rgba(199,171,117,.05)", display: "flex", gap: 12, alignItems: "flex-start", transition: "all .2s" }}>
+              <div onClick={() => toggle(i)} style={{ padding: "14px 20px", cursor: "pointer", borderLeft: `3px solid ${active === i ? "#8B6914" : "transparent"}`, background: active === i ? "rgba(139,105,20,.04)" : "#FAF8F4", borderBottom: "1px solid rgba(0,0,0,.06)", display: "flex", gap: 12, alignItems: "flex-start", transition: "all .2s" }}>
                 <div style={{ flexShrink: 0, minWidth: 52 }}>
-                  <div style={{ fontFamily: sans, fontSize: 10, color: active === i ? gold : "#706860", fontWeight: 600, letterSpacing: "0.04em" }}>{s.time}</div>
-                  <div style={{ fontFamily: sans, fontSize: 9, color: "#504840", marginTop: 1 }}>{s.dur}</div>
+                  <div style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: 18, color: active === i ? "#8B6914" : "#555", fontWeight: 600, lineHeight: 1 }}>{s.time}</div>
+                  <div style={{ fontFamily: "'Lato', sans-serif", fontSize: 9, color: "#555", marginTop: 2 }}>{s.dur}</div>
                 </div>
                 <div style={{ flex: 1 }}>
-                  <div style={{ fontFamily: serif, fontSize: 14, color: active === i ? gold : "#C8C0B8", fontWeight: active === i ? 600 : 400, lineHeight: 1.3 }}>{s.block}</div>
-                  {s.instructor && <div style={{ fontFamily: sans, fontSize: 9, color: active === i ? "rgba(199,171,117,.6)" : "#605850", marginTop: 2 }}>{s.instructor}</div>}
+                  <div style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: 15, fontWeight: 600, color: "#111", lineHeight: 1.3 }}>{s.block}</div>
+                  {s.instructor && <div style={{ fontFamily: "'Lato', sans-serif", fontSize: 9, color: active === i ? "#8B6914" : "#999", marginTop: 2 }}>{s.instructor}</div>}
                 </div>
-                <span style={{ color: active === i ? gold : "#504840", fontSize: 16, transition: "transform .2s", transform: active === i ? "rotate(45deg)" : "none", display: "inline-block", flexShrink: 0 }}>+</span>
+                <span style={{ color: active === i ? "#8B6914" : "#bbb", fontSize: 16, transition: "transform .2s", transform: active === i ? "rotate(45deg)" : "none", display: "inline-block", flexShrink: 0 }}>+</span>
               </div>
-              {/* Detail expands DIRECTLY below this row */}
               {active === i && <ScheduleDetail block={s} />}
             </div>
           ))}
         </div>
       ) : (
-        /* DESKTOP: sidebar + right detail panel */
-        <div style={{ display: "grid", gridTemplateColumns: "280px 1fr" }}>
-          <div style={{ borderRight: "1px solid rgba(199,171,117,.08)" }}>
+        <div style={{ display: "grid", gridTemplateColumns: "300px 1fr" }}>
+          <div style={{ borderRight: "1px solid rgba(0,0,0,.07)", background: "#fff" }}>
             {(schedule || []).map((s, i) => (
-              <div key={i} onClick={() => toggle(i)} style={{ padding: "14px 24px", cursor: "pointer", borderLeft: `3px solid ${active === i ? gold : "transparent"}`, background: active === i ? "rgba(199,171,117,.04)" : "transparent", borderBottom: "1px solid rgba(199,171,117,.05)", transition: "all .2s", display: "flex", gap: 12, alignItems: "flex-start" }}>
+              <div key={i} onClick={() => toggle(i)} style={{ padding: "14px 24px", cursor: "pointer", borderLeft: `3px solid ${active === i ? "#8B6914" : "transparent"}`, background: active === i ? "rgba(139,105,20,.05)" : "transparent", borderBottom: "1px solid rgba(0,0,0,.05)", transition: "all .2s", display: "flex", gap: 12, alignItems: "flex-start" }}>
                 <div style={{ flexShrink: 0, paddingTop: 2 }}>
-                  <div style={{ fontFamily: sans, fontSize: 10, color: active === i ? gold : "#706860", fontWeight: 600, letterSpacing: "0.05em", whiteSpace: "nowrap" }}>{s.time}</div>
-                  <div style={{ fontFamily: sans, fontSize: 9, color: "#504840", marginTop: 2 }}>{s.dur}</div>
+                  <div style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: 20, color: active === i ? "#8B6914" : "#555", fontWeight: 600, lineHeight: 1, whiteSpace: "nowrap" }}>{s.time}</div>
+                  <div style={{ fontFamily: "'Lato', sans-serif", fontSize: 9, color: "#555", marginTop: 3 }}>{s.dur}</div>
                 </div>
                 <div>
-                  <div style={{ fontFamily: serif, fontSize: 14, color: active === i ? gold : "#C8C0B8", fontWeight: active === i ? 600 : 400, lineHeight: 1.3 }}>{s.block}</div>
-                  {s.instructor && <div style={{ fontFamily: sans, fontSize: 9, color: active === i ? "rgba(199,171,117,.6)" : "#605850", marginTop: 2, letterSpacing: "0.06em" }}>{s.instructor}</div>}
+                  <div style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: 15, fontWeight: 600, color: "#111", lineHeight: 1.3 }}>{s.block}</div>
+                  {s.instructor && <div style={{ fontFamily: "'Lato', sans-serif", fontSize: 9, color: active === i ? "#8B6914" : "#999", marginTop: 2, letterSpacing: "0.06em" }}>{s.instructor}</div>}
                 </div>
               </div>
             ))}
           </div>
-          <div style={{ background: "#09080C" }}>
+          <div style={{ background: "#FAF8F4" }}>
             {active !== null && (schedule || [])[active] ? (
               <div key={active} style={{ minHeight: 320 }}>
                 <ScheduleDetail block={(schedule || [])[active]} />
               </div>
             ) : (
               <div style={{ padding: "36px 40px", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", minHeight: 320, gap: 12 }}>
-                <span style={{ fontFamily: serif, fontSize: 40, color: "rgba(199,171,117,.1)" }}>✦</span>
-                <p style={{ fontFamily: serif, fontSize: 15, color: "rgba(199,171,117,.2)", fontStyle: "italic", textAlign: "center" }}>Select a time block<br />to see what happens in that session</p>
+                <span style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 36, color: "rgba(0,0,0,.08)" }}>✦</span>
+                <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 15, color: "rgba(0,0,0,.25)", fontStyle: "italic", textAlign: "center" }}>Select a time block<br />to see what happens in that session</p>
               </div>
             )}
           </div>
@@ -896,7 +944,7 @@ function SoireeInviteBlock({ openInquiry }) {
               <p style={{ fontFamily: serif, fontSize: isMobile ? 13 : 16, color: "#FBF7EE", lineHeight: 1.4, marginBottom: 14, fontStyle: "italic" }}>Academy Launch and Family Information Soirée<br />at the Mediterranean Estate in San Clemente</p>
               <div style={{ width: 44, height: 1, background: `linear-gradient(90deg, transparent, ${gold}, transparent)`, margin: "0 auto 18px" }} />
               <p style={{ fontFamily: sans, fontSize: 13, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.8, maxWidth: 540, margin: "0 auto 18px" }}>An intimate evening and cocktail reception for a select number of families to meet the faculty, learn about the Academy’s programs, ask questions, and experience the people and standards behind Excalibur before applications open for the inaugural cohorts.</p>
-              <p style={{ fontFamily: serif, fontSize: 12, color: gold, letterSpacing: "0.18em", marginBottom: 20 }}>By personal invitation only.</p>
+              <p style={{ fontFamily: serif, fontSize: 18, color: gold, letterSpacing: "0.18em", marginBottom: 20, textTransform: "uppercase" }}>By Personal Invitation Only.</p>
               <div style={{ background: "#000", border: `1px solid rgba(199,171,117,.25)`, padding: "20px 24px", textAlign: "center", maxWidth: 520, margin: "0 auto 24px" }}>
                 <p style={{ fontFamily: sans, fontSize: 12, color: "#FBF7EE", fontWeight: 300, marginBottom: 12, lineHeight: 1.6 }}>Prospective students will be asked to reflect on one simple question:</p>
                 <p style={{ fontFamily: serif, fontSize: isMobile ? 22 : 30, color: gold, fontWeight: 600, lineHeight: 1.3, fontStyle: "italic" }}>"What is your dream?"</p>
@@ -925,6 +973,7 @@ function SoireeInviteBlock({ openInquiry }) {
 // ─────────────────────────────────────────────
 function CurriculumPage({ setPage, openInquiry }) {
   const isMobile = useIsMobile();
+  // Breadcrumb added below
   return (
     <div style={{ background: "#000", paddingTop: 0 }}>
       <div style={{ maxWidth: 900, margin: "0 auto", padding: isMobile ? "36px 16px 32px" : "60px 40px 52px", textAlign: "center" }}>
@@ -1105,7 +1154,7 @@ function FullProgramPage({ setPage, openInquiry }) {
         <Fade d={.08}>
           <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 2, background: "#111" }}>
             {[
-              { tier: "MONTHLY", price: "$1,990", period: "/month", limit: "", features: ["Full 10-month curriculum", "Weekday or Weekend Track", "All guest speakers & sector rotation", "Junior Consultant engagement", "Apprentice Externship placement", "Micro-Business Launch", "Monthly Pitch Night eligibility", "Bound graduation portfolio", "Alumni network access"], accent: false },
+              { tier: "MONTHLY", price: "$1,900", period: "/month", limit: "", features: ["Full 10-month curriculum", "Weekday or Weekend Track", "All guest speakers & sector rotation", "Junior Consultant engagement", "Apprentice Externship placement", "Micro-Business Launch", "Monthly Pitch Night eligibility", "Bound graduation portfolio", "Alumni network access"], accent: false },
               { tier: "ANNUAL", price: "$1,490", period: "/month", limit: "FOUNDING RATE", features: ["Full 10-month curriculum — identical access", "Reserved seat for the full academic year", "Preferred scheduling and priority placement", "Junior Consultant & Externship access", "Micro-Business Launch with dedicated mentor", "Bound graduation portfolio", "Alumni network access"], accent: true },
             ].map((t, i) => (
               <div key={i} style={{ background: "#080808", padding: "40px 32px", position: "relative", borderTop: `2px solid ${t.accent ? gold : "rgba(199,171,117,.15)"}` }}>
@@ -1140,6 +1189,7 @@ function FullProgramPage({ setPage, openInquiry }) {
 // ─────────────────────────────────────────────
 function IntensivePage({ setPage, openInquiry }) {
   const isMobile = useIsMobile();
+  // breadcrumb marker
   const [activeWave, setActiveWave] = useState(0);
   return (
     <div style={{ background: "#000", paddingTop: 0 }}>
@@ -1281,7 +1331,7 @@ function IntensivePage({ setPage, openInquiry }) {
                     <Eyebrow>{label}</Eyebrow>
                     <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12, marginBottom: 20 }}>
                       {[["Days", t.days], ["Time", t.time], ["Duration", "6 Weeks"], ["Location", "Orange County"]].map(([k, v]) => (
-                        <div key={k}><div style={{ fontFamily: sans, fontSize: 9, letterSpacing: 1.5, color: "rgba(251,247,238,0.5)", marginBottom: 3 }}>{k}</div><div style={{ fontFamily: serif, fontSize: 14, color: "#FBF7EE" }}>{v}</div></div>
+                        <div key={k}><div style={{ fontFamily: sans, fontSize: 9, letterSpacing: 1.5, color: "#FBF7EE", marginBottom: 3 }}>{k}</div><div style={{ fontFamily: serif, fontSize: 14, color: "#FBF7EE" }}>{v}</div></div>
                       ))}
                     </div>
                     <button onClick={() => setPage("apply")} style={{ fontFamily: sans, width: "100%", marginTop: 16, padding: "9px 0", border: "1px solid rgba(199,171,117,.25)", color: gold, fontSize: 10, fontWeight: 600, letterSpacing: 2, background: "transparent", cursor: "pointer" }}>INQUIRE NOW →</button>
@@ -1317,7 +1367,7 @@ function DailyScheduleSection({ sectionRef }) {
   const [activeTab, setActiveTab] = useState("summer");
   const [activeBlock, setActiveBlock] = useState(0);
   const tabs = [
-    { id: "summer", label: "Summer Intensive", sched: summerSchedule, subtitle: "Monday – Friday · 9:30 AM – 3:00 PM · July 6–17 & Aug 3–14, 2026" },
+    { id: "summer", label: "Summer Intensive", sched: summerSchedule, subtitle: "Monday – Friday · 9:30 AM – 3:00 PM · July 6–18 & Aug 3–15, 2026" },
     { id: "flagship-wd", label: "Flagship — Weekday", sched: flagshipWeekdaySchedule, subtitle: "Tuesday & Thursday · 4:00–6:15 PM · September 2026 – June 2027" },
     { id: "flagship-sat", label: "Flagship — Saturday", sched: flagshipSaturdaySchedule, subtitle: "Every Saturday · 10:30 AM–3:00 PM · September 2026 – June 2027" },
     { id: "six-week", label: "Six-Week Intensive", sched: sixWeekSchedule, subtitle: "Monday & Wednesday · 4:00–7:00 PM · Four waves per year" },
@@ -1327,15 +1377,15 @@ function DailyScheduleSection({ sectionRef }) {
     <div ref={sectionRef} style={{ maxWidth: 1100, margin: "0 auto", padding: isMobile ? "48px 16px" : "72px 40px" }}>
       <Fade>
         <div style={{ textAlign: "center", marginBottom: 40 }}>
-          <Eyebrow>A DAY AT EXCALIBUR</Eyebrow>
-          <SectionTitle center>What a real session looks like.</SectionTitle>
-          <Sub center>Click any block to meet the instructor and see exactly what happens in that session.</Sub>
+          <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 9, letterSpacing: "0.4em", color: "#8B6914", fontWeight: 700, textTransform: "uppercase", marginBottom: 12 }}>A Day at Excalibur</p>
+          <h2 style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: "clamp(26px,3vw,38px)", fontWeight: 600, color: "#111", lineHeight: 1.1, marginBottom: 8 }}>What a real session looks like.</h2>
+          <p style={{ fontFamily: sans, fontSize: 14, color: "#444", fontWeight: 300, lineHeight: 1.7 }}>Click any block to meet the instructor and see exactly what happens in that session.</p>
         </div>
       </Fade>
       <Fade d={.06}>
         <div style={{ display: "flex", justifyContent: "center", gap: 8, marginBottom: 24, flexWrap: "wrap" }}>
           {tabs.map(t => (
-            <button key={t.id} onClick={() => setActiveTab(t.id)} style={{ fontFamily: sans, padding: "9px 18px", background: activeTab === t.id ? "rgba(199,171,117,.08)" : "transparent", border: `1px solid ${activeTab === t.id ? "rgba(199,171,117,.4)" : "rgba(199,171,117,.12)"}`, color: activeTab === t.id ? gold : "#C8C0B8", fontSize: 11, cursor: "pointer", letterSpacing: "0.1em", textTransform: "uppercase", fontWeight: activeTab === t.id ? 600 : 400, transition: "all .2s" }}>{t.label}</button>
+            <button key={t.id} onClick={() => setActiveTab(t.id)} style={{ fontFamily: sans, padding: "9px 18px", background: activeTab === t.id ? "#111" : "transparent", border: `1px solid ${activeTab === t.id ? "#111" : "rgba(0,0,0,.2)"}`, color: activeTab === t.id ? "#fff" : "#555", fontSize: 11, cursor: "pointer", letterSpacing: "0.1em", textTransform: "uppercase", fontWeight: activeTab === t.id ? 600 : 400, transition: "all .2s" }}>{t.label}</button>
           ))}
         </div>
         <DailyScheduleBlock schedule={current.sched} title={current.label} subtitle={current.subtitle} />
@@ -1351,7 +1401,6 @@ function SummerContent({ setPage, isMobile, summerLeft }) {
         { label: "WAVE 1 — JULY", dates: "July 6 – 18, 2026", left: summerLeft[0], items: [["Schedule", "Mon–Fri · 9:30 AM–3:00 PM"], ["Duration", "2 weeks"], ["Guest Speakers", "Daily"], ["Finale", "Shark Tank · July 18"]] },
         { label: "WAVE 2 — AUGUST", dates: "Aug 3 – 15, 2026", left: summerLeft[1], items: [["Schedule", "Mon–Fri · 9:30 AM–3:00 PM"], ["Duration", "2 weeks"], ["Guest Speakers", "Daily"], ["Finale", "Shark Tank · Aug 15"]] },
       ].map((t, i) => {
-        const filled = 25 - t.left;
         return (
           <div key={i} style={{ background: "#080808", padding: "24px 24px" }}>
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 4 }}>
@@ -1362,11 +1411,11 @@ function SummerContent({ setPage, isMobile, summerLeft }) {
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10, marginBottom: 16 }}>
               {t.items.map(([k, v]) => (<div key={k}><div style={{ fontFamily: sans, fontSize: 9, color: "#FBF7EE", marginBottom: 3, letterSpacing: "0.1em", textTransform: "uppercase" }}>{k}</div><div style={{ fontFamily: sans, fontSize: 12, color: "#FBF7EE" }}>{v}</div></div>))}
             </div>
-            <div style={{ fontFamily: sans, fontSize: 11, color: "#FBF7EE", marginBottom: 6, display: "flex", justifyContent: "space-between" }}>
-              <span>{filled} enrolled</span><span style={{ color: t.left < 8 ? gold : "#C8C0B8" }}>{t.left} remaining</span>
+
+            <div style={{ display: "flex", gap: 8 }}>
+              <button onClick={() => setPage("apply")} style={{ fontFamily: sans, flex: 1, padding: "9px 0", background: gold, border: "none", color: "#000", fontSize: 10, fontWeight: 700, letterSpacing: "0.15em", cursor: "pointer" }}>APPLY NOW →</button>
+              <button onClick={() => setPage("summer-detail")} style={{ fontFamily: sans, flex: 1, padding: "9px 0", border: "1px solid rgba(199,171,117,.3)", color: gold, fontSize: 10, fontWeight: 500, letterSpacing: "0.12em", background: "transparent", cursor: "pointer" }}>LEARN MORE →</button>
             </div>
-            <div style={{ height: 2, background: "#1a1a1a", marginBottom: 14 }}><div style={{ height: "100%", width: `${(filled/25)*100}%`, background: "#4DB87A" }} /></div>
-            <button onClick={() => setPage("apply")} style={{ fontFamily: sans, width: "100%", padding: "9px 0", border: "1px solid rgba(199,171,117,.25)", color: gold, fontSize: 10, fontWeight: 600, letterSpacing: "0.15em", background: "transparent", cursor: "pointer" }}>APPLY NOW →</button>
           </div>
         );
       })}
@@ -1378,8 +1427,8 @@ function FlagshipContent({ setPage, isMobile, flagshipLeft }) {
   return (
     <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 1, background: "#111" }}>
       {[
-        { label: "WEEKDAY TRACK", schedule: "Tue & Thu · 4:00–6:15 PM", left: flagshipLeft[0], items: [["Starts", "September 2026"], ["Duration", "10 Months"], ["Sessions", "Tue & Thu evenings"], ["Ends", "June 2027"], ["Price", "$1,990/month"], ["Seats", "25 per cohort"]] },
-        { label: "SATURDAY TRACK", schedule: "Saturday · 10:30 AM–3:00 PM", left: flagshipLeft[1], items: [["Starts", "September 2026"], ["Duration", "10 Months"], ["Sessions", "Full-day Saturdays"], ["Ends", "June 2027"], ["Price", "$1,990/month"], ["Seats", "25 per cohort"]] },
+        { label: "WEEKDAY TRACK", schedule: "Tue & Thu · 4:00–6:15 PM", left: flagshipLeft[0], items: [["Starts", "September 2026"], ["Duration", "10 Months"], ["Sessions", "Tue & Thu evenings"], ["Ends", "June 2027"], ["Price", "$1,900/month"], ["Seats", "25 per cohort"]] },
+        { label: "SATURDAY TRACK", schedule: "Saturday · 10:30 AM–3:00 PM", left: flagshipLeft[1], items: [["Starts", "September 2026"], ["Duration", "10 Months"], ["Sessions", "Full-day Saturdays"], ["Ends", "June 2027"], ["Price", "$1,900/month"], ["Seats", "25 per cohort"]] },
       ].map((t, i) => {
         return (
           <div key={i} style={{ background: "#080808", padding: "24px 24px" }}>
@@ -1431,31 +1480,6 @@ function SummerProgramContent({ prog, openInquiry, setPage, scrollToSchedule }) 
   const ey = "'DM Sans', sans-serif";
   return (
     <div>
-      {/* 1 — ENROLLMENT TRACKER — black strip, same as desktop order */}
-      <div style={{ background: "#000", padding: "24px 20px 28px", borderBottom: "1px solid rgba(199,171,117,.08)" }}>
-        <p style={{ fontFamily: ey, fontSize: 8, letterSpacing: "0.45em", color: "rgba(199,171,117,.55)", fontWeight: 600, textTransform: "uppercase", marginBottom: 20 }}>Enrollment Status · Summer 2026</p>
-        {[
-          { wave: "Wave I", dates: "July 6–18", days: "Mon–Fri · 9:30 AM–3 PM", enrolled: 14, total: 20 },
-          { wave: "Wave II", dates: "August 3–15", days: "Mon–Fri · 9:30 AM–3 PM", enrolled: 9, total: 20 },
-        ].map((w, i) => (
-          <div key={i} style={{ marginBottom: i === 0 ? 20 : 0, paddingBottom: i === 0 ? 20 : 0, borderBottom: i === 0 ? "1px solid rgba(199,171,117,.07)" : "none" }}>
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: 8 }}>
-              <div>
-                <span style={{ fontFamily: sr, fontSize: 15, fontWeight: 600, color: "#FBF7EE", marginRight: 8 }}>{w.wave}</span>
-                <span style={{ fontFamily: sn, fontSize: 10, color: "rgba(251,247,238,.5)", fontWeight: 300 }}>{w.dates}</span>
-              </div>
-              <div style={{ textAlign: "right" }}>
-                <span style={{ fontFamily: sr, fontSize: 12, color: "#4DB87A" }}>{w.enrolled} enrolled</span>
-                <span style={{ fontFamily: sn, fontSize: 9, color: "rgba(251,247,238,.4)", marginLeft: 6 }}>{w.total - w.enrolled} left</span>
-              </div>
-            </div>
-            <div style={{ height: 2, background: "rgba(255,255,255,.06)", borderRadius: 1 }}>
-              <div style={{ height: "100%", width: `${(w.enrolled / w.total) * 100}%`, background: "linear-gradient(90deg, #4DB87A, rgba(77,184,122,.5))", borderRadius: 1 }} />
-            </div>
-            <p style={{ fontFamily: sn, fontSize: 8, color: "rgba(251,247,238,.3)", letterSpacing: "0.08em", marginTop: 5 }}>{w.days}</p>
-          </div>
-        ))}
-      </div>
 
       {/* 2 — PHOTO — full-width, fixed height, same as desktop */}
       <div style={{ overflow: "hidden", height: 220 }}>
@@ -1504,7 +1528,7 @@ function SummerProgramContent({ prog, openInquiry, setPage, scrollToSchedule }) 
         <div style={{ margin: "28px 20px", background: "#000", padding: "24px 22px" }}>
           <p style={{ fontFamily: ey, fontSize: 8, letterSpacing: "0.4em", color: g, fontWeight: 600, textTransform: "uppercase", marginBottom: 10 }}>A Day at Excalibur</p>
           <h3 style={{ fontFamily: sr, fontSize: 20, fontWeight: 600, color: "#FBF7EE", lineHeight: 1.1, marginBottom: 8 }}>What a real session looks like.</h3>
-          <p style={{ fontFamily: sn, fontSize: 12, color: "rgba(251,247,238,.6)", fontWeight: 300, lineHeight: 1.8, marginBottom: 18 }}>Tap to see the full daily schedule for the Summer Intensive.</p>
+          <p style={{ fontFamily: sn, fontSize: 12, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.8, marginBottom: 18 }}>Tap to see the full daily schedule for the Summer Intensive.</p>
           <button onClick={scrollToSchedule} style={{ fontFamily: sn, background: g, border: "none", color: "#000", padding: "12px 22px", fontSize: 10, fontWeight: 700, letterSpacing: "0.15em", textTransform: "uppercase", cursor: "pointer", width: "100%" }}>VIEW FULL DAY SCHEDULE →</button>
         </div>
 
@@ -1544,7 +1568,7 @@ function DarkProgramContent({ prog, openInquiry, setPage }) {
         <p style={{ fontFamily: sr, fontSize: 15, color: g, fontStyle: "italic", marginBottom: 20, lineHeight: 1.4 }}>{prog.tagline}</p>
         <div style={{ width: 32, height: 1, background: `linear-gradient(90deg, ${g}, transparent)`, marginBottom: 22 }} />
         {prog.desc.split("\n\n").map((para, i) => (
-          <p key={i} style={{ fontFamily: sn, fontSize: 13, lineHeight: 1.9, color: "rgba(251,247,238,.8)", fontWeight: 300, marginBottom: 14 }}>{para}</p>
+          <p key={i} style={{ fontFamily: sn, fontSize: 13, lineHeight: 1.9, color: "#FBF7EE", fontWeight: 300, marginBottom: 14 }}>{para}</p>
         ))}
       </div>
 
@@ -1564,7 +1588,7 @@ function DarkProgramContent({ prog, openInquiry, setPage }) {
         {prog.features.map((f, j) => (
           <div key={j} style={{ display: "flex", gap: 14, padding: "11px 0", borderBottom: "1px solid rgba(199,171,117,.06)", alignItems: "flex-start" }}>
             <span style={{ fontFamily: sr, fontSize: 10, color: "rgba(199,171,117,.25)", fontStyle: "italic", flexShrink: 0, paddingTop: 2 }}>{String(j + 1).padStart(2, "0")}</span>
-            <span style={{ fontFamily: sn, fontSize: 12, color: "rgba(251,247,238,.85)", fontWeight: 300, lineHeight: 1.75 }}>{f}</span>
+            <span style={{ fontFamily: sn, fontSize: 12, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.75 }}>{f}</span>
           </div>
         ))}
       </div>
@@ -1624,7 +1648,7 @@ function ProgramsPage({ setPage, openInquiry }) {
       details: [
         ["Schedule", "Weekday: Tue & Thu · 4:00–6:25 PM (Group B)\nor Saturday: 10:30 AM–3:45 PM (Group A)"],
         ["Class Size", "25 per track · Founding Class"],
-        ["Tuition", "$1,990 / month"],
+        ["Tuition", "$1,900 / month"],
         ["Dates", "September 2026 – June 2027"],
       ],
       features: [
@@ -1664,7 +1688,7 @@ function ProgramsPage({ setPage, openInquiry }) {
 
   return (
     <div style={{ background: "#000", paddingTop: 0 }}>
-
+      <Breadcrumb items={[{label:"Our Programs",page:"programs"}]} setPage={setPage} />
       {/* HERO */}
       <div style={{ maxWidth: 900, margin: "0 auto", padding: isMobile ? "36px 16px 32px" : "60px 40px 48px", textAlign: "center" }}>
         <Fade>
@@ -1694,7 +1718,7 @@ function ProgramsPage({ setPage, openInquiry }) {
                     <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 6 }}>
                       <span style={{ fontFamily: sans, fontSize: 8, letterSpacing: "0.15em", fontWeight: 700, color: p.statusColor, border: `1px solid ${p.statusColor}`, padding: "2px 7px" }}>{p.status}</span>
                     </div>
-                    <p style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: 22, fontWeight: 600, color: activeProgram === i ? "#FBF7EE" : "rgba(251,247,238,.5)", lineHeight: 1.1, marginBottom: 4 }}>{p.title}</p>
+                    <p style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: 22, fontWeight: 600, color: activeProgram === i ? "#FBF7EE" : "#FBF7EE", lineHeight: 1.1, marginBottom: 4 }}>{p.title}</p>
                     <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 13, color: activeProgram === i ? gold : "rgba(199,171,117,.4)", fontStyle: "italic" }}>{p.tagline}</p>
                   </div>
                   <span style={{ fontFamily: sans, fontSize: 20, color: activeProgram === i ? gold : "rgba(199,171,117,.3)", transform: activeProgram === i ? "rotate(45deg)" : "none", transition: "transform .3s", flexShrink: 0, marginLeft: 12 }}>+</span>
@@ -1737,36 +1761,6 @@ function ProgramsPage({ setPage, openInquiry }) {
           {prog.id === "summer" ? (
             /* ── SUMMER: tracker above photo, then white content below ── */
             <div>
-              {/* ENROLLMENT TRACKER — full width black strip, right under the tabs */}
-              <div style={{ background: "#000", padding: isMobile ? "24px 24px" : "28px 52px", borderBottom: "1px solid rgba(199,171,117,.08)" }}>
-                <p style={{ fontFamily: eyebrow_font, fontSize: 8, letterSpacing: "0.45em", color: "rgba(199,171,117,.55)", fontWeight: 600, textTransform: "uppercase", marginBottom: 20 }}>Enrollment Status · Summer 2026</p>
-                <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: isMobile ? 20 : 48 }}>
-                  {[
-                    { wave: "Wave I", dates: "July 6–18", days: "Mon–Fri · 9:30 AM–3 PM", enrolled: 14, total: 20 },
-                    { wave: "Wave II", dates: "August 3–15", days: "Mon–Fri · 9:30 AM–3 PM", enrolled: 9, total: 20 },
-                  ].map((w, i) => (
-                    <div key={i}>
-                      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: 10 }}>
-                        <div>
-                          <span style={{ fontFamily: serif, fontSize: 16, fontWeight: 600, color: "#FBF7EE", marginRight: 10 }}>{w.wave}</span>
-                          <span style={{ fontFamily: sans, fontSize: 11, color: "#FBF7EE", fontWeight: 300 }}>{w.dates} · {w.days}</span>
-                        </div>
-                        <div style={{ textAlign: "right", flexShrink: 0, marginLeft: 12 }}>
-                          <span style={{ fontFamily: serif, fontSize: 13, color: "#4DB87A" }}>{w.enrolled} enrolled</span>
-                          <span style={{ fontFamily: sans, fontSize: 10, color: "rgba(251,247,238,.6)", marginLeft: 8 }}>{w.total - w.enrolled} spots left</span>
-                        </div>
-                      </div>
-                      <div style={{ height: 2, background: "rgba(255,255,255,.06)", borderRadius: 1 }}>
-                        <div style={{ height: "100%", width: `${(w.enrolled / w.total) * 100}%`, background: "linear-gradient(90deg, #4DB87A, rgba(77,184,122,.5))", borderRadius: 1 }} />
-                      </div>
-                      <div style={{ display: "flex", justifyContent: "space-between", marginTop: 5 }}>
-                        <span style={{ fontFamily: sans, fontSize: 8, color: "rgba(251,247,238,.45)", letterSpacing: "0.08em" }}>0 / 20 students</span>
-                        <span style={{ fontFamily: sans, fontSize: 8, color: "rgba(251,247,238,.45)", letterSpacing: "0.08em" }}>Limited cohort</span>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
 
               {/* Photo — controlled height strip */}
               <div style={{ background: "#000", overflow: "hidden", height: isMobile ? 200 : 320 }}>
@@ -1817,7 +1811,7 @@ function ProgramsPage({ setPage, openInquiry }) {
                   <div style={{ background: "#000", padding: "28px 28px" }}>
                     <p style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.4em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 10 }}>A Day at Excalibur</p>
                     <h3 style={{ fontFamily: serif, fontSize: 22, fontWeight: 600, color: "#FBF7EE", lineHeight: 1.1, marginBottom: 8 }}>What a real session looks like.</h3>
-                    <p style={{ fontFamily: sans, fontSize: 12, color: "rgba(251,247,238,.6)", fontWeight: 300, lineHeight: 1.8, marginBottom: 18 }}>Click any block to meet the instructor and see exactly what happens in that session. Summer Intensive.</p>
+                    <p style={{ fontFamily: sans, fontSize: 12, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.8, marginBottom: 18 }}>Click any block to meet the instructor and see exactly what happens in that session. Summer Intensive.</p>
                     <button onClick={scrollToSchedule} style={{ fontFamily: sans, background: gold, border: "none", color: "#000", padding: "11px 22px", fontSize: 10, fontWeight: 700, letterSpacing: "0.15em", textTransform: "uppercase", cursor: "pointer" }}>VIEW FULL DAY SCHEDULE →</button>
                   </div>
                 </div>
@@ -1876,7 +1870,7 @@ function ProgramsPage({ setPage, openInquiry }) {
                   <div style={{ background: "#06050A", border: "1px solid rgba(199,171,117,.12)", padding: "28px 28px" }}>
                     <p style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.4em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 10 }}>A Day at Excalibur</p>
                     <h3 style={{ fontFamily: serif, fontSize: 22, fontWeight: 600, color: "#FBF7EE", lineHeight: 1.1, marginBottom: 8 }}>What a real session looks like.</h3>
-                    <p style={{ fontFamily: sans, fontSize: 12, color: "rgba(251,247,238,.6)", fontWeight: 300, lineHeight: 1.8, marginBottom: 18 }}>Click any block to meet the instructor and see exactly what happens in that session. Flagship Program.</p>
+                    <p style={{ fontFamily: sans, fontSize: 12, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.8, marginBottom: 18 }}>Click any block to meet the instructor and see exactly what happens in that session. Flagship Program.</p>
                     <button onClick={scrollToSchedule} style={{ fontFamily: sans, background: gold, border: "none", color: "#000", padding: "11px 22px", fontSize: 10, fontWeight: 700, letterSpacing: "0.15em", textTransform: "uppercase", cursor: "pointer" }}>VIEW FULL DAY SCHEDULE →</button>
                   </div>
                 </div>
@@ -1942,12 +1936,12 @@ function ProgramsPage({ setPage, openInquiry }) {
         <Fade d={.08}>
           <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(3,1fr)", gap: 2, background: "#111" }}>
             {[
-              { n: "Block 1", star: true, title: "Public Speaking Instructor", sub: "Opens every session", desc: "Speaking warm-up, impromptu drills, pitch practice, debate exercises, rhetoric training. The Speaking Coach sets the energy for the entire session. By graduation, students will have completed 120+ individual speaking reps across structured and unstructured exercises.", color: gold },
-              { n: "Block 2", star: false, title: "Lead Instructor — The War Room", sub: "The real world, every week", desc: "Rotates weekly between: (1) current events and business news analysis, (2) weekly case study deconstruction — approximately 30–40 companies by graduation, (3) guest industry speaker once per month, and (4) applied workshop where students immediately apply the specialist's content.", color: gold },
-              { n: "Block 3", star: false, title: "Specialist Instructor", sub: "The month's module", desc: "The monthly specialist delivers their core module content — Finance, AI, Sales, Leadership, Intellectual Depth, Business Models, or Industry Sectors. Each specialist is a practitioner with real-world experience in the discipline they teach.", color: gold },
+              { n: "BLOCK 1", title: "Public Speaking Instructor", sub: "Opens every session", desc: "Speaking warm-up, impromptu drills, pitch practice, debate exercises, rhetoric training. The Speaking Coach sets the energy for the entire session. By graduation, students will have completed 120+ individual speaking reps across structured and unstructured exercises." },
+              { n: "BLOCK 2", title: "Specialist Instructor", sub: "The month's module", desc: "The monthly specialist delivers their core module content — Finance, AI & tech, Sales, Leadership, Crypto & Trading, Intellectual Depth & Art of Networking, Business Models, or Industry Sectors. Each specialist is a practitioner with real-world experience in the discipline they teach." },
+              { n: "BLOCK 3", title: "Lead Instructor — The War Room", sub: "The real world, every week", desc: "Rotates weekly between: (1) current events and business news analysis, (2) start-up simulations, risk management & weekly case study deconstruction — approximately 30–40 companies by graduation, (3) guest industry speaker once per month, and (4) applied workshop where students immediately apply the specialist's content." },
             ].map((b, i) => (
-              <div key={i} style={{ background: "#080808", padding: "36px 30px", borderTop: `2px solid ${i === 0 ? gold : "rgba(199,171,117,.15)"}` }}>
-                <div style={{ fontFamily: sans, fontSize: 9, letterSpacing: "0.2em", color: b.star ? gold : "rgba(251,247,238,0.45)", marginBottom: 8, fontWeight: 600 }}>{b.star ? "★ " : ""}{b.n}</div>
+              <div key={i} style={{ background: "#080808", padding: "36px 30px", borderTop: `2px solid ${gold}` }}>
+                <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 10, letterSpacing: "0.25em", color: gold, marginBottom: 10, fontWeight: 700 }}>{b.n}</div>
                 <h3 style={{ fontFamily: serif, fontSize: 20, fontWeight: 600, color: "#FBF7EE", marginBottom: 4, lineHeight: 1.2 }}>{b.title}</h3>
                 <p style={{ fontFamily: sans, fontSize: 10, color: gold, letterSpacing: "0.1em", marginBottom: 16 }}>{b.sub}</p>
                 <p style={{ fontFamily: sans, fontSize: 13, lineHeight: 1.8, color: "#FBF7EE", fontWeight: 300 }}>{b.desc}</p>
@@ -1957,12 +1951,10 @@ function ProgramsPage({ setPage, openInquiry }) {
         </Fade>
       </div>
 
-      <Hr />
-
+      <section style={{ background: "#FAF8F4" }}>
       {/* INTERACTIVE DAILY SCHEDULE */}
       <DailyScheduleSection sectionRef={scheduleRef} />
-
-      <Hr />
+      </section>
 
       {/* SCHEDULE */}
       <div style={{ maxWidth: 1100, margin: "0 auto", padding: isMobile ? "48px 16px" : "72px 40px" }}>
@@ -1990,7 +1982,7 @@ function ApplyPage({ setPage, openInquiry }) {
 
   return (
     <div style={{ background: "#000", paddingTop: 0 }}>
-
+      <Breadcrumb items={[{label:"Our Programs",page:"programs"}]} setPage={setPage} />
       {/* HERO */}
       <div style={{ maxWidth: 900, margin: "0 auto", padding: isMobile ? "36px 16px 32px" : "60px 40px 48px", textAlign: "center" }}>
         <Fade>
@@ -2111,14 +2103,14 @@ function ApplyPage({ setPage, openInquiry }) {
         <Fade>
           <div style={{ marginBottom: 48 }}>
             <div style={{ display: "flex", alignItems: "center", gap: 14, marginBottom: 24 }}>
-              <div style={{ width: 30, height: 30, background: prog ? gold : "#111", border: `1px solid ${prog ? gold : "rgba(199,171,117,0.25)"}`, display: "flex", alignItems: "center", justifyContent: "center", fontFamily: sans, fontSize: 12, fontWeight: 700, color: prog ? "#000" : "rgba(251,247,238,0.6)", transition: "all .3s" }}>1</div>
+              <div style={{ width: 30, height: 30, background: prog ? gold : "#111", border: `1px solid ${prog ? gold : "rgba(199,171,117,0.25)"}`, display: "flex", alignItems: "center", justifyContent: "center", fontFamily: sans, fontSize: 12, fontWeight: 700, color: prog ? "#000" : "#FBF7EE", transition: "all .3s" }}>1</div>
               <h2 style={{ fontFamily: serif, fontSize: 26, fontWeight: 600, color: "#FBF7EE" }}>Choose Your Program</h2>
             </div>
             <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr 1fr", gap: 2, background: "#111" }}>
               {[
                 { id: "launchpad", label: "LAUNCHPAD", title: "Launchpad Intensive", price: "$349", desc: "One Saturday. Four hours. The first taste of what Excalibur is." },
                 { id: "intensive", label: "INTENSIVE", title: "Six-Week Intensive", price: "$2,500 / wave", desc: "Six weeks. Full curriculum. Demo Day before live investors." },
-                { id: "full", label: "FULL PROGRAM", title: "Ten-Month Program", price: "$1,990 / month", desc: "Ten months. Complete formation. The flagship." },
+                { id: "full", label: "FULL PROGRAM", title: "Ten-Month Program", price: "$1,900 / month", desc: "Ten months. Complete formation. The flagship." },
               ].map((p) => (
                 <div key={p.id} onClick={() => { setProg(p.id); setTrack(null); setWave(null); }} style={{ background: prog === p.id ? "#0C0C0A" : "#080808", padding: "28px 24px", cursor: "pointer", borderTop: `2px solid ${prog === p.id ? gold : "transparent"}`, transition: "all .25s" }}>
                   <Eyebrow>{p.label}</Eyebrow>
@@ -2137,7 +2129,7 @@ function ApplyPage({ setPage, openInquiry }) {
           <Fade>
             <div style={{ marginBottom: 48 }}>
               <div style={{ display: "flex", alignItems: "center", gap: 14, marginBottom: 24 }}>
-                <div style={{ width: 30, height: 30, background: track ? gold : "#111", border: `1px solid ${track ? gold : "rgba(199,171,117,0.25)"}`, display: "flex", alignItems: "center", justifyContent: "center", fontFamily: sans, fontSize: 12, fontWeight: 700, color: track ? "#000" : "rgba(251,247,238,0.6)", transition: "all .3s" }}>2</div>
+                <div style={{ width: 30, height: 30, background: track ? gold : "#111", border: `1px solid ${track ? gold : "rgba(199,171,117,0.25)"}`, display: "flex", alignItems: "center", justifyContent: "center", fontFamily: sans, fontSize: 12, fontWeight: 700, color: track ? "#000" : "#FBF7EE", transition: "all .3s" }}>2</div>
                 <h2 style={{ fontFamily: serif, fontSize: 26, fontWeight: 600, color: "#FBF7EE" }}>Choose Your Track</h2>
               </div>
               <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 2, background: "#111" }}>
@@ -2163,7 +2155,7 @@ function ApplyPage({ setPage, openInquiry }) {
           <Fade>
             <div style={{ marginBottom: 48 }}>
               <div style={{ display: "flex", alignItems: "center", gap: 14, marginBottom: 24 }}>
-                <div style={{ width: 30, height: 30, background: wave ? gold : "#111", border: `1px solid ${wave ? gold : "rgba(199,171,117,0.25)"}`, display: "flex", alignItems: "center", justifyContent: "center", fontFamily: sans, fontSize: 12, fontWeight: 700, color: wave ? "#000" : "rgba(251,247,238,0.6)", transition: "all .3s" }}>3</div>
+                <div style={{ width: 30, height: 30, background: wave ? gold : "#111", border: `1px solid ${wave ? gold : "rgba(199,171,117,0.25)"}`, display: "flex", alignItems: "center", justifyContent: "center", fontFamily: sans, fontSize: 12, fontWeight: 700, color: wave ? "#000" : "#FBF7EE", transition: "all .3s" }}>3</div>
                 <h2 style={{ fontFamily: serif, fontSize: 26, fontWeight: 600, color: "#FBF7EE" }}>Choose Your Wave</h2>
               </div>
               <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr 1fr" : "repeat(4, 1fr)", gap: 2, background: "#111" }}>
@@ -2189,12 +2181,12 @@ function ApplyPage({ setPage, openInquiry }) {
           <Fade>
             <div style={{ marginBottom: 48 }}>
               <div style={{ display: "flex", alignItems: "center", gap: 14, marginBottom: 24 }}>
-                <div style={{ width: 30, height: 30, background: wave ? gold : "#111", border: `1px solid ${wave ? gold : "rgba(199,171,117,0.25)"}`, display: "flex", alignItems: "center", justifyContent: "center", fontFamily: sans, fontSize: 12, fontWeight: 700, color: wave ? "#000" : "rgba(251,247,238,0.6)", transition: "all .3s" }}>3</div>
+                <div style={{ width: 30, height: 30, background: wave ? gold : "#111", border: `1px solid ${wave ? gold : "rgba(199,171,117,0.25)"}`, display: "flex", alignItems: "center", justifyContent: "center", fontFamily: sans, fontSize: 12, fontWeight: 700, color: wave ? "#000" : "#FBF7EE", transition: "all .3s" }}>3</div>
                 <h2 style={{ fontFamily: serif, fontSize: 26, fontWeight: 600, color: "#FBF7EE" }}>Confirm Your Enrollment</h2>
               </div>
               <div style={{ background: "#080808", padding: "36px 32px", borderTop: `2px solid ${gold}` }}>
                 <Eyebrow>TEN-MONTH FLAGSHIP</Eyebrow>
-                <div style={{ fontFamily: serif, fontSize: 36, fontWeight: 600, color: "#FBF7EE", marginBottom: 6 }}>$1,990 <span style={{ fontFamily: sans, fontSize: 14, color: "#FBF7EE", fontWeight: 300 }}>/ month</span></div>
+                <div style={{ fontFamily: serif, fontSize: 36, fontWeight: 600, color: "#FBF7EE", marginBottom: 6 }}>$1,900 <span style={{ fontFamily: sans, fontSize: 14, color: "#FBF7EE", fontWeight: 300 }}>/ month</span></div>
                 <p style={{ fontFamily: sans, fontSize: 13, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.7, marginBottom: 20 }}>The complete Excalibur experience: all eight modules, sector rotations, pitch nights, consulting-style work, externship exposure, micro-venture development, the Excalibur Portfolio, and alumni network access.</p>
                 <div style={{ display: "flex", gap: 8, cursor: "pointer" }} onClick={() => setWave("monthly")}>
                   <div style={{ width: 16, height: 16, border: `1px solid ${wave === "monthly" ? gold : "#333"}`, background: wave === "monthly" ? gold : "transparent", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, marginTop: 2 }}>
@@ -2285,7 +2277,6 @@ function ScheduleTabs({ setPage, isMobile, waves, gold }) {
             { label: "WAVE 1 — JULY", dates: "July 6 – July 18, 2026", left: summerLeft[0], items: [["Schedule", "Mon–Fri · 9:30 AM – 3:00 PM"], ["Duration", "9 days + Field Trip"], ["Guest Speakers", "Daily · every session"], ["Finale", "Shark Tank · July 18"]] },
             { label: "WAVE 2 — AUGUST", dates: "Aug 3 – Aug 15, 2026", left: summerLeft[1], items: [["Schedule", "Mon–Fri · 9:30 AM – 3:00 PM"], ["Duration", "9 days + Field Trip"], ["Guest Speakers", "Daily · every session"], ["Finale", "Shark Tank · Aug 15"]] },
           ].map((t, i) => {
-            const filled = 25 - t.left;
             return (
               <div key={i} style={{ background: "#080808", padding: "28px 32px" }}>
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 4 }}>
@@ -2301,11 +2292,7 @@ function ScheduleTabs({ setPage, isMobile, waves, gold }) {
                     </div>
                   ))}
                 </div>
-                <div style={{ fontFamily: sans, fontSize: 11, color: "#FBF7EE", marginBottom: 6, display: "flex", justifyContent: "space-between" }}>
-                  <span>{filled} enrolled</span>
-                  <span style={{ color: t.left < 8 ? gold : "#C8C0B8", fontWeight: t.left < 8 ? 600 : 300 }}>{t.left} remaining</span>
-                </div>
-                <div style={{ height: 2, background: "#1a1a1a", marginBottom: 14 }}><div style={{ height: "100%", width: `${(filled/25)*100}%`, background: "#4DB87A" }} /></div>
+
                 <button onClick={() => setPage("apply")} style={{ fontFamily: sans, width: "100%", padding: "9px 0", border: `1px solid rgba(199,171,117,.25)`, color: gold, fontSize: 10, fontWeight: 600, letterSpacing: "0.15em", background: "transparent", cursor: "pointer" }}>APPLY NOW →</button>
               </div>
             );
@@ -2317,8 +2304,8 @@ function ScheduleTabs({ setPage, isMobile, waves, gold }) {
       {activeProgram === "flagship" && (
         <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 1, background: "#111" }}>
           {[
-            { label: "WEEKDAY TRACK", schedule: "Tuesday & Thursday · 4:00–6:15 PM", left: flagshipLeft[0], items: [["Starts", "September 2026"], ["Duration", "10 Months"], ["Sessions", "Tue & Thu evenings"], ["Ends", "June 2027 · Demo Day"], ["Price", "$1,990 / month"], ["Seats", "25 per cohort"]] },
-            { label: "SATURDAY TRACK", schedule: "Every Saturday · 10:30 AM–3:00 PM", left: flagshipLeft[1], items: [["Starts", "September 2026"], ["Duration", "10 Months"], ["Sessions", "Full-day Saturdays"], ["Ends", "June 2027 · Demo Day"], ["Price", "$1,990 / month"], ["Seats", "25 per cohort"]] },
+            { label: "WEEKDAY TRACK", schedule: "Tuesday & Thursday · 4:00–6:15 PM", left: flagshipLeft[0], items: [["Starts", "September 2026"], ["Duration", "10 Months"], ["Sessions", "Tue & Thu evenings"], ["Ends", "June 2027 · Demo Day"], ["Price", "$1,900 / month"], ["Seats", "25 per cohort"]] },
+            { label: "SATURDAY TRACK", schedule: "Every Saturday · 10:30 AM–3:00 PM", left: flagshipLeft[1], items: [["Starts", "September 2026"], ["Duration", "10 Months"], ["Sessions", "Full-day Saturdays"], ["Ends", "June 2027 · Demo Day"], ["Price", "$1,900 / month"], ["Seats", "25 per cohort"]] },
           ].map((t, i) => {
             return (
               <div key={i} style={{ background: "#080808", padding: "28px 32px" }}>
@@ -2449,7 +2436,7 @@ function HomePage({ setPage, openInquiry }) {
       {/* FOUNDING BANNER */}
       <div style={{ background: gold, padding: isMobile ? "10px 16px" : "10px 40px", textAlign: "center" }}>
         <p style={{ fontFamily: sans, fontSize: isMobile ? 9 : 11, letterSpacing: isMobile ? "0.1em" : "0.22em", color: "#000", fontWeight: 700, textTransform: "uppercase", lineHeight: 1.5 }}>
-          {isMobile ? <>WAITLIST NOW OPEN — SUMMER INTENSIVE · JULY & AUGUST 2026 · <span style={{ cursor: "pointer", textDecoration: "underline" }} onClick={() => setPage("apply")}>Apply Now →</span></> : <>✦ &nbsp; Waitlist Now Open for Summer Intensive &nbsp;·&nbsp; July & August 2026 &nbsp;·&nbsp; Limited Cohort &nbsp;·&nbsp; 25 Students Per Cohort Only &nbsp;·&nbsp;<span style={{ cursor: "pointer", textDecoration: "underline", textUnderlineOffset: 3, marginLeft: 8 }} onClick={() => setPage("apply")}>Apply Now →</span>&nbsp; ✦</>}
+          {isMobile ? <>SUMMER INTENSIVE · JULY 6–18 & AUG 3–15 · MON–FRI · 20 STUDENTS PER WAVE · <span style={{ cursor: "pointer", textDecoration: "underline" }} onClick={() => setPage("apply")}>Apply Now</span></> : <>✦ &nbsp; Summer Intensive &nbsp;·&nbsp; July 6–18 &amp; August 3–15 &nbsp;·&nbsp; Mon–Fri &nbsp;·&nbsp; 20 Students Per Wave &nbsp;·&nbsp; <span style={{ cursor: "pointer", textDecoration: "underline", textUnderlineOffset: 3 }} onClick={() => setPage("apply")}>Apply Now</span> &nbsp; ✦</>}
         </p>
       </div>
 
@@ -2498,7 +2485,7 @@ function HomePage({ setPage, openInquiry }) {
           </Fade>
 
           <Fade d={.22}>
-            <h1 style={{ fontFamily: serif, fontStyle: "italic", fontSize: isMobile ? "clamp(20px,4.5vw,30px)" : "clamp(22px,2.2vw,34px)", fontWeight: 300, lineHeight: 1.4, color: "rgba(251,247,238,.7)", maxWidth: 660, marginBottom: 10 }}>
+            <h1 style={{ fontFamily: serif, fontStyle: "italic", fontSize: isMobile ? "clamp(20px,4.5vw,30px)" : "clamp(22px,2.2vw,34px)", fontWeight: 300, lineHeight: 1.4, color: "#FBF7EE", maxWidth: 660, marginBottom: 10 }}>
               School teaches how to take tests.
             </h1>
             <h1 style={{ fontFamily: serif, fontSize: isMobile ? "clamp(22px,5vw,34px)" : "clamp(26px,2.6vw,40px)", fontWeight: 600, lineHeight: 1.25, color: "#FBF7EE", maxWidth: 660, marginBottom: 36 }}>
@@ -2507,7 +2494,7 @@ function HomePage({ setPage, openInquiry }) {
           </Fade>
 
           <Fade d={.28}>
-            <p style={{ fontFamily: sans, fontSize: isMobile ? 14 : 16, lineHeight: 1.85, color: "rgba(251,247,238,.65)", maxWidth: 580, marginBottom: 44, fontWeight: 300 }}>A premier institute where real entrepreneurs, investors, top executives, and distinguished professionals teach the next generation to lead the world — not follow it.</p>
+            <p style={{ fontFamily: sans, fontSize: isMobile ? 14 : 16, lineHeight: 1.85, color: "#FBF7EE", maxWidth: 580, marginBottom: 44, fontWeight: 300 }}>A premier institute where real entrepreneurs, investors, top executives, and distinguished professionals teach the next generation to lead the world — not follow it.</p>
           </Fade>
 
           <Fade d={.34}>
@@ -2515,7 +2502,7 @@ function HomePage({ setPage, openInquiry }) {
               <button onClick={() => setPage("apply")} style={{ fontFamily: sans, background: gold, color: "#000", padding: "14px 44px", fontSize: 11, fontWeight: 700, letterSpacing: "0.22em", textTransform: "uppercase", border: "none", cursor: "pointer" }}>Join the Founding Class</button>
               <button onClick={() => setPage("programs")} style={{ fontFamily: sans, border: `1px solid rgba(199,171,117,.35)`, color: gold, padding: "14px 32px", fontSize: 11, fontWeight: 500, letterSpacing: "0.18em", textTransform: "uppercase", background: "transparent", cursor: "pointer" }}>Explore Programs</button>
             </div>
-            <p style={{ fontFamily: eyebrow_font, fontSize: 9, color: "rgba(199,171,117,.5)", letterSpacing: "0.3em", textTransform: "uppercase" }}>Ages 16–17 &nbsp;·&nbsp; 25 Students Per Cohort &nbsp;·&nbsp; Orange County, CA</p>
+            <p style={{ fontFamily: eyebrow_font, fontSize: 9, color: gold, letterSpacing: "0.3em", textTransform: "uppercase" }}>Ages 16–17 &nbsp;·&nbsp; 25 Students Per Cohort &nbsp;·&nbsp; Orange County, CA</p>
           </Fade>
 
         </div>
@@ -2620,7 +2607,7 @@ function HomePage({ setPage, openInquiry }) {
             {/* "You Asked. We Listened." — black block treatment */}
             <div style={{ marginBottom: 36, background: "#000", padding: isMobile ? "24px 20px" : "28px 32px" }}>
               <p style={{ fontFamily: eyebrow_font, fontSize: 8, letterSpacing: "0.42em", color: gold, fontWeight: 700, textTransform: "uppercase", marginBottom: 12 }}>You Asked. We Listened.</p>
-              <p style={{ fontFamily: sans, fontSize: isMobile ? 13 : 15, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.75 }}>Due to high demand and our commitment to keeping cohort sizes small — a personalised, real experience — we are <span style={{ color: gold, fontWeight: 700 }}>introducing a second two-week intensive wave in August 2026.</span></p>
+              <p style={{ fontFamily: sans, fontSize: isMobile ? 13 : 15, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.75 }}><span style={{ fontWeight: 700 }}>Due to high demand and our commitment to keeping cohort sizes small — a personalised, real experience —</span> we are <span style={{ color: gold, fontWeight: 700, fontStyle: "italic" }}>introducing a second two-week intensive wave in August 2026.</span></p>
             </div>
 
             <p style={{ fontFamily: sans, fontSize: 13, lineHeight: 1.9, color: "#444", fontWeight: 300, marginBottom: 36, maxWidth: 680 }}>
@@ -2642,6 +2629,11 @@ function HomePage({ setPage, openInquiry }) {
                   <span style={{ fontFamily: sans, fontSize: 12, color: "#333", fontWeight: 300, lineHeight: 1.6 }}>{v}</span>
                 </div>
               ))}
+            </div>
+
+            <div style={{ display: "flex", gap: 12, marginTop: 36, flexWrap: "wrap" }}>
+              <button onClick={() => openInquiry && openInquiry("summer")} style={{ fontFamily: sans, padding: "14px 36px", background: "#000", border: "none", color: "#fff", fontSize: 11, fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", cursor: "pointer" }}>APPLY NOW →</button>
+              <button onClick={() => setPage("summer-detail")} style={{ fontFamily: sans, padding: "14px 28px", background: "transparent", border: "1px solid rgba(0,0,0,.25)", color: "#111", fontSize: 11, fontWeight: 500, letterSpacing: "0.15em", textTransform: "uppercase", cursor: "pointer" }}>LEARN MORE →</button>
             </div>
 
           </Fade>
@@ -2805,7 +2797,10 @@ function HomePage({ setPage, openInquiry }) {
                   <div style={{ fontFamily: serif, fontSize: 38, color: "#FBF7EE", fontWeight: 600, lineHeight: 1, marginBottom: 4 }}>$4,500</div>
                   <div style={{ fontFamily: sans, fontSize: 12, color: "#FBF7EE", fontWeight: 300, marginBottom: 28 }}>Per two-week wave · includes catered lunches from local restaurants, distinguished guest speakers, and a Shark Tank-inspired live startup pitch finale before families, investors, entrepreneurs, and invited judges.</div>
                 </div>
-                <button onClick={() => setPage("apply")} style={{ fontFamily: sans, padding: "13px 28px", background: "transparent", border: `1px solid rgba(199,171,117,.4)`, color: gold, fontSize: 11, fontWeight: 600, letterSpacing: "0.18em", textTransform: "uppercase", cursor: "pointer", alignSelf: "flex-start" }}>APPLY NOW →</button>
+                <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
+                <button onClick={() => setPage("apply")} style={{ fontFamily: sans, padding: "13px 28px", background: gold, border: "none", color: "#000", fontSize: 11, fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", cursor: "pointer" }}>APPLY NOW →</button>
+                <button onClick={() => setPage("summer-detail")} style={{ fontFamily: sans, padding: "13px 24px", background: "transparent", border: `1px solid rgba(199,171,117,.35)`, color: gold, fontSize: 11, fontWeight: 500, letterSpacing: "0.15em", textTransform: "uppercase", cursor: "pointer" }}>LEARN MORE →</button>
+              </div>
               </div>
             </div>
           </Fade>
@@ -2828,7 +2823,7 @@ function HomePage({ setPage, openInquiry }) {
                   </div>
                 ))}
                 <div style={{ marginTop: 32, display: "flex", alignItems: "baseline", gap: 8, marginBottom: 18 }}>
-                  <span style={{ fontFamily: serif, fontSize: 32, color: "#FBF7EE", fontWeight: 600 }}>$3,500</span>
+                  <span style={{ fontFamily: serif, fontSize: 32, color: "#FBF7EE", fontWeight: 600 }}>$3,900</span>
                   <span style={{ fontFamily: sans, fontSize: 12, color: "#FBF7EE", fontWeight: 300 }}>/ wave</span>
                 </div>
                 <button onClick={() => setPage("intensive")} style={{ fontFamily: sans, padding: "11px 26px", background: "transparent", border: `1px solid rgba(199,171,117,.3)`, color: gold, fontSize: 11, fontWeight: 600, letterSpacing: "0.15em", textTransform: "uppercase", cursor: "pointer" }}>EXPLORE INTENSIVE →</button>
@@ -2849,7 +2844,7 @@ function HomePage({ setPage, openInquiry }) {
                   </div>
                 ))}
                 <div style={{ marginTop: 32, display: "flex", alignItems: "baseline", gap: 8, marginBottom: 18 }}>
-                  <span style={{ fontFamily: serif, fontSize: 32, color: "#FBF7EE", fontWeight: 600 }}>$1,990</span>
+                  <span style={{ fontFamily: serif, fontSize: 32, color: "#FBF7EE", fontWeight: 600 }}>$1,900</span>
                   <span style={{ fontFamily: sans, fontSize: 12, color: "#FBF7EE", fontWeight: 300 }}>/ month</span>
                 </div>
                 <button onClick={() => setPage("full-program")} style={{ fontFamily: sans, padding: "11px 26px", background: gold, border: "none", color: "#000", fontSize: 11, fontWeight: 700, letterSpacing: "0.15em", textTransform: "uppercase", cursor: "pointer" }}>EXPLORE FULL PROGRAM →</button>
@@ -2873,7 +2868,7 @@ function HomePage({ setPage, openInquiry }) {
                   <div key={i} style={{ borderBottom: "1px solid #0E0E0E" }}>
                     <div onClick={() => setActiveMod(activeMod === i ? null : i)} style={{ padding: "18px 20px", cursor: "pointer", borderLeft: `3px solid ${activeMod === i ? gold : "transparent"}`, background: activeMod === i ? "rgba(199,171,117,.04)" : "#060606", display: "flex", justifyContent: "space-between", alignItems: "center", transition: "all .2s" }}>
                       <div style={{ fontFamily: serif, fontSize: 19, fontWeight: activeMod === i ? 600 : 400, color: activeMod === i ? gold : "#D8D0C8", lineHeight: 1.3 }}>{m.title}</div>
-                      <div style={{ fontFamily: sans, fontSize: 16, color: activeMod === i ? gold : "rgba(251,247,238,0.5)", transition: "transform .25s", transform: activeMod === i ? "rotate(45deg)" : "none", lineHeight: 1 }}>+</div>
+                      <div style={{ fontFamily: sans, fontSize: 16, color: activeMod === i ? gold : "#FBF7EE", transition: "transform .25s", transform: activeMod === i ? "rotate(45deg)" : "none", lineHeight: 1 }}>+</div>
                     </div>
                     {activeMod === i && (
                       <div style={{ background: "#080808", padding: "24px 20px 28px" }}>
@@ -3147,7 +3142,7 @@ function BeyondPage({ setPage, openInquiry }) {
 
   return (
     <div style={{ background: "#000", paddingTop: 0 }}>
-
+      <Breadcrumb items={[{label:"Our Programs",page:"programs"}]} setPage={setPage} />
       {/* HERO */}
       <div style={{ maxWidth: 900, margin: "0 auto", padding: isMobile ? "36px 16px 32px" : "60px 40px 48px", textAlign: "center" }}>
         <Fade>
@@ -3475,7 +3470,7 @@ function FacultyProfilePage({ slug, setPage }) {
           <p style={{ fontFamily: sans, fontSize: 10, letterSpacing: "0.35em", color: "#9A9290", fontWeight: 600, textTransform: "uppercase", marginBottom: 24 }}>Credentials</p>
           <div style={{ display: "flex", flexDirection: "column", gap: 0 }}>
             {f.credentials.map((cr, i) => (
-              <div key={i} style={{ display: "flex", gap: 14, padding: "14px 0", borderBottom: "1px solid rgba(199,171,117,.07)", alignItems: "flex-start" }}>
+              <div key={i} style={{ display: "flex", gap: 14, padding: "14px 0", borderBottom: "1px solid rgba(0,0,0,.07)", alignItems: "flex-start" }}>
                 <div style={{ width: 4, height: 4, borderRadius: "50%", background: gold, flexShrink: 0, marginTop: 7 }} />
                 <span style={{ fontFamily: sans, fontSize: 12, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.65 }}>{cr}</span>
               </div>
@@ -3513,6 +3508,7 @@ function FacultyProfilePage({ slug, setPage }) {
 // PAGE: OUR FACULTY (listing)
 function FacultyPage({ setPage, openInquiry }) {
   const isMobile = useIsMobile();
+  // breadcrumb marker
   const [expanded, setExpanded] = useState({});
 
   const faculty = [
@@ -3888,7 +3884,7 @@ function ComingSoonPage({ onUnlock }) {
         <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(3,1fr)", gap: 2, background: "#111", marginBottom: 52, width: "100%", maxWidth: 880 }}>
           {[
             { label: "SUMMER INTENSIVE", dates: "July & August 2026", detail: "Mon–Fri · 9:30 AM–3:00 PM · $4,500 / wave" },
-            { label: "TEN-MONTH FLAGSHIP", dates: "September 2026 – June 2027", detail: "Weekday or Weekend Track · $1,990 / month", flagship: true },
+            { label: "TEN-MONTH FLAGSHIP", dates: "September 2026 – June 2027", detail: "Weekday or Weekend Track · $1,900 / month", flagship: true },
             { label: "SIX-WEEK INTENSIVE", dates: "Four waves · 2026", detail: "Mon & Wed evenings or Saturdays · $3,900 / wave" },
           ].map((p, i) => (
             <div key={i} style={{ background: "#080808", padding: "24px 22px", borderTop: `2px solid ${p.flagship ? gold : "rgba(199,171,117,.2)"}` }}>
@@ -3956,7 +3952,7 @@ function ComingSoonPage({ onUnlock }) {
               <p style={{ fontFamily: sans, fontSize: isMobile ? 12 : 13, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.85, maxWidth: 520, margin: "0 auto 18px" }}>
                 An intimate evening and cocktail reception for a select number of families to meet the faculty, learn about the programs, and experience the standard of the Academy firsthand.
               </p>
-              <p style={{ fontFamily: serif, fontSize: 12, color: gold, letterSpacing: "0.18em", marginBottom: 32 }}>By personal invitation only.</p>
+              <p style={{ fontFamily: serif, fontSize: 18, color: gold, letterSpacing: "0.18em", marginBottom: 32, textTransform: "uppercase" }}>By Personal Invitation Only.</p>
               <div style={{ display: "flex", gap: 8, flexDirection: isMobile ? "column" : "row", maxWidth: 520, margin: "0 auto" }}>
                 <input
                   type="email"
@@ -3975,7 +3971,7 @@ function ComingSoonPage({ onUnlock }) {
                   Request Invitation
                 </button>
               </div>
-              <p style={{ fontFamily: sans, fontSize: 10, color: "rgba(251,247,238,0.5)", marginTop: 14, letterSpacing: "0.06em" }}>A member of our admissions team will be in touch within 24 hours with next steps.</p>
+              <p style={{ fontFamily: sans, fontSize: 10, color: "#FBF7EE", marginTop: 14, letterSpacing: "0.06em" }}>A member of our admissions team will be in touch within 24 hours with next steps.</p>
             </div>
           </div>
         ) : (
@@ -3991,7 +3987,7 @@ function ComingSoonPage({ onUnlock }) {
 
         {/* Password access */}
         {!showPass ? (
-          <button onClick={() => setShowPass(true)} style={{ fontFamily: sans, background: "transparent", border: "none", color: "rgba(251,247,238,0.6)", fontSize: 11, cursor: "pointer", letterSpacing: "0.1em", textDecoration: "underline", textUnderlineOffset: 3 }}>
+          <button onClick={() => setShowPass(true)} style={{ fontFamily: sans, background: "transparent", border: "none", color: "#FBF7EE", fontSize: 11, cursor: "pointer", letterSpacing: "0.1em", textDecoration: "underline", textUnderlineOffset: 3 }}>
             Staff access
           </button>
         ) : (
@@ -4101,7 +4097,6 @@ function InquiryModal({ open, onClose, defaultProgram }) {
   const inputClass = "inquiry-input";
   const focusStyle = (e) => e.target.style.borderColor = gold;
   const blurStyle = (e) => e.target.style.borderColor = "rgba(199,171,117,.2)";
-
   const Label = ({ children }) => (
     <p style={{ fontFamily: eyebrow, fontSize: 9, letterSpacing: "0.25em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 8 }}>{children}</p>
   );
@@ -4156,8 +4151,8 @@ function InquiryModal({ open, onClose, defaultProgram }) {
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
             <div>
               <p style={{ fontFamily: eyebrow, fontSize: 9, letterSpacing: "0.4em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 8 }}>Excalibur Academy · Inquiry</p>
-              <h2 style={{ fontFamily: serif, fontSize: isMobile ? 26 : 34, fontWeight: 600, color: "#FBF7EE", lineHeight: 1.05 }}>
-                {submitted ? "Thank You." : step === 1 ? "Tell Us About Your Family." : step === 2 ? "Your Prospective Student." : "Program & Preferences."}
+              <h2 style={{ fontFamily: serif, fontSize: isMobile ? 22 : 28, fontWeight: 600, color: "#FBF7EE", lineHeight: 1.1 }}>
+                {submitted ? "Thank You." : "Please Fill out Quick Information Form"}
               </h2>
             </div>
             <button onClick={onClose} style={{ background: "none", border: "none", color: "rgba(251,247,238,.4)", fontSize: 22, cursor: "pointer", lineHeight: 1, marginTop: 4, padding: "4px 8px", transition: "color .2s" }} onMouseEnter={e=>e.target.style.color="#FBF7EE"} onMouseLeave={e=>e.target.style.color="rgba(251,247,238,.4)"}>×</button>
@@ -4207,15 +4202,21 @@ function InquiryModal({ open, onClose, defaultProgram }) {
                   {contactTimes.map(t => <Chip key={t} label={t} active={form.contactTime === t} onClick={() => set("contactTime", t)} />)}
                 </div>
               </div>
-              {/* Address */}
+              {/* Address — city + zip required, street optional */}
               <div>
-                <Label>Home Address</Label>
-                <input style={{ ...inputStyle, marginBottom: 8 }} value={form.address} onChange={e=>set("address",e.target.value)} onFocus={focusStyle} onBlur={blurStyle} placeholder="Street address" />
-                <div style={{ display: "grid", gridTemplateColumns: "1fr 120px 80px", gap: 8 }}>
-                  <input className={inputClass} style={inputStyle} value={form.city} onChange={e=>set("city",e.target.value)} onFocus={focusStyle} onBlur={blurStyle} placeholder="City" />
+                <Label>City <span style={{ color: gold }}>*</span></Label>
+                <input className={inputClass} style={{ ...inputStyle, marginBottom: 8 }} value={form.city} onChange={e=>set("city",e.target.value)} onFocus={focusStyle} onBlur={blurStyle} placeholder="City" required />
+                <div style={{ display: "grid", gridTemplateColumns: "1fr 100px", gap: 8, marginBottom: 8 }}>
                   <input className={inputClass} style={inputStyle} value={form.state} onChange={e=>set("state",e.target.value)} onFocus={focusStyle} onBlur={blurStyle} placeholder="State" />
-                  <input className={inputClass} style={inputStyle} value={form.zip} onChange={e=>set("zip",e.target.value)} onFocus={focusStyle} onBlur={blurStyle} placeholder="ZIP" />
+                  <input className={inputClass} style={inputStyle} value={form.zip} onChange={e=>set("zip",e.target.value)} onFocus={focusStyle} onBlur={blurStyle} placeholder="ZIP *" required />
                 </div>
+                <Label style={{ marginTop: 8 }}>Home Address <span style={{ fontWeight: 300, letterSpacing: "0.1em", textTransform: "none", fontSize: 9, color: "rgba(199,171,117,.5)" }}>(optional)</span></Label>
+                <input style={{ ...inputStyle }} value={form.address} onChange={e=>set("address",e.target.value)} onFocus={focusStyle} onBlur={blurStyle} placeholder="Street address (optional)" />
+              </div>
+              {/* Preferred program / wave / track */}
+              <div>
+                <Label>Preferred Program / Wave / Track</Label>
+                <input className={inputClass} style={inputStyle} value={form.preferredProgram || ""} onChange={e=>set("preferredProgram",e.target.value)} onFocus={focusStyle} onBlur={blurStyle} placeholder="e.g. Ten-Month Flagship · Weekday Track" />
               </div>
             </div>
           ) : step === 2 ? (
@@ -4296,7 +4297,7 @@ function InquiryModal({ open, onClose, defaultProgram }) {
             {step < 3 ? (
               <button onClick={() => setStep(s => s + 1)} style={{ fontFamily: sans, background: gold, color: "#000", padding: "13px 36px", fontSize: 12, fontWeight: 700, letterSpacing: "0.18em", border: "none", cursor: "pointer", textTransform: "uppercase" }}>Continue →</button>
             ) : (
-              <button onClick={() => setSubmitted(true)} style={{ fontFamily: sans, background: gold, color: "#000", padding: "13px 36px", fontSize: 12, fontWeight: 700, letterSpacing: "0.18em", border: "none", cursor: "pointer", textTransform: "uppercase" }}>Submit Inquiry →</button>
+              <button onClick={() => setSubmitted(true)} style={{ fontFamily: sans, background: gold, color: "#000", padding: "13px 36px", fontSize: 12, fontWeight: 700, letterSpacing: "0.18em", border: "none", cursor: "pointer", textTransform: "uppercase" }}>Submit — We'll Be in Touch Within 24 Hours</button>
             )}
           </div>
         )}
@@ -4325,13 +4326,13 @@ function FlagshipModulesBlock({ isMobile, setPage, modules }) {
               <div key={i} style={{ borderBottom: "1px solid #0E0E0E" }}>
                 <div onClick={() => setActiveMod(activeMod === i ? null : i)} style={{ padding: "18px 20px", cursor: "pointer", borderLeft: `3px solid ${activeMod === i ? gold : "transparent"}`, background: activeMod === i ? "rgba(199,171,117,.04)" : "#060606", display: "flex", justifyContent: "space-between", alignItems: "center", transition: "all .2s" }}>
                   <div style={{ fontFamily: serif, fontSize: 19, fontWeight: activeMod === i ? 600 : 400, color: activeMod === i ? gold : "#D8D0C8", lineHeight: 1.3 }}>{m.title}</div>
-                  <div style={{ fontFamily: sans, fontSize: 16, color: activeMod === i ? gold : "rgba(251,247,238,0.5)", transition: "transform .25s", transform: activeMod === i ? "rotate(45deg)" : "none", lineHeight: 1 }}>+</div>
+                  <div style={{ fontFamily: sans, fontSize: 16, color: activeMod === i ? gold : "#FBF7EE", transition: "transform .25s", transform: activeMod === i ? "rotate(45deg)" : "none", lineHeight: 1 }}>+</div>
                 </div>
                 {activeMod === i && (
                   <div style={{ background: "#080808", padding: "24px 20px 28px" }}>
                     <p style={{ fontFamily: serif, fontSize: 15, color: gold, fontStyle: "italic", marginBottom: 14 }}>{m.tagline}</p>
                     <div style={{ marginBottom: 18 }}>{(m.body || m.desc || "").split("\n\n").map((para, pi) => (<p key={pi} style={{ fontFamily: sans, fontSize: 14, lineHeight: 1.9, color: "#FBF7EE", fontWeight: 300, marginBottom: 14 }}>{para}</p>))}</div>
-                    <button onClick={() => setPage(`module:${m.slug}`)} style={{ fontFamily: sans, fontSize: 10, color: gold, letterSpacing: "0.15em", fontWeight: 700, border: `1px solid rgba(199,171,117,.3)`, padding: "9px 16px", background: "transparent", cursor: "pointer", textTransform: "uppercase" }}>Explore Module \u2192</button>
+                    <button onClick={() => setPage(`module:${m.slug}`)} style={{ fontFamily: sans, fontSize: 10, color: gold, letterSpacing: "0.15em", fontWeight: 700, border: `1px solid rgba(199,171,117,.3)`, padding: "9px 16px", background: "transparent", cursor: "pointer", textTransform: "uppercase" }}>Explore Module</button>
                   </div>
                 )}
               </div>
@@ -4353,14 +4354,14 @@ function FlagshipModulesBlock({ isMobile, setPage, modules }) {
                 {activeMod !== null && <h3 style={{ fontFamily: serif, fontSize: "clamp(26px,3vw,36px)", fontWeight: 600, color: "#FBF7EE", marginBottom: 8, lineHeight: 1.15 }}>{modules[activeMod].title}</h3>}
                 {activeMod !== null && <p style={{ fontFamily: serif, fontSize: 19, color: gold, fontStyle: "italic", marginBottom: 20 }}>{modules[activeMod].tagline}</p>}
                 {activeMod !== null && <div style={{ marginBottom: 24 }}>{(modules[activeMod].body || modules[activeMod].desc || "").split("\n\n").map((para, pi) => (<p key={pi} style={{ fontFamily: sans, fontSize: 15, lineHeight: 1.95, color: "#FBF7EE", fontWeight: 300, marginBottom: 18 }}>{para}</p>))}</div>}
-                {activeMod !== null && <button onClick={() => setPage(`module:${modules[activeMod].slug}`)} style={{ fontFamily: sans, fontSize: 10, color: gold, letterSpacing: "0.2em", fontWeight: 700, border: `1px solid rgba(199,171,117,.3)`, padding: "9px 18px", background: "transparent", cursor: "pointer", textTransform: "uppercase" }}>Explore This Module \u2192</button>}
+                {activeMod !== null && <button onClick={() => setPage(`module:${modules[activeMod].slug}`)} style={{ fontFamily: sans, fontSize: 10, color: gold, letterSpacing: "0.2em", fontWeight: 700, border: `1px solid rgba(199,171,117,.3)`, padding: "9px 18px", background: "transparent", cursor: "pointer", textTransform: "uppercase" }}>Explore This Module</button>}
               </div>
             </div>
           </div>
         )}
         <div style={{ marginTop: 2, background: "#060606", border: "1px solid #111", borderTop: "none", padding: "17px 32px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
           <span style={{ fontFamily: sans, fontSize: 12, color: "#FBF7EE", fontWeight: 300 }}>All eight modules covered in both the Intensive and the Full Program.</span>
-          <button onClick={() => setPage("curriculum")} style={{ fontFamily: sans, fontSize: 10, color: gold, letterSpacing: 2, background: "transparent", border: "none", cursor: "pointer", fontWeight: 600, flexShrink: 0 }}>VIEW ALL MODULES \u2192</button>
+          <button onClick={() => setPage("curriculum")} style={{ fontFamily: sans, fontSize: 10, color: gold, letterSpacing: 2, background: "transparent", border: "none", cursor: "pointer", fontWeight: 600, flexShrink: 0 }}>VIEW ALL MODULES</button>
         </div>
       </div>
     </section>
@@ -4376,34 +4377,78 @@ function FlagshipScheduleInteractive({ isMobile }) {
   ];
   const current = tabs.find(t => t.id === activeTab) || tabs[0];
   return (
-    <div style={{ maxWidth: 1100, margin: "0 auto", padding: isMobile ? "32px 24px 52px" : "48px 0 72px" }}>
-      <div style={{ display: "flex", justifyContent: "flex-start", gap: 8, marginBottom: 24, flexWrap: "wrap" }}>
-        {tabs.map(t => (
-          <button key={t.id} onClick={() => { setActiveTab(t.id); setActiveBlock(null); }} style={{ fontFamily: "'Lato',sans-serif", padding: "9px 18px", background: activeTab === t.id ? "rgba(199,171,117,.08)" : "transparent", border: `1px solid ${activeTab === t.id ? "rgba(199,171,117,.4)" : "rgba(199,171,117,.12)"}`, color: activeTab === t.id ? "#C7AB75" : "#C8C0B8", fontSize: 11, cursor: "pointer", letterSpacing: "0.1em", textTransform: "uppercase", fontWeight: activeTab === t.id ? 600 : 400, transition: "all .2s" }}>{t.label}</button>
-        ))}
+    <div style={{ marginTop: 0 }}>
+      {/* Tab selector + subtitle — header strip matching DailyScheduleBlock */}
+      <div style={{ background: "#fff", border: "1px solid rgba(0,0,0,.08)", borderBottom: "none", padding: isMobile ? "16px 20px 14px" : "24px 36px 20px", display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: 12 }}>
+        <div>
+          <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 9, letterSpacing: "0.4em", color: "#8B6914", fontWeight: 700, textTransform: "uppercase", marginBottom: 6 }}>Schedule</p>
+          <p style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: isMobile ? 14 : 17, color: "#222", fontWeight: 400 }}>{current.subtitle}</p>
+        </div>
+        <div style={{ display: "flex", gap: 6, flexWrap: "wrap" }}>
+          {tabs.map(t => (
+            <button key={t.id} onClick={() => { setActiveTab(t.id); setActiveBlock(null); }} style={{ fontFamily: "'Lato',sans-serif", padding: "7px 16px", background: activeTab === t.id ? "#111" : "transparent", border: `1px solid ${activeTab === t.id ? "#111" : "rgba(0,0,0,.15)"}`, color: activeTab === t.id ? "#fff" : "#555", fontSize: 10, cursor: "pointer", letterSpacing: "0.12em", textTransform: "uppercase", fontWeight: activeTab === t.id ? 600 : 400, transition: "all .2s" }}>{t.label}</button>
+          ))}
+        </div>
       </div>
-      <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 9, letterSpacing: "0.25em", color: "#C7AB75", textTransform: "uppercase", marginBottom: 20 }}>{current.subtitle}</p>
-      <div style={{ display: "flex", flexDirection: "column", gap: 0 }}>
-        {current.sched.map((block, i) => {
-          const isActive = activeBlock === i;
-          const isBreak = !block.instructor;
-          return (
-            <div key={i}>
-              <div onClick={() => setActiveBlock(isActive ? null : i)} style={{ display: "grid", gridTemplateColumns: isMobile ? "70px 1fr" : "88px 1fr 80px", gap: isMobile ? 12 : 24, padding: "16px 0", borderBottom: "1px solid rgba(199,171,117,.07)", cursor: "pointer", alignItems: "center", opacity: isBreak ? 0.5 : 1 }}>
-                <div>
-                  <p style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: 13, fontWeight: 600, color: "#C7AB75", marginBottom: 1 }}>{block.time}</p>
-                  {block.dur && block.dur !== "\u2014" && <p style={{ fontFamily: "'Lato',sans-serif", fontSize: 9, color: "#FBF7EE", letterSpacing: "0.05em" }}>{block.dur}</p>}
+      {/* Schedule grid matching DailyScheduleBlock */}
+      <div style={{ background: "#FAF8F4", border: "1px solid rgba(0,0,0,.08)" }}>
+        {isMobile ? (
+          <div>
+            {current.sched.map((block, i) => {
+              const isActive = activeBlock === i;
+              const isBreak = !block.instructor;
+              return (
+                <div key={i}>
+                  <div onClick={() => setActiveBlock(isActive ? null : i)} style={{ padding: "14px 20px", cursor: "pointer", borderLeft: `3px solid ${isActive ? "#8B6914" : "transparent"}`, background: isActive ? "rgba(139,105,20,.04)" : "#FAF8F4", borderBottom: "1px solid rgba(0,0,0,.06)", display: "flex", gap: 12, alignItems: "flex-start", transition: "all .2s", opacity: isBreak ? 0.6 : 1 }}>
+                    <div style={{ flexShrink: 0, minWidth: 52 }}>
+                      <div style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: 18, color: isActive ? "#8B6914" : "#555", fontWeight: 600, lineHeight: 1 }}>{block.time}</div>
+                      {block.dur && block.dur !== "—" && <div style={{ fontFamily: "'Lato', sans-serif", fontSize: 9, color: "#555", marginTop: 2 }}>{block.dur}</div>}
+                    </div>
+                    <div style={{ flex: 1 }}>
+                      <div style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: 15, fontWeight: 600, color: "#111", lineHeight: 1.3 }}>{block.block ? block.block.replace(/^Block [0-9]+[ab]? — /, "").replace(/^Block [0-9]+[ab]? – /, "") : ""}</div>
+                      {block.instructor && <div style={{ fontFamily: "'Lato', sans-serif", fontSize: 9, color: isActive ? "#8B6914" : "#999", marginTop: 2 }}>{block.instructor}</div>}
+                    </div>
+                    <span style={{ color: isActive ? "#8B6914" : "#bbb", fontSize: 16, transition: "transform .2s", transform: isActive ? "rotate(45deg)" : "none", display: "inline-block", flexShrink: 0 }}>+</span>
+                  </div>
+                  {isActive && <ScheduleDetail block={block} />}
                 </div>
-                <div>
-                  <p style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: isMobile ? 15 : 17, fontWeight: block.instructor ? 600 : 400, color: block.instructor ? "#FBF7EE" : "#90D4A0", lineHeight: 1.25, marginBottom: block.instructor ? 3 : 0 }}>{block.block ? block.block.replace(/^Block [0-9]+[ab]? — /, "").replace(/^Block [0-9]+[ab]? – /, "") : ""}</p>
-                  {block.instructor && <p style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: 13, color: gold, fontStyle: "italic", letterSpacing: "0.04em" }}>{block.instructor}</p>}
-                </div>
-                {!isMobile && !isBreak && <span style={{ fontFamily: "'Lato',sans-serif", fontSize: 10, color: isActive ? "#C7AB75" : "rgba(199,171,117,.4)", letterSpacing: "0.1em", textAlign: "right", transition: "color .2s" }}>{isActive ? "CLOSE ×" : "VIEW \u2192"}</span>}
-              </div>
-              {isActive && <ScheduleDetail block={block} />}
+              );
+            })}
+          </div>
+        ) : (
+          <div style={{ display: "grid", gridTemplateColumns: "300px 1fr" }}>
+            <div style={{ borderRight: "1px solid rgba(0,0,0,.07)", background: "#fff" }}>
+              {current.sched.map((block, i) => {
+                const isActive = activeBlock === i;
+                const isBreak = !block.instructor;
+                return (
+                  <div key={i} onClick={() => setActiveBlock(isActive ? null : i)} style={{ padding: "14px 24px", cursor: "pointer", borderLeft: `3px solid ${isActive ? "#8B6914" : "transparent"}`, background: isActive ? "rgba(139,105,20,.05)" : "transparent", borderBottom: "1px solid rgba(0,0,0,.05)", transition: "all .2s", display: "flex", gap: 12, alignItems: "flex-start", opacity: isBreak ? 0.55 : 1 }}>
+                    <div style={{ flexShrink: 0, paddingTop: 2 }}>
+                      <div style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: 20, color: isActive ? "#8B6914" : "#555", fontWeight: 600, lineHeight: 1, whiteSpace: "nowrap" }}>{block.time}</div>
+                      {block.dur && block.dur !== "—" && <div style={{ fontFamily: "'Lato', sans-serif", fontSize: 9, color: "#555", marginTop: 3 }}>{block.dur}</div>}
+                    </div>
+                    <div>
+                      <div style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: 15, fontWeight: 600, color: "#111", lineHeight: 1.3 }}>{block.block ? block.block.replace(/^Block [0-9]+[ab]? — /, "").replace(/^Block [0-9]+[ab]? – /, "") : ""}</div>
+                      {block.instructor && <div style={{ fontFamily: "'Lato', sans-serif", fontSize: 9, color: isActive ? "#8B6914" : "#999", marginTop: 2, letterSpacing: "0.06em" }}>{block.instructor}</div>}
+                    </div>
+                  </div>
+                );
+              })}
             </div>
-          );
-        })}
+            <div style={{ background: "#FAF8F4" }}>
+              {activeBlock !== null && current.sched[activeBlock] ? (
+                <div key={activeBlock} style={{ minHeight: 320 }}>
+                  <ScheduleDetail block={current.sched[activeBlock]} />
+                </div>
+              ) : (
+                <div style={{ padding: "36px 40px", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", minHeight: 320, gap: 12 }}>
+                  <span style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 36, color: "rgba(0,0,0,.08)" }}>✦</span>
+                  <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 15, color: "rgba(0,0,0,.25)", fontStyle: "italic", textAlign: "center" }}>Select a time block<br />to see what happens in that session</p>
+                </div>
+              )}
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
@@ -4486,6 +4531,11 @@ function FlagshipEnrollSelector({ openInquiry, isMobile }) {
                 <input key={ph} type={type} placeholder={ph} className="inquiry-input" style={{ background: "#000", border: "1px solid rgba(199,171,117,.2)", color: "#FBF7EE", padding: "13px 16px", fontFamily: "'Lato',sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
               ))}
             </div>
+            <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr 80px", gap: 10, marginBottom: 24 }}>
+              <input type="text" placeholder="City *" className="inquiry-input" style={{ background: "#000", border: "1px solid rgba(199,171,117,.2)", color: "#FBF7EE", padding: "13px 16px", fontFamily: "'Lato',sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} required />
+              <input type="text" placeholder="State" className="inquiry-input" style={{ background: "#000", border: "1px solid rgba(199,171,117,.2)", color: "#FBF7EE", padding: "13px 16px", fontFamily: "'Lato',sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
+              <input type="text" placeholder="ZIP *" className="inquiry-input" style={{ background: "#000", border: "1px solid rgba(199,171,117,.2)", color: "#FBF7EE", padding: "13px 16px", fontFamily: "'Lato',sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} required />
+            </div>
             {/* Student info */}
             <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 9, letterSpacing: "0.25em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 12 }}>Student</p>
             <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 10, marginBottom: 10 }}>
@@ -4502,7 +4552,7 @@ function FlagshipEnrollSelector({ openInquiry, isMobile }) {
               <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 9, letterSpacing: "0.2em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 6 }}>Your Selection</p>
               <p style={{ fontFamily: "'Lato',sans-serif", fontSize: 13, color: "#FBF7EE", fontWeight: 300 }}>{programs.find(p2 => p2.id === prog)?.title} · {tracks.find(t2 => t2.id === track)?.title}</p>
             </div>
-            <button onClick={() => openInquiry && openInquiry(prog)} style={{ fontFamily: "'Lato',sans-serif", padding: "15px 40px", background: gold, border: "none", color: "#000", fontSize: 12, fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", cursor: "pointer", width: "100%" }}>SUBMIT — WE'LL BE IN TOUCH →</button>
+            <button onClick={() => openInquiry && openInquiry(prog)} style={{ fontFamily: "'Lato',sans-serif", padding: "15px 40px", background: gold, border: "none", color: "#000", fontSize: 12, fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", cursor: "pointer", width: "100%" }}>SUBMIT — WE'LL BE IN TOUCH WITHIN 24 HOURS</button>
           </div>
         </div>
       )}
@@ -4512,6 +4562,7 @@ function FlagshipEnrollSelector({ openInquiry, isMobile }) {
 
 function FlagshipDetailPage({ setPage, openInquiry }) {
   const isMobile = useIsMobile();
+  const hasBreadcrumb = true;
 
   const modules = [
     { n: "01", title: "Public Speaking & Rhetoric", tagline: "Presence. Persuasion. Command.", slug: "public-speaking", phase: "Phase 1 — Foundations", desc: "Every session opens with speaking. Voice mechanics, impromptu drills, rhetorical strategy, Aristotelian persuasion. By graduation, students will have completed 120+ individual speaking reps." },
@@ -4556,7 +4607,7 @@ function FlagshipDetailPage({ setPage, openInquiry }) {
       {/* ── STATS STRIP ── */}
       <div style={{ background: "#000", borderBottom: "1px solid rgba(199,171,117,.10)" }}>
         <div style={{ maxWidth: 1100, margin: "0 auto", display: "grid", gridTemplateColumns: isMobile ? "repeat(2,1fr)" : "repeat(4,1fr)", borderLeft: "1px solid rgba(199,171,117,.10)" }}>
-          {[["Sep 2026", "Program Starts"], ["June 2027", "Gala & Graduation"], ["25 Students", "Per Track · Founding Class"], ["$1,990 / mo", "From — Monthly Plan"]].map(([val, lbl]) => (
+          {[["Sep 2026", "Program Starts"], ["June 2027", "Gala & Graduation"], ["25 Students", "Per Track · Founding Class"], ["$1,900 / mo", "From — Monthly Plan"]].map(([val, lbl]) => (
             <div key={lbl} style={{ padding: isMobile ? "28px 20px" : "36px 40px", borderRight: "1px solid rgba(199,171,117,.10)", borderBottom: isMobile ? "1px solid rgba(199,171,117,.10)" : "none" }}>
               <p style={{ fontFamily: serif, fontSize: isMobile ? 20 : 26, fontWeight: 600, color: "#FBF7EE", lineHeight: 1.1, marginBottom: 7 }}>{val}</p>
               <p style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.25em", color: gold, textTransform: "uppercase", fontWeight: 600 }}>{lbl}</p>
@@ -4565,6 +4616,7 @@ function FlagshipDetailPage({ setPage, openInquiry }) {
         </div>
       </div>
 
+      <Breadcrumb items={[{label:"Our Programs",page:"programs"},{label:"Ten-Month Flagship",page:"flagship-detail"}]} setPage={setPage} />
       {/* ── OVERVIEW HEADING + PROGRAM DETAILS ── */}
       <div style={{ background: "#000" }}>
         <div style={{ maxWidth: 1100, margin: "0 auto", display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", minHeight: 0 }}>
@@ -4572,7 +4624,7 @@ function FlagshipDetailPage({ setPage, openInquiry }) {
           {/* LEFT — heading + copy */}
           <div style={{ padding: isMobile ? "52px 24px 40px" : "72px 80px 64px 80px", borderRight: isMobile ? "none" : "1px solid rgba(199,171,117,.08)" }}>
             <p style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.4em", color: "#FBF7EE", fontWeight: 600, textTransform: "uppercase", marginBottom: 20 }}>Program Overview</p>
-            <h2 style={{ fontFamily: serif, fontSize: isMobile ? 30 : 44, fontWeight: 600, color: "#FBF7EE", lineHeight: 1.0, marginBottom: 32, maxWidth: 520 }}>Ten months. Eight disciplines. Three real-world engagements.</h2>
+            <h2 style={{ fontFamily: serif, fontSize: isMobile ? 30 : 44, fontWeight: 600, color: "#FBF7EE", lineHeight: 1.0, marginBottom: 32, maxWidth: 520 }}>Ten months. Eight disciplines. Real-world applied workshops.</h2>
             <p style={{ fontFamily: sans, fontSize: 14, lineHeight: 1.9, color: "#FBF7EE", fontWeight: 300, marginBottom: 18 }}>The Excalibur Ten-Month Flagship is the Academy&#39;s primary program &#8212; a complete, ten-month course of formation for ambitious high school seniors and juniors in Orange County, California, running from September&#8211;June.</p>
             <p style={{ fontFamily: sans, fontSize: 14, lineHeight: 1.9, color: "#FBF7EE", fontWeight: 300, marginBottom: 18 }}>Offered in two parallel tracks &#8212; Weekday (Tuesday &amp; Thursday evenings) and Saturday (morning) &#8212; both deliver identical curriculum, the same faculty, and the same standard of instruction. Classes are held across distinctive South Orange County settings, from historic villas and private venues inspired by the traditions of European education, to corporate conference rooms, business clubs, and professional spaces in the Newport Beach/Irvine and Laguna Beach/San Clemente corridors.</p>
             <p style={{ fontFamily: sans, fontSize: 14, lineHeight: 1.9, color: "#FBF7EE", fontWeight: 300, marginBottom: 18 }}>Across ten months, students progress through all eight core disciplines: Public Speaking &amp; Rhetoric, Financial Literacy, Business Model Analysis, The Art of Selling &amp; Marketing, AI &amp; Technology, Leadership &amp; Influence, Intellectual Depth &amp; The Art of Class, and Industry Sectors Rotation.</p>
@@ -4594,6 +4646,30 @@ function FlagshipDetailPage({ setPage, openInquiry }) {
                 </div>
               ))}
               <div style={{ paddingTop: 28 }}>
+                {/* WHAT'S INCLUDED */}
+                <p style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.4em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 18 }}>The Formation — What's Included</p>
+                <div style={{ display: "flex", flexDirection: "column", gap: 0, marginBottom: 28 }}>
+                  {[
+                    ["01", "All 8 core modules at full depth across a structured 4-phase arc"],
+                    ["02", "12 industry sector rotations — one dedicated guest professional per month"],
+                    ["03", "Three-block session model: Speaking Coach + Specialist + Applied Workshops & Simulations"],
+                    ["04", "Junior Consultant Program — 3-week advisory team engagement with a real local business"],
+                    ["05", "Apprentice Externship — 4–6 weeks embedded inside a company in your chosen industry"],
+                    ["06", "Micro-Business Launch — seed-supported venture with a dedicated mentor"],
+                    ["07", "Monthly Pitch Night before live judges, investors, and parents"],
+                    ["08", "OC Championship (biannual) — competitive pitch event at a premium venue"],
+                    ["09", "Bound Excalibur Portfolio — every analysis, report, resumé and competition result, professionally compiled"],
+                    ["10", "Faculty letters of recommendation from lead executives and practitioners"],
+                    ["11", "College admissions support and portfolio review with a dedicated advisor"],
+                    ["12", "Alumni network access — graduates, faculty, mentors, and guest speakers"],
+                    ["13", "Weekend & day trips — local businesses, Silicon Valley, SpaceX, Anthropic AI HQ, Yosemite, Daytona Racing, Napa and Mavericks – Half Moon Bay"],
+                  ].map(([n, text]) => (
+                    <div key={n} style={{ display: "flex", gap: 14, padding: "10px 0", borderBottom: "1px solid rgba(199,171,117,.06)", alignItems: "flex-start" }}>
+                      <span style={{ fontFamily: serif, fontSize: 11, color: "rgba(199,171,117,.4)", fontWeight: 300, flexShrink: 0, paddingTop: 1, minWidth: 18 }}>{n}</span>
+                      <span style={{ fontFamily: sans, fontSize: 12, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.6 }}>{text}</span>
+                    </div>
+                  ))}
+                </div>
                 <button onClick={() => openInquiry && openInquiry("full-program")} style={{ fontFamily: sans, padding: "13px 0", background: gold, border: "none", color: "#000", fontSize: 11, fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", cursor: "pointer", width: "100%" }}>APPLY &#8212; FLAGSHIP &#8594;</button>
               </div>
             </div>
@@ -4609,12 +4685,12 @@ function FlagshipDetailPage({ setPage, openInquiry }) {
           <p style={{ fontFamily: sans, fontSize: 14, lineHeight: 1.85, color: "#FBF7EE", fontWeight: 300, marginBottom: 36, maxWidth: 680 }}>Every session at Excalibur follows the same three-block structure, regardless of the program or the week.</p>
           <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(3,1fr)", gap: 2, background: "#111" }}>
             {[
-              { n: "Block 1", star: true, title: "Public Speaking Instructor", sub: "Opens every session", desc: "Speaking warm-up, impromptu drills, pitch practice, debate exercises, rhetoric training. The Speaking Coach sets the energy for the entire session. By graduation, students will have completed 120+ individual speaking reps across structured and unstructured exercises." },
-              { n: "Block 2", star: false, title: "Specialist Instructor", sub: "The month’s module", desc: "The monthly specialist delivers their core module content — Finance, AI, Sales, Leadership, Intellectual Depth, Business Models, or Industry Sectors. Each specialist is a practitioner with real-world experience in the discipline they teach." },
-              { n: "Block 3", star: false, title: "Lead Instructor — The War Room", sub: "The real world, every week", desc: "Rotates weekly between: (1) current events and business news analysis, (2) weekly case study deconstruction — approximately 30–40 companies by graduation, (3) guest industry speaker once per month, and (4) applied workshop where students immediately apply the specialist’s content." },
+              { n: "BLOCK 1", title: "Public Speaking Instructor", sub: "Opens every session", desc: "Speaking warm-up, impromptu drills, pitch practice, debate exercises, rhetoric training. The Speaking Coach sets the energy for the entire session. By graduation, students will have completed 120+ individual speaking reps across structured and unstructured exercises." },
+              { n: "BLOCK 2", title: "Specialist Instructor", sub: "The month's module", desc: "The monthly specialist delivers their core module content — Finance, AI & tech, Sales, Leadership, Crypto & Trading, Intellectual Depth & Art of Networking, Business Models, or Industry Sectors. Each specialist is a practitioner with real-world experience in the discipline they teach." },
+              { n: "BLOCK 3", title: "Lead Instructor — The War Room", sub: "The real world, every week", desc: "Rotates weekly between: (1) current events and business news analysis, (2) start-up simulations, risk management & weekly case study deconstruction — approximately 30–40 companies by graduation, (3) guest industry speaker once per month, and (4) applied workshop where students immediately apply the specialist's content." },
             ].map((b, i) => (
-              <div key={i} style={{ background: "#080808", padding: "36px 30px", borderTop: `2px solid ${i === 0 ? gold : "rgba(199,171,117,.15)"}` }}>
-                <div style={{ fontFamily: sans, fontSize: 9, letterSpacing: "0.2em", color: gold, marginBottom: 8, fontWeight: 600 }}>{b.star ? "★ " : ""}{b.n}</div>
+              <div key={i} style={{ background: "#080808", padding: "36px 30px", borderTop: `2px solid ${gold}` }}>
+                <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 10, letterSpacing: "0.25em", color: gold, marginBottom: 10, fontWeight: 700 }}>{b.n}</div>
                 <h3 style={{ fontFamily: serif, fontSize: 20, fontWeight: 600, color: "#FBF7EE", marginBottom: 4, lineHeight: 1.2 }}>{b.title}</h3>
                 <p style={{ fontFamily: sans, fontSize: 10, color: gold, letterSpacing: "0.1em", marginBottom: 16 }}>{b.sub}</p>
                 <p style={{ fontFamily: sans, fontSize: 13, lineHeight: 1.8, color: "#FBF7EE", fontWeight: 300 }}>{b.desc}</p>
@@ -4657,14 +4733,14 @@ function FlagshipDetailPage({ setPage, openInquiry }) {
         </div>
       </div>
 
-      {/* ── SESSION STRUCTURE: Two tracks. Two locations. One standard. ── */}
-      <div style={{ background: "#07060A", padding: isMobile ? "32px 24px 0" : "52px 80px 0" }}>
+      {/* ── SESSION STRUCTURE ── */}
+      <div style={{ padding: isMobile ? "52px 24px" : "72px 80px", background: "#FAF8F4", borderTop: "1px solid rgba(0,0,0,.07)", borderBottom: "1px solid rgba(0,0,0,.07)" }}>
         <div style={{ maxWidth: 1100, margin: "0 auto" }}>
-          <p style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.4em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 16 }}>A Day at Excalibur</p>
-          <h2 style={{ fontFamily: serif, fontSize: isMobile ? 28 : 38, fontWeight: 600, color: "#FBF7EE", lineHeight: 1.05, marginBottom: 8 }}>Two tracks. Two locations. One standard.</h2>
-          <p style={{ fontFamily: sans, fontSize: 14, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.8, marginBottom: 0, maxWidth: 620 }}>Click any block to meet the instructor and see exactly what happens in that session.</p>
+          <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 9, letterSpacing: "0.4em", color: "#8B6914", fontWeight: 700, textTransform: "uppercase", marginBottom: 16 }}>A Day at Excalibur</p>
+          <h2 style={{ fontFamily: serif, fontSize: isMobile ? 26 : 36, fontWeight: 600, color: "#111", lineHeight: 1.1, marginBottom: 8 }}>What a real session looks like.</h2>
+          <p style={{ fontFamily: sans, fontSize: 14, color: "#444", fontWeight: 300, lineHeight: 1.8, marginBottom: 32, maxWidth: 560 }}>Two tracks — weekday and Saturday. Click any block to see exactly what happens in that session.</p>
+          <FlagshipScheduleInteractive isMobile={isMobile} />
         </div>
-        <FlagshipScheduleInteractive isMobile={isMobile} />
       </div>
 
       {/* ── EIGHT MODULES ── */}
@@ -4840,8 +4916,8 @@ function FlagshipDetailPage({ setPage, openInquiry }) {
         {/* Description strip */}
         <div style={{ borderTop: "1px solid rgba(199,171,117,.15)", borderBottom: "1px solid rgba(199,171,117,.15)" }}>
           <div style={{ maxWidth: 860, margin: "0 auto", padding: isMobile ? "48px 24px" : "64px 40px", textAlign: "center" }}>
-            <p style={{ fontFamily: sans, fontSize: isMobile ? 15 : 17, lineHeight: 2.0, color: "#FBF7EE", fontWeight: 300, marginBottom: 24 }}>The program concludes in June with the Excalibur Gala &amp; Graduation Day \u2014 the Flagship capstone \u2014 where students present their venture concepts before families, investors, mentors, invited guests, and judges. Standout projects may receive awards ranging from business technology tools to potential seed support for early venture development.</p>
-            <p style={{ fontFamily: serif, fontSize: isMobile ? 17 : 21, color: "#FBF7EE", fontStyle: "italic", lineHeight: 1.75 }}>The program is not only measured in documents. Students leave with lasting friendships, shared memories, stronger judgment, greater confidence, and skills that will matter in every arena ahead \u2014 college, career, business, leadership, and life.</p>
+            <p style={{ fontFamily: sans, fontSize: isMobile ? 15 : 17, lineHeight: 2.0, color: "#FBF7EE", fontWeight: 300, marginBottom: 24 }}>The program concludes in June with the Excalibur Gala &amp; Graduation Day — the Flagship capstone — where students present their venture concepts before families, investors, mentors, invited guests, and judges. Standout projects may receive awards ranging from business technology tools to potential seed support for early venture development.</p>
+            <p style={{ fontFamily: serif, fontSize: isMobile ? 17 : 21, color: "#FBF7EE", fontStyle: "italic", lineHeight: 1.75 }}>The program is not only measured in documents. Students leave with lasting friendships, shared memories, stronger judgment, greater confidence, and skills that will matter in every arena ahead — college, career, business, leadership, and life.</p>
           </div>
         </div>
 
@@ -4849,9 +4925,9 @@ function FlagshipDetailPage({ setPage, openInquiry }) {
         <div style={{ maxWidth: 1100, margin: "0 auto", borderLeft: "1px solid rgba(199,171,117,.08)", borderRight: "1px solid rgba(199,171,117,.08)" }}>
           {[
             { n: "I", title: "Venture Presentations", sub: "Live. Judged. Consequential.", body: "Student teams present original business concepts before a panel of real entrepreneurs, investors, and senior professionals. Pitches are evaluated on commercial viability, clarity, originality, delivery, and composure under questioning. This is not a school presentation. It is a genuine performance before people with genuine stakes." },
-            { n: "II", title: "Awards & Distinctions", sub: "Excellence recognised. Publicly.", body: "Standout projects receive awards ranging from business technology tools to potential seed funding for early venture development. Results are verified, documented, and included in the Excalibur Portfolio \u2014 a permanent record of achievement." },
-            { n: "III", title: "Bound Graduation Portfolio", sub: "The complete record. Professionally assembled.", body: "Every graduate receives a professionally bound Excalibur Portfolio: every analysis, presentation, report, competition result, and applied engagement \u2014 compiled into a single coherent record that supports university applications and speaks with a voice most students cannot match." },
-            { n: "IV", title: "Family, Faculty & Guests", sub: "An evening to remember.", body: "Families, mentors, faculty, and invited guests gather to witness ten months of formation made visible. The transformation is evident to everyone in the room. Our students are not the same people who walked in \u2014 and everyone present can see it." },
+            { n: "II", title: "Awards & Distinctions", sub: "Excellence recognised. Publicly.", body: "Standout projects receive awards ranging from business technology tools to potential seed funding for early venture development. Results are verified, documented, and included in the Excalibur Portfolio — a permanent record of achievement." },
+            { n: "III", title: "Bound Graduation Portfolio", sub: "The complete record. Professionally assembled.", body: "Every graduate receives a professionally bound Excalibur Portfolio: every analysis, presentation, report, competition result, and applied engagement — compiled into a single coherent record that supports university applications and speaks with a voice most students cannot match." },
+            { n: "IV", title: "Family, Faculty & Guests", sub: "An evening to remember.", body: "Families, mentors, faculty, and invited guests gather to witness ten months of formation made visible. The transformation is evident to everyone in the room. Our students are not the same people who walked in — and everyone present can see it." },
           ].map((p, i) => (
             <div key={i} style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "80px 1fr 1fr", borderBottom: "1px solid rgba(199,171,117,.08)", padding: isMobile ? "32px 24px" : "44px 48px", gap: isMobile ? 16 : 48, alignItems: "start" }}>
               <div>
@@ -4974,14 +5050,14 @@ function FlagshipDetailPage({ setPage, openInquiry }) {
                 <h3 style={{ fontFamily: serif, fontSize: isMobile ? 24 : 30, fontWeight: 400, color: "#FBF7EE", lineHeight: 1.1, marginBottom: 24, letterSpacing: "0.02em" }}>{p.title}</h3>
                 <div style={{ marginBottom: 8 }}>
                   <span style={{ fontFamily: serif, fontSize: isMobile ? 42 : 52, fontWeight: 300, color: "#FBF7EE", lineHeight: 1 }}>{p.price}</span>
-                  <span style={{ fontFamily: sans, fontSize: 12, color: "rgba(251,247,238,.5)", fontWeight: 300, marginLeft: 8 }}>{p.per}</span>
+                  <span style={{ fontFamily: sans, fontSize: 12, color: "#FBF7EE", fontWeight: 300, marginLeft: 8 }}>{p.per}</span>
                 </div>
                 {p.saving ? (
                   <p style={{ fontFamily: sans, fontSize: 11, color: gold, letterSpacing: "0.08em", marginBottom: 28, fontWeight: 500 }}>{p.saving}</p>
                 ) : <div style={{ marginBottom: 28, height: 18 }} />}
                 <div style={{ width: 32, height: 1, background: `linear-gradient(90deg, ${gold}, transparent)`, marginBottom: 24 }} />
                 <p style={{ fontFamily: sans, fontSize: 13, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.85, marginBottom: 32 }}>{p.desc}</p>
-                <button onClick={() => openInquiry && openInquiry("full-program")} style={{ fontFamily: sans, padding: "13px 0", background: p.recommended ? gold : "transparent", border: `1px solid ${p.recommended ? gold : "rgba(199,171,117,.3)"}`, color: p.recommended ? "#000" : gold, fontSize: 11, fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", cursor: "pointer", width: "100%" }}>{p.cta} \u2192</button>
+                <button onClick={() => openInquiry && openInquiry("full-program")} style={{ fontFamily: sans, padding: "13px 0", background: p.recommended ? gold : "transparent", border: `1px solid ${p.recommended ? gold : "rgba(199,171,117,.3)"}`, color: p.recommended ? "#000" : gold, fontSize: 11, fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", cursor: "pointer", width: "100%" }}>{p.cta}</button>
               </div>
             ))}
           </div>
@@ -5043,13 +5119,15 @@ function SummerDetailPage({ setPage, openInquiry }) {
   const isMobile = useIsMobile();
 
   const schedule = [
-    { time: "9:30 AM", dur: "45 min", block: "Public Speaking & Rhetoric", desc: "Every morning opens with the Speaking Coach. Voice projection, eye contact, impromptu drills, pitch practice, and rhetoric training. The arc is deliberate — from foundational mechanics in Week 1 to advanced rhetoric and Shark Tank rehearsal by Day 10." },
-    { time: "10:15 AM", dur: "15 min", block: "Break" },
-    { time: "10:30 AM", dur: "90 min", block: "Business & Leadership Instruction", desc: "Led by senior faculty and rotating specialists. Content covers business model analysis, financial literacy, marketing, leadership, AI, and entrepreneurship — one focused discipline per day, with applied case studies and workshops." },
-    { time: "12:00 PM", dur: "30 min", block: "Catered Lunch", desc: "Catered from local Orange County restaurants. Courtyard time between blocks." },
-    { time: "12:30 PM", dur: "60 min", block: "Distinguished Guest Speaker", desc: "A different senior professional joins every single day. Entrepreneurs who have built and sold companies. Investors who have backed consequential ventures. Executives who have led thousands. Every speaker is hand-selected. Students submit questions in advance." },
-    { time: "1:45 PM", dur: "60 min", block: "War Room — Applied Workshop", desc: "Teams work on their Shark Tank pitch concepts with faculty guidance. Real-time feedback, competitive simulations, and business challenge exercises. This is where the day's learning becomes judgment." },
-    { time: "2:45 PM", dur: "15 min", block: "Debrief & Close", desc: "Structured daily debrief: what was learned, what will be applied. One specific idea to take home. The program builds toward the Shark Tank–inspired Venture Finale on the final day." },
+    { time: "9:15 AM", dur: "15 min", block: "Arrival", desc: "Students are welcomed by the Teaching Assistants, settle in with their cohort, and begin the day in an atmosphere that feels lively, polished, and personal. There is time to connect, get comfortable, and step into the rhythm of the program before the first session begins." },
+    { time: "9:30 AM", dur: "45 min", block: "Public Speaking & Rhetoric", desc: "Public speaking is built into the rhythm of every Excalibur program. Students get on their feet, speak to the room, practice eye contact, strengthen their voice, and learn how to communicate with confidence. The work develops from foundational mechanics into rhetoric, debate, impromptu speaking, persuasive delivery, and pitch preparation. With repeated practice and direct feedback, students build the kind of presence that carries into interviews, presentations, leadership roles, and every room ahead." },
+    { time: "10:15 AM", dur: "15 min", block: "Snack Break", desc: "A structured pause between sessions, with catered snacks and refreshments provided by the Academy — from light bites and fruit bowls to healthy açaí bowls, smoothies, milkshakes, and seasonal selections. Students recharge, listen to lounge music, and continue conversations informally with classmates, Teaching Assistants, faculty, and instructors. Often, some of the most interesting exchanges of the day happen here — between sessions, in the moments when ideas keep moving." },
+    { time: "10:30 AM", dur: "90 min", block: "Specialist Instruction · Core Curriculum", desc: "The Specialist Instructor leads the core academic block, introducing the day’s discipline through serious instruction, professional frameworks, and guided application. Students engage the material immediately through discussion, analysis, exercises, and applied drills. Subjects include business model analysis, financial literacy, AI and technology, sales and persuasion, leadership, and sector-specific business study — taught by practitioners who bring lived experience into the room." },
+    { time: "12:00 PM", dur: "30 min", block: "Lunch", desc: "Students enjoy a catered three-course lunch from a rotating selection of local restaurants, with menus that may include Mediterranean mezze and grilled entrées, coastal California salads and seasonal bowls, Italian pastas, French-inspired plates, Japanese bento-style selections, and modern American favorites. Lunch is also a time for conversation — with classmates, Teaching Assistants, faculty, and instructors — in a relaxed but polished setting. Social intelligence is part of the Excalibur experience: listening well, asking thoughtful questions, carrying oneself with ease, and making others feel seen and remembered. Dietary restrictions and allergies are requested before the program begins." },
+    { time: "12:30 PM", dur: "60 min", block: "Distinguished Guest Speaker", desc: "Each program day features a senior guest speaker from business, investing, entrepreneurship, technology, leadership, or the arts. Speakers are carefully selected for the substance of their experience: founders who have built companies, investors who understand capital and risk, executives who have led complex organizations, and professionals with serious judgment to share. Students submit questions in advance and take part in a live conversation designed to move beyond biography into decisions, mistakes, lessons, and the realities of leadership. By the end of the program, students will have been in the room with leaders across multiple industries — and had the opportunity to ask thoughtful questions directly." },
+    { time: "1:30 PM", dur: "15 min", block: "Afternoon Break", desc: "A brief reset before the final session of the day. Students step outside, recharge with a light treat — gelato, smoothies, or freshly pressed juices — and reconnect with classmates, Teaching Assistants, and faculty. With lounge music in the background and the pressure briefly lifted, the break gives students time to reset before the final push." },
+    { time: "1:45 PM", dur: "60 min", block: "The War Room", desc: "The War Room is where instruction becomes application. Led by senior faculty, this block places students into structured business scenarios that require analysis, decision-making, communication, and teamwork under pressure, rotating through three formats: (1) What Would You Have Done? — students are placed inside real business moments before knowing the outcome, make the call, defend their reasoning, then learn what actually happened; (2) Your Move — students inherit a company in crisis, build a turnaround strategy, and present their decisions to faculty as if pitching a skeptical investor; (3) Apply It Now — the day’s specialist content is immediately put to work through live exercises, workshops, and team challenges." },
+    { time: "2:45 PM", dur: "15 min", block: "Debrief & Close", desc: "Each day ends with a structured debrief: what was learned, what challenged the group, and what ideas can be carried forward. Students leave with one clear takeaway from the day — a concept, question, habit, or standard to apply beyond the classroom." },
   ];
 
   const modules = [
@@ -5065,14 +5143,14 @@ function SummerDetailPage({ setPage, openInquiry }) {
 
   return (
     <div style={{ background: "#000" }}>
-
+      <Breadcrumb items={[{label:"Our Programs",page:"programs"},{label:"Summer Intensive",page:"summer-detail"}]} setPage={setPage} />
       {/* HERO */}
       <div style={{ position: "relative", background: "#000", overflow: "hidden", height: isMobile ? 260 : 420 }}>
         <img src="https://i.postimg.cc/kgY6kRv8/Untitled-design.png" alt="Summer Intensive" style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center" }} />
         <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(0,0,0,.9) 0%, rgba(0,0,0,.2) 60%)" }} />
         <div style={{ position: "absolute", bottom: isMobile ? 24 : 48, left: isMobile ? 24 : 72 }}>
           <p style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.4em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 10 }}>Summer Intensive · July & August 2026</p>
-          <h1 style={{ fontFamily: serif, fontSize: isMobile ? 36 : 56, fontWeight: 600, color: "#FBF7EE", lineHeight: 1.0, marginBottom: 8 }}>Two Weeks. Full Days.</h1>
+          <h1 style={{ fontFamily: serif, fontSize: isMobile ? 36 : 56, fontWeight: 600, color: "#FBF7EE", lineHeight: 1.0, marginBottom: 8 }}>Two Weeks. Full Immersion.</h1>
           <p style={{ fontFamily: serif, fontSize: isMobile ? 15 : 18, color: gold, fontStyle: "italic" }}>Serious momentum.</p>
         </div>
         <div style={{ position: "absolute", top: 24, left: 24 }}>
@@ -5104,54 +5182,208 @@ function SummerDetailPage({ setPage, openInquiry }) {
         </div>
       </div>
 
-      {/* DAILY SCHEDULE */}
-      <div style={{ background: "#000", padding: isMobile ? "52px 24px" : "72px 80px" }}>
+      {/* SOIREE POSTCARD */}
+      <div style={{ background: "#000", padding: isMobile ? "40px 24px" : "52px 80px" }}>
         <div style={{ maxWidth: 1100, margin: "0 auto" }}>
-          <p style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.4em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 16 }}>A Day at Excalibur</p>
-          <h2 style={{ fontFamily: serif, fontSize: isMobile ? 26 : 36, fontWeight: 600, color: "#FBF7EE", lineHeight: 1.1, marginBottom: 8 }}>What a real session looks like.</h2>
-          <p style={{ fontFamily: sans, fontSize: 14, color: "rgba(251,247,238,.6)", fontWeight: 300, lineHeight: 1.8, marginBottom: 40, maxWidth: 540 }}>Monday through Friday. 9:30 AM to 3:00 PM. Every day follows the same disciplined structure.</p>
-          <div style={{ display: "flex", flexDirection: "column", gap: 0 }}>
-            {schedule.map((s, i) => (
-              <div key={i} style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "120px 1fr", gap: isMobile ? 8 : 28, padding: isMobile ? "20px 0" : "24px 0", borderBottom: "1px solid rgba(199,171,117,.07)", alignItems: "flex-start" }}>
-                <div style={{ flexShrink: 0 }}>
-                  <p style={{ fontFamily: serif, fontSize: 14, fontWeight: 600, color: gold, marginBottom: 2 }}>{s.time}</p>
-                  {s.dur && <p style={{ fontFamily: sans, fontSize: 10, color: "rgba(199,171,117,.4)", letterSpacing: "0.08em" }}>{s.dur}</p>}
+          <SoireeInviteBlock openInquiry={openInquiry} />
+        </div>
+      </div>
+
+      {/* TUITION & ADMISSIONS */}
+      <div style={{ background: "#000", padding: isMobile ? "52px 24px" : "72px 80px", borderTop: "1px solid rgba(199,171,117,.1)", borderBottom: "1px solid rgba(199,171,117,.1)" }}>
+        <div style={{ maxWidth: 1100, margin: "0 auto", display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: isMobile ? 48 : 80 }}>
+
+          {/* LEFT — Tuition */}
+          <div>
+            <p style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.45em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 20 }}>Tuition</p>
+            <div style={{ fontFamily: serif, fontSize: isMobile ? 48 : 64, fontWeight: 300, color: "#FBF7EE", lineHeight: 1, letterSpacing: "-0.02em", marginBottom: 8 }}>$4,500</div>
+            <p style={{ fontFamily: sans, fontSize: 13, color: "#FBF7EE", fontWeight: 300, marginBottom: 28 }}>Per two-week wave</p>
+            <div style={{ height: "1px", background: "rgba(199,171,117,.15)", marginBottom: 24 }} />
+            <p style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.35em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 16 }}>What's Included</p>
+            {[
+              "Catered three-course lunches from local restaurants, daily",
+              "Catered snacks and refreshments at all breaks",
+              "Distinguished guest speaker every single day",
+              "Faculty-led applied workshops and War Room sessions",
+              "Public Speaking Instructor every morning",
+              "Shark Tank\u2013inspired Venture Finale with real investors and judges",
+              "Bound Excalibur Certificate of Completion",
+              "Access to Excalibur Alumni Network",
+              "Priority consideration for the Ten-Month Flagship Program",
+            ].map((item, i) => (
+              <div key={i} style={{ display: "flex", gap: 12, padding: "9px 0", borderBottom: "1px solid rgba(199,171,117,.06)", alignItems: "flex-start" }}>
+                <span style={{ fontFamily: serif, fontSize: 10, color: "rgba(199,171,117,.5)", flexShrink: 0, paddingTop: 1 }}>—</span>
+                <span style={{ fontFamily: sans, fontSize: 13, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.6 }}>{item}</span>
+              </div>
+            ))}
+            <div style={{ marginTop: 28 }}>
+              <button onClick={() => openInquiry && openInquiry("summer")} style={{ fontFamily: sans, padding: "14px 36px", background: gold, border: "none", color: "#000", fontSize: 11, fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", cursor: "pointer" }}>APPLY NOW →</button>
+            </div>
+          </div>
+
+          {/* RIGHT — Admissions */}
+          <div>
+            <p style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.45em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 20 }}>Admissions</p>
+            <h3 style={{ fontFamily: serif, fontSize: isMobile ? 24 : 30, fontWeight: 600, color: "#FBF7EE", lineHeight: 1.1, marginBottom: 16 }}>Who We're Looking For</h3>
+            <p style={{ fontFamily: sans, fontSize: 14, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.85, marginBottom: 24 }}>The Summer Intensive is designed for ambitious high school students aged 15–17 who are ready for a real program — not a summer camp, not a passive course, but a structured, high-expectation environment where they are asked to think, lead, speak, and deliver.</p>
+            <p style={{ fontFamily: sans, fontSize: 14, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.85, marginBottom: 32 }}>We are not looking for the most polished resume. We look for curiosity, maturity, and a genuine interest in business, leadership, and how the world actually works. The student who leans forward. The one who asks the better question.</p>
+            <div style={{ height: "1px", background: "rgba(199,171,117,.15)", marginBottom: 24 }} />
+            <p style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.35em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 12 }}>Admissions</p>
+            <p style={{ fontFamily: sans, fontSize: 13, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.75 }}>Excalibur Summer is selective. We review every application personally and respond within 24 hours.</p>
+          </div>
+
+        </div>
+      </div>
+
+      {/* HOW TO APPLY — full width horizontal luxury steps */}
+      <div style={{ background: "#000", padding: isMobile ? "52px 24px" : "72px 80px", borderTop: "1px solid rgba(199,171,117,.1)" }}>
+        <div style={{ maxWidth: 1100, margin: "0 auto" }}>
+          <p style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.45em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 20 }}>Admissions Process</p>
+          <h2 style={{ fontFamily: serif, fontSize: isMobile ? 26 : 38, fontWeight: 600, color: "#FBF7EE", lineHeight: 1.05, marginBottom: 52 }}>How to Apply</h2>
+          <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(4,1fr)", position: "relative" }}>
+            {!isMobile && (
+              <div style={{ position: "absolute", top: 22, left: 44, right: 44, height: "1px", background: "linear-gradient(90deg, rgba(199,171,117,.08), rgba(199,171,117,.35), rgba(199,171,117,.08))", zIndex: 0 }} />
+            )}
+            {[
+              {
+                n: "01",
+                title: "Submit the Program Application",
+                desc: "The Summer Intensive application is a short online form. Admission is selective, but the process is intentionally straightforward. Each application is reviewed personally by the Excalibur admissions team."
+              },
+              {
+                n: "02",
+                title: "Admissions Follow-Up",
+                desc: "A member of our admissions team will contact the family within 24 hours to answer questions, discuss the student's fit, and confirm availability for the selected wave."
+              },
+              {
+                n: "03",
+                title: "Secure Enrollment",
+                desc: "Once accepted, a deposit secures the student's seat in the chosen wave. Enrollment is limited to 25 students per wave."
+              },
+              {
+                n: "04",
+                title: "Pre-Program Onboarding",
+                desc: "Accepted families receive a welcome packet, program overview, schedule details, and dietary preference form. Before each wave, families receive an invitation to a Family Information Session covering the program structure, student expectations, logistics, and key dates. Student and family portals are set up before the program begins."
+              },
+            ].map((step, i) => (
+              <div key={i} style={{ padding: isMobile ? "28px 0" : "0 28px 0 0", borderTop: isMobile ? "1px solid rgba(199,171,117,.1)" : "none", borderLeft: !isMobile && i > 0 ? "1px solid rgba(199,171,117,.1)" : "none", paddingLeft: !isMobile && i > 0 ? 28 : 0, position: "relative", zIndex: 1 }}>
+                <div style={{ width: 44, height: 44, border: "1px solid rgba(199,171,117,.35)", display: "flex", alignItems: "center", justifyContent: "center", marginBottom: 24, background: "#000" }}>
+                  <span style={{ fontFamily: serif, fontSize: 18, fontWeight: 300, color: gold }}>{step.n}</span>
                 </div>
-                <div>
-                  <p style={{ fontFamily: serif, fontSize: isMobile ? 17 : 20, fontWeight: 600, color: "#FBF7EE", lineHeight: 1.2, marginBottom: s.desc ? 8 : 0 }}>{s.block}</p>
-                  {s.desc && <p style={{ fontFamily: sans, fontSize: 13, color: "rgba(251,247,238,.6)", fontWeight: 300, lineHeight: 1.8 }}>{s.desc}</p>}
-                </div>
+                <p style={{ fontFamily: serif, fontSize: isMobile ? 16 : 17, fontWeight: 600, color: "#FBF7EE", lineHeight: 1.25, marginBottom: 12 }}>{step.title}</p>
+                <p style={{ fontFamily: sans, fontSize: 12, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.8 }}>{step.desc}</p>
               </div>
             ))}
           </div>
+        </div>
+      </div>
+
+      {/* DAILY SCHEDULE */}
+      <div style={{ padding: isMobile ? "52px 24px" : "72px 80px", background: "#FAF8F4", borderTop: "1px solid rgba(0,0,0,.07)", borderBottom: "1px solid rgba(0,0,0,.07)" }}>
+        <div style={{ maxWidth: 1100, margin: "0 auto" }}>
+          <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 9, letterSpacing: "0.4em", color: "#8B6914", fontWeight: 700, textTransform: "uppercase", marginBottom: 16 }}>A Day at Excalibur</p>
+          <h2 style={{ fontFamily: serif, fontSize: isMobile ? 26 : 36, fontWeight: 600, color: "#111", lineHeight: 1.1, marginBottom: 8 }}>What a real session looks like.</h2>
+          <p style={{ fontFamily: sans, fontSize: 14, color: "#444", fontWeight: 300, lineHeight: 1.8, marginBottom: 32, maxWidth: 560 }}>Monday through Friday. 9:30 AM to 3:00 PM. July 6–18 & August 3–15, 2026.</p>
+          <DailyScheduleBlock schedule={schedule} title="SUMMER INTENSIVE" subtitle="Monday – Friday · 9:30 AM – 3:00 PM · July 6–18 & Aug 3–15, 2026" />
         </div>
       </div>
 
       {/* EIGHT MODULES */}
-      <div style={{ background: "#F5F3EE", padding: isMobile ? "52px 24px" : "72px 80px" }}>
+      <div style={{ background: "#050505", padding: isMobile ? "52px 24px" : "72px 80px" }}>
         <div style={{ maxWidth: 1100, margin: "0 auto" }}>
-          <p style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.4em", color: "#8B6914", fontWeight: 600, textTransform: "uppercase", marginBottom: 16 }}>Curriculum</p>
-          <h2 style={{ fontFamily: serif, fontSize: isMobile ? 26 : 36, fontWeight: 600, color: "#000", lineHeight: 1.1, marginBottom: 8 }}>All eight disciplines. Two weeks.</h2>
-          <p style={{ fontFamily: sans, fontSize: 14, color: "#444", fontWeight: 300, lineHeight: 1.8, marginBottom: 40, maxWidth: 540 }}>Every Summer Intensive covers all eight Excalibur disciplines. Click any module to read the full description.</p>
+          <p style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.4em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 16 }}>Curriculum</p>
+          <h2 style={{ fontFamily: serif, fontSize: isMobile ? 26 : 36, fontWeight: 600, color: "#FBF7EE", lineHeight: 1.1, marginBottom: 8 }}>All eight disciplines. Two weeks.</h2>
+          <p style={{ fontFamily: sans, fontSize: 14, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.8, marginBottom: 40, maxWidth: 540 }}>Every Summer Intensive covers all eight Excalibur disciplines. Click any module to read the full description.</p>
           <div style={{ display: "flex", flexDirection: "column", gap: 0 }}>
             {modules.map((m, i) => (
-              <div key={i} onClick={() => setPage(`module:${m.slug}`)} style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "48px 1fr 100px", gap: isMobile ? 8 : 24, padding: isMobile ? "18px 0" : "22px 0", borderBottom: "1px solid rgba(0,0,0,.08)", cursor: "pointer", alignItems: "center" }}
-                onMouseEnter={e => e.currentTarget.style.background = "rgba(0,0,0,.03)"}
+              <div key={i} onClick={() => setPage(`module:${m.slug}`)} style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "48px 1fr 100px", gap: isMobile ? 8 : 24, padding: isMobile ? "18px 0" : "22px 0", borderBottom: "1px solid rgba(199,171,117,.07)", cursor: "pointer", alignItems: "center" }}
+                onMouseEnter={e => e.currentTarget.style.background = "rgba(199,171,117,.05)"}
                 onMouseLeave={e => e.currentTarget.style.background = "transparent"}
               >
-                <span style={{ fontFamily: serif, fontSize: 13, color: "rgba(0,0,0,.2)", fontStyle: "italic" }}>{m.n}</span>
+                <span style={{ fontFamily: serif, fontSize: 13, color: "rgba(199,171,117,.3)", fontStyle: "italic" }}>{m.n}</span>
                 <div>
-                  <p style={{ fontFamily: serif, fontSize: isMobile ? 17 : 20, fontWeight: 600, color: "#000", lineHeight: 1.2, marginBottom: 4 }}>{m.title}</p>
-                  <p style={{ fontFamily: sans, fontSize: 12, color: "#555", fontWeight: 300, lineHeight: 1.6 }}>{m.desc}</p>
+                  <p style={{ fontFamily: serif, fontSize: isMobile ? 17 : 20, fontWeight: 600, color: "#FBF7EE", lineHeight: 1.2, marginBottom: 4 }}>{m.title}</p>
+                  <p style={{ fontFamily: sans, fontSize: 12, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.6 }}>{m.desc}</p>
                 </div>
-                {!isMobile && <span style={{ fontFamily: sans, fontSize: 10, color: "#8B6914", letterSpacing: "0.12em", textAlign: "right" }}>READ MORE →</span>}
+                {!isMobile && <span style={{ fontFamily: sans, fontSize: 10, color: gold, letterSpacing: "0.12em", textAlign: "right" }}>READ MORE →</span>}
               </div>
             ))}
           </div>
         </div>
       </div>
 
-      {/* APPLY */}
+
+      {/* CHOOSE YOUR WAVE — enrollment selector */}
+      <div style={{ background: "#050505", padding: isMobile ? "52px 24px" : "72px 80px", borderTop: "1px solid rgba(199,171,117,.1)" }}>
+        <div style={{ maxWidth: 1100, margin: "0 auto" }}>
+          <p style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.4em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 16 }}>Enrollment</p>
+          <h2 style={{ fontFamily: serif, fontSize: isMobile ? 28 : 40, fontWeight: 600, color: "#FBF7EE", lineHeight: 1.05, marginBottom: 8 }}>Choose Your Wave</h2>
+          <p style={{ fontFamily: sans, fontSize: 14, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.8, marginBottom: 40, maxWidth: 580 }}>Select your wave and complete your program application. Our Enrollment Coordinator will be in touch within 24 hours.</p>
+          <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 2, background: "#111", marginBottom: 2 }}>
+            {[
+              { label: "WAVE 1 — JULY", wave: "Wave 1", dates: "July 6 – 18, 2026", days: "Monday – Friday · 9:30 AM – 3:00 PM", tag: "● Enrollment Open", tagColor: "#4DB87A" },
+              { label: "WAVE 2 — AUGUST", wave: "Wave 2", dates: "August 3 – 15, 2026", days: "Monday – Friday · 9:30 AM – 3:00 PM", tag: "● Enrollment Open", tagColor: "#4DB87A" },
+            ].map((w, i) => (
+              <div key={i} style={{ background: "#080808", padding: isMobile ? "36px 24px" : "48px 44px", borderTop: `2px solid ${gold}` }}>
+                <p style={{ fontFamily: eyebrow_font, fontSize: 8, letterSpacing: "0.4em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 12 }}>{w.label}</p>
+                <h3 style={{ fontFamily: serif, fontSize: 28, fontWeight: 600, color: "#FBF7EE", marginBottom: 6, lineHeight: 1 }}>{w.wave}</h3>
+                <p style={{ fontFamily: serif, fontSize: 16, color: gold, fontStyle: "italic", marginBottom: 20 }}>{w.dates}</p>
+                <div style={{ height: "1px", background: "rgba(199,171,117,.1)", marginBottom: 20 }} />
+                {[["Schedule", w.days], ["Duration", "Two weeks · 10 sessions"], ["Class Size", "20 students maximum"], ["Tuition", "$4,500 per wave"], ["Includes", "Catered lunches · Guest speakers · War Room · Finale"]].map(([k, v]) => (
+                  <div key={k} style={{ display: "flex", gap: 16, padding: "9px 0", borderBottom: "1px solid rgba(199,171,117,.06)", alignItems: "flex-start" }}>
+                    <span style={{ fontFamily: sans, fontSize: 8, letterSpacing: "0.2em", color: gold, textTransform: "uppercase", minWidth: 72, flexShrink: 0, paddingTop: 1 }}>{k}</span>
+                    <span style={{ fontFamily: sans, fontSize: 12, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.6 }}>{v}</span>
+                  </div>
+                ))}
+                <p style={{ fontFamily: eyebrow_font, fontSize: 9, color: w.tagColor, letterSpacing: "0.14em", fontWeight: 600, marginTop: 20, marginBottom: 20 }}>{w.tag}</p>
+                <button onClick={() => openInquiry && openInquiry("summer")} style={{ fontFamily: sans, padding: "13px 0", background: gold, border: "none", color: "#000", fontSize: 11, fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", cursor: "pointer", width: "100%" }}>COMPLETE APPLICATION →</button>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* YOUR INFORMATION FORM */}
+      <div style={{ background: "#000", padding: isMobile ? "52px 24px" : "72px 80px", borderTop: "1px solid rgba(199,171,117,.1)" }}>
+        <div style={{ maxWidth: 740, margin: "0 auto" }}>
+          <p style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.4em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 16 }}>Apply Now</p>
+          <h2 style={{ fontFamily: serif, fontSize: isMobile ? 28 : 40, fontWeight: 600, color: "#FBF7EE", lineHeight: 1.05, marginBottom: 8 }}>Submit Your Application</h2>
+          <p style={{ fontFamily: sans, fontSize: 14, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.8, marginBottom: 36, maxWidth: 580 }}>Fill in your details and our Enrollment Coordinator will contact you within 24 hours with next steps and your place confirmation.</p>
+          <div style={{ background: "#080808", borderTop: `2px solid ${gold}`, padding: "36px 32px" }}>
+            <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 9, letterSpacing: "0.25em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 12 }}>Parent / Guardian</p>
+            <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 10, marginBottom: 10 }}>
+              {[["First Name", "text"], ["Last Name", "text"]].map(([ph, type]) => (
+                <input key={ph} type={type} placeholder={ph} className="inquiry-input" style={{ background: "#000", border: "1px solid rgba(199,171,117,.2)", color: "#FBF7EE", padding: "13px 16px", fontFamily: "'Lato',sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
+              ))}
+            </div>
+            <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 10, marginBottom: 10 }}>
+              {[["Email Address", "email"], ["Phone Number", "tel"]].map(([ph, type]) => (
+                <input key={ph} type={type} placeholder={ph} className="inquiry-input" style={{ background: "#000", border: "1px solid rgba(199,171,117,.2)", color: "#FBF7EE", padding: "13px 16px", fontFamily: "'Lato',sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
+              ))}
+            </div>
+            <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr 80px", gap: 10, marginBottom: 24 }}>
+              <input type="text" placeholder="City *" className="inquiry-input" style={{ background: "#000", border: "1px solid rgba(199,171,117,.2)", color: "#FBF7EE", padding: "13px 16px", fontFamily: "'Lato',sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} required />
+              <input type="text" placeholder="State" className="inquiry-input" style={{ background: "#000", border: "1px solid rgba(199,171,117,.2)", color: "#FBF7EE", padding: "13px 16px", fontFamily: "'Lato',sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
+              <input type="text" placeholder="ZIP *" className="inquiry-input" style={{ background: "#000", border: "1px solid rgba(199,171,117,.2)", color: "#FBF7EE", padding: "13px 16px", fontFamily: "'Lato',sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} required />
+            </div>
+            <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 9, letterSpacing: "0.25em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 12 }}>Student</p>
+            <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 10, marginBottom: 10 }}>
+              {[["First Name", "text"], ["Last Name", "text"]].map(([ph, type]) => (
+                <input key={ph} type={type} placeholder={ph} className="inquiry-input" style={{ background: "#000", border: "1px solid rgba(199,171,117,.2)", color: "#FBF7EE", padding: "13px 16px", fontFamily: "'Lato',sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
+              ))}
+            </div>
+            <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 10, marginBottom: 10 }}>
+              <input type="text" placeholder="Age" className="inquiry-input" style={{ background: "#000", border: "1px solid rgba(199,171,117,.2)", color: "#FBF7EE", padding: "13px 16px", fontFamily: "'Lato',sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
+              <input type="text" placeholder="Current Grade / Year" className="inquiry-input" style={{ background: "#000", border: "1px solid rgba(199,171,117,.2)", color: "#FBF7EE", padding: "13px 16px", fontFamily: "'Lato',sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
+            </div>
+            <input type="text" placeholder="Preferred Wave (July or August)" className="inquiry-input" style={{ background: "#000", border: "1px solid rgba(199,171,117,.2)", color: "#FBF7EE", padding: "13px 16px", fontFamily: "'Lato',sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%", marginBottom: 24 }} />
+            <input type="text" placeholder="How did you hear about Excalibur?" className="inquiry-input" style={{ background: "#000", border: "1px solid rgba(199,171,117,.2)", color: "#FBF7EE", padding: "13px 16px", fontFamily: "'Lato',sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%", marginBottom: 28 }} />
+            <button onClick={() => openInquiry && openInquiry("summer")} style={{ fontFamily: "'Lato',sans-serif", padding: "15px 40px", background: gold, border: "none", color: "#000", fontSize: 12, fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", cursor: "pointer", width: "100%" }}>SUBMIT — WE'LL BE IN TOUCH WITHIN 24 HOURS</button>
+          </div>
+        </div>
+      </div>
+
+            {/* APPLY */}
       <div style={{ background: "#000", padding: isMobile ? "60px 24px" : "80px 80px", textAlign: "center" }}>
         <p style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.4em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 20 }}>Enrollment Open · Summer 2026</p>
         <h2 style={{ fontFamily: serif, fontSize: isMobile ? 36 : 52, fontWeight: 600, color: "#FBF7EE", lineHeight: 1.0, marginBottom: 12 }}>Twenty students per wave.</h2>
@@ -5219,7 +5451,7 @@ export default function ExcaliburApp() {
       <StickyMobileCTA setPage={setPage} openInquiry={openInquiry} />
       <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=Forum&display=swap" rel="stylesheet" />
       <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
-      <style>{`*{margin:0;padding:0;box-sizing:border-box}::selection{background:rgba(199,171,117,.2);color:#fff}html{scroll-behavior:smooth}body{overflow-x:hidden}button{cursor:pointer;font-family:'Lato',sans-serif}img{max-width:100%}.inquiry-input::placeholder{color:rgba(251,247,238,0.7)!important}.inquiry-input{color:#FBF7EE!important}`}</style>
+      <style>{`*{margin:0;padding:0;box-sizing:border-box}::selection{background:rgba(199,171,117,.2);color:#fff}html{scroll-behavior:smooth}body{overflow-x:hidden}button{cursor:pointer;font-family:'Lato',sans-serif}img{max-width:100%}.inquiry-input::placeholder{color:rgba(255,255,255,0.8)!important}.inquiry-input{color:#FBF7EE!important}input::placeholder{color:rgba(255,255,255,0.8)!important}textarea::placeholder{color:rgba(255,255,255,0.8)!important}`}</style>
       <Nav page={page} setPage={setPage} />
       <InquiryModal open={inquiryOpen} onClose={() => setInquiryOpen(false)} defaultProgram={inquiryProgram} />
       {renderPage()}
