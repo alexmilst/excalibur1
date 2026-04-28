@@ -1523,98 +1523,116 @@ function ProgramsPage({ setPage, openInquiry }) {
           ))}
         </div>
 
-        {/* Program detail — luxury editorial layout */}
-        <div key={activeProgram} style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : prog.photo ? "1fr 1fr" : "1fr 1fr", gap: 0, minHeight: isMobile ? "auto" : 640 }}>
+        {/* Program detail */}
+        <div key={activeProgram}>
 
-          {/* LEFT — photo (compact) or dark panel */}
           {prog.photo ? (
-            <div style={{ display: "flex", flexDirection: "column" }}>
-              {/* Photo — fixed height, not full column */}
-              <div style={{ position: "relative", overflow: "hidden", height: isMobile ? 220 : 300, flexShrink: 0 }}>
-                <img src={prog.photo} alt={prog.title} style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center top" }} />
-                <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(0,0,0,.7) 0%, rgba(0,0,0,.1) 60%)" }} />
-                <div style={{ position: "absolute", top: 20, left: 24 }}>
-                  <span style={{ fontFamily: sans, fontSize: 9, color: prog.statusColor, border: `1px solid ${prog.statusColor}`, padding: "3px 8px", letterSpacing: "0.15em", fontWeight: 600, background: "rgba(0,0,0,.55)" }}>{prog.status}</span>
-                </div>
-                <div style={{ position: "absolute", bottom: 20, left: 24 }}>
-                  <p style={{ fontFamily: eyebrow_font, fontSize: 8, letterSpacing: "0.35em", color: "rgba(251,247,238,.6)", textTransform: "uppercase", marginBottom: 5 }}>{prog.tag}</p>
-                  <h2 style={{ fontFamily: serif, fontSize: isMobile ? 24 : 30, fontWeight: 600, color: "#FBF7EE", lineHeight: 1.05, marginBottom: 4 }}>{prog.title}</h2>
-                  <p style={{ fontFamily: serif, fontSize: 13, color: gold, fontStyle: "italic" }}>{prog.tagline}</p>
-                </div>
+            /* ── SUMMER: full photo + white content below ── */
+            <div>
+              {/* Photo — full width, show entire image, no crop */}
+              <div style={{ position: "relative", background: "#000" }}>
+                <img src={prog.photo} alt={prog.title} style={{ width: "100%", display: "block", maxHeight: isMobile ? 320 : 520, objectFit: "contain", objectPosition: "center" }} />
               </div>
-              {/* Dark info panel below photo — details */}
-              <div style={{ background: "#06050A", padding: isMobile ? "28px 24px" : "32px 36px", flex: 1, borderRight: isMobile ? "none" : "1px solid rgba(199,171,117,.06)" }}>
-                {prog.details.map(([k, v]) => (
-                  <div key={k} style={{ display: "grid", gridTemplateColumns: "90px 1fr", gap: 16, padding: "9px 0", borderBottom: "1px solid rgba(199,171,117,.05)" }}>
-                    <span style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.2em", color: "rgba(199,171,117,.5)", textTransform: "uppercase", paddingTop: 2 }}>{k}</span>
-                    <span style={{ fontFamily: sans, fontSize: 12, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.6, whiteSpace: "pre-line" }}>{v}</span>
+
+              {/* Content below photo — white background, two columns */}
+              <div style={{ background: "#fff", display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 0 }}>
+
+                {/* LEFT — heading, desc, status, details */}
+                <div style={{ padding: isMobile ? "36px 24px" : "52px 52px", borderRight: isMobile ? "none" : "1px solid rgba(0,0,0,.07)" }}>
+                  {/* Status + tag */}
+                  <div style={{ display: "flex", gap: 10, alignItems: "center", marginBottom: 20, flexWrap: "wrap" }}>
+                    <span style={{ fontFamily: sans, fontSize: 9, color: prog.statusColor, border: `1px solid ${prog.statusColor}`, padding: "3px 10px", letterSpacing: "0.15em", fontWeight: 600 }}>{prog.status}</span>
+                    <span style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.3em", color: "rgba(0,0,0,.35)", textTransform: "uppercase" }}>{prog.tag}</span>
                   </div>
-                ))}
+                  <h2 style={{ fontFamily: serif, fontSize: isMobile ? 28 : 42, fontWeight: 600, color: "#000", lineHeight: 1.0, marginBottom: 8 }}>{prog.title}</h2>
+                  <p style={{ fontFamily: serif, fontSize: 16, color: "#8B6914", fontStyle: "italic", marginBottom: 28, lineHeight: 1.4 }}>{prog.tagline}</p>
+                  <div style={{ width: 32, height: 1, background: "linear-gradient(90deg, #000, transparent)", marginBottom: 24 }} />
+                  {prog.desc.split("\n\n").map((para, i) => (
+                    <p key={i} style={{ fontFamily: sans, fontSize: 14, lineHeight: 1.9, color: "#1a1a1a", fontWeight: 300, marginBottom: 14 }}>{para}</p>
+                  ))}
+                  {/* Details */}
+                  <div style={{ marginTop: 28, display: "flex", flexDirection: "column", gap: 0, borderTop: "1px solid rgba(0,0,0,.08)", paddingTop: 20 }}>
+                    {prog.details.map(([k, v]) => (
+                      <div key={k} style={{ display: "grid", gridTemplateColumns: "90px 1fr", gap: 16, padding: "10px 0", borderBottom: "1px solid rgba(0,0,0,.05)" }}>
+                        <span style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.2em", color: "rgba(0,0,0,.4)", textTransform: "uppercase", paddingTop: 2 }}>{k}</span>
+                        <span style={{ fontFamily: sans, fontSize: 12, color: "#1a1a1a", fontWeight: 300, lineHeight: 1.6, whiteSpace: "pre-line" }}>{v}</span>
+                      </div>
+                    ))}
+                  </div>
+                  <div style={{ marginTop: 28, display: "flex", gap: 12, flexWrap: "wrap" }}>
+                    <button onClick={() => openInquiry && openInquiry(prog.id)} style={{ fontFamily: sans, padding: "13px 32px", background: "#000", border: "none", color: "#fff", fontSize: 11, fontWeight: 700, letterSpacing: "0.15em", textTransform: "uppercase", cursor: "pointer" }}>APPLY NOW →</button>
+                    <button onClick={() => setPage(prog.id)} style={{ fontFamily: sans, padding: "13px 28px", background: "transparent", border: "1px solid rgba(0,0,0,.25)", color: "#000", fontSize: 11, fontWeight: 500, letterSpacing: "0.12em", textTransform: "uppercase", cursor: "pointer" }}>LEARN MORE →</button>
+                  </div>
+                </div>
+
+                {/* RIGHT — features + Day at Excalibur */}
+                <div style={{ padding: isMobile ? "36px 24px" : "52px 52px", background: "#fafafa" }}>
+                  <p style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.35em", color: "#8B6914", textTransform: "uppercase", fontWeight: 600, marginBottom: 20 }}>{prog.featuresLabel}</p>
+                  <div style={{ display: "flex", flexDirection: "column", gap: 0, marginBottom: 40 }}>
+                    {prog.features.map((f, j) => (
+                      <div key={j} style={{ display: "flex", gap: 16, padding: "11px 0", borderBottom: "1px solid rgba(0,0,0,.07)", alignItems: "flex-start" }}>
+                        <span style={{ fontFamily: serif, fontSize: 11, color: "rgba(0,0,0,.2)", fontStyle: "italic", flexShrink: 0, paddingTop: 2 }}>{String(j + 1).padStart(2, "0")}</span>
+                        <span style={{ fontFamily: sans, fontSize: 13, color: "#1a1a1a", fontWeight: 300, lineHeight: 1.7 }}>{f}</span>
+                      </div>
+                    ))}
+                  </div>
+                  {/* Day at Excalibur CTA */}
+                  <div style={{ borderTop: "1px solid rgba(0,0,0,.1)", paddingTop: 32 }}>
+                    <p style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.4em", color: "#8B6914", fontWeight: 600, textTransform: "uppercase", marginBottom: 12 }}>A Day at Excalibur</p>
+                    <h3 style={{ fontFamily: serif, fontSize: isMobile ? 20 : 26, fontWeight: 600, color: "#000", lineHeight: 1.15, marginBottom: 10 }}>What a real session looks like.</h3>
+                    <p style={{ fontFamily: sans, fontSize: 13, color: "#444", fontWeight: 300, lineHeight: 1.8, marginBottom: 20 }}>Click any block to meet the instructor and see exactly what happens in that session.</p>
+                    <button onClick={() => setPage("summer")} style={{ fontFamily: sans, background: "transparent", border: "1px solid rgba(0,0,0,.2)", color: "#000", padding: "11px 24px", fontSize: 11, fontWeight: 600, letterSpacing: "0.12em", textTransform: "uppercase", cursor: "pointer" }}>VIEW FULL DAY SCHEDULE →</button>
+                  </div>
+                </div>
               </div>
             </div>
+
           ) : (
-            <div style={{ background: "#06050A", padding: isMobile ? "44px 28px" : "64px 52px", display: "flex", flexDirection: "column", justifyContent: "space-between", borderRight: "1px solid rgba(199,171,117,.06)" }}>
-              <div>
-                <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 24, flexWrap: "wrap" }}>
-                  <p style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.4em", color: gold, fontWeight: 600, textTransform: "uppercase" }}>{prog.tag}</p>
-                  <span style={{ fontFamily: sans, fontSize: 9, color: prog.statusColor, border: `1px solid ${prog.statusColor}`, padding: "3px 8px", letterSpacing: "0.1em", fontWeight: 600 }}>{prog.status}</span>
-                </div>
-                <h2 style={{ fontFamily: serif, fontSize: isMobile ? 32 : 48, fontWeight: 600, color: "#FBF7EE", lineHeight: 1.0, marginBottom: 10 }}>{prog.title}</h2>
-                <p style={{ fontFamily: serif, fontSize: 17, color: gold, fontStyle: "italic", marginBottom: 36, lineHeight: 1.4 }}>{prog.tagline}</p>
-                <div style={{ width: 36, height: 1, background: `linear-gradient(90deg, ${gold}, transparent)`, marginBottom: 28 }} />
-                {prog.desc.split("\n\n").map((para, i) => (
-                  <p key={i} style={{ fontFamily: sans, fontSize: 14, lineHeight: 1.9, color: "#FBF7EE", fontWeight: 300, marginBottom: 16 }}>{para}</p>
-                ))}
-              </div>
-              {/* Details grid */}
-              <div style={{ marginTop: 32, display: "flex", flexDirection: "column", gap: 0, borderTop: "1px solid rgba(199,171,117,.08)", paddingTop: 28 }}>
-                {prog.details.map(([k, v]) => (
-                  <div key={k} style={{ display: "grid", gridTemplateColumns: "100px 1fr", gap: 16, padding: "10px 0", borderBottom: "1px solid rgba(199,171,117,.05)" }}>
-                    <span style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.2em", color: "rgba(199,171,117,.5)", textTransform: "uppercase", paddingTop: 2 }}>{k}</span>
-                    <span style={{ fontFamily: sans, fontSize: 12, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.6, whiteSpace: "pre-line" }}>{v}</span>
+            /* ── SIX-WEEK / FLAGSHIP: original dark two-column layout ── */
+            <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 0, minHeight: isMobile ? "auto" : 640 }}>
+              <div style={{ background: "#06050A", padding: isMobile ? "44px 28px" : "64px 52px", display: "flex", flexDirection: "column", justifyContent: "space-between", borderRight: "1px solid rgba(199,171,117,.06)" }}>
+                <div>
+                  <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 24, flexWrap: "wrap" }}>
+                    <p style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.4em", color: gold, fontWeight: 600, textTransform: "uppercase" }}>{prog.tag}</p>
+                    <span style={{ fontFamily: sans, fontSize: 9, color: prog.statusColor, border: `1px solid ${prog.statusColor}`, padding: "3px 8px", letterSpacing: "0.1em", fontWeight: 600 }}>{prog.status}</span>
                   </div>
-                ))}
-              </div>
-            </div>
-          )}
-
-          {/* RIGHT — content / features */}
-          <div style={{ background: "#080808", padding: isMobile ? "36px 28px" : "64px 52px", display: "flex", flexDirection: "column", overflowY: "auto" }}>
-
-            {/* If photo card — show desc first */}
-            {prog.photo && (
-              <>
-                <div style={{ marginBottom: 32 }}>
+                  <h2 style={{ fontFamily: serif, fontSize: isMobile ? 32 : 48, fontWeight: 600, color: "#FBF7EE", lineHeight: 1.0, marginBottom: 10 }}>{prog.title}</h2>
+                  <p style={{ fontFamily: serif, fontSize: 17, color: gold, fontStyle: "italic", marginBottom: 36, lineHeight: 1.4 }}>{prog.tagline}</p>
+                  <div style={{ width: 36, height: 1, background: `linear-gradient(90deg, ${gold}, transparent)`, marginBottom: 28 }} />
                   {prog.desc.split("\n\n").map((para, i) => (
                     <p key={i} style={{ fontFamily: sans, fontSize: 14, lineHeight: 1.9, color: "#FBF7EE", fontWeight: 300, marginBottom: 16 }}>{para}</p>
                   ))}
                 </div>
-              </>
-            )}
-
-            {/* Features */}
-            <p style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.35em", color: gold, textTransform: "uppercase", fontWeight: 600, marginBottom: 22 }}>{prog.featuresLabel}</p>
-            <div style={{ display: "flex", flexDirection: "column", gap: 0, flex: 1 }}>
-              {prog.features.map((f, j) => (
-                <div key={j} style={{ display: "flex", gap: 16, padding: "12px 0", borderBottom: "1px solid rgba(199,171,117,.06)", alignItems: "flex-start" }}>
-                  <span style={{ fontFamily: serif, fontSize: 11, color: "rgba(199,171,117,.35)", fontStyle: "italic", flexShrink: 0, paddingTop: 2 }}>{String(j + 1).padStart(2, "0")}</span>
-                  <span style={{ fontFamily: sans, fontSize: 13, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.7 }}>{f}</span>
+                <div style={{ marginTop: 32, display: "flex", flexDirection: "column", gap: 0, borderTop: "1px solid rgba(199,171,117,.08)", paddingTop: 28 }}>
+                  {prog.details.map(([k, v]) => (
+                    <div key={k} style={{ display: "grid", gridTemplateColumns: "100px 1fr", gap: 16, padding: "10px 0", borderBottom: "1px solid rgba(199,171,117,.05)" }}>
+                      <span style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.2em", color: "rgba(199,171,117,.5)", textTransform: "uppercase", paddingTop: 2 }}>{k}</span>
+                      <span style={{ fontFamily: sans, fontSize: 12, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.6, whiteSpace: "pre-line" }}>{v}</span>
+                    </div>
+                  ))}
                 </div>
-              ))}
+              </div>
+              <div style={{ background: "#080808", padding: isMobile ? "36px 28px" : "64px 52px", display: "flex", flexDirection: "column" }}>
+                <p style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.35em", color: gold, textTransform: "uppercase", fontWeight: 600, marginBottom: 22 }}>{prog.featuresLabel}</p>
+                <div style={{ display: "flex", flexDirection: "column", gap: 0, flex: 1 }}>
+                  {prog.features.map((f, j) => (
+                    <div key={j} style={{ display: "flex", gap: 16, padding: "12px 0", borderBottom: "1px solid rgba(199,171,117,.06)", alignItems: "flex-start" }}>
+                      <span style={{ fontFamily: serif, fontSize: 11, color: "rgba(199,171,117,.35)", fontStyle: "italic", flexShrink: 0, paddingTop: 2 }}>{String(j + 1).padStart(2, "0")}</span>
+                      <span style={{ fontFamily: sans, fontSize: 13, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.7 }}>{f}</span>
+                    </div>
+                  ))}
+                </div>
+                <div style={{ marginTop: 36, display: "flex", gap: 12, flexWrap: "wrap" }}>
+                  <button onClick={() => openInquiry && openInquiry(prog.id)} style={{ fontFamily: sans, padding: "13px 32px", background: gold, border: "none", color: "#000", fontSize: 11, fontWeight: 700, letterSpacing: "0.15em", textTransform: "uppercase", cursor: "pointer" }}>
+                    {prog.flagship ? "APPLY — FLAGSHIP →" : "APPLY NOW →"}
+                  </button>
+                  {!prog.flagship && (
+                    <button onClick={() => setPage(prog.id)} style={{ fontFamily: sans, padding: "13px 28px", background: "transparent", border: `1px solid ${gold}`, color: gold, fontSize: 11, fontWeight: 600, letterSpacing: "0.12em", textTransform: "uppercase", cursor: "pointer" }}>LEARN MORE →</button>
+                  )}
+                </div>
+              </div>
             </div>
-
-            {/* CTA */}
-            <div style={{ marginTop: 36, display: "flex", gap: 12, flexWrap: "wrap" }}>
-              <button onClick={() => openInquiry && openInquiry(prog.id)} style={{ fontFamily: sans, padding: "13px 32px", background: gold, border: "none", color: "#000", fontSize: 11, fontWeight: 700, letterSpacing: "0.15em", textTransform: "uppercase", cursor: "pointer" }}>
-                {prog.flagship ? "APPLY — FLAGSHIP →" : "APPLY NOW →"}
-              </button>
-              {!prog.flagship && (
-                <button onClick={() => setPage(prog.id)} style={{ fontFamily: sans, padding: "13px 28px", background: "transparent", border: `1px solid ${gold}`, color: gold, fontSize: 11, fontWeight: 600, letterSpacing: "0.12em", textTransform: "uppercase", cursor: "pointer" }}>
-                  LEARN MORE →
-                </button>
-              )}
-            </div>
-          </div>
+          )}
         </div>
       </div>
 
