@@ -346,7 +346,7 @@ function Nav({ page, setPage }) {
 
   const pagePhotos = {
     home: "https://i.imgur.com/mkQ2Nde.jpeg",
-    about: "https://i.imgur.com/bBYXZXX.jpeg",
+    about: "https://i.imgur.com/sAPvGtO.jpeg",
     programs: "https://i.imgur.com/1clG3YB.jpeg",
     "summer-detail": "https://i.imgur.com/N4OB8dS.jpeg",
     "flagship-detail": "https://i.imgur.com/eyeb9rX.jpeg",
@@ -1110,7 +1110,11 @@ function CurriculumPage({ setPage, openInquiry }) {
                   {/* Summary — desktop only */}
                   {!isMobile && <p style={{ fontFamily: sans, fontSize: 12, lineHeight: 1.8, color: "#FBF7EE", fontWeight: 300 }}>{m.summary}</p>}
                   {/* CTA */}
-                  {!isMobile && (
+                  {isMobile ? (
+                    <div style={{ display: "flex", justifyContent: "flex-end", paddingTop: 4 }}>
+                      <span style={{ color: gold, fontSize: 22, fontWeight: 300 }}>→</span>
+                    </div>
+                  ) : (
                     <div style={{ display: "flex", alignItems: "center", gap: 8, justifyContent: "flex-end" }}>
                       <span style={{ fontFamily: sans, fontSize: 9, color: gold, letterSpacing: "0.22em", fontWeight: 600, textTransform: "uppercase" }}>Learn More</span>
                       <span style={{ color: gold, fontSize: 13 }}>→</span>
@@ -4624,7 +4628,7 @@ function InquiryModal({ open, onClose, defaultProgram }) {
             {step < 3 ? (
               <button onClick={() => setStep(s => s + 1)} style={{ fontFamily: sans, background: gold, color: "#000", padding: "13px 36px", fontSize: 12, fontWeight: 700, letterSpacing: "0.18em", border: "none", cursor: "pointer", textTransform: "uppercase" }}>Continue →</button>
             ) : (
-              <button onClick={() => setSubmitted(true)} style={{ fontFamily: sans, background: gold, color: "#000", padding: "13px 36px", fontSize: 12, fontWeight: 700, letterSpacing: "0.18em", border: "none", cursor: "pointer", textTransform: "uppercase" }}>Submit — We'll Be in Touch Within 24 Hours</button>
+              <button onClick={async () => { try { await fetch("https://formspree.io/f/xwvaglyg", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(form) }); } catch(e) {} setSubmitted(true); }} style={{ fontFamily: sans, background: gold, color: "#000", padding: "13px 36px", fontSize: 12, fontWeight: 700, letterSpacing: "0.18em", border: "none", cursor: "pointer", textTransform: "uppercase" }}>Submit — We'll Be in Touch Within 24 Hours</button>
             )}
           </div>
         )}
