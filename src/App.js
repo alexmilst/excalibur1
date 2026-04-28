@@ -1528,7 +1528,7 @@ function ProgramsPage({ setPage, openInquiry }) {
       tag: "TEN-MONTH FLAGSHIP", id: "full-program", flagship: true, status: "ENROLLING SOON", statusColor: gold,
       title: "Ten-Month Program",
       tagline: "The complete formation.",
-      photo: "https://i.imgur.com/0uEv8TZ.jpeg",
+      photo: "https://i.imgur.com/TePC0TW.jpeg",
       desc: "The Excalibur Ten-Month Flagship is the Academy’s primary program — a complete, ten-month course of formation for ambitious high school students aged 16–17 in Orange County, California.\n\nOffered in two parallel tracks — Weekday (Tuesday & Thursday evenings) and Saturday (full-day) — both deliver identical curriculum, the same faculty, and the same standard of instruction. Students choose the track that fits their schedule; the formation they receive is the same.\n\nAcross ten months, students progress through all eight core disciplines: Public Speaking & Rhetoric, Financial Literacy, Business Model Analysis, The Art of Selling & Marketing, AI & Technology, Leadership & Influence, Intellectual Depth & The Art of Class, and Industry Sectors Rotation. Each month, a dedicated specialist — a working executive, investor, or entrepreneur — leads the core curriculum block. The Lead Instructor runs the War Room in every session. The Speaking Coach opens every class.\n\nBeyond the classroom, students complete three real-world engagements: the Junior Consultant Program (advising a real local business), the Apprentice Externship (4–6 weeks embedded inside a company), and the Funded Micro-Business Launch (building and launching a revenue-generating venture with a dedicated mentor and seed support).\n\nThe program concludes in June with Demo Day & Graduation — the Flagship capstone — where students present their operating businesses to an audience of parents, investors, mentors, and press.",
       details: [
         ["Schedule", "Weekday: Tue & Thu · 4:00–6:25 PM (Group B)\nor Saturday: 10:30 AM–3:45 PM (Group A)"],
@@ -4182,7 +4182,7 @@ function FlagshipDetailPage({ setPage, openInquiry }) {
 
       {/* HERO — photo full bleed */}
       <div style={{ position: "relative", height: isMobile ? 280 : 480, overflow: "hidden" }}>
-        <img src="https://i.imgur.com/0uEv8TZ.jpeg" alt="Ten-Month Flagship" style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center" }} />
+        <img src="https://i.imgur.com/TePC0TW.jpeg" alt="Ten-Month Flagship" style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center" }} />
         <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(0,0,0,.9) 0%, rgba(0,0,0,.3) 60%, transparent 100%)" }} />
         <div style={{ position: "absolute", bottom: isMobile ? 28 : 52, left: isMobile ? 24 : 72, maxWidth: 640 }}>
           <p style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.4em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 10 }}>Ten-Month Flagship · September 2026 – June 2027</p>
