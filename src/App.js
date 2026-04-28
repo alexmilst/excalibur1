@@ -2617,9 +2617,10 @@ function HomePage({ setPage, openInquiry }) {
             <div style={{ width: 48, height: "1px", background: "rgba(0,0,0,.2)", marginBottom: 36 }} />
 
             {/* "You Asked. We Listened." pull quote */}
-            <div style={{ marginBottom: 36, paddingLeft: 24, borderLeft: `2px solid rgba(0,0,0,.15)` }}>
-              <p style={{ fontFamily: eyebrow_font, fontSize: 8, letterSpacing: "0.38em", color: "#555", fontWeight: 600, textTransform: "uppercase", marginBottom: 10 }}>You Asked. We Listened.</p>
-              <p style={{ fontFamily: serif, fontSize: isMobile ? 17 : 21, color: "#111", fontWeight: 400, lineHeight: 1.5, fontStyle: "italic" }}>Due to high demand and our commitment to keeping cohort sizes small — a personalised, real experience — we are introducing a second two-week intensive wave in August 2026.</p>
+            {/* "You Asked. We Listened." — black block treatment */}
+            <div style={{ marginBottom: 36, background: "#000", padding: isMobile ? "24px 20px" : "28px 32px" }}>
+              <p style={{ fontFamily: eyebrow_font, fontSize: 8, letterSpacing: "0.42em", color: gold, fontWeight: 700, textTransform: "uppercase", marginBottom: 12 }}>You Asked. We Listened.</p>
+              <p style={{ fontFamily: sans, fontSize: isMobile ? 13 : 15, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.75 }}>Due to high demand and our commitment to keeping cohort sizes small — a personalised, real experience — we are <span style={{ color: gold, fontWeight: 700 }}>introducing a second two-week intensive wave in August 2026.</span></p>
             </div>
 
             <p style={{ fontFamily: sans, fontSize: 13, lineHeight: 1.9, color: "#444", fontWeight: 300, marginBottom: 36, maxWidth: 680 }}>
@@ -2637,8 +2638,8 @@ function HomePage({ setPage, openInquiry }) {
                 ["Eligibility", "Ages 15–17 · 25 students per wave"],
               ].map(([k, v], i) => (
                 <div key={i} style={{ display: "flex", gap: 16, padding: "13px 0", borderBottom: "1px solid rgba(0,0,0,.07)", alignItems: "flex-start" }}>
-                  <span style={{ fontFamily: sans, fontSize: 8, letterSpacing: "0.28em", color: "#666", textTransform: "uppercase", minWidth: 80, paddingTop: 2, flexShrink: 0 }}>{k}</span>
-                  <span style={{ fontFamily: sans, fontSize: 12, color: "#222", fontWeight: 300, lineHeight: 1.6 }}>{v}</span>
+                  <span style={{ fontFamily: sans, fontSize: 10, letterSpacing: "0.18em", color: "#111", textTransform: "uppercase", minWidth: 96, paddingTop: 1, flexShrink: 0, fontWeight: 700 }}>{k}</span>
+                  <span style={{ fontFamily: sans, fontSize: 12, color: "#333", fontWeight: 300, lineHeight: 1.6 }}>{v}</span>
                 </div>
               ))}
             </div>
