@@ -1653,7 +1653,7 @@ function ProgramsPage({ setPage, openInquiry }) {
       tag: "TEN-MONTH FLAGSHIP", id: "full-program", flagship: true, status: "ENROLLING SOON", statusColor: gold,
       title: "Ten-Month Program",
       tagline: "The complete formation.",
-      photo: "https://i.postimg.cc/1Vfq1Szf/flagship.jpg",
+      photo: "https://i.imgur.com/PB9loUJ.jpeg",
       desc: "The Excalibur Ten-Month Flagship is the Academy’s primary program — a complete, ten-month course of excellence for ambitious high school students in Orange County, California.\n\nOffered in two parallel tracks — Weekday (Tuesday & Thursday evenings) and Saturday (morning) — both deliver identical curriculum, the same faculty, and the same standard of instruction. Students choose the track that fits their schedule; the formation they receive is the same.\n\nAcross ten months, students progress through all eight core disciplines: Public Speaking & Rhetoric, Financial Literacy, Business Model Analysis, The Art of Selling & Marketing, AI & Technology, Leadership & Influence, Intellectual Depth & The Art of Class, and Industry Sectors Rotation.\n\nEach month, a dedicated specialist — a working executive, investor, or entrepreneur — leads the core curriculum block. The Lead Instructor runs the applied workshops and executive business simulations in every session. The Public Speaking Instructor opens every class.\n\nBeyond the classroom, students complete three real-world engagements: the Junior Consultant Program (advising a real local business), the Apprentice Externship (4–6 weeks embedded inside a company), and the Funded Micro-Business Launch (building and launching a micro venture with a dedicated mentor and seed support).\n\nThe program concludes in June with Excalibur Gala & Graduation — the Flagship capstone — where students present their venture concepts before families, mentors, investors, invited guests, and judges.\n\nGraduates leave with the Excalibur Academy Portfolio — a professionally assembled record designed to support college applications — along with real-world experience, lasting friendships, greater confidence, and skills for every arena ahead.",
       details: [
         ["Schedule", "Weekday: Tue & Thu · 4:00–6:25 PM (Group B)\nor Saturday: 10:30 AM–3:45 PM (Group A)"],
@@ -1774,7 +1774,7 @@ function ProgramsPage({ setPage, openInquiry }) {
 
               {/* Photo — controlled height strip */}
               <div style={{ background: "#000", overflow: "hidden", height: isMobile ? 200 : 320 }}>
-                <img src="https://i.postimg.cc/kgY6kRv8/Untitled-design.png" alt="Summer Intensive at Excalibur" style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center" }} />
+                <img src="https://i.imgur.com/CuztLC5.jpeg" alt="Summer Intensive at Excalibur" style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center" }} />
               </div>
 
               {/* Content below photo — white background, two columns */}
@@ -3154,25 +3154,30 @@ function BeyondPage({ setPage, openInquiry }) {
       <Breadcrumb items={[{label:"The Arena",page:"beyond"}]} setPage={setPage} />
 
       {/* ── HERO — Man in the Arena ── */}
-      <div style={{ background: "#000", padding: isMobile ? "72px 24px 60px" : "112px 80px 88px", position: "relative", overflow: "hidden", borderBottom: "1px solid rgba(199,171,117,.12)" }}>
-        {/* Faint watermark */}
-        <div style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center", pointerEvents: "none", overflow: "hidden" }}>
-          <span style={{ fontFamily: "'Forum', serif", fontSize: "clamp(80px,15vw,200px)", color: "rgba(199,171,117,.025)", letterSpacing: "0.2em", textTransform: "uppercase", userSelect: "none", whiteSpace: "nowrap" }}>ARENA</span>
+      <div style={{ position: "relative", overflow: "hidden", minHeight: isMobile ? 480 : 640 }}>
+        {/* Full-bleed image */}
+        <img src="https://i.imgur.com/qoGFjhQ.jpeg" alt="Man in the Arena" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "center" }} />
+        <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to bottom, rgba(0,0,0,.55) 0%, rgba(0,0,0,.75) 50%, rgba(0,0,0,.97) 100%)" }} />
+        <div style={{ position: "relative", zIndex: 1, display: "flex", flexDirection: "column", justifyContent: "flex-end", minHeight: isMobile ? 480 : 640, padding: isMobile ? "48px 24px" : "72px 80px" }}>
+          <div style={{ maxWidth: 900 }}>
+            <Fade>
+              <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 8, letterSpacing: "0.55em", color: gold, fontWeight: 700, textTransform: "uppercase", marginBottom: 16 }}>The Arena · Excalibur Academy</p>
+              <h1 style={{ fontFamily: serif, fontSize: isMobile ? "clamp(40px,8vw,58px)" : "clamp(56px,6vw,84px)", fontWeight: 300, color: "#FBF7EE", lineHeight: 1.0, letterSpacing: "0.04em", marginBottom: 12 }}>Man in the Arena</h1>
+              <p style={{ fontFamily: serif, fontSize: isMobile ? 16 : 20, color: gold, fontStyle: "italic", letterSpacing: "0.04em", marginBottom: 32 }}>Real work. Real pressure. Real outcomes.</p>
+              <div style={{ width: 48, height: "1px", background: `linear-gradient(90deg, ${gold}, transparent)`, marginBottom: 28 }} />
+            </Fade>
+          </div>
         </div>
-        <div style={{ maxWidth: 900, margin: "0 auto", position: "relative", zIndex: 1, textAlign: "center" }}>
+      </div>
+
+      {/* ── ROOSEVELT QUOTE ── */}
+      <div style={{ background: "#050505", borderBottom: "1px solid rgba(199,171,117,.12)", padding: isMobile ? "52px 24px" : "72px 80px" }}>
+        <div style={{ maxWidth: 860, margin: "0 auto" }}>
           <Fade>
-            <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 8, letterSpacing: "0.55em", color: gold, fontWeight: 700, textTransform: "uppercase", marginBottom: 28 }}>Theodore Roosevelt · Paris · April 23, 1910</p>
-            <div style={{ display: "flex", alignItems: "center", gap: 16, marginBottom: 44, maxWidth: 480, margin: "0 auto 44px" }}>
-              <div style={{ flex: 1, height: "1px", background: "linear-gradient(90deg, transparent, rgba(199,171,117,.3))" }} />
-              <span style={{ fontFamily: serif, fontSize: 14, color: gold }}>✦</span>
-              <div style={{ flex: 1, height: "1px", background: "linear-gradient(90deg, rgba(199,171,117,.3), transparent)" }} />
-            </div>
-            <blockquote style={{ fontFamily: serif, fontSize: isMobile ? 15 : 18, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.9, fontStyle: "italic", textAlign: "left", maxWidth: 820, margin: "0 auto 40px", paddingLeft: isMobile ? 20 : 36, borderLeft: "2px solid rgba(199,171,117,.35)" }}>
+            <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 8, letterSpacing: "0.5em", color: "rgba(199,171,117,.6)", fontWeight: 600, textTransform: "uppercase", marginBottom: 24 }}>Theodore Roosevelt · Paris · April 23, 1910</p>
+            <blockquote style={{ fontFamily: serif, fontSize: isMobile ? 16 : 20, color: "#FBF7EE", fontWeight: 400, lineHeight: 1.85, textAlign: "left", paddingLeft: isMobile ? 20 : 36, borderLeft: `2px solid ${gold}`, margin: 0 }}>
               "It is not the critic who counts; not the man who points out how the strong man stumbles, or where the doer of deeds could have done them better. The credit belongs to the man who is actually in the arena, whose face is marred by dust and sweat and blood; who strives valiantly; who errs, who comes short again and again, because there is no effort without error and shortcoming; but who does actually strive to do the deeds; who knows great enthusiasms, the great devotions; who spends himself in a worthy cause; who at the best knows in the end the triumph of high achievement, and who at the worst, if he fails, at least fails while daring greatly, so that his place shall never be with those cold and timid souls who neither know victory nor defeat."
             </blockquote>
-            <div style={{ width: 48, height: "1px", background: "linear-gradient(90deg, transparent, " + gold + ", transparent)", margin: "0 auto 40px" }} />
-            <h1 style={{ fontFamily: serif, fontSize: isMobile ? "clamp(38px,8vw,56px)" : "clamp(52px,6vw,80px)", fontWeight: 300, color: "#FBF7EE", lineHeight: 1.0, letterSpacing: "0.04em", marginBottom: 16 }}>Man in the Arena</h1>
-            <p style={{ fontFamily: serif, fontSize: isMobile ? 15 : 18, color: gold, fontStyle: "italic", letterSpacing: "0.06em" }}>Real work. Real pressure. Real outcomes.</p>
           </Fade>
         </div>
       </div>
@@ -4581,7 +4586,7 @@ function FlagshipDetailPage({ setPage, openInquiry }) {
 
       {/* HERO — photo full bleed */}
       <div style={{ position: "relative", height: isMobile ? 280 : 480, overflow: "hidden" }}>
-        <img src="https://i.postimg.cc/1Vfq1Szf/flagship.jpg" alt="Ten-Month Flagship" style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center" }} />
+        <img src="https://i.imgur.com/PB9loUJ.jpeg" alt="Ten-Month Flagship" style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center" }} />
         <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(0,0,0,.9) 0%, rgba(0,0,0,.3) 60%, transparent 100%)" }} />
         <div style={{ position: "absolute", bottom: isMobile ? 28 : 52, left: isMobile ? 24 : 72, maxWidth: 640 }}>
           <p style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.4em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 10 }}>Ten-Month Flagship · September 2026 – June 2027</p>
@@ -5140,7 +5145,7 @@ function SummerDetailPage({ setPage, openInquiry }) {
       <Breadcrumb items={[{label:"Our Programs",page:"programs"},{label:"Summer Intensive",page:"summer-detail"}]} setPage={setPage} />
       {/* HERO */}
       <div style={{ position: "relative", background: "#000", overflow: "hidden", height: isMobile ? 260 : 420 }}>
-        <img src="https://i.postimg.cc/kgY6kRv8/Untitled-design.png" alt="Summer Intensive" style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center" }} />
+        <img src="https://i.imgur.com/CuztLC5.jpeg" alt="Summer Intensive" style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center" }} />
         <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(0,0,0,.9) 0%, rgba(0,0,0,.2) 60%)" }} />
         <div style={{ position: "absolute", bottom: isMobile ? 24 : 48, left: isMobile ? 24 : 72 }}>
           <p style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.4em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 10 }}>Summer Intensive · July & August 2026</p>
