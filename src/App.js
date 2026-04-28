@@ -26,6 +26,7 @@ async function sendEmail(data) {
       body: JSON.stringify({ access_key: WEB3FORMS_KEY, ...data }),
     });
     const json = await res.json();
+    console.log("Web3Forms response:", json);
     return json.success;
   } catch (e) {
     console.error("Web3Forms error:", e);
@@ -4456,7 +4457,7 @@ function InquiryModal({ open, onClose, defaultProgram }) {
     { id: "six-week", label: "Six-Week Intensive" },
     { id: "flagship", label: "Ten-Month Flagship Program" },
   ];
-
+  const tracks = ["Weekday (Tue & Thu, 4–7pm)", "Saturday (9am–3pm)", "Either / No Preference"];
   const grades = ["9th Grade", "10th Grade", "11th Grade", "12th Grade"];
   const contactMethods = ["Phone Call", "Email", "Text Message", "WhatsApp"];
   const contactTimes = ["Morning (9–12)", "Afternoon (12–5)", "Evening (5–8)", "Weekends"];
@@ -4655,18 +4656,20 @@ function InquiryModal({ open, onClose, defaultProgram }) {
             ) : (
               <button
                 onClick={async () => {
-                  await sendEmail({
-                    "Parent Name":    form.parentFirst + " " + form.parentLast,
-                    "Email":          form.email,
-                    "Phone":          form.phone,
-                    "City":           form.city + ", " + form.state,
-                    "Contact Method": form.contactMethod,
-                    "Contact Time":   form.contactTime,
-                    "Programs":       form.programs.join(", "),
-                    "Schedule Track": (form.tracks||[]).join(", "),
-                    "Send Package":   form.sendPackage,
-                    "Heard About Us": form.hearAbout,
-                    "Students":       form.students.map(s => s.firstName + " " + s.lastName + " — Grade: " + s.grade + ", Age: " + s.age).join(" | "),
+                  const ok = await sendEmail({
+                    subject: "New Excalibur Inquiry — " + form.parentFirst + " " + form.parentLast,
+                    name: form.parentFirst + " " + form.parentLast,
+                    email: form.email,
+                    phone: form.phone,
+                    city: form.city + (form.state ? ", " + form.state : ""),
+                    contact_method: form.contactMethod,
+                    contact_time: form.contactTime,
+                    programs: form.programs.join(", "),
+                    schedule_track: (form.tracks||[]).join(", "),
+                    send_package: form.sendPackage,
+                    heard_about: form.hearAbout,
+                    students: form.students.map(s => s.firstName + " " + s.lastName + " | Grade: " + s.grade + " | Age: " + s.age).join(" / "),
+                    message: "Programs: " + form.programs.join(", ") + " | Track: " + (form.tracks||[]).join(", "),
                   });
                   setSubmitted(true);
                 }}
