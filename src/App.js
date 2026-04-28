@@ -1052,27 +1052,48 @@ function CurriculumPage({ setPage, openInquiry }) {
       {/* ── EIGHT MODULES ── */}
       <div style={{ background: "#050505", padding: isMobile ? "52px 24px" : "72px 80px" }}>
         <div style={{ maxWidth: 1100, margin: "0 auto" }}>
+          {/* Editorial heading — asymmetric, luxury */}
           <Fade>
-            <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 9, letterSpacing: "0.45em", color: gold, fontWeight: 700, textTransform: "uppercase", marginBottom: 16 }}>The Curriculum</p>
-            <h2 style={{ fontFamily: serif, fontSize: isMobile ? 28 : 44, fontWeight: 600, color: "#FBF7EE", lineHeight: 1.05, marginBottom: 8 }}>Inside the Classroom</h2>
-            <p style={{ fontFamily: sans, fontSize: 14, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.8, marginBottom: 40, maxWidth: 600 }}>Eight disciplines — taught by executive business leaders, distinguished keynote speakers, and professors from leading universities. Click any module to go deep.</p>
+            <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: isMobile ? 24 : 80, alignItems: "end", marginBottom: 64, paddingBottom: 40, borderBottom: "1px solid rgba(199,171,117,.12)" }}>
+              <div>
+                <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 8, letterSpacing: "0.55em", color: gold, fontWeight: 700, textTransform: "uppercase", marginBottom: 20 }}>The Curriculum · Eight Disciplines</p>
+                <h2 style={{ fontFamily: serif, fontSize: isMobile ? 36 : 58, fontWeight: 300, color: "#FBF7EE", lineHeight: 1.0, letterSpacing: "0.01em" }}>Inside the<br />Classroom</h2>
+              </div>
+              <div>
+                <div style={{ width: 32, height: "1px", background: `linear-gradient(90deg, ${gold}, transparent)`, marginBottom: 20 }} />
+                <p style={{ fontFamily: sans, fontSize: 14, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.9, marginBottom: 24 }}>Eight disciplines — taught by executive business leaders, distinguished keynote speakers, and professors from leading universities. Click any module to learn more.</p>
+                <p style={{ fontFamily: serif, fontSize: 15, color: gold, fontStyle: "italic", lineHeight: 1.6 }}>No career academics. No theory divorced from practice. Every instructor has done the thing they teach.</p>
+              </div>
+            </div>
           </Fade>
-          <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 2, background: "#111" }}>
+
+          {/* Modules — editorial numbered rows */}
+          <div style={{ display: "flex", flexDirection: "column", gap: 0 }}>
             {currMods.map((m, i) => (
               <Fade key={i} d={i * .03}>
-                <div onClick={() => setPage(`module:${m.slug}`)} style={{ background: "#080808", padding: isMobile ? "32px 24px" : "44px 40px", cursor: "pointer", borderTop: "2px solid transparent", transition: "all .3s", position: "relative" }}
-                  onMouseEnter={e => { e.currentTarget.style.background = "#0D0D0B"; e.currentTarget.style.borderTopColor = gold; }}
-                  onMouseLeave={e => { e.currentTarget.style.background = "#080808"; e.currentTarget.style.borderTopColor = "transparent"; }}>
-                  <div style={{ position: "absolute", top: 20, right: 20, fontFamily: serif, fontSize: 48, color: "rgba(199,171,117,.04)", lineHeight: 1, fontWeight: 700 }}>{m.n}</div>
-                  <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 8, letterSpacing: "0.3em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 12 }}>{m.phase || "Core Module"}</p>
-                  <h3 style={{ fontFamily: serif, fontSize: isMobile ? 20 : 24, fontWeight: 600, color: "#FBF7EE", lineHeight: 1.2, marginBottom: 6 }}>{m.title}</h3>
-                  <p style={{ fontFamily: serif, fontSize: 14, fontStyle: "italic", color: gold, marginBottom: 14, lineHeight: 1.4 }}>{m.tagline}</p>
-                  <div style={{ width: 28, height: 1, background: "linear-gradient(90deg, " + gold + ", transparent)", marginBottom: 14 }} />
-                  <p style={{ fontFamily: sans, fontSize: 12, lineHeight: 1.8, color: "#FBF7EE", fontWeight: 300, marginBottom: 18 }}>{m.summary}</p>
-                  <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-                    <span style={{ fontFamily: sans, fontSize: 10, color: gold, letterSpacing: "0.18em", fontWeight: 600 }}>DEEP DIVE</span>
-                    <span style={{ color: gold, fontSize: 14 }}>→</span>
+                <div
+                  onClick={() => setPage(`module:${m.slug}`)}
+                  style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "72px 1fr 1fr 120px", gap: isMobile ? 12 : 32, padding: isMobile ? "28px 0" : "32px 0", borderBottom: "1px solid rgba(199,171,117,.1)", cursor: "pointer", alignItems: "center", transition: "all .2s" }}
+                  onMouseEnter={e => { e.currentTarget.style.background = "rgba(199,171,117,.03)"; e.currentTarget.style.paddingLeft = isMobile ? "0" : "12px"; }}
+                  onMouseLeave={e => { e.currentTarget.style.background = "transparent"; e.currentTarget.style.paddingLeft = "0"; }}
+                >
+                  {/* Number */}
+                  <span style={{ fontFamily: serif, fontSize: isMobile ? 28 : 38, fontWeight: 300, color: "rgba(199,171,117,.2)", lineHeight: 1, flexShrink: 0 }}>{m.n}</span>
+                  {/* Title + tagline */}
+                  <div>
+                    <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 8, letterSpacing: "0.28em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 6 }}>{m.phase || "Core Module"}</p>
+                    <h3 style={{ fontFamily: serif, fontSize: isMobile ? 20 : 26, fontWeight: 600, color: "#FBF7EE", lineHeight: 1.15, marginBottom: 4 }}>{m.title}</h3>
+                    <p style={{ fontFamily: serif, fontSize: 13, fontStyle: "italic", color: gold, lineHeight: 1.3 }}>{m.tagline}</p>
                   </div>
+                  {/* Summary — desktop only */}
+                  {!isMobile && <p style={{ fontFamily: sans, fontSize: 12, lineHeight: 1.8, color: "#FBF7EE", fontWeight: 300 }}>{m.summary}</p>}
+                  {/* CTA */}
+                  {!isMobile && (
+                    <div style={{ display: "flex", alignItems: "center", gap: 8, justifyContent: "flex-end" }}>
+                      <span style={{ fontFamily: sans, fontSize: 9, color: gold, letterSpacing: "0.22em", fontWeight: 600, textTransform: "uppercase" }}>Learn More</span>
+                      <span style={{ color: gold, fontSize: 13 }}>→</span>
+                    </div>
+                  )}
                 </div>
               </Fade>
             ))}
