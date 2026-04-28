@@ -1314,7 +1314,7 @@ function IntensivePage({ setPage, openInquiry }) {
 }
 
 // ── Standalone schedule section for ProgramsPage ──
-function DailyScheduleSection() {
+function DailyScheduleSection({ sectionRef }) {
   const isMobile = useIsMobile();
   const [activeTab, setActiveTab] = useState("summer");
   const [activeBlock, setActiveBlock] = useState(0);
@@ -1326,7 +1326,7 @@ function DailyScheduleSection() {
   ];
   const current = tabs.find(t => t.id === activeTab) || tabs[0];
   return (
-    <div style={{ maxWidth: 1100, margin: "0 auto", padding: isMobile ? "48px 16px" : "72px 40px" }}>
+    <div ref={sectionRef} style={{ maxWidth: 1100, margin: "0 auto", padding: isMobile ? "48px 16px" : "72px 40px" }}>
       <Fade>
         <div style={{ textAlign: "center", marginBottom: 40 }}>
           <Eyebrow>A DAY AT EXCALIBUR</Eyebrow>
@@ -1496,6 +1496,8 @@ function ProgramsPage({ setPage, openInquiry }) {
   const isMobile = useIsMobile();
   const [activeWave, setActiveWave] = useState(0);
   const [activeProgram, setActiveProgram] = useState(0);
+  const scheduleRef = React.useRef(null);
+  const scrollToSchedule = () => scheduleRef.current && scheduleRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
 
   const programs = [
     {
@@ -1643,28 +1645,28 @@ function ProgramsPage({ setPage, openInquiry }) {
                       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: 10 }}>
                         <div>
                           <span style={{ fontFamily: serif, fontSize: 16, fontWeight: 600, color: "#FBF7EE", marginRight: 10 }}>{w.wave}</span>
-                          <span style={{ fontFamily: sans, fontSize: 11, color: "rgba(251,247,238,.4)", fontWeight: 300 }}>{w.dates} · {w.days}</span>
+                          <span style={{ fontFamily: sans, fontSize: 11, color: "#FBF7EE", fontWeight: 300 }}>{w.dates} · {w.days}</span>
                         </div>
                         <div style={{ textAlign: "right", flexShrink: 0, marginLeft: 12 }}>
                           <span style={{ fontFamily: serif, fontSize: 13, color: "#4DB87A" }}>{w.enrolled} enrolled</span>
-                          <span style={{ fontFamily: sans, fontSize: 10, color: "rgba(251,247,238,.25)", marginLeft: 8 }}>{w.total - w.enrolled} spots left</span>
+                          <span style={{ fontFamily: sans, fontSize: 10, color: "rgba(251,247,238,.6)", marginLeft: 8 }}>{w.total - w.enrolled} spots left</span>
                         </div>
                       </div>
                       <div style={{ height: 2, background: "rgba(255,255,255,.06)", borderRadius: 1 }}>
                         <div style={{ height: "100%", width: `${(w.enrolled / w.total) * 100}%`, background: "linear-gradient(90deg, #4DB87A, rgba(77,184,122,.5))", borderRadius: 1 }} />
                       </div>
                       <div style={{ display: "flex", justifyContent: "space-between", marginTop: 5 }}>
-                        <span style={{ fontFamily: sans, fontSize: 8, color: "rgba(251,247,238,.2)", letterSpacing: "0.08em" }}>0 / 20 students</span>
-                        <span style={{ fontFamily: sans, fontSize: 8, color: "rgba(251,247,238,.2)", letterSpacing: "0.08em" }}>Limited cohort</span>
+                        <span style={{ fontFamily: sans, fontSize: 8, color: "rgba(251,247,238,.45)", letterSpacing: "0.08em" }}>0 / 20 students</span>
+                        <span style={{ fontFamily: sans, fontSize: 8, color: "rgba(251,247,238,.45)", letterSpacing: "0.08em" }}>Limited cohort</span>
                       </div>
                     </div>
                   ))}
                 </div>
               </div>
 
-              {/* Photo — full width, show entire image */}
-              <div style={{ background: "#000" }}>
-                <img src="https://i.ibb.co/Rr2zhXD" alt="Summer Intensive at Excalibur" style={{ width: "100%", display: "block", objectFit: "contain" }} />
+              {/* Photo — controlled height strip */}
+              <div style={{ background: "#000", overflow: "hidden", height: isMobile ? 200 : 320 }}>
+                <img src="https://i.postimg.cc/kgY6kRv8/Untitled-design.png" alt="Summer Intensive at Excalibur" style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center" }} />
               </div>
 
               {/* Content below photo — white background, two columns */}
@@ -1696,10 +1698,10 @@ function ProgramsPage({ setPage, openInquiry }) {
                   </div>
                 </div>
 
-                {/* RIGHT — features + Day at Excalibur */}
+                {/* RIGHT — features */}
                 <div style={{ padding: isMobile ? "36px 24px" : "52px 52px", background: "#fafafa" }}>
                   <p style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.35em", color: "#8B6914", textTransform: "uppercase", fontWeight: 600, marginBottom: 20 }}>{prog.featuresLabel}</p>
-                  <div style={{ display: "flex", flexDirection: "column", gap: 0, marginBottom: 40 }}>
+                  <div style={{ display: "flex", flexDirection: "column", gap: 0, marginBottom: 36 }}>
                     {prog.features.map((f, j) => (
                       <div key={j} style={{ display: "flex", gap: 16, padding: "11px 0", borderBottom: "1px solid rgba(0,0,0,.07)", alignItems: "flex-start" }}>
                         <span style={{ fontFamily: serif, fontSize: 11, color: "rgba(0,0,0,.2)", fontStyle: "italic", flexShrink: 0, paddingTop: 2 }}>{String(j + 1).padStart(2, "0")}</span>
@@ -1707,11 +1709,12 @@ function ProgramsPage({ setPage, openInquiry }) {
                       </div>
                     ))}
                   </div>
-                  <div style={{ borderTop: "1px solid rgba(0,0,0,.1)", paddingTop: 32 }}>
-                    <p style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.4em", color: "#8B6914", fontWeight: 600, textTransform: "uppercase", marginBottom: 12 }}>A Day at Excalibur</p>
-                    <h3 style={{ fontFamily: serif, fontSize: isMobile ? 20 : 26, fontWeight: 600, color: "#000", lineHeight: 1.15, marginBottom: 10 }}>What a real session looks like.</h3>
-                    <p style={{ fontFamily: sans, fontSize: 13, color: "#444", fontWeight: 300, lineHeight: 1.8, marginBottom: 20 }}>Click any block to meet the instructor and see exactly what happens in that session.</p>
-                    <button onClick={() => setPage("summer")} style={{ fontFamily: sans, background: "transparent", border: "1px solid rgba(0,0,0,.2)", color: "#000", padding: "11px 24px", fontSize: 11, fontWeight: 600, letterSpacing: "0.12em", textTransform: "uppercase", cursor: "pointer" }}>VIEW FULL DAY SCHEDULE →</button>
+                  {/* Day at Excalibur */}
+                  <div style={{ background: "#000", padding: "28px 28px" }}>
+                    <p style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.4em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 10 }}>A Day at Excalibur</p>
+                    <h3 style={{ fontFamily: serif, fontSize: 22, fontWeight: 600, color: "#FBF7EE", lineHeight: 1.1, marginBottom: 8 }}>What a real session looks like.</h3>
+                    <p style={{ fontFamily: sans, fontSize: 12, color: "rgba(251,247,238,.6)", fontWeight: 300, lineHeight: 1.8, marginBottom: 18 }}>Click any block to meet the instructor and see exactly what happens in that session. Summer Intensive.</p>
+                    <button onClick={scrollToSchedule} style={{ fontFamily: sans, background: gold, border: "none", color: "#000", padding: "11px 22px", fontSize: 10, fontWeight: 700, letterSpacing: "0.15em", textTransform: "uppercase", cursor: "pointer" }}>VIEW FULL DAY SCHEDULE →</button>
                   </div>
                 </div>
               </div>
@@ -1796,7 +1799,7 @@ function ProgramsPage({ setPage, openInquiry }) {
       <Hr />
 
       {/* INTERACTIVE DAILY SCHEDULE */}
-      <DailyScheduleSection />
+      <DailyScheduleSection sectionRef={scheduleRef} />
 
       <Hr />
 
