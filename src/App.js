@@ -2486,7 +2486,7 @@ function HomePage({ setPage, openInquiry }) {
             School teaches how to take tests.
           </h1>
           <h1 style={{ fontFamily: serif, fontSize: "clamp(18px,1.8vw,28px)", fontWeight: 600, lineHeight: 1.25, color: gold, maxWidth: 700, marginBottom: 24 }}>
-            We teach how to take lead.
+            We teach how to take the lead.
           </h1>
         </Fade>
 
