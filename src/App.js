@@ -975,7 +975,7 @@ function SoireeInviteBlock({ openInquiry, setPage = () => {} }) {
   const [sending, setSending] = useState(false);
   const [form, setForm] = useState({
     name: "", phone: "", city: "", studentName: "", studentAge: "", studentGrade: "",
-    inviteMethod: "", attendees: "", dietary: "",
+    inviteMethod: "", attendees: "", dietary: "", school: "", mailingAddress: "", comments: "",
   });
   const isMobile = useIsMobile();
   const setF = (k, v) => setForm(f => ({ ...f, [k]: v }));
@@ -993,7 +993,10 @@ function SoireeInviteBlock({ openInquiry, setPage = () => {} }) {
       subject: "Soirée Invitation Request — " + form.name,
       name: form.name, phone: form.phone, city: form.city,
       student_name: form.studentName, student_age: form.studentAge, student_grade: form.studentGrade,
-      invite_method: form.inviteMethod, attendees: form.attendees, dietary: form.dietary,
+      school: form.school,
+      invite_method: form.inviteMethod, mailing_address: form.mailingAddress,
+      attendees: form.attendees, dietary: form.dietary,
+      comments: form.comments,
       type: "Soiree Invitation Request",
       message: "Soiree request from " + form.name,
     });
@@ -1018,8 +1021,16 @@ function SoireeInviteBlock({ openInquiry, setPage = () => {} }) {
           {!submitted ? (
             <>
               {/* PHOTO + CONTENT grid */}
-              <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "380px 1fr", minHeight: 520 }}>
-                {/* Photo */}
+              <div style={{ display: "flex", flexDirection: "column" }}>
+                {/* Photo — full width on mobile, left column on desktop */}
+                {isMobile ? (
+                  <div style={{ position: "relative", height: 240, overflow: "hidden" }}>
+                    <img src="https://i.imgur.com/wf1ttmj.jpeg" alt="Excalibur Soirée" style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center" }} />
+                    <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to bottom, transparent 50%, #050505 100%)" }} />
+                  </div>
+                ) : null}
+                <div style={{ display: isMobile ? "block" : "grid", gridTemplateColumns: "380px 1fr", minHeight: isMobile ? "auto" : 520 }}>
+                {/* Photo desktop */}
                 {!isMobile && (
                   <div style={{ position: "relative", overflow: "hidden" }}>
                     <img src="https://i.imgur.com/wf1ttmj.jpeg" alt="Excalibur Soirée" style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center" }} />
@@ -1044,11 +1055,11 @@ function SoireeInviteBlock({ openInquiry, setPage = () => {} }) {
                   {/* Body */}
                   <p style={{ fontFamily: "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif", fontSize: isMobile ? 13 : 14, color: "#FBF7EE", fontWeight: 300, lineHeight: 2.0, maxWidth: 520, marginBottom: 28 }}>An intimate invitation-only evening reception for selected number of families, marking the official launch of Excalibur Academy. Excalibur Family Soirée includes live jazz, cocktails, hors d'oeuvres, faculty introductions, program & curriculum presentations, as well as the opportunity to meet the founder, leadership team, and other prospective Excalibur families.</p>
                   {/* By Invitation */}
-                  <p style={{ fontFamily: serif, fontSize: 17, color: gold, letterSpacing: "0.15em", marginBottom: 28, textTransform: "uppercase" }}>By Personal Invitation Only.</p>
+                  <p style={{ fontFamily: serif, fontSize: 17, color: gold, letterSpacing: "0.15em", marginBottom: 28, textTransform: "uppercase" }}>By Personal Invitation Only</p>
                   {/* Dream question */}
                   <div style={{ border: "1px solid rgba(199,171,117,.25)", padding: isMobile ? "18px 18px" : "24px 36px", textAlign: "center", maxWidth: 540, marginBottom: 32, position: "relative", width: "100%" }}>
                     <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 1, background: "linear-gradient(90deg, transparent, rgba(199,171,117,.4), transparent)" }} />
-                    <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 8, letterSpacing: "0.3em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 12 }}>On the Evening, Prospective Students & Parents Will Be Asked to share an answer to one Question</p>
+                    <p style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: 13, letterSpacing: "0.08em", color: "#FBF7EE", fontWeight: 400, fontStyle: "italic", marginBottom: 14 }}>On the evening, prospective students &amp; parents will be asked to share an answer to one question</p>
                     <p style={{ fontFamily: "'Playfair Display', 'Didot', 'Bodoni MT', Georgia, serif", fontSize: isMobile ? 28 : 42, color: gold, fontWeight: 400, lineHeight: 1.25, fontStyle: "italic" }}>"What is your dream?"</p>
                   </div>
                   {/* Buttons */}
@@ -1058,7 +1069,8 @@ function SoireeInviteBlock({ openInquiry, setPage = () => {} }) {
                   </div>
                   <p style={{ fontFamily: "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif", fontSize: 11, color: "rgba(199,171,117,.55)", marginTop: 4, lineHeight: 1.7, maxWidth: 420 }}>Invitations will be extended personally by the Founder of Excalibur Academy.</p>
                 </div>
-              </div>
+              </div> {/* close inner grid */}
+              </div> {/* close flex column wrapper */}
 
               {/* REQUEST INVITATION FORM — inline popup */}
               {showForm && (
@@ -1082,6 +1094,7 @@ function SoireeInviteBlock({ openInquiry, setPage = () => {} }) {
                         ))}
                       </div>
                     </div>
+                    <input className="inquiry-input" style={{...iStyle, marginBottom: 10}} placeholder="School Name" value={form.school} onChange={e => setF("school", e.target.value)} onFocus={focus} onBlur={blur} />
                     <div style={{ marginBottom: 10 }}>
                       <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 9, letterSpacing: "0.22em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 8 }}>Preferred Invitation Method</p>
                       <div style={{ display: "flex", gap: 8 }}>
@@ -1090,10 +1103,14 @@ function SoireeInviteBlock({ openInquiry, setPage = () => {} }) {
                         ))}
                       </div>
                     </div>
-                    <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 10, marginBottom: 20 }}>
+                    {(form.inviteMethod === "By Post" || form.inviteMethod === "Both") && (
+                      <input className="inquiry-input" style={{...iStyle, marginBottom: 10}} placeholder="Mailing Address *" value={form.mailingAddress} onChange={e => setF("mailingAddress", e.target.value)} onFocus={focus} onBlur={blur} />
+                    )}
+                    <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 10, marginBottom: 10 }}>
                       <input className="inquiry-input" style={{...iStyle}} placeholder="Expected number of guests" value={form.attendees} onChange={e => setF("attendees", e.target.value)} onFocus={focus} onBlur={blur} />
                       <input className="inquiry-input" style={{...iStyle}} placeholder="Dietary restrictions (optional)" value={form.dietary} onChange={e => setF("dietary", e.target.value)} onFocus={focus} onBlur={blur} />
                     </div>
+                    <textarea className="inquiry-input" style={{...iStyle, marginBottom: 20, minHeight: 80, resize: "vertical"}} placeholder="Comments or questions (optional)" value={form.comments} onChange={e => setF("comments", e.target.value)} onFocus={focus} onBlur={blur} />
                     <button onClick={handleSubmit} disabled={sending || !form.name || !form.phone} style={{ fontFamily: sans, background: (!form.name || !form.phone) ? "rgba(199,171,117,.4)" : gold, color: "#000", padding: "13px 0", fontSize: 11, fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", border: "none", cursor: "pointer", width: "100%", transition: "all .2s" }}>{sending ? "Sending..." : "Submit Invitation Request"}</button>
                   </div>
                 </div>
@@ -4371,7 +4388,7 @@ function ComingSoonPage({ onUnlock }) {
               <p style={{ fontFamily: sans, fontSize: isMobile ? 12 : 13, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.85, maxWidth: 520, margin: "0 auto 18px" }}>
                 An intimate evening and cocktail reception for a select number of families to meet the faculty, learn about the programs, and experience the standard of the Academy firsthand.
               </p>
-              <p style={{ fontFamily: serif, fontSize: 18, color: gold, letterSpacing: "0.18em", marginBottom: 32, textTransform: "uppercase" }}>By Personal Invitation Only.</p>
+              <p style={{ fontFamily: serif, fontSize: 18, color: gold, letterSpacing: "0.18em", marginBottom: 32, textTransform: "uppercase" }}>By Personal Invitation Only</p>
               <div style={{ display: "flex", gap: 8, flexDirection: isMobile ? "column" : "row", maxWidth: 520, margin: "0 auto" }}>
                 <input
                   type="email"
@@ -5934,7 +5951,7 @@ function EventsPage({ setPage, openInquiry }) {
                 <p style={{ fontFamily: sans, fontSize: 14, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.9, marginBottom: 16 }}>The evening includes cocktails, candid conversations with the Academy's lead faculty and founding team, a full overview of Excalibur's programs, structure, expectations, and logistics — and a chance for families and prospective students to experience the standard of the Academy before enrollment opens.</p>
                 <p style={{ fontFamily: sans, fontSize: 14, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.9, marginBottom: 28 }}>Prospective students attending the evening will be asked one question: <span style={{ fontFamily: serif, fontStyle: "italic", color: gold }}>"What is your dream?"</span></p>
                 <div style={{ borderTop: "1px solid rgba(199,171,117,.12)", paddingTop: 24 }}>
-                  <p style={{ fontFamily: serif, fontSize: 16, color: gold, letterSpacing: "0.1em", marginBottom: 12, fontStyle: "italic" }}>By Personal Invitation Only.</p>
+                  <p style={{ fontFamily: serif, fontSize: 16, color: gold, letterSpacing: "0.1em", marginBottom: 12, fontStyle: "italic" }}>By Personal Invitation Only</p>
                   <p style={{ fontFamily: sans, fontSize: 12, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.8 }}>Invitations are extended personally by the Excalibur team. Families may request an invitation. We will be in touch personally with event details and next steps.</p>
                 </div>
               </div>
