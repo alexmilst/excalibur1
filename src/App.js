@@ -4,7 +4,7 @@ const STRIPE = "https://buy.stripe.com/placeholder";
 const LOGO_URL = "https://i.ibb.co/rKSp526b/upsclae-logo.png";
 const LOGO = LOGO_URL;
 const serif = "'Cormorant Garamond', Georgia, serif";
-const sans = "'Lato', sans-serif";
+const sans = "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif";
 const eyebrow_font = "'DM Sans', sans-serif";
 const gold = "#C7AB75";
 
@@ -127,7 +127,7 @@ function CountdownTimer({ targetDate, label = "Days Until Wave 1 Opens" }) {
   return (
     <div style={{ textAlign: "center", marginBottom: 52 }}>
       <div style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: "clamp(100px,18vw,180px)", fontWeight: 300, color: "#FBF7EE", lineHeight: 1, letterSpacing: "-0.04em" }}>{days}</div>
-      <div style={{ fontFamily: "'Lato', sans-serif", fontSize: 10, letterSpacing: "0.55em", color: "rgba(199,171,117,.55)", textTransform: "uppercase", marginTop: 14 }}>{label}</div>
+      <div style={{ fontFamily: "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif", fontSize: 10, letterSpacing: "0.55em", color: "rgba(199,171,117,.55)", textTransform: "uppercase", marginTop: 14 }}>{label}</div>
     </div>
   );
 }
@@ -154,7 +154,7 @@ function Breadcrumb({ items, setPage }) {
   // items = [{label, page}] — last item is current page (no link)
   if (!items || items.length === 0) return null;
   const gold = "#C7AB75";
-  const sans = "'Lato', sans-serif";
+  const sans = "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif";
   return (
     <div style={{ background: "#000", borderBottom: "1px solid rgba(199,171,117,.08)", padding: "10px 48px" }}>
       <div style={{ maxWidth: 1400, margin: "0 auto", display: "flex", alignItems: "center", gap: 8 }}>
@@ -413,21 +413,19 @@ function Nav({ page, setPage }) {
       <nav style={{ position: "sticky", top: 0, zIndex: 200, background: "rgba(0,0,0,.97)", backdropFilter: "blur(20px)", borderBottom: "1px solid rgba(199,171,117,.12)" }}>
         <div style={{ maxWidth: 1400, margin: "0 auto", padding: isMobile ? "0 20px" : "0 48px", display: "flex", alignItems: "center", justifyContent: "space-between", height: 64 }}>
 
-          {/* LEFT — logo */}
-          <div style={{ width: isMobile ? "auto" : 160, display: "flex", alignItems: "center" }}>
-            {!isMobile && <div onClick={() => go("home")} style={{ cursor: "pointer", width: 56, height: 56, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
-              <img src={LOGO_URL} alt="Excalibur Academy" style={{ width: 56, height: 56, objectFit: "contain" }} />
+          {/* LEFT — logo + name + motto (desktop) | name only (mobile) */}
+          <div onClick={() => go("home")} style={{ display: "flex", alignItems: "center", gap: 14, cursor: "pointer", flex: isMobile ? 1 : "0 0 auto" }}>
+            {!isMobile && <div style={{ width: 52, height: 52, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+              <img src={LOGO_URL} alt="Excalibur Academy" style={{ width: 52, height: 52, objectFit: "contain" }} />
             </div>}
-          </div>
-
-          {/* CENTER — brand name + motto */}
-          <div onClick={() => go("home")} style={{ textAlign: isMobile ? "left" : "center", cursor: "pointer", flex: 1, paddingLeft: isMobile ? 12 : 0 }}>
-            <div style={{ fontFamily: "'Forum', 'Copperplate', Georgia, serif", fontSize: isMobile ? 18 : 22, letterSpacing: "0.28em", color: "#FBF7EE", textTransform: "uppercase", lineHeight: 1.15, whiteSpace: "nowrap" }}>Excalibur Academy</div>
-            {!isMobile && <div style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: 11, letterSpacing: "0.16em", color: gold, fontStyle: "italic", marginTop: 3, whiteSpace: "nowrap" }}>Forging the Leaders of Tomorrow</div>}
+            <div style={{ paddingLeft: isMobile ? 0 : 0 }}>
+              <div style={{ fontFamily: "'Forum', 'Copperplate', Georgia, serif", fontSize: isMobile ? 18 : 22, letterSpacing: "0.28em", color: "#FBF7EE", textTransform: "uppercase", lineHeight: 1.15, whiteSpace: "nowrap" }}>Excalibur Academy</div>
+              {!isMobile && <div style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: 11, letterSpacing: "0.16em", color: gold, fontStyle: "italic", marginTop: 3, whiteSpace: "nowrap" }}>Forging the Leaders of Tomorrow</div>}
+            </div>
           </div>
 
           {/* RIGHT — APPLY NOW + MENU */}
-          <div style={{ width: isMobile ? "auto" : 160, display: "flex", alignItems: "center", gap: 12, justifyContent: "flex-end" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 12, justifyContent: "flex-end" }}>
             {!isMobile && (
               <button onClick={() => go("apply")}
                 onMouseEnter={e => { e.currentTarget.style.background = "transparent"; e.currentTarget.style.color = gold; }}
@@ -493,7 +491,7 @@ function Nav({ page, setPage }) {
                     >
                       <div>
                         <div className="sl" style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: isMobile ? 18 : 22, fontWeight: 500, color: "#FBF7EE", lineHeight: 1.2, transition: "color .2s" }}>{sub.label}</div>
-                        <div style={{ fontFamily: "'Lato', sans-serif", fontSize: 9, color: gold, letterSpacing: "0.14em", textTransform: "uppercase", marginTop: 2 }}>{sub.sub}</div>
+                        <div style={{ fontFamily: "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif", fontSize: 9, color: gold, letterSpacing: "0.14em", textTransform: "uppercase", marginTop: 2 }}>{sub.sub}</div>
                       </div>
                     </div>
                   ))}
@@ -769,7 +767,7 @@ function ScheduleDetail({ block }) {
       {isBreak ? (
         <>
           <p style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: 22, fontWeight: 600, color: "#111", letterSpacing: "0.01em", marginBottom: 14, lineHeight: 1.1 }}>{block.block}</p>
-          <p style={{ fontFamily: "'Lato', sans-serif", fontSize: 15, color: "#333", fontWeight: 300, lineHeight: 1.85 }}>{block.desc}</p>
+          <p style={{ fontFamily: "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif", fontSize: 15, color: "#333", fontWeight: 300, lineHeight: 1.85 }}>{block.desc}</p>
         </>
       ) : (
         <>
@@ -789,7 +787,7 @@ function ScheduleDetail({ block }) {
             </div>
           </div>
           <p style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: 22, fontWeight: 600, color: "#111", letterSpacing: "0.01em", marginBottom: 14, lineHeight: 1.1 }}>{block.block}</p>
-          <p style={{ fontFamily: "'Lato', sans-serif", fontSize: 15, color: "#333", fontWeight: 300, lineHeight: 1.9 }}>{block.desc}</p>
+          <p style={{ fontFamily: "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif", fontSize: 15, color: "#333", fontWeight: 300, lineHeight: 1.9 }}>{block.desc}</p>
         </>
       )}
     </div>
@@ -817,11 +815,11 @@ function DailyScheduleBlock({ schedule, title, subtitle }) {
               <div onClick={() => toggle(i)} style={{ padding: "14px 20px", cursor: "pointer", borderLeft: `3px solid ${active === i ? "#8B6914" : "transparent"}`, background: active === i ? "rgba(139,105,20,.04)" : "#FAF8F4", borderBottom: "1px solid rgba(0,0,0,.06)", display: "flex", gap: 12, alignItems: "flex-start", transition: "all .2s" }}>
                 <div style={{ flexShrink: 0, minWidth: 52 }}>
                   <div style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: 18, color: active === i ? "#8B6914" : "#555", fontWeight: 600, lineHeight: 1 }}>{s.time}</div>
-                  <div style={{ fontFamily: "'Lato', sans-serif", fontSize: 9, color: "#555", marginTop: 2 }}>{s.dur}</div>
+                  <div style={{ fontFamily: "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif", fontSize: 9, color: "#555", marginTop: 2 }}>{s.dur}</div>
                 </div>
                 <div style={{ flex: 1 }}>
                   <div style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: 15, fontWeight: 600, color: "#111", lineHeight: 1.3 }}>{s.block}</div>
-                  {s.instructor && <div style={{ fontFamily: "'Lato', sans-serif", fontSize: 9, color: active === i ? "#8B6914" : "#999", marginTop: 2 }}>{s.instructor}</div>}
+                  {s.instructor && <div style={{ fontFamily: "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif", fontSize: 9, color: active === i ? "#8B6914" : "#999", marginTop: 2 }}>{s.instructor}</div>}
                 </div>
                 <span style={{ color: active === i ? "#8B6914" : "#bbb", fontSize: 16, transition: "transform .2s", transform: active === i ? "rotate(45deg)" : "none", display: "inline-block", flexShrink: 0 }}>+</span>
               </div>
@@ -836,11 +834,11 @@ function DailyScheduleBlock({ schedule, title, subtitle }) {
               <div key={i} onClick={() => toggle(i)} style={{ padding: "14px 24px", cursor: "pointer", borderLeft: `3px solid ${active === i ? "#8B6914" : "transparent"}`, background: active === i ? "rgba(139,105,20,.05)" : "transparent", borderBottom: "1px solid rgba(0,0,0,.05)", transition: "all .2s", display: "flex", gap: 12, alignItems: "flex-start" }}>
                 <div style={{ flexShrink: 0, paddingTop: 2 }}>
                   <div style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: 20, color: active === i ? "#8B6914" : "#555", fontWeight: 600, lineHeight: 1, whiteSpace: "nowrap" }}>{s.time}</div>
-                  <div style={{ fontFamily: "'Lato', sans-serif", fontSize: 9, color: "#555", marginTop: 3 }}>{s.dur}</div>
+                  <div style={{ fontFamily: "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif", fontSize: 9, color: "#555", marginTop: 3 }}>{s.dur}</div>
                 </div>
                 <div>
                   <div style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: 15, fontWeight: 600, color: "#111", lineHeight: 1.3 }}>{s.block}</div>
-                  {s.instructor && <div style={{ fontFamily: "'Lato', sans-serif", fontSize: 9, color: active === i ? "#8B6914" : "#999", marginTop: 2, letterSpacing: "0.06em" }}>{s.instructor}</div>}
+                  {s.instructor && <div style={{ fontFamily: "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif", fontSize: 9, color: active === i ? "#8B6914" : "#999", marginTop: 2, letterSpacing: "0.06em" }}>{s.instructor}</div>}
                 </div>
               </div>
             ))}
@@ -971,55 +969,141 @@ function ModulePage({ slug, setPage }) {
 }
 
 // ── SOIRÉE INVITE BLOCK — reusable across pages ──
-function SoireeInviteBlock({ openInquiry }) {
-  const [email, setEmail] = useState("");
+function SoireeInviteBlock({ openInquiry, setPage = () => {} }) {
+  const [showForm, setShowForm] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [sending, setSending] = useState(false);
+  const [form, setForm] = useState({
+    name: "", phone: "", city: "", studentName: "", studentAge: "", studentGrade: "",
+    inviteMethod: "", attendees: "", dietary: "",
+  });
   const isMobile = useIsMobile();
+  const setF = (k, v) => setForm(f => ({ ...f, [k]: v }));
+
+  const iStyle = { width: "100%", padding: "12px 16px", background: "#000", border: "1px solid rgba(199,171,117,.25)", color: "#FBF7EE", fontFamily: "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif", fontSize: 14, outline: "none", boxSizing: "border-box" };
+  const focus = e => e.target.style.borderColor = gold;
+  const blur  = e => e.target.style.borderColor = "rgba(199,171,117,.25)";
+  const grades = ["9th Grade", "10th Grade", "11th Grade", "12th Grade"];
+  const inviteMethods = ["By Post", "Email", "Both"];
+
+  const handleSubmit = async () => {
+    if (!form.name || !form.phone) return;
+    setSending(true);
+    await sendEmail({
+      subject: "Soirée Invitation Request — " + form.name,
+      name: form.name, phone: form.phone, city: form.city,
+      student_name: form.studentName, student_age: form.studentAge, student_grade: form.studentGrade,
+      invite_method: form.inviteMethod, attendees: form.attendees, dietary: form.dietary,
+      type: "Soiree Invitation Request",
+      message: "Soiree request from " + form.name,
+    });
+    setSending(false);
+    setSubmitted(true);
+  };
+
   return (
     <section style={{ padding: isMobile ? "52px 16px" : "80px 40px", background: "#000" }}>
-      <div style={{ maxWidth: 920, margin: "0 auto" }}>
-        <div style={{ border: `1px solid rgba(199,171,117,.4)`, position: "relative", background: "#050505" }} className="soiree-card">
+      <div style={{ maxWidth: 960, margin: "0 auto" }}>
+        <div style={{ border: "1px solid rgba(199,171,117,.4)", position: "relative", background: "#050505" }} className="soiree-card">
+          {/* Top gold line */}
           <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 2, background: `linear-gradient(90deg, transparent, ${gold}, transparent)` }} />
+          {/* Corner brackets */}
           {[["top","left"],["top","right"],["bottom","left"],["bottom","right"]].map(([v,h],i) => (
             <div key={i} style={{ position: "absolute", [v]: 14, [h]: 14, width: 22, height: 22,
               [`border${v.charAt(0).toUpperCase()+v.slice(1)}`]: `1px solid ${gold}`,
               [`border${h.charAt(0).toUpperCase()+h.slice(1)}`]: `1px solid ${gold}`,
               pointerEvents: "none" }} />
           ))}
+
           {!submitted ? (
-            <div style={{ padding: isMobile ? "44px 28px" : "64px 80px", textAlign: "center" }}>
-              <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 8, letterSpacing: "0.55em", color: gold, fontWeight: 700, textTransform: "uppercase", marginBottom: 28 }}>Private Family Information Event · Excalibur Academy 2026</p>
-              <div style={{ display: "flex", alignItems: "center", gap: 16, marginBottom: 32, maxWidth: 480, margin: "0 auto 32px" }}>
-                <div style={{ flex: 1, height: "1px", background: `linear-gradient(90deg, transparent, rgba(199,171,117,.35))` }} />
-                <span style={{ fontFamily: serif, fontSize: 14, color: gold }}>❆</span>
-                <div style={{ flex: 1, height: "1px", background: `linear-gradient(90deg, rgba(199,171,117,.35), transparent)` }} />
+            <>
+              {/* PHOTO + CONTENT grid */}
+              <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "380px 1fr", minHeight: 520 }}>
+                {/* Photo */}
+                {!isMobile && (
+                  <div style={{ position: "relative", overflow: "hidden" }}>
+                    <img src="https://i.imgur.com/wf1ttmj.jpeg" alt="Excalibur Soirée" style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center" }} />
+                    <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to right, transparent 60%, #050505 100%)" }} />
+                  </div>
+                )}
+                {/* Content */}
+                <div style={{ padding: isMobile ? "44px 28px" : "56px 60px", textAlign: "center", display: "flex", flexDirection: "column", alignItems: "center" }}>
+                  <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 8, letterSpacing: "0.55em", color: gold, fontWeight: 700, textTransform: "uppercase", marginBottom: 28 }}>Private Family Information Event · Excalibur Academy 2026</p>
+                  {/* Ornament */}
+                  <div style={{ display: "flex", alignItems: "center", gap: 16, marginBottom: 28, width: "100%", maxWidth: 440 }}>
+                    <div style={{ flex: 1, height: "1px", background: "linear-gradient(90deg, transparent, rgba(199,171,117,.35))" }} />
+                    <span style={{ fontFamily: serif, fontSize: 14, color: gold }}>✦</span>
+                    <div style={{ flex: 1, height: "1px", background: "linear-gradient(90deg, rgba(199,171,117,.35), transparent)" }} />
+                  </div>
+                  {/* Date */}
+                  <p style={{ fontFamily: serif, fontSize: isMobile ? 72 : 96, fontWeight: 300, color: "#FBF7EE", lineHeight: 1, letterSpacing: "-0.03em", marginBottom: 6 }}>May 23</p>
+                  <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 11, letterSpacing: "0.38em", color: gold, textTransform: "uppercase", fontWeight: 600, marginBottom: 8 }}>Saturday · 5:00 PM – 7:00 PM</p>
+                  <p style={{ fontFamily: serif, fontSize: isMobile ? 18 : 24, color: "#FBF7EE", lineHeight: 1.3, marginBottom: 4, fontWeight: 400 }}>Academy Launch & Family Information Soirée</p>
+                  <p style={{ fontFamily: serif, fontSize: isMobile ? 13 : 16, color: gold, lineHeight: 1.4, marginBottom: 32, fontStyle: "italic" }}>at a Mediterranean Estate · San Clemente, California</p>
+                  <div style={{ width: 52, height: "1px", background: `linear-gradient(90deg, transparent, ${gold}, transparent)`, marginBottom: 28 }} />
+                  {/* Body */}
+                  <p style={{ fontFamily: "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif", fontSize: isMobile ? 13 : 14, color: "#FBF7EE", fontWeight: 300, lineHeight: 2.0, maxWidth: 520, marginBottom: 28 }}>An intimate invitation-only evening reception for selected number of families, marking the official launch of Excalibur Academy. Excalibur Family Soirée includes live jazz, cocktails, hors d'oeuvres, faculty introductions, program & curriculum presentations, as well as the opportunity to meet the founder, leadership team, and other prospective Excalibur families.</p>
+                  {/* By Invitation */}
+                  <p style={{ fontFamily: serif, fontSize: 17, color: gold, letterSpacing: "0.15em", marginBottom: 28, textTransform: "uppercase" }}>By Personal Invitation Only.</p>
+                  {/* Dream question */}
+                  <div style={{ border: "1px solid rgba(199,171,117,.25)", padding: isMobile ? "18px 18px" : "24px 36px", textAlign: "center", maxWidth: 540, marginBottom: 32, position: "relative", width: "100%" }}>
+                    <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 1, background: "linear-gradient(90deg, transparent, rgba(199,171,117,.4), transparent)" }} />
+                    <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 8, letterSpacing: "0.3em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 12 }}>On the Evening, Prospective Students & Parents Will Be Asked to share an answer to one Question</p>
+                    <p style={{ fontFamily: "'Playfair Display', 'Didot', 'Bodoni MT', Georgia, serif", fontSize: isMobile ? 28 : 42, color: gold, fontWeight: 400, lineHeight: 1.25, fontStyle: "italic" }}>"What is your dream?"</p>
+                  </div>
+                  {/* Buttons */}
+                  <div style={{ display: "flex", gap: 10, flexDirection: isMobile ? "column" : "row", width: "100%", maxWidth: 460, marginBottom: 14 }}>
+                    <button onClick={() => setShowForm(true)} style={{ fontFamily: sans, background: gold, color: "#000", padding: "13px 22px", fontSize: 11, fontWeight: 700, letterSpacing: "0.15em", textTransform: "uppercase", border: "none", cursor: "pointer", flex: 1 }}>Request Invitation</button>
+                    <button onClick={() => setPage("events")} style={{ fontFamily: sans, background: "transparent", color: gold, padding: "13px 22px", fontSize: 11, fontWeight: 500, letterSpacing: "0.15em", textTransform: "uppercase", border: "1px solid rgba(199,171,117,.35)", cursor: "pointer", flex: 1 }}>Event Information →</button>
+                  </div>
+                  <p style={{ fontFamily: "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif", fontSize: 11, color: "rgba(199,171,117,.55)", marginTop: 4, lineHeight: 1.7, maxWidth: 420 }}>Invitations will be extended personally by the Founder of Excalibur Academy.</p>
+                </div>
               </div>
-              <p style={{ fontFamily: serif, fontSize: isMobile ? 72 : 104, fontWeight: 300, color: "#FBF7EE", lineHeight: 1, letterSpacing: "-0.03em", marginBottom: 6 }}>May 23</p>
-              <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 10, letterSpacing: "0.4em", color: gold, textTransform: "uppercase", fontWeight: 600, marginBottom: 32 }}>Saturday · 5:00 PM</p>
-              <p style={{ fontFamily: serif, fontSize: isMobile ? 20 : 28, color: "#FBF7EE", lineHeight: 1.3, marginBottom: 6, fontWeight: 400 }}>Academy Launch &amp; Family Information Soirée</p>
-              <p style={{ fontFamily: serif, fontSize: isMobile ? 14 : 18, color: gold, lineHeight: 1.4, marginBottom: 36, fontStyle: "italic" }}>at a Mediterranean Estate · San Clemente, California</p>
-              <div style={{ width: 60, height: "1px", background: `linear-gradient(90deg, transparent, ${gold}, transparent)`, margin: "0 auto 36px" }} />
-              <p style={{ fontFamily: sans, fontSize: isMobile ? 13 : 14, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.9, maxWidth: 600, margin: "0 auto 32px" }}>An intimate evening reception for a carefully selected number of families — an opportunity to meet the faculty, the founding team, and the families who will form Excalibur’s inaugural class. The evening includes cocktails, a private tour of the estate grounds, and candid conversations with the Academy’s leadership before applications formally open.</p>
-              <p style={{ fontFamily: serif, fontSize: 18, color: gold, letterSpacing: "0.18em", marginBottom: 32, textTransform: "uppercase" }}>By Personal Invitation Only.</p>
-              <div style={{ border: `1px solid rgba(199,171,117,.25)`, padding: isMobile ? "20px 20px" : "28px 44px", textAlign: "center", maxWidth: 560, margin: "0 auto 40px", position: "relative" }}>
-                <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 1, background: `linear-gradient(90deg, transparent, rgba(199,171,117,.4), transparent)` }} />
-                <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 8, letterSpacing: "0.3em", color: "rgba(199,171,117,.55)", fontWeight: 600, textTransform: "uppercase", marginBottom: 16 }}>On the Evening, Prospective Students Will Be Asked</p>
-                <p style={{ fontFamily: serif, fontSize: isMobile ? 36 : 52, color: gold, fontWeight: 600, lineHeight: 1.3, fontStyle: "italic" }}>“What is your dream?”</p>
-              </div>
-              <div style={{ display: "flex", gap: 8, flexDirection: isMobile ? "column" : "row", maxWidth: 520, margin: "0 auto 14px" }}>
-                <input type="email" value={email} onChange={e => setEmail(e.target.value)} onKeyDown={async e => { if (e.key === "Enter" && email) { await sendEmail({ "Email": email, "Type": "Soirée Invitation Request", "Message": "Soirée invitation request from: " + email }); setSubmitted(true); }}} placeholder="Your email address" style={{ flex: 1, padding: "13px 18px", background: "#000", border: "1px solid rgba(199,171,117,.3)", color: "#FBF7EE", fontFamily: sans, fontSize: 13, outline: "none" }} onFocus={e => e.target.style.borderColor = gold} onBlur={e => e.target.style.borderColor = "rgba(199,171,117,.3)"} />
-                <button
-                  onClick={async () => { if (!email) return; await sendEmail({ "Email": email, "Type": "Soirée Invitation Request", "Message": "Soirée invitation request from: " + email }); setSubmitted(true); }}
-                  style={{ fontFamily: sans, background: gold, color: "#000", padding: "13px 22px", fontSize: 11, fontWeight: 700, letterSpacing: "0.15em", textTransform: "uppercase", border: "none", cursor: "pointer", flexShrink: 0 }}
-                >Request Invitation</button>
-              </div>
-              <p style={{ fontFamily: sans, fontSize: 9, letterSpacing: "0.14em", color: "#C7AB75", marginTop: 8, textTransform: "uppercase" }}>Invitations are extended personally by the Excalibur team.</p>
-            </div>
+
+              {/* REQUEST INVITATION FORM — inline popup */}
+              {showForm && (
+                <div style={{ borderTop: "1px solid rgba(199,171,117,.2)", padding: isMobile ? "32px 24px" : "44px 60px", background: "#000" }}>
+                  <div style={{ maxWidth: 640, margin: "0 auto" }}>
+                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 28 }}>
+                      <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 9, letterSpacing: "0.4em", color: gold, fontWeight: 700, textTransform: "uppercase" }}>Request Your Invitation</p>
+                      <button onClick={() => setShowForm(false)} style={{ background: "none", border: "none", color: gold, fontSize: 20, cursor: "pointer", lineHeight: 1 }}>×</button>
+                    </div>
+                    <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 10, marginBottom: 10 }}>
+                      <input className="inquiry-input" style={{...iStyle}} placeholder="Your Name *" value={form.name} onChange={e => setF("name", e.target.value)} onFocus={focus} onBlur={blur} />
+                      <input className="inquiry-input" style={{...iStyle}} placeholder="Phone Number *" value={form.phone} onChange={e => setF("phone", e.target.value)} onFocus={focus} onBlur={blur} />
+                    </div>
+                    <input className="inquiry-input" style={{...iStyle, marginBottom: 10}} placeholder="City" value={form.city} onChange={e => setF("city", e.target.value)} onFocus={focus} onBlur={blur} />
+                    <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr 80px", gap: 10, marginBottom: 10 }}>
+                      <input className="inquiry-input" style={{...iStyle}} placeholder="Prospective Student Name" value={form.studentName} onChange={e => setF("studentName", e.target.value)} onFocus={focus} onBlur={blur} />
+                      <input className="inquiry-input" style={{...iStyle}} placeholder="Age" value={form.studentAge} onChange={e => setF("studentAge", e.target.value)} onFocus={focus} onBlur={blur} />
+                      <div style={{ display: "flex", gap: 6, flexWrap: "wrap", alignItems: "center", gridColumn: isMobile ? "1" : "3" }}>
+                        {grades.map(g => (
+                          <button key={g} onClick={() => setF("studentGrade", g)} style={{ fontFamily: sans, fontSize: 10, padding: "8px 10px", cursor: "pointer", background: form.studentGrade === g ? gold : "transparent", color: form.studentGrade === g ? "#000" : "#FBF7EE", border: `1px solid ${form.studentGrade === g ? gold : "rgba(199,171,117,.2)"}`, transition: "all .2s", whiteSpace: "nowrap" }}>{g}</button>
+                        ))}
+                      </div>
+                    </div>
+                    <div style={{ marginBottom: 10 }}>
+                      <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 9, letterSpacing: "0.22em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 8 }}>Preferred Invitation Method</p>
+                      <div style={{ display: "flex", gap: 8 }}>
+                        {inviteMethods.map(m => (
+                          <button key={m} onClick={() => setF("inviteMethod", m)} style={{ fontFamily: sans, fontSize: 12, padding: "9px 16px", cursor: "pointer", background: form.inviteMethod === m ? gold : "transparent", color: form.inviteMethod === m ? "#000" : "#FBF7EE", border: `1px solid ${form.inviteMethod === m ? gold : "rgba(199,171,117,.2)"}`, transition: "all .2s" }}>{m}</button>
+                        ))}
+                      </div>
+                    </div>
+                    <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 10, marginBottom: 20 }}>
+                      <input className="inquiry-input" style={{...iStyle}} placeholder="Expected number of guests" value={form.attendees} onChange={e => setF("attendees", e.target.value)} onFocus={focus} onBlur={blur} />
+                      <input className="inquiry-input" style={{...iStyle}} placeholder="Dietary restrictions (optional)" value={form.dietary} onChange={e => setF("dietary", e.target.value)} onFocus={focus} onBlur={blur} />
+                    </div>
+                    <button onClick={handleSubmit} disabled={sending || !form.name || !form.phone} style={{ fontFamily: sans, background: (!form.name || !form.phone) ? "rgba(199,171,117,.4)" : gold, color: "#000", padding: "13px 0", fontSize: 11, fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", border: "none", cursor: "pointer", width: "100%", transition: "all .2s" }}>{sending ? "Sending..." : "Submit Invitation Request"}</button>
+                  </div>
+                </div>
+              )}
+            </>
           ) : (
             <div style={{ padding: isMobile ? "52px 28px" : "80px 72px", textAlign: "center" }}>
-              <span style={{ fontFamily: serif, fontSize: 40, color: gold, display: "block", marginBottom: 24 }}>❆</span>
+              <span style={{ fontFamily: serif, fontSize: 40, color: gold, display: "block", marginBottom: 24 }}>✦</span>
               <p style={{ fontFamily: serif, fontSize: isMobile ? 28 : 38, color: "#FBF7EE", marginBottom: 14, fontWeight: 300 }}>Thank you.</p>
-              <p style={{ fontFamily: sans, fontSize: 14, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.9, maxWidth: 480, margin: "0 auto" }}>We will be in touch personally with event details and your private invitation. We look forward to welcoming your family to Excalibur.</p>
+              <p style={{ fontFamily: "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif", fontSize: 15, color: "#FBF7EE", fontWeight: 300, lineHeight: 2.0, maxWidth: 480, margin: "0 auto" }}>We will be in touch personally with event details and your private invitation. We look forward to welcoming your family to Excalibur.</p>
             </div>
           )}
         </div>
@@ -1027,6 +1111,7 @@ function SoireeInviteBlock({ openInquiry }) {
     </section>
   );
 }
+
 
 // ─────────────────────────────────────────────
 // PAGE: CURRICULUM INDEX
@@ -1267,7 +1352,7 @@ function CurriculumPage({ setPage, openInquiry }) {
       </div>
 
       {/* ── SOIREE ── */}
-      <SoireeInviteBlock openInquiry={openInquiry} />
+      <SoireeInviteBlock openInquiry={openInquiry} setPage={setPage} />
 
     </div>
   );
@@ -2235,7 +2320,7 @@ function ProgramsPage({ setPage, openInquiry }) {
         </div>
       </div>
 
-    <SoireeInviteBlock openInquiry={openInquiry} />
+    <SoireeInviteBlock openInquiry={openInquiry} setPage={setPage} />
     </div>
   );
 }
@@ -2315,7 +2400,7 @@ function ApplyPage({ setPage, openInquiry }) {
                 status: "ACCEPTING APPLICATIONS NOW", statusColor: "#4DB87A",
                 label: "Summer Intensive", dates: "July & August 2026",
                 price: "$4,500", period: "per two-week wave",
-                desc: "A two-week intensive for high school juniors and seniors who want to experience Excalibur's core model in a concentrated format.\n\nStudents train in public speaking, business, leadership, AI, sales, venture development, and applied strategy — culminating in The Excalibur Venture Court, a Shark Tank–inspired pitch finale before families, investors, entrepreneurs, and invited judges.\n\nLimited enrollment per wave. 20 per cohort.",
+                desc: "A two-week intensive for high school students aged 15–17 (rising juniors and seniors) who want to experience Excalibur's core model in a concentrated format.\n\nStudents train in public speaking, business, leadership, AI, sales, venture development, and applied strategy — culminating in The Excalibur Venture Court, a Shark Tank–inspired pitch finale before families, investors, entrepreneurs, and invited judges.\n\nLimited enrollment per wave. 20 per cohort.",
                 page: "summer-detail",
               },
               {
@@ -2559,7 +2644,7 @@ function ApplyPage({ setPage, openInquiry }) {
         </div>
       </div>
 
-      <SoireeInviteBlock openInquiry={openInquiry} />
+      <SoireeInviteBlock openInquiry={openInquiry} setPage={setPage} />
 
     </div>
   );
@@ -2851,7 +2936,7 @@ function HomePage({ setPage, openInquiry }) {
               <button onClick={() => setPage("apply")} style={{ fontFamily: sans, background: gold, color: "#000", padding: "14px 44px", fontSize: 11, fontWeight: 700, letterSpacing: "0.22em", textTransform: "uppercase", border: "none", cursor: "pointer" }}>Join the Founding Class</button>
               <button onClick={() => setPage("programs")} style={{ fontFamily: sans, border: `1px solid rgba(199,171,117,.35)`, color: gold, padding: "14px 32px", fontSize: 11, fontWeight: 500, letterSpacing: "0.18em", textTransform: "uppercase", background: "transparent", cursor: "pointer" }}>Explore Programs</button>
             </div>
-            <p style={{ fontFamily: eyebrow_font, fontSize: 9, color: gold, letterSpacing: "0.3em", textTransform: "uppercase" }}>Ages 16–17 &nbsp;·&nbsp; 25 Students Per Cohort &nbsp;·&nbsp; Orange County, CA</p>
+            <p style={{ fontFamily: eyebrow_font, fontSize: 9, color: gold, letterSpacing: "0.3em", textTransform: "uppercase" }}>Ages 16–17 &nbsp;·&nbsp; 20 Students Per Cohort &nbsp;·&nbsp; Orange County, CA</p>
           </Fade>
 
         </div>
@@ -2861,20 +2946,20 @@ function HomePage({ setPage, openInquiry }) {
       <section style={{ background: "#050504", borderTop: "1px solid rgba(199,171,117,.10)", borderBottom: "1px solid rgba(199,171,117,.10)", overflow: "hidden" }}>
         {isMobile ? (
           <div ref={statsRef} style={{ display: "grid", gridTemplateColumns: "1fr 1fr" }}>
-            {[["10", " Months", "academic year program"], ["6", " Weeks", "intensive track"], ["25", "", "students per cohort"], ["8", "", "curriculum modules"], ["30+", "", "guest speakers / year"], ["2", "", "summer waves"]].map(([num, suf, l], i) => (
+            {[["10", " Months", "academic year program"], ["6", " Weeks", "intensive track"], ["20", "", "students per cohort"], ["8", "", "curriculum modules"], ["30+", "", "guest speakers / year"], ["2", "", "summer waves"]].map(([num, suf, l], i) => (
               <div key={i} style={{ padding: "28px 16px", textAlign: "center", borderLeft: i % 2 === 1 ? "1px solid rgba(199,171,117,.10)" : "none", borderTop: i >= 2 ? "1px solid rgba(199,171,117,.10)" : "none", display: "flex", flexDirection: "column", alignItems: "center" }}>
                 <div style={{ width: 16, height: 1, background: "rgba(199,171,117,.35)", marginBottom: 12 }} />
                 <div style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: 44, fontWeight: 300, color: "#FBF7EE", lineHeight: 1 }}>
                   <StatCounter num={num} suf={suf} label="" inView={statsInView} lightMode={false} />
                 </div>
                 <div style={{ width: 20, height: "1px", background: "linear-gradient(90deg, transparent, rgba(199,171,117,.5), transparent)", margin: "10px auto 8px" }} />
-                <p style={{ fontFamily: "'Lato', sans-serif", fontSize: 8, letterSpacing: "0.22em", color: "rgba(199,171,117,.55)", textTransform: "uppercase" }}>{l}</p>
+                <p style={{ fontFamily: "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif", fontSize: 8, letterSpacing: "0.22em", color: "rgba(199,171,117,.55)", textTransform: "uppercase" }}>{l}</p>
               </div>
             ))}
           </div>
         ) : (
           <div ref={statsRef} style={{ maxWidth: 1200, margin: "0 auto", display: "grid", gridTemplateColumns: "repeat(6, 1fr)" }}>
-            {[["10", " Months", "academic year program"], ["6", " Weeks", "intensive track"], ["25", "", "students per cohort"], ["8", "", "curriculum modules"], ["30+", "", "guest speakers / year"], ["2", "", "summer waves"]].map(([num, suf, l], i) => {
+            {[["10", " Months", "academic year program"], ["6", " Weeks", "intensive track"], ["20", "", "students per cohort"], ["8", "", "curriculum modules"], ["30+", "", "guest speakers / year"], ["2", "", "summer waves"]].map(([num, suf, l], i) => {
               const isHigh = i % 2 === 0;
               return (
                 <div key={i} style={{
@@ -2892,7 +2977,7 @@ function HomePage({ setPage, openInquiry }) {
                     <StatCounter num={num} suf={suf} label="" inView={statsInView} lightMode={false} />
                   </div>
                   <div style={{ width: 22, height: "1px", background: "linear-gradient(90deg, transparent, rgba(199,171,117,.5), transparent)", margin: "12px auto 10px" }} />
-                  <p style={{ fontFamily: "'Lato', sans-serif", fontSize: 8, letterSpacing: "0.26em", color: "rgba(199,171,117,.50)", textTransform: "uppercase", lineHeight: 1.7 }}>{l}</p>
+                  <p style={{ fontFamily: "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif", fontSize: 8, letterSpacing: "0.26em", color: "rgba(199,171,117,.50)", textTransform: "uppercase", lineHeight: 1.7 }}>{l}</p>
                 </div>
               );
             })}
@@ -2959,8 +3044,8 @@ function HomePage({ setPage, openInquiry }) {
               <p style={{ fontFamily: sans, fontSize: isMobile ? 13 : 15, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.75 }}><span style={{ fontWeight: 700 }}>Due to high demand and our commitment to keeping cohort sizes small — a personalised, real experience —</span> we are <span style={{ color: gold, fontWeight: 700, fontStyle: "italic" }}>introducing a second two-week intensive wave in August 2026.</span></p>
             </div>
 
-            <p style={{ fontFamily: sans, fontSize: 13, lineHeight: 1.9, color: "#444", fontWeight: 300, marginBottom: 36, maxWidth: 680 }}>
-              Offered in two waves — July and August — this full-day, Monday-through-Friday intensive is led by senior faculty, former Fortune 500 executives, accomplished leaders, top industry specialists, and distinguished guest speakers. The program emphasises business and leadership curriculum, public speaking, real-world case studies, immersive startup simulations, and live pitch development, culminating in a Shark Tank-style finale.
+            <p style={{ fontFamily: "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif", fontSize: 14, lineHeight: 2.0, color: "#444", fontWeight: 300, marginBottom: 36, maxWidth: 680 }}>
+              Offered in two waves — July and August — this full-day, Monday-through-Friday intensive is led by senior faculty, former Fortune 500 executives, accomplished leaders, top industry specialists, and distinguished guest speakers. The program emphasizes business and leadership curriculum, public speaking, real-world case studies, immersive startup simulations, and live pitch development, culminating in a Shark Tank-style finale.
             </p>
 
             {/* details list — editorial style */}
@@ -2971,7 +3056,7 @@ function HomePage({ setPage, openInquiry }) {
                 ["Wave 2", "August 3 – 15, 2026"],
                 ["Guest Speakers", "Distinguished speaker rotating daily"],
                 ["Finale", "Shark Tank–inspired with real investors"],
-                ["Eligibility", "Ages 15–17 · 25 students per wave"],
+                ["Eligibility", "Ages 15–17 (rising juniors and seniors) · 20 students per wave"],
               ].map(([k, v], i) => (
                 <div key={i} style={{ display: "flex", gap: 16, padding: "13px 0", borderBottom: "1px solid rgba(0,0,0,.07)", alignItems: "flex-start" }}>
                   <span style={{ fontFamily: sans, fontSize: 10, letterSpacing: "0.18em", color: "#111", textTransform: "uppercase", minWidth: 96, paddingTop: 1, flexShrink: 0, fontWeight: 700 }}>{k}</span>
@@ -2990,7 +3075,7 @@ function HomePage({ setPage, openInquiry }) {
       </section>
 
 
-      <SoireeInviteBlock openInquiry={openInquiry} />
+      <SoireeInviteBlock openInquiry={openInquiry} setPage={setPage} />
 
       {/* FOUNDER QUOTE */}
       <section style={{ background: "#080808", borderTop: "1px solid rgba(199,171,117,.07)", borderBottom: "1px solid rgba(199,171,117,.07)", padding: isMobile ? "60px 24px" : "80px 40px" }}>
@@ -3130,7 +3215,7 @@ function HomePage({ setPage, openInquiry }) {
                   ["Wave 2", "August 3 – 15, 2026"],
                   ["Guest Speakers", "Distinguished speaker rotating daily"],
                   ["Finale", "Shark Tank–inspired with real investors and judges"],
-                  ["Eligibility", "Ages 15–17 · 25 students per wave"],
+                  ["Eligibility", "Ages 15–17 (rising juniors and seniors) · 20 students per wave"],
                 ].map(([k, v], i) => (
                   <div key={i} style={{ display: "flex", gap: 16, padding: "11px 0", borderBottom: "1px solid rgba(199,171,117,.06)", alignItems: "flex-start" }}>
                     <span style={{ fontFamily: sans, fontSize: 10, color: gold, letterSpacing: "0.08em", minWidth: 90, paddingTop: 1, fontWeight: 500 }}>{k}</span>
@@ -3611,7 +3696,7 @@ function BeyondPage({ setPage, openInquiry }) {
       </div>
 
       {/* ── SOIREE & APPLY ── */}
-      <SoireeInviteBlock openInquiry={openInquiry} />
+      <SoireeInviteBlock openInquiry={openInquiry} setPage={setPage} />
 
       {/* ── APPLY CTA ── */}
       <div style={{ background: "#000", padding: isMobile ? "60px 24px" : "80px 80px", textAlign: "center", borderTop: "1px solid rgba(199,171,117,.12)" }}>
@@ -4142,7 +4227,7 @@ We teach how to lead.</h2>
         ))}
       </div>
 
-      <SoireeInviteBlock openInquiry={openInquiry} />
+      <SoireeInviteBlock openInquiry={openInquiry} setPage={setPage} />
     </div>
   );
 }
@@ -4763,7 +4848,7 @@ function FlagshipScheduleInteractive({ isMobile }) {
         </div>
         <div style={{ display: "flex", gap: 6, flexWrap: "wrap" }}>
           {tabs.map(t => (
-            <button key={t.id} onClick={() => { setActiveTab(t.id); setActiveBlock(null); }} style={{ fontFamily: "'Lato',sans-serif", padding: "7px 16px", background: activeTab === t.id ? "#111" : "transparent", border: `1px solid ${activeTab === t.id ? "#111" : "rgba(0,0,0,.15)"}`, color: activeTab === t.id ? "#fff" : "#555", fontSize: 10, cursor: "pointer", letterSpacing: "0.12em", textTransform: "uppercase", fontWeight: activeTab === t.id ? 600 : 400, transition: "all .2s" }}>{t.label}</button>
+            <button key={t.id} onClick={() => { setActiveTab(t.id); setActiveBlock(null); }} style={{ fontFamily: "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif", padding: "7px 16px", background: activeTab === t.id ? "#111" : "transparent", border: `1px solid ${activeTab === t.id ? "#111" : "rgba(0,0,0,.15)"}`, color: activeTab === t.id ? "#fff" : "#555", fontSize: 10, cursor: "pointer", letterSpacing: "0.12em", textTransform: "uppercase", fontWeight: activeTab === t.id ? 600 : 400, transition: "all .2s" }}>{t.label}</button>
           ))}
         </div>
       </div>
@@ -4779,11 +4864,11 @@ function FlagshipScheduleInteractive({ isMobile }) {
                   <div onClick={() => setActiveBlock(isActive ? null : i)} style={{ padding: "14px 20px", cursor: "pointer", borderLeft: `3px solid ${isActive ? "#8B6914" : "transparent"}`, background: isActive ? "rgba(139,105,20,.04)" : "#FAF8F4", borderBottom: "1px solid rgba(0,0,0,.06)", display: "flex", gap: 12, alignItems: "flex-start", transition: "all .2s", opacity: isBreak ? 0.6 : 1 }}>
                     <div style={{ flexShrink: 0, minWidth: 52 }}>
                       <div style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: 18, color: isActive ? "#8B6914" : "#555", fontWeight: 600, lineHeight: 1 }}>{block.time}</div>
-                      {block.dur && block.dur !== "—" && <div style={{ fontFamily: "'Lato', sans-serif", fontSize: 9, color: "#555", marginTop: 2 }}>{block.dur}</div>}
+                      {block.dur && block.dur !== "—" && <div style={{ fontFamily: "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif", fontSize: 9, color: "#555", marginTop: 2 }}>{block.dur}</div>}
                     </div>
                     <div style={{ flex: 1 }}>
                       <div style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: 15, fontWeight: 600, color: "#111", lineHeight: 1.3 }}>{block.block ? block.block.replace(/^Block [0-9]+[ab]? — /, "").replace(/^Block [0-9]+[ab]? – /, "") : ""}</div>
-                      {block.instructor && <div style={{ fontFamily: "'Lato', sans-serif", fontSize: 9, color: isActive ? "#8B6914" : "#999", marginTop: 2 }}>{block.instructor}</div>}
+                      {block.instructor && <div style={{ fontFamily: "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif", fontSize: 9, color: isActive ? "#8B6914" : "#999", marginTop: 2 }}>{block.instructor}</div>}
                     </div>
                     <span style={{ color: isActive ? "#8B6914" : "#bbb", fontSize: 16, transition: "transform .2s", transform: isActive ? "rotate(45deg)" : "none", display: "inline-block", flexShrink: 0 }}>+</span>
                   </div>
@@ -4802,11 +4887,11 @@ function FlagshipScheduleInteractive({ isMobile }) {
                   <div key={i} onClick={() => setActiveBlock(isActive ? null : i)} style={{ padding: "14px 24px", cursor: "pointer", borderLeft: `3px solid ${isActive ? "#8B6914" : "transparent"}`, background: isActive ? "rgba(139,105,20,.05)" : "transparent", borderBottom: "1px solid rgba(0,0,0,.05)", transition: "all .2s", display: "flex", gap: 12, alignItems: "flex-start", opacity: isBreak ? 0.55 : 1 }}>
                     <div style={{ flexShrink: 0, paddingTop: 2 }}>
                       <div style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: 20, color: isActive ? "#8B6914" : "#555", fontWeight: 600, lineHeight: 1, whiteSpace: "nowrap" }}>{block.time}</div>
-                      {block.dur && block.dur !== "—" && <div style={{ fontFamily: "'Lato', sans-serif", fontSize: 9, color: "#555", marginTop: 3 }}>{block.dur}</div>}
+                      {block.dur && block.dur !== "—" && <div style={{ fontFamily: "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif", fontSize: 9, color: "#555", marginTop: 3 }}>{block.dur}</div>}
                     </div>
                     <div>
                       <div style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: 15, fontWeight: 600, color: "#111", lineHeight: 1.3 }}>{block.block ? block.block.replace(/^Block [0-9]+[ab]? — /, "").replace(/^Block [0-9]+[ab]? – /, "") : ""}</div>
-                      {block.instructor && <div style={{ fontFamily: "'Lato', sans-serif", fontSize: 9, color: isActive ? "#8B6914" : "#999", marginTop: 2, letterSpacing: "0.06em" }}>{block.instructor}</div>}
+                      {block.instructor && <div style={{ fontFamily: "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif", fontSize: 9, color: isActive ? "#8B6914" : "#999", marginTop: 2, letterSpacing: "0.06em" }}>{block.instructor}</div>}
                     </div>
                   </div>
                 );
@@ -4850,7 +4935,7 @@ function FlagshipEnrollSelector({ openInquiry, isMobile }) {
       {/* Step 1 */}
       <div style={{ marginBottom: 40 }}>
         <div style={{ display: "flex", alignItems: "center", gap: 14, marginBottom: 24 }}>
-          <div style={{ width: 30, height: 30, background: prog ? gold : "#111", border: `1px solid ${prog ? gold : "rgba(199,171,117,.25)"}`, display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "'Lato',sans-serif", fontSize: 12, fontWeight: 700, color: prog ? "#000" : "#FBF7EE", flexShrink: 0 }}>1</div>
+          <div style={{ width: 30, height: 30, background: prog ? gold : "#111", border: `1px solid ${prog ? gold : "rgba(199,171,117,.25)"}`, display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif", fontSize: 12, fontWeight: 700, color: prog ? "#000" : "#FBF7EE", flexShrink: 0 }}>1</div>
           <h3 style={{ fontFamily: "'Cormorant Garamond',Georgia,serif", fontSize: 24, fontWeight: 600, color: "#FBF7EE" }}>Choose Your Program</h3>
         </div>
         <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(3,1fr)", gap: 2, background: "#111" }}>
@@ -4859,8 +4944,8 @@ function FlagshipEnrollSelector({ openInquiry, isMobile }) {
               <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 8, letterSpacing: "0.3em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 10 }}>{p.label}</p>
               <h4 style={{ fontFamily: "'Cormorant Garamond',Georgia,serif", fontSize: 20, fontWeight: 600, color: "#FBF7EE", marginBottom: 6, lineHeight: 1.2 }}>{p.title}</h4>
               <p style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: 15, color: gold, marginBottom: 10 }}>{p.price}</p>
-              <p style={{ fontFamily: "'Lato',sans-serif", fontSize: 12, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.6 }}>{p.desc}</p>
-              {prog === p.id && <p style={{ fontFamily: "'Lato',sans-serif", fontSize: 10, color: gold, letterSpacing: "0.18em", marginTop: 14 }}>✓ SELECTED</p>}
+              <p style={{ fontFamily: "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif", fontSize: 12, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.6 }}>{p.desc}</p>
+              {prog === p.id && <p style={{ fontFamily: "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif", fontSize: 10, color: gold, letterSpacing: "0.18em", marginTop: 14 }}>✓ SELECTED</p>}
             </div>
           ))}
         </div>
@@ -4870,7 +4955,7 @@ function FlagshipEnrollSelector({ openInquiry, isMobile }) {
       {prog && (
         <div style={{ marginBottom: 40 }}>
           <div style={{ display: "flex", alignItems: "center", gap: 14, marginBottom: 24 }}>
-            <div style={{ width: 30, height: 30, background: track ? gold : "#111", border: `1px solid ${track ? gold : "rgba(199,171,117,.25)"}`, display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "'Lato',sans-serif", fontSize: 12, fontWeight: 700, color: track ? "#000" : "#FBF7EE", flexShrink: 0 }}>2</div>
+            <div style={{ width: 30, height: 30, background: track ? gold : "#111", border: `1px solid ${track ? gold : "rgba(199,171,117,.25)"}`, display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif", fontSize: 12, fontWeight: 700, color: track ? "#000" : "#FBF7EE", flexShrink: 0 }}>2</div>
             <h3 style={{ fontFamily: "'Cormorant Garamond',Georgia,serif", fontSize: 24, fontWeight: 600, color: "#FBF7EE" }}>Choose Your Track</h3>
           </div>
           <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 2, background: "#111" }}>
@@ -4879,8 +4964,8 @@ function FlagshipEnrollSelector({ openInquiry, isMobile }) {
                 <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 8, letterSpacing: "0.3em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 10 }}>{t.label}</p>
                 <h4 style={{ fontFamily: "'Cormorant Garamond',Georgia,serif", fontSize: 22, fontWeight: 600, color: "#FBF7EE", marginBottom: 4 }}>{t.title}</h4>
                 <p style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: 16, color: gold, marginBottom: 10 }}>{t.sub}</p>
-                <p style={{ fontFamily: "'Lato',sans-serif", fontSize: 13, color: "#FBF7EE", fontWeight: 300 }}>{t.detail}</p>
-                {track === t.id && <p style={{ fontFamily: "'Lato',sans-serif", fontSize: 10, color: gold, letterSpacing: "0.18em", marginTop: 14 }}>✓ SELECTED</p>}
+                <p style={{ fontFamily: "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif", fontSize: 13, color: "#FBF7EE", fontWeight: 300 }}>{t.detail}</p>
+                {track === t.id && <p style={{ fontFamily: "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif", fontSize: 10, color: gold, letterSpacing: "0.18em", marginTop: 14 }}>✓ SELECTED</p>}
               </div>
             ))}
           </div>
@@ -4891,45 +4976,45 @@ function FlagshipEnrollSelector({ openInquiry, isMobile }) {
       {prog && track && (
         <div style={{ marginBottom: 40 }}>
           <div style={{ display: "flex", alignItems: "center", gap: 14, marginBottom: 24 }}>
-            <div style={{ width: 30, height: 30, background: gold, border: `1px solid ${gold}`, display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "'Lato',sans-serif", fontSize: 12, fontWeight: 700, color: "#000", flexShrink: 0 }}>3</div>
+            <div style={{ width: 30, height: 30, background: gold, border: `1px solid ${gold}`, display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif", fontSize: 12, fontWeight: 700, color: "#000", flexShrink: 0 }}>3</div>
             <h3 style={{ fontFamily: "'Cormorant Garamond',Georgia,serif", fontSize: 24, fontWeight: 600, color: "#FBF7EE" }}>Your Information</h3>
           </div>
           <div style={{ background: "#080808", borderTop: `2px solid ${gold}`, padding: "36px 32px" }}>
-            <p style={{ fontFamily: "'Lato',sans-serif", fontSize: 13, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.75, marginBottom: 28 }}>Fill in your details and our Enrollment Coordinator will be in touch within 48 hours with your full information package and next steps.</p>
+            <p style={{ fontFamily: "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif", fontSize: 13, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.75, marginBottom: 28 }}>Fill in your details and our Enrollment Coordinator will be in touch within 48 hours with your full information package and next steps.</p>
             {/* Parent info */}
             <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 9, letterSpacing: "0.25em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 12 }}>Parent / Guardian</p>
             <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 10, marginBottom: 10 }}>
               {[["First Name", "text"], ["Last Name", "text"]].map(([ph, type]) => (
-                <input key={ph} type={type} placeholder={ph} className="inquiry-input" style={{ background: "#000", border: "1px solid rgba(199,171,117,.2)", color: "#FBF7EE", padding: "13px 16px", fontFamily: "'Lato',sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
+                <input key={ph} type={type} placeholder={ph} className="inquiry-input" style={{ background: "#000", border: "1px solid rgba(199,171,117,.2)", color: "#FBF7EE", padding: "13px 16px", fontFamily: "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
               ))}
             </div>
             <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 10, marginBottom: 24 }}>
               {[["Email Address", "email"], ["Phone Number", "tel"]].map(([ph, type]) => (
-                <input key={ph} type={type} placeholder={ph} className="inquiry-input" style={{ background: "#000", border: "1px solid rgba(199,171,117,.2)", color: "#FBF7EE", padding: "13px 16px", fontFamily: "'Lato',sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
+                <input key={ph} type={type} placeholder={ph} className="inquiry-input" style={{ background: "#000", border: "1px solid rgba(199,171,117,.2)", color: "#FBF7EE", padding: "13px 16px", fontFamily: "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
               ))}
             </div>
             <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr 80px", gap: 10, marginBottom: 24 }}>
-              <input type="text" placeholder="City *" className="inquiry-input" style={{ background: "#000", border: "1px solid rgba(199,171,117,.2)", color: "#FBF7EE", padding: "13px 16px", fontFamily: "'Lato',sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} required />
-              <input type="text" placeholder="State" className="inquiry-input" style={{ background: "#000", border: "1px solid rgba(199,171,117,.2)", color: "#FBF7EE", padding: "13px 16px", fontFamily: "'Lato',sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
-              <input type="text" placeholder="ZIP *" className="inquiry-input" style={{ background: "#000", border: "1px solid rgba(199,171,117,.2)", color: "#FBF7EE", padding: "13px 16px", fontFamily: "'Lato',sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} required />
+              <input type="text" placeholder="City *" className="inquiry-input" style={{ background: "#000", border: "1px solid rgba(199,171,117,.2)", color: "#FBF7EE", padding: "13px 16px", fontFamily: "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} required />
+              <input type="text" placeholder="State" className="inquiry-input" style={{ background: "#000", border: "1px solid rgba(199,171,117,.2)", color: "#FBF7EE", padding: "13px 16px", fontFamily: "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
+              <input type="text" placeholder="ZIP *" className="inquiry-input" style={{ background: "#000", border: "1px solid rgba(199,171,117,.2)", color: "#FBF7EE", padding: "13px 16px", fontFamily: "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} required />
             </div>
             {/* Student info */}
             <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 9, letterSpacing: "0.25em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 12 }}>Student</p>
             <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 10, marginBottom: 10 }}>
               {[["First Name", "text"], ["Last Name", "text"]].map(([ph, type]) => (
-                <input key={ph} type={type} placeholder={ph} className="inquiry-input" style={{ background: "#000", border: "1px solid rgba(199,171,117,.2)", color: "#FBF7EE", padding: "13px 16px", fontFamily: "'Lato',sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
+                <input key={ph} type={type} placeholder={ph} className="inquiry-input" style={{ background: "#000", border: "1px solid rgba(199,171,117,.2)", color: "#FBF7EE", padding: "13px 16px", fontFamily: "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
               ))}
             </div>
             <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 10, marginBottom: 24 }}>
-              <input type="text" placeholder="Age" className="inquiry-input" style={{ background: "#000", border: "1px solid rgba(199,171,117,.2)", color: "#FBF7EE", padding: "13px 16px", fontFamily: "'Lato',sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
-              <input type="text" placeholder="Current Grade / Year" className="inquiry-input" style={{ background: "#000", border: "1px solid rgba(199,171,117,.2)", color: "#FBF7EE", padding: "13px 16px", fontFamily: "'Lato',sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
+              <input type="text" placeholder="Age" className="inquiry-input" style={{ background: "#000", border: "1px solid rgba(199,171,117,.2)", color: "#FBF7EE", padding: "13px 16px", fontFamily: "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
+              <input type="text" placeholder="Current Grade / Year" className="inquiry-input" style={{ background: "#000", border: "1px solid rgba(199,171,117,.2)", color: "#FBF7EE", padding: "13px 16px", fontFamily: "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
             </div>
-            <input type="text" placeholder="How did you hear about Excalibur?" className="inquiry-input" style={{ background: "#000", border: "1px solid rgba(199,171,117,.2)", color: "#FBF7EE", padding: "13px 16px", fontFamily: "'Lato',sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%", marginBottom: 24 }} />
+            <input type="text" placeholder="How did you hear about Excalibur?" className="inquiry-input" style={{ background: "#000", border: "1px solid rgba(199,171,117,.2)", color: "#FBF7EE", padding: "13px 16px", fontFamily: "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%", marginBottom: 24 }} />
             <div style={{ background: "#000", padding: "16px 20px", marginBottom: 28, borderLeft: `2px solid ${gold}` }}>
               <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 9, letterSpacing: "0.2em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 6 }}>Your Selection</p>
-              <p style={{ fontFamily: "'Lato',sans-serif", fontSize: 13, color: "#FBF7EE", fontWeight: 300 }}>{programs.find(p2 => p2.id === prog)?.title} · {tracks.find(t2 => t2.id === track)?.title}</p>
+              <p style={{ fontFamily: "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif", fontSize: 13, color: "#FBF7EE", fontWeight: 300 }}>{programs.find(p2 => p2.id === prog)?.title} · {tracks.find(t2 => t2.id === track)?.title}</p>
             </div>
-            <button onClick={() => openInquiry && openInquiry(prog)} style={{ fontFamily: "'Lato',sans-serif", padding: "15px 40px", background: gold, border: "none", color: "#000", fontSize: 12, fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", cursor: "pointer", width: "100%" }}>SUBMIT — WE'LL BE IN TOUCH WITHIN 24 HOURS</button>
+            <button onClick={() => openInquiry && openInquiry(prog)} style={{ fontFamily: "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif", padding: "15px 40px", background: gold, border: "none", color: "#000", fontSize: 12, fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", cursor: "pointer", width: "100%" }}>SUBMIT — WE'LL BE IN TOUCH WITHIN 24 HOURS</button>
           </div>
         </div>
       )}
@@ -5488,7 +5573,7 @@ function FlagshipDetailPage({ setPage, openInquiry }) {
       </div>
 
       {/* ── MAY 23 SOIREE ── */}
-      <SoireeInviteBlock openInquiry={openInquiry} />
+      <SoireeInviteBlock openInquiry={openInquiry} setPage={setPage} />
     </div>
   );
 }
@@ -5571,7 +5656,7 @@ function SummerDetailPage({ setPage, openInquiry }) {
       {/* SOIREE POSTCARD */}
       <div style={{ background: "#000", padding: isMobile ? "40px 24px" : "52px 80px" }}>
         <div style={{ maxWidth: 1100, margin: "0 auto" }}>
-          <SoireeInviteBlock openInquiry={openInquiry} />
+          <SoireeInviteBlock openInquiry={openInquiry} setPage={setPage} />
         </div>
       </div>
 
@@ -5611,7 +5696,7 @@ function SummerDetailPage({ setPage, openInquiry }) {
           <div>
             <p style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.45em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 20 }}>Admissions</p>
             <h3 style={{ fontFamily: serif, fontSize: isMobile ? 24 : 30, fontWeight: 600, color: "#FBF7EE", lineHeight: 1.1, marginBottom: 16 }}>Our Students</h3>
-            <p style={{ fontFamily: sans, fontSize: 14, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.85, marginBottom: 24 }}>The Summer Intensive is designed for ambitious high school students aged 15–17 who are ready for a real program — not a summer camp, not a passive course, but a structured, high-expectation environment where they are asked to think, dream, lead, make mistakes, speak out, and aim for the stars.</p>
+            <p style={{ fontFamily: sans, fontSize: 14, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.85, marginBottom: 24 }}>The Summer Intensive is designed for ambitious high school students aged 15–17 (rising juniors and seniors) (rising juniors and seniors) (rising juniors and seniors) who are ready for a real program — not a summer camp, not a passive course, but a structured, high-expectation environment where they are asked to think, dream, lead, make mistakes, speak out, and aim for the stars.</p>
             <p style={{ fontFamily: sans, fontSize: 14, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.85 }}>We are not looking for the most polished resume. We look for curiosity, maturity, and a genuine interest in business, leadership, and how the world actually works. The student who leans forward. The one who asks the most questions and is ready to make mistakes, learn and grow.</p>
           </div>
 
@@ -5641,7 +5726,7 @@ function SummerDetailPage({ setPage, openInquiry }) {
               {
                 n: "03",
                 title: "Secure Enrollment",
-                desc: "Once accepted, a deposit secures the student's seat in the chosen wave. Enrollment is limited to 25 students per wave."
+                desc: "Once accepted, a deposit secures the student's seat in the chosen wave. Enrollment is limited to 20 students per wave."
               },
               {
                 n: "04",
@@ -5736,32 +5821,32 @@ function SummerDetailPage({ setPage, openInquiry }) {
             <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 9, letterSpacing: "0.25em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 12 }}>Parent / Guardian</p>
             <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 10, marginBottom: 10 }}>
               {[["First Name", "text"], ["Last Name", "text"]].map(([ph, type]) => (
-                <input key={ph} type={type} placeholder={ph} className="inquiry-input" style={{ background: "#000", border: "1px solid rgba(199,171,117,.2)", color: "#FBF7EE", padding: "13px 16px", fontFamily: "'Lato',sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
+                <input key={ph} type={type} placeholder={ph} className="inquiry-input" style={{ background: "#000", border: "1px solid rgba(199,171,117,.2)", color: "#FBF7EE", padding: "13px 16px", fontFamily: "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
               ))}
             </div>
             <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 10, marginBottom: 10 }}>
               {[["Email Address", "email"], ["Phone Number", "tel"]].map(([ph, type]) => (
-                <input key={ph} type={type} placeholder={ph} className="inquiry-input" style={{ background: "#000", border: "1px solid rgba(199,171,117,.2)", color: "#FBF7EE", padding: "13px 16px", fontFamily: "'Lato',sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
+                <input key={ph} type={type} placeholder={ph} className="inquiry-input" style={{ background: "#000", border: "1px solid rgba(199,171,117,.2)", color: "#FBF7EE", padding: "13px 16px", fontFamily: "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
               ))}
             </div>
             <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr 80px", gap: 10, marginBottom: 24 }}>
-              <input type="text" placeholder="City *" className="inquiry-input" style={{ background: "#000", border: "1px solid rgba(199,171,117,.2)", color: "#FBF7EE", padding: "13px 16px", fontFamily: "'Lato',sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} required />
-              <input type="text" placeholder="State" className="inquiry-input" style={{ background: "#000", border: "1px solid rgba(199,171,117,.2)", color: "#FBF7EE", padding: "13px 16px", fontFamily: "'Lato',sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
-              <input type="text" placeholder="ZIP *" className="inquiry-input" style={{ background: "#000", border: "1px solid rgba(199,171,117,.2)", color: "#FBF7EE", padding: "13px 16px", fontFamily: "'Lato',sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} required />
+              <input type="text" placeholder="City *" className="inquiry-input" style={{ background: "#000", border: "1px solid rgba(199,171,117,.2)", color: "#FBF7EE", padding: "13px 16px", fontFamily: "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} required />
+              <input type="text" placeholder="State" className="inquiry-input" style={{ background: "#000", border: "1px solid rgba(199,171,117,.2)", color: "#FBF7EE", padding: "13px 16px", fontFamily: "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
+              <input type="text" placeholder="ZIP *" className="inquiry-input" style={{ background: "#000", border: "1px solid rgba(199,171,117,.2)", color: "#FBF7EE", padding: "13px 16px", fontFamily: "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} required />
             </div>
             <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 9, letterSpacing: "0.25em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 12 }}>Student</p>
             <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 10, marginBottom: 10 }}>
               {[["First Name", "text"], ["Last Name", "text"]].map(([ph, type]) => (
-                <input key={ph} type={type} placeholder={ph} className="inquiry-input" style={{ background: "#000", border: "1px solid rgba(199,171,117,.2)", color: "#FBF7EE", padding: "13px 16px", fontFamily: "'Lato',sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
+                <input key={ph} type={type} placeholder={ph} className="inquiry-input" style={{ background: "#000", border: "1px solid rgba(199,171,117,.2)", color: "#FBF7EE", padding: "13px 16px", fontFamily: "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
               ))}
             </div>
             <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 10, marginBottom: 10 }}>
-              <input type="text" placeholder="Age" className="inquiry-input" style={{ background: "#000", border: "1px solid rgba(199,171,117,.2)", color: "#FBF7EE", padding: "13px 16px", fontFamily: "'Lato',sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
-              <input type="text" placeholder="Current Grade / Year" className="inquiry-input" style={{ background: "#000", border: "1px solid rgba(199,171,117,.2)", color: "#FBF7EE", padding: "13px 16px", fontFamily: "'Lato',sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
+              <input type="text" placeholder="Age" className="inquiry-input" style={{ background: "#000", border: "1px solid rgba(199,171,117,.2)", color: "#FBF7EE", padding: "13px 16px", fontFamily: "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
+              <input type="text" placeholder="Current Grade / Year" className="inquiry-input" style={{ background: "#000", border: "1px solid rgba(199,171,117,.2)", color: "#FBF7EE", padding: "13px 16px", fontFamily: "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
             </div>
-            <input type="text" placeholder="Preferred Wave (July or August)" className="inquiry-input" style={{ background: "#000", border: "1px solid rgba(199,171,117,.2)", color: "#FBF7EE", padding: "13px 16px", fontFamily: "'Lato',sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%", marginBottom: 24 }} />
-            <input type="text" placeholder="How did you hear about Excalibur?" className="inquiry-input" style={{ background: "#000", border: "1px solid rgba(199,171,117,.2)", color: "#FBF7EE", padding: "13px 16px", fontFamily: "'Lato',sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%", marginBottom: 28 }} />
-            <button onClick={() => openInquiry && openInquiry("summer")} style={{ fontFamily: "'Lato',sans-serif", padding: "15px 40px", background: gold, border: "none", color: "#000", fontSize: 12, fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", cursor: "pointer", width: "100%" }}>SUBMIT — WE'LL BE IN TOUCH WITHIN 24 HOURS</button>
+            <input type="text" placeholder="Preferred Wave (July or August)" className="inquiry-input" style={{ background: "#000", border: "1px solid rgba(199,171,117,.2)", color: "#FBF7EE", padding: "13px 16px", fontFamily: "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%", marginBottom: 24 }} />
+            <input type="text" placeholder="How did you hear about Excalibur?" className="inquiry-input" style={{ background: "#000", border: "1px solid rgba(199,171,117,.2)", color: "#FBF7EE", padding: "13px 16px", fontFamily: "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%", marginBottom: 28 }} />
+            <button onClick={() => openInquiry && openInquiry("summer")} style={{ fontFamily: "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif", padding: "15px 40px", background: gold, border: "none", color: "#000", fontSize: 12, fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", cursor: "pointer", width: "100%" }}>SUBMIT — WE'LL BE IN TOUCH WITHIN 24 HOURS</button>
           </div>
         </div>
       </div>
@@ -5883,7 +5968,7 @@ function EventsPage({ setPage, openInquiry }) {
       </div>
 
       {/* ── SOIREE POSTCARD — unchanged ── */}
-      <SoireeInviteBlock openInquiry={openInquiry} />
+      <SoireeInviteBlock openInquiry={openInquiry} setPage={setPage} />
 
     </div>
   );
@@ -5911,7 +5996,7 @@ function ApplicationPage({ setPage, defaultProgram }) {
   const updateStudent = (i, k, v) => { const s = [...students]; s[i] = { ...s[i], [k]: v }; setStudents(s); };
 
   const programs = [
-    { id: "summer", label: "SUMMER INTENSIVE", title: "Summer Intensive", price: "$4,500 / wave", desc: "Two weeks, full days, Mon–Fri. Public speaking, business, AI, sales and a Shark Tank–style Venture Court finale. 20 students per wave.", page: "summer-detail" },
+    { id: "summer", label: "SUMMER INTENSIVE", title: "Summer Intensive", price: "$4,500 / wave", desc: "Two weeks, full days, Mon–Fri. For students aged 15–17 (rising juniors and seniors). Public speaking, business, AI, sales and a Shark Tank–style Venture Court finale. 20 students per wave.", page: "summer-detail" },
     { id: "six-week", label: "SIX-WEEK INTENSIVE", title: "Six-Week Intensive", price: "$3,900 / wave", desc: "Full curriculum in six concentrated weeks. Weekday evening or Sunday half-day formats. Judged Demo Day finale.", page: "intensive" },
     { id: "flagship", label: "TEN-MONTH FLAGSHIP", title: "Ten-Month Program", price: "From $1,990 / month", desc: "All eight disciplines, real-world engagements, competitions, field trips, and the Excalibur Academy Portfolio. September–June.", page: "flagship-detail" },
   ];
@@ -5933,12 +6018,12 @@ function ApplicationPage({ setPage, defaultProgram }) {
   const needsTrack = prog === "six-week" || prog === "flagship";
   const readyToFill = prog && (needsWave ? wave : true) && (needsTrack ? track : true);
 
-  const iStyle = { background: "#000", border: "1px solid rgba(199,171,117,.2)", color: "#FBF7EE", padding: "13px 16px", fontFamily: "'Lato',sans-serif", fontSize: 15, fontWeight: 300, outline: "none", width: "100%" };
+  const iStyle = { background: "#000", border: "1px solid rgba(199,171,117,.2)", color: "#FBF7EE", padding: "13px 16px", fontFamily: "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif", fontSize: 15, fontWeight: 300, outline: "none", width: "100%" };
   const focus = e => e.target.style.borderColor = gold;
   const blur  = e => e.target.style.borderColor = "rgba(199,171,117,.2)";
 
   const StepNum = ({ n, done }) => (
-    <div style={{ width: 30, height: 30, background: done ? gold : "#111", border: `1px solid ${done ? gold : "rgba(199,171,117,.25)"}`, display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "'Lato',sans-serif", fontSize: 12, fontWeight: 700, color: done ? "#000" : "#FBF7EE", flexShrink: 0 }}>{n}</div>
+    <div style={{ width: 30, height: 30, background: done ? gold : "#111", border: `1px solid ${done ? gold : "rgba(199,171,117,.25)"}`, display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif", fontSize: 12, fontWeight: 700, color: done ? "#000" : "#FBF7EE", flexShrink: 0 }}>{n}</div>
   );
   const SectionHead = ({ n, done, label }) => (
     <div style={{ display: "flex", alignItems: "center", gap: 14, marginBottom: 24 }}>
@@ -5950,7 +6035,7 @@ function ApplicationPage({ setPage, defaultProgram }) {
     <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 11, letterSpacing: "0.22em", color: gold, fontWeight: 700, textTransform: "uppercase", marginBottom: 12 }}>{children}</p>
   );
   const Chip = ({ label, active, onClick }) => (
-    <button onClick={onClick} style={{ fontFamily: "'Lato',sans-serif", fontSize: 15, padding: "11px 20px", cursor: "pointer", background: active ? gold : "transparent", color: active ? "#000" : "#FBF7EE", border: `1px solid ${active ? gold : "rgba(199,171,117,.2)"}`, transition: "all .2s", fontWeight: active ? 700 : 300, whiteSpace: "nowrap" }}>{label}</button>
+    <button onClick={onClick} style={{ fontFamily: "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif", fontSize: 15, padding: "11px 20px", cursor: "pointer", background: active ? gold : "transparent", color: active ? "#000" : "#FBF7EE", border: `1px solid ${active ? gold : "rgba(199,171,117,.2)"}`, transition: "all .2s", fontWeight: active ? 700 : 300, whiteSpace: "nowrap" }}>{label}</button>
   );
 
   const handleSubmit = async () => {
@@ -5987,9 +6072,9 @@ function ApplicationPage({ setPage, defaultProgram }) {
       {/* HEADER */}
       <div style={{ padding: isMobile ? "48px 24px 36px" : "64px 80px 48px", borderBottom: "1px solid rgba(199,171,117,.1)" }}>
         <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 8, letterSpacing: "0.5em", color: gold, fontWeight: 700, textTransform: "uppercase", marginBottom: 16 }}>Excalibur Academy · 2026</p>
-        <h1 style={{ fontFamily: "'Cormorant Garamond',Georgia,serif", fontSize: isMobile ? 32 : 48, fontWeight: 300, color: "#FBF7EE", lineHeight: 1.0, marginBottom: 14, letterSpacing: "0.02em" }}>Apply for Enrollment</h1>
+        <h1 style={{ fontFamily: "'Cormorant Garamond',Georgia,serif", fontSize: isMobile ? 28 : 44, fontWeight: 300, color: "#FBF7EE", lineHeight: 1.05, marginBottom: 14, letterSpacing: "0.02em" }}>Request Program Information &amp; Admissions Package</h1>
         <div style={{ width: 48, height: "1px", background: "linear-gradient(90deg," + gold + ",transparent)", marginBottom: 16 }} />
-        <p style={{ fontFamily: "'Lato',sans-serif", fontSize: 15, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.85, maxWidth: 560 }}>Select your program, choose your schedule, and complete your application. Our admissions team will be in touch personally within 24 hours.</p>
+        <p style={{ fontFamily: "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif", fontSize: 15, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.85, maxWidth: 660 }}>Please choose your program and preferred schedule, then complete the application for admissions review. A dedicated Enrollment Coordinator will follow up within 24 hours with a personalized program information and admissions package, answer any questions, and guide your family through the next stage of the admissions process.</p>
       </div>
 
       {submitted ? (
@@ -5997,8 +6082,8 @@ function ApplicationPage({ setPage, defaultProgram }) {
           <div style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: 56, color: gold, marginBottom: 24 }}>✦</div>
           <h2 style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: isMobile ? 32 : 44, fontWeight: 300, color: "#FBF7EE", marginBottom: 14 }}>Thank You.</h2>
           <div style={{ width: 48, height: "1px", background: "linear-gradient(90deg,transparent," + gold + ",transparent)", margin: "0 auto 20px" }} />
-          <p style={{ fontFamily: "'Lato',sans-serif", fontSize: 15, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.9, marginBottom: 36 }}>Your application has been received. A member of our admissions team will be in touch within 24 hours. We look forward to welcoming your family to Excalibur Academy.</p>
-          <button onClick={() => setPage("home")} style={{ fontFamily: "'Lato',sans-serif", padding: "13px 36px", background: "transparent", border: "1px solid rgba(199,171,117,.35)", color: gold, fontSize: 11, fontWeight: 600, letterSpacing: "0.18em", textTransform: "uppercase", cursor: "pointer" }}>Return Home →</button>
+          <p style={{ fontFamily: "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif", fontSize: 15, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.9, marginBottom: 36 }}>Your application has been received. A member of our admissions team will be in touch within 24 hours. We look forward to welcoming your family to Excalibur Academy.</p>
+          <button onClick={() => setPage("home")} style={{ fontFamily: "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif", padding: "13px 36px", background: "transparent", border: "1px solid rgba(199,171,117,.35)", color: gold, fontSize: 11, fontWeight: 600, letterSpacing: "0.18em", textTransform: "uppercase", cursor: "pointer" }}>Return Home →</button>
         </div>
       ) : (
         <div style={{ padding: isMobile ? "36px 24px 80px" : "56px 80px 100px" }}>
@@ -6012,9 +6097,9 @@ function ApplicationPage({ setPage, defaultProgram }) {
                   <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 8, letterSpacing: "0.3em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 10 }}>{p.label}</p>
                   <h4 style={{ fontFamily: "'Cormorant Garamond',Georgia,serif", fontSize: 20, fontWeight: 600, color: "#FBF7EE", marginBottom: 6, lineHeight: 1.2 }}>{p.title}</h4>
                   <p style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: 30, color: gold, marginBottom: 10 }}>{p.price}</p>
-                  <p style={{ fontFamily: "'Lato',sans-serif", fontSize: 15, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.6, marginBottom: 14 }}>{p.desc}</p>
-                  <button onClick={e => { e.stopPropagation(); setPage(p.page); }} style={{ fontFamily: "'Lato',sans-serif", fontSize: 9, letterSpacing: "0.16em", color: gold, background: "transparent", border: "none", cursor: "pointer", padding: 0, textTransform: "uppercase" }}>Explore Program →</button>
-                  {prog === p.id && <p style={{ fontFamily: "'Lato',sans-serif", fontSize: 10, color: gold, letterSpacing: "0.18em", marginTop: 10 }}>✓ SELECTED</p>}
+                  <p style={{ fontFamily: "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif", fontSize: 15, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.6, marginBottom: 14 }}>{p.desc}</p>
+                  <button onClick={e => { e.stopPropagation(); setPage(p.page); }} style={{ fontFamily: "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif", fontSize: 9, letterSpacing: "0.16em", color: gold, background: "transparent", border: "none", cursor: "pointer", padding: 0, textTransform: "uppercase" }}>Explore Program →</button>
+                  {prog === p.id && <p style={{ fontFamily: "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif", fontSize: 10, color: gold, letterSpacing: "0.18em", marginTop: 10 }}>✓ SELECTED</p>}
                 </div>
               ))}
             </div>
@@ -6030,8 +6115,8 @@ function ApplicationPage({ setPage, defaultProgram }) {
                     <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 8, letterSpacing: "0.3em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 10 }}>{w.label}</p>
                     <h4 style={{ fontFamily: "'Cormorant Garamond',Georgia,serif", fontSize: 22, fontWeight: 600, color: "#FBF7EE", marginBottom: 4 }}>{w.title}</h4>
                     <p style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: 15, color: gold, marginBottom: 10 }}>{w.sub}</p>
-                    <p style={{ fontFamily: "'Lato',sans-serif", fontSize: 15, color: "#FBF7EE", fontWeight: 300 }}>{w.detail}</p>
-                    {wave === w.id && <p style={{ fontFamily: "'Lato',sans-serif", fontSize: 10, color: gold, letterSpacing: "0.18em", marginTop: 14 }}>✓ SELECTED</p>}
+                    <p style={{ fontFamily: "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif", fontSize: 15, color: "#FBF7EE", fontWeight: 300 }}>{w.detail}</p>
+                    {wave === w.id && <p style={{ fontFamily: "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif", fontSize: 10, color: gold, letterSpacing: "0.18em", marginTop: 14 }}>✓ SELECTED</p>}
                   </div>
                 ))}
               </div>
@@ -6048,8 +6133,8 @@ function ApplicationPage({ setPage, defaultProgram }) {
                     <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 8, letterSpacing: "0.3em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 10 }}>{t.label}</p>
                     <h4 style={{ fontFamily: "'Cormorant Garamond',Georgia,serif", fontSize: 22, fontWeight: 600, color: "#FBF7EE", marginBottom: 4 }}>{t.title}</h4>
                     {t.sub && <p style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: 16, color: gold, marginBottom: 10 }}>{t.sub}</p>}
-                    <p style={{ fontFamily: "'Lato',sans-serif", fontSize: 15, color: "#FBF7EE", fontWeight: 300 }}>{t.detail}</p>
-                    {track === t.id && <p style={{ fontFamily: "'Lato',sans-serif", fontSize: 10, color: gold, letterSpacing: "0.18em", marginTop: 14 }}>✓ SELECTED</p>}
+                    <p style={{ fontFamily: "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif", fontSize: 15, color: "#FBF7EE", fontWeight: 300 }}>{t.detail}</p>
+                    {track === t.id && <p style={{ fontFamily: "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif", fontSize: 10, color: gold, letterSpacing: "0.18em", marginTop: 14 }}>✓ SELECTED</p>}
                   </div>
                 ))}
               </div>
@@ -6061,12 +6146,12 @@ function ApplicationPage({ setPage, defaultProgram }) {
             <div style={{ marginBottom: 40 }}>
               <SectionHead n={needsWave || needsTrack ? "3" : "2"} done={false} label="Your Information" />
               <div style={{ background: "#080808", borderTop: `2px solid ${gold}`, padding: isMobile ? "28px 22px" : "36px 40px" }}>
-                <p style={{ fontFamily: "'Lato',sans-serif", fontSize: 15, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.75, marginBottom: 32 }}>Fill in your details and our admissions team will be in touch within 24 hours with your full information package and next steps.</p>
+                <p style={{ fontFamily: "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif", fontSize: 15, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.75, marginBottom: 32 }}>Fill in your details and our admissions team will be in touch within 24 hours with your full information package and next steps.</p>
 
                 {/* Selection summary */}
                 <div style={{ background: "#000", padding: "14px 20px", marginBottom: 28, borderLeft: `2px solid ${gold}` }}>
                   <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 9, letterSpacing: "0.2em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 6 }}>Your Selection</p>
-                  <p style={{ fontFamily: "'Lato',sans-serif", fontSize: 13, color: "#FBF7EE", fontWeight: 300 }}>
+                  <p style={{ fontFamily: "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif", fontSize: 13, color: "#FBF7EE", fontWeight: 300 }}>
                     {programs.find(x => x.id === prog)?.title}
                     {wave ? " · " + waves.find(x => x.id === wave)?.title : ""}
                     {track ? " · " + tracks.find(x => x.id === track)?.title : ""}
@@ -6120,12 +6205,12 @@ function ApplicationPage({ setPage, defaultProgram }) {
                   </div>
                 ))}
                 {students.length < 5 && (
-                  <button onClick={addStudent} style={{ fontFamily: "'Lato',sans-serif", background: "transparent", border: "1px dashed rgba(199,171,117,.25)", color: gold, padding: "12px", fontSize: 15, fontWeight: 500, letterSpacing: "0.1em", cursor: "pointer", textAlign: "center", width: "100%", marginBottom: 28 }}>+ Add Another Student</button>
+                  <button onClick={addStudent} style={{ fontFamily: "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif", background: "transparent", border: "1px dashed rgba(199,171,117,.25)", color: gold, padding: "12px", fontSize: 15, fontWeight: 500, letterSpacing: "0.1em", cursor: "pointer", textAlign: "center", width: "100%", marginBottom: 28 }}>+ Add Another Student</button>
                 )}
 
                 {/* Package */}
                 <Label>Admissions Package & Private Invitation</Label>
-                <p style={{ fontFamily: "'Lato',sans-serif", fontSize: 15, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.7, marginBottom: 12 }}>Would you like to receive your private invitation to the May 23 family soirée and admissions package by post?</p>
+                <p style={{ fontFamily: "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif", fontSize: 15, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.7, marginBottom: 12 }}>Would you like to receive your private invitation to the May 23 family soirée and admissions package by post?</p>
                 <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginBottom: 24 }}>
                   {["Yes — send by post", "Email only"].map(opt => <Chip key={opt} label={opt} active={form.sendPackage === opt} onClick={() => set("sendPackage", opt)} />)}
                 </div>
@@ -6139,8 +6224,8 @@ function ApplicationPage({ setPage, defaultProgram }) {
                 <button
                   onClick={handleSubmit}
                   disabled={sending || !form.email || !form.city}
-                  style={{ fontFamily: "'Lato',sans-serif", padding: "15px 40px", background: (!form.email || !form.city) ? "rgba(199,171,117,.4)" : gold, border: "none", color: "#000", fontSize: 12, fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", cursor: (!form.email || !form.city) ? "not-allowed" : "pointer", width: "100%", transition: "all .2s" }}
-                >{sending ? "Submitting..." : "SUBMIT — WE'LL BE IN TOUCH WITHIN 24 HOURS"}</button>
+                  style={{ fontFamily: "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif", padding: "15px 40px", background: (!form.email || !form.city) ? "rgba(199,171,117,.4)" : gold, border: "none", color: "#000", fontSize: 12, fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", cursor: (!form.email || !form.city) ? "not-allowed" : "pointer", width: "100%", transition: "all .2s" }}
+                >{sending ? "Submitting..." : "REQUEST PROGRAM INFORMATION & ADMISSIONS PACKAGE"}</button>
               </div>
             </div>
           )}
@@ -6203,7 +6288,7 @@ export default function ExcaliburApp() {
   };
 
   return (
-    <div style={{ background: "#000", color: "#FBF7EE", minHeight: "100vh", fontFamily: "'Lato', sans-serif" }}>
+    <div style={{ background: "#000", color: "#FBF7EE", minHeight: "100vh", fontFamily: "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif" }}>
       <ScrollProgress />
       <ShimmerStyle />
       <StickyMobileCTA setPage={setPage} openInquiry={openInquiry} />
