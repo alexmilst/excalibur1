@@ -3012,16 +3012,16 @@ function HomePage({ setPage, openInquiry }) {
             <div style={{ position: "absolute", top: 12, right: 12, width: 16, height: 16, borderTop: `1px solid rgba(199,171,117,.4)`, borderRight: `1px solid rgba(199,171,117,.4)` }} />
             <div style={{ position: "absolute", bottom: 12, left: 12, width: 16, height: 16, borderBottom: `1px solid rgba(199,171,117,.4)`, borderLeft: `1px solid rgba(199,171,117,.4)` }} />
             <div style={{ position: "absolute", bottom: 12, right: 12, width: 16, height: 16, borderBottom: `1px solid rgba(199,171,117,.4)`, borderRight: `1px solid rgba(199,171,117,.4)` }} />
-            <p style={{ fontFamily: sans, fontSize: 10, letterSpacing: "0.4em", color: "#FBF7EE", fontWeight: 600, textTransform: "uppercase", padding: "20px 28px 0", textAlign: "center" }}>Top Leaders — Your Mentors</p>
+            <p style={{ fontFamily: sans, fontSize: 11, letterSpacing: "0.35em", color: "#FBF7EE", fontWeight: 600, textTransform: "uppercase", padding: "20px 28px 0", textAlign: "center" }}>Top Leaders — Your Mentors</p>
             <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1px 1fr", padding: isMobile ? "16px 24px 24px" : "20px 40px 28px", gap: isMobile ? 20 : 0 }}>
               <div style={{ padding: isMobile ? "0" : "0 36px 0 0" }}>
                 <div style={{ width: 28, height: 1, background: `linear-gradient(90deg, ${gold}, transparent)`, marginBottom: 12 }} />
-                <p style={{ fontFamily: sans, fontSize: 12, lineHeight: 1.8, color: "#FBF7EE", fontWeight: 300 }}>A CEO who built the world's first autonomous racing series, directed the Formula BMW programme — developing multiple Formula 1 World Champions — and oversaw a $13 billion NASDAQ listing. Secured over $100M in institutional funding. Guinness World Record holder. Professional Auto & Rally Racer.</p>
+                <p style={{ fontFamily: sans, fontSize: 15, lineHeight: 1.85, color: "#FBF7EE", fontWeight: 300 }}>A CEO who built the world's first autonomous racing series, directed the Formula BMW programme — developing multiple Formula 1 World Champions — and oversaw a $13 billion NASDAQ listing. Secured over $100M in institutional funding. Guinness World Record holder. Professional Auto & Rally Racer.</p>
               </div>
               {!isMobile && <div style={{ background: "rgba(199,171,117,.12)" }} />}
               <div style={{ padding: isMobile ? "0" : "0 0 0 36px" }}>
                 <div style={{ width: 28, height: 1, background: `linear-gradient(90deg, ${gold}, transparent)`, marginBottom: 12 }} />
-                <p style={{ fontFamily: sans, fontSize: 12, lineHeight: 1.8, color: "#FBF7EE", fontWeight: 300 }}>A former Citigroup Managing Director with 100+ M&A transactions and 600+ CEO advisory engagements. EVP and CFO of two NYSE-listed companies. Georgetown MBA Professor and TEDx speaker. Has spoken at institutions from West Point to Stanford.</p>
+                <p style={{ fontFamily: sans, fontSize: 15, lineHeight: 1.85, color: "#FBF7EE", fontWeight: 300 }}>A former Citigroup Managing Director with 100+ M&A transactions and 600+ CEO advisory engagements. EVP and CFO of two NYSE-listed companies. Georgetown MBA Professor and TEDx speaker. Has spoken at institutions from West Point to Stanford.</p>
               </div>
             </div>
             <div style={{ textAlign: "center", paddingBottom: 16 }}>
