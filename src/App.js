@@ -752,7 +752,7 @@ const fieldTrips = [
   { title: "Silicon Valley — Incubators & Accelerators", tag: "Where the next business revolution is built.", img: "https://images.unsplash.com/photo-1449034446853-66c86144b0ad?w=800&q=80", desc: "Behind-the-scenes visits to leading venture capital firms, startup incubators, and accelerators across the Bay Area. Students walk through the environments where the world’s most consequential companies began. A curated dinner with a VC partner closes the day.", type: "2-Day" },
   { title: "TED Talks — San Diego", tag: "The most important ideas in the world. Live.", img: "https://i.imgur.com/OG9TuYo.jpeg", desc: "One of the world’s most influential gatherings of ideas, innovation, and leadership. TED’s power lies in compression: exceptional people distilling their most important thinking into eighteen unforgettable minutes. Students study not only the ideas themselves, but the architecture of communication from the most consequential leaders in the world.", type: "Day Trip" },
   { title: "SF + LA Tech Week", tag: "Five days. Hundreds of the most significant companies.", img: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=800&q=80", desc: "Two extraordinary events hosted across San Francisco and Los Angeles where hundreds of portfolio companies open their doors for panels, founder conversations, and networking in the environments where consequential decisions actually get made. Students attend across both cities — five days that cover more real business acumen than most accumulate in a lifetime.", type: "5-Day" },
-  { title: "SpaceX — Launch & Engineering", tag: "The ambition that changes the species.", img: "https://images.unsplash.com/photo-1516849677043-ef67c9557e16?w=800&q=80", desc: "A SpaceX launch is the closest thing on the student program calendar to a moment that physically alters your sense of what is possible. Real enough to feel the pressure wave as the booster separates and the grid fins deploy for landing. This is not a visitor center experience. Students watch the most consequential commercial spaceflight program in history from the water on a private boat charter, with commentary from space engineers who know every mission.", type: "Day Trip" },
+  { title: "SpaceX — Launch & Engineering", tag: "The ambition that changes the species.", img: "https://i.imgur.com/ZmeKnnu.jpeg", desc: "Students witness a SpaceX launch from the water on a private charter — a rare vantage point on one of the most consequential engineering achievements of our time. It is an unforgettable proximity to history in motion: the ignition, the ascent, the booster separation, the controlled return — explained in real time by space engineers who understand the physics, the stakes, and the ambition behind the mission.", type: "Day Trip" },
   { title: "Yosemite — Nature, Clarity & Team Building", tag: "Connection. Clarity. Renewal.", img: "https://images.unsplash.com/photo-1472396961693-142e6e269027?w=800&q=80", desc: "A weekend in Yosemite National Park — hiking, outdoor leadership challenges, and evening team sessions under the stars. A deliberate reminder that mental clarity, resilience, and the ability to lead under pressure are forged as much outside the boardroom as within it.", type: "Weekend" },
 ];
 
@@ -1997,7 +1997,7 @@ function ProgramsPage({ setPage, openInquiry }) {
       details: [
         ["Schedule", "Wave I: July 6–18, 2026  ·  Wave II: August 3–15, 2026\nMonday–Friday · 9:30 AM–3:00 PM"],
         ["Class Size", "Limited to 20 students per wave"],
-        ["Tuition", "$410 / full day · $75/hr · $4,500 total"],
+        ["Tuition", "$410 / full day · $4,500 per wave"],
         ["Included", "Catered lunches from local restaurants, distinguished guest speakers, faculty-led workshops, pitch development, and The Excalibur Venture Grand Finale before families and invited professionals."],
       ],
       features: [
@@ -2630,7 +2630,7 @@ function ApplyPage({ setPage, openInquiry }) {
           </Fade>
           <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(3,1fr)", gap: 0 }}>
             {[
-              { label: "Summer Intensive", price: "$410", period: "per full day · $75/hr · $4,500 total", detail: "Two waves — July & August 2026.\n20 students per wave." },
+              { label: "Summer Intensive", price: "$410", period: "per full day · $4,500 per wave", detail: "Two waves — July & August 2026.\n20 students per wave." },
               { label: "Six-Week Intensive", price: "$3,900", period: "per wave", detail: "Four waves per year.\nWeekday evening or weekend formats." },
               { label: "Ten-Month Flagship", price: "$1,990", period: "per month", detail: "September 2026 – June 2027.\nWeekday or Saturday track." },
             ].map((t, i) => (
@@ -3246,7 +3246,7 @@ function HomePage({ setPage, openInquiry }) {
                 <div>
                   <p style={{ fontFamily: eyebrow_font, fontSize: 10, letterSpacing: "0.3em", color: "#4DB87A", fontWeight: 600, textTransform: "uppercase", marginBottom: 12 }}>● Accepting Applications</p>
                   <div style={{ fontFamily: serif, fontSize: 38, color: "#FBF7EE", fontWeight: 600, lineHeight: 1, marginBottom: 2 }}>$410<span style={{ fontSize: 18, fontWeight: 300 }}> / full day</span></div>
-                  <div style={{ fontFamily: sans, fontSize: 12, color: gold, fontWeight: 300, marginBottom: 8 }}>$75 / hour · $4,500 total</div>
+                  <div style={{ fontFamily: sans, fontSize: 12, color: gold, fontWeight: 300, marginBottom: 8 }}>$4,500 per wave</div>
                   <div style={{ fontFamily: sans, fontSize: 12, color: "#FBF7EE", fontWeight: 300, marginBottom: 28 }}>Per two-week wave · includes catered lunches from local restaurants, distinguished guest speakers, and a Shark Tank-inspired live startup pitch finale before families, investors, entrepreneurs, and invited judges.</div>
                 </div>
                 <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
@@ -4320,7 +4320,7 @@ function ComingSoonPage({ onUnlock }) {
         {/* Program cards — all gold */}
         <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(3,1fr)", gap: 2, background: "#111", marginBottom: 52, width: "100%", maxWidth: 880 }}>
           {[
-            { label: "SUMMER INTENSIVE", dates: "July & August 2026", detail: "Mon–Fri · 9:30 AM–3:00 PM · $410/day · $75/hr · $4,500 total" },
+            { label: "SUMMER INTENSIVE", dates: "July & August 2026", detail: "Mon–Fri · 9:30 AM–3:00 PM · $410/day · $4,500 per wave" },
             { label: "TEN-MONTH FLAGSHIP", dates: "September 2026 – June 2027", detail: "Weekday or Weekend Track · $1,900 / month", flagship: true },
             { label: "SIX-WEEK INTENSIVE", dates: "Four waves · 2026", detail: "Mon & Wed evenings or Saturdays · $3,900 / wave" },
           ].map((p, i) => (
@@ -4941,7 +4941,7 @@ function FlagshipEnrollSelector({ openInquiry, isMobile }) {
   const programs = [
     { id: "full", label: "TEN-MONTH FLAGSHIP", title: "Ten-Month Program", price: "From $1,900 / month", desc: "The complete Excalibur formation. All eight modules, real-world engagements, and the Gala & Graduation capstone." },
     { id: "intensive", label: "SIX-WEEK INTENSIVE", title: "Six-Week Intensive", price: "$2,500 / wave", desc: "Full curriculum in six weeks. One discipline per week, Shark Tank–style Finale." },
-    { id: "summer", label: "SUMMER INTENSIVE", title: "Summer Intensive", price: "$410 / full day · $75/hr · $4,500 total", desc: "Two weeks, full days. All eight disciplines with daily guest speakers and a Venture Finale." },
+    { id: "summer", label: "SUMMER INTENSIVE", title: "Summer Intensive", price: "$410 / full day · $4,500 per wave", desc: "Two weeks, full days. All eight disciplines with daily guest speakers and a Venture Finale." },
   ];
   const tracks = [
     { id: "weekday", label: "WEEKDAY TRACK", title: "Tuesday & Thursday", sub: "4:00–6:25 PM", detail: "Evening sessions. Fits any weekend schedule." },
@@ -5653,7 +5653,7 @@ function SummerDetailPage({ setPage, openInquiry }) {
             <p style={{ fontFamily: sans, fontSize: 14, lineHeight: 1.9, color: "#1a1a1a", fontWeight: 300 }}>The program culminates in The Excalibur Venture Finale — a Shark Tank–inspired pitch finale where student teams present original business concepts to a panel of experienced judges and real investors. Selected projects receive rewards and prizes ranging from top business tech accessories to real seed funding support.</p>
           </div>
           <div>
-            {[["Waves", "Wave I: July 6–18, 2026\nWave II: August 3–15, 2026"], ["Schedule", "Monday–Friday · 9:30 AM–3:00 PM"], ["Class Size", "Limited to 20 students per wave"], ["Tuition", "$410 / full day · $75/hr · $4,500 total"], ["Eligibility", "Ages 15–17 · Rising juniors and seniors"], ["Included", "Catered lunches, guest speakers, workshops, Shark Tank–inspired Finale"], ["Location", "Private venues · South Orange County, CA"]].map(([k, v]) => (
+            {[["Waves", "Wave I: July 6–18, 2026\nWave II: August 3–15, 2026"], ["Schedule", "Monday–Friday · 9:30 AM–3:00 PM"], ["Class Size", "Limited to 20 students per wave"], ["Tuition", "$410 / full day · $4,500 per wave"], ["Eligibility", "Ages 15–17 · Rising juniors and seniors"], ["Included", "Catered lunches, guest speakers, workshops, Shark Tank–inspired Finale"], ["Location", "Private venues · South Orange County, CA"]].map(([k, v]) => (
               <div key={k} style={{ display: "grid", gridTemplateColumns: "90px 1fr", gap: 16, padding: "11px 0", borderBottom: "1px solid rgba(0,0,0,.08)" }}>
                 <span style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.2em", color: "#8B6914", textTransform: "uppercase", paddingTop: 2 }}>{k}</span>
                 <span style={{ fontFamily: sans, fontSize: 13, color: "#1a1a1a", fontWeight: 300, lineHeight: 1.6, whiteSpace: "pre-line" }}>{v}</span>
@@ -5686,7 +5686,7 @@ function SummerDetailPage({ setPage, openInquiry }) {
           <div>
             <p style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.45em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 20 }}>Tuition</p>
             <div style={{ fontFamily: serif, fontSize: isMobile ? 48 : 64, fontWeight: 300, color: "#FBF7EE", lineHeight: 1, letterSpacing: "-0.02em", marginBottom: 4 }}>$410<span style={{ fontSize: isMobile ? 22 : 28, fontWeight: 300 }}> / full day</span></div>
-            <div style={{ fontFamily: sans, fontSize: 14, color: gold, fontWeight: 300, marginBottom: 24 }}>$75 / hour · $4,500 total</div>
+            <div style={{ fontFamily: sans, fontSize: 14, color: gold, fontWeight: 300, marginBottom: 24 }}>$4,500 per wave</div>
             <div style={{ height: "1px", background: "rgba(199,171,117,.15)", marginBottom: 24 }} />
             <p style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.35em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 16 }}>What's Included</p>
             {[
@@ -5815,7 +5815,7 @@ function SummerDetailPage({ setPage, openInquiry }) {
                 <h3 style={{ fontFamily: serif, fontSize: 28, fontWeight: 600, color: "#FBF7EE", marginBottom: 6, lineHeight: 1 }}>{w.wave}</h3>
                 <p style={{ fontFamily: serif, fontSize: 16, color: gold, fontStyle: "italic", marginBottom: 20 }}>{w.dates}</p>
                 <div style={{ height: "1px", background: "rgba(199,171,117,.1)", marginBottom: 20 }} />
-                {[["Schedule", w.days], ["Duration", "Two weeks · 10 sessions"], ["Class Size", "20 students maximum"], ["Tuition", "$410 / full day · $75/hr · $4,500 total"], ["Includes", "Catered lunches · Guest speakers · Workshops · Start-up simulations · Shark Tank-inspired Finale"]].map(([k, v]) => (
+                {[["Schedule", w.days], ["Duration", "Two weeks · 10 sessions"], ["Class Size", "20 students maximum"], ["Tuition", "$410 / full day · $4,500 per wave"], ["Includes", "Catered lunches · Guest speakers · Workshops · Start-up simulations · Shark Tank-inspired Finale"]].map(([k, v]) => (
                   <div key={k} style={{ display: "flex", gap: 16, padding: "9px 0", borderBottom: "1px solid rgba(199,171,117,.06)", alignItems: "flex-start" }}>
                     <span style={{ fontFamily: sans, fontSize: 8, letterSpacing: "0.2em", color: gold, textTransform: "uppercase", minWidth: 72, flexShrink: 0, paddingTop: 1 }}>{k}</span>
                     <span style={{ fontFamily: sans, fontSize: 12, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.6 }}>{v}</span>
@@ -6014,7 +6014,7 @@ function ApplicationPage({ setPage, defaultProgram }) {
   const updateStudent = (i, k, v) => { const s = [...students]; s[i] = { ...s[i], [k]: v }; setStudents(s); };
 
   const programs = [
-    { id: "summer", label: "SUMMER INTENSIVE", title: "Summer Intensive", price: "$410 / full day · $75/hr · $4,500 total", desc: "Two weeks, full days, Mon–Fri. For students aged 15–17 (rising juniors and seniors). Public speaking, business, AI, sales and a Shark Tank–style Venture Court finale. 20 students per wave.", page: "summer-detail" },
+    { id: "summer", label: "SUMMER INTENSIVE", title: "Summer Intensive", price: "$410 / full day · $4,500 per wave", desc: "Two weeks, full days, Mon–Fri. For students aged 15–17 (rising juniors and seniors). Public speaking, business, AI, sales and a Shark Tank–style Venture Court finale. 20 students per wave.", page: "summer-detail" },
     { id: "six-week", label: "SIX-WEEK INTENSIVE", title: "Six-Week Intensive", price: "$3,900 / wave", desc: "Full curriculum in six concentrated weeks. Weekday evening or Sunday half-day formats. Judged Demo Day finale.", page: "intensive" },
     { id: "flagship", label: "TEN-MONTH FLAGSHIP", title: "Ten-Month Program", price: "From $1,990 / month", desc: "All eight disciplines, real-world engagements, competitions, field trips, and the Excalibur Academy Portfolio. September–June.", page: "flagship-detail" },
   ];
