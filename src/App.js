@@ -239,9 +239,10 @@ const coaches = [
     role: "Founder & CEO",
     img: "https://i.imgur.com/F23ULHv.jpeg",
     isLogo: false,
-    shortBio: "Founder & CEO of Excalibur Academy. A serial entrepreneur whose first startup launched in the final year of high school. Educated at elite UK boarding school from age 12, pursued undergraduate studies at Tufts University with a double major in History and Political Science. Founded ventures and led initiatives across Italy, Spain, the USA, and multiple cities across Eastern Europe — including one of St Petersburg's largest art salon programmes, inviting leading academics to lecture in historic venues.",
+    shortBio: "Founder & CEO of Excalibur Academy. Born in New York City and Russian by heritage, Alexander’s worldview was shaped by St. Petersburg, Paris, London, and the wider European cultural tradition. Educated from age 12 at a British private boarding school outside London, he later earned his degree from Tufts University in History and Political Science. A serial entrepreneur since first year of college, Alexander has built ventures across the U.S. and Europe, including a youth discussion and debate club, and an art salon series hosted in historic venues with curators, collectors, historians, and cultural speakers. He now leads Excalibur Academy, a leadership and entrepreneurship institute for ambitious high school students in Orange County.",
     tags: ["Academy Founder", "Program Architect", "Entrepreneurship", "Vision & Strategy"],
-    bio: "Alexander Milstein is a serial entrepreneur whose first startup launched in the final year of high school. He received an elite private education in London from the age of 12 — living independently at a UK boarding school — before pursuing undergraduate studies at Tufts University in Boston, earning a double major in History and Political Science, and later attending Duke University before leaving to focus on already-successful ventures.\n\nA mission-driven entrepreneur and advocate, he has launched ventures and led initiatives across Italy, Spain, the USA, and multiple cities in Eastern Europe. From a young age, he has been guided by a deep commitment to justice and community care — founding an international youth political debate and leadership club, and playing a key role in national humanitarian efforts across Eastern Europe, helping raise millions for critically ill children in need of life-saving treatment.\n\nHe produced one of the largest art salon events in St Petersburg history — creating an 18th-century Paris salon environment, inviting leading academics and cultural figures to give lectures in historic venues across St Petersburg, Italy, and France.\n\nAs Founder and CEO of Excalibur Academy, he designed the full architecture of the programme — curriculum structure, faculty model, real-world engagements, competition pipeline, and the standard of instruction. He built Excalibur on a single conviction: the most consequential thing a young person can develop is an identity forged through real pressure and real achievement."
+    linkedin: "https://www.linkedin.com/in/alexander-milstein",
+    bio: "Founder & CEO of Excalibur Academy. Born in New York City and Russian by heritage, Alexander’s worldview was shaped by St. Petersburg, Paris, London, and the wider European cultural tradition. At twelve, he left for boarding school outside London — an experience that built independence early and exposed him to a more global understanding of education, discipline, class, culture, and ambition.\n\nAlexander later earned his bachelor’s degree from Tufts University, double majoring in History and Political Science. His intellectual interests have always lived at the intersection of history, power, art, leadership, and human character — from ancient Greek civilization and classical art to political debate, philosophy, literature, and conversations that move beyond the surface.\n\nAlexander began building ventures in college, founding a youth political debate and leadership club, and later a cultural company that produced immersive History of Art lecture salons in St. Petersburg. Hosted in historic venues, these salons brought together museum curators, collectors, historians, academics, speakers, and cultural figures — reviving the spirit of intellectual society around art, history, and serious conversation.\n\nWith Excalibur Academy, Alexander is building the institution where students are not simply taught information, but formed through public speaking, business judgment, intellectual depth, leadership, entrepreneurship, and real-world experience. Excalibur is built for students ready to build and lead their own path — through clear thinking, strong communication, real work, and the courage to begin."
   },
   {
     name: "Bill Morris",
@@ -291,10 +292,10 @@ const coaches = [
 ];
 
 const handson = [
-  { title: "The Junior Consultant Program", tag: "TEAMS OF 4 · REAL BUSINESS CONSULTING", desc: "Student teams are paired with a real local business facing a real challenge. Over three weeks, each team conducts a structured professional engagement: on-site observation, customer interviews, competitive analysis, SWOT assessment, and financial diagnostics. The program culminates in a Boardroom Finale — a formal fifteen-minute presentation to the business owner, with parents and mentors in attendance.", outcome: "A client-facing consulting report, a formal presentation, and a documented example of applied business judgment." },
+  { title: "The Junior Consultant Program", tag: "TEAMS OF 4 · REAL BUSINESS CONSULTING", desc: "Student teams are paired with a real local business. Over three weeks, each team conducts a structured professional engagement: on-site observation, customer interviews, competitive analysis, SWOT assessment, and marketing strategy. The program culminates in a Boardroom Finale — a formal presentation of the consultant reports to the business owner and the executive team.", outcome: "A client-facing consulting report, a formal presentation, and a documented example of applied business judgment." },
   { title: "The Apprentice Externship", tag: "WORK EXPERIENCE · REAL COMPANY", desc: "After eight months of formation, each Full Program student is placed inside a real local business in the industry of their choosing. Students attend real meetings, contribute to active projects, and produce three formal deliverables: a Business Map, a reflective journal, and a Recommendation Memo identifying one strategic opportunity the business is currently missing.", outcome: "Three professional-grade deliverables, direct experience inside a working business, and a reference from an employer who has seen them operate under real conditions." },
-  { title: "Micro-Business Launch", tag: "TEAMS · SEED-FUNDED · REVENUE-DRIVEN", desc: "In the program's penultimate month, student teams build and launch micro-ventures designed to reach actual customers and generate revenue. Each team receives faculty guidance, structured accountability, and access to seed support through the Excalibur network of business owners, guest speakers, mentors, and alumni families. The goal is not to simulate entrepreneurship, but to experience the discipline of building something that is tested outside the room — in the real world with real constraints and realities.", outcome: "A micro-business brought from idea to launch — with mentor support, market pressure, real customers, and the lasting understanding that serious work can turn an idea into reality." },
-  { title: "Demo Day & Graduation", tag: "GUESTS · INVESTORS · PARENTS", desc: "Demo Day & Graduation is the Flagship capstone. Student teams present their operating micro-businesses before families, mentors, investors, invited guests, and a panel of judges. Each presentation is evaluated on commercial viability, pitch quality, evidence of execution, and composure under questioning. Every graduate receives a professionally bound Excalibur Portfolio — a documented record of the work, presentations, competitions, and applied experiences completed across the program. Our students are not the same people who walked in ten months ago — and everyone in the room can see it.", outcome: "A public performance before a live investor audience, a bound graduation portfolio, and Alumni status in the Excalibur network." },
+  { title: "Micro-Business Launch", tag: "TEAMS · SEED-FUNDED · MENTORED", desc: "In the Flagship's penultimate program month, student teams build and launch micro-ventures designed to reach actual customers and aimed to generate revenue. Each team receives faculty guidance, structured accountability, and access to seed support through the Excalibur network of business owners, investors, mentors, and allies. The goal is not to simulate entrepreneurship, but to experience the discipline of building something that is tested outside the room — in the real world with real constraints and realities.", outcome: "A micro-business brought from idea to launch — with mentor support, market pressure, real customers, and the lasting understanding that hard work, passion and discipline can turn a dream into reality." },
+  { title: "Academy Gala & Graduation Day", tag: "GUESTS · INVESTORS · PARENTS", desc: "Academy Gala & Graduation Day is the Flagship capstone. Student teams present their micro-businesses before families, mentors, investors, invited guests, and a panel of judges. Every graduate receives a professionally bound Excalibur Portfolio — a documented record of the work, presentations, competitions, and applied experiences completed across the program. The evening marks more than completion. It marks the emergence of young leaders with the confidence, discipline, and presence to carry Excalibur's standard into every arena ahead.", outcome: "A public performance before a live investor audience, a bound graduation portfolio, and Alumni status in the Excalibur network." },
 ];
 
 const distinctions = [
@@ -1163,7 +1164,7 @@ function CurriculumPage({ setPage, openInquiry }) {
     { m: "Month 9", t: "Public Speaking IV", items: ["Advanced narrative", "Sector speaker series", "Externship begins", "City Champ prep"] },
     { m: "Month 10", t: "Leadership", items: ["Five forms of power", "Emotional intelligence", "CEO crisis simulation", "Conflict resolution"] },
     { m: "Month 11", t: "Micro-Business Launch", items: ["Assigned mentor & funding", "Build real venture", "Weekly check-ins", "Revenue target"] },
-    { m: "Month 12", t: "Graduation", items: ["Financial Literacy III", "Investor Briefing II", "Demo Day prep", "Portfolio & ceremony"] },
+    { m: "Month 12", t: "Graduation", items: ["Financial Literacy III", "Investor Briefing II", "Gala & Graduation prep", "Portfolio & ceremony"] },
     { m: "Throughout", t: "Sector Rotation", items: ["12 industries, 12 speakers", "Sector Journal", "One case study/month", "Real practitioner every time"] },
     { m: "Throughout", t: "Intellectual Depth", items: ["Stoic philosophy", "Literary analysis", "Social arts", "Writing with precision"] },
   ];
@@ -1420,7 +1421,7 @@ function FullProgramPage({ setPage, openInquiry }) {
             <div>
               <Eyebrow>WHAT THIS IS</Eyebrow>
               <p style={{ fontFamily: sans, fontSize: 15, lineHeight: 1.95, color: "#FBF7EE", fontWeight: 300, marginBottom: 18 }}>The Full Program is the complete Excalibur formation — ten months of deliberate development across every discipline that defines a consequential career. It is not a series of workshops. It is a year-long transformation built around a cohort of 25 students who challenge each other and graduate with documented, professional-grade experience.</p>
-              <p style={{ fontFamily: sans, fontSize: 15, lineHeight: 1.95, color: "#FBF7EE", fontWeight: 300 }}>Available as Weekday Track (Tue & Thu, 4:00–6:25 PM) or Saturday Track (every Saturday, 10:30 AM–3:45 PM). Both tracks are identical in curriculum and depth. Both share the same milestone events: Monthly Pitch Nights, the consulting project, the externship, the micro-business launch, and Demo Day.</p>
+              <p style={{ fontFamily: sans, fontSize: 15, lineHeight: 1.95, color: "#FBF7EE", fontWeight: 300 }}>Available as Weekday Track (Tue & Thu, 4:00–6:25 PM) or Saturday Track (every Saturday, 10:30 AM–3:45 PM). Both tracks are identical in curriculum and depth. Both share the same milestone events: Monthly Pitch Nights, the consulting project, the externship, the micro-business launch, and Academy Gala & Graduation Day.</p>
             </div>
             <div>
               <Eyebrow>WHO IT'S FOR</Eyebrow>
@@ -1446,7 +1447,7 @@ function FullProgramPage({ setPage, openInquiry }) {
               { m: "Month 7–8", t: "Junior Consultant", items: ["Assigned to real business", "On-site observation", "Customer research", "Boardroom Finale"] },
               { m: "Month 9", t: "Public Speaking IV", items: ["Advanced narrative", "Sector speaker series", "Externship begins", "City Champ prep"] },
               { m: "Month 9–10", t: "Leadership & Micro-Business", items: ["Five forms of power", "CEO crisis simulation", "Assigned mentor & funding", "Build real venture"] },
-              { m: "Month 10", t: "Gala & Graduation", items: ["Investor Briefing II", "Portfolio assembly", "Gala & Graduation Day", "Alumni status"] },
+              { m: "Month 10", t: "Academy Gala & Graduation Day", items: ["Investor Briefing II", "Portfolio assembly", "Academy Gala & Graduation Day", "Alumni status"] },
               { m: "Throughout", t: "Sector Rotation", items: ["10 industries, 10 speakers", "Sector Journal", "One case study/month", "Real practitioner every time"] },
               { m: "Throughout", t: "Intellectual Depth", items: ["Stoic philosophy", "Literary analysis", "Social arts", "Writing with precision"] },
             ].map((row, i) => (
@@ -1509,8 +1510,8 @@ function FullProgramPage({ setPage, openInquiry }) {
         <Fade d={.08}>
           <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 2, background: "#111", marginTop: 36 }}>
             {[
-              { label: "WEEKDAY TRACK", schedule: "Tuesday & Thursday · 4:00–7:00 PM", details: ["3-hour sessions after school, 6 days per week", "~96 sessions over 10 months · 18 hrs/month", "Guest speakers every Thursday", "Shared events: competitions, Demo Day, externship"] },
-              { label: "WEEKEND TRACK", schedule: "Every Saturday · 9:00 AM–3:00 PM", details: ["Full-day immersion — deeper workshop time", "~48 Saturdays over 10 months · 6 hrs each", "Guest speakers attend in-person all morning", "Shared events: competitions, Demo Day, externship"] },
+              { label: "WEEKDAY TRACK", schedule: "Tuesday & Thursday · 4:00–7:00 PM", details: ["3-hour sessions after school, 6 days per week", "~96 sessions over 10 months · 18 hrs/month", "Guest speakers every Thursday", "Shared events: competitions, Academy Gala & Graduation Day, externship"] },
+              { label: "WEEKEND TRACK", schedule: "Every Saturday · 9:00 AM–3:00 PM", details: ["Full-day immersion — deeper workshop time", "~48 Saturdays over 10 months · 6 hrs each", "Guest speakers attend in-person all morning", "Shared events: competitions, Academy Gala & Graduation Day, externship"] },
             ].map((t, i) => (
               <div key={i} style={{ background: "#080808", padding: "36px 32px", borderTop: `2px solid ${i === 0 ? gold : "rgba(199,171,117,.2)"}` }}>
                 <Eyebrow>{t.label}</Eyebrow>
@@ -2019,7 +2020,7 @@ function ProgramsPage({ setPage, openInquiry }) {
       title: "Ten-Month Program",
       tagline: "The complete formation.",
       photo: "https://i.imgur.com/eyeb9rX.jpeg",
-      desc: "The Excalibur Ten-Month Flagship is the Academy’s primary program — a complete, ten-month course of excellence for ambitious high school students in Orange County, California.\n\nOffered in two parallel tracks — Weekday (Tuesday & Thursday evenings) and Saturday (morning) — both deliver identical curriculum, the same faculty, and the same standard of instruction. Students choose the track that fits their schedule; the formation they receive is the same.\n\nAcross ten months, students progress through all nine core disciplines: Public Speaking & Rhetoric, Financial Literacy, Business Model Analysis, The Art of Selling & Marketing, Stocks, Crypto & Market Literacy, AI & Technology, Leadership & Influence, Intellectual Depth & The Art of Class, and Industry Sectors Rotation.\n\nEach month, a dedicated specialist — a working executive, investor, or entrepreneur — leads the core curriculum block. The Lead Instructor runs the applied workshops and executive business simulations in every session. The Public Speaking Instructor opens every class.\n\nBeyond the classroom, students complete three real-world engagements: the Junior Consultant Program (advising a real local business), the Apprentice Externship (4–6 weeks embedded inside a company), and the Micro-business launch in teams with a dedicated mentor.\n\nThe program concludes in June with Excalibur Gala & Graduation — the Flagship capstone — where students present their venture concepts before families, mentors, investors, invited guests, and judges.\n\nGraduates leave with the Excalibur Academy Portfolio — a professionally assembled record designed to support college applications — along with real-world experience, lasting friendships, greater confidence, and skills for every arena ahead.",
+      desc: "The Excalibur Ten-Month Flagship is the Academy’s primary program — a complete, ten-month course of excellence for ambitious high school students in Orange County, California.\n\nOffered in two parallel tracks — Weekday (Tuesday & Thursday evenings) and Saturday (morning) — both deliver identical curriculum, the same faculty, and the same standard of instruction. Students choose the track that fits their schedule; the formation they receive is the same.\n\nAcross ten months, students progress through all nine core disciplines: Public Speaking & Rhetoric, Financial Literacy, Business Model Analysis, The Art of Selling & Marketing, Stocks, Crypto & Market Literacy, AI & Technology, Leadership & Influence, Intellectual Depth & The Art of Class, and Industry Sectors Rotation.\n\nEach month, a dedicated specialist — a working executive, investor, or entrepreneur — leads the core curriculum block. The Lead Instructor runs the applied workshops and executive business simulations in every session. The Public Speaking Instructor opens every class.\n\nBeyond the classroom, students complete three real-world engagements: the Junior Consultant Program (advising a real local business), the Apprentice Externship (4–6 weeks embedded inside a company), and the Micro-business launch in teams with a dedicated mentor.\n\nThe program concludes in June with Academy Gala & Graduation Day — the Flagship capstone — where student teams present their micro-businesses before families, mentors, investors, invited guests, and a panel of judges.\n\nGraduates leave with the Excalibur Academy Portfolio — a professionally assembled record designed to support college applications — along with real-world experience, lasting friendships, greater confidence, and skills for every arena ahead.",
       details: [
         ["Schedule", "Weekday: Tue & Thu · 4:00–6:25 PM (Group B)\nor Saturday: 10:30 AM–3:45 PM (Group A)"],
         ["Class Size", "25 per track · Founding Class"],
@@ -2426,14 +2427,14 @@ function ApplyPage({ setPage, openInquiry }) {
                 status: "ENROLLING SOON", statusColor: gold,
                 label: "Ten-Month Flagship", dates: "September 2026 – June 2027",
                 price: "$1,990", period: "per month",
-                desc: "Excalibur's complete September-to-June program for ambitious high school juniors and seniors.\n\nStudents move through all nine core disciplines, complete real-world engagements, participate in selected expeditions, present at Excalibur Gala & Graduation Day, and graduate with the Excalibur Academy Portfolio — a professionally assembled record of work designed to support college applications and distinguish students through evidence of leadership, communication, execution, and real-world experience.",
+                desc: "Excalibur's complete September-to-June program for ambitious high school juniors and seniors.\n\nStudents move through all nine core disciplines, complete real-world engagements, participate in selected expeditions, present at Excalibur Academy Gala & Graduation Day, and graduate with the Excalibur Academy Portfolio — a professionally assembled record of work designed to support college applications and distinguish students through evidence of leadership, communication, execution, and real-world experience.",
                 page: "flagship-detail",
               },
               {
                 status: "ENROLLING SOON", statusColor: gold,
                 label: "Six-Week Intensive", dates: "Four waves per year",
                 price: "$3,900", period: "per wave",
-                desc: "A focused version of Excalibur's core curriculum, offered in weekday evening or Sunday half-day formats.\n\nStudents progress through the Academy's core disciplines, practice public speaking in every class, work with guest speakers and specialist instructors, develop a team venture project, and conclude with a judged Demo Day.\n\nPriority consideration may be given to students applying later for the Ten-Month Flagship.",
+                desc: "A focused version of Excalibur's core curriculum, offered in weekday evening or Sunday half-day formats.\n\nStudents progress through the Academy's core disciplines, practice public speaking in every class, work with guest speakers and specialist instructors, develop a team venture project, and conclude with a judged Academy Gala & Graduation Day.\n\nPriority consideration may be given to students applying later for the Ten-Month Flagship.",
                 page: "intensive",
               },
             ].map((prog, i) => (
@@ -2542,7 +2543,7 @@ function ApplyPage({ setPage, openInquiry }) {
             <div style={{ width: 36, height: 1, background: `linear-gradient(90deg, ${gold}, transparent)`, marginBottom: 24 }} />
             <p style={{ fontFamily: sans, fontSize: 14, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.9, marginBottom: 16 }}>Confirmed families will receive an invitation to a Family Information Session before the start of the program.</p>
             <p style={{ fontFamily: sans, fontSize: 14, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.9, marginBottom: 16 }}>The session is designed to introduce families to the Academy's structure, location, schedule, expectations, faculty model, student experience, final events, logistics, and communication systems.</p>
-            <p style={{ fontFamily: sans, fontSize: 14, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.9, marginBottom: 28 }}>Families will have the opportunity to ask questions, meet members of the Excalibur team and the Faculty, and understand how the program is designed to support each student from the first day through the final Graduation Gala or Demo Day.</p>
+            <p style={{ fontFamily: sans, fontSize: 14, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.9, marginBottom: 28 }}>Families will have the opportunity to ask questions, meet members of the Excalibur team and the Faculty, and understand how the program is designed to support each student from the first day through Academy Gala & Graduation Day.</p>
             <p style={{ fontFamily: sans, fontSize: 14, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.9, marginBottom: 32 }}>Each family will also receive access to the Excalibur student and family portal — where schedules, event information, lunch selections, shuttle requests if needed, faculty communications, team updates, and all administrative information are managed in one place.</p>
             <button onClick={() => setPage("events")} style={{ fontFamily: sans, padding: "12px 28px", background: "transparent", border: `1px solid rgba(199,171,117,.4)`, color: gold, fontSize: 10, fontWeight: 600, letterSpacing: "0.18em", textTransform: "uppercase", cursor: "pointer" }}>View Upcoming Events →</button>
           </Fade>
@@ -2757,8 +2758,8 @@ function ScheduleTabs({ setPage, isMobile, waves, gold }) {
       {activeProgram === "flagship" && (
         <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 1, background: "#111" }}>
           {[
-            { label: "WEEKDAY TRACK", schedule: "Tuesday & Thursday · 4:00–6:15 PM", left: flagshipLeft[0], items: [["Starts", "September 2026"], ["Duration", "10 Months"], ["Sessions", "Tue & Thu evenings"], ["Ends", "June 2027 · Demo Day"], ["Price", "$1,900 / month"], ["Seats", "25 per cohort"]] },
-            { label: "SATURDAY TRACK", schedule: "Every Saturday · 10:30 AM–3:00 PM", left: flagshipLeft[1], items: [["Starts", "September 2026"], ["Duration", "10 Months"], ["Sessions", "Full-day Saturdays"], ["Ends", "June 2027 · Demo Day"], ["Price", "$1,900 / month"], ["Seats", "25 per cohort"]] },
+            { label: "WEEKDAY TRACK", schedule: "Tuesday & Thursday · 4:00–6:15 PM", left: flagshipLeft[0], items: [["Starts", "September 2026"], ["Duration", "10 Months"], ["Sessions", "Tue & Thu evenings"], ["Ends", "June 2027 · Academy Gala & Graduation Day"], ["Price", "$1,900 / month"], ["Seats", "25 per cohort"]] },
+            { label: "SATURDAY TRACK", schedule: "Every Saturday · 10:30 AM–3:00 PM", left: flagshipLeft[1], items: [["Starts", "September 2026"], ["Duration", "10 Months"], ["Sessions", "Full-day Saturdays"], ["Ends", "June 2027 · Academy Gala & Graduation Day"], ["Price", "$1,900 / month"], ["Seats", "25 per cohort"]] },
           ].map((t, i) => {
             return (
               <div key={i} style={{ background: "#080808", padding: "28px 32px" }}>
@@ -2817,7 +2818,7 @@ function ScheduleTabs({ setPage, isMobile, waves, gold }) {
   );
 }
 function CoachCard({ c, i, setPage }) {
-  const hasFacultyPage = ["Chip Pankow", "Bill Morris", "Erik Dostal", "Christopher Sanders", "Amina Abdulaeva"].includes(c.name);
+  const hasFacultyPage = ["Alexander Milstein", "Chip Pankow", "Bill Morris", "Erik Dostal", "Christopher Sanders", "Amina Abdulaeva"].includes(c.name);
 
   return (
     <div style={{ background: "#080808", borderTop: i === 0 ? `2px solid ${gold}` : "2px solid rgba(199,171,117,.1)", overflow: "hidden" }}>
@@ -2851,12 +2852,17 @@ function CoachCard({ c, i, setPage }) {
           {c.shortBio || c.bio}
         </p>
         {hasFacultyPage && (
-          <button
-            onClick={() => setPage(`faculty:${c.name.toLowerCase().replace(/ /g, "-")}`)}
-            style={{ fontFamily: sans, fontSize: 11, color: gold, background: "transparent", border: "none", cursor: "pointer", padding: 0, letterSpacing: "0.08em", fontWeight: 600 }}
-          >
-            Read Full Profile →
-          </button>
+          <div style={{ display: "flex", alignItems: "center", gap: 16, flexWrap: "wrap" }}>
+            <button
+              onClick={() => setPage(`faculty:${c.name.toLowerCase().replace(/ /g, "-")}`)}
+              style={{ fontFamily: sans, fontSize: 11, color: gold, background: "transparent", border: "none", cursor: "pointer", padding: 0, letterSpacing: "0.08em", fontWeight: 600 }}
+            >
+              Read Full Profile →
+            </button>
+            {c.linkedin && (
+              <a href={c.linkedin} target="_blank" rel="noopener noreferrer" style={{ fontFamily: sans, fontSize: 11, color: "rgba(199,171,117,.6)", letterSpacing: "0.08em", fontWeight: 600, textDecoration: "none" }}>LinkedIn ↗</a>
+            )}
+          </div>
         )}
       </div>
     </div>
@@ -3359,7 +3365,7 @@ function HomePage({ setPage, openInquiry }) {
           </Fade>
           <Fade d={.12}>
             <div style={{ marginTop: 2, background: "#060606", border: "1px solid #111", borderTop: "none", padding: "17px 32px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-              <span style={{ fontFamily: sans, fontSize: 12, color: "#FBF7EE", fontWeight: 300 }}>All nine modules covered in both the Intensive and the Full Program.</span>
+              <span style={{ fontFamily: sans, fontSize: 12, color: "#FBF7EE", fontWeight: 300 }}>All nine modules covered only in the Flagship Ten-Month Program.</span>
               <button onClick={() => setPage("curriculum")} style={{ fontFamily: sans, fontSize: 10, color: gold, letterSpacing: 2, background: "transparent", border: "none", cursor: "pointer", fontWeight: 600, flexShrink: 0 }}>VIEW ALL MODULES →</button>
             </div>
           </Fade>
@@ -3410,8 +3416,8 @@ function HomePage({ setPage, openInquiry }) {
         <div style={{ maxWidth: 1100, margin: "0 auto" }}>
           <Fade><div style={{ textAlign: "center", marginBottom: 48 }}>
             <p style={{ fontFamily: eyebrow_font, fontSize: 10, letterSpacing: "0.4em", color: "#000", fontWeight: 600, textTransform: "uppercase", marginBottom: 12 }}>FACULTY & LEADERSHIP</p>
-            <h2 style={{ fontFamily: serif, fontSize: isMobile ? 26 : 36, fontWeight: 600, color: "#000", lineHeight: 1.1, marginBottom: 16 }}>The People In the Room.</h2>
-            <p style={{ fontFamily: sans, fontSize: 14, color: "#111", fontWeight: 300, lineHeight: 1.7, maxWidth: 680, margin: "0 auto" }}>From a CEO who built the world’s first autonomous racing series, directed the Formula BMW program, and oversaw a $13B NASDAQ listing, to a former Citigroup Managing Director with over 100 M&A transactions and 600+ CEO advisory engagements, EVP/CFO of two NYSE-listed companies, TEDx speaker and Georgetown MBA Professor.</p>
+            <h2 style={{ fontFamily: serif, fontSize: isMobile ? 26 : 36, fontWeight: 600, color: "#000", lineHeight: 1.1, marginBottom: 16 }}>The Mentors In the Room.</h2>
+            <p style={{ fontFamily: sans, fontSize: 14, color: "#111", fontWeight: 300, lineHeight: 1.7, maxWidth: 680, margin: "0 auto" }}>Excalibur faculty come from the arenas where leadership is tested: a CEO who built the world’s first autonomous racing series, directed the Formula BMW program, and oversaw a $13B NASDAQ listing, a former Citigroup Managing Director and Georgetown MBA professor with 100+ M&A transactions, 600+ CEO advisory engagements, EVP/CFO leadership at two NYSE-listed companies, TEDx speaking engagement, and a doctoral candidate serving as an Orange County Sheriff’s Department spokesman. They have led companies, advised CEOs, taught MBA students, spoken on stages from West Point to Ivy League institutions, and now bring that experience directly to Excalibur students.</p>
           </div></Fade>
           <Fade d={.08}>
             <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(3, 1fr)", gap: 2, background: "#E8E4DC" }}>
@@ -3681,7 +3687,7 @@ function BeyondPage({ setPage, openInquiry }) {
               { title: "Monthly Pitch Night", tag: "12× per year · All programs", num: "01", desc: "Students present pitches before a panel of guest judges drawn from the local business community, including entrepreneurs, investors, and senior professionals. Pitches are evaluated on clarity of thinking, commercial viability, quality of delivery, and composure under live questioning. Parents are invited to attend." },
               { title: "Shark Tank Finale", tag: "Summer & Six-Week programs", num: "02", desc: "The Shark Tank–inspired pitch forum where student teams present complete business concepts before entrepreneurs, investors, and senior professionals. Judges evaluate each pitch on clarity, commercial viability, originality, delivery, and composure under questioning. Awards are presented for Best Business Concept, Best Pitch, and Most Innovative Venture." },
               { title: "OC City Championship", tag: "Biannual · Flagship students", num: "03", desc: "The Excalibur Championship is a biannual competition for all Flagship students, held at a premium South Orange County venue with judges drawn from the professional community. Students compete individually and in teams. Awards and formal recognition are presented in a ceremony before families and invited guests." },
-              { title: "Demo Day & Graduation", tag: "Annual · Flagship capstone", num: "04", desc: "The culminating event. Each team delivers a ten-minute pitch of its micro-business concept before an audience of parents, mentors, investors, and members of the press. Every graduate receives a professionally bound portfolio and formal alumni status. The transformation is evident to everyone in the room." },
+              { title: "Academy Gala & Graduation Day", tag: "Annual · Flagship capstone", num: "04", desc: "Academy Gala & Graduation Day is the Flagship capstone. Student teams present their micro-businesses before families, mentors, investors, invited guests, and a panel of judges. Every graduate receives a professionally bound Excalibur Portfolio — a documented record of the work, presentations, competitions, and applied experiences completed across the program. The evening marks more than completion. It marks the emergence of young leaders with the confidence, discipline, and presence to carry Excalibur's standard into every arena ahead." },
             ].map((c, i) => (
               <div key={i} style={{ background: "#fff", padding: isMobile ? "32px 24px" : "44px 44px", position: "relative", overflow: "hidden" }}>
                 <div style={{ position: "absolute", top: 24, right: 28, fontFamily: serif, fontSize: 64, fontWeight: 600, color: "rgba(0,0,0,.04)", lineHeight: 1 }}>{c.num}</div>
@@ -3849,6 +3855,27 @@ const facultyProfiles = {
       "Fluent: English, Spanish · Native: Russian",
     ],
   },
+  "alexander-milstein": {
+    name: "Alexander Milstein",
+    role: "Founder & CEO",
+    img: "https://i.imgur.com/placeholder.jpeg",
+    tags: ["Entrepreneurship", "Leadership", "Education Design", "Cultural History", "Art & Intellectual Society"],
+    headline: "Built the institution from first principles. Every element by design.",
+    linkedin: "https://www.linkedin.com/in/alexander-milstein",
+    paras: [
+      "Alexander Milstein is the Founder and CEO of Excalibur Academy. Born in New York City and Russian by heritage, his worldview was shaped by St. Petersburg, Paris, London, and the wider European cultural tradition. At twelve, he left for boarding school outside London — an experience that built independence early and exposed him to a more global understanding of education, discipline, class, culture, and ambition.",
+      "Alexander later earned his bachelor’s degree from Tufts University, double majoring in History and Political Science. His intellectual interests have always lived at the intersection of history, power, art, leadership, and human character — from ancient Greek civilization and classical art to political debate, philosophy, literature, and conversations that move beyond the surface.",
+      "Alexander began building ventures in college, founding a youth political debate and leadership club, and later a cultural company that produced immersive History of Art lecture salons in St. Petersburg. Hosted in historic venues, these salons brought together museum curators, collectors, historians, academics, speakers, and cultural figures — reviving the spirit of intellectual society around art, history, and serious conversation.",
+      "With Excalibur Academy, Alexander is building the institution where students are not simply taught information, but formed through public speaking, business judgment, intellectual depth, leadership, entrepreneurship, and real-world experience. Excalibur is built for students ready to build and lead their own path — through clear thinking, strong communication, real work, and the courage to begin.",
+    ],
+    credentials: [
+      "Founder & CEO — Excalibur Academy, Orange County, California",
+      "Bachelor’s degree — Tufts University, History & Political Science (double major)",
+      "Educated from age 12 at British private boarding school outside London",
+      "Founded youth political debate and leadership club",
+      "Founder — immersive History of Art lecture salon series, St. Petersburg",
+    ],
+  },
 };
 
 function FacultyProfilePage({ slug, setPage }) {
@@ -3900,12 +3927,17 @@ function FacultyProfilePage({ slug, setPage }) {
             <p key={i} style={{ fontFamily: sans, fontSize: isMobile ? 14 : 15, lineHeight: 1.95, color: "#FBF7EE", fontWeight: 300, marginBottom: 22 }}>{para}</p>
           ))}
           <div style={{ marginTop: 48 }}>
-            <button onClick={() => setPage("apply")} style={{ fontFamily: sans, background: gold, color: "#000", padding: "13px 36px", fontSize: 11, fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", border: "none", cursor: "pointer" }}>Apply to Study Under {f.name.split(" ")[0]} →</button>
+            {f.linkedin ? (
+              <a href={f.linkedin} target="_blank" rel="noopener noreferrer" style={{ display: "inline-block", fontFamily: sans, background: "transparent", color: gold, padding: "13px 0", fontSize: 11, fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", textDecoration: "none", borderBottom: `1px solid ${gold}` }}>Connect on LinkedIn →</a>
+            ) : (
+              <button onClick={() => setPage("apply")} style={{ fontFamily: sans, background: gold, color: "#000", padding: "13px 36px", fontSize: 11, fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", border: "none", cursor: "pointer" }}>Apply to Study Under {f.name.split(" ")[0]} →</button>
+            )}
           </div>
         </div>
 
         {/* Credentials sidebar — right */}
         <div style={{ background: "#07060A", padding: isMobile ? "40px 28px" : "72px 40px" }}>
+          {!f.linkedin && (<>
           <p style={{ fontFamily: sans, fontSize: 10, letterSpacing: "0.35em", color: "#9A9290", fontWeight: 600, textTransform: "uppercase", marginBottom: 24 }}>Credentials</p>
           <div style={{ display: "flex", flexDirection: "column", gap: 0 }}>
             {f.credentials.map((cr, i) => (
@@ -3923,7 +3955,8 @@ function FacultyProfilePage({ slug, setPage }) {
               ))}
             </div>
           </div>
-          <div style={{ marginTop: 40, paddingTop: 32, borderTop: "1px solid rgba(199,171,117,.08)" }}>
+          </>)}
+          <div style={{ marginTop: f.linkedin ? 0 : 40, paddingTop: f.linkedin ? 0 : 32, borderTop: f.linkedin ? "none" : "1px solid rgba(199,171,117,.08)" }}>
             <p style={{ fontFamily: sans, fontSize: 10, letterSpacing: "0.35em", color: "#9A9290", fontWeight: 600, textTransform: "uppercase", marginBottom: 16 }}>Also Meet</p>
             {Object.values(facultyProfiles).filter(p => p.name !== f.name).slice(0, 3).map((p, i) => (
               <div key={i} onClick={() => setPage(`faculty:${p.name.toLowerCase().replace(/ /g, "-")}`)} style={{ display: "flex", gap: 12, marginBottom: 14, cursor: "pointer", alignItems: "center" }}>
@@ -3987,12 +4020,12 @@ function FacultyPage({ setPage, openInquiry }) {
       {/* Hero */}
       <div style={{ padding: isMobile ? "60px 24px 48px" : "88px 80px 64px", maxWidth: 1100, margin: "0 auto" }}>
         <Fade>
-          <Eyebrow>OUR FACULTY</Eyebrow>
+          <Eyebrow>FACULTY &amp; LEADERSHIP</Eyebrow>
           <h1 style={{ fontFamily: serif, fontSize: isMobile ? "clamp(32px,7vw,48px)" : "clamp(44px,5vw,64px)", fontWeight: 600, color: "#FBF7EE", lineHeight: 1.05, marginBottom: 16 }}>
-            The people<br /><span style={{ color: gold }}>behind the programme.</span>
+            The Mentors<br /><span style={{ color: gold }}>In the Room.</span>
           </h1>
-          <p style={{ fontFamily: sans, fontSize: 15, lineHeight: 1.85, color: "#FBF7EE", fontWeight: 300, maxWidth: 580 }}>
-            Excalibur faculty are not chosen for titles alone. They are selected for experience, judgment, communication, and the ability to make serious material useful to ambitious high school students. They have built companies, led teams, advised leaders, taught at top institutions, raised capital, negotiated deals, and stood in the arenas they now teach.
+          <p style={{ fontFamily: sans, fontSize: 15, lineHeight: 1.85, color: "#FBF7EE", fontWeight: 300, maxWidth: 680 }}>
+            Excalibur faculty come from the arenas where leadership is tested: a CEO who built the world's first autonomous racing series, directed the Formula BMW program, and oversaw a $13B NASDAQ listing, a former Citigroup Managing Director and Georgetown MBA professor with 100+ M&amp;A transactions, 600+ CEO advisory engagements, EVP/CFO leadership at two NYSE-listed companies, TEDx speaking engagement, and a doctoral candidate serving as an Orange County Sheriff's Department spokesman. They have led companies, advised CEOs, taught MBA students, spoken on stages from West Point to Ivy League institutions, and now bring that experience directly to Excalibur students.
           </p>
         </Fade>
       </div>
@@ -4842,7 +4875,7 @@ function FlagshipModulesBlock({ isMobile, setPage, modules }) {
           </div>
         )}
         <div style={{ marginTop: 2, background: "#060606", border: "1px solid #111", borderTop: "none", padding: "17px 32px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-          <span style={{ fontFamily: sans, fontSize: 12, color: "#FBF7EE", fontWeight: 300 }}>All nine modules covered in both the Intensive and the Full Program.</span>
+          <span style={{ fontFamily: sans, fontSize: 12, color: "#FBF7EE", fontWeight: 300 }}>All nine modules covered only in the Flagship Ten-Month Program.</span>
           <button onClick={() => setPage("curriculum")} style={{ fontFamily: sans, fontSize: 10, color: gold, letterSpacing: 2, background: "transparent", border: "none", cursor: "pointer", fontWeight: 600, flexShrink: 0 }}>VIEW ALL MODULES</button>
         </div>
       </div>
@@ -4941,7 +4974,7 @@ function FlagshipEnrollSelector({ openInquiry, isMobile }) {
   const [track, setTrack] = React.useState(null);
 
   const programs = [
-    { id: "full", label: "TEN-MONTH FLAGSHIP", title: "Ten-Month Program", price: "From $1,900 / month", desc: "The complete Excalibur formation. All nine modules, real-world engagements, and the Gala & Graduation capstone." },
+    { id: "full", label: "TEN-MONTH FLAGSHIP", title: "Ten-Month Program", price: "From $1,900 / month", desc: "The complete Excalibur formation. All nine modules, real-world engagements, and the Academy Gala & Graduation Day capstone." },
     { id: "intensive", label: "SIX-WEEK INTENSIVE", title: "Six-Week Intensive", price: "$2,500 / wave", desc: "Full curriculum in six weeks. One discipline per week, Shark Tank–style Finale." },
     { id: "summer", label: "SUMMER INTENSIVE", title: "Summer Intensive", price: "$410 / full day · $4,500 per wave", desc: "Two weeks, full days. All nine disciplines with daily guest speakers and a Venture Finale." },
   ];
@@ -5064,9 +5097,9 @@ function FlagshipDetailPage({ setPage, openInquiry }) {
   ];
 
   const engagements = [
-    { n: "I", title: "Junior Consultant Program", tag: "TEAMS OF 4 · REAL BUSINESS CONSULTING", desc: "Student teams are paired with a real local business facing a real challenge. Over three weeks, each team conducts on-site observation, customer interviews, competitive analysis, and financial diagnostics. Culminates in a formal Boardroom Finale — a fifteen-minute presentation to the business owner, with parents and mentors in attendance.", outcome: "A client-facing consulting report and a documented example of applied business judgment." },
+    { n: "I", title: "The Junior Consultant Program", tag: "TEAMS OF 4 · REAL BUSINESS CONSULTING", desc: "Student teams are paired with a real local business. Over three weeks, each team conducts a structured professional engagement: on-site observation, customer interviews, competitive analysis, SWOT assessment, and marketing strategy. The program culminates in a Boardroom Finale — a formal presentation of the consultant reports to the business owner and the executive team.", outcome: "A client-facing consulting report, a formal presentation, and a documented example of applied business judgment." },
     { n: "II", title: "Apprentice Externship", tag: "WORK EXPERIENCE · REAL COMPANY", desc: "Students complete a 4–6 week externship embedded within a company in their chosen industry sector, sourced from the Academy's network. They observe, contribute, build professional references, and produce a written reflection included in the graduation portfolio.", outcome: "Professional references, externship documentation, and direct industry experience." },
-    { n: "III", title: "Funded Micro-Business Launch", tag: "TEAMS · SEED-FUNDED · REVENUE-DRIVEN", desc: "In the program's penultimate month, student teams build and launch micro-ventures designed to reach actual customers and generate revenue. Each team receives faculty guidance, seed support through the Excalibur network, and structured accountability.", outcome: "A micro-business brought from idea to launch — with mentor support, real customers, and documented revenue." },
+    { n: "III", title: "Micro-Business Launch", tag: "TEAMS · SEED-FUNDED · MENTORED", desc: "In the Flagship's penultimate program month, student teams build and launch micro-ventures designed to reach actual customers and aimed to generate revenue. Each team receives faculty guidance, structured accountability, and access to seed support through the Excalibur network of business owners, investors, mentors, and allies. The goal is not to simulate entrepreneurship, but to experience the discipline of building something that is tested outside the room — in the real world with real constraints and realities.", outcome: "A micro-business brought from idea to launch — with mentor support, market pressure, real customers, and the lasting understanding that hard work, passion and discipline can turn a dream into reality." },
   ];
 
   return (
@@ -5090,7 +5123,7 @@ function FlagshipDetailPage({ setPage, openInquiry }) {
       {/* ── STATS STRIP ── */}
       <div style={{ background: "#000", borderBottom: "1px solid rgba(199,171,117,.10)" }}>
         <div style={{ maxWidth: 1100, margin: "0 auto", display: "grid", gridTemplateColumns: isMobile ? "repeat(2,1fr)" : "repeat(4,1fr)", borderLeft: "1px solid rgba(199,171,117,.10)" }}>
-          {[["Sep 2026", "Program Starts"], ["June 2027", "Gala & Graduation"], ["25 Students", "Per Track · Founding Class"], ["$1,900 / mo", "From — Monthly Plan"]].map(([val, lbl]) => (
+          {[["Sep 2026", "Program Starts"], ["June 2027", "Academy Gala & Graduation Day"], ["25 Students", "Per Track · Founding Class"], ["$1,900 / mo", "From — Monthly Plan"]].map(([val, lbl]) => (
             <div key={lbl} style={{ padding: isMobile ? "28px 20px" : "36px 40px", borderRight: "1px solid rgba(199,171,117,.10)", borderBottom: isMobile ? "1px solid rgba(199,171,117,.10)" : "none" }}>
               <p style={{ fontFamily: serif, fontSize: isMobile ? 20 : 26, fontWeight: 600, color: "#FBF7EE", lineHeight: 1.1, marginBottom: 7 }}>{val}</p>
               <p style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.25em", color: gold, textTransform: "uppercase", fontWeight: 600 }}>{lbl}</p>
@@ -5138,7 +5171,7 @@ function FlagshipDetailPage({ setPage, openInquiry }) {
                     ["03", "Three-block session model: Speaking Coach + Specialist + Applied Workshops & Simulations"],
                     ["04", "Junior Consultant Program — 3-week advisory team engagement with a real local business"],
                     ["05", "Apprentice Externship — 4–6 weeks embedded inside a company in your chosen industry"],
-                    ["06", "Micro-Business Launch — seed-supported venture with a dedicated mentor"],
+                    ["06", "Micro-Business Launch — seed-funded, mentored, aimed at real customers and revenue"],
                     ["07", "Monthly Pitch Night before live judges, investors, and parents"],
                     ["09", "OC Championship (biannual) — competitive pitch event at a premium venue"],
                     ["09", "Bound Excalibur Portfolio — every analysis, report, resumé and competition result, professionally compiled"],
@@ -5251,7 +5284,7 @@ function FlagshipDetailPage({ setPage, openInquiry }) {
               { m: "Month 9", t: "Public Speaking IV", items: ["Advanced narrative", "Sector speaker series", "Externship begins", "City Champ prep"] },
               { m: "Month 10", t: "Leadership", items: ["Five forms of power", "Emotional intelligence", "CEO crisis simulation", "Conflict resolution"] },
               { m: "Month 11", t: "Micro-Business Launch", items: ["Assigned mentor & funding", "Build real venture", "Weekly check-ins", "Revenue target"] },
-              { m: "Month 12", t: "Graduation", items: ["Financial Literacy III", "Investor Briefing II", "Demo Day prep", "Portfolio & ceremony"] },
+              { m: "Month 12", t: "Graduation", items: ["Financial Literacy III", "Investor Briefing II", "Gala & Graduation prep", "Portfolio & ceremony"] },
               { m: "Throughout", t: "Sector Rotation", items: ["10 industries, 12 speakers", "Sector Journal", "One case study/month", "Real practitioner every time"] },
               { m: "Throughout", t: "Intellectual Depth", items: ["Stoic philosophy", "Literary analysis", "Social arts", "Writing with precision"] },
             ].map((row, i) => (
@@ -5347,7 +5380,7 @@ function FlagshipDetailPage({ setPage, openInquiry }) {
               { title: "Monthly Pitch Night", tag: "12\u00d7 per year \u00b7 All programs", num: "01", desc: "Students present pitches before a panel of guest judges drawn from the local business community, including entrepreneurs, investors, and senior professionals. Pitches are evaluated on clarity of thinking, commercial viability, quality of delivery, and composure under live questioning. Parents are invited to attend." },
               { title: "Shark Tank Finale", tag: "Summer & Six-Week programs", num: "02", desc: "The Shark Tank\u2013inspired pitch forum where student teams present complete business concepts before entrepreneurs, investors, and senior professionals. Judges evaluate each pitch on clarity, commercial viability, originality, delivery, and composure under questioning. Awards are presented for Best Business Concept, Best Pitch, and Most Innovative Venture." },
               { title: "OC City Championship", tag: "Biannual \u00b7 Flagship students", num: "03", desc: "The Excalibur Championship is a biannual competition for all Flagship students, held at a premium South Orange County venue with judges drawn from the professional community. Students compete individually and in teams. Awards and formal recognition are presented in a ceremony before families and invited guests." },
-              { title: "Demo Day & Graduation", tag: "Annual \u00b7 Flagship capstone", num: "04", desc: "The culminating event. Each team delivers a ten-minute pitch of its micro-business concept before an audience of parents, mentors, investors, and members of the press. Every graduate receives a professionally bound portfolio and formal alumni status. The transformation is evident to everyone in the room." },
+              { title: "Academy Gala & Graduation Day", tag: "Annual \u00b7 Flagship capstone", num: "04", desc: "The culminating event. Each team delivers a ten-minute pitch of its micro-business concept before an audience of parents, mentors, investors, and members of the press. Every graduate receives a professionally bound portfolio and formal alumni status. The transformation is evident to everyone in the room." },
             ].map((c, i) => (
               <div key={i} style={{ background: "#fff", padding: isMobile ? "32px 24px" : "44px 44px", borderTop: "none", position: "relative", overflow: "hidden" }}>
                 <div style={{ position: "absolute", top: 24, right: 28, fontFamily: serif, fontSize: 64, fontWeight: 600, color: "rgba(0,0,0,.04)", lineHeight: 1 }}>{c.num}</div>
@@ -5386,7 +5419,7 @@ function FlagshipDetailPage({ setPage, openInquiry }) {
 
         {/* Full-bleed photo */}
         <div style={{ position: "relative", height: isMobile ? 480 : 640, overflow: "hidden" }}>
-          <img src="https://i.imgur.com/d7mP4Sy.jpeg" alt="Excalibur Gala & Graduation" style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center" }} />
+          <img src="https://i.imgur.com/d7mP4Sy.jpeg" alt="Excalibur Academy Gala & Graduation Day" style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center" }} />
           <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(0,0,0,.97) 0%, rgba(0,0,0,.5) 45%, rgba(0,0,0,.1) 100%)" }} />
           <div style={{ position: "absolute", top: isMobile ? 28 : 48, left: "50%", transform: "translateX(-50%)" }}>
             <div style={{ display: "inline-block", border: "1px solid rgba(199,171,117,.4)", padding: "7px 24px" }}>
@@ -5395,7 +5428,7 @@ function FlagshipDetailPage({ setPage, openInquiry }) {
           </div>
           <div style={{ position: "absolute", bottom: isMobile ? 40 : 72, left: 0, right: 0, textAlign: "center", padding: "0 24px" }}>
             <p style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.5em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 18 }}>Excalibur Academy</p>
-            <h2 style={{ fontFamily: serif, fontSize: isMobile ? "clamp(36px,8vw,54px)" : "clamp(52px,6vw,88px)", fontWeight: 300, color: "#FBF7EE", lineHeight: 1.0, marginBottom: 16, letterSpacing: "0.03em" }}>Gala &amp; Graduation Day</h2>
+            <h2 style={{ fontFamily: serif, fontSize: isMobile ? "clamp(36px,8vw,54px)" : "clamp(52px,6vw,88px)", fontWeight: 300, color: "#FBF7EE", lineHeight: 1.0, marginBottom: 16, letterSpacing: "0.03em" }}>Academy Gala &amp; Graduation Day</h2>
             <div style={{ width: 48, height: 1, background: `linear-gradient(90deg, transparent, ${gold}, transparent)`, margin: "0 auto 18px" }} />
             <p style={{ fontFamily: serif, fontSize: isMobile ? 15 : 20, color: gold, fontStyle: "italic", letterSpacing: "0.06em" }}>South Orange County \u00b7 June 2027</p>
           </div>
@@ -5404,7 +5437,7 @@ function FlagshipDetailPage({ setPage, openInquiry }) {
         {/* Description strip */}
         <div style={{ borderTop: "1px solid rgba(199,171,117,.15)", borderBottom: "1px solid rgba(199,171,117,.15)" }}>
           <div style={{ maxWidth: 860, margin: "0 auto", padding: isMobile ? "48px 24px" : "64px 40px", textAlign: "center" }}>
-            <p style={{ fontFamily: sans, fontSize: isMobile ? 15 : 17, lineHeight: 2.0, color: "#FBF7EE", fontWeight: 300, marginBottom: 24 }}>The program concludes in June with the Excalibur Gala &amp; Graduation Day — the Flagship capstone — where students present their venture concepts before families, investors, mentors, invited guests, and judges. Standout projects may receive awards ranging from business technology tools to potential seed support for early venture development.</p>
+            <p style={{ fontFamily: sans, fontSize: isMobile ? 15 : 17, lineHeight: 2.0, color: "#FBF7EE", fontWeight: 300, marginBottom: 24 }}>Academy Gala &amp; Graduation Day is the Flagship capstone. Student teams present their micro-businesses before families, mentors, investors, invited guests, and a panel of judges. Every graduate receives a professionally bound Excalibur Portfolio — a documented record of the work, presentations, competitions, and applied experiences completed across the program. The evening marks more than completion. It marks the emergence of young leaders with the confidence, discipline, and presence to carry Excalibur's standard into every arena ahead.</p>
             <p style={{ fontFamily: serif, fontSize: isMobile ? 17 : 21, color: "#FBF7EE", fontStyle: "italic", lineHeight: 1.75 }}>The program is not only measured in documents. Students leave with lasting friendships, shared memories, stronger judgment, greater confidence, and skills that will matter in every arena ahead — college, career, business, leadership, and life.</p>
           </div>
         </div>
@@ -6020,7 +6053,7 @@ function ApplicationPage({ setPage, defaultProgram }) {
 
   const programs = [
     { id: "summer", label: "SUMMER INTENSIVE", title: "Summer Intensive", price: "$410 / full day · $4,500 per wave", desc: "Two weeks, full days, Mon–Fri. For students aged 15–18 (rising juniors and seniors). Public speaking, business, AI, sales and a Shark Tank–style Venture Court finale. 20 students per wave.", page: "summer-detail" },
-    { id: "six-week", label: "SIX-WEEK INTENSIVE", title: "Six-Week Intensive", price: "$3,900 / wave", desc: "Full curriculum in six concentrated weeks. Weekday evening or Sunday half-day formats. Judged Demo Day finale.", page: "intensive" },
+    { id: "six-week", label: "SIX-WEEK INTENSIVE", title: "Six-Week Intensive", price: "$3,900 / wave", desc: "Full curriculum in six concentrated weeks. Weekday evening or Sunday half-day formats. Judged Academy Gala & Graduation Day finale.", page: "intensive" },
     { id: "flagship", label: "TEN-MONTH FLAGSHIP", title: "Ten-Month Program", price: "From $1,990 / month", desc: "All nine disciplines, real-world engagements, competitions, field trips, and the Excalibur Academy Portfolio. September–June.", page: "flagship-detail" },
   ];
   const waves = [
