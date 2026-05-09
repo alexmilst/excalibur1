@@ -204,6 +204,7 @@ const currMods = [
   { slug: "leadership", title: "Leadership, Ownership & Influence", months: "", tagline: "Lead with earned authority, not borrowed title.", summary: "Leadership begins where comfort ends: in moments of pressure, uncertainty, disagreement, and responsibility. This module teaches the disciplines behind effective leadership — building trust, reading people, managing conflict, making decisions without perfect information, communicating clearly, and staying composed when others are looking for direction.", why: "Leadership begins where comfort ends: in moments of pressure, uncertainty, disagreement, and responsibility. This module teaches the disciplines behind effective leadership — building trust, reading people, managing conflict, making decisions without perfect information, communicating clearly, and staying composed when others are looking for direction.", body: "Leadership begins where comfort ends: in moments of pressure, uncertainty, disagreement, and responsibility.\n\nThis module teaches the disciplines behind effective leadership — building trust, reading people, managing conflict, making decisions without perfect information, communicating clearly, and staying composed when others are looking for direction.\n\nStudents examine the difference between power and influence, explore emotional intelligence, conflict resolution, courage, team dynamics, and the invisible work of preparation that separates genuine leaders from those who merely hold titles.\n\nA title can be given. Authority has to be earned.", whatYouLearn: ["The five forms of power — legitimate, reward, coercive, expert, referent — and which create lasting authority", "Emotional intelligence — self-awareness, self-regulation, empathy, motivation, and social skill", "Decision-making under uncertainty — frameworks for consequential choices with incomplete information", "Conflict resolution — how to navigate disagreement and maintain relationships across rupture", "Team dynamics — stages of team development and roles within high-performing teams", "The invisible work of leadership — preparation, follow-through, and trust-building habits", "Crisis communication — how to lead when things are going wrong and everyone is watching", "CEO crisis simulation — a live exercise running a fictional company through a real-time emergency"], outcomes: ["Can identify the five forms of power and explain which create lasting influence", "Has led a team through a live crisis simulation", "Can articulate a personal leadership framework as a set of practices, not a personality description"], quote: "“Leadership is the art of getting someone else to do something because he wants to do it.” — Dwight D. Eisenhower" },
   { slug: "business-models", title: "Business Model Analysis", months: "", tagline: "Break down any business. Understand any market. Find the logic.", summary: "This discipline trains students to look beneath the surface of a company and understand the structure underneath: how it creates value, earns revenue, controls costs, reaches customers, defends margins, and survives competition. Students learn to analyze businesses the way founders, executives, and investors do — not by asking whether an idea sounds impressive, but by asking whether the model works.", why: "Business model literacy is one of the most powerful analytical skills a young person can develop. A student who can walk into any company and explain its model within five minutes has capability that most adults cannot demonstrate.", body: "This discipline trains students to see through businesses the way founders, executives, and investors do. Not at the surface level of branding or hype — but at the structural level where money is made, lost, or defended.\n\nStudents learn to break down any company — from a neighbourhood café to a global technology firm — and explain, with clarity and precision, how it generates revenue, where costs concentrate, what advantage protects it, and what single failure point could bring it down.\n\nThey learn to ask the questions that actually matter: What drives demand? What scales? What breaks? What kills this business if it goes wrong?\n\nThe result is not theory — but fluency. Students graduate able to analyse, challenge, and understand any business put in front of them.", whatYouLearn: ["The eight business models: subscription, marketplace, DTC, advertising, franchise, freemium, professional services, hardware-plus-consumable", "How to identify a company's core value proposition and revenue capture mechanism", "Competitive advantage analysis — cost leadership, differentiation, focus, network effects", "Vulnerability mapping — identifying the greatest strategic risk in any business model", "Investor Briefing format — how analysts present company analysis to investment committees", "Case studies: Netflix, Apple, Amazon, Airbnb, Costco — iconic business model evolution", "Business model disruption — how it happens and why incumbents fail to respond", "Live deconstruction of local businesses: model, strengths, blind spots"], outcomes: ["Identifies the business model of any company within minutes of exposure", "Delivers a five-minute Investor Briefing on a real public company to a professional audience", "Completes four quarterly business model analyses, progressively more sophisticated"], quote: "A brilliant product in the wrong business model is just an expensive lesson." },
   { slug: "intellectual-depth", title: "Intellectual Depth & The Art of Class", months: "", tagline: "Think deeply. Move effortlessly among ideas.", summary: "Technical skill can open doors. Intellectual range and social intelligence determine what happens inside the room. This discipline develops the qualities that make a young person not only capable, but memorable: cultural literacy, conversation, etiquette, taste, listening, judgment, and the ability to engage intelligently across history, philosophy, psychology, business, politics, and the arts. Ability to engage serious ideas without pretension.", why: "These are not decorative skills. They are the foundation of presence — the kind that makes others trust, remember, and respect the person in front of them.", body: "True influence is rarely earned through numbers alone. In the rooms where real decisions are made — private dinners, boardrooms, salons, galleries, and negotiations — people are assessed for their class, judgement, manners, and intellectual depth. This discipline exists to ensure Excalibur students are not only capable, but distinguished.\n\nStudents are formed to converse with ease across philosophy, history, psychology, and the arts — the shared language of educated societies. They engage with the foundations of aristocratic education: Homer on honour and leadership; Plato and Aristotle on virtue, reason, and rhetoric; Seneca and Marcus Aurelius on self-command and duty; Machiavelli on power, perception, and statecraft.\n\nThis is not academic display. It is social fluency. An Excalibur graduate can enter any room and make an impression through depth: thoughtful questions, cultural awareness, composed manners, and the ability to connect ideas effortlessly. This is the quiet authority that marks true class — the kind that opens doors, builds alliances, and endures long after the meeting ends.", whatYouLearn: ["Stoic philosophy as a practical framework — Marcus Aurelius, Seneca, Epictetus applied to modern business", "The art of patronage — what the Medici teach about investing in human potential and building influence", "Literary analysis for leaders — The Great Gatsby, The Alchemist examined through ambition and meaning", "Historical leadership case studies — Lincoln, Churchill, Mandela, Jobs", "The social arts — formal dining protocol, professional conversation, how to work a room without working it", "How to be remembered — substance, specificity, and genuine curiosity about others", "Writing with precision — expressing a complex idea in one clear, specific sentence", "The intellectual habits of the most accomplished people — how they read, think, and synthesize"], outcomes: ["References classical philosophy and history naturally in professional conversations", "Navigates a formal dinner or professional networking event with ease", "Has developed a personal reading practice and can discuss ideas from at least five significant books"], quote: "The mind is not a vessel to be filled, but a fire to be kindled. — Plutarch" },
+  { slug: "college-admissions", title: "College Admissions & Personal Development", months: "", tagline: "Start forging your own path. Dig Deeper. Ignite your true passions.", summary: "This module helps students prepare not only for college applications, but for the deeper question behind them: who they are becoming, what they care about, and where their energy naturally comes alive.", why: "College applications are a mirror. The student who has spent time understanding their own direction, building real things, and developing a genuine point of view will always present more compellingly than the student who assembled a transcript. Excalibur exists to build that student.", body: "This module helps students prepare not only for college applications, but for the deeper question behind them: who they are becoming, what they care about, and where their energy naturally comes alive.\n\nStudents work with Excalibur’s college advisor on application strategy, personal narrative, portfolio presentation, recommendation preparation, interview readiness, and how their Excalibur experience can strengthen their college applications and future academic goals.\n\nEach student participates in monthly 1:1 personal development sessions designed to help them reflect seriously on their strengths, interests, ambitions, values, and sense of direction. The goal is not to force a life plan too early, but to help each student understand what creates curiosity, discipline, and spark — and how to begin building around it.", whatYouLearn: ["How to identify and articulate your intellectual interests and personal values", "College application strategy — positioning, school selection, timeline, and narrative arc", "How to write a compelling personal statement rooted in genuine experience", "How to present your Excalibur portfolio and real-world work in applications", "Interview preparation — composure, storytelling, and how to handle hard questions", "How to approach recommendation letters — who to ask, how to guide them, what to include", "Personal reflection practice — strengths, interests, patterns, and direction", "How to build a personal roadmap that extends beyond the application season"], outcomes: ["Has a completed college application strategy and timeline", "Has written a personal statement draft reviewed by the Excalibur college advisor", "Has participated in at least four 1:1 personal development sessions and documented key findings about their own direction"], quote: "The student who knows who they are will always write a better essay than the student who simply knows what they have done." },
   { slug: "industry-sectors", title: "Industry Sectors Rotation", months: "One new sector each month", tagline: "Know every industry. Own any room.", summary: "Each month features a dedicated guest speaker from a different industry, a sector-specific case study, and an analytical exercise. Over ten months, students explore twelve major sectors of modern commerce.", why: "Most people leave education with deep familiarity of one or two sectors and almost no working knowledge of everything else. An Excalibur graduate who can speak with informed intelligence across ten industries has social and professional range that almost no peer can match.", body: "Each month features a dedicated guest speaker from a different industry, a sector-specific case study, and an analytical exercise. Over ten months, students explore technology, food and hospitality, finance, real estate, e-commerce, healthcare, media, legal services, manufacturing, energy, sports and fitness, and luxury brands. By graduation, every student holds a Sector Journal documenting all twelve.", whatYouLearn: ["Technology & AI — platform economics, software margins, how the most valuable companies were built", "Finance & Venture Capital — equity, debt, cap tables, term sheets, how investors decide", "Real Estate — development economics, cap rates, wealth-building mechanics", "Food & Hospitality — unit economics, brand-building in a commoditized market", "E-Commerce & Retail — customer acquisition, lifetime value, supply chains, DTC brands", "Healthcare & Biotech — FDA pathways, healthcare economics, why it requires unusual patience", "Media & Entertainment — attention economics, the creator economy, IP valuation", "Legal & Professional Services — contracts, IP, equity agreements every entrepreneur needs to understand", "Manufacturing & Supply Chain — how physical things are made, moved, and sold at scale", "Energy & Sustainability — renewable economics, carbon markets, the greatest entrepreneurial opportunity ahead", "Sports, Fitness & Wellness — athlete branding, sponsorship, franchise valuation", "Luxury & Premium Brands — psychology of desire, scarcity, heritage, and premium pricing"], outcomes: ["Holds a Sector Journal with twelve completed industry analyses", "Can speak knowledgeably about any of the twelve sectors to a professional in that field", "Has met and engaged with twelve guest speakers from twelve different industries"], quote: "The more industries the student understands, the more they realize how similar the underlying principles are — and how different the specifics are. Both things matter." },
 ];
 
@@ -249,7 +250,7 @@ const coaches = [
     role: "Academy Dean & Senior Instructor",
     img: "https://i.imgur.com/GDkTAdw.jpeg",
     isLogo: false,
-    shortBio: "Program Director. Lead Faculty. Became a Wall Street executive at age 30, heading International Finance and Operations for investment bank Kidder Peabody in London, Paris, Geneva, Zurich, Hong Kong and Tokyo. Former Executive Vice President and Chief Financial Officer of Media Arts Group (NYSE Company). Former Citigroup Managing Director with over 100 M&A transactions and 600+ CEO advisory engagements, EVP/CFO of two NYSE-listed companies, TEDx speaker, and published author. Adjunct professor at Georgetown University and UC Irvine's Paul Merage School of Business. Sits on three corporate boards. Has spoken at institutions from West Point to Stanford.",
+    shortBio: "Academy Dean and Lead Faculty. Became a Wall Street executive at age 30, heading International Finance and Operations for investment bank Kidder Peabody in London, Paris, Geneva, Zurich, Hong Kong and Tokyo. Former Executive Vice President and Chief Financial Officer of Media Arts Group (NYSE Company). Former Citigroup Managing Director with over 100 M&A transactions and 600+ CEO advisory engagements, EVP/CFO of two NYSE-listed companies, TEDx speaker, and published author. Adjunct professor at Georgetown University and UC Irvine’s Paul Merage School of Business. Sits on three corporate boards. Has spoken at leading global and national institutions from West Point to Stanford.",
     tags: ["M&A Strategy", "Finance", "Leadership", "TEDx Speaker", "Author", "Georgetown MBA Professor"],
     linkedin: "https://www.linkedin.com/in/billmorris1/",
     bio: "William Morris is a transformational finance and strategy executive with over 30 years of experience at the highest levels of Wall Street, corporate leadership, and executive education. He began his career at Exxon Corporation, earning four promotions in five years, before heading international finance and operations for Kidder Peabody across London, Paris, Geneva, Zurich, Hong Kong, and Tokyo. As Senior Vice President and Managing Director at Geneva Capital Markets — then a division of Citigroup — he completed over 100 closed middle-market M&A transactions and advised more than 600 private-company CEOs on valuation, exits, and strategy. He later served as Executive Vice President and Chief Financial Officer of Media Arts Group, a NYSE-listed company, overseeing financial operations, investor relations, and the company's $450M brand portfolio. A sought-after educator and speaker, Bill is currently an Adjunct Professor at Georgetown University's McDonough School of Business, where he teaches advanced MBA courses on strategic behavior and competitive dynamics. He is the author of The Formula for Success, a TEDx speaker, and the holder of a Guinness World Record — 20,100 consecutive sit-ups in 11 hours and 32 minutes — achieved while raising over $150,000 for the Make-A-Wish Foundation. At Excalibur Academy, Bill serves as Academy Director, overseeing curriculum strategy, faculty coordination, guest speaker programming, and academic standards across all programs."
@@ -269,16 +270,16 @@ const coaches = [
     role: "Senior Program Director",
     img: "https://i.imgur.com/HV7hqca.jpeg",
     isLogo: false,
-    shortBio: "Program Director. MBA professor. Founder and CEO of international educational institute serving over 6,000 students across 25 franchises worldwide with campuses in Huntington Beach and Czech Republic, former advisor to a national Ministry of Education of Czech Republic, played for the U.S. Youth National Soccer team, published textbook author, and international academic accreditor.",
+    shortBio: "Program Director. MBA professor. Founder and CEO of international educational institute serving over 6,000 students across 25 franchises worldwide with campuses in Huntington Beach and Europe, former advisor to a national Ministry of Education of Czech Republic, played for the U.S. Youth National Soccer team, published textbook author, and international academic accreditor.",
     tags: ["Education Systems", "Curriculum Design", "International Accreditation", "Franchise Development", "Entrepreneurship"],
     bio: "Erik Dostal is the founder and president of CA Institute, a comprehensive educational institution he built from the ground up into a leading international provider of English language, business, and professional education — serving over 6,000 students across 25 international franchise locations. Over nearly three decades, Erik has demonstrated what it means to build an educational institution that operates at genuine scale: generating $4.8M in annual revenues, sustaining 20% year-over-year growth, and closing franchise deals spanning multiple continents. He holds an MA in TESOL from the University of Chichester and NILE, an MBA from IDRAC Business School, and a BA in Cultural Anthropology from Chapman University, where he was also a collegiate athlete. A former U.S. Youth National Team soccer player, Erik has channeled his competitive background into youth development, coaching, and the design of high-performance learning environments. He has authored multiple textbooks and publications on teaching methodology, language acquisition, and business education, and has organized international language symposiums attracting thousands of delegates from around the world. A former advisor to the Czech Ministry of Education and a certified international academic accreditor, his work has received recognition including European Small Business Awards recognition across multiple years. At Excalibur Academy, Erik brings the rare combination of deep pedagogical expertise, proven franchise and systems-building experience, and a practitioner's understanding of what it takes to build educational institutions that last."
   },
   {
     name: "Christopher Sanders",
-    role: "Head of Rhetoric & Executive Communication",
+    role: "Senior Public Speaking Instructor",
     img: "https://i.imgur.com/EELzLmn.jpeg",
     isLogo: false,
-    shortBio: "Servant Leader, Keynote Speaker, Doctoral Candidate. Public safety professional and leadership-focused educator currently serving as a Deputy Sheriff with the Orange County Sheriff's Department. Alongside his law enforcement role, he teaches criminal justice as an instructor and adjunct professor, and is a doctoral candidate with an MBA background. A keynote speaker and mindset coach, focused on discipline, self-mastery, and personal transformation — bridging real-world public service experience with leadership development and community impact.",
+    shortBio: "Servant Leader, Keynote Speaker, Doctoral Candidate. Public safety professional and leadership-focused educator currently serving as a Deputy Sheriff with the Orange County Sheriff’s Department. Alongside his law enforcement role, Christopher teaches criminal justice as an instructor and adjunct professor, and is a doctoral candidate with an MBA background. A keynote speaker and mindset coach, focused on discipline, self-mastery, and personal transformation — bridging real-world public service experience with leadership development and community impact.",
     tags: ["Public Speaking", "Leadership Development", "Mindset Coaching", "Criminal Justice", "MBA", "Doctoral Candidate"],
     linkedin: "https://www.linkedin.com/in/christopher-sanders-abd-mba-dre-97a85332/",
     bio: "Christopher Sanders is a servant leader, keynote speaker, and doctoral candidate whose career spans law enforcement, higher education, and transformational personal development. A Deputy Sheriff II with the Orange County Sheriff's Department, he brings to every session the clarity, composure, and command presence that comes from operating under genuine high-stakes pressure. He holds an MBA in Strategic Management from Davenport University — graduating with a 3.95 GPA — and is completing a Doctorate in Public Administration at the University of La Verne. He has served as an Adjunct Professor at Rancho Santiago Community College District and at Davenport University, where he taught across multiple disciplines for nearly four years. Beyond the classroom, Christopher runs his own leadership and mindset development seminars — most recently his Living Life Unchained series in Irvine, California — focused on breaking limiting beliefs, building discipline-based systems, and creating lasting behavioral change in adults and young professionals. His StrengthsFinder profile reflects the qualities that define his teaching: Achiever, Futuristic, Focus, Strategic, and Positivity. At Excalibur Academy, Christopher owns the public speaking block that runs through every single session — developing voice mechanics, physical presence, impromptu delivery, advanced rhetoric, and the kind of composure under pressure that most teenagers have never been asked to find."
@@ -543,13 +544,13 @@ function Nav({ page, setPage }) {
 
 // ── PORTFOLIO FOLDER COMPONENT ──
 const portfolioItems = [
-  { n: "01", tab: "Investor Pitch", title: "Live Investor Pitch & Funding", tagline: "Public performance. Real feedback. Real judges. Real stakes.", body: "Students present a final venture in a Shark Tank-style pitch competition before real entrepreneurs and investors. Judged. Competitive. Consequential. The closest a high school student will come to a real funding environment before university. Cash prizes are awarded. Investor feedback is recorded and included in the portfolio." },
+  { n: "01", tab: "Investor Pitch", title: "Live Investor Pitch & Funding", tagline: "Public performance. Real feedback. Real judges. Real stakes.", body: "Students present their final venture concepts before a panel of entrepreneurs, investors, and senior professionals in a formal pitch competition inspired by Shark Tank.\n\nThis is not a classroom showcase. It is a judged venture forum where students are expected to defend their ideas, answer real investor & expert questions, and demonstrate the quality of their leadership thinking under pressure. Prizes are awarded, including seed investment from local investors and Academy allies. Feedback is recorded, and the experience becomes part of the student\u2019s portfolio." },
   { n: "02", tab: "Consulting", title: "Consulting Engagement", tagline: "A professional deliverable with a real client's name on it.", body: "Each student completes a consulting assignment for a local business, producing a deliverable intended for real use by the organisation. Not a simulation — a real client, a real brief, a real outcome. Students work in teams, are supervised by faculty, and present their findings directly to the business owner." },
-  { n: "03", tab: "Micro-Business", title: "Micro-Business Launch", tagline: "Real customers. Real revenue. Real accountability.", body: "In the flagship programme, students build and launch a revenue-generating micro-venture with seed funding and a dedicated mentor. They acquire real customers, manage real money, and experience real consequences of every decision they make. Every launch is documented and included in the portfolio." },
-  { n: "04", tab: "Externship", title: "Apprenticeship & Externship", tagline: "An internship in the industry sector of the student's choice.", body: "Students complete a 4–6 week externship embedded within a company in their chosen industry sector — sourced from the Academy's network of business and industry partners. They observe, contribute, build professional references, and produce a written reflection that becomes part of the graduation portfolio." },
+  { n: "03", tab: "Micro-Business", title: "Micro-Business Launch", tagline: "Real customers. Real revenue. Real accountability.", body: "In the Flagship Program, students do more than pitch ideas \u2014 they <em>forge</em> their dreams. Teams, under assigned mentors\u2019 guidance develop micro-ventures, test them with customers, manage real budgets, create marketing campaigns, pursue revenue, and learn what happens when an idea meets the market.\n\nEvery launch is documented and included in the Excalibur Portfolio, giving students a record of real execution, not just classroom theory." },
+  { n: "04", tab: "Externship", title: "Apprenticeship & Externship", tagline: "An internship in the industry sector of the student's choice.", body: "Students complete a 4\u20136 week externship inside a company or professional environment connected to their chosen industry sector, sourced through the Academy\u2019s network of business and industry partners.\n\nThe world often asks young people for experience before giving them the chance to earn it. Excalibur changes that equation. Through selected externships, students observe real work, contribute where appropriate, build professional references, and document the experience as part of their graduation portfolio." },
   { n: "05", tab: "Competition", title: "Competition Record", tagline: "Verified results. Judged by professionals.", body: "Students participate in judged pitch competitions throughout the programs, gaining experience with formal evaluation, structured feedback, and competitive recognition. Results are verified, documented, and included in the portfolio — evidence of performance under genuine competitive environment." },
   { n: "06", tab: "Portfolio", title: "Bound Graduation Portfolio", tagline: "The complete record. Professionally assembled.", body: "All major analyses, reports, awards, presentations, and business plans are professionally compiled into a single, coherent portfolio — a physical and digital record of everything a student built, wrote, delivered, and won across the programs. Presented at graduation. Submitted with university applications." },
-  { n: "07", tab: "Recommendations", title: "Faculty Recommendations", tagline: "Letters grounded in direct observation.", body: "Excalibur recommendations are written by lead faculty, top executives, and practitioners who have worked directly with the student and can speak with specificity about performance, judgment, communication, leadership, and growth over time. Not form letters. Observations from professionals who have operated at the highest levels of their fields and watched this student do the same." },
+  { n: "07", tab: "Recommendations", title: "Faculty Recommendations", tagline: "Letters grounded in direct observation.", body: "Excalibur recommendations are written by lead faculty, top executives, and practitioners who have worked directly with the student and can speak with specificity about performance, judgment, communication, leadership, and growth over time. Not form letters. Observations from professionals who have operated at the highest levels of their fields and watched the student do the same." },
   { n: "08", tab: "Alumni Network", title: "Alumni Network Access", tagline: "A network that compounds over time.", body: "Graduates gain access to a curated alumni and faculty network that supports continued development, mentorship, and professional opportunity — a community of Excalibur graduates, faculty, and guest speakers that grows with every cohort and program." },
 ];
 
@@ -581,7 +582,11 @@ function PortfolioFolder({ isMobile }) {
             <div className={isMobile ? "mod-content" : ""}>
               <div style={{ width: 24, height: 1, background: `linear-gradient(90deg, ${gold}, transparent)`, marginBottom: 12 }} />
               <p style={{ fontFamily: serif, fontSize: 13, color: gold, fontStyle: "italic", lineHeight: 1.5, marginBottom: 12 }}>{item.tagline}</p>
-              <p style={{ fontFamily: sans, fontSize: 13, lineHeight: 1.8, color: "#FBF7EE", fontWeight: 300 }}>{item.body}</p>
+              <div style={{ fontFamily: sans, fontSize: 13, lineHeight: 1.8, color: "#FBF7EE", fontWeight: 300 }}>
+                {item.body.split('\n\n').map((para, pi) => (
+                  <p key={pi} style={{ marginBottom: pi < item.body.split('\n\n').length - 1 ? 12 : 0 }} dangerouslySetInnerHTML={{ __html: para }} />
+                ))}
+              </div>
             </div>
           )}
         </div>
@@ -611,7 +616,11 @@ function PortfolioIndexWhite({ isMobile, setPage }) {
               {active === i && (
                 <div style={{ paddingBottom: 20, paddingLeft: 30 }}>
                   <p style={{ fontFamily: serif, fontSize: 13, color: "#8B6914", fontStyle: "italic", marginBottom: 8 }}>{it.tagline}</p>
-                  <p style={{ fontFamily: sans, fontSize: 13, color: "#1a1a1a", fontWeight: 300, lineHeight: 1.8 }}>{it.body}</p>
+                  <div style={{ fontFamily: sans, fontSize: 13, color: "#1a1a1a", fontWeight: 300, lineHeight: 1.8 }}>
+                    {it.body.split('\n\n').map((para, pi) => (
+                      <p key={pi} style={{ marginBottom: pi < it.body.split('\n\n').length - 1 ? 12 : 0 }} dangerouslySetInnerHTML={{ __html: para }} />
+                    ))}
+                  </div>
                 </div>
               )}
             </div>
@@ -643,7 +652,11 @@ function PortfolioIndexWhite({ isMobile, setPage }) {
               </div>
               <div style={{ width: 36, height: 1, background: "linear-gradient(90deg, #8B6914, transparent)", marginBottom: 20 }} />
               <p style={{ fontFamily: serif, fontSize: 16, color: "#8B6914", fontStyle: "italic", marginBottom: 20, lineHeight: 1.5 }}>{item.tagline}</p>
-              <p style={{ fontFamily: sans, fontSize: 14, color: "#1a1a1a", fontWeight: 300, lineHeight: 1.9, maxWidth: 560 }}>{item.body}</p>
+              <div style={{ fontFamily: sans, fontSize: 14, color: "#1a1a1a", fontWeight: 300, lineHeight: 1.9, maxWidth: 560 }}>
+                {item.body.split('\n\n').map((para, pi) => (
+                  <p key={pi} style={{ marginBottom: pi < item.body.split('\n\n').length - 1 ? 14 : 0 }} dangerouslySetInnerHTML={{ __html: para }} />
+                ))}
+              </div>
             </div>
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: 36, paddingTop: 24, borderTop: "1px solid rgba(0,0,0,.07)" }}>
               <span style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.3em", color: "rgba(0,0,0,.25)", textTransform: "uppercase" }}>{active + 1} of {portfolioItems.length}</span>
@@ -683,16 +696,17 @@ function Footer({ setPage }) {
           {/* Business info */}
           <div style={{ display: "flex", flexDirection: "column", gap: 5 }}>
             <span style={{ fontFamily: eyebrow_font, fontSize: 9, color: gold, letterSpacing: "0.25em", textTransform: "uppercase", fontWeight: 600, marginBottom: 4 }}>Excalibur Academy LLC</span>
-            <span style={{ fontFamily: sans, fontSize: 11, color: "#FBF7EE", fontWeight: 300, letterSpacing: "0.03em" }}>Orange County, CA</span>
+            <span style={{ fontFamily: sans, fontSize: 11, color: "#FBF7EE", fontWeight: 300, letterSpacing: "0.03em" }}>125 Newport Center Drive</span>
+            <span style={{ fontFamily: sans, fontSize: 11, color: "#FBF7EE", fontWeight: 300, letterSpacing: "0.03em" }}>Newport Beach, CA 92660</span>
           </div>
           {/* Applications email */}
           <div style={{ display: "flex", flexDirection: "column", gap: 5, borderLeft: isMobile ? "none" : "1px solid rgba(199,171,117,.15)", paddingLeft: isMobile ? 0 : 48 }}>
-            <span style={{ fontFamily: eyebrow_font, fontSize: 9, color: gold, letterSpacing: "0.25em", textTransform: "uppercase", fontWeight: 600, marginBottom: 4 }}>For Applications</span>
+            <span style={{ fontFamily: eyebrow_font, fontSize: 9, color: gold, letterSpacing: "0.25em", textTransform: "uppercase", fontWeight: 600, marginBottom: 4 }}>ADMISSIONS</span>
             <a href="mailto:apply@excaliburacademy.org" style={{ fontFamily: serif, fontSize: 13, color: "#FBF7EE", textDecoration: "none", letterSpacing: "0.05em", fontStyle: "italic", transition: "color .2s" }} onMouseEnter={e => e.target.style.color = gold} onMouseLeave={e => e.target.style.color = "#FBF7EE"}>apply@excaliburacademy.org</a>
           </div>
           {/* Support email */}
           <div style={{ display: "flex", flexDirection: "column", gap: 5, borderLeft: isMobile ? "none" : "1px solid rgba(199,171,117,.15)", paddingLeft: isMobile ? 0 : 48 }}>
-            <span style={{ fontFamily: eyebrow_font, fontSize: 9, color: gold, letterSpacing: "0.25em", textTransform: "uppercase", fontWeight: 600, marginBottom: 4 }}>For Support</span>
+            <span style={{ fontFamily: eyebrow_font, fontSize: 9, color: gold, letterSpacing: "0.25em", textTransform: "uppercase", fontWeight: 600, marginBottom: 4 }}>SUPPORT & GENERAL INQUIRIES</span>
             <a href="mailto:support@excaliburacademy.org" style={{ fontFamily: serif, fontSize: 13, color: "#FBF7EE", textDecoration: "none", letterSpacing: "0.05em", fontStyle: "italic", transition: "color .2s" }} onMouseEnter={e => e.target.style.color = gold} onMouseLeave={e => e.target.style.color = "#FBF7EE"}>support@excaliburacademy.org</a>
           </div>
         </div>
@@ -700,7 +714,7 @@ function Footer({ setPage }) {
       {/* Copyright */}
       <div style={{ maxWidth: 1200, margin: "0 auto", padding: isMobile ? "20px 24px" : "20px 60px", display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 8 }}>
         <p style={{ fontFamily: sans, fontSize: 9, color: "#C7AB75", letterSpacing: "0.08em", textTransform: "uppercase" }}>© 2026 Excalibur Academy LLC · Orange County, California</p>
-        <p style={{ fontFamily: sans, fontSize: 9, color: "rgba(251,247,238,.4)", letterSpacing: "0.06em" }}>Orange County, CA</p>
+        <p style={{ fontFamily: sans, fontSize: 9, color: "rgba(251,247,238,.4)", letterSpacing: "0.06em" }}>125 Newport Center Drive, Newport Beach, CA 92660</p>
       </div>
     </footer>
   );
@@ -712,7 +726,7 @@ function Footer({ setPage }) {
 // ─────────────────────────────────────────────
 const summerSchedule = [
   { time: "9:15 AM", dur: "15 min", block: "Arrival", instructor: null, role: null, img: null, desc: "Students are welcomed by the Teaching Assistants, settle in with their cohort, and begin the day in an atmosphere that feels lively, polished, and personal. There is time to connect, get comfortable, and step into the rhythm of the program before the first session begins.", color: "rgba(251,247,238,0.45)" },
-  { time: "9:30 AM", dur: "45 min", block: "Public Speaking & Rhetoric", instructor: "Christopher Sanders", role: "Public Speaking Senior Instructor", img: "https://i.imgur.com/EELzLmn.jpeg", desc: "Public speaking is built into the rhythm of every Excalibur program. Students get on their feet, speak to the room, practice eye contact, strengthen their voice, and learn how to communicate with confidence. The work develops from foundational mechanics into rhetoric, debate, impromptu speaking, persuasive delivery, and pitch preparation. With repeated practice and direct feedback, students build the kind of presence that carries into interviews, presentations, leadership roles, and every room ahead.", color: "#C7AB75" },
+  { time: "9:30 AM", dur: "45 min", block: "Public Speaking & Rhetoric", instructor: "Christopher Sanders", role: "Senior Public Speaking Instructor", img: "https://i.imgur.com/EELzLmn.jpeg", desc: "Public speaking is built into the rhythm of every Excalibur program. Students get on their feet, speak to the room, practice eye contact, strengthen their voice, and learn how to communicate with confidence. The work develops from foundational mechanics into rhetoric, debate, impromptu speaking, persuasive delivery, and pitch preparation. With repeated practice and direct feedback, students build the kind of presence that carries into interviews, presentations, leadership roles, and every room ahead.", color: "#C7AB75" },
   { time: "10:15 AM", dur: "15 min", block: "Snack Break", instructor: null, role: null, img: null, desc: "A structured pause between sessions, with catered snacks and refreshments provided by the Academy — from light bites and fruit bowls to healthy açaí bowls, smoothies, milkshakes, and seasonal selections. Students recharge, listen to lounge music, and continue conversations informally with classmates, Teaching Assistants, faculty, and instructors. Often, some of the most interesting exchanges of the day happen here — between sessions, in the moments when ideas keep moving.", color: "rgba(251,247,238,0.45)" },
   { time: "10:30 AM", dur: "90 min", block: "Block 2 — Specialist · Core Curriculum + Applied", instructor: "Bill Morris / Rotating Specialist", role: "Academy Dean · Domain Expert", img: null, desc: "The Specialist Instructor leads the core academic block, introducing the day's discipline through serious instruction, professional frameworks, and guided application. Students engage the material immediately through discussion, analysis, exercises, and applied drills. Subjects include business model analysis, financial literacy, AI and technology, sales and persuasion, leadership, and sector-specific business study — taught by practitioners who bring lived experience into the room.", color: "#A89060" },
   { time: "12:00 PM", dur: "30 min", block: "Lunch", instructor: null, role: null, img: null, desc: "Students enjoy a catered three-course lunch from a rotating selection of local restaurants, with menus that may include Mediterranean mezze and grilled entrées, coastal California salads and seasonal bowls, Italian pastas, French-inspired plates, Japanese bento-style selections, and modern American favorites. Lunch is also a time for conversation — with classmates, Teaching Assistants, faculty, and instructors — in a relaxed but polished setting. Social intelligence is part of the Excalibur experience: listening well, asking thoughtful questions, carrying oneself with ease, and making others feel seen and remembered. Dietary restrictions and allergies are requested before the program begins.", color: "rgba(251,247,238,0.45)" },
@@ -723,7 +737,7 @@ const summerSchedule = [
 ];
 
 const flagshipWeekdaySchedule = [
-  { time: "4:00 PM", dur: "40 min", block: "Block 1 — Public Speaking & Rhetoric", instructor: "Christopher Sanders", role: "Public Speaking Senior Instructor", img: "https://i.imgur.com/EELzLmn.jpeg", desc: "Public speaking is built into the rhythm of every Excalibur program. Students get on their feet, speak to the room, practice eye contact, strengthen their voice, and learn how to communicate with confidence. The work develops from foundational mechanics into rhetoric, debate, impromptu speaking, persuasive delivery, and pitch preparation. With repeated practice and direct feedback, students build the kind of presence that carries into interviews, presentations, leadership roles, and every room ahead.", color: "#C7AB75" },
+  { time: "4:00 PM", dur: "40 min", block: "Block 1 — Public Speaking & Rhetoric", instructor: "Christopher Sanders", role: "Senior Public Speaking Instructor", img: "https://i.imgur.com/EELzLmn.jpeg", desc: "Public speaking is built into the rhythm of every Excalibur program. Students get on their feet, speak to the room, practice eye contact, strengthen their voice, and learn how to communicate with confidence. The work develops from foundational mechanics into rhetoric, debate, impromptu speaking, persuasive delivery, and pitch preparation. With repeated practice and direct feedback, students build the kind of presence that carries into interviews, presentations, leadership roles, and every room ahead.", color: "#C7AB75" },
   { time: "4:40 PM", dur: "15 min", block: "Snack Break", instructor: null, role: null, img: null, desc: "A structured pause between sessions, with catered snacks and refreshments provided by the Academy — from light bites and fruit bowls to healthy açaí bowls, smoothies, milkshakes, and seasonal selections. Students recharge, listen to lounge music, and continue conversations informally with classmates, Teaching Assistants, faculty, and instructors. Often, some of the most interesting exchanges of the day happen here — between sessions, in the moments when ideas keep moving.", color: "rgba(251,247,238,0.45)" },
   { time: "4:55 PM", dur: "40 min", block: "Block 2 — Specialist / Academy Dean", instructor: "Monthly Specialist or Bill Morris (1×/month)", role: "Domain Expert · Academy Dean", img: null, desc: "The Specialist Instructor leads the core academic block, introducing the day’s discipline through serious instruction, professional frameworks, and guided application. Students engage the material immediately through discussion, analysis, exercises, and applied drills. Subjects include business model analysis, financial literacy, AI and technology, sales and persuasion, leadership, and sector-specific business study — taught by practitioners who bring lived experience into the room.", color: "#A89060" },
   { time: "5:35 PM", dur: "10 min", block: "Short Break", instructor: null, role: null, img: null, desc: "A brief reset. Students step out, recharge, and return ready for the War Room.", color: "rgba(251,247,238,0.45)" },
@@ -732,9 +746,9 @@ const flagshipWeekdaySchedule = [
 ];
 
 const flagshipSaturdaySchedule = [
-  { time: "10:30 AM", dur: "40 min", block: "Block 1a — Public Speaking · Opening", instructor: "Christopher Sanders", role: "Public Speaking Senior Instructor", img: "https://i.imgur.com/EELzLmn.jpeg", desc: "Saturday opens identically to every other Excalibur session: students stand up and speak before anything else happens. Speaking warm-up, vocal mechanics, and impromptu drills. Christopher teaches 1a and immediately continues into 1b — no gap, no wait, no idle time between blocks.", color: "#C7AB75" },
+  { time: "10:30 AM", dur: "40 min", block: "Block 1a — Public Speaking · Opening", instructor: "Christopher Sanders", role: "Senior Public Speaking Instructor", img: "https://i.imgur.com/EELzLmn.jpeg", desc: "Saturday opens identically to every other Excalibur session: students stand up and speak before anything else happens. Speaking warm-up, vocal mechanics, and impromptu drills. Christopher teaches 1a and immediately continues into 1b — no gap, no wait, no idle time between blocks.", color: "#C7AB75" },
   { time: "11:10 AM", dur: "15 min", block: "Snack Break", instructor: null, role: null, img: null, desc: "A structured pause between sessions, with catered snacks and refreshments provided by the Academy — from light bites and fruit bowls to healthy açaí bowls, smoothies, milkshakes, and seasonal selections. Students recharge, listen to lounge music, and continue conversations informally with classmates, Teaching Assistants, faculty, and instructors. Often, some of the most interesting exchanges of the day happen here — between sessions, in the moments when ideas keep moving.", color: "rgba(251,247,238,0.45)" },
-  { time: "11:25 AM", dur: "40 min", block: "Block 1b — Public Speaking · Rhetoric & Pitch", instructor: "Christopher Sanders", role: "Public Speaking Senior Instructor", img: "https://i.imgur.com/EELzLmn.jpeg", desc: "The second speaking block, consecutive to 1a. Advanced rhetoric, formal pitch architecture, high-stakes debate formats, and Aristotelian persuasion applied to modern business scenarios. Saturday is the most intensive speaking training of the week — nearly two hours with one of the programme's senior instructors, dedicated entirely to communication at the highest level.", color: "#C7AB75" },
+  { time: "11:25 AM", dur: "40 min", block: "Block 1b — Public Speaking · Rhetoric & Pitch", instructor: "Christopher Sanders", role: "Senior Public Speaking Instructor", img: "https://i.imgur.com/EELzLmn.jpeg", desc: "The second speaking block, consecutive to 1a. Advanced rhetoric, formal pitch architecture, high-stakes debate formats, and Aristotelian persuasion applied to modern business scenarios. Saturday is the most intensive speaking training of the week — nearly two hours with one of the programme's senior instructors, dedicated entirely to communication at the highest level.", color: "#C7AB75" },
   { time: "12:05 PM", dur: "30 min", block: "Lunch Break", instructor: null, role: null, img: null, desc: "Students enjoy a catered three-course lunch from a rotating selection of local restaurants, with menus that may include Mediterranean mezze and grilled entrées, coastal California salads and seasonal bowls, Italian pastas, French-inspired plates, Japanese bento-style selections, and modern American favorites. Lunch is also a time for conversation — with classmates, Teaching Assistants, faculty, and instructors — in a relaxed but polished setting. Social intelligence is part of the Excalibur experience: listening well, asking thoughtful questions, carrying oneself with ease, and making others feel seen and remembered. Dietary restrictions and allergies are requested before the program begins.", color: "rgba(251,247,238,0.45)" },
   { time: "12:35 PM", dur: "80 min", block: "Block 2 — Specialist / Academy Dean", instructor: "Monthly Specialist or Bill Morris (1×/month)", role: "Domain Expert · Academy Dean", img: null, desc: "The Specialist Instructor leads the core academic block, introducing the day’s discipline through serious instruction, professional frameworks, and guided application. Students engage the material immediately through discussion, analysis, exercises, and applied drills. Subjects include business model analysis, financial literacy, AI and technology, sales and persuasion, leadership, and sector-specific business study — taught by practitioners who bring lived experience into the room.", color: "#A89060" },
   { time: "1:55 PM", dur: "15 min", block: "Snack Break", instructor: null, role: null, img: null, desc: "A structured pause between sessions, with catered snacks and refreshments provided by the Academy — from light bites and fruit bowls to healthy açaí bowls, smoothies, milkshakes, and seasonal selections. Students recharge, listen to lounge music, and continue conversations informally with classmates, Teaching Assistants, faculty, and instructors. Often, some of the most interesting exchanges of the day happen here — between sessions, in the moments when ideas keep moving.", color: "rgba(251,247,238,0.45)" },
@@ -745,7 +759,7 @@ const flagshipSaturdaySchedule = [
 ];
 
 const sixWeekSchedule = [
-  { time: "4:00 PM", dur: "40 min", block: "Block 1 — Public Speaking & Rhetoric", instructor: "Christopher Sanders", role: "Public Speaking Senior Instructor", img: "https://i.imgur.com/EELzLmn.jpeg", desc: "Public speaking is built into the rhythm of every Excalibur program. Students get on their feet, speak to the room, practice eye contact, strengthen their voice, and learn how to communicate with confidence. The work develops from foundational mechanics into rhetoric, debate, impromptu speaking, persuasive delivery, and pitch preparation. With repeated practice and direct feedback, students build the kind of presence that carries into interviews, presentations, leadership roles, and every room ahead.", color: "#C7AB75" },
+  { time: "4:00 PM", dur: "40 min", block: "Block 1 — Public Speaking & Rhetoric", instructor: "Christopher Sanders", role: "Senior Public Speaking Instructor", img: "https://i.imgur.com/EELzLmn.jpeg", desc: "Public speaking is built into the rhythm of every Excalibur program. Students get on their feet, speak to the room, practice eye contact, strengthen their voice, and learn how to communicate with confidence. The work develops from foundational mechanics into rhetoric, debate, impromptu speaking, persuasive delivery, and pitch preparation. With repeated practice and direct feedback, students build the kind of presence that carries into interviews, presentations, leadership roles, and every room ahead.", color: "#C7AB75" },
   { time: "4:40 PM", dur: "15 min", block: "Snack Break", instructor: null, role: null, img: null, desc: "A structured pause between sessions, with catered snacks and refreshments provided by the Academy — from light bites and fruit bowls to healthy açaí bowls, smoothies, milkshakes, and seasonal selections. Students recharge, listen to lounge music, and continue conversations informally with classmates, Teaching Assistants, faculty, and instructors. Often, some of the most interesting exchanges of the day happen here — between sessions, in the moments when ideas keep moving.", color: "rgba(251,247,238,0.45)" },
   { time: "4:55 PM", dur: "40 min", block: "Block 2 — Specialist / Academy Dean", instructor: "Bill Morris or Rotating Specialist", role: "Academy Dean · Domain Expert", img: null, desc: "The Specialist Instructor leads the core academic block, introducing the day’s discipline through serious instruction, professional frameworks, and guided application. Students engage the material immediately through discussion, analysis, exercises, and applied drills. Subjects include business model analysis, financial literacy, AI and technology, sales and persuasion, leadership, and sector-specific business study — taught by practitioners who bring lived experience into the room.", color: "#A89060" },
   { time: "5:35 PM", dur: "10 min", block: "Short Break", instructor: null, role: null, img: null, desc: "A brief reset. Students step out, recharge, and return ready for the War Room.", color: "rgba(251,247,238,0.45)" },
@@ -757,7 +771,7 @@ const fieldTrips = [
   { title: "Silicon Valley — Incubators & Accelerators", tag: "Where the next business revolution is built.", img: "https://images.unsplash.com/photo-1449034446853-66c86144b0ad?w=800&q=80", desc: "Behind-the-scenes visits to leading venture capital firms, startup incubators, and accelerators across the Bay Area. Students walk through the environments where the world’s most consequential companies began. A curated dinner with a VC partner closes the day.", type: "2-Day" },
   { title: "TED Talks — San Diego", tag: "The most important ideas in the world. Live.", img: "https://i.imgur.com/OG9TuYo.jpeg", desc: "One of the world’s most influential gatherings of ideas, innovation, and leadership. TED’s power lies in compression: exceptional people distilling their most important thinking into eighteen unforgettable minutes. Students study not only the ideas themselves, but the architecture of communication from the most consequential leaders in the world.", type: "Day Trip" },
   { title: "SF + LA Tech Week", tag: "Five days. Hundreds of the most significant companies.", img: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=800&q=80", desc: "Two extraordinary events hosted across San Francisco and Los Angeles where hundreds of portfolio companies open their doors for panels, founder conversations, and networking in the environments where consequential decisions actually get made. Students attend across both cities — five days that cover more real business acumen than most accumulate in a lifetime.", type: "5-Day" },
-  { title: "SpaceX — Launch & Engineering", tag: "The ambition that changes the species.", img: "https://i.imgur.com/9qB01yy.jpeg", desc: "Students witness a SpaceX launch from the water on a private charter — a rare vantage point on one of the most consequential engineering achievements of our time. It is an unforgettable proximity to history in motion: the ignition, the ascent, the booster separation, the controlled return — explained in real time by space engineers who understand the physics, the stakes, and the ambition behind the mission.", type: "Day Trip" },
+  { title: "SpaceX — Launch & Engineering", tag: "The ambition that changes the species.", img: "https://i.imgur.com/9qB01yy.jpeg", desc: "Students witness a SpaceX launch from the water on a private charter — a rare vantage point on one of the most consequential engineering achievements of our time. It is an unforgettable proximity to history in motion: the ignition, the ascent, the booster separation, the controlled return — explained in real time by space engineers who understand the physics, the stakes, and the ambition behind the mission.", type: "Weekend" },
   { title: "Yosemite — Nature, Clarity & Team Building", tag: "Connection. Clarity. Renewal.", img: "https://images.unsplash.com/photo-1472396961693-142e6e269027?w=800&q=80", desc: "A weekend in Yosemite National Park — hiking, outdoor leadership challenges, and evening team sessions under the stars. A deliberate reminder that mental clarity, resilience, and the ability to lead under pressure are forged as much outside the boardroom as within it.", type: "Weekend" },
 ];
 
@@ -1052,13 +1066,19 @@ function SoireeInviteBlock({ openInquiry, setPage = () => {} }) {
                     <div style={{ flex: 1, height: "1px", background: "linear-gradient(90deg, rgba(199,171,117,.35), transparent)" }} />
                   </div>
                   {/* Date */}
-                  <p style={{ fontFamily: serif, fontSize: isMobile ? 72 : 96, fontWeight: 300, color: "#FBF7EE", lineHeight: 1, letterSpacing: "-0.03em", marginBottom: 6 }}>May 28</p>
-                  <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 11, letterSpacing: "0.38em", color: gold, textTransform: "uppercase", fontWeight: 600, marginBottom: 8 }}>Thursday · 6:00 PM</p>
+                  <p style={{ fontFamily: serif, fontSize: isMobile ? 72 : 96, fontWeight: 300, color: "#FBF7EE", lineHeight: 1, letterSpacing: "-0.03em", marginBottom: 6 }}>May 27</p>
+                  <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 11, letterSpacing: "0.38em", color: gold, textTransform: "uppercase", fontWeight: 600, marginBottom: 8 }}>Tuesday · 6:00 – 8:00 PM</p>
                   <p style={{ fontFamily: serif, fontSize: isMobile ? 18 : 24, color: "#FBF7EE", lineHeight: 1.3, marginBottom: 4, fontWeight: 400 }}>Academy Launch & Family Information Soirée</p>
-                  <p style={{ fontFamily: serif, fontSize: isMobile ? 13 : 16, color: gold, lineHeight: 1.4, marginBottom: 32, fontStyle: "italic" }}>at a Mediterranean Estate · San Clemente, California</p>
+                  <p style={{ fontFamily: "'Cormorant Garamond', 'Didot', Georgia, serif", fontSize: isMobile ? 11 : 12, color: "rgba(199,171,117,0.7)", lineHeight: 1.4, marginBottom: 6, fontStyle: "italic", letterSpacing: "0.18em", textTransform: "uppercase" }}>at</p>
+                  <p style={{ fontFamily: "'Cormorant Garamond', 'Didot', 'Bodoni MT', Georgia, serif", fontSize: isMobile ? 28 : 42, color: "#FBF7EE", lineHeight: 1.1, marginBottom: 6, fontWeight: 300, fontStyle: "italic", letterSpacing: "0.04em" }}>Laguna Niguel City Hall Ballroom</p>
+                  <div style={{ display: "flex", alignItems: "center", gap: 12, justifyContent: "center", marginBottom: 36 }}>
+                    <div style={{ width: 28, height: "1px", background: "rgba(199,171,117,0.4)" }} />
+                    <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 9, color: gold, lineHeight: 1, fontWeight: 600, letterSpacing: "0.35em", textTransform: "uppercase", margin: 0 }}>Laguna Niguel · California</p>
+                    <div style={{ width: 28, height: "1px", background: "rgba(199,171,117,0.4)" }} />
+                  </div>
                   <div style={{ width: 52, height: "1px", background: `linear-gradient(90deg, transparent, ${gold}, transparent)`, marginBottom: 28 }} />
                   {/* Body */}
-                  <p style={{ fontFamily: "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif", fontSize: isMobile ? 13 : 14, color: "#FBF7EE", fontWeight: 300, lineHeight: 2.0, maxWidth: 520, marginBottom: 28 }}>An intimate invitation-only evening reception for selected number of families, marking the official launch of Excalibur Academy. Excalibur Family Soirée includes live jazz, cocktails, hors d'oeuvres, faculty introductions, program & curriculum presentations, as well as the opportunity to meet the founder, leadership team, and other prospective Excalibur families.</p>
+                  <p style={{ fontFamily: "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif", fontSize: isMobile ? 13 : 14, color: "#FBF7EE", fontWeight: 300, lineHeight: 2.0, maxWidth: 520, marginBottom: 28 }}>An intimate invitation-only evening for a selected number of families, marking the official launch of Excalibur Academy. The evening includes live jazz, hors d’oeuvres, faculty introductions, program & curriculum presentations, as well as the opportunity to meet the founder, leadership team, and other prospective Excalibur families.</p>
                   {/* By Invitation */}
                   <p style={{ fontFamily: serif, fontSize: 17, color: gold, letterSpacing: "0.15em", marginBottom: 28, textTransform: "uppercase" }}>By Personal Invitation Only</p>
                   {/* Dream question */}
@@ -1219,7 +1239,7 @@ function CurriculumPage({ setPage, openInquiry }) {
               </div>
               <div>
                 <div style={{ width: 32, height: "1px", background: `linear-gradient(90deg, ${gold}, transparent)`, marginBottom: 20 }} />
-                <p style={{ fontFamily: sans, fontSize: 14, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.9, marginBottom: 24 }}>Nine disciplines — taught by executive business leaders, distinguished keynote speakers, and professors from leading universities. Click any module to learn more.</p>
+                <p style={{ fontFamily: sans, fontSize: 14, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.9, marginBottom: 24 }}>Ten disciplines — taught by executive business leaders, distinguished keynote speakers, and professors from leading universities. Click any module to learn more.</p>
                 <p style={{ fontFamily: serif, fontSize: 15, color: gold, fontStyle: "italic", lineHeight: 1.6 }}>No career academics. No theory divorced from practice. Every instructor has done the thing they teach.</p>
               </div>
             </div>
@@ -1344,7 +1364,7 @@ function CurriculumPage({ setPage, openInquiry }) {
           </div>
           <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", gap: 16 }}>
             <div style={{ width: 24, height: 1, background: "#000" }} />
-            <p style={{ fontFamily: serif, fontSize: isMobile ? 14 : 18, color: "#000", fontWeight: 400, lineHeight: 1.75, fontStyle: "italic" }}>Eight documented components · Verified · Professionally assembled · Submitted with university applications.</p>
+            <p style={{ fontFamily: serif, fontSize: isMobile ? 14 : 18, color: "#000", fontWeight: 400, lineHeight: 1.75, fontStyle: "italic" }}>Documented components · Verified · Professionally assembled · Submitted with university applications.</p>
           </div>
         </div>
         <PortfolioIndexWhite isMobile={isMobile} setPage={setPage} />
@@ -1424,7 +1444,7 @@ function FullProgramPage({ setPage, openInquiry }) {
           <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 60 }}>
             <div>
               <Eyebrow>WHAT THIS IS</Eyebrow>
-              <p style={{ fontFamily: sans, fontSize: 15, lineHeight: 1.95, color: "#FBF7EE", fontWeight: 300, marginBottom: 18 }}>The Full Program is the complete Excalibur formation — ten months of deliberate development across every discipline that defines a consequential career. It is not a series of workshops. It is a year-long transformation built around a cohort of 25 students who challenge each other and graduate with documented, professional-grade experience.</p>
+              <p style={{ fontFamily: sans, fontSize: 15, lineHeight: 1.95, color: "#FBF7EE", fontWeight: 300, marginBottom: 18 }}>The Full Program is the complete Excalibur formation — ten months of deliberate development across every discipline that defines a consequential career. It is not a series of workshops. It is a year-long transformation built around a cohort of 20 students who challenge each other and graduate with documented, professional-grade experience.</p>
               <p style={{ fontFamily: sans, fontSize: 15, lineHeight: 1.95, color: "#FBF7EE", fontWeight: 300 }}>Available as Weekday Track (Tue & Thu, 4:00–6:25 PM) or Saturday Track (every Saturday, 10:30 AM–3:45 PM). Both tracks are identical in curriculum and depth. Both share the same milestone events: Monthly Pitch Nights, the consulting project, the externship, the micro-business launch, and Academy Gala & Graduation Day.</p>
             </div>
             <div>
@@ -1556,7 +1576,7 @@ function FullProgramPage({ setPage, openInquiry }) {
       <div style={{ padding: isMobile ? "48px 16px" : "72px 40px", textAlign: "center" }}>
         <Fade>
           <h2 style={{ fontFamily: serif, fontSize: "clamp(30px,4vw,52px)", fontWeight: 600, color: "#FBF7EE", marginBottom: 12, lineHeight: 1.1 }}>The Founding Class<br /><span style={{ color: gold }}>is forming now.</span></h2>
-          <Sub center>Twenty-five students. One year of real formation. A foundation for every arena ahead.</Sub>
+          <Sub center>Twenty students. One year of real formation. A foundation for every arena ahead.</Sub>
           <button onClick={() => setPage("apply")} style={{ fontFamily: sans, background: gold, color: "#000", padding: "14px 44px", fontSize: 13, fontWeight: 700, letterSpacing: 2.5, border: "none", cursor: "pointer", marginTop: 32 }}>APPLY FOR THE FULL PROGRAM</button>
         </Fade>
       </div>
@@ -1807,8 +1827,8 @@ function FlagshipContent({ setPage, isMobile, flagshipLeft }) {
   return (
     <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 1, background: "#111" }}>
       {[
-        { label: "WEEKDAY TRACK", schedule: "Tue & Thu · 4:00–6:15 PM", left: flagshipLeft[0], items: [["Starts", "September 2026"], ["Duration", "10 Months"], ["Sessions", "Tue & Thu evenings"], ["Ends", "June 2027"], ["Price", "$1,900/month"], ["Seats", "25 per cohort"]] },
-        { label: "SATURDAY TRACK", schedule: "Saturday · 10:30 AM–3:00 PM", left: flagshipLeft[1], items: [["Starts", "September 2026"], ["Duration", "10 Months"], ["Sessions", "Full-day Saturdays"], ["Ends", "June 2027"], ["Price", "$1,900/month"], ["Seats", "25 per cohort"]] },
+        { label: "WEEKDAY TRACK", schedule: "Tue & Thu · 4:00–6:15 PM", left: flagshipLeft[0], items: [["Starts", "September 2026"], ["Duration", "10 Months"], ["Sessions", "Tue & Thu evenings"], ["Ends", "June 2027"], ["Price", "$1,900/month"], ["Seats", "20 per cohort"]] },
+        { label: "SATURDAY TRACK", schedule: "Saturday · 10:30 AM–3:00 PM", left: flagshipLeft[1], items: [["Starts", "September 2026"], ["Duration", "10 Months"], ["Sessions", "Full-day Saturdays"], ["Ends", "June 2027"], ["Price", "$1,900/month"], ["Seats", "20 per cohort"]] },
       ].map((t, i) => {
         return (
           <div key={i} style={{ background: "#080808", padding: "24px 24px" }}>
@@ -2024,15 +2044,15 @@ function ProgramsPage({ setPage, openInquiry }) {
       title: "Ten-Month Program",
       tagline: "The complete formation.",
       photo: "https://i.imgur.com/eyeb9rX.jpeg",
-      desc: "The Excalibur Ten-Month Flagship is the Academy’s primary program — a complete, ten-month course of excellence for ambitious high school students in Orange County, California.\n\nOffered in two parallel tracks — Weekday (Tuesday & Thursday evenings) and Saturday (morning) — both deliver identical curriculum, the same faculty, and the same standard of instruction. Students choose the track that fits their schedule; the formation they receive is the same.\n\nAcross ten months, students progress through all nine core disciplines: Public Speaking & Rhetoric, Financial Literacy, Business Model Analysis, The Art of Selling & Marketing, Stocks, Crypto & Market Literacy, AI & Technology, Leadership & Influence, Intellectual Depth & The Art of Class, and Industry Sectors Rotation.\n\nEach month, a dedicated specialist — a working executive, investor, or entrepreneur — leads the core curriculum block. The Lead Instructor runs the applied workshops and executive business simulations in every session. The Public Speaking Instructor opens every class.\n\nBeyond the classroom, students complete three real-world engagements: the Junior Consultant Program (advising a real local business), the Apprentice Externship (4–6 weeks embedded inside a company), and the Micro-business launch in teams with a dedicated mentor.\n\nThe program concludes in June with Academy Gala & Graduation Day — the Flagship capstone — where student teams present their micro-businesses before families, mentors, investors, invited guests, and a panel of judges.\n\nGraduates leave with the Excalibur Academy Portfolio — a professionally assembled record designed to support college applications — along with real-world experience, lasting friendships, greater confidence, and skills for every arena ahead.",
+      desc: "The Excalibur Ten-Month Flagship is the Academy’s primary program — a complete, ten-month course of excellence for ambitious high school students in Orange County, California.\n\nOffered in two parallel tracks — Weekday (Tuesday & Thursday evenings) and Saturday (morning) — both deliver identical curriculum, the same faculty, and the same standard of instruction. Students choose the track that fits their schedule; the formation they receive is the same.\n\nAcross ten months, students progress through all ten core disciplines: Public Speaking & Rhetoric, Financial Literacy, Business Model Analysis, The Art of Selling & Marketing, Stocks, Crypto & Market Literacy, AI & Technology, Leadership & Influence, Intellectual Depth & The Art of Class, Industry Sectors Rotation, and College Admissions & Personal Development.\n\nEach month, a dedicated specialist — a working executive, investor, or entrepreneur — leads the core curriculum block. The Lead Instructor runs the applied workshops and executive business simulations in every session. The Public Speaking Instructor opens every class.\n\nBeyond the classroom, students complete three real-world engagements: the Junior Consultant Program (advising a real local business), the Apprentice Externship (4–6 weeks embedded inside a company), and the Micro-business launch in teams with a dedicated mentor.\n\nThe program concludes in June with Academy Gala & Graduation Day — the Flagship capstone — where student teams present their micro-businesses before families, mentors, investors, invited guests, and a panel of judges.\n\nGraduates leave with the Excalibur Academy Portfolio — a professionally assembled record designed to support college applications — along with real-world experience, lasting friendships, greater confidence, and skills for every arena ahead.",
       details: [
         ["Schedule", "Weekday: Tue & Thu · 4:00–6:25 PM (Group B)\nor Saturday: 10:30 AM–3:45 PM (Group A)"],
-        ["Class Size", "25 per track · Founding Class"],
+        ["Class Size", "20 per track · Founding Class"],
         ["Tuition", "$1,900 / month"],
         ["Dates", "September 2026 – June 2027"],
       ],
       features: [
-        "All 9 core modules at full depth across a structured 4-phase arc",
+        "All 10 core modules at full depth across a structured 4-phase arc",
         "12 industry sector rotations — one dedicated guest professional per month",
         "Three-block session model: Speaking Coach + War Room + Specialist",
         "Junior Consultant Program — 3-week advisory engagement with a real local business",
@@ -2431,7 +2451,7 @@ function ApplyPage({ setPage, openInquiry }) {
                 status: "ENROLLING SOON", statusColor: gold,
                 label: "Ten-Month Flagship", dates: "September 2026 – June 2027",
                 price: "$1,990", period: "per month",
-                desc: "Excalibur's complete September-to-June program for ambitious high school juniors and seniors.\n\nStudents move through all nine core disciplines, complete real-world engagements, participate in selected expeditions, present at Excalibur Academy Gala & Graduation Day, and graduate with the Excalibur Academy Portfolio — a professionally assembled record of work designed to support college applications and distinguish students through evidence of leadership, communication, execution, and real-world experience.",
+                desc: "Excalibur's complete September-to-June program for ambitious high school juniors and seniors.\n\nStudents move through all ten core disciplines, complete real-world engagements, participate in selected expeditions, present at Excalibur Academy Gala & Graduation Day, and graduate with the Excalibur Academy Portfolio — a professionally assembled record of work designed to support college applications and distinguish students through evidence of leadership, communication, execution, and real-world experience.",
                 page: "flagship-detail",
               },
               {
@@ -2621,7 +2641,7 @@ function ApplyPage({ setPage, openInquiry }) {
           </div>
           <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", gap: 16 }}>
             <div style={{ width: 24, height: 1, background: "#000" }} />
-            <p style={{ fontFamily: serif, fontSize: isMobile ? 14 : 18, color: "#000", fontWeight: 400, lineHeight: 1.75, fontStyle: "italic" }}>Eight documented components · Verified · Professionally assembled · Submitted with university applications.</p>
+            <p style={{ fontFamily: serif, fontSize: isMobile ? 14 : 18, color: "#000", fontWeight: 400, lineHeight: 1.75, fontStyle: "italic" }}>Documented components · Verified · Professionally assembled · Submitted with university applications.</p>
           </div>
         </div>
         <PortfolioIndexWhite isMobile={isMobile} setPage={setPage} />
@@ -2762,8 +2782,8 @@ function ScheduleTabs({ setPage, isMobile, waves, gold }) {
       {activeProgram === "flagship" && (
         <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 1, background: "#111" }}>
           {[
-            { label: "WEEKDAY TRACK", schedule: "Tuesday & Thursday · 4:00–6:15 PM", left: flagshipLeft[0], items: [["Starts", "September 2026"], ["Duration", "10 Months"], ["Sessions", "Tue & Thu evenings"], ["Ends", "June 2027 · Academy Gala & Graduation Day"], ["Price", "$1,900 / month"], ["Seats", "25 per cohort"]] },
-            { label: "SATURDAY TRACK", schedule: "Every Saturday · 10:30 AM–3:00 PM", left: flagshipLeft[1], items: [["Starts", "September 2026"], ["Duration", "10 Months"], ["Sessions", "Full-day Saturdays"], ["Ends", "June 2027 · Academy Gala & Graduation Day"], ["Price", "$1,900 / month"], ["Seats", "25 per cohort"]] },
+            { label: "WEEKDAY TRACK", schedule: "Tuesday & Thursday · 4:00–6:15 PM", left: flagshipLeft[0], items: [["Starts", "September 2026"], ["Duration", "10 Months"], ["Sessions", "Tue & Thu evenings"], ["Ends", "June 2027 · Academy Gala & Graduation Day"], ["Price", "$1,900 / month"], ["Seats", "20 per cohort"]] },
+            { label: "SATURDAY TRACK", schedule: "Every Saturday · 10:30 AM–3:00 PM", left: flagshipLeft[1], items: [["Starts", "September 2026"], ["Duration", "10 Months"], ["Sessions", "Full-day Saturdays"], ["Ends", "June 2027 · Academy Gala & Graduation Day"], ["Price", "$1,900 / month"], ["Seats", "20 per cohort"]] },
           ].map((t, i) => {
             return (
               <div key={i} style={{ background: "#080808", padding: "28px 32px" }}>
@@ -2975,7 +2995,7 @@ function HomePage({ setPage, openInquiry }) {
       <section style={{ background: "#050504", borderTop: "1px solid rgba(199,171,117,.10)", borderBottom: "1px solid rgba(199,171,117,.10)", overflow: "hidden" }}>
         {isMobile ? (
           <div ref={statsRef} style={{ display: "grid", gridTemplateColumns: "1fr 1fr" }}>
-            {[["10", " Months", "academic year program"], ["6", " Weeks", "intensive track"], ["20", "", "students per cohort"], ["9", "", "curriculum modules"], ["30+", "", "guest speakers / year"], ["2", "", "summer waves"]].map(([num, suf, l], i) => (
+            {[["10", " Months", "academic year program"], ["6", " Weeks", "intensive track"], ["20", "", "students per cohort"], ["10", "", "curriculum modules"], ["30+", "", "guest speakers / year"], ["2", "", "summer waves"]].map(([num, suf, l], i) => (
               <div key={i} style={{ padding: "28px 16px", textAlign: "center", borderLeft: i % 2 === 1 ? "1px solid rgba(199,171,117,.10)" : "none", borderTop: i >= 2 ? "1px solid rgba(199,171,117,.10)" : "none", display: "flex", flexDirection: "column", alignItems: "center" }}>
                 <div style={{ width: 16, height: 1, background: "rgba(199,171,117,.35)", marginBottom: 12 }} />
                 <div style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: 44, fontWeight: 300, color: "#FBF7EE", lineHeight: 1 }}>
@@ -2988,7 +3008,7 @@ function HomePage({ setPage, openInquiry }) {
           </div>
         ) : (
           <div ref={statsRef} style={{ maxWidth: 1200, margin: "0 auto", display: "grid", gridTemplateColumns: "repeat(6, 1fr)" }}>
-            {[["10", " Months", "academic year program"], ["6", " Weeks", "intensive track"], ["20", "", "students per cohort"], ["9", "", "curriculum modules"], ["30+", "", "guest speakers / year"], ["2", "", "summer waves"]].map(([num, suf, l], i) => {
+            {[["10", " Months", "academic year program"], ["6", " Weeks", "intensive track"], ["20", "", "students per cohort"], ["10", "", "curriculum modules"], ["30+", "", "guest speakers / year"], ["2", "", "summer waves"]].map(([num, suf, l], i) => {
               const isHigh = i % 2 === 0;
               return (
                 <div key={i} style={{
@@ -3275,10 +3295,10 @@ function HomePage({ setPage, openInquiry }) {
 
               {/* INTENSIVE */}
               <div style={{ background: "#080808", padding: isMobile ? "40px 28px" : "52px 48px", borderTop: "2px solid rgba(199,171,117,.2)" }}>
-                <Eyebrow>ENTRY TRACK · THE IGNITION</Eyebrow>
+                <Eyebrow>INTENSIVE TRACK · THE IGNITION</Eyebrow>
                 <h3 style={{ fontFamily: serif, fontSize: 36, fontWeight: 600, color: "#FBF7EE", lineHeight: 1, marginBottom: 6 }}>Six-Week Intensive</h3>
                 <p style={{ fontFamily: serif, fontSize: 15, color: gold, fontStyle: "italic", marginBottom: 20 }}>Four waves per year · Spring, Summer, Fall, Winter</p>
-                <p style={{ fontFamily: sans, fontSize: 13, lineHeight: 1.85, color: "#FBF7EE", fontWeight: 300, marginBottom: 24 }}>Offered in four waves annually, the Six-Week Intensive distills the complete Excalibur curriculum into a focused, high‑impact experience. Six weeks in duration. Twelve total sessions. One core discipline per week. Every session follows the same consistent three-block model used across all Excalibur programs: public speaking, specialist block and applied workshop with startup simulations, case studies and team exercises.</p>
+                <p style={{ fontFamily: sans, fontSize: 13, lineHeight: 1.85, color: "#FBF7EE", fontWeight: 300, marginBottom: 24 }}>Offered in four waves annually, the Six-Week Intensive distills the complete Excalibur curriculum into a focused, high‑impact experience. Six weeks in duration. One core discipline per week. Every session follows the same consistent three-block model used across all Excalibur programs: public speaking, specialist block and applied workshop with startup simulations, case studies and team exercises.</p>
                 <div style={{ height: 1, background: "rgba(199,171,117,.08)", marginBottom: 20 }} />
                 {["A limited version of Excalibur’s curriculum", "Flexible weekday evening or Sunday half-day format", "Guest speakers from leading national companies and various industry sectors", "Public speaking training in every class", "Team-based micro-venture project with faculty guidance", "Judged Shark Tank–inspired Finale before invited guests, families, and professionals", "Access to the Excalibur alumni network", "Priority consideration for the Ten-Month Flagship Program"].map((f, j) => (
                   <div key={j} style={{ display: "flex", gap: 12, marginBottom: 11, alignItems: "flex-start" }}>
@@ -3299,9 +3319,9 @@ function HomePage({ setPage, openInquiry }) {
                 <Eyebrow>FULL IMMERSION</Eyebrow>
                 <h3 style={{ fontFamily: serif, fontSize: 36, fontWeight: 600, color: "#FBF7EE", lineHeight: 1, marginBottom: 6 }}>Flagship Ten-Month Program</h3>
                 <p style={{ fontFamily: serif, fontSize: 15, color: gold, fontStyle: "italic", marginBottom: 20 }}>The complete formation.</p>
-                <p style={{ fontFamily: sans, fontSize: 13, lineHeight: 1.85, color: "#FBF7EE", fontWeight: 300, marginBottom: 24 }}>The Full Formation is Excalibur’s ten-month flagship — a deep, immersive course of study for students ready for complete entrepreneurial, intellectual, and personal formation across all nine modules, ten industry sectors, and real-world applied engagements.</p>
+                <p style={{ fontFamily: sans, fontSize: 13, lineHeight: 1.85, color: "#FBF7EE", fontWeight: 300, marginBottom: 24 }}>The Full Formation is Excalibur’s ten-month flagship — a deep, immersive course of study for students ready for complete entrepreneurial, intellectual, and personal formation across all modules, ten industry sectors, and real-world applied engagements.</p>
                 <div style={{ height: 1, background: "rgba(199,171,117,.12)", marginBottom: 20 }} />
-                {["Full ten-month curriculum across all nine core modules", "All ten industry sectors with guest leaders", "Junior Consultant Program — real local business engagement", "Apprentice Externship — 4–6 weeks inside a real company", "Micro-business launch in teams with a dedicated mentor", "Monthly Pitch Night and Competitions", "Bound graduation portfolio of all academic and professional work", "Eligibility for London and Geneva international summer 2027 programs"].map((f, j) => (
+                {["Full ten-month curriculum across all ten curriculum modules", "All ten industry sectors with guest leaders", "Junior Consultant Program — real local business engagement", "Apprentice Externship — 4–6 weeks inside a real company", "Micro-business launch in teams with a dedicated mentor", "Monthly Pitch Night and Competitions", "Bound graduation portfolio of all academic and professional work", "Selective Day and Weekend Field Trips (Daytona, SpaceX Launch, Silicon Valley Incubators & Accelerators, TED Talks, LA & SF Tech Weeks, Yosemite Summit)", "Eligibility for London and Geneva international summer school 2027 programs"].map((f, j) => (
                   <div key={j} style={{ display: "flex", gap: 12, marginBottom: 11, alignItems: "flex-start" }}>
                     <div style={{ width: 14, height: 1, background: gold, marginTop: 8, flexShrink: 0 }} />
                     <span style={{ fontFamily: sans, fontSize: 13, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.65 }}>{f}</span>
@@ -3323,7 +3343,7 @@ function HomePage({ setPage, openInquiry }) {
       {/* CURRICULUM */}
       <section style={{ padding: isMobile ? "60px 16px" : "80px 40px" }}>
         <div style={{ maxWidth: 1100, margin: "0 auto" }}>
-          <Fade><div style={{ textAlign: "center", marginBottom: 52 }}><Eyebrow>THE CURRICULUM</Eyebrow><SectionTitle center>Inside the Classroom</SectionTitle><Sub center>Nine disciplines — taught by executive business leaders, distinguished keynote speakers, and professors from leading universities.</Sub></div></Fade>
+          <Fade><div style={{ textAlign: "center", marginBottom: 52 }}><Eyebrow>THE CURRICULUM</Eyebrow><SectionTitle center>Inside the Classroom</SectionTitle><Sub center>Ten disciplines — taught by executive business leaders, distinguished keynote speakers, and professors from leading universities.</Sub></div></Fade>
           <Fade d={.08}>
             {isMobile ? (
               /* MOBILE: accordion — all closed initially */
@@ -3369,7 +3389,7 @@ function HomePage({ setPage, openInquiry }) {
           </Fade>
           <Fade d={.12}>
             <div style={{ marginTop: 2, background: "#060606", border: "1px solid #111", borderTop: "none", padding: "17px 32px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-              <span style={{ fontFamily: sans, fontSize: 12, color: "#FBF7EE", fontWeight: 300 }}>All nine modules covered only in the Flagship Ten-Month Program.</span>
+              <span style={{ fontFamily: sans, fontSize: 12, color: "#FBF7EE", fontWeight: 300 }}>All ten modules covered only in the Flagship Ten-Month Program.</span>
               <button onClick={() => setPage("curriculum")} style={{ fontFamily: sans, fontSize: 10, color: gold, letterSpacing: 2, background: "transparent", border: "none", cursor: "pointer", fontWeight: 600, flexShrink: 0 }}>VIEW ALL MODULES →</button>
             </div>
           </Fade>
@@ -3442,7 +3462,7 @@ function HomePage({ setPage, openInquiry }) {
             <div style={{ textAlign: "center", marginBottom: 52 }}>
               <Eyebrow>OUTSIDE THE CLASSROOM</Eyebrow>
               <SectionTitle center>Field Trips & Expeditions</SectionTitle>
-              <Sub center>Real places. Real companies. Real people who built something significant. Students visit the environments where consequential things actually happen.</Sub>
+              <Sub center>Students step inside the environments where leadership, capital, innovation, and performance are put into practice — meeting the people and institutions shaping the world beyond the classroom.</Sub>
             </div>
           </Fade>
           <Fade d={.08}>
@@ -3515,7 +3535,7 @@ function HomePage({ setPage, openInquiry }) {
           </div>
           <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", gap: 16 }}>
             <div style={{ width: 24, height: 1, background: "#000" }} />
-            <p style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: isMobile ? 14 : 18, color: "#000", fontWeight: 400, lineHeight: 1.75, fontStyle: "italic" }}>Eight documented components · Verified · Professionally assembled · Submitted with university applications.</p>
+            <p style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: isMobile ? 14 : 18, color: "#000", fontWeight: 400, lineHeight: 1.75, fontStyle: "italic" }}>Documented components · Verified · Professionally assembled · Submitted with university applications.</p>
           </div>
         </div>
 
@@ -3531,7 +3551,7 @@ function HomePage({ setPage, openInquiry }) {
               <p style={{ fontFamily: serif, fontSize: 17, color: "#000", fontStyle: "italic", marginBottom: 22, lineHeight: 1.3 }}>Why Excalibur Students Stand Apart</p>
               <div style={{ width: 36, height: 1, background: "linear-gradient(90deg, #000, transparent)", marginBottom: 22 }} />
               <p style={{ fontFamily: sans, fontSize: 14, lineHeight: 1.9, color: "#1a1a1a", fontWeight: 300, marginBottom: 16 }}>An Excalibur graduate approaches college admission with proof of applied real-world leadership and work experience. A consulting report. An externship record. A micro-business launch. Competition results. A graduation portfolio. Faculty recommendations written by top executives and professionals who watched them operate, lead, and execute.</p>
-              <p style={{ fontFamily: sans, fontSize: 14, lineHeight: 1.9, color: "#1a1a1a", fontWeight: 300 }}>College admissions advisors help translate that record into a serious admissions strategy — shaping the student’s academic and personal narrative, advising on school positioning, preparing for interviews, and helping present the portfolio in a way that strengthens applications to highly selective colleges and universities.</p>
+              <p style={{ fontFamily: sans, fontSize: 14, lineHeight: 1.9, color: "#1a1a1a", fontWeight: 300 }}>Students work with Excalibur’s college advisor on application strategy, personal narrative, portfolio presentation, recommendation preparation, interview readiness, and how their Excalibur experience can strengthen their college applications and future academic goals.</p>
             </div>
             <div style={{ display: "flex", flexDirection: "column", justifyContent: "center" }}>
               <p style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.35em", color: "#000", fontWeight: 600, textTransform: "uppercase", marginBottom: 24 }}>What This Means in Practice</p>
@@ -3576,9 +3596,9 @@ function HomePage({ setPage, openInquiry }) {
           {/* Three bold statements */}
           <div style={{ maxWidth: 700, margin: "0 auto 60px", display: "flex", flexDirection: "column", gap: 0 }}>
             {[
-              { n: "I", head: "A Cohort of Twenty-Five", body: "Each wave is limited to twenty-five students. Student receives direct faculty attention and mentorship, and becomes part of the Excalibur family." },
+              { n: "I", head: "A Cohort of Twenty", body: "Each wave is limited to twenty students. Student receives direct faculty attention and mentorship, and becomes part of the Excalibur family." },
               { n: "II", head: "A Dedicated Family Coordinator", body: "From first inquiry through graduation, each family is assigned a personal coordinator. One point of contact. Direct communication, guidance and support from first contact." },
-              { n: "III", head: "Private Invitation to the May Soirée", body: "An intimate evening at a Mediterranean estate in San Clemente. Meet the faculty, the founding team, and the families who will form the first class. By personal invitation only." },
+              { n: "III", head: "Private Invitation to the May Soirée", body: "An intimate family information evening. Meet the faculty, the leadership team, and the families who will form the summer cohorts. By personal invitation only." },
             ].map(({ n, head, body }, i) => (
               <div key={i} style={{ padding: isMobile ? "28px 0" : "36px 0", borderBottom: "1px solid rgba(199,171,117,.08)", display: "grid", gridTemplateColumns: isMobile ? "1fr" : "48px 1fr", gap: isMobile ? 12 : 36, alignItems: "flex-start", textAlign: "left" }}>
                 <span style={{ fontFamily: serif, fontSize: isMobile ? 16 : 20, fontWeight: 300, color: "rgba(199,171,117,.35)", lineHeight: 1, letterSpacing: "0.1em", fontStyle: "italic", paddingTop: 4 }}>{n}</span>
@@ -3732,7 +3752,7 @@ function BeyondPage({ setPage, openInquiry }) {
       <div style={{ background: "#000", padding: isMobile ? "60px 24px" : "80px 80px", textAlign: "center", borderTop: "1px solid rgba(199,171,117,.12)" }}>
         <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 9, letterSpacing: "0.45em", color: gold, fontWeight: 700, textTransform: "uppercase", marginBottom: 20 }}>Enrollment Open · 2026</p>
         <h2 style={{ fontFamily: serif, fontSize: isMobile ? 36 : 54, fontWeight: 300, color: "#FBF7EE", lineHeight: 1.0, marginBottom: 12, letterSpacing: "0.02em" }}>Enter the Arena.</h2>
-        <p style={{ fontFamily: serif, fontSize: isMobile ? 15 : 19, color: gold, fontStyle: "italic", marginBottom: 40 }}>Twenty-five students per cohort. Selective. Serious.</p>
+        <p style={{ fontFamily: serif, fontSize: isMobile ? 15 : 19, color: gold, fontStyle: "italic", marginBottom: 40 }}>Twenty students per cohort. Selective. Serious.</p>
         <div style={{ display: "flex", gap: 14, justifyContent: "center", flexWrap: "wrap" }}>
           <button onClick={() => openInquiry && openInquiry()} style={{ fontFamily: sans, padding: "14px 48px", background: gold, border: "none", color: "#000", fontSize: 12, fontWeight: 700, letterSpacing: "0.2em", textTransform: "uppercase", cursor: "pointer" }}>APPLY NOW →</button>
           <button onClick={() => setPage("flagship-detail")} style={{ fontFamily: sans, padding: "14px 32px", background: "transparent", border: "1px solid rgba(199,171,117,.35)", color: gold, fontSize: 11, fontWeight: 500, letterSpacing: "0.15em", textTransform: "uppercase", cursor: "pointer" }}>Explore Flagship →</button>
@@ -3792,7 +3812,7 @@ const facultyProfiles = {
       "EVP & CFO of two NYSE-listed companies",
       "Adjunct Professor: Georgetown McDonough MBA · UC Irvine Paul Merage School of Business",
       "TEDx speaker · Author: The Formula for Success · Three corporate board seats",
-      "Has spoken at West Point, Stanford, and institutions across the United States",
+      "Has spoken at leading global and national institutions from West Point to Stanford",
     ],
   },
   "erik-dostal": {
@@ -3803,14 +3823,14 @@ const facultyProfiles = {
     headline: "Built an educational institution. Then franchised it across 25 locations.",
     paras: [
       "Erik Dostal is the founder and president of CA Institute, a comprehensive educational institution he built from the ground up into a leading international provider of English language, business, and professional education — serving over 6,000 students across 25 international franchise locations.",
-      "Over nearly three decades, Erik has demonstrated what it means to build an educational institution that operates at genuine scale: generating $4.8M in annual revenues, sustaining 20% year-over-year growth, and closing franchise deals spanning multiple continents, with campuses in Huntington Beach, California and Czech Republic.",
+      "Over nearly three decades, Erik has demonstrated what it means to build an educational institution that operates at genuine scale: generating $4.8M in annual revenues, sustaining 20% year-over-year growth, and closing franchise deals spanning multiple continents, with campuses in Huntington Beach, California and Europe.",
       "He holds an MA in TESOL from the University of Chichester and NILE, an MBA from IDRAC Business School, and a BA in Cultural Anthropology from Chapman University, where he was also a collegiate athlete. A former U.S. Youth National Team soccer player, Erik has channeled his competitive background into youth development, coaching, and the design of high-performance learning environments.",
       "He has authored multiple textbooks and publications on teaching methodology, language acquisition, and business education, and has organized international language symposiums attracting thousands of delegates from around the world. A former advisor to the Czech Ministry of Education and a certified international academic accreditor, his work has received European Small Business Awards recognition across multiple years.",
       "At Excalibur Academy, Erik brings the rare combination of deep pedagogical expertise, proven franchise and systems-building experience, and a practitioner's understanding of what it takes to build educational institutions that last.",
     ],
     credentials: [
       "Founder & CEO — CA Institute: 6,000+ students · 25 international franchises",
-      "Campuses in Huntington Beach, CA and Czech Republic",
+      "Campuses in Huntington Beach, CA and Europe",
       "Former advisor to the Czech Ministry of Education",
       "Published textbook author · International academic accreditor",
       "European Small Business Awards recognition",
@@ -3819,7 +3839,7 @@ const facultyProfiles = {
   },
   "christopher-sanders": {
     name: "Christopher Sanders",
-    role: "Public Speaking Senior Instructor",
+    role: "Senior Public Speaking Instructor",
     img: "https://i.imgur.com/EELzLmn.jpeg",
     tags: ["Public Speaking", "Leadership Development", "Mindset Coaching", "Criminal Justice", "MBA", "Doctoral Candidate"],
     linkedin: "https://www.linkedin.com/in/christopher-sanders-abd-mba-dre-97a85332/",
@@ -4015,7 +4035,7 @@ function FacultyPage({ setPage, openInquiry }) {
     },
     {
       name: "Christopher Sanders",
-      role: "Public Speaking Senior Instructor",
+      role: "Senior Public Speaking Instructor",
       img: "https://i.imgur.com/EELzLmn.jpeg",
       tags: ["Public Speaking", "Leadership Development", "Mindset Coaching", "Criminal Justice", "Doctoral Candidate"],
       bio: "Christopher Sanders is a servant leader, keynote speaker, and doctoral candidate whose career spans law enforcement, higher education, and transformational personal development. A Deputy Sheriff II with the Orange County Sheriff's Department, he brings to every session the clarity, composure, and command presence that comes from operating under genuine high-stakes pressure.\n\nHe holds an MBA in Strategic Management from Davenport University — graduating with a 3.95 GPA — and is completing a Doctorate in Public Administration at the University of La Verne. He has served as an Adjunct Professor at Rancho Santiago Community College District and at Davenport University, teaching across multiple disciplines for nearly four years.\n\nBeyond the classroom, Christopher runs his own leadership and mindset development seminars — most recently his Living Life Unchained series in Irvine, California — focused on breaking limiting beliefs, building discipline-based systems, and creating lasting behavioral change in adults and young professionals.\n\nAt Excalibur Academy, Christopher owns the public speaking block that runs through every single session — developing voice mechanics, physical presence, impromptu delivery, advanced rhetoric, and the kind of composure under pressure that most teenagers have never been asked to find.\n\nHis work centers on helping individuals break limiting patterns, build structure, and operate with clarity and accountability — bridging real-world public service experience with leadership development and community impact."
@@ -4280,7 +4300,7 @@ We teach how to lead.</h2>
 
       {/* STATS */}
       <div style={{ display: "grid", gridTemplateColumns: isMobile ? "repeat(2,1fr)" : "repeat(4,1fr)", gap: 2, background: "#111" }}>
-        {[["15–18", "Age range"], ["25", "Students per cohort"], ["10", "Months flagship"], ["9", "Curriculum modules"]].map(([v, l], i) => (
+        {[["15–18", "Age range"], ["20", "Students per cohort"], ["10", "Months flagship"], ["10", "Curriculum modules"]].map(([v, l], i) => (
           <div key={i} style={{ background: "#080808", padding: "36px 20px", textAlign: "center", borderTop: `2px solid ${i === 0 ? gold : "rgba(199,171,117,.1)"}` }}>
             <div style={{ fontFamily: serif, fontSize: 44, fontWeight: 600, color: gold, lineHeight: 1 }}>{v}</div>
             <div style={{ fontFamily: sans, color: "#FBF7EE", fontSize: 13, marginTop: 10, letterSpacing: "0.05em" }}>{l}</div>
@@ -4337,7 +4357,7 @@ function ComingSoonPage({ onUnlock }) {
 
         {/* Eyebrow */}
         <p style={{ fontFamily: eyebrow_font, fontSize: 10, letterSpacing: "0.4em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 20, borderBottom: "1px solid rgba(199,171,117,.3)", paddingBottom: 8, display: "inline-block" }}>
-          Waitlist Now Open for Summer Intensive July & August Waves 2026 &nbsp;·&nbsp; Apply Now &nbsp;·&nbsp; Limited Cohort &nbsp;·&nbsp; 25 Students Only
+          Waitlist Now Open for Summer Intensive July & August Waves 2026 &nbsp;·&nbsp; Apply Now &nbsp;·&nbsp; Limited Cohort &nbsp;·&nbsp; 20 Students Only
         </p>
 
         {/* Title — uniform uppercase via textTransform to match homepage */}
@@ -4426,11 +4446,11 @@ function ComingSoonPage({ onUnlock }) {
               {/* Card content */}
               <p style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.4em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 18 }}>Excalibur Academy · May 2026</p>
               <p style={{ fontFamily: serif, fontSize: isMobile ? 18 : 23, color: "#FBF7EE", lineHeight: 1.45, marginBottom: 18 }}>
-                Academy Launch and Family Information Soirée<br />at the Mediterranean Estate in San Clemente
+                Academy Launch and Family Information Soirée<br />at Laguna Niguel City Hall Ballroom
               </p>
               <div style={{ width: 48, height: 1, background: `linear-gradient(90deg, transparent, ${gold}, transparent)`, margin: "0 auto 20px" }} />
               <p style={{ fontFamily: sans, fontSize: isMobile ? 12 : 13, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.85, maxWidth: 520, margin: "0 auto 18px" }}>
-                An intimate evening and cocktail reception for a select number of families to meet the faculty, learn about the programs, and experience the standard of the Academy firsthand.
+                An intimate evening for a select number of families to meet the faculty, learn about the programs, and experience the standard of the Academy firsthand.
               </p>
               <p style={{ fontFamily: serif, fontSize: 18, color: gold, letterSpacing: "0.18em", marginBottom: 32, textTransform: "uppercase" }}>By Personal Invitation Only</p>
               <div style={{ display: "flex", gap: 8, flexDirection: isMobile ? "column" : "row", maxWidth: 520, margin: "0 auto" }}>
@@ -4460,7 +4480,7 @@ function ComingSoonPage({ onUnlock }) {
               <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 1, background: `linear-gradient(90deg, transparent, ${gold}, transparent)` }} />
               <span style={{ fontFamily: serif, fontSize: 28, color: gold, display: "block", marginBottom: 16 }}>✦</span>
               <p style={{ fontFamily: serif, fontSize: 22, color: "#FBF7EE", marginBottom: 12 }}>Thank you.</p>
-              <p style={{ fontFamily: sans, fontSize: 14, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.8 }}>Our admissions team will follow up personally with details for the May soirée. We would be honored to welcome your family.</p>
+              <p style={{ fontFamily: sans, fontSize: 14, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.8 }}>Our admissions team will follow up personally with details for the May 27 evening. We would be honored to welcome your family.</p>
             </div>
           </div>
         )}
@@ -4767,7 +4787,7 @@ function InquiryModal({ open, onClose, defaultProgram }) {
               {/* Private invitation + package */}
               <div>
                 <Label>Admissions Package & Private Invitation</Label>
-                <p style={{ fontFamily: sans, fontSize: 12, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.7, marginBottom: 14 }}>Would you like to receive your private invitation to the May 28 family soirée and admissions package by post?</p>
+                <p style={{ fontFamily: sans, fontSize: 12, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.7, marginBottom: 14 }}>Would you like to receive your private invitation to the May 27 family evening and admissions package by post?</p>
                 <div style={{ display: "flex", gap: 8 }}>
                   {["Yes — send by post", "Email only"].map(opt => <Chip key={opt} label={opt} active={form.sendPackage === opt} onClick={() => set("sendPackage", opt)} />)}
                 </div>
@@ -4841,7 +4861,7 @@ function FlagshipModulesBlock({ isMobile, setPage, modules }) {
         <div style={{ textAlign: "center", marginBottom: 52 }}>
           <p style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.4em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 12 }}>THE CURRICULUM</p>
           <h2 style={{ fontFamily: serif, fontSize: isMobile ? 28 : 42, fontWeight: 600, color: "#FBF7EE", lineHeight: 1.05, marginBottom: 12 }}>Inside the Classroom</h2>
-          <p style={{ fontFamily: sans, fontSize: 14, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.7, maxWidth: 600, margin: "0 auto" }}>Nine disciplines — taught by executive business leaders, distinguished keynote speakers, and professors from leading universities.</p>
+          <p style={{ fontFamily: sans, fontSize: 14, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.7, maxWidth: 600, margin: "0 auto" }}>Ten disciplines — taught by executive business leaders, distinguished keynote speakers, and professors from leading universities.</p>
         </div>
         {isMobile ? (
           <div style={{ border: "1px solid #151515" }}>
@@ -4883,7 +4903,7 @@ function FlagshipModulesBlock({ isMobile, setPage, modules }) {
           </div>
         )}
         <div style={{ marginTop: 2, background: "#060606", border: "1px solid #111", borderTop: "none", padding: "17px 32px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-          <span style={{ fontFamily: sans, fontSize: 12, color: "#FBF7EE", fontWeight: 300 }}>All nine modules covered only in the Flagship Ten-Month Program.</span>
+          <span style={{ fontFamily: sans, fontSize: 12, color: "#FBF7EE", fontWeight: 300 }}>All ten modules covered only in the Flagship Ten-Month Program.</span>
           <button onClick={() => setPage("curriculum")} style={{ fontFamily: sans, fontSize: 10, color: gold, letterSpacing: 2, background: "transparent", border: "none", cursor: "pointer", fontWeight: 600, flexShrink: 0 }}>VIEW ALL MODULES</button>
         </div>
       </div>
@@ -4982,7 +5002,7 @@ function FlagshipEnrollSelector({ openInquiry, isMobile }) {
   const [track, setTrack] = React.useState(null);
 
   const programs = [
-    { id: "full", label: "TEN-MONTH FLAGSHIP", title: "Ten-Month Program", price: "From $1,900 / month", desc: "The complete Excalibur formation. All nine modules, real-world engagements, and the Academy Gala & Graduation Day capstone." },
+    { id: "full", label: "TEN-MONTH FLAGSHIP", title: "Ten-Month Program", price: "From $1,900 / month", desc: "The complete Excalibur formation. All ten modules, real-world engagements, and the Academy Gala & Graduation Day capstone." },
     { id: "intensive", label: "SIX-WEEK INTENSIVE", title: "Six-Week Intensive", price: "$2,500 / wave", desc: "Full curriculum in six weeks. One discipline per week, Shark Tank–style Finale." },
     { id: "summer", label: "SUMMER INTENSIVE", title: "Summer Intensive", price: "$410 / full day · $4,500 per wave", desc: "Two weeks, full days. All nine disciplines with daily guest speakers and a Venture Finale." },
   ];
@@ -5097,6 +5117,7 @@ function FlagshipDetailPage({ setPage, openInquiry }) {
     { n: "07", title: "Leadership, Ownership & Influence", tagline: "Lead with earned authority, not borrowed title.", slug: "leadership", phase: "Phase 2 — Skills", desc: "The five forms of power, emotional intelligence, crisis communication, team dynamics, and a live CEO crisis simulation." },
     { n: "08", title: "Intellectual Depth & The Art of Class", tagline: "Think deeply. Move effortlessly among ideas.", slug: "intellectual-depth", phase: "Phase 3 — Application", desc: "Classical philosophy applied to modern leadership, social fluency, cultural literacy, and the habits of the most accomplished people." },
     { n: "09", title: "Industry Sectors Rotation", tagline: "Know every industry. Own any room.", slug: "industry-sectors", phase: "Phase 4 — Mastery", desc: "Twelve industries across ten months — technology, finance, real estate, healthcare, media, luxury, and more. One dedicated guest speaker per sector." },
+    { n: "10", title: "College Admissions & Personal Development", tagline: "Start forging your own path. Dig Deeper. Ignite your true passions.", slug: "college-admissions", phase: "Phase 4 — Mastery", desc: "Application strategy, personal narrative, portfolio presentation, interview readiness, and monthly 1:1 personal development sessions." },
   ];
 
   const tracks = [
@@ -5131,7 +5152,7 @@ function FlagshipDetailPage({ setPage, openInquiry }) {
       {/* ── STATS STRIP ── */}
       <div style={{ background: "#000", borderBottom: "1px solid rgba(199,171,117,.10)" }}>
         <div style={{ maxWidth: 1100, margin: "0 auto", display: "grid", gridTemplateColumns: isMobile ? "repeat(2,1fr)" : "repeat(4,1fr)", borderLeft: "1px solid rgba(199,171,117,.10)" }}>
-          {[["Sep 2026", "Program Starts"], ["June 2027", "Academy Gala & Graduation Day"], ["25 Students", "Per Track · Founding Class"], ["$1,900 / mo", "From — Monthly Plan"]].map(([val, lbl]) => (
+          {[["Sep 2026", "Program Starts"], ["June 2027", "Academy Gala & Graduation Day"], ["20 Students", "Per Track · Founding Class"], ["$1,900 / mo", "From — Monthly Plan"]].map(([val, lbl]) => (
             <div key={lbl} style={{ padding: isMobile ? "28px 20px" : "36px 40px", borderRight: "1px solid rgba(199,171,117,.10)", borderBottom: isMobile ? "1px solid rgba(199,171,117,.10)" : "none" }}>
               <p style={{ fontFamily: serif, fontSize: isMobile ? 20 : 26, fontWeight: 600, color: "#FBF7EE", lineHeight: 1.1, marginBottom: 7 }}>{val}</p>
               <p style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.25em", color: gold, textTransform: "uppercase", fontWeight: 600 }}>{lbl}</p>
@@ -5151,7 +5172,7 @@ function FlagshipDetailPage({ setPage, openInquiry }) {
             <h2 style={{ fontFamily: serif, fontSize: isMobile ? 30 : 44, fontWeight: 600, color: "#FBF7EE", lineHeight: 1.0, marginBottom: 32, maxWidth: 520 }}>Ten months. Nine disciplines. Real-world applied workshops.</h2>
             <p style={{ fontFamily: sans, fontSize: 14, lineHeight: 1.9, color: "#FBF7EE", fontWeight: 300, marginBottom: 18 }}>The Excalibur Ten-Month Flagship is the Academy&#39;s primary program &#8212; a complete, ten-month course of formation for ambitious high school seniors and juniors in Orange County, California, running from September&#8211;June.</p>
             <p style={{ fontFamily: sans, fontSize: 14, lineHeight: 1.9, color: "#FBF7EE", fontWeight: 300, marginBottom: 18 }}>Offered in two parallel tracks &#8212; Weekday (Tuesday &amp; Thursday evenings) and Saturday (morning) &#8212; both deliver identical curriculum, the same faculty, and the same standard of instruction. Classes are held across distinctive South Orange County settings, from historic villas and private venues inspired by the traditions of European education, to corporate conference rooms, business clubs, and professional spaces in the Newport Beach/Irvine and Laguna Beach/San Clemente corridors.</p>
-            <p style={{ fontFamily: sans, fontSize: 14, lineHeight: 1.9, color: "#FBF7EE", fontWeight: 300, marginBottom: 18 }}>Across ten months, students progress through all nine core disciplines: Public Speaking &amp; Rhetoric, Financial Literacy, Business Model Analysis, The Art of Selling &amp; Marketing, Stocks, Crypto &amp; Market Literacy, AI &amp; Technology, Leadership &amp; Influence, Intellectual Depth &amp; The Art of Class, and Industry Sectors Rotation.</p>
+            <p style={{ fontFamily: sans, fontSize: 14, lineHeight: 1.9, color: "#FBF7EE", fontWeight: 300, marginBottom: 18 }}>Across ten months, students progress through all ten core disciplines: Public Speaking &amp; Rhetoric, Financial Literacy, Business Model Analysis, The Art of Selling &amp; Marketing, Stocks, Crypto &amp; Market Literacy, AI &amp; Technology, Leadership &amp; Influence, Intellectual Depth &amp; The Art of Class, Industry Sectors Rotation, and College Admissions &amp; Personal Development.</p>
             <p style={{ fontFamily: sans, fontSize: 14, lineHeight: 1.9, color: "#FBF7EE", fontWeight: 300 }}>Each month, a dedicated specialist &#8212; a working executive, investor, entrepreneur, or senior practitioner &#8212; leads the core curriculum block. The Lead Instructor runs the War Room, where students apply what they learn through case studies, simulations, strategy exercises, and team-based challenges. The Public Speaking Instructor opens every class with drills, debates, elevator pitches, and speaking exercises designed to build confidence, presence, rhetoric, and communication under pressure.</p>
           </div>
 
@@ -5163,7 +5184,7 @@ function FlagshipDetailPage({ setPage, openInquiry }) {
                 <p style={{ fontFamily: serif, fontSize: 22, fontWeight: 600, color: "#FBF7EE" }}>Ten-Month Flagship</p>
                 <p style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.22em", color: gold, textTransform: "uppercase" }}>Inaugural Class &#183; September 2026</p>
               </div>
-              {[["Dates", "September 2026 &#8211; June 2027"], ["Weekday Track", "Tue &amp; Thu &#183; 4:00&#8211;6:25 PM"], ["Saturday Track", "Saturday &#183; 10:30 AM&#8211;3:45 PM"], ["Class Size", "25 students per track"], ["Eligibility", "Ages 15&#8211;18 &#183; Juniors &amp; Seniors"]].map(([k, v]) => (
+              {[["Dates", "September 2026 &#8211; June 2027"], ["Weekday Track", "Tue &amp; Thu &#183; 4:00&#8211;6:25 PM"], ["Saturday Track", "Saturday &#183; 10:30 AM&#8211;3:45 PM"], ["Class Size", "20 students per track"], ["Eligibility", "Ages 15&#8211;18 &#183; Juniors &amp; Seniors"]].map(([k, v]) => (
                 <div key={k} style={{ display: "grid", gridTemplateColumns: "130px 1fr", gap: 16, padding: "14px 0", borderBottom: "1px solid rgba(199,171,117,.07)" }}>
                   <span style={{ fontFamily: eyebrow_font, fontSize: 8, letterSpacing: "0.2em", color: gold, textTransform: "uppercase", paddingTop: 3, fontWeight: 600 }} dangerouslySetInnerHTML={{ __html: k }} />
                   <span style={{ fontFamily: sans, fontSize: 13, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.5 }} dangerouslySetInnerHTML={{ __html: v }} />
@@ -5174,7 +5195,7 @@ function FlagshipDetailPage({ setPage, openInquiry }) {
                 <p style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.4em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 18 }}>The Formation — What's Included</p>
                 <div style={{ display: "flex", flexDirection: "column", gap: 0, marginBottom: 28 }}>
                   {[
-                    ["01", "All 9 core modules at full depth across a structured 4-phase arc"],
+                    ["01", "All 10 core modules at full depth across a structured 4-phase arc"],
                     ["02", "12 industry sector rotations — one dedicated guest professional per month"],
                     ["03", "Three-block session model: Speaking Coach + Specialist + Applied Workshops & Simulations"],
                     ["04", "Junior Consultant Program — 3-week advisory team engagement with a real local business"],
@@ -5259,7 +5280,7 @@ function FlagshipDetailPage({ setPage, openInquiry }) {
           {[
             { n: "I", title: "Real Executives & Investors", sub: "The people who built something.", body: "CEOs, founders, venture capitalists, and operators who have built companies, managed capital at scale, and navigated the kinds of decisions most people only read about. Their sessions are not performances. They are conversations." },
             { n: "II", title: "Monthly Industry Rotation", sub: "A different world each month.", body: "Each speaker represents a different sector — technology, finance, real estate, media, luxury, healthcare, and more. By graduation, students have sat across from professionals in every major industry and understand each world from the inside." },
-            { n: "III", title: "Direct Access", sub: "Twenty-five students. One guest.", body: "The small cohort model means every student can ask a question, engage directly, and make a genuine connection. These are not auditorium lectures. They are intimate sessions where the quality of your question determines the quality of the answer." },
+            { n: "III", title: "Direct Access", sub: "Twenty students. One guest.", body: "The small cohort model means every student can ask a question, engage directly, and make a genuine connection. These are not auditorium lectures. They are intimate sessions where the quality of your question determines the quality of the answer." },
             { n: "IV", title: "Post-Session Debrief", sub: "The lesson behind the lesson.", body: "Every guest session is followed by a faculty-led debrief. Students are pushed to extract the principles beneath the story, connect the speaker's experience to current curriculum, and identify the one thing they will carry forward." },
           ].map((p, i) => (
             <div key={i} style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "60px 1fr 1fr", borderBottom: "1px solid rgba(0,0,0,.06)", padding: isMobile ? "28px 24px" : "40px 48px", gap: isMobile ? 14 : 40, alignItems: "start" }}>
@@ -5515,7 +5536,7 @@ function FlagshipDetailPage({ setPage, openInquiry }) {
           </div>
           <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", gap: 16 }}>
             <div style={{ width: 24, height: 1, background: "#000" }} />
-            <p style={{ fontFamily: serif, fontSize: isMobile ? 14 : 18, color: "#000", fontWeight: 400, lineHeight: 1.75, fontStyle: "italic" }}>Eight documented components · Verified · Professionally assembled · Submitted with university applications.</p>
+            <p style={{ fontFamily: serif, fontSize: isMobile ? 14 : 18, color: "#000", fontWeight: 400, lineHeight: 1.75, fontStyle: "italic" }}>Documented components · Verified · Professionally assembled · Submitted with university applications.</p>
           </div>
         </div>
         <PortfolioIndexWhite isMobile={isMobile} setPage={setPage} />
@@ -5527,7 +5548,7 @@ function FlagshipDetailPage({ setPage, openInquiry }) {
               <p style={{ fontFamily: serif, fontSize: 17, color: "#000", fontStyle: "italic", marginBottom: 22, lineHeight: 1.3 }}>Why Excalibur Students Stand Apart</p>
               <div style={{ width: 36, height: 1, background: "linear-gradient(90deg, #000, transparent)", marginBottom: 22 }} />
               <p style={{ fontFamily: sans, fontSize: 14, lineHeight: 1.9, color: "#1a1a1a", fontWeight: 300, marginBottom: 16 }}>An Excalibur graduate approaches college admission with proof of applied real-world leadership and work experience. A consulting report. An externship record. A micro-business launch. Competition results. A graduation portfolio. Faculty recommendations written by top executives and professionals who watched them operate, lead, and execute.</p>
-              <p style={{ fontFamily: sans, fontSize: 14, lineHeight: 1.9, color: "#1a1a1a", fontWeight: 300 }}>College admissions advisors help translate that record into a serious admissions strategy — shaping the student’s academic and personal narrative, advising on school positioning, preparing for interviews, and helping present the portfolio in a way that strengthens applications to highly selective colleges and universities.</p>
+              <p style={{ fontFamily: sans, fontSize: 14, lineHeight: 1.9, color: "#1a1a1a", fontWeight: 300 }}>Students work with Excalibur’s college advisor on application strategy, personal narrative, portfolio presentation, recommendation preparation, interview readiness, and how their Excalibur experience can strengthen their college applications and future academic goals.</p>
             </div>
             <div style={{ display: "flex", flexDirection: "column", justifyContent: "center" }}>
               <p style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.35em", color: "#000", fontWeight: 600, textTransform: "uppercase", marginBottom: 24 }}>What This Means in Practice</p>
@@ -5669,6 +5690,7 @@ function SummerDetailPage({ setPage, openInquiry }) {
     { n: "07", title: "Leadership, Ownership & Influence", slug: "leadership", desc: "The five forms of power, emotional intelligence, team dynamics, CEO crisis simulation." },
     { n: "08", title: "Intellectual Depth & The Art of Class", slug: "intellectual-depth", desc: "Classical philosophy applied to modern leadership, cultural fluency, social intelligence." },
     { n: "09", title: "Industry Sectors Rotation", slug: "industry-sectors", desc: "Ten industries, ten perspectives — technology, finance, real estate, luxury, and more." },
+    { n: "10", title: "College Admissions & Personal Development", slug: "college-admissions", desc: "Application strategy, personal narrative, interview readiness, and monthly 1:1 personal development sessions." },
   ];
 
   return (
@@ -5969,14 +5991,20 @@ function EventsPage({ setPage, openInquiry }) {
                 </div>
                 <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 8, letterSpacing: "0.45em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 16 }}>Academy Launch & Family Information Soirée</p>
                 {/* Date — monumental */}
-                <div style={{ fontFamily: serif, fontSize: isMobile ? 80 : 112, fontWeight: 300, color: "#FBF7EE", lineHeight: 1, letterSpacing: "-0.03em", marginBottom: 8 }}>May 28</div>
-                <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 10, letterSpacing: "0.4em", color: gold, textTransform: "uppercase", fontWeight: 600, marginBottom: 40 }}>Thursday · 2026 · 6:00 PM</p>
+                <div style={{ fontFamily: serif, fontSize: isMobile ? 80 : 112, fontWeight: 300, color: "#FBF7EE", lineHeight: 1, letterSpacing: "-0.03em", marginBottom: 8 }}>May 27</div>
+                <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 10, letterSpacing: "0.4em", color: gold, textTransform: "uppercase", fontWeight: 600, marginBottom: 16 }}>Tuesday · 2026 · 6:00 – 8:00 PM</p>
+                <p style={{ fontFamily: "'Cormorant Garamond', 'Didot', 'Bodoni MT', Georgia, serif", fontSize: isMobile ? 24 : 36, color: "#FBF7EE", lineHeight: 1.1, marginBottom: 6, fontWeight: 300, fontStyle: "italic", letterSpacing: "0.04em" }}>Laguna Niguel City Hall Ballroom</p>
+                <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 40 }}>
+                  <div style={{ width: 22, height: "1px", background: "rgba(199,171,117,0.4)" }} />
+                  <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 9, color: gold, letterSpacing: "0.32em", textTransform: "uppercase", fontWeight: 600, margin: 0 }}>Laguna Niguel · California</p>
+                  <div style={{ width: 22, height: "1px", background: "rgba(199,171,117,0.4)" }} />
+                </div>
                 <div style={{ width: 40, height: "1px", background: `linear-gradient(90deg, ${gold}, transparent)`, marginBottom: 32 }} />
                 {/* Details table */}
                 {[
-                  ["Location", "Mediterranean Estate · San Clemente, California"],
+                  ["Location", "Laguna Niguel City Hall Ballroom, Laguna Niguel, CA"],
                   ["Format", "Private Evening Reception"],
-                  ["Time", "6:00 PM"],
+                  ["Time", "6:00 – 8:00 PM"],
                   ["Dress Code", "Black Tie"],
                   ["Access", "By Personal Invitation Only"],
                 ].map(([label, value], i) => (
@@ -5994,8 +6022,8 @@ function EventsPage({ setPage, openInquiry }) {
               <div>
                 <h2 style={{ fontFamily: serif, fontSize: isMobile ? 24 : 36, fontWeight: 300, color: "#FBF7EE", lineHeight: 1.2, marginBottom: 28 }}>The official launch of Excalibur Academy — and a personal introduction to the people, programs, and standards behind it.</h2>
                 <div style={{ width: 36, height: "1px", background: `linear-gradient(90deg, ${gold}, transparent)`, marginBottom: 28 }} />
-                <p style={{ fontFamily: sans, fontSize: 14, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.9, marginBottom: 16 }}>Before the first program begins, Excalibur is hosting a private evening reception for a carefully selected number of families at a Mediterranean estate in San Clemente. This is the Academy's official launch event and Family Information Session — combined into one intimate, memorable evening.</p>
-                <p style={{ fontFamily: sans, fontSize: 14, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.9, marginBottom: 16 }}>The evening includes cocktails, candid conversations with the Academy's lead faculty and founding team, a full overview of Excalibur's programs, structure, expectations, and logistics — and a chance for families and prospective students to experience the standard of the Academy before enrollment opens.</p>
+                <p style={{ fontFamily: sans, fontSize: 14, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.9, marginBottom: 16 }}>Before the first program begins, Excalibur is hosting a private evening reception for a carefully selected number of families at Laguna Niguel City Hall Ballroom. This is the Academy's official launch event and Family Information Session — combined into one intimate, memorable evening.</p>
+                <p style={{ fontFamily: sans, fontSize: 14, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.9, marginBottom: 16 }}>The evening includes candid conversations with the Academy's lead faculty and founding team, a full overview of Excalibur's programs, structure, expectations, and logistics — and a chance for families and prospective students to experience the standard of the Academy before enrollment opens.</p>
                 <p style={{ fontFamily: sans, fontSize: 14, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.9, marginBottom: 28 }}>Prospective students attending the evening will be asked one question: <span style={{ fontFamily: serif, fontStyle: "italic", color: gold }}>"What is your dream?"</span></p>
                 <div style={{ borderTop: "1px solid rgba(199,171,117,.12)", paddingTop: 24 }}>
                   <p style={{ fontFamily: serif, fontSize: 16, color: gold, letterSpacing: "0.1em", marginBottom: 12, fontStyle: "italic" }}>By Personal Invitation Only</p>
@@ -6016,7 +6044,7 @@ function EventsPage({ setPage, openInquiry }) {
           </Fade>
           <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(4,1fr)", gap: 0 }}>
             {[
-              { n: "01", title: "Cocktail Reception", desc: "An intimate welcome reception on the estate grounds. Families are introduced to the Excalibur team, faculty, and one another in a relaxed, private setting." },
+              { n: "01", title: "Welcome Reception", desc: "An intimate welcome on the estate grounds. Families are introduced to the Excalibur team, faculty, and one another in a relaxed, private setting." },
               { n: "02", title: "Program Overview", desc: "A candid walk through Excalibur's programs, structure, curriculum, faculty model, and student experience — led by the Academy's founding team." },
               { n: "03", title: "Faculty Introductions", desc: "A personal introduction to Excalibur's lead faculty and visiting practitioners. An opportunity to ask questions directly and understand who will be in the room." },
               { n: "04", title: "Student Moment", desc: "Prospective students will be asked to reflect on one question: \u201cWhat is your dream?\u201d \u2014 the first step in understanding what kind of student is right for Excalibur." },
@@ -6274,7 +6302,7 @@ function ApplicationPage({ setPage, defaultProgram }) {
 
                 {/* Package */}
                 <Label>Admissions Package & Private Invitation</Label>
-                <p style={{ fontFamily: "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif", fontSize: 15, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.7, marginBottom: 12 }}>Would you like to receive your private invitation to the May 28 family soirée and admissions package by post?</p>
+                <p style={{ fontFamily: "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif", fontSize: 15, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.7, marginBottom: 12 }}>Would you like to receive your private invitation to the May 27 family evening and admissions package by post?</p>
                 <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginBottom: 24 }}>
                   {["Yes — send by post", "Email only"].map(opt => <Chip key={opt} label={opt} active={form.sendPackage === opt} onClick={() => set("sendPackage", opt)} />)}
                 </div>
