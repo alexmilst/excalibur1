@@ -3131,64 +3131,91 @@ function HomePage({ setPage, openInquiry }) {
         </div>
       </section>
 
-      {/* SUMMER ENROLLMENT BANNER */}
-      <section style={{ background: "#FAF8F4", borderBottom: `1px solid rgba(0,0,0,.08)`, padding: isMobile ? "64px 24px" : "88px 80px", position: "relative", overflow: "hidden" }}>
-        {/* background watermark numeral */}
-        <div style={{ position: "absolute", right: isMobile ? -20 : 60, top: "50%", transform: "translateY(-50%)", fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: "clamp(180px,22vw,320px)", fontWeight: 300, color: "rgba(0,0,0,.03)", lineHeight: 1, userSelect: "none", pointerEvents: "none", letterSpacing: "-0.05em" }}>2026</div>
+      {/* SUMMER ENROLLMENT BANNER — luxury editorial */}
+      <section style={{ background: "#0A0A0A", position: "relative", overflow: "hidden", padding: isMobile ? "72px 24px" : "100px 80px" }}>
 
-        <div style={{ maxWidth: 860, margin: "0 auto", position: "relative", zIndex: 1 }}>
+        {/* Background watermark numeral */}
+        <div style={{ position: "absolute", right: isMobile ? -20 : 40, top: "50%", transform: "translateY(-50%)", fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: "clamp(200px,28vw,380px)", fontWeight: 300, color: "rgba(199,171,117,.03)", lineHeight: 1, userSelect: "none", pointerEvents: "none", letterSpacing: "-0.05em" }}>2026</div>
+
+        {/* Top gold rule */}
+        <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: "1px", background: `linear-gradient(90deg, transparent, ${gold}, transparent)` }} />
+
+        <div style={{ maxWidth: 1100, margin: "0 auto", position: "relative", zIndex: 1 }}>
           <Fade>
-            {/* eyebrow — black color block with gold text */}
-            <div style={{ marginBottom: 32 }}>
-              <span style={{ display: "inline-block", background: "#000", color: gold, fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.45em", fontWeight: 700, textTransform: "uppercase", padding: "8px 18px" }}>Enrollment Now Open · Summer 2026</span>
-            </div>
+            <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 420px", gap: isMobile ? 48 : 80, alignItems: "start" }}>
 
-            {/* heading */}
-            <h2 style={{ fontFamily: serif, fontSize: isMobile ? "clamp(30px,6vw,40px)" : "clamp(38px,4vw,58px)", fontWeight: 300, color: "#0a0a0a", lineHeight: 1.05, marginBottom: 6, letterSpacing: "-0.01em" }}>
-              Summer Intensive 2026
-            </h2>
-            <h3 style={{ fontFamily: serif, fontSize: isMobile ? 16 : 20, fontWeight: 400, color: "#222", fontStyle: "italic", marginBottom: 36, letterSpacing: "0.04em" }}>
-              July &amp; August Waves
-            </h3>
-
-            {/* ornament rule */}
-            <div style={{ width: 48, height: "1px", background: "rgba(0,0,0,.2)", marginBottom: 36 }} />
-
-            {/* "You Asked. We Listened." pull quote */}
-            {/* "You Asked. We Listened." — black block treatment */}
-            <div style={{ marginBottom: 36, background: "#000", padding: isMobile ? "24px 20px" : "28px 32px" }}>
-              <p style={{ fontFamily: eyebrow_font, fontSize: 8, letterSpacing: "0.42em", color: gold, fontWeight: 700, textTransform: "uppercase", marginBottom: 12 }}>You Asked. We Listened.</p>
-              <p style={{ fontFamily: sans, fontSize: isMobile ? 13 : 15, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.75 }}><span style={{ fontWeight: 700 }}>Due to high demand and our commitment to keeping cohort sizes small — a personalised, real experience —</span> we are <span style={{ color: gold, fontWeight: 700, fontStyle: "italic" }}>introducing a second two-week intensive wave in August 2026.</span></p>
-            </div>
-
-            <p style={{ fontFamily: "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif", fontSize: 14, lineHeight: 2.0, color: "#444", fontWeight: 300, marginBottom: 36, maxWidth: 680 }}>
-              Offered in two waves — July and August — this full-day, Monday-through-Friday intensive is led by senior faculty, former Fortune 500 executives, accomplished leaders, top industry specialists, and distinguished guest speakers. The program emphasizes business and leadership curriculum, public speaking, real-world case studies, immersive startup simulations, and live pitch development, culminating in a Shark Tank-style finale.
-            </p>
-
-            {/* details list — editorial style */}
-            <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: isMobile ? 0 : "0 48px" }}>
-              {[
-                ["Sessions", "9:30 AM – 3:30 PM · Mon–Fri"],
-                ["Wave 1", "July 6 – 18, 2026"],
-                ["Wave 2", "August 3 – 15, 2026"],
-                ["Guest Speakers", "Distinguished speaker rotating daily"],
-                ["Finale", "Shark Tank–inspired with real investors"],
-                ["Eligibility", "Ages 15–18 (rising juniors and seniors) · 20 students per wave"],
-              ].map(([k, v], i) => (
-                <div key={i} style={{ display: "flex", gap: 16, padding: "13px 0", borderBottom: "1px solid rgba(0,0,0,.07)", alignItems: "flex-start" }}>
-                  <span style={{ fontFamily: sans, fontSize: 10, letterSpacing: "0.18em", color: "#111", textTransform: "uppercase", minWidth: 96, paddingTop: 1, flexShrink: 0, fontWeight: 700 }}>{k}</span>
-                  <span style={{ fontFamily: sans, fontSize: 12, color: "#333", fontWeight: 300, lineHeight: 1.6 }}>{v}</span>
+              {/* LEFT — content */}
+              <div>
+                {/* Eyebrow */}
+                <div style={{ display: "flex", alignItems: "center", gap: 14, marginBottom: 24 }}>
+                  <div style={{ width: 32, height: "1px", background: `linear-gradient(90deg, ${gold}, transparent)` }} />
+                  <span style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.45em", color: gold, fontWeight: 700, textTransform: "uppercase" }}>Enrollment Now Open · Summer 2026</span>
                 </div>
-              ))}
-            </div>
 
-            <div style={{ display: "flex", gap: 12, marginTop: 36, flexWrap: "wrap" }}>
-              <button onClick={() => openInquiry && openInquiry("summer")} style={{ fontFamily: sans, padding: "14px 36px", background: "#000", border: "none", color: "#fff", fontSize: 11, fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", cursor: "pointer" }}>APPLY NOW →</button>
-              <button onClick={() => setPage("summer-detail")} style={{ fontFamily: sans, padding: "14px 28px", background: "transparent", border: "1px solid rgba(0,0,0,.25)", color: "#111", fontSize: 11, fontWeight: 500, letterSpacing: "0.15em", textTransform: "uppercase", cursor: "pointer" }}>LEARN MORE →</button>
-            </div>
+                {/* Heading */}
+                <h2 style={{ fontFamily: "'Cormorant Garamond', 'Didot', Georgia, serif", fontSize: isMobile ? 38 : 62, fontWeight: 300, fontStyle: "italic", color: "#FBF7EE", lineHeight: 1.0, marginBottom: 6, letterSpacing: "0.01em" }}>
+                  Summer Intensive 2026
+                </h2>
+                <p style={{ fontFamily: "'Cormorant Garamond', 'Didot', Georgia, serif", fontSize: isMobile ? 18 : 26, fontWeight: 300, color: gold, fontStyle: "italic", marginBottom: 36, letterSpacing: "0.04em" }}>
+                  July &amp; August Waves
+                </p>
 
+                {/* "You Asked. We Listened." — bold statement block */}
+                <div style={{ marginBottom: 40, background: gold, padding: isMobile ? "28px 24px" : "36px 40px", position: "relative", overflow: "hidden" }}>
+                  {/* Background texture watermark */}
+                  <div style={{ position: "absolute", right: -10, top: "50%", transform: "translateY(-50%)", fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: 120, fontWeight: 300, color: "rgba(0,0,0,.08)", lineHeight: 1, userSelect: "none", pointerEvents: "none" }}>✦</div>
+                  <p style={{ fontFamily: eyebrow_font, fontSize: 8, letterSpacing: "0.42em", color: "rgba(0,0,0,.5)", fontWeight: 700, textTransform: "uppercase", marginBottom: 10, position: "relative", zIndex: 1 }}>You Asked. We Listened.</p>
+                  <p style={{ fontFamily: "'Cormorant Garamond', 'Didot', Georgia, serif", fontSize: isMobile ? 22 : 30, fontWeight: 600, color: "#000", lineHeight: 1.2, marginBottom: 0, letterSpacing: "0.01em", position: "relative", zIndex: 1 }}>We are introducing a second two-week intensive wave in August 2026.</p>
+                  <p style={{ fontFamily: sans, fontSize: 12, color: "rgba(0,0,0,.6)", fontWeight: 400, lineHeight: 1.7, marginTop: 12, position: "relative", zIndex: 1 }}>Due to high demand and our commitment to keeping cohort sizes small — a personalized, real experience.</p>
+                </div>
+
+                {/* Body copy */}
+                <p style={{ fontFamily: sans, fontSize: isMobile ? 13 : 14, lineHeight: 2.0, color: "#FBF7EE", fontWeight: 300, marginBottom: 36, maxWidth: 600 }}>
+                  Offered in two waves — July and August — this full-day, Monday-through-Friday intensive is led by senior faculty, former Fortune 100 executives, accomplished leaders, top industry specialists, and distinguished guest speakers. Designed specifically for high school students ages 15–18 who are ready to turn ambition into discipline and action. Students move from idea to venture concept: researching the market, shaping the business model, building the pitch, practicing executive communication, and learning how to defend their thinking under pressure. The program culminates in the Shark Tank Inspired Excalibur Venture Finale, where teams present before real investors and invited judges.
+                </p>
+
+                {/* CTA buttons */}
+                <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
+                  <button onClick={() => openInquiry && openInquiry("summer")} style={{ fontFamily: sans, padding: "14px 40px", background: gold, border: "none", color: "#000", fontSize: 11, fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", cursor: "pointer" }}>APPLY NOW →</button>
+                  <button onClick={() => setPage("summer-detail")} style={{ fontFamily: sans, padding: "14px 28px", background: "transparent", border: `1px solid rgba(199,171,117,.35)`, color: gold, fontSize: 11, fontWeight: 500, letterSpacing: "0.15em", textTransform: "uppercase", cursor: "pointer" }}>LEARN MORE →</button>
+                </div>
+              </div>
+
+              {/* RIGHT — details panel */}
+              <div style={{ border: `1px solid rgba(199,171,117,.15)`, borderTop: `2px solid ${gold}` }}>
+                {/* Panel header */}
+                <div style={{ padding: "20px 28px", borderBottom: `1px solid rgba(199,171,117,.1)` }}>
+                  <p style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: 18, color: "#FBF7EE", fontStyle: "italic", fontWeight: 300, margin: 0 }}>Program Details</p>
+                </div>
+                {/* Detail rows */}
+                <div style={{ padding: "0 28px" }}>
+                  {[
+                    ["Sessions", "9:30 AM – 3:30 PM · Mon–Fri"],
+                    ["Wave 1", "July 6 – 18, 2026"],
+                    ["Wave 2", "August 3 – 15, 2026"],
+                    ["Finale", "Excalibur Venture Finale · Real investors"],
+                    ["Guest Speakers", "Distinguished speaker rotating daily"],
+                    ["Eligibility", "Ages 15–18 · 20 students per wave"],
+                  ].map(([k, v], i) => (
+                    <div key={i} style={{ display: "grid", gridTemplateColumns: "96px 1fr", gap: 14, padding: "13px 0", borderBottom: "1px solid rgba(199,171,117,.07)", alignItems: "flex-start" }}>
+                      <span style={{ fontFamily: eyebrow_font, fontSize: 8, letterSpacing: "0.18em", color: gold, textTransform: "uppercase", paddingTop: 2, flexShrink: 0, fontWeight: 600 }}>{k}</span>
+                      <span style={{ fontFamily: sans, fontSize: 12, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.65 }}>{v}</span>
+                    </div>
+                  ))}
+                </div>
+                {/* Tuition */}
+                <div style={{ padding: "24px 28px", borderTop: `1px solid rgba(199,171,117,.1)` }}>
+                  <p style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: 36, fontWeight: 300, color: "#FBF7EE", lineHeight: 1, marginBottom: 4 }}>$4,500<span style={{ fontSize: 16 }}> / wave</span></p>
+                  <p style={{ fontFamily: sans, fontSize: 11, color: gold, fontWeight: 300 }}>$410 per full day</p>
+                </div>
+              </div>
+
+            </div>
           </Fade>
         </div>
+
+        {/* Bottom gold rule */}
+        <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: "1px", background: `linear-gradient(90deg, transparent, rgba(199,171,117,.25), transparent)` }} />
       </section>
 
 
