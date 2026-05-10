@@ -1067,9 +1067,13 @@ function SoireeInviteBlock({ openInquiry, setPage = () => {} }) {
                   </div>
                   {/* Date */}
                   <p style={{ fontFamily: serif, fontSize: isMobile ? 72 : 96, fontWeight: 300, color: "#FBF7EE", lineHeight: 1, letterSpacing: "-0.03em", marginBottom: 6 }}>May 27</p>
-                  <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 11, letterSpacing: "0.38em", color: gold, textTransform: "uppercase", fontWeight: 600, marginBottom: 8 }}>Tuesday · 6:00 – 8:00 PM</p>
-                  <p style={{ fontFamily: serif, fontSize: isMobile ? 18 : 24, color: "#FBF7EE", lineHeight: 1.3, marginBottom: 4, fontWeight: 400 }}>Academy Launch & Family Information Soirée</p>
-                  <p style={{ fontFamily: "'Cormorant Garamond', 'Didot', Georgia, serif", fontSize: isMobile ? 11 : 12, color: "rgba(199,171,117,0.7)", lineHeight: 1.4, marginBottom: 6, fontStyle: "italic", letterSpacing: "0.18em", textTransform: "uppercase" }}>at</p>
+                  <div style={{ display: "flex", alignItems: "center", gap: 10, justifyContent: "center", marginBottom: 8 }}>
+                    <div style={{ width: 18, height: "1px", background: `linear-gradient(90deg, transparent, ${gold})` }} />
+                    <p style={{ fontFamily: "'Cormorant Garamond', 'Didot', Georgia, serif", fontSize: isMobile ? 16 : 20, color: gold, fontStyle: "italic", fontWeight: 600, letterSpacing: "0.12em", margin: 0 }}>Wednesday &nbsp;·&nbsp; 6:00 – 8:00 PM</p>
+                    <div style={{ width: 18, height: "1px", background: `linear-gradient(90deg, ${gold}, transparent)` }} />
+                  </div>
+                  <p style={{ fontFamily: serif, fontSize: isMobile ? 18 : 24, color: "#FBF7EE", lineHeight: 1.3, marginBottom: 16, fontWeight: 400 }}>Academy Launch & Family Information Soirée</p>
+                  <p style={{ fontFamily: "'Cormorant Garamond', 'Didot', Georgia, serif", fontSize: isMobile ? 15 : 18, color: gold, lineHeight: 1.4, marginBottom: 6, fontStyle: "italic", fontWeight: 700, letterSpacing: "0.12em" }}>at</p>
                   <p style={{ fontFamily: "'Cormorant Garamond', 'Didot', 'Bodoni MT', Georgia, serif", fontSize: isMobile ? 28 : 42, color: "#FBF7EE", lineHeight: 1.1, marginBottom: 6, fontWeight: 300, fontStyle: "italic", letterSpacing: "0.04em" }}>Laguna Niguel City Hall Ballroom</p>
                   <div style={{ display: "flex", alignItems: "center", gap: 12, justifyContent: "center", marginBottom: 36 }}>
                     <div style={{ width: 28, height: "1px", background: "rgba(199,171,117,0.4)" }} />
@@ -2969,15 +2973,15 @@ function HomePage({ setPage, openInquiry }) {
 
           <Fade d={.22}>
             <h1 style={{ fontFamily: serif, fontStyle: "italic", fontSize: isMobile ? "clamp(20px,4.5vw,30px)" : "clamp(22px,2.2vw,34px)", fontWeight: 300, lineHeight: 1.4, color: "#FBF7EE", maxWidth: 660, marginBottom: 10 }}>
-              School teaches how to take tests.
+              The Future Belongs to Those Who Build It.
             </h1>
             <h1 style={{ fontFamily: serif, fontSize: isMobile ? "clamp(22px,5vw,34px)" : "clamp(26px,2.6vw,40px)", fontWeight: 600, lineHeight: 1.25, color: gold, maxWidth: 660, marginBottom: 36 }}>
-              We teach how to take the lead.
+              Become Who You Are.
             </h1>
           </Fade>
 
           <Fade d={.28}>
-            <p style={{ fontFamily: sans, fontSize: isMobile ? 14 : 16, lineHeight: 1.85, color: "#FBF7EE", maxWidth: 580, marginBottom: 44, fontWeight: 300 }}>A premier institute where Fortune 500 executives, real entrepreneurs, investors, and distinguished professors teach the next generation to lead the world — not follow it.</p>
+            <p style={{ fontFamily: sans, fontSize: isMobile ? 14 : 16, lineHeight: 1.85, color: "#FBF7EE", maxWidth: 580, marginBottom: 44, fontWeight: 300 }}>A premier institute where Fortune 100 executives, real entrepreneurs, investors, and distinguished professors teach the next generation to lead the world — not follow it.</p>
           </Fade>
 
           <Fade d={.34}>
@@ -3174,7 +3178,7 @@ function HomePage({ setPage, openInquiry }) {
               Excalibur Leadership Academy is a premier institute for entrepreneurship and leadership for ambitious teenagers aged 15–18 in Orange County, California. We are building the institution we wish had existed when we were young — one where students are mentored by accomplished adults who have built companies, led teams, and operated under real stakes.
             </p>
             <p style={{ fontFamily: sans, fontSize: 13, lineHeight: 1.9, color: "#1a1a1a", fontWeight: 300, marginBottom: 20 }}>
-              Our sessions &amp; events take place across South Orange County, inspired by the traditions of European elite education and American spirit of leadership and excellence.
+              Our sessions &amp; events take place across South Orange County, in historic and business venues inspired by the traditions of European elite education and American spirit of leadership and excellence.
             </p>
             <p style={{ fontFamily: sans, fontSize: 13, lineHeight: 1.9, color: "#1a1a1a", fontWeight: 300, marginBottom: 32 }}>
               Every session follows a rigorous three-block format: rhetoric and public speaking with a speaking coach, real-world business analysis and applied workshops led by senior faculty, and deep domain instruction from rotating specialists for every industry. No filler. No theory divorced from practice — only formation that builds confidence, judgment, and mental fortitude.
@@ -3203,23 +3207,26 @@ function HomePage({ setPage, openInquiry }) {
           {/* Right panel — outcomes + Why This Matters */}
           <div style={{ padding: isMobile ? "0 28px 48px" : "64px 72px", display: "flex", flexDirection: "column" }}>
             <p style={{ fontFamily: sans, fontSize: 13, lineHeight: 1.9, color: "#1a1a1a", fontWeight: 300, marginBottom: 24 }}>
-              Our faculty are not simply career academics. They are entrepreneurs, Fortune 500 executives, investors, Wall Street "sharks" and professionals who teach from lived experience. Students learn public speaking, financial literacy &amp; trading, business strategy, sales and marketing, leadership, technology and AI, and the social arts through live case studies, startup simulations, consulting projects, and competitive pitch forums.
+              Our faculty are not simply career academics. They are entrepreneurs, Fortune 100 executives, investors, Wall Street "sharks" and professionals who teach from lived experience. Students learn public speaking, financial literacy &amp; trading, business strategy, sales and marketing, leadership, technology and AI, and the social arts through live case studies, startup simulations, consulting projects, and competitive pitch forums.
             </p>
             <p style={{ fontFamily: sans, fontSize: 13, lineHeight: 1.9, color: "#1a1a1a", fontWeight: 300, marginBottom: 40 }}>
-              By the end of the program, every student will have pitched before live audiences, analyzed and advised real businesses, launched a micro venture, worked in teams under pressure, and competed in Shark Tank-style finals before real investors. In our flagship program, students launch revenue-generating micro-ventures and graduate with a bound portfolio of work that sets them apart for university admissions — and beyond.
+              By the end of the program, every student will have pitched before live audiences, analyzed and advised real businesses, launched a micro venture, worked in teams under pressure, and competed in Shark Tank-style finals before real investors. In our flagship program, students launch in teams a real micro-venture and graduate with a bound portfolio of work that sets them apart for university admissions — and beyond.
             </p>
 
             {/* WHY THIS MATTERS NOW */}
             <div style={{ borderTop: `1px solid rgba(0,0,0,.1)`, paddingTop: 32, marginBottom: 28 }}>
               <div style={{ display: "flex", alignItems: "center", gap: 14, marginBottom: 18 }}>
                 <div style={{ width: 28, height: 1, background: "#8B6914", flexShrink: 0 }} />
-                <h3 style={{ fontFamily: serif, fontSize: isMobile ? 20 : 24, fontWeight: 600, color: "#000", letterSpacing: "0.02em" }}>Why This Matters Now</h3>
+                <h3 style={{ fontFamily: serif, fontSize: isMobile ? 20 : 24, fontWeight: 600, color: "#000", letterSpacing: "0.02em" }}>Character is Destiny. Become Who You Are.</h3>
               </div>
               <p style={{ fontFamily: sans, fontSize: 13, lineHeight: 1.9, color: "#1a1a1a", fontWeight: 300, marginBottom: 16 }}>
-                The skills that determine success — public speaking, strategic thinking, financial judgment, leadership, and the ability to persuade — are largely absent from traditional education. At the same time, artificial intelligence is rapidly reshaping industries and dissolving career paths once considered secure.
+                The skills that determine success — public speaking, strategic thinking, financial judgment, leadership, and the ability to persuade are largely absent from traditional education. At the same time, AI is rapidly reshaping industries and dissolving career paths once considered secure.
               </p>
-              <p style={{ fontFamily: sans, fontSize: 13, lineHeight: 1.9, color: "#1a1a1a", fontWeight: 300 }}>
-                What cannot be replaced are human capacities: confidence under pressure, ownership of outcomes, the ability to lead, to sell an idea, resilience after failure, and the ability to act when the path is uncertain. Entrepreneurs have built industries, challenged assumptions, and shaped every major era of innovation. Excalibur exists to prepare students to lead the next business revolution.
+              <p style={{ fontFamily: sans, fontSize: 13, lineHeight: 1.9, color: "#1a1a1a", fontWeight: 300, marginBottom: 16 }}>
+                What cannot be replaced are human capacities: confidence under pressure, ownership of outcomes, the courage to keep going, regroup or the judgement to know when to stop, the art of class manners, the ability to lead people through the unknown. Entrepreneurs have powered business revolutions, built modern industry, and are now shaping the age of AI.
+              </p>
+              <p style={{ fontFamily: serif, fontSize: isMobile ? 15 : 17, color: "#8B6914", fontStyle: "italic", lineHeight: 1.5 }}>
+                Excalibur Academy forges students with the confidence, discipline, and courage to lead what comes next.
               </p>
             </div>
 
@@ -4140,16 +4147,16 @@ function AboutPage({ setPage, openInquiry }) {
               <p style={{ fontFamily: eyebrow_font, fontSize: 10, letterSpacing: "0.4em", color: "#111", fontWeight: 600, textTransform: "uppercase", marginBottom: 14 }}>The Academy</p>
               <h2 style={{ fontFamily: serif, fontSize: isMobile ? 26 : 36, fontWeight: 600, color: "#000", lineHeight: 1.1, marginBottom: 28 }}>Forging the leaders of tomorrow</h2>
               <p style={{ fontFamily: sans, fontSize: 16, lineHeight: 1.9, color: "#111", fontWeight: 300, marginBottom: 18 }}>Excalibur Leadership Academy is a premier institute for entrepreneurship, business, and leadership for ambitious teenagers aged 15–18 in Orange County, California. We are building the institution we wish had existed when we were young — one where students are mentored by accomplished adults who have built companies, led teams, and operated under real stakes.</p>
-              <p style={{ fontFamily: sans, fontSize: 16, lineHeight: 1.9, color: "#111", fontWeight: 300, marginBottom: 18 }}>Our sessions &amp; events take place across South Orange County, inspired by the traditions of European elite education and American spirit of leadership and excellence.</p>
+              <p style={{ fontFamily: sans, fontSize: 16, lineHeight: 1.9, color: "#111", fontWeight: 300, marginBottom: 18 }}>Our sessions &amp; events take place across South Orange County, in historic and business venues inspired by the traditions of European elite education and American spirit of leadership and excellence.</p>
               <p style={{ fontFamily: sans, fontSize: 16, lineHeight: 1.9, color: "#111", fontWeight: 300, marginBottom: 18 }}>Every session follows a rigorous three-block format: rhetoric and public speaking with a speaking coach, real-world business analysis and applied workshops led by senior faculty, and deep domain instruction from rotating specialists for every industry. No filler. No theory divorced from practice — only formation that builds confidence, judgment, and mental fortitude.</p>
-              <p style={{ fontFamily: sans, fontSize: 16, lineHeight: 1.9, color: "#111", fontWeight: 300 }}>Our faculty are not simply career academics. They are entrepreneurs, Fortune 500 executives, investors, Wall Street "sharks" and professionals who teach from lived experience. Students learn public speaking, financial literacy &amp; trading, business strategy, sales and marketing, leadership, technology and AI, and the social arts through live case studies, startup simulations, consulting projects, and competitive pitch forums.</p>
+              <p style={{ fontFamily: sans, fontSize: 16, lineHeight: 1.9, color: "#111", fontWeight: 300 }}>Our faculty are not simply career academics. They are entrepreneurs, Fortune 100 executives, investors, Wall Street "sharks" and professionals who teach from lived experience. Students learn public speaking, financial literacy &amp; trading, business strategy, sales and marketing, leadership, technology and AI, and the social arts through live case studies, startup simulations, consulting projects, and competitive pitch forums.</p>
             </div>
             <div>
               <div style={{ height: isMobile ? 300 : 460, overflow: "hidden", border: "1px solid rgba(0,0,0,.08)", marginBottom: 28 }}>
                 <img src="https://i.imgur.com/PGjUc7X.jpeg" alt="Excalibur Academy" style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center top" }} onError={e => e.target.style.display="none"} />
               </div>
               <div style={{ borderLeft: "3px solid #C7AB75", paddingLeft: 20 }}>
-                <p style={{ fontFamily: sans, fontSize: 16, lineHeight: 1.9, color: "#111", fontWeight: 300 }}>By the end of the program, every student will have pitched before live audiences, analyzed and advised real businesses, launched a micro venture, worked in teams under pressure, and competed in Shark Tank-style finals before real investors. In our flagship program, students launch revenue-generating micro-ventures and graduate with a bound portfolio of work that sets them apart for university admissions — and beyond.</p>
+                <p style={{ fontFamily: sans, fontSize: 16, lineHeight: 1.9, color: "#111", fontWeight: 300 }}>By the end of the program, every student will have pitched before live audiences, analyzed and advised real businesses, launched a micro venture, worked in teams under pressure, and competed in Shark Tank-style finals before real investors. In our flagship program, students launch in teams a real micro-venture and graduate with a bound portfolio of work that sets them apart for university admissions — and beyond.</p>
               </div>
             </div>
           </div>
@@ -4170,83 +4177,124 @@ function AboutPage({ setPage, openInquiry }) {
         <div style={{ background: "#080608", padding: isMobile ? "56px 24px" : "80px 80px" }}>
           <div style={{ maxWidth: 860, margin: "0 auto" }}>
             <p style={{ fontFamily: eyebrow_font, fontSize: 10, letterSpacing: "0.4em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 14 }}>Why This Matters Now</p>
-            <h2 style={{ fontFamily: serif, fontSize: isMobile ? 26 : 40, fontWeight: 600, color: "#FBF7EE", lineHeight: 1.1, marginBottom: 36 }}>Schools teach how to take tests.
-We teach how to lead.</h2>
+            <h2 style={{ fontFamily: serif, fontSize: isMobile ? 26 : 40, fontWeight: 600, color: "#FBF7EE", lineHeight: 1.1, marginBottom: 36 }}>Character is Destiny. Become Who You Are.</h2>
             <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: isMobile ? 28 : 52 }}>
-              <p style={{ fontFamily: sans, fontSize: 16, lineHeight: 1.9, color: "#FBF7EE", fontWeight: 300 }}>The skills that determine success — public speaking, strategic thinking, financial judgment, leadership, and the ability to persuade — are largely absent from traditional education. At the same time, AI is rapidly reshaping industries and dissolving career paths once considered secure.</p>
+              <p style={{ fontFamily: sans, fontSize: 16, lineHeight: 1.9, color: "#FBF7EE", fontWeight: 300 }}>The skills that determine success — public speaking, strategic thinking, financial judgment, leadership, and the ability to persuade are largely absent from traditional education. At the same time, AI is rapidly reshaping industries and dissolving career paths once considered secure.</p>
               <div>
-                <p style={{ fontFamily: sans, fontSize: 16, lineHeight: 1.9, color: "#FBF7EE", fontWeight: 300, marginBottom: 18 }}>What cannot be replaced are human capacities: confidence under pressure, ownership of outcomes, the ability to lead, to sell an idea, to recover from failure, and to act when the path is uncertain. Entrepreneurs have powered business revolutions, built modern industry, and are now shaping the age of AI.</p>
-                <p style={{ fontFamily: serif, fontSize: isMobile ? 18 : 22, color: gold, fontStyle: "italic", lineHeight: 1.5 }}>Excalibur exists to prepare students to lead the next business revolution.</p>
+                <p style={{ fontFamily: sans, fontSize: 16, lineHeight: 1.9, color: "#FBF7EE", fontWeight: 300, marginBottom: 18 }}>What cannot be replaced are human capacities: confidence under pressure, ownership of outcomes, the courage to keep going, regroup or the judgement to know when to stop, the art of class manners, the ability to lead people through the unknown. Entrepreneurs have powered business revolutions, built modern industry, and are now shaping the age of AI.</p>
+                <p style={{ fontFamily: serif, fontSize: isMobile ? 18 : 22, color: gold, fontStyle: "italic", lineHeight: 1.5 }}>Excalibur Academy forges students with the confidence, discipline, and courage to lead what comes next.</p>
               </div>
             </div>
           </div>
         </div>
 
-        {/* WHAT IS BEHIND A NAME — text left, image right — merged, no gap */}
-        <div style={{ background: "#07060A", padding: isMobile ? "56px 24px" : "80px 80px" }}>
-          <div style={{ maxWidth: 900, margin: "0 auto" }}>
-            <div>
-              <p style={{ fontFamily: eyebrow_font, fontSize: 10, letterSpacing: "0.4em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 16 }}>What is Behind a Name?</p>
-              <h2 style={{ fontFamily: serif, fontSize: isMobile ? 30 : 44, fontWeight: 600, color: "#FBF7EE", lineHeight: 1.1, marginBottom: 28 }}>The Meaning of Excalibur.</h2>
-              <div style={{ width: 48, height: 1, background: `linear-gradient(90deg, ${gold}, transparent)`, marginBottom: 28 }} />
-              <p style={{ fontFamily: sans, fontSize: 16, lineHeight: 1.9, color: "#FBF7EE", fontWeight: 300, marginBottom: 20 }}>In Arthurian legend, Excalibur is more than a sword or power. It is a symbol of leadership and excellence. It represents the right to lead — earned through judgment, courage, responsibility, and character. At Excalibur Academy, leadership is treated the same way. It is not about being the loudest in the room or holding the highest title. It is about becoming the kind of person others can trust to think clearly, act responsibly, and lead under pressure.</p>
-              <p style={{ fontFamily: sans, fontSize: 16, lineHeight: 1.9, color: "#FBF7EE", fontWeight: 300, marginBottom: 28 }}>The Knights of the Round Table represented more than strength in battle. It stood for a broader ideal of leadership: courage joined with judgment, debate joined with loyalty, and ambition governed by honor. At Excalibur, that ideal becomes an educational model. Students are trained not for one narrow skill, but for the range of capacities leadership requires.</p>
-              <p style={{ fontFamily: serif, fontSize: isMobile ? 20 : 26, color: gold, fontStyle: "italic", lineHeight: 1.4 }}>That is our model.</p>
-            </div>
-            <div style={{ height: 48 }} />
-            <div style={{ height: isMobile ? 300 : 520, overflow: "hidden" }}>
-              <img src="https://i.imgur.com/QNW043y.jpeg" alt="King Arthur — Excalibur" style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center" }} onError={e => e.target.style.display="none"} />
+        {/* WHAT IS BEHIND A NAME — luxury full-bleed editorial */}
+        <div style={{ background: "#07060A", position: "relative", overflow: "hidden" }}>
+
+          {/* Full-bleed image — no crop, full picture visible */}
+          <div style={{ position: "relative", width: "100%", background: "#07060A" }}>
+            <img
+              src="https://i.imgur.com/QNW043y.jpeg"
+              alt="King Arthur — Excalibur"
+              style={{ width: "100%", height: "auto", display: "block", objectFit: "contain", objectPosition: "center top" }}
+              onError={e => e.target.style.display = "none"}
+            />
+            {/* Bottom gradient fade into the text section */}
+            <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: isMobile ? 120 : 200, background: "linear-gradient(to bottom, transparent, #07060A)" }} />
+          </div>
+
+          {/* Text content — floats below the image */}
+          <div style={{ position: "relative", zIndex: 2, padding: isMobile ? "0 24px 72px" : "0 80px 100px" }}>
+            <div style={{ maxWidth: 860, margin: "0 auto" }}>
+
+              {/* Gold rule */}
+              <div style={{ display: "flex", alignItems: "center", gap: 20, marginBottom: 40 }}>
+                <div style={{ flex: 1, height: "1px", background: `linear-gradient(90deg, transparent, rgba(199,171,117,.4))` }} />
+                <span style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: 18, color: gold, opacity: 0.7 }}>✦</span>
+                <div style={{ flex: 1, height: "1px", background: `linear-gradient(90deg, rgba(199,171,117,.4), transparent)` }} />
+              </div>
+
+              {/* Eyebrow */}
+              <p style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.45em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 18, opacity: 0.8 }}>What is Behind a Name?</p>
+
+              {/* Heading */}
+              <h2 style={{ fontFamily: "'Cormorant Garamond', 'Didot', 'Bodoni MT', Georgia, serif", fontSize: isMobile ? 36 : 62, fontWeight: 300, fontStyle: "italic", color: "#FBF7EE", lineHeight: 1.05, letterSpacing: "0.01em", marginBottom: 36 }}>The Meaning<br />of Excalibur.</h2>
+
+              {/* Gold rule short */}
+              <div style={{ width: 56, height: "1px", background: `linear-gradient(90deg, ${gold}, transparent)`, marginBottom: 36 }} />
+
+              {/* Two-column body on desktop */}
+              <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: isMobile ? 24 : 64, marginBottom: 48 }}>
+                <p style={{ fontFamily: sans, fontSize: isMobile ? 14 : 15, lineHeight: 2.0, color: "rgba(251,247,238,0.75)", fontWeight: 300 }}>
+                  In Arthurian legend, Excalibur is more than a sword or power. It is a symbol of leadership and excellence. It represents the right to lead — earned through judgment, courage, responsibility, and character. At Excalibur Academy, leadership is treated the same way. It is not about being the loudest in the room or holding the highest title. It is about becoming the kind of person others can trust to think clearly, act responsibly, and emerge as a natural leader under toughest conditions.
+                </p>
+                <p style={{ fontFamily: sans, fontSize: isMobile ? 14 : 15, lineHeight: 2.0, color: "rgba(251,247,238,0.75)", fontWeight: 300 }}>
+                  The Knights of the Round Table represent more than strength in battle, but courage joined with judgment, debate joined with loyalty, and ambition governed by honor. At Excalibur, that ideal becomes an educational model. Students are trained not for one narrow skill, but for the range of capacities true leadership requires.
+                </p>
+              </div>
+
+              {/* Closing italic quote — large, centred */}
+              <div style={{ borderTop: "1px solid rgba(199,171,117,.12)", paddingTop: 40, textAlign: "center" }}>
+                <p style={{ fontFamily: "'Cormorant Garamond', 'Didot', Georgia, serif", fontSize: isMobile ? 22 : 34, fontWeight: 300, fontStyle: "italic", color: gold, lineHeight: 1.4, letterSpacing: "0.02em", maxWidth: 640, margin: "0 auto" }}>
+                  "That is our model."
+                </p>
+              </div>
+
             </div>
           </div>
         </div>
       </Fade>
 
-      {/* OUR PHILOSOPHY — white background, LZ29Hjy + DhYCwhg */}
+      {/* OUR PHILOSOPHY — ivory luxury editorial */}
       <Fade>
-        <div style={{ background: "#FAFAF8", padding: isMobile ? "56px 24px" : "80px 80px" }}>
+        <div style={{ background: "#FAFAF8", padding: isMobile ? "72px 24px" : "110px 80px" }}>
           <div style={{ maxWidth: 1100, margin: "0 auto" }}>
-            <p style={{ fontFamily: eyebrow_font, fontSize: 10, letterSpacing: "0.4em", color: "#111", fontWeight: 600, textTransform: "uppercase", marginBottom: 14 }}>Our Philosophy</p>
-            <h2 style={{ fontFamily: serif, fontSize: isMobile ? 26 : 38, fontWeight: 600, color: "#000", lineHeight: 1.1, marginBottom: 32 }}>Classical formation. Modern ambition.</h2>
-            <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: isMobile ? 32 : 64, marginBottom: 48 }}>
-              <p style={{ fontFamily: sans, fontSize: 16, lineHeight: 1.9, color: "#111", fontWeight: 300 }}>Excalibur Academy exists to restore a form of education that once produced statesmen, generals, patrons of culture, and innovators — while equipping it for the demands of the modern world. Our foundation is European in character: classical formation, intellectual depth, discipline of mind, and cultivated presence, while our heart and soul is unmistakably American: with fire, hustle, innovation and leadership.</p>
-              <p style={{ fontFamily: sans, fontSize: 16, lineHeight: 1.9, color: "#111", fontWeight: 300 }}>For centuries, European education focused not only on knowledge, but on formation — the shaping of judgment, character, taste, and authority. From Ancient Greek warriors trained in rhetoric and philosophy, to Roman senators schooled in governance and persuasion, to Renaissance leaders educated across art, politics, and commerce, excellence was understood as multidimensional. Excalibur returns to this tradition while extending it into the modern age — where leadership now requires command of technology, AI, entrepreneurship, and global complexity.</p>
+            <div style={{ display: "flex", alignItems: "center", gap: 16, marginBottom: 32 }}>
+              <div style={{ width: 36, height: "1px", background: "rgba(0,0,0,.2)" }} />
+              <p style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.45em", color: "#8B6914", fontWeight: 600, textTransform: "uppercase", margin: 0 }}>Our Philosophy</p>
             </div>
-            {/* Two photos side by side */}
-            <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 2 }}>
-              <div style={{ height: isMobile ? 240 : 380, overflow: "hidden" }}>
-                <img src="https://i.imgur.com/LZ29Hjy.jpeg" alt="Ancient Greece — classical tradition" style={{ width: "100%", height: "100%", objectFit: "cover", transition: "transform .6s ease" }} onError={e => e.target.style.display="none"} onMouseEnter={e => e.target.style.transform="scale(1.04)"} onMouseLeave={e => e.target.style.transform="scale(1)"} />
+            <h2 style={{ fontFamily: "'Cormorant Garamond', 'Didot', 'Bodoni MT', Georgia, serif", fontSize: isMobile ? 34 : 56, fontWeight: 300, fontStyle: "italic", color: "#0A0A0A", lineHeight: 1.1, letterSpacing: "0.01em", marginBottom: 52 }}>Classical formation.<br />Modern ambition.</h2>
+            <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: isMobile ? 32 : 80, marginBottom: 64 }}>
+              <p style={{ fontFamily: sans, fontSize: isMobile ? 14 : 15, lineHeight: 2.1, color: "#2a2a2a", fontWeight: 300 }}>Excalibur Academy exists to restore a form of education that once formed statesmen, aristocrats, generals, pioneers, and innovators — while equipping it for the demands of the modern world. Our foundation is European in character: classical formation, intellectual depth, discipline of mind, and cultivated presence, while equally driven by the American spirit of leadership: action, innovation, independence, ambition, and the courage to forge new paths.</p>
+              <p style={{ fontFamily: sans, fontSize: isMobile ? 14 : 15, lineHeight: 2.1, color: "#2a2a2a", fontWeight: 300 }}>For centuries, European education focused not only on knowledge, but on formation of character — the shaping of judgment, taste, class and natural authority. From Ancient Greek warriors trained in rhetoric and philosophy, to Roman senators schooled in governance and persuasion, to Renaissance leaders educated across art, politics, and commerce, excellence was understood as multidimensional. Excalibur returns to this tradition while extending it into the modern age — where leadership now requires command of technology, entrepreneurship, rapid change and global complexity.</p>
+            </div>
+            {/* Two photos — refined border treatment */}
+            <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: isMobile ? 3 : 3 }}>
+              <div style={{ height: isMobile ? 260 : 420, overflow: "hidden", position: "relative" }}>
+                <img src="https://i.imgur.com/LZ29Hjy.jpeg" alt="Ancient Greece — classical tradition" style={{ width: "100%", height: "100%", objectFit: "cover", transition: "transform .8s cubic-bezier(.25,.46,.45,.94)" }} onError={e => e.target.style.display = "none"} onMouseEnter={e => e.target.style.transform = "scale(1.05)"} onMouseLeave={e => e.target.style.transform = "scale(1)"} />
+                <div style={{ position: "absolute", inset: 0, background: "rgba(10,10,10,0.08)" }} />
               </div>
-              <div style={{ height: isMobile ? 240 : 380, overflow: "hidden" }}>
-                <img src="https://i.imgur.com/DhYCwhg.jpeg" alt="European heritage" style={{ width: "100%", height: "100%", objectFit: "cover", transition: "transform .6s ease" }} onError={e => e.target.style.display="none"} onMouseEnter={e => e.target.style.transform="scale(1.04)"} onMouseLeave={e => e.target.style.transform="scale(1)"} />
+              <div style={{ height: isMobile ? 260 : 420, overflow: "hidden", position: "relative" }}>
+                <img src="https://i.imgur.com/DhYCwhg.jpeg" alt="European heritage" style={{ width: "100%", height: "100%", objectFit: "cover", transition: "transform .8s cubic-bezier(.25,.46,.45,.94)" }} onError={e => e.target.style.display = "none"} onMouseEnter={e => e.target.style.transform = "scale(1.05)"} onMouseLeave={e => e.target.style.transform = "scale(1)"} />
+                <div style={{ position: "absolute", inset: 0, background: "rgba(10,10,10,0.08)" }} />
               </div>
             </div>
           </div>
         </div>
       </Fade>
 
-      {/* A MULTIDIMENSIONAL LEADER — dark block */}
+      {/* A MULTIDIMENSIONAL LEADER — dark luxury block */}
       <Fade>
-        <div style={{ background: "#07060A", padding: isMobile ? "56px 24px" : "80px 80px" }}>
+        <div style={{ background: "#07060A", padding: isMobile ? "72px 24px" : "110px 80px", borderTop: "1px solid rgba(199,171,117,.08)" }}>
           <div style={{ maxWidth: 1100, margin: "0 auto" }}>
-            <p style={{ fontFamily: eyebrow_font, fontSize: 10, letterSpacing: "0.4em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 14 }}>A Multidimensional Leader</p>
-            <h2 style={{ fontFamily: serif, fontSize: isMobile ? 26 : 40, fontWeight: 600, color: "#FBF7EE", lineHeight: 1.1, marginBottom: 36 }}>Ownership and Excellence.</h2>
-            <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: isMobile ? 28 : 72 }}>
+            <div style={{ display: "flex", alignItems: "center", gap: 16, marginBottom: 32 }}>
+              <div style={{ width: 36, height: "1px", background: `linear-gradient(90deg, ${gold}, transparent)` }} />
+              <p style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.45em", color: gold, fontWeight: 600, textTransform: "uppercase", margin: 0 }}>A Multidimensional Leader</p>
+            </div>
+            <h2 style={{ fontFamily: "'Cormorant Garamond', 'Didot', 'Bodoni MT', Georgia, serif", fontSize: isMobile ? 34 : 58, fontWeight: 300, fontStyle: "italic", color: "#FBF7EE", lineHeight: 1.05, letterSpacing: "0.01em", marginBottom: 52 }}>Ownership<br />and Excellence.</h2>
+            <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: isMobile ? 48 : 80 }}>
               <div>
-                <p style={{ fontFamily: sans, fontSize: 16, lineHeight: 1.9, color: "#FBF7EE", fontWeight: 300, marginBottom: 22 }}>Excalibur students are forged to lead commanding respect, to speak with precision, to think with depth, to take risks intelligently, and to remain composed under scrutiny. They study public speaking and executive communication alongside financial reasoning and strategy. They learn the art of class and presence alongside risk management, ownership of outcomes, and modern innovation in AI and emerging technology. They are trained to take responsibility not only for success, but also failure — and to learn decisively from both, and own the next step through resilience and will.</p>
-                <p style={{ fontFamily: sans, fontSize: 16, lineHeight: 1.9, color: "#FBF7EE", fontWeight: 300 }}>This is a type of leader forged by Excalibur Academy — a leader of range and depth. One who is credible from every angle. Intellectual without being abstract. Decisive without being reckless. Cultured without being performative. When such a student enters a room — whether an art gallery, a boardroom, a negotiation, or a stage — the authority is natural. Conversations are grounded. Presence is composed. Leadership is evident.</p>
+                <p style={{ fontFamily: sans, fontSize: isMobile ? 14 : 15, lineHeight: 2.1, color: "rgba(251,247,238,0.75)", fontWeight: 300, marginBottom: 28 }}>Excalibur students are forged to lead commanding respect, to speak with precision, to think with depth, to take risks intelligently, and to remain composed under scrutiny. They study public speaking and executive communication alongside financial reasoning and strategy. They learn the art of class and presence alongside risk management, ownership of outcomes, and modern innovation in AI and emerging technology. They are trained to take responsibility not only for success, but also failure — to learn decisively from both, and own the next step through resilience and will.</p>
+                <p style={{ fontFamily: sans, fontSize: isMobile ? 14 : 15, lineHeight: 2.1, color: "rgba(251,247,238,0.75)", fontWeight: 300 }}>This is a type of a leader forged by Excalibur Academy — a leader of range and depth. One who is credible from every angle. Intellectual without being abstract. Decisive without being reckless. Cultured without being performative. When such a student enters a room — whether a boardroom, an art gallery, an intimate gala event, or a stage — the authority is natural and leadership is evident.</p>
               </div>
-              <div style={{ display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
-                {/* Real stakes — luxury quote block, no yellow overlay */}
-                <div style={{ position: "relative", marginBottom: 28 }}>
-                  <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 1, background: gold }} />
-                  <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: 1, background: gold }} />
-                  <div style={{ padding: isMobile ? "28px 0" : "36px 0" }}>
-                    {["Real Responsibilities.", "Real Decisions.", "Real Stakes.", "Real Mistakes.", "Real Lessons.", "Real Successes."].map((line, i) => (
-                      <p key={i} style={{ fontFamily: serif, fontSize: isMobile ? 20 : 26, color: i % 2 === 0 ? "#F0E8E0" : gold, fontWeight: i % 2 === 0 ? 600 : 300, lineHeight: 1.45, fontStyle: i % 2 !== 0 ? "italic" : "normal" }}>{line}</p>
-                    ))}
-                  </div>
+              <div style={{ display: "flex", flexDirection: "column", gap: 40 }}>
+                {/* Real stakes — refined luxury list */}
+                <div style={{ borderTop: `1px solid ${gold}`, borderBottom: `1px solid ${gold}`, padding: isMobile ? "32px 0" : "44px 0" }}>
+                  {["Real Responsibilities.", "Real Decisions.", "Real Stakes.", "Real Mistakes.", "Real Lessons.", "Real Successes."].map((line, i) => (
+                    <p key={i} style={{ fontFamily: "'Cormorant Garamond', 'Didot', Georgia, serif", fontSize: isMobile ? 22 : 30, color: i % 2 === 0 ? "#F0E8E0" : gold, fontWeight: i % 2 === 0 ? 500 : 300, lineHeight: 1.5, fontStyle: i % 2 !== 0 ? "italic" : "normal", letterSpacing: "0.01em" }}>{line}</p>
+                  ))}
                 </div>
-                <p style={{ fontFamily: sans, fontSize: 16, lineHeight: 1.9, color: "#FBF7EE", fontWeight: 300 }}>At Excalibur Academy, students do not learn theory alone. They are forged through real responsibility, real decisions, and real consequences. Through applied leadership, entrepreneurship, and execution — tested under pressure rather than discussed in isolation. They experience global perspective through international programs and summer immersions in places such as London and Geneva, learning to operate across cultures with confidence and respect.</p>
+                <p style={{ fontFamily: sans, fontSize: isMobile ? 14 : 15, lineHeight: 2.1, color: "rgba(251,247,238,0.75)", fontWeight: 300 }}>At Excalibur Academy, students do not learn theory alone. They are placed in situations that require responsibility, judgment, teamwork, and decision-making under pressure. Through applied leadership, public speaking, venture development, and real-world engagements, students learn by doing — building the confidence to speak clearly, dream boldly, act responsibly, and improve through feedback. They experience global perspective through international programs and summer immersions in places such as London and Geneva, learning to operate across cultures with confidence and respect.</p>
               </div>
             </div>
           </div>
@@ -4257,11 +4305,10 @@ We teach how to lead.</h2>
       <Fade>
         <div style={{ background: "#F5F3EE", padding: isMobile ? "56px 24px" : "80px 80px", textAlign: "center" }}>
           <div style={{ maxWidth: 780, margin: "0 auto" }}>
-            <p style={{ fontFamily: sans, fontSize: 16, lineHeight: 1.9, color: "#111", fontWeight: 300, marginBottom: 20 }}>Excalibur graduates are not prepared by theory alone. They are prepared by repeated practice: speaking, presenting, analyzing, building, competing, receiving feedback, and improving under scrutiny. They leave with the confidence to address a room, the judgment to defend an idea, and the maturity to take responsibility for the choices they make.</p>
+            <p style={{ fontFamily: sans, fontSize: 16, lineHeight: 1.9, color: "#111", fontWeight: 300, marginBottom: 20 }}>Excalibur students graduate with the confidence to address a room, the judgment to defend an idea, the maturity to take responsibility for the choices they make, and forged to be ready for whatever arena they step into next.</p>
             <div style={{ height: 1, background: "rgba(199,171,117,.4)", margin: "32px auto", maxWidth: 120 }} />
             <p style={{ fontFamily: serif, fontSize: isMobile ? 20 : 28, color: "#000", fontWeight: 600, lineHeight: 1.4, marginBottom: 12 }}>This is not an education designed to avoid difficulty.</p>
-            <p style={{ fontFamily: serif, fontSize: isMobile ? 20 : 28, color: "#111", fontWeight: 600, lineHeight: 1.4, marginBottom: 32 }}>It is an education designed to form leaders.</p>
-            <p style={{ fontFamily: sans, fontSize: 16, lineHeight: 1.9, color: "#111", fontWeight: 300 }}>Excalibur does not aim to build theory specialists alone — but leaders forged broadly, deeply, and deliberately, ready for whatever arena they step into next.</p>
+            <p style={{ fontFamily: serif, fontSize: isMobile ? 20 : 28, color: "#111", fontWeight: 600, lineHeight: 1.4, marginBottom: 0 }}>It is an education designed to form leaders.</p>
           </div>
         </div>
       </Fade>
@@ -4370,7 +4417,7 @@ function ComingSoonPage({ onUnlock }) {
 
         {/* Tagline from homepage */}
         <p style={{ fontFamily: sans, fontSize: isMobile ? 14 : 16, color: "#FBF7EE", lineHeight: 1.75, maxWidth: 640, marginBottom: 40, fontWeight: 300 }}>
-          A premier institute where Fortune 500 executives, real entrepreneurs, investors, and distinguished professors teach the next generation to lead the world — not follow it.
+          A premier institute where Fortune 100 executives, real entrepreneurs, investors, and distinguished professors teach the next generation to lead the world — not follow it.
         </p>
 
         {/* Status banner */}
@@ -5992,7 +6039,11 @@ function EventsPage({ setPage, openInquiry }) {
                 <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 8, letterSpacing: "0.45em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 16 }}>Academy Launch & Family Information Soirée</p>
                 {/* Date — monumental */}
                 <div style={{ fontFamily: serif, fontSize: isMobile ? 80 : 112, fontWeight: 300, color: "#FBF7EE", lineHeight: 1, letterSpacing: "-0.03em", marginBottom: 8 }}>May 27</div>
-                <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 10, letterSpacing: "0.4em", color: gold, textTransform: "uppercase", fontWeight: 600, marginBottom: 16 }}>Tuesday · 2026 · 6:00 – 8:00 PM</p>
+                <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 16 }}>
+                  <div style={{ width: 14, height: "1px", background: `linear-gradient(90deg, transparent, ${gold})` }} />
+                  <p style={{ fontFamily: "'Cormorant Garamond', 'Didot', Georgia, serif", fontSize: isMobile ? 15 : 18, color: gold, fontStyle: "italic", fontWeight: 600, letterSpacing: "0.1em", margin: 0 }}>Wednesday &nbsp;·&nbsp; 2026 &nbsp;·&nbsp; 6:00 – 8:00 PM</p>
+                  <div style={{ width: 14, height: "1px", background: `linear-gradient(90deg, ${gold}, transparent)` }} />
+                </div>
                 <p style={{ fontFamily: "'Cormorant Garamond', 'Didot', 'Bodoni MT', Georgia, serif", fontSize: isMobile ? 24 : 36, color: "#FBF7EE", lineHeight: 1.1, marginBottom: 6, fontWeight: 300, fontStyle: "italic", letterSpacing: "0.04em" }}>Laguna Niguel City Hall Ballroom</p>
                 <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 40 }}>
                   <div style={{ width: 22, height: "1px", background: "rgba(199,171,117,0.4)" }} />
