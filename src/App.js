@@ -4279,59 +4279,49 @@ function AboutPage({ setPage, openInquiry }) {
           </div>
         </div>
 
-        {/* WHAT IS BEHIND A NAME — luxury full-bleed editorial */}
-        <div style={{ background: "#07060A", position: "relative", overflow: "hidden" }}>
+        {/* WHAT IS BEHIND A NAME — luxury editorial */}
+        <div style={{ background: "#07060A", position: "relative", overflow: "hidden", padding: isMobile ? "64px 24px" : "88px 80px" }}>
+          <div style={{ maxWidth: 1100, margin: "0 auto" }}>
 
-          {/* Image — constrained width, not full bleed */}
-          <div style={{ position: "relative", background: "#07060A", padding: isMobile ? "48px 24px 0" : "64px 80px 0", display: "flex", justifyContent: "center" }}>
-            <div style={{ position: "relative", maxWidth: isMobile ? "100%" : 480, width: "100%" }}>
-              <img
-                src="https://i.imgur.com/QNW043y.jpeg"
-                alt="King Arthur — Excalibur"
-                style={{ width: "100%", height: "auto", display: "block", objectFit: "contain" }}
-                onError={e => e.target.style.display = "none"}
-              />
-              {/* Bottom gradient fade */}
-              <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: 80, background: "linear-gradient(to bottom, transparent, #07060A)" }} />
+            {/* Gold rule top */}
+            <div style={{ display: "flex", alignItems: "center", gap: 20, marginBottom: 52 }}>
+              <div style={{ flex: 1, height: "1px", background: `linear-gradient(90deg, transparent, rgba(199,171,117,.4))` }} />
+              <span style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: 18, color: gold, opacity: 0.7 }}>✦</span>
+              <div style={{ flex: 1, height: "1px", background: `linear-gradient(90deg, rgba(199,171,117,.4), transparent)` }} />
             </div>
-          </div>
 
-          {/* Text content — floats below the image */}
-          <div style={{ position: "relative", zIndex: 2, padding: isMobile ? "0 24px 72px" : "0 80px 100px" }}>
-            <div style={{ maxWidth: 860, margin: "0 auto" }}>
+            {/* Two-column: text left, photo right (desktop) */}
+            <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 400px", gap: isMobile ? 40 : 80, alignItems: "center" }}>
 
-              {/* Gold rule */}
-              <div style={{ display: "flex", alignItems: "center", gap: 20, marginBottom: 40 }}>
-                <div style={{ flex: 1, height: "1px", background: `linear-gradient(90deg, transparent, rgba(199,171,117,.4))` }} />
-                <span style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: 18, color: gold, opacity: 0.7 }}>✦</span>
-                <div style={{ flex: 1, height: "1px", background: `linear-gradient(90deg, rgba(199,171,117,.4), transparent)` }} />
-              </div>
-
-              {/* Eyebrow */}
-              <p style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.45em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 18, opacity: 0.8 }}>What is Behind a Name?</p>
-
-              {/* Heading */}
-              <h2 style={{ fontFamily: "'Cormorant Garamond', 'Didot', 'Bodoni MT', Georgia, serif", fontSize: isMobile ? 36 : 62, fontWeight: 300, fontStyle: "italic", color: "#FBF7EE", lineHeight: 1.05, letterSpacing: "0.01em", marginBottom: 36 }}>The Meaning<br />of Excalibur.</h2>
-
-              {/* Gold rule short */}
-              <div style={{ width: 56, height: "1px", background: `linear-gradient(90deg, ${gold}, transparent)`, marginBottom: 36 }} />
-
-              {/* Two-column body on desktop */}
-              <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: isMobile ? 24 : 64, marginBottom: 48 }}>
-                <p style={{ fontFamily: sans, fontSize: isMobile ? 14 : 15, lineHeight: 2.0, color: "rgba(251,247,238,0.75)", fontWeight: 300 }}>
+              {/* LEFT — text */}
+              <div>
+                <p style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.45em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 18, opacity: 0.8 }}>What is Behind a Name?</p>
+                <h2 style={{ fontFamily: "'Cormorant Garamond', 'Didot', 'Bodoni MT', Georgia, serif", fontSize: isMobile ? 36 : 58, fontWeight: 300, fontStyle: "italic", color: "#FBF7EE", lineHeight: 1.05, letterSpacing: "0.01em", marginBottom: 32 }}>The Meaning<br />of Excalibur.</h2>
+                <div style={{ width: 56, height: "1px", background: `linear-gradient(90deg, ${gold}, transparent)`, marginBottom: 32 }} />
+                <p style={{ fontFamily: sans, fontSize: isMobile ? 14 : 15, lineHeight: 2.0, color: "rgba(251,247,238,0.75)", fontWeight: 300, marginBottom: 24 }}>
                   In Arthurian legend, Excalibur is more than a sword or power. It is a symbol of leadership and excellence. It represents the right to lead — earned through judgment, courage, responsibility, and character. At Excalibur Academy, leadership is treated the same way. It is not about being the loudest in the room or holding the highest title. It is about becoming the kind of person others can trust to think clearly, act responsibly, and emerge as a natural leader under toughest conditions.
                 </p>
-                <p style={{ fontFamily: sans, fontSize: isMobile ? 14 : 15, lineHeight: 2.0, color: "rgba(251,247,238,0.75)", fontWeight: 300 }}>
+                <p style={{ fontFamily: sans, fontSize: isMobile ? 14 : 15, lineHeight: 2.0, color: "rgba(251,247,238,0.75)", fontWeight: 300, marginBottom: 40 }}>
                   The Knights of the Round Table represent more than strength in battle, but courage joined with judgment, debate joined with loyalty, and ambition governed by honor. At Excalibur, that ideal becomes an educational model. Students are trained not for one narrow skill, but for the range of capacities true leadership requires.
                 </p>
+                <div style={{ borderTop: "1px solid rgba(199,171,117,.12)", paddingTop: 32 }}>
+                  <p style={{ fontFamily: "'Cormorant Garamond', 'Didot', Georgia, serif", fontSize: isMobile ? 20 : 28, fontWeight: 300, fontStyle: "italic", color: gold, lineHeight: 1.4, letterSpacing: "0.02em" }}>
+                    "That is our model."
+                  </p>
+                </div>
               </div>
 
-              {/* Closing italic quote — large, centred */}
-              <div style={{ borderTop: "1px solid rgba(199,171,117,.12)", paddingTop: 40, textAlign: "center" }}>
-                <p style={{ fontFamily: "'Cormorant Garamond', 'Didot', Georgia, serif", fontSize: isMobile ? 22 : 34, fontWeight: 300, fontStyle: "italic", color: gold, lineHeight: 1.4, letterSpacing: "0.02em", maxWidth: 640, margin: "0 auto" }}>
-                  "That is our model."
-                </p>
-              </div>
+              {/* RIGHT — photo (desktop only as side column; stacks above on mobile) */}
+              {isMobile ? (
+                <div style={{ position: "relative" }}>
+                  <img src="https://i.imgur.com/QNW043y.jpeg" alt="King Arthur — Excalibur" style={{ width: "100%", height: "auto", display: "block", objectFit: "contain" }} onError={e => e.target.style.display = "none"} />
+                </div>
+              ) : (
+                <div style={{ position: "relative", alignSelf: "center" }}>
+                  <img src="https://i.imgur.com/QNW043y.jpeg" alt="King Arthur — Excalibur" style={{ width: "100%", height: "auto", display: "block", objectFit: "contain" }} onError={e => e.target.style.display = "none"} />
+                  <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: 60, background: "linear-gradient(to bottom, transparent, #07060A)" }} />
+                </div>
+              )}
 
             </div>
           </div>
