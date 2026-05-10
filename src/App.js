@@ -726,44 +726,44 @@ function Footer({ setPage }) {
 // ─────────────────────────────────────────────
 const summerSchedule = [
   { time: "9:15 AM", dur: "15 min", block: "Arrival", instructor: null, role: null, img: null, desc: "Students are welcomed by the Teaching Assistants, settle in with their cohort, and begin the day in an atmosphere that feels lively, polished, and personal. There is time to connect, get comfortable, and step into the rhythm of the program before the first session begins.", color: "rgba(251,247,238,0.45)" },
-  { time: "9:30 AM", dur: "45 min", block: "Public Speaking & Rhetoric", instructor: "Christopher Sanders", role: "Senior Public Speaking Instructor", img: "https://i.imgur.com/EELzLmn.jpeg", desc: "Public speaking is built into the rhythm of every Excalibur program. Students get on their feet, speak to the room, practice eye contact, strengthen their voice, and learn how to communicate with confidence. The work develops from foundational mechanics into rhetoric, debate, impromptu speaking, persuasive delivery, and pitch preparation. With repeated practice and direct feedback, students build the kind of presence that carries into interviews, presentations, leadership roles, and every room ahead.", color: "#C7AB75" },
+  { time: "9:30 AM", dur: "45 min", block: "Public Speaking & Executive Communication", instructor: "", role: "Senior Public Speaking Instructor", img: null, desc: "Students are on their feet from the start. Voice, presence, eye contact, body language, impromptu delivery, pitch mechanics, rhetorical precision, and confidence under pressure. This opening block runs every day, building the communication foundation that everything else depends on.", color: "#C7AB75" },
   { time: "10:15 AM", dur: "15 min", block: "Snack Break", instructor: null, role: null, img: null, desc: "A structured pause between sessions, with catered snacks and refreshments provided by the Academy — from light bites and fruit bowls to healthy açaí bowls, smoothies, milkshakes, and seasonal selections. Students recharge, listen to lounge music, and continue conversations informally with classmates, Teaching Assistants, faculty, and instructors. Often, some of the most interesting exchanges of the day happen here — between sessions, in the moments when ideas keep moving.", color: "rgba(251,247,238,0.45)" },
-  { time: "10:30 AM", dur: "90 min", block: "Block 2 — Specialist · Core Curriculum + Applied", instructor: "Bill Morris / Rotating Specialist", role: "Academy Dean · Domain Expert", img: null, desc: "The Specialist Instructor leads the core academic block, introducing the day's discipline through serious instruction, professional frameworks, and guided application. Students engage the material immediately through discussion, analysis, exercises, and applied drills. Subjects include business model analysis, financial literacy, AI and technology, sales and persuasion, leadership, and sector-specific business study — taught by practitioners who bring lived experience into the room.", color: "#A89060" },
+  { time: "10:30 AM", dur: "90 min", block: "Venture Development Studio", instructor: "", role: "Lead Faculty", img: null, desc: "The central working block of the Intensive. Students build venture concepts through entrepreneurial mindset, business fundamentals, market research, customer psychology, competitive analysis, brand positioning, marketing strategy, and business plan development.", color: "#A89060" },
   { time: "12:00 PM", dur: "30 min", block: "Lunch", instructor: null, role: null, img: null, desc: "Students enjoy a catered three-course lunch from a rotating selection of local restaurants, with menus that may include Mediterranean mezze and grilled entrées, coastal California salads and seasonal bowls, Italian pastas, French-inspired plates, Japanese bento-style selections, and modern American favorites. Lunch is also a time for conversation — with classmates, Teaching Assistants, faculty, and instructors — in a relaxed but polished setting. Social intelligence is part of the Excalibur experience: listening well, asking thoughtful questions, carrying oneself with ease, and making others feel seen and remembered. Dietary restrictions and allergies are requested before the program begins.", color: "rgba(251,247,238,0.45)" },
-  { time: "12:30 PM", dur: "60 min", block: "Distinguished Guest Speaker", instructor: "Daily Rotating Guest", role: "Entrepreneur · Executive · Investor", img: null, desc: "Each program day features a senior guest speaker from business, investing, entrepreneurship, technology, leadership, or the arts. Speakers are carefully selected for the substance of their experience: founders who have built companies, investors who understand capital and risk, executives who have led complex organizations, and professionals with serious judgment to share. Students submit questions in advance and take part in a live conversation designed to move beyond biography into decisions, mistakes, lessons, and the realities of leadership. By the end of the program, students will have been in the room with leaders across multiple industries — and had the opportunity to ask thoughtful questions directly.", color: "#C7AB75" },
+  { time: "12:30 PM", dur: "60 min", block: "Distinguished Guest Speaker", instructor: "", role: "Entrepreneur · Executive · Investor", img: null, desc: "Each program day features a senior guest speaker from business, investing, entrepreneurship, technology, leadership, or the arts. Speakers are carefully selected for the substance of their experience: founders who have built companies, investors who understand capital and risk, executives who have led complex organizations, and professionals with serious judgment to share. Students can ask any questions and take part in a live conversation designed to move beyond biography into decisions, mistakes, lessons, and the realities of leadership. By the end of the program, students will have been in the room with leaders across multiple industries — and had the opportunity to ask thoughtful questions directly.", color: "#C7AB75" },
   { time: "1:30 PM", dur: "15 min", block: "Afternoon Break", instructor: null, role: null, img: null, desc: "A brief reset before the final session of the day. Students step outside, recharge with a light treat — gelato, smoothies, or freshly pressed juices — and reconnect with classmates, Teaching Assistants, and faculty. With lounge music in the background and the pressure briefly lifted, the break gives students time to reset before the final push.", color: "rgba(251,247,238,0.45)" },
-  { time: "1:45 PM", dur: "60 min", block: "Block 3 — The War Room", instructor: "Chip Pankow (Mon/Wed/Fri) · Erik Dostal (Tue/Thu)", role: "Lead Program Director · Senior Instructor", img: "https://i.imgur.com/Ckny7HG.png", desc: "The War Room is where instruction becomes application. Led by senior faculty, this block places students into structured business scenarios that require analysis, decision-making, communication, and teamwork under pressure, rotating through three formats: (1) What Would You Have Done? — students are placed inside real business moments before knowing the outcome, make the call, defend their reasoning, then learn what actually happened; (2) Your Move — students inherit a company in crisis, build a turnaround strategy, and present their decisions to faculty as if pitching a skeptical investor; (3) Apply It Now — the day’s specialist content is immediately put to work through live exercises, workshops, and team challenges.", color: "#C7AB75" },
+  { time: "1:45 PM", dur: "60 min", block: "Applied Skills Session", instructor: "", role: "Lead Faculty", img: null, desc: "Rotating daily between AI tools for business research, marketing and branding workshops, sales and customer psychology, risk management, pitch rehearsal and critique, executive communication drills, and competitive team exercises. Every session is hands-on and directly connected to the venture work.", color: "#C7AB75" },
   { time: "2:45 PM", dur: "15 min", block: "Debrief & Close", instructor: "War Room Lead", role: "Lead Program Director", img: "https://i.imgur.com/Ckny7HG.png", desc: "Each day ends with a structured debrief: what was learned, what challenged the group, and what ideas can be carried forward. Students leave with one clear takeaway from the day — a concept, question, habit, or standard to apply beyond the classroom.", color: "#A89060" },
 ];
 
 const flagshipWeekdaySchedule = [
-  { time: "4:00 PM", dur: "40 min", block: "Block 1 — Public Speaking & Rhetoric", instructor: "Christopher Sanders", role: "Senior Public Speaking Instructor", img: "https://i.imgur.com/EELzLmn.jpeg", desc: "Public speaking is built into the rhythm of every Excalibur program. Students get on their feet, speak to the room, practice eye contact, strengthen their voice, and learn how to communicate with confidence. The work develops from foundational mechanics into rhetoric, debate, impromptu speaking, persuasive delivery, and pitch preparation. With repeated practice and direct feedback, students build the kind of presence that carries into interviews, presentations, leadership roles, and every room ahead.", color: "#C7AB75" },
+  { time: "4:00 PM", dur: "40 min", block: "Block 1 — Public Speaking & Rhetoric", instructor: "", role: "Senior Public Speaking Instructor", img: null, desc: "Public speaking is a central discipline in every Excalibur program. Students get on their feet, speak to the room, practice eye contact, strengthen their voice, and learn how to communicate with confidence. The work develops from foundational mechanics into rhetoric, debate, impromptu speaking, persuasive delivery, and pitch preparation. With repeated practice and direct feedback, students build the kind of presence that carries into interviews, presentations, leadership roles, and every room ahead.", color: "#C7AB75" },
   { time: "4:40 PM", dur: "15 min", block: "Snack Break", instructor: null, role: null, img: null, desc: "A structured pause between sessions, with catered snacks and refreshments provided by the Academy — from light bites and fruit bowls to healthy açaí bowls, smoothies, milkshakes, and seasonal selections. Students recharge, listen to lounge music, and continue conversations informally with classmates, Teaching Assistants, faculty, and instructors. Often, some of the most interesting exchanges of the day happen here — between sessions, in the moments when ideas keep moving.", color: "rgba(251,247,238,0.45)" },
-  { time: "4:55 PM", dur: "40 min", block: "Block 2 — Specialist / Academy Dean", instructor: "Monthly Specialist or Bill Morris (1×/month)", role: "Domain Expert · Academy Dean", img: null, desc: "The Specialist Instructor leads the core academic block, introducing the day’s discipline through serious instruction, professional frameworks, and guided application. Students engage the material immediately through discussion, analysis, exercises, and applied drills. Subjects include business model analysis, financial literacy, AI and technology, sales and persuasion, leadership, and sector-specific business study — taught by practitioners who bring lived experience into the room.", color: "#A89060" },
+  { time: "4:55 PM", dur: "40 min", block: "Block 2 — Specialist / Academy Dean", instructor: "", role: "Domain Expert · Academy Dean", img: null, desc: "The Specialist Instructor leads the core academic block, introducing the day’s discipline through serious instruction, professional frameworks, and guided application. Students engage the material immediately through discussion, analysis, exercises, and applied drills. Subjects include business model analysis, financial literacy, stock & trading, AI and technology, sales and persuasion, leadership & risk management, and sector-specific business rotation — taught by practitioners who bring lived experience into the room.", color: "#A89060" },
   { time: "5:35 PM", dur: "10 min", block: "Short Break", instructor: null, role: null, img: null, desc: "A brief reset. Students step out, recharge, and return ready for the War Room.", color: "rgba(251,247,238,0.45)" },
-  { time: "5:45 PM", dur: "40 min", block: "Block 3 — The War Room", instructor: "Chip Pankow", role: "Lead Program Director", img: "https://i.imgur.com/Ckny7HG.png", desc: "The War Room is where instruction becomes application. Led by senior faculty, this block places students into structured business scenarios that require analysis, decision-making, communication, and teamwork under pressure, rotating through three formats: (1) What Would You Have Done? — students are placed inside real business moments before knowing the outcome, make the call, defend their reasoning, then learn what actually happened; (2) Your Move — students inherit a company in crisis, build a turnaround strategy, and present their decisions to faculty as if pitching a skeptical investor; (3) Apply It Now — the day’s specialist content is immediately put to work through live exercises, workshops, and team challenges.", color: "#C7AB75" },
+  { time: "5:45 PM", dur: "40 min", block: "Block 3 — The War Room", instructor: "", role: "Lead Program Director", img: null, desc: "The War Room is where instruction becomes application. Led by senior faculty, this block places students into structured business scenarios that require analysis, decision-making, communication, and teamwork under pressure, rotating through three formats: (1) What Would You Have Done? — students are placed inside real business moments before knowing the outcome, make the call, defend their reasoning, then learn what actually happened; (2) Your Move — students inherit a company in crisis, build a turnaround strategy, and present their decisions to faculty as if pitching a skeptical investor; (3) Apply It Now — the day’s specialist content is immediately put to work through live exercises, workshops, and team challenges.", color: "#C7AB75" },
   { time: "6:25 PM", dur: "—", block: "Session Close", instructor: null, role: null, img: null, desc: "Each day ends with a structured debrief: what was learned, what challenged the group, and what ideas can be carried forward. Students leave with one clear takeaway from the day — a concept, question, habit, or standard to apply beyond the classroom.", color: "rgba(251,247,238,0.45)" },
 ];
 
 const flagshipSaturdaySchedule = [
-  { time: "10:30 AM", dur: "40 min", block: "Block 1a — Public Speaking · Opening", instructor: "Christopher Sanders", role: "Senior Public Speaking Instructor", img: "https://i.imgur.com/EELzLmn.jpeg", desc: "Saturday opens identically to every other Excalibur session: students stand up and speak before anything else happens. Speaking warm-up, vocal mechanics, and impromptu drills. Christopher teaches 1a and immediately continues into 1b — no gap, no wait, no idle time between blocks.", color: "#C7AB75" },
+  { time: "10:30 AM", dur: "40 min", block: "Block 1a — Public Speaking · Opening", instructor: "", role: "Senior Public Speaking Instructor", img: null, desc: "Saturday opens identically to every other Excalibur session: students stand up and speak before anything else happens. Speaking warm-up, vocal mechanics, and impromptu drills. Christopher teaches 1a and immediately continues into 1b — no gap, no wait, no idle time between blocks.", color: "#C7AB75" },
   { time: "11:10 AM", dur: "15 min", block: "Snack Break", instructor: null, role: null, img: null, desc: "A structured pause between sessions, with catered snacks and refreshments provided by the Academy — from light bites and fruit bowls to healthy açaí bowls, smoothies, milkshakes, and seasonal selections. Students recharge, listen to lounge music, and continue conversations informally with classmates, Teaching Assistants, faculty, and instructors. Often, some of the most interesting exchanges of the day happen here — between sessions, in the moments when ideas keep moving.", color: "rgba(251,247,238,0.45)" },
-  { time: "11:25 AM", dur: "40 min", block: "Block 1b — Public Speaking · Rhetoric & Pitch", instructor: "Christopher Sanders", role: "Senior Public Speaking Instructor", img: "https://i.imgur.com/EELzLmn.jpeg", desc: "The second speaking block, consecutive to 1a. Advanced rhetoric, formal pitch architecture, high-stakes debate formats, and Aristotelian persuasion applied to modern business scenarios. Saturday is the most intensive speaking training of the week — nearly two hours with one of the programme's senior instructors, dedicated entirely to communication at the highest level.", color: "#C7AB75" },
+  { time: "11:25 AM", dur: "40 min", block: "Block 1b — Public Speaking · Rhetoric & Pitch", instructor: "", role: "Senior Public Speaking Instructor", img: null, desc: "The second speaking block, consecutive to 1a. Advanced rhetoric, formal pitch architecture, high-stakes debate formats, and Aristotelian persuasion applied to modern business scenarios. Saturday is the most intensive speaking training of the week — nearly two hours with one of the programme's senior instructors, dedicated entirely to communication at the highest level.", color: "#C7AB75" },
   { time: "12:05 PM", dur: "30 min", block: "Lunch Break", instructor: null, role: null, img: null, desc: "Students enjoy a catered three-course lunch from a rotating selection of local restaurants, with menus that may include Mediterranean mezze and grilled entrées, coastal California salads and seasonal bowls, Italian pastas, French-inspired plates, Japanese bento-style selections, and modern American favorites. Lunch is also a time for conversation — with classmates, Teaching Assistants, faculty, and instructors — in a relaxed but polished setting. Social intelligence is part of the Excalibur experience: listening well, asking thoughtful questions, carrying oneself with ease, and making others feel seen and remembered. Dietary restrictions and allergies are requested before the program begins.", color: "rgba(251,247,238,0.45)" },
-  { time: "12:35 PM", dur: "80 min", block: "Block 2 — Specialist / Academy Dean", instructor: "Monthly Specialist or Bill Morris (1×/month)", role: "Domain Expert · Academy Dean", img: null, desc: "The Specialist Instructor leads the core academic block, introducing the day’s discipline through serious instruction, professional frameworks, and guided application. Students engage the material immediately through discussion, analysis, exercises, and applied drills. Subjects include business model analysis, financial literacy, AI and technology, sales and persuasion, leadership, and sector-specific business study — taught by practitioners who bring lived experience into the room.", color: "#A89060" },
+  { time: "12:35 PM", dur: "80 min", block: "Block 2 — Specialist / Academy Dean", instructor: "", role: "Domain Expert · Academy Dean", img: null, desc: "The Specialist Instructor leads the core academic block, introducing the day’s discipline through serious instruction, professional frameworks, and guided application. Students engage the material immediately through discussion, analysis, exercises, and applied drills. Subjects include business model analysis, financial literacy, stock & trading, AI and technology, sales and persuasion, leadership & risk management, and sector-specific business rotation — taught by practitioners who bring lived experience into the room.", color: "#A89060" },
   { time: "1:55 PM", dur: "15 min", block: "Snack Break", instructor: null, role: null, img: null, desc: "A structured pause between sessions, with catered snacks and refreshments provided by the Academy — from light bites and fruit bowls to healthy açaí bowls, smoothies, milkshakes, and seasonal selections. Students recharge, listen to lounge music, and continue conversations informally with classmates, Teaching Assistants, faculty, and instructors. Often, some of the most interesting exchanges of the day happen here — between sessions, in the moments when ideas keep moving.", color: "rgba(251,247,238,0.45)" },
-  { time: "2:10 PM", dur: "40 min", block: "Block 3a — War Room · Case Study", instructor: "Chip Pankow", role: "Lead Program Director", img: "https://i.imgur.com/Ckny7HG.png", desc: "Current events deconstruction or real crisis case study. Students are placed inside real business moments before knowing the outcome. They analyze the situation, make the call, defend their reasoning, and then learn what actually happened.", color: "#C7AB75" },
+  { time: "2:10 PM", dur: "40 min", block: "Block 3a — War Room · Case Study", instructor: "", role: "Lead Program Director", img: null, desc: "Current events deconstruction or real crisis case study. Students are placed inside real business moments before knowing the outcome. They analyze the situation, make the call, defend their reasoning, and then learn what actually happened.", color: "#C7AB75" },
   { time: "2:50 PM", dur: "10 min", block: "Short Break", instructor: null, role: null, img: null, desc: "A brief reset between War Room sub-blocks.", color: "rgba(251,247,238,0.45)" },
-  { time: "3:00 PM", dur: "40 min", block: "Block 3b — War Room · Applied Workshop", instructor: "Chip Pankow", role: "Lead Program Director", img: "https://i.imgur.com/Ckny7HG.png", desc: "The specialist's content from Block 2 is immediately deployed under pressure. Teams compete, present, and defend their work in front of the group. Finance, AI, sales, leadership, branding, strategy, and industry analysis become active tools rather than abstract concepts.", color: "#C7AB75" },
-  { time: "3:40 PM", dur: "5 min", block: "Debrief & Close", instructor: "Chip Pankow", role: "Lead Program Director", img: "https://i.imgur.com/Ckny7HG.png", desc: "Each day ends with a structured debrief: what was learned, what challenged the group, and what ideas can be carried forward. Students leave with one clear takeaway from the day — a concept, question, habit, or standard to apply beyond the classroom.", color: "#A89060" },
+  { time: "3:00 PM", dur: "40 min", block: "Block 3b — War Room · Applied Workshop", instructor: "", role: "Lead Program Director", img: null, desc: "The specialist's content from Block 2 is immediately deployed under pressure. Teams compete, present, and defend their work in front of the group. Finance, AI, sales, leadership, branding, strategy, and industry analysis become active tools rather than abstract concepts.", color: "#C7AB75" },
+  { time: "3:40 PM", dur: "5 min", block: "Debrief & Close", instructor: "", role: "Lead Program Director", img: null, desc: "Each day ends with a structured debrief: what was learned, what challenged the group, and what ideas can be carried forward. Students leave with one clear takeaway from the day — a concept, question, habit, or standard to apply beyond the classroom.", color: "#A89060" },
 ];
 
 const sixWeekSchedule = [
-  { time: "4:00 PM", dur: "40 min", block: "Block 1 — Public Speaking & Rhetoric", instructor: "Christopher Sanders", role: "Senior Public Speaking Instructor", img: "https://i.imgur.com/EELzLmn.jpeg", desc: "Public speaking is built into the rhythm of every Excalibur program. Students get on their feet, speak to the room, practice eye contact, strengthen their voice, and learn how to communicate with confidence. The work develops from foundational mechanics into rhetoric, debate, impromptu speaking, persuasive delivery, and pitch preparation. With repeated practice and direct feedback, students build the kind of presence that carries into interviews, presentations, leadership roles, and every room ahead.", color: "#C7AB75" },
+  { time: "4:00 PM", dur: "40 min", block: "Block 1 — Public Speaking & Rhetoric", instructor: "", role: "Senior Public Speaking Instructor", img: null, desc: "Public speaking is a central discipline in every Excalibur program. Students get on their feet, speak to the room, practice eye contact, strengthen their voice, and learn how to communicate with confidence. The work develops from foundational mechanics into rhetoric, debate, impromptu speaking, persuasive delivery, and pitch preparation. With repeated practice and direct feedback, students build the kind of presence that carries into interviews, presentations, leadership roles, and every room ahead.", color: "#C7AB75" },
   { time: "4:40 PM", dur: "15 min", block: "Snack Break", instructor: null, role: null, img: null, desc: "A structured pause between sessions, with catered snacks and refreshments provided by the Academy — from light bites and fruit bowls to healthy açaí bowls, smoothies, milkshakes, and seasonal selections. Students recharge, listen to lounge music, and continue conversations informally with classmates, Teaching Assistants, faculty, and instructors. Often, some of the most interesting exchanges of the day happen here — between sessions, in the moments when ideas keep moving.", color: "rgba(251,247,238,0.45)" },
-  { time: "4:55 PM", dur: "40 min", block: "Block 2 — Specialist / Academy Dean", instructor: "Bill Morris or Rotating Specialist", role: "Academy Dean · Domain Expert", img: null, desc: "The Specialist Instructor leads the core academic block, introducing the day’s discipline through serious instruction, professional frameworks, and guided application. Students engage the material immediately through discussion, analysis, exercises, and applied drills. Subjects include business model analysis, financial literacy, AI and technology, sales and persuasion, leadership, and sector-specific business study — taught by practitioners who bring lived experience into the room.", color: "#A89060" },
+  { time: "4:55 PM", dur: "40 min", block: "Block 2 — Specialist / Academy Dean", instructor: "", role: "Academy Dean · Domain Expert", img: null, desc: "The Specialist Instructor leads the core academic block, introducing the day’s discipline through serious instruction, professional frameworks, and guided application. Students engage the material immediately through discussion, analysis, exercises, and applied drills. Subjects include business model analysis, financial literacy, stock & trading, AI and technology, sales and persuasion, leadership & risk management, and sector-specific business rotation — taught by practitioners who bring lived experience into the room.", color: "#A89060" },
   { time: "5:35 PM", dur: "10 min", block: "Short Break", instructor: null, role: null, img: null, desc: "A brief reset. Students step out, recharge, and return ready for the War Room.", color: "rgba(251,247,238,0.45)" },
-  { time: "5:45 PM", dur: "40 min", block: "Block 3 — The War Room", instructor: "Chip Pankow", role: "Lead Program Director", img: "https://i.imgur.com/Ckny7HG.png", desc: "The War Room is where instruction becomes application. Led by senior faculty, this block places students into structured business scenarios that require analysis, decision-making, communication, and teamwork under pressure, rotating through three formats: (1) What Would You Have Done? — students are placed inside real business moments before knowing the outcome, make the call, defend their reasoning, then learn what actually happened; (2) Your Move — students inherit a company in crisis, build a turnaround strategy, and present their decisions to faculty as if pitching a skeptical investor; (3) Apply It Now — the day’s specialist content is immediately put to work through live exercises, workshops, and team challenges.", color: "#C7AB75" },
+  { time: "5:45 PM", dur: "40 min", block: "Block 3 — The War Room", instructor: "", role: "Lead Program Director", img: null, desc: "The War Room is where instruction becomes application. Led by senior faculty, this block places students into structured business scenarios that require analysis, decision-making, communication, and teamwork under pressure, rotating through three formats: (1) What Would You Have Done? — students are placed inside real business moments before knowing the outcome, make the call, defend their reasoning, then learn what actually happened; (2) Your Move — students inherit a company in crisis, build a turnaround strategy, and present their decisions to faculty as if pitching a skeptical investor; (3) Apply It Now — the day’s specialist content is immediately put to work through live exercises, workshops, and team challenges.", color: "#C7AB75" },
 ];
 
 const fieldTrips = [
@@ -814,7 +814,7 @@ function ScheduleDetail({ block }) {
 }
 
 function DailyScheduleBlock({ schedule, title, subtitle }) {
-  const [active, setActive] = useState(null);
+  const [active, setActive] = useState(0);
   const isMobile = useIsMobile();
 
   const toggle = (i) => setActive(active === i ? null : i);
@@ -882,6 +882,70 @@ function DailyScheduleBlock({ schedule, title, subtitle }) {
 
 
 // ─────────────────────────────────────────────
+const summerModules = [
+  {
+    n: "01", slug: "summer-public-speaking",
+    title: "Public Speaking & Executive Communication",
+    tagline: "Students are on their feet from the start. Voice, presence, and the confidence to own any room.",
+    summary: "The most important professional skill is also the most neglected. This module builds it from the ground up — every single day. By the end of two weeks, students who arrived nervous to speak in public leave with the mechanics, habits, and composure to address any room with authority.",
+    body: "Public speaking is not a gift. It is a discipline — one that can be trained, refined, and made instinctive through repetition and direct feedback.\n\nEvery day of the Summer Intensive opens with this block. Students build from physical foundations — posture, breath, eye contact, voice projection — into rhetorical structure, impromptu delivery, persuasive framing, and pitch mechanics. By the final week, they are practicing investor-grade presentations and defending their business concepts under real pressure.\n\nThe goal is not polish for its own sake. It is the ability to think on your feet, communicate under pressure, and hold a room — skills that compound across every arena ahead.",
+    whatYouLearn: ["Voice mechanics — projection, pace, tone, and clarity", "Physical presence — posture, eye contact, movement, and command of space", "Impromptu speaking — structured responses under time pressure with no preparation", "Rhetorical structure — how to build an argument that lands", "Persuasive delivery — Aristotle's ethos, pathos, logos applied to real scenarios", "Pitch mechanics — how to open, build tension, and close a business presentation", "Composure under pressure — handling hard questions, objections, and skeptical audiences", "Elevator pitch — your concept in 60 seconds, refined and rehearsed"],
+    outcomes: ["Can stand up and speak to a room without notes on any given topic", "Has completed 30+ individual speaking reps across two weeks with direct faculty feedback", "Delivers a polished investor pitch at the Excalibur Venture Finale"],
+    quote: "The human brain starts working the moment you are born and never stops until you stand up to speak in public. — George Jessel",
+  },
+  {
+    n: "02", slug: "summer-entrepreneurial-mindset",
+    title: "The Entrepreneurial Mindset & Business Fundamentals",
+    tagline: "How real businesses start. How founders think. How ideas become ventures.",
+    summary: "Before students can build a business plan, they need to understand how businesses actually work — and how the people who build them think. This module installs the entrepreneurial operating system: how to identify opportunity, stress-test an idea, and move from concept to fundable venture.",
+    body: "Entrepreneurship is not about having ideas. It is about having the judgment to know which ideas are worth pursuing, the discipline to test them quickly, and the clarity to explain why they matter.\n\nThis module covers the fundamentals every founder needs: how markets work, how customers think, how value is created and captured, and what separates a business from a hobby. Students examine real companies — how they started, what problem they solved, and what made them defensible — and begin applying those frameworks to their own venture concepts.\n\nThe session is practical from the start. By the end of the module, each team has a defined business idea, a basic understanding of their market, and a clear problem they are solving.",
+    whatYouLearn: ["The entrepreneurial mindset — how founders think differently about problems and opportunity", "Idea validation — how to test whether an idea is worth pursuing before building it", "Market sizing — TAM, SAM, SOM and what they tell investors", "Value creation and capture — how businesses make money and why some models are stronger than others", "Problem-solution fit — how to define a problem precisely and match it to a solution", "Business model basics — the eight archetypes and which fits your concept", "Real company case studies — from first idea to fundable venture", "Team dynamics — how to work effectively as a founding team under pressure"],
+    outcomes: ["Has identified and defined their team's venture concept", "Can articulate the problem they are solving and who they are solving it for", "Understands the basic mechanics of how businesses create and capture value"],
+    quote: "The entrepreneurial journey starts with a question, not an answer. — Unknown",
+  },
+  {
+    n: "03", slug: "summer-marketing-branding",
+    title: "Marketing, Branding & Customer Psychology",
+    tagline: "Who is your customer? How do you reach them? How do you make them care?",
+    summary: "Marketing is not advertising. It is the deep understanding of who your customer is, what they actually want, and how to position your product so they choose you over everyone else. This module teaches students to think like marketers — with real frameworks, real examples, and direct application to their own venture.",
+    body: "Every business lives or dies by its ability to reach the right customer with the right message at the right time. Most founders underestimate how hard this is — and how much thinking it requires before anything is built.\n\nThis module walks students through the complete marketing stack: customer definition, persona development, channel strategy, brand identity, positioning, digital marketing fundamentals, and the psychology that drives purchasing decisions. Students study how great brands are built — from luxury to tech to consumer goods — and apply those principles directly to their own venture concepts.\n\nBy the end of the module, each team has a defined target customer, a brand positioning statement, and a basic marketing strategy for their business plan.",
+    whatYouLearn: ["Customer segmentation — how to define and describe your ideal customer precisely", "Buyer psychology — what drives decisions and how to design for them", "Brand identity — name, positioning, voice, and visual presence", "The marketing funnel — awareness, consideration, conversion, retention", "Digital marketing channels — social, search, content, email, and when to use each", "Storytelling in marketing — how to make people care about what you are building", "Cialdini's principles of influence — social proof, scarcity, authority, reciprocity", "Building a marketing plan — strategy, channels, budget allocation, and measurement"],
+    outcomes: ["Has a defined target customer persona for their venture", "Has written a brand positioning statement", "Has built a basic marketing strategy as part of the team business plan"],
+    quote: "Marketing is no longer about the stuff that you make, but about the stories you tell. — Seth Godin",
+  },
+  {
+    n: "04", slug: "summer-competitive-analysis",
+    title: "Competitive Analysis & Market Research",
+    tagline: "Who else is doing this? Why would a customer choose you?",
+    summary: "No investor will back a team that cannot answer these two questions clearly. This module teaches students to map the competitive landscape, understand what makes a business defensible, and position their venture for a market that already has players in it.",
+    body: "Every market has competition. The question is not whether competitors exist — it is whether you understand them better than they understand themselves, and whether your positioning makes your offering the obvious choice for the right customer.\n\nStudents learn structured competitive analysis: how to identify direct and indirect competitors, how to map them across key dimensions, how to identify gaps and white space, and how to articulate a differentiated value proposition. They study real market maps — from consumer tech to food and beverage to services — and build their own for their venture concept.\n\nThe module also covers primary market research: how to talk to potential customers, what questions to ask, how to interpret what you hear, and how to use that intelligence to sharpen your positioning.",
+    whatYouLearn: ["Competitive mapping — identifying and categorizing direct and indirect competitors", "Porter's Five Forces — the structural analysis of industry attractiveness", "SWOT analysis — applied to your own venture and your top competitors", "Differentiation strategy — what makes your offering genuinely different and why it matters", "Value proposition design — the precise articulation of why customers should choose you", "Primary research — how to conduct customer interviews and what to listen for", "Market gap analysis — how to identify underserved segments and white space", "Competitive moats — what makes a business hard to copy and how to build one"],
+    outcomes: ["Has completed a competitive landscape map for their venture", "Has conducted at least one customer conversation and documented the findings", "Has a clear differentiated value proposition included in the team business plan"],
+    quote: "Know your enemy and know yourself, and you can fight a hundred battles without disaster. — Sun Tzu",
+  },
+  {
+    n: "05", slug: "summer-ai-business-tool",
+    title: "AI as a Business Tool",
+    tagline: "Not a threat. A tool. Learn to use it better than anyone in the room.",
+    summary: "AI is not replacing founders. It is multiplying the output of founders who know how to use it. This module gives students practical fluency with AI tools for business research, copywriting, competitor analysis, deck building, and ideation — turning a two-person team into a ten-person team in terms of output.",
+    body: "The question is no longer whether to use AI in business. It is how to use it well — with judgment, speed, and the ability to direct it toward real outcomes rather than generic outputs.\n\nThis module is entirely practical. Students learn how to use AI tools to research markets and competitors faster, draft and refine marketing copy, build and iterate on business decks, generate and stress-test business model assumptions, and automate outreach and research tasks that would otherwise take days.\n\nEqually important: students learn what AI cannot do — the judgment calls, the customer conversations, the leadership decisions, and the creative leaps that still require a human mind with real information and real stakes.",
+    whatYouLearn: ["AI tools for business research — how to use AI to map markets, competitors, and trends at speed", "Prompt engineering for business — how to write prompts that produce useful, specific outputs", "AI for marketing copy — drafting positioning statements, ad copy, email campaigns, and social content", "AI for deck building — structuring investor presentations with AI-assisted frameworks", "AI for competitive intelligence — monitoring competitors and synthesizing industry signals", "AI for customer research — using AI to analyze patterns in customer conversations and reviews", "The limits of AI — where human judgment, relationships, and creativity are irreplaceable", "Building an AI-powered workflow — integrating AI tools into a real business operating rhythm"],
+    outcomes: ["Has used AI tools to conduct market research for their venture", "Has generated and refined marketing copy for their business plan using AI", "Has built a section of their investor deck with AI-assisted structuring"],
+    quote: "The technology is not the moat. The judgment to deploy it is. — Unknown",
+  },
+  {
+    n: "06", slug: "summer-sales-persuasion-pitch",
+    title: "Sales, Persuasion & The Pitch",
+    tagline: "Every founder is a salesperson. Every presentation is a pitch. Learn to win the room.",
+    summary: "Sales is not manipulation. It is the art of understanding what someone needs, showing them that you have it, and giving them a reason to act. This module covers the full arc from persuasion principles to elevator pitch to investor presentation — culminating in the Excalibur Venture Finale.",
+    body: "Every founder pitches — to investors, to customers, to partners, to the team they are trying to recruit. The ability to sell an idea with clarity, conviction, and composure under questioning is one of the highest-value skills a young professional can develop.\n\nThis module begins with the psychology of persuasion — how decisions are actually made, what triggers trust, and what kills it. Students practice consultative selling, objection handling, and the art of closing. They learn the architecture of a great pitch: how to open with a hook, build tension with a problem, resolve with a solution, and close with a call to action.\n\nThe final days of the module are dedicated to rehearsal for the Venture Finale: live pitch runs, timed presentations, Q&A drills with faculty acting as skeptical investors, and feedback sessions designed to tighten every slide, every sentence, and every answer.",
+    whatYouLearn: ["The psychology of persuasion — Cialdini's principles applied to business contexts", "Consultative selling — how to understand a customer's real need before presenting a solution", "Objection handling — how to welcome and neutralize resistance without losing the room", "The elevator pitch — your business in 60 seconds, crisp, compelling, and memorable", "Investor pitch architecture — problem, solution, market, model, team, ask", "Storytelling in sales — how to make your pitch feel like a narrative rather than a presentation", "Q&A mastery — how to handle hard questions with composure and precision", "Closing — how to move from interest to commitment"],
+    outcomes: ["Has delivered a timed investor pitch with no notes", "Has completed multiple live Q&A sessions with faculty acting as skeptical investors", "Presents at the Excalibur Venture Finale before a panel of real investors and judges"],
+    quote: "Selling is not something you do to people. It is something you do for people. — Zig Ziglar",
+  },
+];
+
+
 function ModulePage({ slug, setPage }) {
   const isMobile = useIsMobile();
   const mod = currMods.find(m => m.slug === slug);
@@ -1771,7 +1835,7 @@ function DailyScheduleSection({ sectionRef }) {
   const [activeTab, setActiveTab] = useState("summer");
   const [activeBlock, setActiveBlock] = useState(0);
   const tabs = [
-    { id: "summer", label: "Summer Intensive", sched: summerSchedule, subtitle: "Monday – Friday · 9:30 AM – 3:00 PM · July 6–18 & Aug 3–15, 2026" },
+    { id: "summer", label: "Summer Intensive", sched: summerSchedule, subtitle: "Monday – Friday · 9:30 AM – 3:30 PM · July 6–18 & Aug 3–15, 2026" },
     { id: "flagship-wd", label: "Flagship — Weekday", sched: flagshipWeekdaySchedule, subtitle: "Tuesday & Thursday · 4:00–6:15 PM · September 2026 – June 2027" },
     { id: "flagship-sat", label: "Flagship — Saturday", sched: flagshipSaturdaySchedule, subtitle: "Every Saturday · 10:30 AM–3:00 PM · September 2026 – June 2027" },
     { id: "six-week", label: "Six-Week Intensive", sched: sixWeekSchedule, subtitle: "Monday & Wednesday · 4:00–7:00 PM · Four waves per year" },
@@ -1802,8 +1866,8 @@ function SummerContent({ setPage, isMobile, summerLeft }) {
   return (
     <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 1, background: "#111" }}>
       {[
-        { label: "WAVE 1 — JULY", dates: "July 6 – 18, 2026", left: summerLeft[0], items: [["Schedule", "Mon–Fri · 9:30 AM–3:00 PM"], ["Duration", "2 weeks"], ["Guest Speakers", "Daily"], ["Finale", "Shark Tank · July 18"]] },
-        { label: "WAVE 2 — AUGUST", dates: "Aug 3 – 15, 2026", left: summerLeft[1], items: [["Schedule", "Mon–Fri · 9:30 AM–3:00 PM"], ["Duration", "2 weeks"], ["Guest Speakers", "Daily"], ["Finale", "Shark Tank · Aug 15"]] },
+        { label: "WAVE 1 — JULY", dates: "July 6 – 18, 2026", left: summerLeft[0], items: [["Schedule", "Mon–Fri · 9:30 AM–3:30 PM"], ["Duration", "2 weeks"], ["Guest Speakers", "Daily"], ["Finale", "Shark Tank · July 18"]] },
+        { label: "WAVE 2 — AUGUST", dates: "Aug 3 – 15, 2026", left: summerLeft[1], items: [["Schedule", "Mon–Fri · 9:30 AM–3:30 PM"], ["Duration", "2 weeks"], ["Guest Speakers", "Daily"], ["Finale", "Shark Tank · Aug 15"]] },
       ].map((t, i) => {
         return (
           <div key={i} style={{ background: "#080808", padding: "24px 24px" }}>
@@ -2024,9 +2088,9 @@ function ProgramsPage({ setPage, openInquiry }) {
       title: "Summer Intensive",
       tagline: "Two weeks. Full days. Serious momentum.",
       photo: "https://i.imgur.com/ua2WSIA.jpeg",
-      desc: "The Summer Intensive is a two-week, full-day program offered in July and August for high school juniors and seniors ready to experience Excalibur's core model in a concentrated format.\n\nEach day combines public speaking training, business, innovation, marketing and leadership instruction, applied workshops, and sessions with distinguished guest speakers. Students rotate through all major curricular areas and engage daily with guest lecturers and specialists drawn from a range of professional fields.\n\nThe program culminates in The Excalibur Venture Finale — a Shark Tank–inspired pitch finale where student teams present original business concepts to a panel of experienced judges and real investors. Selected projects receive rewards and prizes ranging from top business tech accessories to real seed funding support.",
+      desc: "The Summer Intensive is a two-week, full-day program offered in July and August for high school students ages 15–18 who are ready to turn ambition into discipline and action.\n\nEvery day begins with public speaking and executive communication training. Students are on their feet from the first morning — practicing voice, presence, eye contact, persuasion, and composure under pressure.\n\nThe core of the program is venture development. Working in teams, students research a market, identify a real problem, define their customer, study the competition, build a marketing strategy, and structure a business plan.\n\nApplied workshops, AI tool sessions, and daily guest speakers from business and entrepreneurship support the venture work throughout the two weeks, helping students turn an idea into a pitch-ready concept.\n\nThe program culminates in the Shark Tank Inspired — Excalibur Venture Finale — a live pitch competition where student teams present their business plans before investors, entrepreneurs, executives, and invited judges.\n\nTeams are evaluated on the strength of their concept, market research, customer insight, marketing strategy, business logic, and composure under questioning. Awards are presented for the strongest performances, with prizes ranging from premium business accessories to custom surfboards, scooters, event tickets and cash awards.",
       details: [
-        ["Schedule", "Wave I: July 6–18, 2026  ·  Wave II: August 3–15, 2026\nMonday–Friday · 9:30 AM–3:00 PM"],
+        ["Schedule", "Wave I: July 6–18, 2026  ·  Wave II: August 3–15, 2026\nMonday–Friday · 9:30 AM–3:30 PM"],
         ["Class Size", "Limited to 20 students per wave"],
         ["Tuition", "$410 / full day · $4,500 per wave"],
         ["Included", "Catered lunches from local restaurants, distinguished guest speakers, faculty-led workshops, pitch development, and The Excalibur Venture Grand Finale before families and invited professionals."],
@@ -2756,8 +2820,8 @@ function ScheduleTabs({ setPage, isMobile, waves, gold }) {
       {activeProgram === "summer" && (
         <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 1, background: "#111" }}>
           {[
-            { label: "WAVE 1 — JULY", dates: "July 6 – July 18, 2026", left: summerLeft[0], items: [["Schedule", "Mon–Fri · 9:30 AM – 3:00 PM"], ["Duration", "9 days + Field Trip"], ["Guest Speakers", "Daily · every session"], ["Finale", "Shark Tank · July 18"]] },
-            { label: "WAVE 2 — AUGUST", dates: "Aug 3 – Aug 15, 2026", left: summerLeft[1], items: [["Schedule", "Mon–Fri · 9:30 AM – 3:00 PM"], ["Duration", "9 days + Field Trip"], ["Guest Speakers", "Daily · every session"], ["Finale", "Shark Tank · Aug 15"]] },
+            { label: "WAVE 1 — JULY", dates: "July 6 – July 18, 2026", left: summerLeft[0], items: [["Schedule", "Mon–Fri · 9:30 AM – 3:30 PM"], ["Duration", "9 days + Field Trip"], ["Guest Speakers", "Daily · every session"], ["Finale", "Shark Tank · July 18"]] },
+            { label: "WAVE 2 — AUGUST", dates: "Aug 3 – Aug 15, 2026", left: summerLeft[1], items: [["Schedule", "Mon–Fri · 9:30 AM – 3:30 PM"], ["Duration", "9 days + Field Trip"], ["Guest Speakers", "Daily · every session"], ["Finale", "Shark Tank · Aug 15"]] },
           ].map((t, i) => {
             return (
               <div key={i} style={{ background: "#080808", padding: "28px 32px" }}>
@@ -3104,7 +3168,7 @@ function HomePage({ setPage, openInquiry }) {
             {/* details list — editorial style */}
             <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: isMobile ? 0 : "0 48px" }}>
               {[
-                ["Sessions", "9:30 AM – 3:00 PM · Mon–Fri"],
+                ["Sessions", "9:30 AM – 3:30 PM · Mon–Fri"],
                 ["Wave 1", "July 6 – 18, 2026"],
                 ["Wave 2", "August 3 – 15, 2026"],
                 ["Guest Speakers", "Distinguished speaker rotating daily"],
@@ -3266,7 +3330,7 @@ function HomePage({ setPage, openInquiry }) {
               {/* Middle: details */}
               <div style={{ padding: isMobile ? "0 28px 28px" : "52px 44px", display: "flex", flexDirection: "column", gap: 0 }}>
                 {[
-                  ["Sessions", "9:30 AM – 3:00 PM · Mon–Fri"],
+                  ["Sessions", "9:30 AM – 3:30 PM · Mon–Fri"],
                   ["Wave 1", "July 6 – 18, 2026"],
                   ["Wave 2", "August 3 – 15, 2026"],
                   ["Guest Speakers", "Distinguished speaker rotating daily"],
@@ -3396,7 +3460,7 @@ function HomePage({ setPage, openInquiry }) {
           </Fade>
           <Fade d={.12}>
             <div style={{ marginTop: 2, background: "#060606", border: "1px solid #111", borderTop: "none", padding: "17px 32px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-              <span style={{ fontFamily: sans, fontSize: 12, color: "#FBF7EE", fontWeight: 300 }}>All ten modules covered only in the Flagship Ten-Month Program.</span>
+              <span style={{ fontFamily: sans, fontSize: 12, color: "#FBF7EE", fontWeight: 300 }}>All modules, field trips and The Arena Beyond Classroom experiences covered only in the Flagship Ten-Month Program.</span>
               <button onClick={() => setPage("curriculum")} style={{ fontFamily: sans, fontSize: 10, color: gold, letterSpacing: 2, background: "transparent", border: "none", cursor: "pointer", fontWeight: 600, flexShrink: 0 }}>VIEW ALL MODULES →</button>
             </div>
           </Fade>
@@ -4430,7 +4494,7 @@ function ComingSoonPage({ onUnlock }) {
         {/* Program cards — all gold */}
         <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(3,1fr)", gap: 2, background: "#111", marginBottom: 52, width: "100%", maxWidth: 880 }}>
           {[
-            { label: "SUMMER INTENSIVE", dates: "July & August 2026", detail: "Mon–Fri · 9:30 AM–3:00 PM · $410/day · $4,500 per wave" },
+            { label: "SUMMER INTENSIVE", dates: "July & August 2026", detail: "Mon–Fri · 9:30 AM–3:30 PM · $410/day · $4,500 per wave" },
             { label: "TEN-MONTH FLAGSHIP", dates: "September 2026 – June 2027", detail: "Weekday or Weekend Track · $1,900 / month", flagship: true },
             { label: "SIX-WEEK INTENSIVE", dates: "Four waves · 2026", detail: "Mon & Wed evenings or Saturdays · $3,900 / wave" },
           ].map((p, i) => (
@@ -4950,7 +5014,7 @@ function FlagshipModulesBlock({ isMobile, setPage, modules }) {
           </div>
         )}
         <div style={{ marginTop: 2, background: "#060606", border: "1px solid #111", borderTop: "none", padding: "17px 32px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-          <span style={{ fontFamily: sans, fontSize: 12, color: "#FBF7EE", fontWeight: 300 }}>All ten modules covered only in the Flagship Ten-Month Program.</span>
+          <span style={{ fontFamily: sans, fontSize: 12, color: "#FBF7EE", fontWeight: 300 }}>All modules, field trips and The Arena Beyond Classroom experiences covered only in the Flagship Ten-Month Program.</span>
           <button onClick={() => setPage("curriculum")} style={{ fontFamily: sans, fontSize: 10, color: gold, letterSpacing: 2, background: "transparent", border: "none", cursor: "pointer", fontWeight: 600, flexShrink: 0 }}>VIEW ALL MODULES</button>
         </div>
       </div>
@@ -5051,7 +5115,7 @@ function FlagshipEnrollSelector({ openInquiry, isMobile }) {
   const programs = [
     { id: "full", label: "TEN-MONTH FLAGSHIP", title: "Ten-Month Program", price: "From $1,900 / month", desc: "The complete Excalibur formation. All ten modules, real-world engagements, and the Academy Gala & Graduation Day capstone." },
     { id: "intensive", label: "SIX-WEEK INTENSIVE", title: "Six-Week Intensive", price: "$2,500 / wave", desc: "Full curriculum in six weeks. One discipline per week, Shark Tank–style Finale." },
-    { id: "summer", label: "SUMMER INTENSIVE", title: "Summer Intensive", price: "$410 / full day · $4,500 per wave", desc: "Two weeks, full days. All nine disciplines with daily guest speakers and a Venture Finale." },
+    { id: "summer", label: "SUMMER INTENSIVE", title: "Summer Intensive", price: "$410 / full day · $4,500 per wave", desc: "Two weeks. Full Days. Students move from idea to venture concept: researching the market, shaping the business model, building the pitch, and learning to present with clarity and confidence before the Shark Tank-inspired — Excalibur Venture Finale." },
   ];
   const tracks = [
     { id: "weekday", label: "WEEKDAY TRACK", title: "Tuesday & Thursday", sub: "4:00–6:25 PM", detail: "Evening sessions. Fits any weekend schedule." },
@@ -5712,71 +5776,207 @@ function FlagshipDetailPage({ setPage, openInquiry }) {
 // ─────────────────────────────────────────────
 // PAGE: SUMMER INTENSIVE DETAIL
 // ─────────────────────────────────────────────
+function SummerModulePage({ slug, setPage }) {
+  const isMobile = useIsMobile();
+  const mod = summerModules.find(m => m.slug === slug);
+  if (!mod) return null;
+  return (
+    <div style={{ background: "#000", paddingTop: 0 }}>
+      {/* Breadcrumb */}
+      <div style={{ maxWidth: 1100, margin: "0 auto", padding: isMobile ? "24px 16px 0" : "32px 40px 0" }}>
+        <div style={{ display: "flex", gap: 8, alignItems: "center", flexWrap: "wrap" }}>
+          {[["Home", "home"], ["Our Programs", "programs"], ["Summer Intensive", "summer-detail"]].map(([l, p]) => (
+            <span key={p} style={{ display: "flex", alignItems: "center", gap: 8 }}>
+              <span onClick={() => setPage(p)} style={{ fontFamily: sans, fontSize: 11, color: "rgba(251,247,238,0.4)", cursor: "pointer", letterSpacing: 1 }} onMouseEnter={e => e.target.style.color = gold} onMouseLeave={e => e.target.style.color = "rgba(251,247,238,0.4)"}>{l}</span>
+              <span style={{ color: "#333" }}>/</span>
+            </span>
+          ))}
+          <span style={{ fontFamily: sans, fontSize: 11, color: gold, letterSpacing: 1 }}>{mod.title}</span>
+        </div>
+      </div>
+
+      {/* Hero */}
+      <div style={{ maxWidth: 1100, margin: "0 auto", padding: isMobile ? "40px 16px 52px" : "48px 40px 60px" }}>
+        <Fade>
+          <p style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.4em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 16 }}>Summer Intensive · Discipline</p>
+          <h1 style={{ fontFamily: serif, fontSize: isMobile ? "clamp(30px,6vw,48px)" : "clamp(38px,5vw,64px)", fontWeight: 600, color: "#FBF7EE", lineHeight: 1.05, marginBottom: 16, maxWidth: 800 }}>{mod.title}</h1>
+          <p style={{ fontFamily: serif, fontSize: isMobile ? 18 : 22, color: "#FBF7EE", fontStyle: "italic", lineHeight: 1.6, maxWidth: 680 }}>{mod.tagline}</p>
+        </Fade>
+      </div>
+      <div style={{ height: "1px", background: "linear-gradient(90deg, transparent, rgba(199,171,117,.3), transparent)" }} />
+
+      {/* Body */}
+      <div style={{ maxWidth: 1100, margin: "0 auto", padding: isMobile ? "48px 16px" : "72px 40px" }}>
+        <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 340px", gap: isMobile ? 40 : 72, alignItems: "start" }}>
+          <div>
+            <Fade>
+              <p style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.4em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 20 }}>About This Discipline</p>
+              {mod.body.split('\n\n').map((para, i) => (
+                <p key={i} style={{ fontFamily: sans, fontSize: 16, lineHeight: 1.95, color: "#FBF7EE", fontWeight: 300, marginBottom: 24 }}>{para}</p>
+              ))}
+            </Fade>
+            <Fade d={.06}>
+              <div style={{ marginTop: 52 }}>
+                <p style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.4em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 20 }}>What You Will Learn</p>
+                {mod.whatYouLearn.map((item, i) => (
+                  <div key={i} style={{ display: "flex", gap: 16, padding: "13px 0", borderBottom: "1px solid rgba(199,171,117,.08)" }}>
+                    <div style={{ width: 4, height: 4, borderRadius: "50%", background: gold, flexShrink: 0, marginTop: 8 }} />
+                    <p style={{ fontFamily: sans, fontSize: 14, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.7 }}>{item}</p>
+                  </div>
+                ))}
+              </div>
+            </Fade>
+            <Fade d={.08}>
+              <div style={{ marginTop: 52, borderTop: "1px solid rgba(199,171,117,.1)", paddingTop: 40 }}>
+                <p style={{ fontFamily: serif, fontSize: isMobile ? 20 : 26, color: gold, fontStyle: "italic", lineHeight: 1.5 }}>{mod.quote}</p>
+              </div>
+            </Fade>
+          </div>
+          <div>
+            {/* Outcomes */}
+            <div style={{ border: "1px solid rgba(199,171,117,.15)", padding: "28px 24px", marginBottom: 24 }}>
+              <p style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.4em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 20 }}>By the End of This Discipline</p>
+              {mod.outcomes.map((o, i) => (
+                <div key={i} style={{ display: "flex", gap: 14, padding: "11px 0", borderBottom: i < mod.outcomes.length - 1 ? "1px solid rgba(199,171,117,.07)" : "none" }}>
+                  <div style={{ width: 4, height: 4, borderRadius: "50%", background: gold, flexShrink: 0, marginTop: 7 }} />
+                  <p style={{ fontFamily: sans, fontSize: 13, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.65 }}>{o}</p>
+                </div>
+              ))}
+            </div>
+            {/* Other summer disciplines */}
+            <div style={{ border: "1px solid rgba(199,171,117,.1)", padding: "24px" }}>
+              <p style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.4em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 16 }}>All Summer Disciplines</p>
+              {summerModules.filter(m => m.slug !== slug).map((m, i) => (
+                <div key={i} onClick={() => setPage(`summer-module:${m.slug}`)} style={{ padding: "10px 0", borderBottom: "1px solid rgba(199,171,117,.07)", cursor: "pointer" }}
+                  onMouseEnter={e => e.currentTarget.style.color = gold} onMouseLeave={e => e.currentTarget.style.color = "inherit"}>
+                  <p style={{ fontFamily: sans, fontSize: 12, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.5 }}>{m.title}</p>
+                </div>
+              ))}
+            </div>
+            <button onClick={() => setPage("summer-detail")} style={{ fontFamily: sans, marginTop: 20, width: "100%", padding: "13px", background: "transparent", border: "1px solid rgba(199,171,117,.3)", color: gold, fontSize: 11, fontWeight: 600, letterSpacing: "0.15em", textTransform: "uppercase", cursor: "pointer" }}>← Back to Summer Intensive</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function SummerDetailPage({ setPage, openInquiry }) {
   const isMobile = useIsMobile();
 
   const schedule = [
     { time: "9:15 AM", dur: "15 min", block: "Arrival", desc: "Students are welcomed by the Teaching Assistants, settle in with their cohort, and begin the day in an atmosphere that feels lively, polished, and personal. There is time to connect, get comfortable, and step into the rhythm of the program before the first session begins." },
-    { time: "9:30 AM", dur: "45 min", block: "Public Speaking & Rhetoric", desc: "Public speaking is built into the rhythm of every Excalibur program. Students get on their feet, speak to the room, practice eye contact, strengthen their voice, and learn how to communicate with confidence. The work develops from foundational mechanics into rhetoric, debate, impromptu speaking, persuasive delivery, and pitch preparation. With repeated practice and direct feedback, students build the kind of presence that carries into interviews, presentations, leadership roles, and every room ahead." },
+    { time: "9:30 AM", dur: "45 min", block: "Public Speaking & Rhetoric", desc: "Public speaking is a central discipline in every Excalibur program. Students get on their feet, speak to the room, practice eye contact, strengthen their voice, and learn how to communicate with confidence. The work develops from foundational mechanics into rhetoric, debate, impromptu speaking, persuasive delivery, and pitch preparation. With repeated practice and direct feedback, students build the kind of presence that carries into interviews, presentations, leadership roles, and every room ahead." },
     { time: "10:15 AM", dur: "15 min", block: "Snack Break", desc: "A structured pause between sessions, with catered snacks and refreshments provided by the Academy — from light bites and fruit bowls to healthy açaí bowls, smoothies, milkshakes, and seasonal selections. Students recharge, listen to lounge music, and continue conversations informally with classmates, Teaching Assistants, faculty, and instructors. Often, some of the most interesting exchanges of the day happen here — between sessions, in the moments when ideas keep moving." },
-    { time: "10:30 AM", dur: "90 min", block: "Specialist Instruction · Core Curriculum", desc: "The Specialist Instructor leads the core academic block, introducing the day’s discipline through serious instruction, professional frameworks, and guided application. Students engage the material immediately through discussion, analysis, exercises, and applied drills. Subjects include business model analysis, financial literacy, AI and technology, sales and persuasion, leadership, and sector-specific business study — taught by practitioners who bring lived experience into the room." },
+    { time: "10:30 AM", dur: "90 min", block: "Specialist Instruction · Core Curriculum", desc: "The Specialist Instructor leads the core academic block, introducing the day’s discipline through serious instruction, professional frameworks, and guided application. Students engage the material immediately through discussion, analysis, exercises, and applied drills. Subjects include business model analysis, financial literacy, stock & trading, AI and technology, sales and persuasion, leadership & risk management, and sector-specific business rotation — taught by practitioners who bring lived experience into the room." },
     { time: "12:00 PM", dur: "30 min", block: "Lunch", desc: "Students enjoy a catered three-course lunch from a rotating selection of local restaurants, with menus that may include Mediterranean mezze and grilled entrées, coastal California salads and seasonal bowls, Italian pastas, French-inspired plates, Japanese bento-style selections, and modern American favorites. Lunch is also a time for conversation — with classmates, Teaching Assistants, faculty, and instructors — in a relaxed but polished setting. Social intelligence is part of the Excalibur experience: listening well, asking thoughtful questions, carrying oneself with ease, and making others feel seen and remembered. Dietary restrictions and allergies are requested before the program begins." },
-    { time: "12:30 PM", dur: "60 min", block: "Distinguished Guest Speaker", desc: "Each program day features a senior guest speaker from business, investing, entrepreneurship, technology, leadership, or the arts. Speakers are carefully selected for the substance of their experience: founders who have built companies, investors who understand capital and risk, executives who have led complex organizations, and professionals with serious judgment to share. Students submit questions in advance and take part in a live conversation designed to move beyond biography into decisions, mistakes, lessons, and the realities of leadership. By the end of the program, students will have been in the room with leaders across multiple industries — and had the opportunity to ask thoughtful questions directly." },
+    { time: "12:30 PM", dur: "60 min", block: "Distinguished Guest Speaker", desc: "Each program day features a senior guest speaker from business, investing, entrepreneurship, technology, leadership, or the arts. Speakers are carefully selected for the substance of their experience: founders who have built companies, investors who understand capital and risk, executives who have led complex organizations, and professionals with serious judgment to share. Students can ask any questions and take part in a live conversation designed to move beyond biography into decisions, mistakes, lessons, and the realities of leadership. By the end of the program, students will have been in the room with leaders across multiple industries — and had the opportunity to ask thoughtful questions directly." },
     { time: "1:30 PM", dur: "15 min", block: "Afternoon Break", desc: "A brief reset before the final session of the day. Students step outside, recharge with a light treat — gelato, smoothies, or freshly pressed juices — and reconnect with classmates, Teaching Assistants, and faculty. With lounge music in the background and the pressure briefly lifted, the break gives students time to reset before the final push." },
     { time: "1:45 PM", dur: "60 min", block: "The War Room", desc: "The War Room is where instruction becomes application. Led by senior faculty, this block places students into structured business scenarios that require analysis, decision-making, communication, and teamwork under pressure, rotating through three formats: (1) What Would You Have Done? — students are placed inside real business moments before knowing the outcome, make the call, defend their reasoning, then learn what actually happened; (2) Your Move — students inherit a company in crisis, build a turnaround strategy, and present their decisions to faculty as if pitching a skeptical investor; (3) Apply It Now — the day’s specialist content is immediately put to work through live exercises, workshops, and team challenges." },
     { time: "2:45 PM", dur: "15 min", block: "Debrief & Close", desc: "Each day ends with a structured debrief: what was learned, what challenged the group, and what ideas can be carried forward. Students leave with one clear takeaway from the day — a concept, question, habit, or standard to apply beyond the classroom." },
   ];
 
-  const modules = [
-    { n: "01", title: "Public Speaking & Rhetoric", slug: "public-speaking", desc: "Voice, posture, impromptu speaking, Aristotelian persuasion, pitch development." },
-    { n: "02", title: "Financial Literacy & Business Acumen", slug: "financial-literacy", desc: "How companies make money, unit economics, pricing, and investor-grade analysis." },
-    { n: "03", title: "Business Model Analysis", slug: "business-models", desc: "The eight archetypes, competitive advantage, vulnerability mapping, live company deconstructions." },
-    { n: "04", title: "The Art of Selling & Marketing", slug: "art-of-selling", desc: "Consultative selling, Cialdini's principles, objection handling, live roleplay." },
-    { n: "05", title: "Stocks, Crypto & Market Literacy", tagline: "Understanding capital, risk, and market behavior.", slug: "stocks-crypto-trading", phase: "Phase 2 — Skills", desc: "How equity markets work, how to read a stock, crypto fundamentals, risk management, trading psychology, and a live paper trading simulation before a real investor panel." },
-    { n: "06", title: "AI, Technology & Innovation", slug: "ai-technology", desc: "AI as a working instrument across research, modeling, strategy, and pitch development." },
-    { n: "07", title: "Leadership, Ownership & Influence", slug: "leadership", desc: "The five forms of power, emotional intelligence, team dynamics, CEO crisis simulation." },
-    { n: "08", title: "Intellectual Depth & The Art of Class", slug: "intellectual-depth", desc: "Classical philosophy applied to modern leadership, cultural fluency, social intelligence." },
-    { n: "09", title: "Industry Sectors Rotation", slug: "industry-sectors", desc: "Ten industries, ten perspectives — technology, finance, real estate, luxury, and more." },
-    { n: "10", title: "College Admissions & Personal Development", slug: "college-admissions", desc: "Application strategy, personal narrative, interview readiness, and monthly 1:1 personal development sessions." },
-  ];
+  const modules = summerModules;
 
   return (
     <div style={{ background: "#000" }}>
       <Breadcrumb items={[{label:"Our Programs",page:"programs"},{label:"Summer Intensive",page:"summer-detail"}]} setPage={setPage} />
       {/* HERO */}
-      <div style={{ position: "relative", background: "#000", overflow: "hidden", height: isMobile ? 260 : 420 }}>
+      <div style={{ position: "relative", background: "#000", overflow: "hidden", height: isMobile ? 300 : 460 }}>
         <img src="https://i.imgur.com/N4OB8dS.jpeg" alt="Summer Intensive" style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center" }} />
-        <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(0,0,0,.9) 0%, rgba(0,0,0,.2) 60%)" }} />
-        <div style={{ position: "absolute", bottom: isMobile ? 24 : 48, left: isMobile ? 24 : 72 }}>
-          <p style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.4em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 10 }}>Summer Intensive · July & August 2026</p>
-          <h1 style={{ fontFamily: serif, fontSize: isMobile ? 36 : 56, fontWeight: 600, color: "#FBF7EE", lineHeight: 1.0, marginBottom: 8 }}>Two Weeks. Full Immersion.</h1>
-          <p style={{ fontFamily: serif, fontSize: isMobile ? 15 : 18, color: gold, fontStyle: "italic" }}>Serious momentum.</p>
+        <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(0,0,0,.92) 0%, rgba(0,0,0,.15) 60%)" }} />
+        <div style={{ position: "absolute", bottom: isMobile ? 28 : 56, left: isMobile ? 24 : 72 }}>
+          <p style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.42em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 14 }}>Summer Intensive · July &amp; August 2026</p>
+          <h1 style={{ fontFamily: "'Cormorant Garamond', 'Didot', Georgia, serif", fontSize: isMobile ? 30 : 52, fontWeight: 300, fontStyle: "italic", color: "#FBF7EE", lineHeight: 1.1, marginBottom: 6, letterSpacing: "0.01em" }}>Two-Weeks. Full Day Immersion.</h1>
+          <p style={{ fontFamily: "'Cormorant Garamond', 'Didot', Georgia, serif", fontSize: isMobile ? 20 : 32, color: gold, fontStyle: "italic", fontWeight: 300, letterSpacing: "0.02em" }}>Elite Mentorship. Real Momentum.</p>
         </div>
         <div style={{ position: "absolute", top: 24, left: 24 }}>
           <button onClick={() => setPage("programs")} style={{ fontFamily: sans, background: "rgba(0,0,0,.5)", border: "1px solid rgba(199,171,117,.3)", color: gold, padding: "8px 16px", fontSize: 10, letterSpacing: "0.15em", cursor: "pointer", textTransform: "uppercase" }}>← OUR PROGRAMS</button>
         </div>
       </div>
 
-      {/* OVERVIEW — white */}
-      <div style={{ background: "#F5F3EE", padding: isMobile ? "48px 24px" : "72px 80px" }}>
-        <div style={{ maxWidth: 1100, margin: "0 auto", display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: isMobile ? 36 : 80 }}>
-          <div>
-            <p style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.4em", color: "#8B6914", fontWeight: 600, textTransform: "uppercase", marginBottom: 16 }}>Program Overview</p>
-            <h2 style={{ fontFamily: serif, fontSize: isMobile ? 26 : 36, fontWeight: 600, color: "#000", lineHeight: 1.1, marginBottom: 20 }}>Excalibur's complete model. Concentrated into two weeks.</h2>
-            <p style={{ fontFamily: sans, fontSize: 14, lineHeight: 1.9, color: "#1a1a1a", fontWeight: 300, marginBottom: 14 }}>The Summer Intensive is a two-week, full-day program offered in July and August for high school juniors and seniors ready to experience Excalibur's core model in a concentrated format.</p>
-            <p style={{ fontFamily: sans, fontSize: 14, lineHeight: 1.9, color: "#1a1a1a", fontWeight: 300, marginBottom: 14 }}>Each day combines public speaking training, business and leadership instruction, applied workshops, and sessions with distinguished guest speakers. Students rotate through all major curricular areas and engage daily with guest lecturers drawn from a range of professional fields.</p>
-            <p style={{ fontFamily: sans, fontSize: 14, lineHeight: 1.9, color: "#1a1a1a", fontWeight: 300 }}>The program culminates in The Excalibur Venture Finale — a Shark Tank–inspired pitch finale where student teams present original business concepts to a panel of experienced judges and real investors. Selected projects receive rewards and prizes ranging from top business tech accessories to real seed funding support.</p>
+      {/* OVERVIEW — ivory luxury editorial */}
+      <div style={{ background: "#F5F3EE" }}>
+
+        {/* TOP — heading + intro + detail table */}
+        <div style={{ padding: isMobile ? "52px 24px 40px" : "80px 80px 56px", maxWidth: 1100, margin: "0 auto" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 14, marginBottom: 20 }}>
+            <div style={{ width: 32, height: "1px", background: "rgba(139,105,20,.4)" }} />
+            <p style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.45em", color: "#8B6914", fontWeight: 600, textTransform: "uppercase", margin: 0 }}>Program Overview</p>
           </div>
-          <div>
-            {[["Waves", "Wave I: July 6–18, 2026\nWave II: August 3–15, 2026"], ["Schedule", "Monday–Friday · 9:30 AM–3:00 PM"], ["Class Size", "Limited to 20 students per wave"], ["Tuition", "$410 / full day · $4,500 per wave"], ["Eligibility", "Ages 15–18 · Rising juniors and seniors"], ["Included", "Catered lunches, guest speakers, workshops, Shark Tank–inspired Finale"], ["Location", "Private venues · South Orange County, CA"]].map(([k, v]) => (
-              <div key={k} style={{ display: "grid", gridTemplateColumns: "90px 1fr", gap: 16, padding: "11px 0", borderBottom: "1px solid rgba(0,0,0,.08)" }}>
-                <span style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.2em", color: "#8B6914", textTransform: "uppercase", paddingTop: 2 }}>{k}</span>
-                <span style={{ fontFamily: sans, fontSize: 13, color: "#1a1a1a", fontWeight: 300, lineHeight: 1.6, whiteSpace: "pre-line" }}>{v}</span>
-              </div>
-            ))}
-            <div style={{ marginTop: 28, display: "flex", gap: 12, flexWrap: "wrap" }}>
-              <button onClick={() => openInquiry && openInquiry("summer")} style={{ fontFamily: sans, padding: "13px 32px", background: "#000", border: "none", color: "#fff", fontSize: 11, fontWeight: 700, letterSpacing: "0.15em", textTransform: "uppercase", cursor: "pointer" }}>APPLY NOW →</button>
+          <h2 style={{ fontFamily: "'Cormorant Garamond', 'Didot', Georgia, serif", fontSize: isMobile ? 32 : 52, fontWeight: 300, fontStyle: "italic", color: "#000", lineHeight: 1.05, letterSpacing: "0.01em", marginBottom: 40 }}>Excalibur’s Leadership<br />and Venture Launchpad.</h2>
+
+          <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 380px", gap: isMobile ? 32 : 64, alignItems: "start" }}>
+            <div>
+              <p style={{ fontFamily: sans, fontSize: isMobile ? 14 : 15, lineHeight: 2.0, color: "#1a1a1a", fontWeight: 300, marginBottom: 18 }}>The Summer Intensive is a two-week, full-day program offered in July and August for high school students ages 15–18 who are ready to turn ambition into discipline and action.</p>
+              <p style={{ fontFamily: sans, fontSize: isMobile ? 14 : 15, lineHeight: 2.0, color: "#1a1a1a", fontWeight: 300 }}>Students move from idea to venture concept: researching the market, shaping the business model, building the pitch, practicing executive communication, and learning how to defend their thinking under pressure.</p>
             </div>
+            <div>
+              {[["Waves", "Wave I: July 6–18, 2026\nWave II: August 3–15, 2026"], ["Schedule", "Monday–Friday · 9:30 AM–3:30 PM"], ["Class Size", "Limited to 20 students per wave"], ["Tuition", "$410 / full day · $4,500 per wave"], ["Eligibility", "Ages 15–18 · Rising juniors and seniors"], ["Location", "South Orange County, CA"]].map(([k, v]) => (
+                <div key={k} style={{ display: "grid", gridTemplateColumns: "80px 1fr", gap: 14, padding: "10px 0", borderBottom: "1px solid rgba(0,0,0,.08)" }}>
+                  <span style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.2em", color: "#8B6914", textTransform: "uppercase", paddingTop: 2 }}>{k}</span>
+                  <span style={{ fontFamily: sans, fontSize: 13, color: "#1a1a1a", fontWeight: 300, lineHeight: 1.6, whiteSpace: "pre-line" }}>{v}</span>
+                </div>
+              ))}
+              <div style={{ marginTop: 24 }}>
+                <button onClick={() => openInquiry && openInquiry("summer")} style={{ fontFamily: sans, padding: "12px 28px", background: "#000", border: "none", color: "#fff", fontSize: 10, fontWeight: 700, letterSpacing: "0.15em", textTransform: "uppercase", cursor: "pointer" }}>APPLY NOW →</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* GOLD RULE */}
+        <div style={{ maxWidth: 1100, margin: "0 auto", padding: isMobile ? "0 24px" : "0 80px" }}>
+          <div style={{ height: "1px", background: "linear-gradient(90deg, rgba(139,105,20,.4), rgba(139,105,20,.1), transparent)" }} />
+        </div>
+
+        {/* 3-COLUMN PROGRAM PILLARS */}
+        <div style={{ padding: isMobile ? "40px 24px" : "56px 80px", maxWidth: 1100, margin: "0 auto" }}>
+          <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr 1fr", gap: isMobile ? 28 : 48 }}>
+            <div>
+              <p style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: 13, color: "#8B6914", fontStyle: "italic", letterSpacing: "0.06em", marginBottom: 10 }}>Daily Foundation</p>
+              <p style={{ fontFamily: sans, fontSize: 13, lineHeight: 1.9, color: "#2a2a2a", fontWeight: 300 }}>Every day begins with public speaking and executive communication training. Students are on their feet from the first morning — practicing voice, presence, eye contact, persuasion, and composure under pressure.</p>
+            </div>
+            <div>
+              <p style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: 13, color: "#8B6914", fontStyle: "italic", letterSpacing: "0.06em", marginBottom: 10 }}>The Core Work</p>
+              <p style={{ fontFamily: sans, fontSize: 13, lineHeight: 1.9, color: "#2a2a2a", fontWeight: 300 }}>Venture development is the engine of the Intensive. Working in teams, students research a market, identify a real problem, define their customer, study the competition, build a marketing strategy, and structure a business plan.</p>
+            </div>
+            <div>
+              <p style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: 13, color: "#8B6914", fontStyle: "italic", letterSpacing: "0.06em", marginBottom: 10 }}>Applied & Expert</p>
+              <p style={{ fontFamily: sans, fontSize: 13, lineHeight: 1.9, color: "#2a2a2a", fontWeight: 300 }}>Applied workshops, AI tool sessions, and daily guest speakers from business and entrepreneurship support the venture work throughout the two weeks, helping students turn an idea into a pitch-ready concept.</p>
+            </div>
+          </div>
+        </div>
+
+        {/* VENTURE FINALE — dark accent strip */}
+        <div style={{ background: "#0A0A0A", padding: isMobile ? "40px 24px" : "52px 80px" }}>
+          <div style={{ maxWidth: 1100, margin: "0 auto", display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: isMobile ? 24 : 64, alignItems: "center" }}>
+            <div>
+              <p style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.4em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 14 }}>The Culmination</p>
+              <h3 style={{ fontFamily: "'Cormorant Garamond', 'Didot', Georgia, serif", fontSize: isMobile ? 26 : 38, fontWeight: 300, fontStyle: "italic", color: "#FBF7EE", lineHeight: 1.1, marginBottom: 0 }}>Shark Tank Inspired —<br />Excalibur Venture Finale.</h3>
+            </div>
+            <div>
+              <p style={{ fontFamily: sans, fontSize: 13, lineHeight: 1.9, color: "rgba(251,247,238,0.75)", fontWeight: 300, marginBottom: 14 }}>A live pitch competition where student teams present their business plans before investors, entrepreneurs, executives, and invited judges. Teams are evaluated on concept strength, market research, customer insight, marketing strategy, business logic, and composure under questioning.</p>
+              <p style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: 14, color: gold, fontStyle: "italic", lineHeight: 1.6 }}>Awards range from premium business accessories to custom surfboards, scooters, event tickets, and cash prizes.</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      {/* SUMMER FACULTY — filtered: Bill, Chip, Erik, Christopher */}
+      <div style={{ background: "#FAFAF8", padding: isMobile ? "56px 24px" : "80px 80px", borderTop: "1px solid rgba(0,0,0,.06)" }}>
+        <div style={{ maxWidth: 1100, margin: "0 auto" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 16, marginBottom: 12 }}>
+            <div style={{ width: 32, height: "1px", background: "rgba(0,0,0,.2)" }} />
+            <p style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.45em", color: "#8B6914", fontWeight: 600, textTransform: "uppercase", margin: 0 }}>FACULTY &amp; LEADERSHIP</p>
+          </div>
+          <h2 style={{ fontFamily: serif, fontSize: isMobile ? 26 : 36, fontWeight: 600, color: "#000", lineHeight: 1.1, marginBottom: 8 }}>The Mentors In the Room.</h2>
+          <p style={{ fontFamily: sans, fontSize: 13, color: "#444", fontWeight: 300, lineHeight: 1.7, maxWidth: 680, marginBottom: 48 }}>Excalibur faculty come from the arenas where leadership is tested: a CEO who built the world's first autonomous racing series, directed the Formula BMW program, and oversaw a $13B NASDAQ listing, a former Citigroup Managing Director and Georgetown MBA professor with 100+ M&amp;A transactions, 600+ CEO advisory engagements, EVP/CFO leadership at two NYSE-listed companies, TEDx speaking engagement, and a doctoral candidate serving as an Orange County Sheriff's Department spokesman. They have led companies, advised CEOs, taught MBA students, spoken on stages from West Point to Ivy League institutions, and now bring that experience directly to Excalibur students.</p>
+          <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(2, 1fr)", gap: isMobile ? 24 : 32 }}>
+            {coaches.filter(c => ["Bill Morris", "Chip Pankow", "Erik Dostal", "Christopher Sanders"].includes(c.name)).map((co, i) => (
+              <CoachCard key={i} c={co} i={i} setPage={setPage} light={true} />
+            ))}
           </div>
         </div>
       </div>
@@ -5786,12 +5986,6 @@ function SummerDetailPage({ setPage, openInquiry }) {
         <button onClick={() => setPage("faculty")} style={{ fontFamily: sans, padding: "13px 36px", background: "transparent", border: `1px solid rgba(199,171,117,.35)`, color: gold, fontSize: 11, fontWeight: 600, letterSpacing: "0.2em", textTransform: "uppercase", cursor: "pointer" }}>Meet Our Faculty →</button>
       </div>
 
-      {/* SOIREE POSTCARD */}
-      <div style={{ background: "#000", padding: isMobile ? "40px 24px" : "52px 80px" }}>
-        <div style={{ maxWidth: 1100, margin: "0 auto" }}>
-          <SoireeInviteBlock openInquiry={openInquiry} setPage={setPage} />
-        </div>
-      </div>
 
       {/* TUITION & ADMISSIONS */}
       <div style={{ background: "#000", padding: isMobile ? "52px 24px" : "72px 80px", borderTop: "1px solid rgba(199,171,117,.1)", borderBottom: "1px solid rgba(199,171,117,.1)" }}>
@@ -5805,15 +5999,17 @@ function SummerDetailPage({ setPage, openInquiry }) {
             <div style={{ height: "1px", background: "rgba(199,171,117,.15)", marginBottom: 24 }} />
             <p style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.35em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 16 }}>What's Included</p>
             {[
-              "Catered three-course lunches from local restaurants, daily",
-              "Catered snacks and refreshments at all breaks",
-              "Distinguished guest speaker every single day",
-              "Faculty-led applied workshops and War Room sessions",
-              "Public Speaking Instructor every morning",
-              "Shark Tank\u2013inspired Venture Finale with real investors and judges",
-              "Bound Excalibur Certificate of Completion",
-              "Access to Excalibur Alumni Network",
+              "Daily public speaking and executive communication training",
+              "Venture development — market research, competitor analysis, business planning",
+              "Marketing strategy, branding, and customer psychology",
+              "AI tools for business research, analysis, and presentation",
+              "Sales, persuasion, and pitch training",
+              "Distinguished guest speakers from different industry sectors, business and entrepreneurship daily",
+              "Excalibur Venture Finale — live Shark Tank-inspired pitch before real investors, entrepreneurs, and executives",
+              "Bound Certificate of Completion and Graduate Portfolio",
+              "Catered daily lunches, snacks, smoothies and refreshments",
               "Priority consideration for the Ten-Month Flagship Program",
+              "Daily Academy Shuttle for pick up/drop off (for South OC students)",
             ].map((item, i) => (
               <div key={i} style={{ display: "flex", gap: 12, padding: "9px 0", borderBottom: "1px solid rgba(199,171,117,.06)", alignItems: "flex-start" }}>
                 <span style={{ fontFamily: serif, fontSize: 10, color: "#C7AB75", flexShrink: 0, paddingTop: 1 }}>—</span>
@@ -5828,64 +6024,24 @@ function SummerDetailPage({ setPage, openInquiry }) {
           {/* RIGHT — Admissions */}
           <div>
             <p style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.45em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 20 }}>Admissions</p>
-            <h3 style={{ fontFamily: serif, fontSize: isMobile ? 24 : 30, fontWeight: 600, color: "#FBF7EE", lineHeight: 1.1, marginBottom: 16 }}>Our Students</h3>
-            <p style={{ fontFamily: sans, fontSize: 14, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.85, marginBottom: 24 }}>The Summer Intensive is designed for ambitious high school students aged 15–18 (rising juniors and seniors) who are ready for a real program — not a summer camp, not a passive course, but a structured, high-expectation environment where they are asked to think, dream, lead, make mistakes, speak out, and aim for the stars.</p>
-            <p style={{ fontFamily: sans, fontSize: 14, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.85 }}>We are not looking for the most polished resume. We look for curiosity, maturity, and a genuine interest in business, leadership, and how the world actually works. The student who leans forward. The one who asks the most questions and is ready to make mistakes, learn and grow.</p>
+            <h3 style={{ fontFamily: serif, fontSize: isMobile ? 24 : 30, fontWeight: 600, color: "#FBF7EE", lineHeight: 1.1, marginBottom: 16 }}>Who This Program Is For</h3>
+            <p style={{ fontFamily: sans, fontSize: 14, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.85, marginBottom: 20 }}>The Summer Intensive is built for ambitious students ages 15–18 ready to think like founders, work in teams, take initiative, and turn ambition into discipline and action. Excalibur looks for curiosity, drive, maturity, and the willingness to learn not only about business, but about oneself.</p>
+            <p style={{ fontFamily: sans, fontSize: 14, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.85, marginBottom: 20 }}>This is not a traditional summer camp or passive enrichment program. It is a focused, immersive environment where students are challenged to think deeply, dream boldly, speak clearly, take initiative, make mistakes, build resilience, and grow through challenge.</p>
+            <p style={{ fontFamily: sans, fontSize: 14, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.85 }}>We are not looking for the most polished resume. We look for curiosity, maturity, and a genuine interest in business, leadership, and how the world actually works. The student who leans forward. The one who asks questions, is ready to make mistakes, learn to step outside the comfort zone and rise to a higher standard.</p>
           </div>
 
         </div>
       </div>
 
-      {/* HOW TO APPLY — full width horizontal luxury steps */}
-      <div style={{ background: "#000", padding: isMobile ? "52px 24px" : "72px 80px", borderTop: "1px solid rgba(199,171,117,.1)" }}>
-        <div style={{ maxWidth: 1100, margin: "0 auto" }}>
-          <p style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.45em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 20 }}>Admissions Process</p>
-          <h2 style={{ fontFamily: serif, fontSize: isMobile ? 26 : 38, fontWeight: 600, color: "#FBF7EE", lineHeight: 1.05, marginBottom: 52 }}>How to Apply</h2>
-          <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(4,1fr)", position: "relative" }}>
-            {!isMobile && (
-              <div style={{ position: "absolute", top: 22, left: 44, right: 44, height: "1px", background: "linear-gradient(90deg, rgba(199,171,117,.08), rgba(199,171,117,.35), rgba(199,171,117,.08))", zIndex: 0 }} />
-            )}
-            {[
-              {
-                n: "01",
-                title: "Submit the Program Application",
-                desc: "The Summer Intensive application is a short online form. Admission is selective, but the process is intentionally straightforward. Each application is reviewed personally by the Excalibur admissions team."
-              },
-              {
-                n: "02",
-                title: "Admissions Follow-Up",
-                desc: "A member of our admissions team will contact the family within 24 hours to answer questions, discuss the student's fit, and confirm availability for the selected wave."
-              },
-              {
-                n: "03",
-                title: "Secure Enrollment",
-                desc: "Once accepted, a deposit secures the student's seat in the chosen wave. Enrollment is limited to 20 students per wave."
-              },
-              {
-                n: "04",
-                title: "Pre-Program Onboarding",
-                desc: "Accepted families receive a welcome packet, program overview, schedule details, and dietary preference form. Before each wave, families receive an invitation to a Family Information Session covering the program structure, student expectations, logistics, and key dates. Student and family portals are set up before the program begins."
-              },
-            ].map((step, i) => (
-              <div key={i} style={{ padding: isMobile ? "28px 0" : "0 28px 0 0", borderTop: isMobile ? "1px solid rgba(199,171,117,.1)" : "none", borderLeft: !isMobile && i > 0 ? "1px solid rgba(199,171,117,.1)" : "none", paddingLeft: !isMobile && i > 0 ? 28 : 0, position: "relative", zIndex: 1 }}>
-                <div style={{ width: 44, height: 44, border: "1px solid rgba(199,171,117,.35)", display: "flex", alignItems: "center", justifyContent: "center", marginBottom: 24, background: "#000" }}>
-                  <span style={{ fontFamily: serif, fontSize: 18, fontWeight: 300, color: gold }}>{step.n}</span>
-                </div>
-                <p style={{ fontFamily: serif, fontSize: isMobile ? 16 : 17, fontWeight: 600, color: "#FBF7EE", lineHeight: 1.25, marginBottom: 12 }}>{step.title}</p>
-                <p style={{ fontFamily: sans, fontSize: 12, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.8 }}>{step.desc}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
+
 
       {/* DAILY SCHEDULE */}
       <div style={{ padding: isMobile ? "52px 24px" : "72px 80px", background: "#FAF8F4", borderTop: "1px solid rgba(0,0,0,.07)", borderBottom: "1px solid rgba(0,0,0,.07)" }}>
         <div style={{ maxWidth: 1100, margin: "0 auto" }}>
           <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 9, letterSpacing: "0.4em", color: "#8B6914", fontWeight: 700, textTransform: "uppercase", marginBottom: 16 }}>A Day at Excalibur</p>
-          <h2 style={{ fontFamily: serif, fontSize: isMobile ? 26 : 36, fontWeight: 600, color: "#111", lineHeight: 1.1, marginBottom: 8 }}>What a real session looks like.</h2>
-          <p style={{ fontFamily: sans, fontSize: 14, color: "#444", fontWeight: 300, lineHeight: 1.8, marginBottom: 32, maxWidth: 560 }}>Monday through Friday. 9:30 AM to 3:00 PM. July 6–18 & August 3–15, 2026.</p>
-          <DailyScheduleBlock schedule={schedule} title="SUMMER INTENSIVE" subtitle="Monday – Friday · 9:30 AM – 3:00 PM · July 6–18 & Aug 3–15, 2026" />
+          <h2 style={{ fontFamily: serif, fontSize: isMobile ? 26 : 36, fontWeight: 600, color: "#111", lineHeight: 1.1, marginBottom: 8 }}>What a summer session looks like.</h2>
+          <p style={{ fontFamily: sans, fontSize: 14, color: "#444", fontWeight: 300, lineHeight: 1.8, marginBottom: 32, maxWidth: 560 }}>Monday through Friday. 9:30 AM to 3:30 PM. July 6–18 & August 3–15, 2026.</p>
+          <DailyScheduleBlock schedule={schedule} title="SUMMER INTENSIVE" subtitle="Monday – Friday · 9:30 AM – 3:30 PM · July 6–18 & Aug 3–15, 2026" />
         </div>
       </div>
 
@@ -5893,11 +6049,11 @@ function SummerDetailPage({ setPage, openInquiry }) {
       <div style={{ background: "#050505", padding: isMobile ? "52px 24px" : "72px 80px" }}>
         <div style={{ maxWidth: 1100, margin: "0 auto" }}>
           <p style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.4em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 16 }}>Curriculum</p>
-          <h2 style={{ fontFamily: serif, fontSize: isMobile ? 26 : 36, fontWeight: 600, color: "#FBF7EE", lineHeight: 1.1, marginBottom: 8 }}>All nine disciplines. Two weeks.</h2>
-          <p style={{ fontFamily: sans, fontSize: 14, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.8, marginBottom: 40, maxWidth: 540 }}>Every Summer Intensive covers all nine Excalibur disciplines. Click any module to read the full description.</p>
+          <h2 style={{ fontFamily: serif, fontSize: isMobile ? 26 : 36, fontWeight: 600, color: "#FBF7EE", lineHeight: 1.1, marginBottom: 8 }}>Six disciplines. Two weeks. One mission.</h2>
+          <p style={{ fontFamily: sans, fontSize: 14, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.8, marginBottom: 40, maxWidth: 540 }}>The Summer Intensive runs its own focused curriculum — built around venture launchpad, executive communication, and the Shark Tank-inspired Venture Finale. Click any discipline to read more.</p>
           <div style={{ display: "flex", flexDirection: "column", gap: 0 }}>
             {modules.map((m, i) => (
-              <div key={i} onClick={() => setPage(`module:${m.slug}`)} style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "48px 1fr 100px", gap: isMobile ? 8 : 24, padding: isMobile ? "18px 0" : "22px 0", borderBottom: "1px solid rgba(199,171,117,.07)", cursor: "pointer", alignItems: "center" }}
+              <div key={i} onClick={() => setPage(`summer-module:${m.slug}`)} style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "48px 1fr 100px", gap: isMobile ? 8 : 24, padding: isMobile ? "18px 0" : "22px 0", borderBottom: "1px solid rgba(199,171,117,.07)", cursor: "pointer", alignItems: "center" }}
                 onMouseEnter={e => e.currentTarget.style.background = "rgba(199,171,117,.05)"}
                 onMouseLeave={e => e.currentTarget.style.background = "transparent"}
               >
@@ -5913,6 +6069,52 @@ function SummerDetailPage({ setPage, openInquiry }) {
         </div>
       </div>
 
+      {/* SOIREE POSTCARD */}
+      <div style={{ background: "#000", padding: isMobile ? "40px 24px" : "52px 80px" }}>
+        <div style={{ maxWidth: 1100, margin: "0 auto" }}>
+          <SoireeInviteBlock openInquiry={openInquiry} setPage={setPage} />
+        </div>
+      </div>
+
+      {/* HOW TO APPLY — full width horizontal luxury steps */}
+      <div style={{ background: "#FAFAF8", padding: isMobile ? "52px 24px" : "72px 80px", borderTop: "1px solid rgba(0,0,0,.06)" }}>
+        <div style={{ maxWidth: 1100, margin: "0 auto" }}>
+          <p style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.45em", color: "#8B6914", fontWeight: 600, textTransform: "uppercase", marginBottom: 20 }}>Admissions Process</p>
+          <h2 style={{ fontFamily: serif, fontSize: isMobile ? 26 : 38, fontWeight: 600, color: "#000", lineHeight: 1.05, marginBottom: 52 }}>How to Apply</h2>
+          <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(3,1fr)", position: "relative", marginBottom: 0 }}>
+            {!isMobile && (
+              <div style={{ position: "absolute", top: 22, left: 44, right: 44, height: "1px", background: "linear-gradient(90deg, rgba(0,0,0,.04), rgba(0,0,0,.15), rgba(0,0,0,.04))", zIndex: 0 }} />
+            )}
+            {[
+              { n: "01", title: "Submit Application", desc: "Please begin by submitting a brief application for admissions review following the form below. Excalibur Summer is selective, and each applicant is considered individually." },
+              { n: "02", title: "Admissions Consultation", desc: "A member of the admissions team will contact the family within 24 hours to answer questions, discuss the student’s interests, and review availability for the selected wave." },
+              { n: "03", title: "Enrollment Confirmation", desc: "Upon acceptance, enrollment is confirmed by deposit. Each wave is limited to 20 students to preserve the quality of instruction, discussion, mentorship, and direct feedback." },
+            ].map((step, i) => (
+              <div key={i} style={{ padding: isMobile ? "28px 0" : "0 28px 0 0", borderTop: isMobile ? "1px solid rgba(199,171,117,.1)" : "none", borderLeft: !isMobile && i > 0 ? "1px solid rgba(199,171,117,.1)" : "none", paddingLeft: !isMobile && i > 0 ? 28 : 0, position: "relative", zIndex: 1 }}>
+                <div style={{ width: 44, height: 44, border: "1px solid rgba(0,0,0,.2)", display: "flex", alignItems: "center", justifyContent: "center", marginBottom: 24, background: "#FAFAF8" }}>
+                  <span style={{ fontFamily: serif, fontSize: 18, fontWeight: 300, color: "#8B6914" }}>{step.n}</span>
+                </div>
+                <p style={{ fontFamily: serif, fontSize: isMobile ? 16 : 17, fontWeight: 600, color: "#000", lineHeight: 1.25, marginBottom: 12 }}>{step.title}</p>
+                <p style={{ fontFamily: sans, fontSize: 12, color: "#333", fontWeight: 300, lineHeight: 1.8 }}>{step.desc}</p>
+              </div>
+            ))}
+          </div>
+
+          {/* Step 04 — full width below the 3-column grid */}
+          <div style={{ borderTop: "1px solid rgba(0,0,0,.1)", marginTop: 40, paddingTop: 36, display: "grid", gridTemplateColumns: isMobile ? "1fr" : "56px 1fr", gap: isMobile ? 20 : 36, alignItems: "start" }}>
+            <div style={{ width: 44, height: 44, border: "1px solid rgba(0,0,0,.2)", display: "flex", alignItems: "center", justifyContent: "center", background: "#FAFAF8", flexShrink: 0 }}>
+              <span style={{ fontFamily: serif, fontSize: 18, fontWeight: 300, color: "#8B6914" }}>04</span>
+            </div>
+            <div>
+              <p style={{ fontFamily: serif, fontSize: isMobile ? 16 : 17, fontWeight: 600, color: "#000", lineHeight: 1.25, marginBottom: 16 }}>Family Onboarding &amp; Orientation</p>
+              <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: isMobile ? 14 : 52 }}>
+                <p style={{ fontFamily: sans, fontSize: 12, color: "#333", fontWeight: 300, lineHeight: 1.9 }}>Accepted families receive formal onboarding materials, including the welcome packet, program overview, schedule details, full menu information &amp; dietary preference form, student and family portal access, and information regarding Academy shuttle transportation for South Orange County students.</p>
+                <p style={{ fontFamily: sans, fontSize: 12, color: "#333", fontWeight: 300, lineHeight: 1.9 }}>Prior to the beginning of each wave, families are invited to a Family Orientation Session to meet with Lead faculty, Teaching Assistants, and the operations team — an opportunity to become fully acquainted with the Academy environment, review expectations and logistics, and get fully onboarded.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
 
       {/* CHOOSE YOUR WAVE — enrollment selector */}
       <div style={{ background: "#050505", padding: isMobile ? "52px 24px" : "72px 80px", borderTop: "1px solid rgba(199,171,117,.1)" }}>
@@ -5922,15 +6124,15 @@ function SummerDetailPage({ setPage, openInquiry }) {
           <p style={{ fontFamily: sans, fontSize: 14, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.8, marginBottom: 40, maxWidth: 580 }}>Select your wave and complete your program application. Our Enrollment Coordinator will be in touch within 24 hours.</p>
           <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 2, background: "#111", marginBottom: 2 }}>
             {[
-              { label: "WAVE 1 — JULY", wave: "Wave 1", dates: "July 6 – 18, 2026", days: "Monday – Friday · 9:30 AM – 3:00 PM", tag: "● Enrollment Open", tagColor: "#4DB87A" },
-              { label: "WAVE 2 — AUGUST", wave: "Wave 2", dates: "August 3 – 15, 2026", days: "Monday – Friday · 9:30 AM – 3:00 PM", tag: "● Enrollment Open", tagColor: "#4DB87A" },
+              { label: "WAVE 1 — JULY", wave: "Wave 1", dates: "July 6 – 18, 2026", days: "Monday – Friday · 9:30 AM – 3:30 PM", tag: "● Enrollment Open", tagColor: "#4DB87A" },
+              { label: "WAVE 2 — AUGUST", wave: "Wave 2", dates: "August 3 – 15, 2026", days: "Monday – Friday · 9:30 AM – 3:30 PM", tag: "● Enrollment Open", tagColor: "#4DB87A" },
             ].map((w, i) => (
               <div key={i} style={{ background: "#080808", padding: isMobile ? "36px 24px" : "48px 44px", borderTop: `2px solid ${gold}` }}>
                 <p style={{ fontFamily: eyebrow_font, fontSize: 8, letterSpacing: "0.4em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 12 }}>{w.label}</p>
                 <h3 style={{ fontFamily: serif, fontSize: 28, fontWeight: 600, color: "#FBF7EE", marginBottom: 6, lineHeight: 1 }}>{w.wave}</h3>
                 <p style={{ fontFamily: serif, fontSize: 16, color: gold, fontStyle: "italic", marginBottom: 20 }}>{w.dates}</p>
                 <div style={{ height: "1px", background: "rgba(199,171,117,.1)", marginBottom: 20 }} />
-                {[["Schedule", w.days], ["Duration", "Two weeks · 10 sessions"], ["Class Size", "20 students maximum"], ["Tuition", "$410 / full day · $4,500 per wave"], ["Includes", "Catered lunches · Guest speakers · Workshops · Start-up simulations · Shark Tank-inspired Finale"]].map(([k, v]) => (
+                {[["Schedule", w.label === "WAVE 1 — JULY" ? "Mon–Fri 9:30 AM–3:30 PM · July 18 Saturday Venture Finale" : "Mon–Fri 9:30 AM–3:30 PM · Aug 15 Saturday Venture Finale"], ["Duration", "Two Weeks"], ["Class Size", "Limited to 20 students"], ["Tuition", "$410 / full day · $4,500 per wave"], ["Includes", "Catered lunches · Guest speakers · Workshops · Start-up simulations · Shark Tank-inspired Finale"]].map(([k, v]) => (
                   <div key={k} style={{ display: "flex", gap: 16, padding: "9px 0", borderBottom: "1px solid rgba(199,171,117,.06)", alignItems: "flex-start" }}>
                     <span style={{ fontFamily: sans, fontSize: 8, letterSpacing: "0.2em", color: gold, textTransform: "uppercase", minWidth: 72, flexShrink: 0, paddingTop: 1 }}>{k}</span>
                     <span style={{ fontFamily: sans, fontSize: 12, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.6 }}>{v}</span>
@@ -5947,9 +6149,9 @@ function SummerDetailPage({ setPage, openInquiry }) {
       {/* YOUR INFORMATION FORM */}
       <div style={{ background: "#000", padding: isMobile ? "52px 24px" : "72px 80px", borderTop: "1px solid rgba(199,171,117,.1)" }}>
         <div style={{ maxWidth: 740, margin: "0 auto" }}>
-          <p style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.4em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 16 }}>Apply Now</p>
-          <h2 style={{ fontFamily: serif, fontSize: isMobile ? 28 : 40, fontWeight: 600, color: "#FBF7EE", lineHeight: 1.05, marginBottom: 8 }}>Submit Your Application</h2>
-          <p style={{ fontFamily: sans, fontSize: 14, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.8, marginBottom: 36, maxWidth: 580 }}>Fill in your details and our Enrollment Coordinator will contact you within 24 hours with next steps and your place confirmation.</p>
+          <p style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.4em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 16 }}>Request a Consultation</p>
+          <h2 style={{ fontFamily: serif, fontSize: isMobile ? 28 : 40, fontWeight: 600, color: "#FBF7EE", lineHeight: 1.05, marginBottom: 8 }}>Schedule a Family Consultation</h2>
+          <p style={{ fontFamily: sans, fontSize: 14, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.8, marginBottom: 36, maxWidth: 580 }}>Submit your information to schedule a private admissions consultation. A dedicated Enrollment Coordinator will guide your family through program options, admissions steps, availability, and next steps.</p>
           <div style={{ background: "#080808", borderTop: `2px solid ${gold}`, padding: "36px 32px" }}>
             <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 9, letterSpacing: "0.25em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 12 }}>Parent / Guardian</p>
             <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 10, marginBottom: 10 }}>
@@ -5978,8 +6180,19 @@ function SummerDetailPage({ setPage, openInquiry }) {
               <input type="text" placeholder="Current Grade / Year" className="inquiry-input" style={{ background: "#000", border: "1px solid rgba(199,171,117,.2)", color: "#FBF7EE", padding: "13px 16px", fontFamily: "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
             </div>
             <input type="text" placeholder="Preferred Wave (July or August)" className="inquiry-input" style={{ background: "#000", border: "1px solid rgba(199,171,117,.2)", color: "#FBF7EE", padding: "13px 16px", fontFamily: "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%", marginBottom: 24 }} />
-            <input type="text" placeholder="How did you hear about Excalibur?" className="inquiry-input" style={{ background: "#000", border: "1px solid rgba(199,171,117,.2)", color: "#FBF7EE", padding: "13px 16px", fontFamily: "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%", marginBottom: 28 }} />
-            <button onClick={() => openInquiry && openInquiry("summer")} style={{ fontFamily: "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif", padding: "15px 40px", background: gold, border: "none", color: "#000", fontSize: 12, fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", cursor: "pointer", width: "100%" }}>SUBMIT — WE'LL BE IN TOUCH WITHIN 24 HOURS</button>
+            <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 9, letterSpacing: "0.25em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 12, marginTop: 0 }}>Consultation Preferences</p>
+            <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 10, marginBottom: 10 }}>
+              <select className="inquiry-input" defaultValue="" style={{ background: "#000", border: "1px solid rgba(199,171,117,.2)", color: "#FBF7EE", padding: "13px 16px", fontFamily: "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%", appearance: "none" }}>
+                <option value="" disabled>Preferred Contact Method</option>
+                <option value="phone">Phone Call</option>
+                <option value="email">Email</option>
+                <option value="either">Either</option>
+              </select>
+              <input type="text" placeholder="Preferred Consultation Dates" className="inquiry-input" style={{ background: "#000", border: "1px solid rgba(199,171,117,.2)", color: "#FBF7EE", padding: "13px 16px", fontFamily: "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
+            </div>
+            <input type="text" placeholder="Preferred Times (e.g. mornings, evenings, weekends)" className="inquiry-input" style={{ background: "#000", border: "1px solid rgba(199,171,117,.2)", color: "#FBF7EE", padding: "13px 16px", fontFamily: "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%", marginBottom: 10 }} />
+            <textarea placeholder="Additional notes or questions (optional)" className="inquiry-input" rows={4} style={{ background: "#000", border: "1px solid rgba(199,171,117,.2)", color: "#FBF7EE", padding: "13px 16px", fontFamily: "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%", marginBottom: 28, resize: "vertical" }} />
+            <button onClick={() => openInquiry && openInquiry("summer")} style={{ fontFamily: "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif", padding: "15px 40px", background: gold, border: "none", color: "#000", fontSize: 12, fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", cursor: "pointer", width: "100%" }}>REQUEST CONSULTATION — WE'LL BE IN TOUCH WITHIN 24 HOURS</button>
           </div>
         </div>
       </div>
@@ -6427,6 +6640,7 @@ export default function ExcaliburApp() {
     if (page === "flagship-detail") return <FlagshipDetailPage setPage={setPage} openInquiry={openInquiry} />;
     if (page === "summer-detail") return <SummerDetailPage setPage={setPage} openInquiry={openInquiry} />;
     if (page.startsWith("module:")) return <ModulePage slug={page.replace("module:", "")} setPage={setPage} />;
+    if (page.startsWith("summer-module:")) return <SummerModulePage slug={page.replace("summer-module:", "")} setPage={setPage} />;
     return <HomePage setPage={setPage} openInquiry={openInquiry} />;
   };
 
