@@ -3160,34 +3160,25 @@ function HomePage({ setPage, openInquiry }) {
                   July &amp; August Waves
                 </p>
 
-                {/* "You Asked. We Listened." — bold statement block */}
-                <div style={{ marginBottom: 40, background: gold, padding: isMobile ? "28px 24px" : "36px 40px", position: "relative", overflow: "hidden" }}>
-                  {/* Background texture watermark */}
-                  <div style={{ position: "absolute", right: -10, top: "50%", transform: "translateY(-50%)", fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: 120, fontWeight: 300, color: "rgba(0,0,0,.08)", lineHeight: 1, userSelect: "none", pointerEvents: "none" }}>✦</div>
-                  <p style={{ fontFamily: eyebrow_font, fontSize: 8, letterSpacing: "0.42em", color: "rgba(0,0,0,.5)", fontWeight: 700, textTransform: "uppercase", marginBottom: 10, position: "relative", zIndex: 1 }}>You Asked. We Listened.</p>
-                  <p style={{ fontFamily: "'Cormorant Garamond', 'Didot', Georgia, serif", fontSize: isMobile ? 22 : 30, fontWeight: 600, color: "#000", lineHeight: 1.2, marginBottom: 0, letterSpacing: "0.01em", position: "relative", zIndex: 1 }}>We are introducing a second two-week intensive wave in August 2026.</p>
-                  <p style={{ fontFamily: sans, fontSize: 12, color: "rgba(0,0,0,.6)", fontWeight: 400, lineHeight: 1.7, marginTop: 12, position: "relative", zIndex: 1 }}>Due to high demand and our commitment to keeping cohort sizes small — a personalized, real experience.</p>
-                </div>
-
                 {/* Body copy */}
-                <p style={{ fontFamily: sans, fontSize: isMobile ? 13 : 14, lineHeight: 2.0, color: "#FBF7EE", fontWeight: 300, marginBottom: 36, maxWidth: 600 }}>
+                <p style={{ fontFamily: sans, fontSize: isMobile ? 15 : 16, lineHeight: 2.0, color: "#FBF7EE", fontWeight: 300, marginBottom: 36, maxWidth: 600 }}>
                   Offered in two waves — July and August — this full-day, Monday-through-Friday intensive is led by senior faculty, former Fortune 100 executives, accomplished leaders, top industry specialists, and distinguished guest speakers. Designed specifically for high school students ages 15–18 who are ready to turn ambition into discipline and action. Students move from idea to venture concept: researching the market, shaping the business model, building the pitch, practicing executive communication, and learning how to defend their thinking under pressure. The program culminates in the Shark Tank Inspired Excalibur Venture Finale, where teams present before real investors and invited judges.
                 </p>
 
-                {/* CTA buttons */}
-                <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
-                  <button onClick={() => openInquiry && openInquiry("summer")} style={{ fontFamily: sans, padding: "14px 40px", background: gold, border: "none", color: "#000", fontSize: 11, fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", cursor: "pointer" }}>APPLY NOW →</button>
-                  <button onClick={() => setPage("summer-detail")} style={{ fontFamily: sans, padding: "14px 28px", background: "transparent", border: `1px solid rgba(199,171,117,.35)`, color: gold, fontSize: 11, fontWeight: 500, letterSpacing: "0.15em", textTransform: "uppercase", cursor: "pointer" }}>LEARN MORE →</button>
-                </div>
               </div>
 
               {/* RIGHT — details panel */}
               <div style={{ border: `1px solid rgba(199,171,117,.15)`, borderTop: `2px solid ${gold}` }}>
+                {/* "You Asked. We Listened." — bold statement block */}
+                <div style={{ marginBottom: 0, background: gold, padding: isMobile ? "24px 20px" : "28px 28px", position: "relative", overflow: "hidden" }}>
+                  <div style={{ position: "absolute", right: -10, top: "50%", transform: "translateY(-50%)", fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: 100, fontWeight: 300, color: "rgba(0,0,0,.08)", lineHeight: 1, userSelect: "none", pointerEvents: "none" }}>✦</div>
+                  <p style={{ fontFamily: eyebrow_font, fontSize: 10, letterSpacing: "0.38em", color: "rgba(0,0,0,.55)", fontWeight: 700, textTransform: "uppercase", marginBottom: 10, position: "relative", zIndex: 1 }}>You Asked. We Listened.</p>
+                  <p style={{ fontFamily: "'Cormorant Garamond', 'Didot', Georgia, serif", fontSize: isMobile ? 20 : 26, fontWeight: 600, color: "#000", lineHeight: 1.25, marginBottom: 0, letterSpacing: "0.01em", position: "relative", zIndex: 1 }}>Due to high demand and our commitment to keeping cohort sizes small — and experience for each student personalized — <em>we are introducing a second two-week intensive wave in August 2026.</em></p>
+                </div>
                 {/* Panel header */}
-                <div style={{ padding: "20px 28px", borderBottom: `1px solid rgba(199,171,117,.1)` }}>
+                <div style={{ padding: "16px 28px", borderBottom: `1px solid rgba(199,171,117,.1)`, borderTop: `1px solid rgba(199,171,117,.1)` }}>
                   <p style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: 18, color: "#FBF7EE", fontStyle: "italic", fontWeight: 300, margin: 0 }}>Program Details</p>
                 </div>
-                {/* Detail rows */}
                 <div style={{ padding: "0 28px" }}>
                   {[
                     ["Sessions", "9:30 AM – 3:30 PM · Mon–Fri"],
@@ -3198,8 +3189,8 @@ function HomePage({ setPage, openInquiry }) {
                     ["Eligibility", "Ages 15–18 · 20 students per wave"],
                   ].map(([k, v], i) => (
                     <div key={i} style={{ display: "grid", gridTemplateColumns: "96px 1fr", gap: 14, padding: "13px 0", borderBottom: "1px solid rgba(199,171,117,.07)", alignItems: "flex-start" }}>
-                      <span style={{ fontFamily: eyebrow_font, fontSize: 8, letterSpacing: "0.18em", color: gold, textTransform: "uppercase", paddingTop: 2, flexShrink: 0, fontWeight: 600 }}>{k}</span>
-                      <span style={{ fontFamily: sans, fontSize: 12, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.65 }}>{v}</span>
+                      <span style={{ fontFamily: eyebrow_font, fontSize: 11, letterSpacing: "0.18em", color: gold, textTransform: "uppercase", paddingTop: 2, flexShrink: 0, fontWeight: 600 }}>{k}</span>
+                      <span style={{ fontFamily: sans, fontSize: 15, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.65 }}>{v}</span>
                     </div>
                   ))}
                 </div>
@@ -3207,6 +3198,11 @@ function HomePage({ setPage, openInquiry }) {
                 <div style={{ padding: "24px 28px", borderTop: `1px solid rgba(199,171,117,.1)` }}>
                   <p style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: 36, fontWeight: 300, color: "#FBF7EE", lineHeight: 1, marginBottom: 4 }}>$4,500<span style={{ fontSize: 16 }}> / wave</span></p>
                   <p style={{ fontFamily: sans, fontSize: 11, color: gold, fontWeight: 300 }}>$410 per full day</p>
+                </div>
+                {/* CTA buttons — beneath the panel */}
+                <div style={{ padding: "20px 28px", borderTop: `1px solid rgba(199,171,117,.1)`, display: "flex", gap: 10, flexWrap: "wrap" }}>
+                  <button onClick={() => openInquiry && openInquiry("summer")} style={{ fontFamily: sans, padding: "13px 28px", background: gold, border: "none", color: "#000", fontSize: 11, fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", cursor: "pointer", flex: 1 }}>APPLY NOW →</button>
+                  <button onClick={() => setPage("summer-detail")} style={{ fontFamily: sans, padding: "13px 20px", background: "transparent", border: `1px solid rgba(199,171,117,.35)`, color: gold, fontSize: 11, fontWeight: 500, letterSpacing: "0.15em", textTransform: "uppercase", cursor: "pointer", flex: 1 }}>LEARN MORE →</button>
                 </div>
               </div>
 
