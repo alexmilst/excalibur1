@@ -2349,6 +2349,11 @@ function ProgramsPage({ setPage, openInquiry }) {
 
           ) : (
             /* ── SIX-WEEK: dark two-column layout ── */
+            <div>
+              {/* Photo strip */}
+              <div style={{ height: isMobile ? 200 : 320, overflow: "hidden", background: "#000" }}>
+                <img src={prog.photo} alt={prog.title} style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center" }} />
+              </div>
             <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 0, minHeight: isMobile ? "auto" : 640 }}>
               <div style={{ background: "#06050A", padding: isMobile ? "44px 28px" : "64px 52px", display: "flex", flexDirection: "column", justifyContent: "space-between", borderRight: "1px solid rgba(199,171,117,.06)" }}>
                 <div>
@@ -2389,6 +2394,7 @@ function ProgramsPage({ setPage, openInquiry }) {
                   <button onClick={() => setPage(prog.flagship ? "flagship-detail" : prog.id)} style={{ fontFamily: sans, padding: "13px 28px", background: "transparent", border: `1px solid ${gold}`, color: gold, fontSize: 11, fontWeight: 600, letterSpacing: "0.12em", textTransform: "uppercase", cursor: "pointer" }}>LEARN MORE →</button>
                 </div>
               </div>
+            </div>
             </div>
           )}
         </div>}
@@ -4252,13 +4258,9 @@ function AboutPage({ setPage, openInquiry }) {
         </div>
       </Fade>
 
-      {/* FZa8mNV — full width photo between sections */}
-      <div style={{ height: isMobile ? 240 : 360, overflow: "hidden", position: "relative" }}>
-        <img src="https://i.imgur.com/FZa8mNV.jpeg" alt="Excalibur Academy" style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center 30%", filter: "brightness(0.6)" }} onError={e => e.target.style.display="none"} />
-        <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to bottom, rgba(0,0,0,.3) 0%, transparent 35%, transparent 65%, rgba(0,0,0,.5) 100%)" }} />
-        <div style={{ position: "absolute", bottom: isMobile ? 20 : 36, left: 0, right: 0, textAlign: "center" }}>
-          <p style={{ fontFamily: serif, fontSize: isMobile ? 15 : 20, color: "#FBF7EE", fontStyle: "italic", letterSpacing: "0.04em" }}>Orange County, California · Inaugural Class 2026</p>
-        </div>
+      {/* Photo between sections */}
+      <div style={{ overflow: "hidden", position: "relative", background: "#000" }}>
+        <img src="https://i.imgur.com/5lWMfOb.jpeg" alt="Excalibur Academy" style={{ width: "100%", height: "auto", display: "block", objectFit: "contain" }} onError={e => e.target.style.display="none"} />
       </div>
 
       {/* WHY THIS MATTERS NOW — dark block */}
@@ -4280,16 +4282,18 @@ function AboutPage({ setPage, openInquiry }) {
         {/* WHAT IS BEHIND A NAME — luxury full-bleed editorial */}
         <div style={{ background: "#07060A", position: "relative", overflow: "hidden" }}>
 
-          {/* Full-bleed image — no crop, full picture visible */}
-          <div style={{ position: "relative", width: "100%", background: "#07060A" }}>
-            <img
-              src="https://i.imgur.com/QNW043y.jpeg"
-              alt="King Arthur — Excalibur"
-              style={{ width: "100%", height: "auto", display: "block", objectFit: "contain", objectPosition: "center top" }}
-              onError={e => e.target.style.display = "none"}
-            />
-            {/* Bottom gradient fade into the text section */}
-            <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: isMobile ? 120 : 200, background: "linear-gradient(to bottom, transparent, #07060A)" }} />
+          {/* Image — constrained width, not full bleed */}
+          <div style={{ position: "relative", background: "#07060A", padding: isMobile ? "48px 24px 0" : "64px 80px 0", display: "flex", justifyContent: "center" }}>
+            <div style={{ position: "relative", maxWidth: isMobile ? "100%" : 480, width: "100%" }}>
+              <img
+                src="https://i.imgur.com/QNW043y.jpeg"
+                alt="King Arthur — Excalibur"
+                style={{ width: "100%", height: "auto", display: "block", objectFit: "contain" }}
+                onError={e => e.target.style.display = "none"}
+              />
+              {/* Bottom gradient fade */}
+              <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: 80, background: "linear-gradient(to bottom, transparent, #07060A)" }} />
+            </div>
           </div>
 
           {/* Text content — floats below the image */}
