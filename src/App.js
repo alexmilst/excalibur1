@@ -2141,7 +2141,7 @@ function ProgramsPage({ setPage, openInquiry }) {
       tag: "SIX-WEEK INTENSIVE", id: "intensive", flagship: false, status: "ENROLLING SOON", statusColor: gold,
       title: "Six-Week Intensive",
       tagline: "The compressed formation.",
-      photo: null,
+      photo: "https://i.imgur.com/P86gddQ.png",
       desc: "A compressed version of the flagship curriculum. One discipline per week, building toward a Shark Tank–style Finale. Two tracks — Monday & Wednesday evenings or Sunday mornings. Twelve total sessions, structured as 12 sessions of three hours each.",
       details: [
         ["Schedule", "Mon & Wed evenings · 4:00–6:25 PM (Group A)\nor Sunday (Group B)"],
