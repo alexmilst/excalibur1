@@ -290,7 +290,7 @@ const coaches = [
     isLogo: false,
     shortBio: "Anastasia leads strategic partnerships, VIP relations, and student experience opportunities at Excalibur. A Brown University graduate with a Master's from IE University Madrid and studies at Sorbonne University Paris, she brings international business fluency shaped by life in Madrid, Paris, and Milan. With experience securing 15+ multi-million-dollar deals and high-value partnerships, Anastasia secures distinguished speakers, investors, externship partners, and exclusive field experiences — ensuring every opportunity meets Excalibur's highest standard.",
     tags: ["Strategic Partnerships", "VIP Relations", "Business Development", "International Business"],
-    linkedin: "",
+    linkedin: "https://www.linkedin.com/in/anastasiamilstein/",
     bio: "Anastasia Milstein serves as Director of Business Development at Excalibur Academy, where she leads strategic partnerships, VIP relations, and experiential growth for the Academy's student programs.\n\nAn Ivy League graduate of Brown University with a degree in International Relations, Anastasia also holds a Master's in Business and Innovation from IE University in Madrid and completed a Business & Global Management program at Sorbonne University in Paris. Having lived in Madrid, Paris, and Milan, she brings a distinctly international perspective, polished communication style, and deep cultural fluency to her work. Networking and VIP relationship-building are her natural fluency, with experience securing multiple multi-million-dollar deals and high-value partnerships.\n\nAt Excalibur, Anastasia is responsible for securing prominent local and national guest speakers, investors for student competitions, partner organizations for externships and apprenticeships, and exclusive real-world learning opportunities — from Silicon Valley accelerator and incubator visits to special-access industry experiences such as SpaceX launch programming.\n\nHer role is centered on building the relationships that turn Excalibur from a classroom into a true leadership ecosystem. Through tailored outreach, high-level stewardship, and a relentlessly curated approach to quality, Anastasia helps ensure that Excalibur students are surrounded by exceptional mentors, serious opportunities, and experiences designed to expand their ambition, confidence, and understanding of the world."
   },
   {
@@ -4308,7 +4308,8 @@ const facultyProfiles = {
     role: "Director of Business Development",
     img: "https://i.imgur.com/9BWvKC8.jpeg",
     tags: ["Strategic Partnerships", "VIP Relations", "Business Development", "International Business"],
-    linkedin: "",
+    linkedin: "https://www.linkedin.com/in/anastasiamilstein/",
+    headline: "Building the relationships that turn Excalibur from a classroom into a leadership ecosystem.",
     credentials: [
       "Director of Business Development — Excalibur Academy, Orange County, California",
       "Bachelor's degree — Brown University, International Relations",
@@ -4317,17 +4318,11 @@ const facultyProfiles = {
       "Lived and worked in Madrid, Paris, and Milan",
       "15+ multi-million-dollar deals and high-value partnerships secured",
     ],
-    tagline: "The relationships that turn a classroom into a leadership ecosystem.",
-    intro: "Anastasia Milstein serves as Director of Business Development at Excalibur Academy, where she leads strategic partnerships, VIP relations, and experiential growth for the Academy's student programs.",
-    sections: [
-      {
-        heading: "International Education & Background",
-        body: "An Ivy League graduate of Brown University with a degree in International Relations, Anastasia also holds a Master's in Business and Innovation from IE University in Madrid and completed a Business & Global Management program at Sorbonne University in Paris. Having lived in Madrid, Paris, and Milan, she brings a distinctly international perspective, polished communication style, and deep cultural fluency to her work.",
-      },
-      {
-        heading: "At Excalibur Academy",
-        body: "At Excalibur, Anastasia is responsible for securing prominent local and national guest speakers, investors for student competitions, partner organizations for externships and apprenticeships, and exclusive real-world learning opportunities — from Silicon Valley accelerator and incubator visits to special-access industry experiences such as SpaceX launch programming.\n\nHer role is centered on building the relationships that turn Excalibur from a classroom into a true leadership ecosystem. Through tailored outreach, high-level stewardship, and a relentlessly curated approach to quality, Anastasia helps ensure that Excalibur students are surrounded by exceptional mentors, serious opportunities, and experiences designed to expand their ambition, confidence, and understanding of the world.",
-      },
+    paras: [
+      "Anastasia Milstein serves as Director of Business Development at Excalibur Academy, where she leads strategic partnerships, VIP relations, and experiential growth for the Academy's student programs.",
+      "An Ivy League graduate of Brown University with a degree in International Relations, Anastasia also holds a Master's in Business and Innovation from IE University in Madrid and completed a Business & Global Management program at Sorbonne University in Paris. Having lived in Madrid, Paris, and Milan, she brings a distinctly international perspective, polished communication style, and deep cultural fluency to her work. Networking and VIP relationship-building are her natural fluency, with experience securing multiple multi-million-dollar deals and high-value partnerships.",
+      "At Excalibur, Anastasia is responsible for securing prominent local and national guest speakers, investors for student competitions, partner organizations for externships and apprenticeships, and exclusive real-world learning opportunities — from Silicon Valley accelerator and incubator visits to special-access industry experiences such as SpaceX launch programming.",
+      "Her role is centered on building the relationships that turn Excalibur from a classroom into a true leadership ecosystem. Through tailored outreach, high-level stewardship, and a relentlessly curated approach to quality, Anastasia helps ensure that Excalibur students are surrounded by exceptional mentors, serious opportunities, and experiences designed to expand their ambition, confidence, and understanding of the world.",
     ],
   },
   "amina-abdulaeva": {
@@ -4428,9 +4423,9 @@ function FacultyProfilePage({ slug, setPage }) {
           <div style={{ marginTop: 48 }}>
             {f.linkedin ? (
               <a href={f.linkedin} target="_blank" rel="noopener noreferrer" style={{ display: "inline-block", fontFamily: sans, background: "transparent", color: gold, padding: "13px 0", fontSize: 11, fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", textDecoration: "none", borderBottom: `1px solid ${gold}` }}>Connect on LinkedIn →</a>
-            ) : (
+            ) : !["Alexander Milstein", "Anastasia Milstein", "Amina Abdulaeva"].includes(f.name) ? (
               <button onClick={() => setPage("apply")} style={{ fontFamily: sans, background: gold, color: "#000", padding: "13px 36px", fontSize: 11, fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", border: "none", cursor: "pointer" }}>Apply to Study Under {f.name.split(" ")[0]} →</button>
-            )}
+            ) : null}
           </div>
         </div>
 
