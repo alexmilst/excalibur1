@@ -286,7 +286,7 @@ const coaches = [
   {
     name: "Anastasia Milstein",
     role: "Director of Business Development",
-    img: "https://i.imgur.com/placeholder.jpeg",
+    img: "https://i.imgur.com/9BWvKC8.jpeg",
     isLogo: false,
     shortBio: "Anastasia leads strategic partnerships, VIP relations, and student experience opportunities at Excalibur. A Brown University graduate with a Master's from IE University Madrid and studies at Sorbonne University Paris, she brings international business fluency shaped by life in Madrid, Paris, and Milan. With experience securing 15+ multi-million-dollar deals and high-value partnerships, Anastasia secures distinguished speakers, investors, externship partners, and exclusive field experiences — ensuring every opportunity meets Excalibur's highest standard.",
     tags: ["Strategic Partnerships", "VIP Relations", "Business Development", "International Business"],
@@ -4305,7 +4305,7 @@ const facultyProfiles = {
   "anastasia-milstein": {
     name: "Anastasia Milstein",
     role: "Director of Business Development",
-    img: "https://i.imgur.com/placeholder.jpeg",
+    img: "https://i.imgur.com/9BWvKC8.jpeg",
     tags: ["Strategic Partnerships", "VIP Relations", "Business Development", "International Business"],
     linkedin: "",
     credentials: [
@@ -4356,7 +4356,7 @@ const facultyProfiles = {
   "alexander-milstein": {
     name: "Alexander Milstein",
     role: "Founder & CEO",
-    img: "https://i.imgur.com/placeholder.jpeg",
+    img: "https://i.imgur.com/9BWvKC8.jpeg",
     tags: ["Entrepreneurship", "Leadership", "Education Design", "Cultural History", "Art & Intellectual Society"],
     headline: "Built the institution from first principles. Every element by design.",
     linkedin: "https://www.linkedin.com/in/alexander-milstein",
