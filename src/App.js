@@ -3041,7 +3041,7 @@ function HomePage({ setPage, openInquiry }) {
               {/* Eyebrow — small, spaced, gold */}
               {/* Logo */}
               <Fade d={.06}>
-                <img src="https://i.ibb.co/rKSp526b/upsclae-logo.png" alt="Excalibur Academy" style={{ width: 72, height: "auto", objectFit: "contain", marginBottom: 20, opacity: 0.95 }} onError={e => e.target.style.display="none"} />
+                <img src="https://i.ibb.co/rKSp526b/upsclae-logo.png" alt="Excalibur Academy" style={{ width: 320, height: "auto", objectFit: "contain", marginBottom: 20, opacity: 0.95 }} onError={e => e.target.style.display="none"} />
               </Fade>
 
               {/* Academy name — one line, Forum serif */}
