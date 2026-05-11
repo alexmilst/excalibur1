@@ -3089,7 +3089,7 @@ function CoachCard({ c, i, setPage }) {
   const hasFacultyPage = ["Alexander Milstein", "Chip Pankow", "Bill Morris", "Erik Dostal", "Christopher Sanders", "Anastasia Milstein", "Amina Abdulaeva"].includes(c.name);
 
   return (
-    <div style={{ background: "#080808", borderTop: i === 0 ? `2px solid ${gold}` : "2px solid rgba(199,171,117,.1)", overflow: "hidden" }}>
+    <div style={{ background: "#080808", borderTop: i === 0 ? `2px solid ${gold}` : "2px solid rgba(199,171,117,.1)", overflow: "hidden", display: "flex", flexDirection: "column" }}>
       {/* Photo  -  full portrait, same as faculty page */}
       <div style={{ height: 0, paddingBottom: "110%", overflow: "hidden", position: "relative", background: "#0D0D0B" }}>
         {c.isLogo ? (
@@ -3112,7 +3112,7 @@ function CoachCard({ c, i, setPage }) {
       </div>
 
       {/* Tags + shortBio */}
-      <div style={{ padding: "20px 24px 24px" }}>
+      <div style={{ padding: "20px 24px 24px", flex: 1, display: "flex", flexDirection: "column" }}>
         <div style={{ display: "flex", gap: 4, flexWrap: "wrap", marginBottom: 14 }}>
           {c.tags && c.tags.map((t, j) => <span key={j} style={{ fontFamily: sans, fontSize: 9, color: "#FBF7EE", border: "1px solid #1a1a1a", padding: "2px 7px" }}>{t}</span>)}
         </div>
@@ -3189,7 +3189,7 @@ function HomePage({ setPage, openInquiry }) {
               </div>
               <h1 style={{ fontFamily: serif, fontStyle: "italic", fontSize: "clamp(20px,4.5vw,28px)", fontWeight: 300, lineHeight: 1.4, color: "#FBF7EE", marginBottom: 8 }}>The Future Belongs to Those Who Build It.</h1>
               <h1 style={{ fontFamily: serif, fontSize: "clamp(22px,5vw,32px)", fontWeight: 600, lineHeight: 1.25, color: gold, marginBottom: 24 }}>Become Who You Are.</h1>
-              <p style={{ fontFamily: sans, fontSize: 14, lineHeight: 1.85, color: "#FBF7EE", marginBottom: 32, fontWeight: 300 }}>A premier institute where Fortune 100 executives, real entrepreneurs, investors, and distinguished professors teach the next generation to lead the world — not follow it.</p>
+              <p style={{ fontFamily: sans, fontSize: 15, lineHeight: 1.85, color: "#FBF7EE", marginBottom: 32, fontWeight: 300 }}>A premier institute offering two-week summer intensives and academic-year after-school programs, where Fortune 100 executives, real entrepreneurs, keynote speakers, investors, and distinguished professors teach the next generation to lead the world — not follow it.</p>
               <div style={{ display: "flex", gap: 10, flexDirection: "column", alignItems: "center", width: "100%", marginBottom: 24 }}>
                 <button onClick={() => setPage("apply")} style={{ fontFamily: sans, background: gold, color: "#000", padding: "14px 44px", fontSize: 11, fontWeight: 700, letterSpacing: "0.22em", textTransform: "uppercase", border: "none", cursor: "pointer", width: "100%" }}>Join the Founding Class</button>
                 <button onClick={() => setPage("programs")} style={{ fontFamily: sans, background: "transparent", color: gold, padding: "13px 32px", fontSize: 11, fontWeight: 500, letterSpacing: "0.18em", textTransform: "uppercase", border: `1px solid rgba(199,171,117,.35)`, cursor: "pointer", width: "100%" }}>Explore Programs</button>
@@ -3240,8 +3240,8 @@ function HomePage({ setPage, openInquiry }) {
 
               {/* Body paragraph */}
               <Fade d={.26}>
-                <p style={{ fontFamily: sans, fontSize: 13, lineHeight: 1.9, color: "rgba(251,247,238,0.8)", fontWeight: 300, marginBottom: 44, maxWidth: 440, textAlign: "justify", margin: "0 auto 44px" }}>
-                  A premier institute where Fortune 100 executives, real entrepreneurs, investors, and distinguished professors teach the next generation to lead the world — not follow it.
+                <p style={{ fontFamily: sans, fontSize: 15, lineHeight: 1.9, color: "rgba(251,247,238,0.8)", fontWeight: 300, marginBottom: 44, maxWidth: 440, textAlign: "justify", margin: "0 auto 44px" }}>
+                  A premier institute offering two-week summer intensives and academic-year after-school programs, where Fortune 100 executives, real entrepreneurs, keynote speakers, investors, and distinguished professors teach the next generation to lead the world — not follow it.
                 </p>
               </Fade>
 
@@ -3256,7 +3256,6 @@ function HomePage({ setPage, openInquiry }) {
               {/* Bottom gold rule + ages line */}
               <Fade d={.38}>
                 <div style={{ display: "flex", alignItems: "center", gap: 10, justifyContent: "center" }}>
-                  <div style={{ width: 18, height: "1px", background: "rgba(199,171,117,.4)" }} />
                   <p style={{ fontFamily: sans, fontSize: 10, color: gold, letterSpacing: "0.16em", textTransform: "uppercase" }}>Ages 15–18 &nbsp;·&nbsp; 20 Per Cohort &nbsp;·&nbsp; Orange County, CA</p>
                 </div>
               </Fade>
@@ -3616,6 +3615,7 @@ function HomePage({ setPage, openInquiry }) {
                   ["Group A", "Saturday · 10:30 AM–3:45 PM"],
                   ["Group B", "Tue & Thu · 4:00–6:30 PM"],
                   ["Duration", "10 Months · Sep 2026 – Jun 2027"],
+                  ["Finale", "Academy Gala & Graduation · June 2027"],
                   ["Eligibility", "Ages 16–17 · 20 students per cohort"],
                 ].map(([k, v], i) => (
                   <div key={i} style={{ display: "flex", gap: 16, padding: "10px 0", borderBottom: "1px solid rgba(199,171,117,.08)", alignItems: "flex-start" }}>
@@ -3624,7 +3624,7 @@ function HomePage({ setPage, openInquiry }) {
                   </div>
                 ))}
                 <div style={{ height: 1, background: "rgba(199,171,117,.12)", marginBottom: 20, marginTop: 4 }} />
-                {["Full ten-month curriculum across all ten curriculum modules", "All ten industry sectors with guest leaders", "Junior Consultant Program — real local business engagement", "Apprentice Externship — 4–6 weeks inside a real company", "Micro-business launch in teams with a dedicated mentor", "Monthly Pitch Night and Competitions", "Bound graduation portfolio of all academic and professional work", "Selective Day and Weekend Field Trips (Daytona, SpaceX Launch, Silicon Valley Incubators & Accelerators, TED Talks, LA & SF Tech Weeks, Yosemite Summit)", "Eligibility for London and Geneva international summer school 2027 programs"].map((f, j) => (
+                {["All 10 core modules at full depth across a structured 4-phase arc", "12 industry sector rotations — one dedicated guest professional per month", "Flexible weekday evening or Saturday half-day format", "Three-block session model: Speaking Coach + Specialist + Applied Workshops & Simulations", "Junior Consultant Program — 3-week advisory team engagement with a real local business", "Apprentice Externship — 4–6 weeks embedded inside a company in your chosen industry", "Micro-Business Launch — from concept to customers: mentored venture development with market testing, customer discovery, and potential seed support for selected projects", "Monthly Pitch Night before live judges, investors, and parents", "Faculty letters of recommendation from lead executives and practitioners", "College admissions support and portfolio review with a dedicated advisor", "Alumni network access — graduates, faculty, mentors, and guest speakers", "Weekend & day trips — local businesses, Silicon Valley, SpaceX launch, LA & SF Tech Weeks, Daytona NASCAR Racing, Yosemite Summit"].map((f, j) => (
                   <div key={j} style={{ display: "flex", gap: 12, marginBottom: 11, alignItems: "flex-start" }}>
                     <div style={{ width: 14, height: 1, background: gold, marginTop: 8, flexShrink: 0 }} />
                     <span style={{ fontFamily: sans, fontSize: 13, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.65 }}>{f}</span>
@@ -3642,7 +3642,7 @@ function HomePage({ setPage, openInquiry }) {
                 <Eyebrow>INTENSIVE TRACK · THE IGNITION</Eyebrow>
                 <h3 style={{ fontFamily: serif, fontSize: 36, fontWeight: 600, color: "#FBF7EE", lineHeight: 1, marginBottom: 6 }}>Six-Week Intensive</h3>
                 <p style={{ fontFamily: serif, fontSize: 15, color: gold, fontStyle: "italic", marginBottom: 20 }}>Four waves per year · Spring, Summer, Fall, Winter</p>
-                <p style={{ fontFamily: sans, fontSize: 13, lineHeight: 1.85, color: "#FBF7EE", fontWeight: 300, marginBottom: 24 }}>Offered in four waves annually, the Six-Week Intensive distills the complete Excalibur curriculum into a focused, high‑impact experience. Six weeks in duration. One core discipline per week. Every session follows the same consistent three-block model used across all Excalibur programs: public speaking, specialist block and applied workshop with startup simulations, case studies and team exercises.</p>
+                <p style={{ fontFamily: sans, fontSize: 13, lineHeight: 1.85, color: "#FBF7EE", fontWeight: 300, marginBottom: 24 }}>Offered in four waves annually, the Six-Week Intensive distills the complete Excalibur curriculum into a focused, high‑impact experience. Six weeks in duration. One core discipline per week.</p>
                 <div style={{ height: 1, background: "rgba(199,171,117,.08)", marginBottom: 20 }} />
                 {[
                   ["Group A", "Mon & Wed · 4:00–6:30 PM"],
@@ -3651,6 +3651,7 @@ function HomePage({ setPage, openInquiry }) {
                   ["Wave 1 — Fall", "Oct 5 – Nov 14, 2026 · Enrolling Soon"],
                   ["Wave 2 — Winter", "Jan 5 – Feb 13, 2027"],
                   ["Wave 3 — Spring", "Apr 7 – May 15, 2027"],
+                  ["Wave 4 — Summer", "Jul 6 – Aug 14, 2027"],
                   ["Finale", "Shark Tank–Inspired · Real Investors"],
                   ["Eligibility", "Ages 15–18 · 20 students per wave"],
                 ].map(([k, v], i) => (
@@ -3660,7 +3661,7 @@ function HomePage({ setPage, openInquiry }) {
                   </div>
                 ))}
                 <div style={{ height: 1, background: "rgba(199,171,117,.08)", marginBottom: 20, marginTop: 4 }} />
-                {["A limited version of Excalibur's curriculum", "Flexible weekday evening or Sunday half-day format", "Guest speakers from leading national companies and various industry sectors", "Public speaking training in every class", "Team-based micro-venture project with faculty guidance", "Judged Shark Tank–inspired Finale before invited guests, families, and professionals", "Access to the Excalibur alumni network", "Priority consideration for the Ten-Month Flagship Program"].map((f, j) => (
+                {["A limited ignition version of Excalibur's curriculum", "Flexible weekday evening or Sunday half-day format", "Guest speakers from leading national companies and various industry sectors", "Public speaking training in every class", "Team-based micro-venture project with faculty guidance", "Shark Tank–inspired Finale before invited guests, families, and investors", "Access to the Excalibur alumni network", "Priority consideration for the Ten-Month Flagship Program"].map((f, j) => (
                   <div key={j} style={{ display: "flex", gap: 12, marginBottom: 11, alignItems: "flex-start" }}>
                     <div style={{ width: 14, height: 1, background: "rgba(199,171,117,.4)", marginTop: 8, flexShrink: 0 }} />
                     <span style={{ fontFamily: sans, fontSize: 13, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.65 }}>{f}</span>
@@ -3783,7 +3784,7 @@ function HomePage({ setPage, openInquiry }) {
             <p style={{ fontFamily: sans, fontSize: 14, color: "#111", fontWeight: 300, lineHeight: 1.7, maxWidth: 680, margin: "0 auto" }}>Excalibur faculty come from the arenas where leadership is tested: a CEO who built the world’s first autonomous racing series, directed the Formula BMW program, and oversaw a $13B NASDAQ listing, a former Citigroup Managing Director and Georgetown MBA professor with 100+ M&A transactions, 600+ CEO advisory engagements, EVP/CFO leadership at two NYSE-listed companies, TEDx speaking engagement, and a doctoral candidate serving as an Orange County Sheriff’s Department spokesman. They have led companies, advised CEOs, taught MBA students, spoken on stages from West Point to Ivy League institutions, and now bring that experience directly to Excalibur students.</p>
           </div></Fade>
           <Fade d={.08}>
-            <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(3, 1fr)", gap: 2, background: "#E8E4DC" }}>
+            <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(3, 1fr)", gap: 2, background: "#E8E4DC", alignItems: "stretch" }}>
               {coaches.map((co, i) => (
                 <Fade key={i} d={i * .04}>
                   <CoachCard c={co} i={i} setPage={setPage} light={true} />
@@ -4868,7 +4869,7 @@ function ComingSoonPage({ onUnlock }) {
 
         {/* Tagline from homepage */}
         <p style={{ fontFamily: sans, fontSize: isMobile ? 14 : 16, color: "#FBF7EE", lineHeight: 1.75, maxWidth: 640, marginBottom: 40, fontWeight: 300 }}>
-          A premier institute where Fortune 100 executives, real entrepreneurs, investors, and distinguished professors teach the next generation to lead the world — not follow it.
+          A premier institute offering two-week summer intensives and academic-year after-school programs, where Fortune 100 executives, real entrepreneurs, keynote speakers, investors, and distinguished professors teach the next generation to lead the world — not follow it.
         </p>
 
         {/* Status banner */}
@@ -6391,7 +6392,7 @@ function SummerDetailPage({ setPage, openInquiry }) {
           </div>
           <h2 style={{ fontFamily: serif, fontSize: isMobile ? 26 : 36, fontWeight: 600, color: "#000", lineHeight: 1.1, marginBottom: 8 }}>The Mentors In the Room.</h2>
           <p style={{ fontFamily: sans, fontSize: 13, color: "#444", fontWeight: 300, lineHeight: 1.7, maxWidth: 680, marginBottom: 48 }}>Excalibur faculty come from the arenas where leadership is tested: a CEO who built the world's first autonomous racing series, directed the Formula BMW program, and oversaw a $13B NASDAQ listing, a former Citigroup Managing Director and Georgetown MBA professor with 100+ M&amp;A transactions, 600+ CEO advisory engagements, EVP/CFO leadership at two NYSE-listed companies, TEDx speaking engagement, and a doctoral candidate serving as an Orange County Sheriff's Department spokesman. They have led companies, advised CEOs, taught MBA students, spoken on stages from West Point to Ivy League institutions, and now bring that experience directly to Excalibur students.</p>
-          <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(2, 1fr)", gap: isMobile ? 24 : 32 }}>
+          <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(2, 1fr)", gap: isMobile ? 24 : 32, alignItems: "stretch" }}>
             {coaches.filter(c => ["Bill Morris", "Chip Pankow", "Erik Dostal", "Christopher Sanders"].includes(c.name)).map((co, i) => (
               <CoachCard key={i} c={co} i={i} setPage={setPage} light={true} />
             ))}
