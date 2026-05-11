@@ -418,7 +418,7 @@ function Nav({ page, setPage }) {
       <nav style={{ position: "sticky", top: 0, zIndex: 200, background: "rgba(0,0,0,.97)", backdropFilter: "blur(20px)", borderBottom: "1px solid rgba(199,171,117,.12)" }}>
         <div style={{ maxWidth: 1400, margin: "0 auto", padding: isMobile ? "0 20px" : "0 48px", display: "flex", alignItems: "center", justifyContent: "space-between", height: 64 }}>
 
-          {/* LEFT — logo + name + motto (desktop) | name only (mobile) */}
+          {/* LEFT  -  logo + name + motto (desktop) | name only (mobile) */}
           <div onClick={() => go("home")} style={{ display: "flex", alignItems: "center", gap: 14, cursor: "pointer", flex: isMobile ? 1 : "0 0 auto" }}>
             {!isMobile && <div style={{ width: 52, height: 52, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
               <img src={LOGO_URL} alt="Excalibur Academy" style={{ width: 52, height: 52, objectFit: "contain" }} />
@@ -429,7 +429,7 @@ function Nav({ page, setPage }) {
             </div>
           </div>
 
-          {/* RIGHT — APPLY NOW + MENU */}
+          {/* RIGHT  -  APPLY NOW + MENU */}
           <div style={{ display: "flex", alignItems: "center", gap: 12, justifyContent: "flex-end" }}>
             {!isMobile && (
               <button onClick={() => go("apply")}
@@ -463,12 +463,12 @@ function Nav({ page, setPage }) {
         display: "flex",
         overflowY: "auto",
       }}>
-        {/* Background wordmark — very faint */}
+        {/* Background wordmark  -  very faint */}
         <div style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center", pointerEvents: "none", overflow: "hidden" }}>
           <span style={{ fontFamily: "'Forum', serif", fontSize: "clamp(120px,20vw,220px)", color: "rgba(199,171,117,.04)", letterSpacing: "0.15em", textTransform: "uppercase", userSelect: "none", whiteSpace: "nowrap" }}>EXCALIBUR</span>
         </div>
 
-        {/* LEFT — nav links */}
+        {/* LEFT  -  nav links */}
         <div style={{ flex: 1, padding: isMobile ? "36px 28px 48px" : "48px 72px 64px", display: "flex", flexDirection: "column", justifyContent: "flex-start", position: "relative", zIndex: 1 }}>
           {allLinks.map(([l, p, subs], i) => (
             <div key={l}>
@@ -510,7 +510,7 @@ function Nav({ page, setPage }) {
           </button>
         </div>
 
-        {/* RIGHT — photo panel (desktop only) */}
+        {/* RIGHT  -  photo panel (desktop only) */}
         {!isMobile && (
           <div style={{ width: "38%", position: "relative", flexShrink: 0 }}>
             <img src={activePhoto} alt="Excalibur Academy" style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center", transition: "opacity .35s ease" }} />
@@ -520,7 +520,7 @@ function Nav({ page, setPage }) {
               <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 13, color: "#FBF7EE", letterSpacing: "0.2em", textTransform: "uppercase", marginBottom: 8 }}>Orange County · California</p>
               <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 16, color: gold, fontStyle: "italic", lineHeight: 1.4, whiteSpace: "nowrap" }}>Forging the Leaders of Tomorrow.</p>
             </div>
-            {/* Oxford-style CTA card — top right of photo */}
+            {/* Oxford-style CTA card  -  top right of photo */}
             <div style={{
               position: "absolute", top: 40, right: 36,
               background: gold, padding: "24px 28px", maxWidth: 240,
@@ -627,7 +627,7 @@ function PortfolioIndexWhite({ isMobile, setPage }) {
       ) : (
         // Desktop — index left, detail right (like a hotel menu / gallery catalogue)
         <div style={{ display: "grid", gridTemplateColumns: "280px 1fr", gap: 0, border: "1px solid rgba(0,0,0,.08)" }}>
-          {/* Left — index */}
+          {/* Left  -  index */}
           <div style={{ borderRight: "1px solid rgba(0,0,0,.08)" }}>
             {portfolioItems.map((it, i) => (
               <div key={i} onClick={() => setActive(i)} style={{
@@ -641,7 +641,7 @@ function PortfolioIndexWhite({ isMobile, setPage }) {
               </div>
             ))}
           </div>
-          {/* Right — detail panel */}
+          {/* Right  -  detail panel */}
           <div style={{ padding: "44px 52px", background: "#fff", display: "flex", flexDirection: "column", justifyContent: "space-between", minHeight: 360 }}>
             <div>
               <div style={{ display: "flex", alignItems: "baseline", gap: 20, marginBottom: 20 }}>
@@ -1103,7 +1103,7 @@ function SoireeInviteBlock({ openInquiry, setPage = () => {} }) {
             <>
               {/* PHOTO + CONTENT grid */}
               <div style={{ display: "flex", flexDirection: "column" }}>
-                {/* Photo — full width on mobile, left column on desktop */}
+                {/* Photo  -  full width on mobile, left column on desktop */}
                 {isMobile ? (
                   <div style={{ position: "relative", height: 240, overflow: "hidden" }}>
                     <img src="https://i.imgur.com/wf1ttmj.jpeg" alt="Excalibur Soirée" style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center" }} />
@@ -1163,7 +1163,7 @@ function SoireeInviteBlock({ openInquiry, setPage = () => {} }) {
               </div> {/* close inner grid */}
               </div> {/* close flex column wrapper */}
 
-              {/* REQUEST INVITATION FORM — inline popup */}
+              {/* REQUEST INVITATION FORM  -  inline popup */}
               {showForm && (
                 <div style={{ borderTop: "1px solid rgba(199,171,117,.2)", padding: isMobile ? "32px 24px" : "44px 60px", background: "#000" }}>
                   <div style={{ maxWidth: 640, margin: "0 auto" }}>
@@ -1226,7 +1226,8 @@ function SoireeInviteBlock({ openInquiry, setPage = () => {} }) {
 // ─────────────────────────────────────────────
 function CurriculumPage({ setPage, openInquiry }) {
   const isMobile = useIsMobile();
-  const [activeModule, setActiveModule] = useState(null);
+  const [activeModule, setActiveModule] = useState(0);
+  React.useEffect(() => { setActiveModule(isMobile ? null : 0); }, [isMobile]);
 
   const industries = [
     { n: "01", sector: "Technology & AI", desc: "Platform economics, software margins, how the most valuable companies were built." },
@@ -1296,7 +1297,7 @@ function CurriculumPage({ setPage, openInquiry }) {
       {/* ── EIGHT MODULES ── */}
       <div style={{ background: "#050505", padding: isMobile ? "52px 24px" : "72px 80px" }}>
         <div style={{ maxWidth: 1100, margin: "0 auto" }}>
-          {/* Editorial heading — asymmetric, luxury */}
+          {/* Editorial heading  -  asymmetric, luxury */}
           <Fade>
             <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: isMobile ? 24 : 80, alignItems: "end", marginBottom: 64, paddingBottom: 40, borderBottom: "1px solid rgba(199,171,117,.12)" }}>
               <div>
@@ -1311,7 +1312,7 @@ function CurriculumPage({ setPage, openInquiry }) {
             </div>
           </Fade>
 
-          {/* Modules — editorial numbered rows */}
+          {/* Modules  -  editorial numbered rows */}
           <div style={{ display: "flex", flexDirection: "column", gap: 0 }}>
             {currMods.map((m, i) => (
               <Fade key={i} d={i * .03}>
@@ -1329,7 +1330,7 @@ function CurriculumPage({ setPage, openInquiry }) {
                     <h3 style={{ fontFamily: serif, fontSize: isMobile ? 20 : 26, fontWeight: 600, color: "#FBF7EE", lineHeight: 1.15, marginBottom: 4 }}>{m.title}</h3>
                     <p style={{ fontFamily: serif, fontSize: 13, fontStyle: "italic", color: gold, lineHeight: 1.3 }}>{m.tagline}</p>
                   </div>
-                  {/* Summary — desktop only */}
+                  {/* Summary  -  desktop only */}
                   {!isMobile && <p style={{ fontFamily: sans, fontSize: 12, lineHeight: 1.8, color: "#FBF7EE", fontWeight: 300 }}>{m.summary}</p>}
                   {/* CTA */}
                   {isMobile ? (
@@ -1472,11 +1473,11 @@ function CurriculumPage({ setPage, openInquiry }) {
 // ─────────────────────────────────────────────
 function FullProgramPage({ setPage, openInquiry }) {
   const isMobile = useIsMobile();
-  const [activeMod, setActiveMod] = useState(null);
+  const [activeMod, setActiveMod] = useState(0);
+  React.useEffect(() => { setActiveMod(isMobile ? null : 0); }, [isMobile]);
   return (
     <div style={{ background: "#000", paddingTop: 0 }}>
       <div style={{ maxWidth: 900, margin: "0 auto", padding: isMobile ? "36px 16px 32px" : "60px 40px 48px", textAlign: "center", position: "relative" }}>
-        <div style={{ position: "absolute", inset: 0, background: "radial-gradient(ellipse 60% 60% at 50% 0%, rgba(199,171,117,.04) 0%, transparent 70%)" }} />
         <Fade>
           <Eyebrow>THE FLAGSHIP PROGRAM</Eyebrow>
           <h1 style={{ fontFamily: serif, fontSize: "clamp(40px,5.5vw,70px)", fontWeight: 600, color: "#FBF7EE", lineHeight: 1.05, marginBottom: 16 }}>The Ten-Month Formation</h1>
@@ -1947,12 +1948,12 @@ function SummerProgramContent({ prog, openInquiry, setPage, scrollToSchedule }) 
   return (
     <div>
 
-      {/* 2 — PHOTO — full-width, fixed height, same as desktop */}
+      {/* 2  -  PHOTO  -  full-width, fixed height, same as desktop */}
       <div style={{ overflow: "hidden", height: 220 }}>
         <img src={prog.photo} alt={prog.title} style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center", display: "block" }} />
       </div>
 
-      {/* 3 — MAIN CONTENT — white background */}
+      {/* 3  -  MAIN CONTENT  -  white background */}
       <div style={{ background: "#fff" }}>
 
         {/* Header block */}
@@ -1990,7 +1991,7 @@ function SummerProgramContent({ prog, openInquiry, setPage, scrollToSchedule }) 
           ))}
         </div>
 
-        {/* A Day at Excalibur CTA — matches desktop right-column block */}
+        {/* A Day at Excalibur CTA  -  matches desktop right-column block */}
         <div style={{ margin: "28px 20px", background: "#000", padding: "24px 22px" }}>
           <p style={{ fontFamily: ey, fontSize: 8, letterSpacing: "0.4em", color: g, fontWeight: 600, textTransform: "uppercase", marginBottom: 10 }}>A Day at Excalibur</p>
           <h3 style={{ fontFamily: sr, fontSize: 20, fontWeight: 600, color: "#FBF7EE", lineHeight: 1.1, marginBottom: 8 }}>What a real session looks like.</h3>
@@ -2171,7 +2172,7 @@ function ProgramsPage({ setPage, openInquiry }) {
       {/* LUXURY PROGRAM SHOWCASE */}
       <div style={{ maxWidth: 1200, margin: "0 auto", padding: isMobile ? "0" : "0 0 80px" }}>
 
-        {/* Program selector — luxury three-panel cards */}
+        {/* Program selector  -  luxury three-panel cards */}
         {isMobile ? (
           /* MOBILE — accordion: click card, content drops below that card */
           <div style={{ display: "flex", flexDirection: "column", gap: 2, background: "#111" }}>
@@ -2223,22 +2224,22 @@ function ProgramsPage({ setPage, openInquiry }) {
           </div>
         )}
 
-        {/* Program detail — desktop only; mobile renders content inside each accordion card */}
+        {/* Program detail  -  desktop only; mobile renders content inside each accordion card */}
         {!isMobile && <div key={activeProgram}>
 
           {prog.id === "summer" ? (
             /* ── SUMMER: tracker above photo, then white content below ── */
             <div>
 
-              {/* Photo — controlled height strip */}
+              {/* Photo  -  controlled height strip */}
               <div style={{ background: "#000", overflow: "hidden", height: isMobile ? 200 : 320 }}>
                 <img src="https://i.imgur.com/N4OB8dS.jpeg" alt="Summer Intensive at Excalibur" style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center" }} />
               </div>
 
-              {/* Content below photo — white background, two columns */}
+              {/* Content below photo  -  white background, two columns */}
               <div style={{ background: "#fff", display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 0 }}>
 
-                {/* LEFT — heading, desc, details */}
+                {/* LEFT  -  heading, desc, details */}
                 <div style={{ padding: isMobile ? "36px 24px" : "52px 52px", borderRight: isMobile ? "none" : "1px solid rgba(0,0,0,.07)" }}>
                   <div style={{ display: "flex", gap: 10, alignItems: "center", marginBottom: 20, flexWrap: "wrap" }}>
                     <span style={{ fontFamily: sans, fontSize: 9, color: prog.statusColor, border: `1px solid ${prog.statusColor}`, padding: "3px 10px", letterSpacing: "0.15em", fontWeight: 600 }}>{prog.status}</span>
@@ -2264,7 +2265,7 @@ function ProgramsPage({ setPage, openInquiry }) {
                   </div>
                 </div>
 
-                {/* RIGHT — features */}
+                {/* RIGHT  -  features */}
                 <div style={{ padding: isMobile ? "36px 24px" : "52px 52px", background: "#fafafa" }}>
                   <p style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.35em", color: "#8B6914", textTransform: "uppercase", fontWeight: 600, marginBottom: 20 }}>{prog.featuresLabel}</p>
                   <div style={{ display: "flex", flexDirection: "column", gap: 0, marginBottom: 36 }}>
@@ -2294,7 +2295,7 @@ function ProgramsPage({ setPage, openInquiry }) {
                 <img src={prog.photo} alt={prog.title} style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center" }} />
               </div>
 
-              {/* Content — black background, two columns */}
+              {/* Content  -  black background, two columns */}
               <div style={{ background: "#000", display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 0 }}>
 
                 {/* LEFT */}
@@ -2323,7 +2324,7 @@ function ProgramsPage({ setPage, openInquiry }) {
                   </div>
                 </div>
 
-                {/* RIGHT — features + Day at Excalibur */}
+                {/* RIGHT  -  features + Day at Excalibur */}
                 <div style={{ padding: isMobile ? "36px 24px" : "52px 52px", background: "#080808" }}>
                   <p style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.35em", color: gold, textTransform: "uppercase", fontWeight: 600, marginBottom: 20 }}>{prog.featuresLabel}</p>
                   <div style={{ display: "flex", flexDirection: "column", gap: 0, marginBottom: 36 }}>
@@ -2537,7 +2538,7 @@ function ApplyPage({ setPage, openInquiry }) {
               },
             ].map((prog, i) => (
               <div key={i} style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 0, borderTop: "1px solid rgba(199,171,117,.1)", padding: isMobile ? "36px 0" : "52px 0", alignItems: "start" }}>
-                {/* Left — label, price, status */}
+                {/* Left  -  label, price, status */}
                 <div style={{ paddingRight: isMobile ? 0 : 64, marginBottom: isMobile ? 24 : 0 }}>
                   <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 20 }}>
                     <div style={{ width: 7, height: 7, borderRadius: "50%", background: prog.statusColor, flexShrink: 0 }} />
@@ -2554,7 +2555,7 @@ function ApplyPage({ setPage, openInquiry }) {
                     <button onClick={() => setPage(prog.page)} style={{ fontFamily: sans, padding: "13px 24px", background: "transparent", border: "1px solid rgba(199,171,117,.3)", color: gold, fontSize: 10, fontWeight: 500, letterSpacing: "0.15em", textTransform: "uppercase", cursor: "pointer" }}>Learn More →</button>
                   </div>
                 </div>
-                {/* Right — description */}
+                {/* Right  -  description */}
                 <div style={{ borderLeft: isMobile ? "none" : "1px solid rgba(199,171,117,.1)", paddingLeft: isMobile ? 0 : 64 }}>
                   {prog.desc.split("\n\n").map((para, j) => (
                     <p key={j} style={{ fontFamily: sans, fontSize: 14, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.9, marginBottom: j < 2 ? 16 : 0 }}>{para}</p>
@@ -2566,7 +2567,7 @@ function ApplyPage({ setPage, openInquiry }) {
         </div>
       </div>
 
-      {/* ── HOW TO APPLY — interactive vertical steps ── */}
+      {/* ── HOW TO APPLY  -  interactive vertical steps ── */}
       <div style={{ background: "#FAF8F4", padding: isMobile ? "60px 24px" : "80px 80px" }}>
         <div style={{ maxWidth: 1100, margin: "0 auto" }}>
           <Fade>
@@ -2574,7 +2575,7 @@ function ApplyPage({ setPage, openInquiry }) {
             <h2 style={{ fontFamily: serif, fontSize: isMobile ? 28 : 48, fontWeight: 300, color: "#111", lineHeight: 1.0, marginBottom: 52, letterSpacing: "0.01em" }}>Five steps. Admissions Process.</h2>
           </Fade>
           <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: isMobile ? 0 : 80, alignItems: "start" }}>
-            {/* Left — step list */}
+            {/* Left  -  step list */}
             <div style={{ background: "#FAF8F4" }}>
               {steps.map((step, i) => {
                 const isActive = activeStep === i;
@@ -2601,7 +2602,7 @@ function ApplyPage({ setPage, openInquiry }) {
               })}
               <div style={{ borderTop: "1px solid rgba(0,0,0,.08)" }} />
             </div>
-            {/* Right — active step detail (desktop) */}
+            {/* Right  -  active step detail (desktop) */}
             {!isMobile && (
               <div style={{ position: "sticky", top: 80 }}>
                 <div style={{ background: "#111", padding: "48px 44px", minHeight: 360 }}>
@@ -2880,7 +2881,7 @@ function ScheduleTabs({ setPage, isMobile, waves, gold }) {
         </div>
       )}
 
-      {/* SIX-WEEK — wave sub-tabs */}
+      {/* SIX-WEEK  -  wave sub-tabs */}
       {activeProgram === "intensive" && (
         <div>
           <div style={{ display: "flex", gap: 8, padding: "14px 20px", background: "#060606", borderBottom: "1px solid #111", flexWrap: "wrap" }}>
@@ -2920,7 +2921,7 @@ function CoachCard({ c, i, setPage }) {
 
   return (
     <div style={{ background: "#080808", borderTop: i === 0 ? `2px solid ${gold}` : "2px solid rgba(199,171,117,.1)", overflow: "hidden" }}>
-      {/* Photo — full portrait, same as faculty page */}
+      {/* Photo  -  full portrait, same as faculty page */}
       <div style={{ height: 0, paddingBottom: "110%", overflow: "hidden", position: "relative", background: "#0D0D0B" }}>
         {c.isLogo ? (
           <>
@@ -2973,7 +2974,7 @@ function CoachCard({ c, i, setPage }) {
 function HomePage({ setPage, openInquiry }) {
   const isMobile = useIsMobile();
   const [activeMod, setActiveMod] = useState(0);
-  React.useEffect(() => { if (isMobile) setActiveMod(null); }, [isMobile]);
+  React.useEffect(() => { setActiveMod(isMobile ? null : 0); }, [isMobile]);
   const [activeCat, setActiveCat] = useState(0);
   const [expandedCard, setExpandedCard] = useState(null);
   const [activeTier, setActiveTier] = useState(0);
@@ -3000,7 +3001,7 @@ function HomePage({ setPage, openInquiry }) {
       {/* HERO */}
       <section style={{ minHeight: "100vh", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", textAlign: "center", padding: isMobile ? "80px 24px 60px" : "60px 80px", position: "relative", overflow: "hidden", background: "#000" }}>
 
-        {/* Faint EXCALIBUR wordmark — gallery watermark */}
+        {/* Faint EXCALIBUR wordmark  -  gallery watermark */}
         <div style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center", pointerEvents: "none", overflow: "hidden" }}>
           <span style={{ fontFamily: "'Forum', serif", fontSize: "clamp(80px,14vw,180px)", color: "rgba(199,171,117,.03)", letterSpacing: "0.3em", textTransform: "uppercase", userSelect: "none", whiteSpace: "nowrap" }}>EXCALIBUR</span>
         </div>
@@ -3065,7 +3066,7 @@ function HomePage({ setPage, openInquiry }) {
         </div>
       </section>
 
-      {/* STATS — chessboard scatter */}
+      {/* STATS  -  chessboard scatter */}
       <section style={{ background: "#050504", borderTop: "1px solid rgba(199,171,117,.10)", borderBottom: "1px solid rgba(199,171,117,.10)", overflow: "hidden" }}>
         {isMobile ? (
           <div ref={statsRef} style={{ display: "grid", gridTemplateColumns: "1fr 1fr" }}>
@@ -3109,7 +3110,7 @@ function HomePage({ setPage, openInquiry }) {
       </section>
 
 
-      {/* LEAD FACULTY — postcard after hero */}
+      {/* LEAD FACULTY  -  postcard after hero */}
       <section style={{ background: "#000", borderBottom: `1px solid rgba(199,171,117,.1)`, padding: isMobile ? "40px 24px" : "52px 80px" }}>
         <div style={{ maxWidth: 1100, margin: "0 auto" }}>
           <div style={{ background: "#080808", border: `1px solid rgba(199,171,117,.25)`, position: "relative", overflow: "hidden" }}>
@@ -3137,7 +3138,7 @@ function HomePage({ setPage, openInquiry }) {
         </div>
       </section>
 
-      {/* SUMMER ENROLLMENT BANNER — luxury editorial */}
+      {/* SUMMER ENROLLMENT BANNER  -  luxury editorial */}
       <section style={{ background: "#0A0A0A", position: "relative", overflow: "hidden", padding: isMobile ? "72px 24px" : "100px 80px" }}>
 
         {/* Background watermark numeral */}
@@ -3150,7 +3151,7 @@ function HomePage({ setPage, openInquiry }) {
           <Fade>
             <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 400px", gap: isMobile ? 48 : 64, alignItems: "stretch" }}>
 
-              {/* LEFT — content */}
+              {/* LEFT  -  content */}
               <div style={{ display: "flex", flexDirection: "column", justifyContent: "center" }}>
                 {/* Eyebrow */}
                 <div style={{ display: "flex", alignItems: "center", gap: 14, marginBottom: 20 }}>
@@ -3173,9 +3174,9 @@ function HomePage({ setPage, openInquiry }) {
 
               </div>
 
-              {/* RIGHT — details panel */}
+              {/* RIGHT  -  details panel */}
               <div style={{ border: `1px solid rgba(199,171,117,.15)`, borderTop: `2px solid ${gold}`, display: "flex", flexDirection: "column" }}>
-                {/* "You Asked. We Listened." — bold statement block */}
+                {/* "You Asked. We Listened."  -  bold statement block */}
                 <div style={{ background: gold, padding: isMobile ? "20px 18px" : "22px 22px", position: "relative", overflow: "hidden", flexShrink: 0 }}>
                   <div style={{ position: "absolute", right: -10, top: "50%", transform: "translateY(-50%)", fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: 80, fontWeight: 300, color: "rgba(0,0,0,.08)", lineHeight: 1, userSelect: "none", pointerEvents: "none" }}>✦</div>
                   <p style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.38em", color: "rgba(0,0,0,.55)", fontWeight: 700, textTransform: "uppercase", marginBottom: 8, position: "relative", zIndex: 1 }}>You Asked. We Listened.</p>
@@ -3246,7 +3247,7 @@ function HomePage({ setPage, openInquiry }) {
         </div>
       </section>
 
-      {/* ACADEMY ABOUT — luxury editorial layout */}
+      {/* ACADEMY ABOUT  -  luxury editorial layout */}
       <section style={{ background: "#F5F3EE", padding: 0 }}>
         <Fade>
         {/* Full-width photo strip with text overlay */}
@@ -3262,10 +3263,10 @@ function HomePage({ setPage, openInquiry }) {
 
         </div>
 
-        {/* Main content — asymmetric grid */}
+        {/* Main content  -  asymmetric grid */}
         <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1px 1fr", background: "#F5F3EE" }}>
 
-          {/* Left panel — founding statement + session model */}
+          {/* Left panel  -  founding statement + session model */}
           <div style={{ padding: isMobile ? "48px 28px" : "64px 72px" }}>
             <p style={{ fontFamily: serif, fontSize: isMobile ? 17 : 19, lineHeight: 1.85, color: "#111", fontWeight: 400, marginBottom: 28, fontStyle: "italic", borderLeft: `2px solid rgba(199,171,117,.5)`, paddingLeft: 20 }}>
               Excalibur Leadership Academy is a premier institute for entrepreneurship and leadership for ambitious teenagers aged 15–18 in Orange County, California. We are building the institution we wish had existed when we were young — one where students are mentored by accomplished adults who have built companies, led teams, and operated under real stakes.
@@ -3297,7 +3298,7 @@ function HomePage({ setPage, openInquiry }) {
           {/* Divider */}
           {!isMobile && <div style={{ background: "rgba(0,0,0,.08)" }} />}
 
-          {/* Right panel — outcomes + Why This Matters */}
+          {/* Right panel  -  outcomes + Why This Matters */}
           <div style={{ padding: isMobile ? "0 28px 48px" : "64px 72px", display: "flex", flexDirection: "column" }}>
             <p style={{ fontFamily: sans, fontSize: 13, lineHeight: 1.9, color: "#1a1a1a", fontWeight: 300, marginBottom: 24 }}>
               Our faculty are not simply career academics. They are entrepreneurs, Fortune 100 executives, investors, Wall Street "sharks" and professionals who teach from lived experience. Students learn public speaking, financial literacy &amp; trading, business strategy, sales and marketing, leadership, technology and AI, and the social arts through live case studies, startup simulations, consulting projects, and competitive pitch forums.
@@ -3329,7 +3330,7 @@ function HomePage({ setPage, openInquiry }) {
           </div>
         </div>
 
-        {/* Quote — warm white */}
+        {/* Quote  -  warm white */}
         <div style={{ background: "#EDEAE3", padding: isMobile ? "48px 24px" : "64px 80px" }}>
           <div style={{ maxWidth: 760, margin: "0 auto", textAlign: "center" }}>
             <p style={{ fontFamily: serif, fontSize: isMobile ? 18 : 24, color: "#111", fontStyle: "italic", lineHeight: 1.7 }}>
@@ -3345,7 +3346,7 @@ function HomePage({ setPage, openInquiry }) {
         <div style={{ maxWidth: 1100, margin: "0 auto" }}>
           <Fade><div style={{ textAlign: "center", marginBottom: 52 }}><Eyebrow>THREE PATHS INTO EXCALIBUR</Eyebrow><SectionTitle center>Choose Your Entry Point</SectionTitle><Sub center>From two-week summer intensives and six-week sprint programmes to a ten-month Flagship — weekday and weekend tracks, designed around your schedule.<br /><br />Three paths into Excalibur.</Sub></div></Fade>
 
-          {/* SUMMER — full width on top */}
+          {/* SUMMER  -  full width on top */}
           <Fade d={.06}>
             <div style={{ background: "#080808", borderTop: `2px solid rgba(199,171,117,.35)`, marginBottom: 2, display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1px 1fr 1px 1fr", overflow: "hidden" }}>
               {/* Left: identity */}
@@ -3389,7 +3390,7 @@ function HomePage({ setPage, openInquiry }) {
             </div>
           </Fade>
 
-          {/* INTENSIVE + FLAGSHIP — side by side below */}
+          {/* INTENSIVE + FLAGSHIP  -  side by side below */}
           <Fade d={.1}>
             <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 2, background: "#111" }}>
 
@@ -3535,7 +3536,7 @@ function HomePage({ setPage, openInquiry }) {
         </div>
       </section>
 
-      {/* FACULTY & LEADERSHIP — white background strip */}
+      {/* FACULTY & LEADERSHIP  -  white background strip */}
       <section style={{ background: "#F5F3EE", padding: isMobile ? "60px 16px" : "80px 40px" }}>
         <div style={{ maxWidth: 1100, margin: "0 auto" }}>
           <Fade><div style={{ textAlign: "center", marginBottom: 48 }}>
@@ -3555,7 +3556,7 @@ function HomePage({ setPage, openInquiry }) {
           <Fade d={.12}><div style={{ textAlign: "center", marginTop: 32 }}><button onClick={() => setPage("faculty")} style={{ fontFamily: sans, background: "transparent", border: "1px solid #000", color: "#000", padding: "11px 28px", fontSize: 11, fontWeight: 600, letterSpacing: "0.15em", textTransform: "uppercase", cursor: "pointer" }}>Meet Our Faculty →</button></div></Fade>
         </div>
       </section>
-      {/* FIELD TRIPS — Outside the Classroom */}
+      {/* FIELD TRIPS  -  Outside the Classroom */}
       <section style={{ padding: isMobile ? "60px 16px" : "80px 40px", background: "#050505" }}>
         <div style={{ maxWidth: 1100, margin: "0 auto" }}>
           <Fade>
@@ -3591,10 +3592,10 @@ function HomePage({ setPage, openInquiry }) {
         </div>
       </section>
 
-            {/* EXCALIBUR IVY PORTFOLIO — merged with college admissions */}
+            {/* EXCALIBUR IVY PORTFOLIO  -  merged with college admissions */}
       <section style={{ background: "#F5F3EE", padding: 0 }}>
 
-        {/* Photos — heading on solid dark block so it is always visible */}
+        {/* Photos  -  heading on solid dark block so it is always visible */}
         {!isMobile ? (
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 0, height: 420 }}>
             <div style={{ overflow: "hidden", position: "relative" }}>
@@ -3642,7 +3643,7 @@ function HomePage({ setPage, openInquiry }) {
         {/* Interactive 8-component index */}
         <PortfolioIndexWhite isMobile={isMobile} setPage={setPage} />
 
-        {/* College admissions — merged below */}
+        {/* College admissions  -  merged below */}
         <div style={{ background: "#EDEAE3", padding: isMobile ? "48px 24px" : "64px 80px" }}>
           <div style={{ maxWidth: 1100, margin: "0 auto", display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: isMobile ? 36 : 80 }}>
             <div>
@@ -3688,7 +3689,7 @@ function HomePage({ setPage, openInquiry }) {
           <h2 style={{ fontFamily: serif, fontSize: isMobile ? "clamp(32px,7vw,52px)" : "clamp(44px,5vw,72px)", fontWeight: 300, lineHeight: 1.0, marginBottom: 48, color: gold, fontStyle: "italic" }}>
             Now Open.
           </h2>
-          {/* Countdown — clean, minimal, no boxes */}
+          {/* Countdown  -  clean, minimal, no boxes */}
           <div style={{ marginBottom: 56 }}>
             <p style={{ fontFamily: eyebrow_font, fontSize: 10, letterSpacing: "0.3em", color: "#C7AB75", textTransform: "uppercase", marginBottom: 20 }}>Wave 1 starts July 6, 2026</p>
             <CountdownTimer targetDate="2026-07-06T09:30:00" label="Days Until Summer July Wave Begins" />
@@ -3727,7 +3728,7 @@ function BeyondPage({ setPage, openInquiry }) {
     <div style={{ background: "#000", paddingTop: 0 }}>
       <Breadcrumb items={[{label:"The Arena",page:"beyond"}]} setPage={setPage} />
 
-      {/* ── HERO — Man in the Arena ── */}
+      {/* ── HERO  -  Man in the Arena ── */}
       <div style={{ position: "relative", overflow: "hidden", minHeight: isMobile ? 480 : 640 }}>
         {/* Full-bleed image */}
         <img src="https://i.imgur.com/1QP3p5p.jpeg" alt="Man in the Arena" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "center" }} />
@@ -4022,11 +4023,11 @@ function FacultyProfilePage({ slug, setPage }) {
   return (
     <div style={{ background: "#000", paddingTop: 0 }}>
 
-      {/* Hero — photo beside info, no crop */}
+      {/* Hero  -  photo beside info, no crop */}
       <div style={{ background: "#07060A", borderBottom: "1px solid rgba(199,171,117,.1)" }}>
         <button onClick={() => setPage("faculty")} style={{ display: "block", padding: isMobile ? "16px 20px" : "20px 60px", fontFamily: sans, background: "transparent", border: "none", color: "#C7AB75", fontSize: 11, cursor: "pointer", letterSpacing: "0.15em" }}>← OUR FACULTY</button>
         <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "360px 1fr", maxWidth: 1100, margin: "0 auto", padding: isMobile ? "0 0 40px" : "0 40px 64px", gap: isMobile ? 28 : 64, alignItems: "start" }}>
-          {/* Photo — full show, no crop */}
+          {/* Photo  -  full show, no crop */}
           <div style={{ overflow: "hidden", border: "1px solid rgba(199,171,117,.12)" }}>
             <img src={f.img} alt={f.name} style={{ width: "100%", height: "auto", objectFit: "contain", display: "block" }} onError={e => e.target.style.display = "none"} />
           </div>
@@ -4048,7 +4049,7 @@ function FacultyProfilePage({ slug, setPage }) {
       {/* Main content */}
       <div style={{ maxWidth: 1100, margin: "0 auto", display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 320px", gap: isMobile ? 0 : 2, background: "#111" }}>
 
-        {/* Bio — left */}
+        {/* Bio  -  left */}
         <div style={{ background: "#080808", padding: isMobile ? "48px 28px" : "72px 72px" }}>
           <div style={{ width: 36, height: 1, background: `linear-gradient(90deg, ${gold}, transparent)`, marginBottom: 36 }} />
           {f.paras.map((para, i) => (
@@ -4063,7 +4064,7 @@ function FacultyProfilePage({ slug, setPage }) {
           </div>
         </div>
 
-        {/* Credentials sidebar — right */}
+        {/* Credentials sidebar  -  right */}
         <div style={{ background: "#07060A", padding: isMobile ? "40px 28px" : "72px 40px" }}>
           {!f.linkedin && (<>
           <p style={{ fontFamily: sans, fontSize: 10, letterSpacing: "0.35em", color: "#9A9290", fontWeight: 600, textTransform: "uppercase", marginBottom: 24 }}>Credentials</p>
@@ -4216,7 +4217,7 @@ function AboutPage({ setPage, openInquiry }) {
   return (
     <div style={{ background: "#000", paddingTop: 0 }}>
 
-      {/* HERO — H7T1wmI background, main heading */}
+      {/* HERO  -  H7T1wmI background, main heading */}
       <div style={{ position: "relative", height: isMobile ? 420 : 620, overflow: "hidden" }}>
         <img src="https://i.imgur.com/H7T1wmI.png" alt="Excalibur Academy" style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center", filter: "brightness(0.45)" }} />
         <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to bottom, rgba(0,0,0,.2) 0%, rgba(0,0,0,.85) 100%)" }} />
@@ -4232,7 +4233,7 @@ function AboutPage({ setPage, openInquiry }) {
         </div>
       </div>
 
-      {/* THE ACADEMY — white background block */}
+      {/* THE ACADEMY  -  white background block */}
       <Fade>
         <div style={{ background: "#FAFAF8", padding: isMobile ? "56px 24px" : "80px 80px" }}>
           <div style={{ maxWidth: 1100, margin: "0 auto", display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: isMobile ? 40 : 80, alignItems: "start" }}>
@@ -4261,7 +4262,7 @@ function AboutPage({ setPage, openInquiry }) {
         <img src="https://i.imgur.com/5lWMfOb.jpeg" alt="Excalibur Academy" style={{ width: "100%", height: "auto", display: "block", objectFit: "contain" }} onError={e => e.target.style.display="none"} />
       </div>
 
-      {/* WHY THIS MATTERS NOW — dark block */}
+      {/* WHY THIS MATTERS NOW  -  dark block */}
       <Fade>
         <div style={{ background: "#080608", padding: isMobile ? "56px 24px" : "80px 80px" }}>
           <div style={{ maxWidth: 860, margin: "0 auto" }}>
@@ -4277,7 +4278,7 @@ function AboutPage({ setPage, openInquiry }) {
           </div>
         </div>
 
-        {/* WHAT IS BEHIND A NAME — luxury editorial */}
+        {/* WHAT IS BEHIND A NAME  -  luxury editorial */}
         <div style={{ background: "#07060A", position: "relative", overflow: "hidden", padding: isMobile ? "64px 24px" : "88px 80px" }}>
           <div style={{ maxWidth: 1100, margin: "0 auto" }}>
 
@@ -4291,7 +4292,7 @@ function AboutPage({ setPage, openInquiry }) {
             {/* Two-column: text left, photo right (desktop) */}
             <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 400px", gap: isMobile ? 40 : 80, alignItems: "center" }}>
 
-              {/* LEFT — text */}
+              {/* LEFT  -  text */}
               <div>
                 <p style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.45em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 18, opacity: 0.8 }}>What is Behind a Name?</p>
                 <h2 style={{ fontFamily: "'Cormorant Garamond', 'Didot', 'Bodoni MT', Georgia, serif", fontSize: isMobile ? 36 : 58, fontWeight: 300, fontStyle: "italic", color: "#FBF7EE", lineHeight: 1.05, letterSpacing: "0.01em", marginBottom: 32 }}>The Meaning<br />of Excalibur.</h2>
@@ -4309,7 +4310,7 @@ function AboutPage({ setPage, openInquiry }) {
                 </div>
               </div>
 
-              {/* RIGHT — photo (desktop only as side column; stacks above on mobile) */}
+              {/* RIGHT  -  photo (desktop only as side column; stacks above on mobile) */}
               {isMobile ? (
                 <div style={{ position: "relative" }}>
                   <img src="https://i.imgur.com/QNW043y.jpeg" alt="King Arthur — Excalibur" style={{ width: "100%", height: "auto", display: "block", objectFit: "contain" }} onError={e => e.target.style.display = "none"} />
@@ -4326,7 +4327,7 @@ function AboutPage({ setPage, openInquiry }) {
         </div>
       </Fade>
 
-      {/* OUR PHILOSOPHY — ivory luxury editorial */}
+      {/* OUR PHILOSOPHY  -  ivory luxury editorial */}
       <Fade>
         <div style={{ background: "#FAFAF8", padding: isMobile ? "72px 24px" : "110px 80px" }}>
           <div style={{ maxWidth: 1100, margin: "0 auto" }}>
@@ -4339,7 +4340,7 @@ function AboutPage({ setPage, openInquiry }) {
               <p style={{ fontFamily: sans, fontSize: isMobile ? 14 : 15, lineHeight: 2.1, color: "#2a2a2a", fontWeight: 300 }}>Excalibur Academy exists to restore a form of education that once formed statesmen, aristocrats, generals, pioneers, and innovators — while equipping it for the demands of the modern world. Our foundation is European in character: classical formation, intellectual depth, discipline of mind, and cultivated presence, while equally driven by the American spirit of leadership: action, innovation, independence, ambition, and the courage to forge new paths.</p>
               <p style={{ fontFamily: sans, fontSize: isMobile ? 14 : 15, lineHeight: 2.1, color: "#2a2a2a", fontWeight: 300 }}>For centuries, European education focused not only on knowledge, but on formation of character — the shaping of judgment, taste, class and natural authority. From Ancient Greek warriors trained in rhetoric and philosophy, to Roman senators schooled in governance and persuasion, to Renaissance leaders educated across art, politics, and commerce, excellence was understood as multidimensional. Excalibur returns to this tradition while extending it into the modern age — where leadership now requires command of technology, entrepreneurship, rapid change and global complexity.</p>
             </div>
-            {/* Two photos — refined border treatment */}
+            {/* Two photos  -  refined border treatment */}
             <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: isMobile ? 3 : 3 }}>
               <div style={{ height: isMobile ? 260 : 420, overflow: "hidden", position: "relative" }}>
                 <img src="https://i.imgur.com/LZ29Hjy.jpeg" alt="Ancient Greece — classical tradition" style={{ width: "100%", height: "100%", objectFit: "cover", transition: "transform .8s cubic-bezier(.25,.46,.45,.94)" }} onError={e => e.target.style.display = "none"} onMouseEnter={e => e.target.style.transform = "scale(1.05)"} onMouseLeave={e => e.target.style.transform = "scale(1)"} />
@@ -4354,7 +4355,7 @@ function AboutPage({ setPage, openInquiry }) {
         </div>
       </Fade>
 
-      {/* A MULTIDIMENSIONAL LEADER — dark luxury block */}
+      {/* A MULTIDIMENSIONAL LEADER  -  dark luxury block */}
       <Fade>
         <div style={{ background: "#07060A", padding: isMobile ? "72px 24px" : "110px 80px", borderTop: "1px solid rgba(199,171,117,.08)" }}>
           <div style={{ maxWidth: 1100, margin: "0 auto" }}>
@@ -4369,7 +4370,7 @@ function AboutPage({ setPage, openInquiry }) {
                 <p style={{ fontFamily: sans, fontSize: isMobile ? 14 : 15, lineHeight: 2.1, color: "rgba(251,247,238,0.75)", fontWeight: 300 }}>This is a type of a leader forged by Excalibur Academy — a leader of range and depth. One who is credible from every angle. Intellectual without being abstract. Decisive without being reckless. Cultured without being performative. When such a student enters a room — whether a boardroom, an art gallery, an intimate gala event, or a stage — the authority is natural and leadership is evident.</p>
               </div>
               <div style={{ display: "flex", flexDirection: "column", gap: 40 }}>
-                {/* Real stakes — refined luxury list */}
+                {/* Real stakes  -  refined luxury list */}
                 <div style={{ borderTop: `1px solid ${gold}`, borderBottom: `1px solid ${gold}`, padding: isMobile ? "32px 0" : "44px 0" }}>
                   {["Real Responsibilities.", "Real Decisions.", "Real Stakes.", "Real Mistakes.", "Real Lessons.", "Real Successes."].map((line, i) => (
                     <p key={i} style={{ fontFamily: "'Cormorant Garamond', 'Didot', Georgia, serif", fontSize: isMobile ? 22 : 30, color: i % 2 === 0 ? "#F0E8E0" : gold, fontWeight: i % 2 === 0 ? 500 : 300, lineHeight: 1.5, fontStyle: i % 2 !== 0 ? "italic" : "normal", letterSpacing: "0.01em" }}>{line}</p>
@@ -4382,7 +4383,7 @@ function AboutPage({ setPage, openInquiry }) {
         </div>
       </Fade>
 
-      {/* CLOSING STATEMENT — full bleed black luxury */}
+      {/* CLOSING STATEMENT  -  full bleed black luxury */}
       <Fade>
         <div style={{ background: "#F5F3EE", padding: isMobile ? "56px 24px" : "80px 80px", textAlign: "center" }}>
           <div style={{ maxWidth: 780, margin: "0 auto" }}>
@@ -4394,7 +4395,7 @@ function AboutPage({ setPage, openInquiry }) {
         </div>
       </Fade>
 
-      {/* STATEMENT — full bleed black, gold lines */}
+      {/* STATEMENT  -  full bleed black, gold lines */}
       <div style={{ background: "#000", padding: isMobile ? "72px 24px" : "100px 80px", textAlign: "center", position: "relative", overflow: "hidden" }}>
         {/* Subtle corner marks */}
         {[["top","left"],["top","right"],["bottom","left"],["bottom","right"]].map(([v,h],i) => (
@@ -4474,7 +4475,7 @@ function ComingSoonPage({ onUnlock }) {
       <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
       <style>{`*{margin:0;padding:0;box-sizing:border-box}::selection{background:rgba(199,171,117,.2);color:#fff}body{overflow-x:hidden}@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-8px)}75%{transform:translateX(8px)}}`}</style>
 
-      {/* Background — pure black with subtle gold glow */}
+      {/* Background  -  pure black with subtle gold glow */}
       <div style={{ position: "fixed", inset: 0, background: "radial-gradient(ellipse 70% 50% at 50% 0%, rgba(199,171,117,.04) 0%, transparent 65%)" }} />
 
       {/* Content */}
@@ -4488,7 +4489,7 @@ function ComingSoonPage({ onUnlock }) {
           Waitlist Now Open for Summer Intensive July & August Waves 2026 &nbsp;·&nbsp; Apply Now &nbsp;·&nbsp; Limited Cohort &nbsp;·&nbsp; 20 Students Only
         </p>
 
-        {/* Title — uniform uppercase via textTransform to match homepage */}
+        {/* Title  -  uniform uppercase via textTransform to match homepage */}
         <h1 style={{ fontFamily: "'Forum', Georgia, serif", fontSize: isMobile ? "clamp(22px,5vw,32px)" : "clamp(28px,3.5vw,44px)", fontWeight: 400, color: "#FBF7EE", lineHeight: 1.05, letterSpacing: "0.28em", textTransform: "uppercase", marginBottom: 12 }}>
           Excalibur Academy
         </h1>
@@ -4508,7 +4509,7 @@ function ComingSoonPage({ onUnlock }) {
           <p style={{ fontFamily: sans, fontSize: isMobile ? 13 : 15, color: "#FBF7EE", lineHeight: 1.75, fontWeight: 300, marginTop: 4 }}>Enrollment limited to 20 students per cohort.</p>
         </div>
 
-        {/* Program cards — all gold */}
+        {/* Program cards  -  all gold */}
         <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(3,1fr)", gap: 2, background: "#111", marginBottom: 52, width: "100%", maxWidth: 880 }}>
           {[
             { label: "SUMMER INTENSIVE", dates: "July & August 2026", detail: "Mon–Fri · 9:30 AM–3:30 PM · $410/day · $4,500 per wave" },
@@ -4523,7 +4524,7 @@ function ComingSoonPage({ onUnlock }) {
           ))}
         </div>
 
-        {/* Faculty credentials — refined split panels */}
+        {/* Faculty credentials  -  refined split panels */}
         <div style={{ width: "100%", maxWidth: 880, marginBottom: 52 }}>
           <p style={{ fontFamily: sans, fontSize: 12, letterSpacing: "0.4em", color: "#FBF7EE", fontWeight: 600, textTransform: "uppercase", marginBottom: 20 }}>Lead Faculty</p>
           <div style={{ background: "#08080A", border: "1px solid rgba(199,171,117,.12)", position: "relative", overflow: "hidden" }}>
@@ -4561,7 +4562,7 @@ function ComingSoonPage({ onUnlock }) {
           </div>
         </div>
 
-        {/* Email capture — invitation card */}
+        {/* Email capture  -  invitation card */}
         {!submitted ? (
           <div style={{ width: "100%", maxWidth: 880, marginBottom: 48 }}>
             <p style={{ fontFamily: eyebrow_font, fontSize: 10, letterSpacing: "0.4em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 20 }}>Family Information Event · May 2026</p>
@@ -4836,7 +4837,7 @@ function InquiryModal({ open, onClose, defaultProgram }) {
                   {contactTimes.map(t => <Chip key={t} label={t} active={form.contactTime === t} onClick={() => set("contactTime", t)} />)}
                 </div>
               </div>
-              {/* Address — city + zip required, street optional */}
+              {/* Address  -  city + zip required, street optional */}
               <div>
                 <Label>City <span style={{ color: gold }}>*</span></Label>
                 <input className={inputClass} style={{ ...inputStyle, marginBottom: 8 }} value={form.city} onChange={e=>set("city",e.target.value)} onFocus={focusStyle} onBlur={blurStyle} placeholder="City" required />
@@ -4983,6 +4984,7 @@ function InquiryModal({ open, onClose, defaultProgram }) {
 
 function FlagshipModulesBlock({ isMobile, setPage, modules }) {
   const [activeMod, setActiveMod] = useState(0);
+  React.useEffect(() => { setActiveMod(isMobile ? null : 0); }, [isMobile]);
   return (
     <section style={{ padding: isMobile ? "60px 16px" : "80px 40px", background: "#000" }}>
       <div style={{ maxWidth: 1100, margin: "0 auto" }}>
@@ -5049,7 +5051,7 @@ function FlagshipScheduleInteractive({ isMobile }) {
   const current = tabs.find(t => t.id === activeTab) || tabs[0];
   return (
     <div style={{ marginTop: 0 }}>
-      {/* Tab selector + subtitle — header strip matching DailyScheduleBlock */}
+      {/* Tab selector + subtitle  -  header strip matching DailyScheduleBlock */}
       <div style={{ background: "#fff", border: "1px solid rgba(0,0,0,.08)", borderBottom: "none", padding: isMobile ? "16px 20px 14px" : "24px 36px 20px", display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: 12 }}>
         <div>
           <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 9, letterSpacing: "0.4em", color: "#8B6914", fontWeight: 700, textTransform: "uppercase", marginBottom: 6 }}>Schedule</p>
@@ -5262,19 +5264,35 @@ function FlagshipDetailPage({ setPage, openInquiry }) {
   return (
     <div style={{ background: "#000", paddingTop: 0 }}>
 
-      {/* HERO — photo full bleed */}
-      <div style={{ position: "relative", height: isMobile ? 280 : 480, overflow: "hidden" }}>
+      {/* HERO  -  photo full bleed */}
+      {isMobile ? (
+        <div style={{ background: "#000" }}>
+          <div style={{ position: "relative", height: 220, overflow: "hidden" }}>
+            <img src="https://i.imgur.com/eyeb9rX.jpeg" alt="Ten-Month Flagship" style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center" }} />
+            <div style={{ position: "absolute", top: 16, left: 16 }}>
+              <button onClick={() => setPage("programs")} style={{ fontFamily: sans, background: "rgba(0,0,0,.5)", border: "1px solid rgba(199,171,117,.3)", color: gold, padding: "8px 16px", fontSize: 10, letterSpacing: "0.15em", cursor: "pointer", textTransform: "uppercase" }}>← OUR PROGRAMS</button>
+            </div>
+          </div>
+          <div style={{ background: "#000", padding: "28px 24px 20px" }}>
+            <p style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.4em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 10 }}>Ten-Month Flagship · September 2026 – June 2027</p>
+            <h1 style={{ fontFamily: serif, fontSize: "clamp(32px,7vw,44px)", fontWeight: 600, color: "#FBF7EE", lineHeight: 1.0, marginBottom: 10 }}>The Complete Academy Experience.</h1>
+            <p style={{ fontFamily: serif, fontSize: 15, color: gold, fontStyle: "italic", lineHeight: 1.4 }}>An after-school full year program of applied leadership, business, communication, and real-world experience.</p>
+          </div>
+        </div>
+      ) : (
+      <div style={{ position: "relative", height: 480, overflow: "hidden" }}>
         <img src="https://i.imgur.com/eyeb9rX.jpeg" alt="Ten-Month Flagship" style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center" }} />
         <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(0,0,0,.9) 0%, rgba(0,0,0,.3) 60%, transparent 100%)" }} />
-        <div style={{ position: "absolute", bottom: isMobile ? 28 : 52, left: isMobile ? 24 : 72, maxWidth: 640 }}>
+        <div style={{ position: "absolute", bottom: 52, left: 72, maxWidth: 640 }}>
           <p style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.4em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 10 }}>Ten-Month Flagship · September 2026 – June 2027</p>
-          <h1 style={{ fontFamily: serif, fontSize: isMobile ? "clamp(32px,7vw,44px)" : "clamp(44px,5vw,64px)", fontWeight: 600, color: "#FBF7EE", lineHeight: 1.0, marginBottom: 10 }}>The Complete Academy Experience.</h1>
-          <p style={{ fontFamily: serif, fontSize: isMobile ? 15 : 18, color: gold, fontStyle: "italic", lineHeight: 1.4 }}>An after-school full year program of applied leadership, business, communication, and real-world experience.</p>
+          <h1 style={{ fontFamily: serif, fontSize: "clamp(44px,5vw,64px)", fontWeight: 600, color: "#FBF7EE", lineHeight: 1.0, marginBottom: 10 }}>The Complete Academy Experience.</h1>
+          <p style={{ fontFamily: serif, fontSize: 18, color: gold, fontStyle: "italic", lineHeight: 1.4 }}>An after-school full year program of applied leadership, business, communication, and real-world experience.</p>
         </div>
         <div style={{ position: "absolute", top: 24, left: 24 }}>
           <button onClick={() => setPage("programs")} style={{ fontFamily: sans, background: "rgba(0,0,0,.5)", border: "1px solid rgba(199,171,117,.3)", color: gold, padding: "8px 16px", fontSize: 10, letterSpacing: "0.15em", cursor: "pointer", textTransform: "uppercase" }}>← OUR PROGRAMS</button>
         </div>
       </div>
+      )}
 
 
       {/* ── STATS STRIP ── */}
@@ -5294,7 +5312,7 @@ function FlagshipDetailPage({ setPage, openInquiry }) {
       <div style={{ background: "#000" }}>
         <div style={{ maxWidth: 1100, margin: "0 auto", display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", minHeight: 0 }}>
 
-          {/* LEFT — heading + copy */}
+          {/* LEFT  -  heading + copy */}
           <div style={{ padding: isMobile ? "52px 24px 40px" : "72px 80px 64px 80px", borderRight: isMobile ? "none" : "1px solid rgba(199,171,117,.08)" }}>
             <p style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.4em", color: "#FBF7EE", fontWeight: 600, textTransform: "uppercase", marginBottom: 20 }}>Program Overview</p>
             <h2 style={{ fontFamily: serif, fontSize: isMobile ? 30 : 44, fontWeight: 600, color: "#FBF7EE", lineHeight: 1.0, marginBottom: 32, maxWidth: 520 }}>Ten months. Ten disciplines. Real-world applied experience.</h2>
@@ -5306,7 +5324,7 @@ function FlagshipDetailPage({ setPage, openInquiry }) {
             <p style={{ fontFamily: sans, fontSize: 14, lineHeight: 1.9, color: "#FBF7EE", fontWeight: 300 }}>The Public Speaking Instructor opens every class with drills, debates, elevator pitches, and speaking exercises designed to build confidence, presence, rhetoric, and communication under pressure.</p>
           </div>
 
-          {/* RIGHT — program details on black */}
+          {/* RIGHT  -  program details on black */}
           <div style={{ padding: isMobile ? "0 24px 52px" : "72px 80px 64px 64px", display: "flex", flexDirection: "column", justifyContent: "center" }}>
             <p style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.45em", color: "#FBF7EE", fontWeight: 600, textTransform: "uppercase", marginBottom: 28 }}>Program Details</p>
             <div style={{ borderTop: "1px solid rgba(199,171,117,.15)" }}>
@@ -5405,7 +5423,7 @@ function FlagshipDetailPage({ setPage, openInquiry }) {
           </div>
         </div>
 
-        {/* Four pillars — white, black text */}
+        {/* Four pillars  -  white, black text */}
         <div style={{ maxWidth: 1100, margin: "0 auto", borderLeft: "1px solid rgba(0,0,0,.06)", borderRight: "1px solid rgba(0,0,0,.06)" }}>
           {[
             { n: "I", title: "Real Executives & Investors", sub: "The people behind companies, capital, leadership, and execution.", body: "CEOs, founders, venture capitalists, and operators who have built companies, managed capital, and faced decisions most students have only read about. These sessions are not performances. They are candid conversations about what leadership actually requires." },
@@ -5678,7 +5696,7 @@ function FlagshipDetailPage({ setPage, openInquiry }) {
 
       </section>
 
-      {/* ── PORTFOLIO — Excalibur Ivy (copied from homepage) ── */}
+      {/* ── PORTFOLIO  -  Excalibur Ivy (copied from homepage) ── */}
       <section style={{ background: "#F5F3EE", padding: 0 }}>
         {!isMobile ? (
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 0, height: 420 }}>
@@ -5743,7 +5761,7 @@ function FlagshipDetailPage({ setPage, openInquiry }) {
             </div>
           </div>
 
-          {/* Three plan cards — luxury hotel/Cartier style */}
+          {/* Three plan cards  -  luxury hotel/Cartier style */}
           <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(3,1fr)", gap: 1, background: "rgba(199,171,117,.08)" }}>
             {[
               { label: "MONTHLY", title: "Month to Month", price: "$2,400", per: "per month", saving: null, desc: "Billed monthly. Full flexibility. Cancel with 30 days notice before your next billing cycle. The same program, the same faculty, the same formation.", cta: "Select Monthly" },
@@ -5931,23 +5949,39 @@ function SummerDetailPage({ setPage, openInquiry }) {
     <div style={{ background: "#000" }}>
       <Breadcrumb items={[{label:"Our Programs",page:"programs"},{label:"Summer Intensive",page:"summer-detail"}]} setPage={setPage} />
       {/* HERO */}
-      <div style={{ position: "relative", background: "#000", overflow: "hidden", height: isMobile ? 300 : 460 }}>
+      {isMobile ? (
+        <div style={{ background: "#000" }}>
+          <div style={{ position: "relative", height: 220, overflow: "hidden" }}>
+            <img src="https://i.imgur.com/N4OB8dS.jpeg" alt="Summer Intensive" style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center" }} />
+            <div style={{ position: "absolute", top: 16, left: 16 }}>
+              <button onClick={() => setPage("programs")} style={{ fontFamily: sans, background: "rgba(0,0,0,.5)", border: "1px solid rgba(199,171,117,.3)", color: gold, padding: "8px 16px", fontSize: 10, letterSpacing: "0.15em", cursor: "pointer", textTransform: "uppercase" }}>← OUR PROGRAMS</button>
+            </div>
+          </div>
+          <div style={{ background: "#000", padding: "28px 24px 20px" }}>
+            <p style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.42em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 14 }}>Summer Intensive · July & August 2026</p>
+            <h1 style={{ fontFamily: "'Cormorant Garamond', 'Didot', Georgia, serif", fontSize: 30, fontWeight: 300, fontStyle: "italic", color: "#FBF7EE", lineHeight: 1.1, marginBottom: 6, letterSpacing: "0.01em" }}>Two-Weeks. Full Day Immersion.</h1>
+            <p style={{ fontFamily: "'Cormorant Garamond', 'Didot', Georgia, serif", fontSize: 20, color: gold, fontStyle: "italic", fontWeight: 300, letterSpacing: "0.02em" }}>Elite Mentorship. Real Momentum.</p>
+          </div>
+        </div>
+      ) : (
+      <div style={{ position: "relative", background: "#000", overflow: "hidden", height: 460 }}>
         <img src="https://i.imgur.com/N4OB8dS.jpeg" alt="Summer Intensive" style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center" }} />
         <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(0,0,0,.92) 0%, rgba(0,0,0,.15) 60%)" }} />
-        <div style={{ position: "absolute", bottom: isMobile ? 28 : 56, left: isMobile ? 24 : 72 }}>
-          <p style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.42em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 14 }}>Summer Intensive · July &amp; August 2026</p>
-          <h1 style={{ fontFamily: "'Cormorant Garamond', 'Didot', Georgia, serif", fontSize: isMobile ? 30 : 52, fontWeight: 300, fontStyle: "italic", color: "#FBF7EE", lineHeight: 1.1, marginBottom: 6, letterSpacing: "0.01em" }}>Two-Weeks. Full Day Immersion.</h1>
-          <p style={{ fontFamily: "'Cormorant Garamond', 'Didot', Georgia, serif", fontSize: isMobile ? 20 : 32, color: gold, fontStyle: "italic", fontWeight: 300, letterSpacing: "0.02em" }}>Elite Mentorship. Real Momentum.</p>
+        <div style={{ position: "absolute", bottom: 56, left: 72 }}>
+          <p style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.42em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 14 }}>Summer Intensive · July & August 2026</p>
+          <h1 style={{ fontFamily: "'Cormorant Garamond', 'Didot', Georgia, serif", fontSize: 52, fontWeight: 300, fontStyle: "italic", color: "#FBF7EE", lineHeight: 1.1, marginBottom: 6, letterSpacing: "0.01em" }}>Two-Weeks. Full Day Immersion.</h1>
+          <p style={{ fontFamily: "'Cormorant Garamond', 'Didot', Georgia, serif", fontSize: 32, color: gold, fontStyle: "italic", fontWeight: 300, letterSpacing: "0.02em" }}>Elite Mentorship. Real Momentum.</p>
         </div>
         <div style={{ position: "absolute", top: 24, left: 24 }}>
           <button onClick={() => setPage("programs")} style={{ fontFamily: sans, background: "rgba(0,0,0,.5)", border: "1px solid rgba(199,171,117,.3)", color: gold, padding: "8px 16px", fontSize: 10, letterSpacing: "0.15em", cursor: "pointer", textTransform: "uppercase" }}>← OUR PROGRAMS</button>
         </div>
       </div>
+      )}
 
-      {/* OVERVIEW — ivory luxury editorial */}
+      {/* OVERVIEW  -  ivory luxury editorial */}
       <div style={{ background: "#F5F3EE" }}>
 
-        {/* TOP — heading + intro + detail table */}
+        {/* TOP  -  heading + intro + detail table */}
         <div style={{ padding: isMobile ? "52px 24px 40px" : "80px 80px 56px", maxWidth: 1100, margin: "0 auto" }}>
           <div style={{ display: "flex", alignItems: "center", gap: 14, marginBottom: 20 }}>
             <div style={{ width: 32, height: "1px", background: "rgba(139,105,20,.4)" }} />
@@ -5997,7 +6031,7 @@ function SummerDetailPage({ setPage, openInquiry }) {
           </div>
         </div>
 
-        {/* VENTURE FINALE — dark accent strip */}
+        {/* VENTURE FINALE  -  dark accent strip */}
         <div style={{ background: "#0A0A0A", padding: isMobile ? "40px 24px" : "52px 80px" }}>
           <div style={{ maxWidth: 1100, margin: "0 auto", display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: isMobile ? 24 : 64, alignItems: "center" }}>
             <div>
@@ -6013,7 +6047,7 @@ function SummerDetailPage({ setPage, openInquiry }) {
 
       </div>
 
-      {/* SUMMER FACULTY — filtered: Bill, Chip, Erik, Christopher */}
+      {/* SUMMER FACULTY  -  filtered: Bill, Chip, Erik, Christopher */}
       <div style={{ background: "#FAFAF8", padding: isMobile ? "56px 24px" : "80px 80px", borderTop: "1px solid rgba(0,0,0,.06)" }}>
         <div style={{ maxWidth: 1100, margin: "0 auto" }}>
           <div style={{ display: "flex", alignItems: "center", gap: 16, marginBottom: 12 }}>
@@ -6040,7 +6074,7 @@ function SummerDetailPage({ setPage, openInquiry }) {
       <div style={{ background: "#000", padding: isMobile ? "52px 24px" : "72px 80px", borderTop: "1px solid rgba(199,171,117,.1)", borderBottom: "1px solid rgba(199,171,117,.1)" }}>
         <div style={{ maxWidth: 1100, margin: "0 auto", display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: isMobile ? 48 : 80 }}>
 
-          {/* LEFT — Tuition */}
+          {/* LEFT  -  Tuition */}
           <div>
             <p style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.45em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 20 }}>Tuition</p>
             <div style={{ fontFamily: serif, fontSize: isMobile ? 48 : 64, fontWeight: 300, color: "#FBF7EE", lineHeight: 1, letterSpacing: "-0.02em", marginBottom: 4 }}>$410<span style={{ fontSize: isMobile ? 22 : 28, fontWeight: 300 }}> / full day</span></div>
@@ -6070,7 +6104,7 @@ function SummerDetailPage({ setPage, openInquiry }) {
             </div>
           </div>
 
-          {/* RIGHT — Admissions */}
+          {/* RIGHT  -  Admissions */}
           <div>
             <p style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.45em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 20 }}>Admissions</p>
             <h3 style={{ fontFamily: serif, fontSize: isMobile ? 24 : 30, fontWeight: 600, color: "#FBF7EE", lineHeight: 1.1, marginBottom: 16 }}>Who This Program Is For</h3>
@@ -6125,7 +6159,7 @@ function SummerDetailPage({ setPage, openInquiry }) {
         </div>
       </div>
 
-      {/* HOW TO APPLY — full width horizontal luxury steps */}
+      {/* HOW TO APPLY  -  full width horizontal luxury steps */}
       <div style={{ background: "#FAFAF8", padding: isMobile ? "52px 24px" : "72px 80px", borderTop: "1px solid rgba(0,0,0,.06)" }}>
         <div style={{ maxWidth: 1100, margin: "0 auto" }}>
           <p style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.45em", color: "#8B6914", fontWeight: 600, textTransform: "uppercase", marginBottom: 20 }}>Admissions Process</p>
@@ -6149,7 +6183,7 @@ function SummerDetailPage({ setPage, openInquiry }) {
             ))}
           </div>
 
-          {/* Step 04 — full width below the 3-column grid */}
+          {/* Step 04  -  full width below the 3-column grid */}
           <div style={{ borderTop: "1px solid rgba(0,0,0,.1)", marginTop: 40, paddingTop: 36, display: "grid", gridTemplateColumns: isMobile ? "1fr" : "56px 1fr", gap: isMobile ? 20 : 36, alignItems: "start" }}>
             <div style={{ width: 44, height: 44, border: "1px solid rgba(0,0,0,.2)", display: "flex", alignItems: "center", justifyContent: "center", background: "#FAFAF8", flexShrink: 0 }}>
               <span style={{ fontFamily: serif, fontSize: 18, fontWeight: 300, color: "#8B6914" }}>04</span>
@@ -6165,7 +6199,7 @@ function SummerDetailPage({ setPage, openInquiry }) {
         </div>
       </div>
 
-      {/* CHOOSE YOUR WAVE — enrollment selector */}
+      {/* CHOOSE YOUR WAVE  -  enrollment selector */}
       <div style={{ background: "#050505", padding: isMobile ? "52px 24px" : "72px 80px", borderTop: "1px solid rgba(199,171,117,.1)" }}>
         <div style={{ maxWidth: 1100, margin: "0 auto" }}>
           <p style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.4em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 16 }}>Enrollment</p>
@@ -6288,18 +6322,18 @@ function EventsPage({ setPage, openInquiry }) {
             <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 8, letterSpacing: "0.55em", color: gold, fontWeight: 700, textTransform: "uppercase", marginBottom: 48 }}>Featured Event · By Invitation Only</p>
           </Fade>
 
-          {/* Event block — editorial two-column on black */}
+          {/* Event block  -  editorial two-column on black */}
           <div style={{ borderTop: `2px solid ${gold}`, paddingTop: 48 }}>
             <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: isMobile ? 48 : 80, alignItems: "start" }}>
 
-              {/* Left — date, details */}
+              {/* Left  -  date, details */}
               <div>
                 <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 32 }}>
                   <div style={{ width: 8, height: 8, borderRadius: "50%", background: "#4DB87A", flexShrink: 0 }} />
                   <span style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 9, letterSpacing: "0.22em", color: "#4DB87A", fontWeight: 700, textTransform: "uppercase" }}>Registration Open</span>
                 </div>
                 <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 8, letterSpacing: "0.45em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 16 }}>Academy Launch & Family Information Soirée</p>
-                {/* Date — monumental */}
+                {/* Date  -  monumental */}
                 <div style={{ fontFamily: serif, fontSize: isMobile ? 80 : 112, fontWeight: 300, color: "#FBF7EE", lineHeight: 1, letterSpacing: "-0.03em", marginBottom: 8 }}>May 27</div>
                 <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 16 }}>
                   <div style={{ width: 14, height: "1px", background: `linear-gradient(90deg, transparent, ${gold})` }} />
@@ -6331,7 +6365,7 @@ function EventsPage({ setPage, openInquiry }) {
                 </div>
               </div>
 
-              {/* Right — description */}
+              {/* Right  -  description */}
               <div>
                 <h2 style={{ fontFamily: serif, fontSize: isMobile ? 24 : 36, fontWeight: 300, color: "#FBF7EE", lineHeight: 1.2, marginBottom: 28 }}>The official launch of Excalibur Academy — and a personal introduction to the people, programs, and standards behind it.</h2>
                 <div style={{ width: 36, height: "1px", background: `linear-gradient(90deg, ${gold}, transparent)`, marginBottom: 28 }} />
@@ -6372,7 +6406,7 @@ function EventsPage({ setPage, openInquiry }) {
         </div>
       </div>
 
-      {/* ── SOIREE POSTCARD — unchanged ── */}
+      {/* ── SOIREE POSTCARD  -  unchanged ── */}
       <SoireeInviteBlock openInquiry={openInquiry} setPage={setPage} />
 
     </div>
@@ -6493,7 +6527,7 @@ function ApplicationPage({ setPage, defaultProgram }) {
       ) : (
         <div style={{ padding: isMobile ? "36px 24px 80px" : "56px 80px 100px" }}>
 
-          {/* STEP 1 — PROGRAM */}
+          {/* STEP 1  -  PROGRAM */}
           <div style={{ marginBottom: 40 }}>
             <SectionHead n="1" done={!!prog} label="Choose Your Program" />
             <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(3,1fr)", gap: 2, background: "#111" }}>
@@ -6510,7 +6544,7 @@ function ApplicationPage({ setPage, defaultProgram }) {
             </div>
           </div>
 
-          {/* STEP 2 — WAVE (summer only) */}
+          {/* STEP 2  -  WAVE (summer only) */}
           {prog && needsWave && (
             <div style={{ marginBottom: 40 }}>
               <SectionHead n="2" done={!!wave} label="Choose Your Wave" />
@@ -6528,7 +6562,7 @@ function ApplicationPage({ setPage, defaultProgram }) {
             </div>
           )}
 
-          {/* STEP 2/3 — TRACK (six-week & flagship) */}
+          {/* STEP 2/3  -  TRACK (six-week & flagship) */}
           {prog && needsTrack && (
             <div style={{ marginBottom: 40 }}>
               <SectionHead n="2" done={!!track} label="Choose Your Track" />
@@ -6546,7 +6580,7 @@ function ApplicationPage({ setPage, defaultProgram }) {
             </div>
           )}
 
-          {/* STEP 3 — FORM */}
+          {/* STEP 3  -  FORM */}
           {readyToFill && (
             <div style={{ marginBottom: 40 }}>
               <SectionHead n={needsWave || needsTrack ? "3" : "2"} done={false} label="Your Information" />
