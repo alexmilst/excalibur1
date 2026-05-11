@@ -2048,6 +2048,31 @@ function IntensiveContent({ setPage, isMobile, waves, activeWave, setActiveWave 
 }
 
 // ── MOBILE PROGRAM CONTENT HELPERS ──
+function DailyScheduleSection({ sectionRef }) {
+  const isMobile = useIsMobile();
+  const [activeTab, setActiveTab] = useState(0);
+  const tabs = [
+    { label: "Summer Intensive", schedule: summerSchedule, title: "Summer Intensive · Daily Schedule", subtitle: "Monday – Friday · 9:15 AM – 3:00 PM" },
+    { label: "Flagship Weekday", schedule: flagshipWeekdaySchedule, title: "Flagship · Weekday Track", subtitle: "Tuesday & Thursday · 4:00 – 6:30 PM" },
+    { label: "Flagship Saturday", schedule: flagshipSaturdaySchedule, title: "Flagship · Saturday Track", subtitle: "Saturday · 10:30 AM – 3:45 PM" },
+  ];
+  return (
+    <div ref={sectionRef} style={{ padding: isMobile ? "48px 16px" : "72px 80px" }}>
+      <div style={{ maxWidth: 1100, margin: "0 auto" }}>
+        <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 9, letterSpacing: "0.4em", color: "#8B6914", fontWeight: 700, textTransform: "uppercase", marginBottom: 16 }}>A Day at Excalibur</p>
+        <h2 style={{ fontFamily: "'Cormorant Garamond',Georgia,serif", fontSize: isMobile ? 26 : 36, fontWeight: 600, color: "#111", lineHeight: 1.1, marginBottom: 8 }}>What a real session looks like.</h2>
+        <p style={{ fontFamily: "'Avenir','Avenir Next','Century Gothic',sans-serif", fontSize: 13, color: "#444", fontWeight: 300, lineHeight: 1.8, marginBottom: 28, maxWidth: 560 }}>Select a program track to see the full daily schedule.</p>
+        <div style={{ display: "flex", gap: 2, marginBottom: 2 }}>
+          {tabs.map((t, i) => (
+            <button key={i} onClick={() => setActiveTab(i)} style={{ fontFamily: "'DM Sans',sans-serif", padding: "10px 20px", background: activeTab === i ? "#8B6914" : "#fff", border: "1px solid rgba(0,0,0,.08)", color: activeTab === i ? "#fff" : "#555", fontSize: 10, fontWeight: 600, letterSpacing: "0.1em", textTransform: "uppercase", cursor: "pointer" }}>{t.label}</button>
+          ))}
+        </div>
+        <DailyScheduleBlock schedule={tabs[activeTab].schedule} title={tabs[activeTab].title} subtitle={tabs[activeTab].subtitle} />
+      </div>
+    </div>
+  );
+}
+
 function ProgramsPage({ setPage, openInquiry }) {
   const isMobile = useIsMobile();
   const [activeWave, setActiveWave] = useState(0);
@@ -2097,16 +2122,17 @@ function ProgramsPage({ setPage, openInquiry }) {
       features: [
         "All 10 core modules at full depth across a structured 4-phase arc",
         "12 industry sector rotations — one dedicated guest professional per month",
-        "Three-block session model: Speaking Coach + War Room + Specialist",
-        "Junior Consultant Program — 3-week advisory engagement with a real local business",
+        "Three-block session model: Speaking Coach + Specialist + Applied Workshops & Simulations",
+        "Junior Consultant Program — 3-week advisory team engagement with a real local business",
         "Apprentice Externship — 4–6 weeks embedded inside a company in your chosen industry",
-        "Micro-business launch in teams with a dedicated mentor",
+        "Micro-Business Launch — from concept to customers: mentored venture development with market testing, customer discovery, and potential seed support for selected projects",
         "Monthly Pitch Night before live judges, investors, and parents",
         "OC Championship (biannual) — competitive pitch event at a premium venue",
-        "Bound Excalibur Portfolio — every analysis, report, and competition result, professionally compiled",
+        "Bound Excalibur Portfolio — every analysis, report, resumé and competition result, professionally compiled",
         "Faculty letters of recommendation from lead executives and practitioners",
-        "College admissions strategy and portfolio review with a dedicated advisor",
+        "College admissions support and portfolio review with a dedicated advisor",
         "Alumni network access — graduates, faculty, mentors, and guest speakers",
+        "Weekend & day trips — local businesses, Silicon Valley, SpaceX launch, LA & SF Tech Weeks, Daytona NASCAR Racing, Yosemite Summit",
       ],
       featuresLabel: "The Formation",
     },
@@ -2122,8 +2148,17 @@ function ProgramsPage({ setPage, openInquiry }) {
         ["Tuition", "$3,900 / wave"],
         ["Waves", "Four per year · Spring, Summer, Fall, Winter"],
       ],
-      features: ["Full curriculum across six weeks — one module per week", "Weekday evening or Sunday morning track", "Guest speaker every week from a different industry", "Shark Tank–style Finale closes each wave with live investor panel"],
-      featuresLabel: "The Experience",
+      features: [
+        "Daily public speaking and communication training",
+        "Specialist instruction across six disciplines",
+        "Two distinguished guest speakers per wave",
+        "The War Room — case studies, simulations, and team challenges",
+        "Excalibur Venture Finale before real investors and judges",
+        "Certificate of Completion and Excalibur Portfolio",
+        "Access to Excalibur Alumni Network",
+        "Priority consideration for the Ten-Month Flagship",
+      ],
+      featuresLabel: "What's Included",
     },
   ];
 
@@ -2168,8 +2203,38 @@ function ProgramsPage({ setPage, openInquiry }) {
                 </button>
                 {/* Content drops right below this card on mobile */}
                 {activeProgram === i && (
-                  <div style={{ background: "#000" }}>
-                    {p.id === "summer" ? <SummerProgramContent prog={p} openInquiry={openInquiry} setPage={setPage} scrollToSchedule={scrollToSchedule} /> : <DarkProgramContent prog={p} openInquiry={openInquiry} setPage={setPage} />}
+                  <div style={{ background: p.id === "summer" ? "#fff" : "#000", padding: "36px 24px" }}>
+                    <div style={{ display: "flex", gap: 10, alignItems: "center", marginBottom: 16, flexWrap: "wrap" }}>
+                      <span style={{ fontFamily: sans, fontSize: 9, color: p.statusColor, border: `1px solid ${p.statusColor}`, padding: "3px 10px", letterSpacing: "0.15em", fontWeight: 600 }}>{p.status}</span>
+                      <span style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.3em", color: p.id === "summer" ? "rgba(0,0,0,.35)" : gold, textTransform: "uppercase" }}>{p.tag}</span>
+                    </div>
+                    <h2 style={{ fontFamily: serif, fontSize: 28, fontWeight: 600, color: p.id === "summer" ? "#000" : "#FBF7EE", lineHeight: 1.05, marginBottom: 8 }}>{p.title}</h2>
+                    <p style={{ fontFamily: serif, fontSize: 15, color: gold, fontStyle: "italic", marginBottom: 20, lineHeight: 1.4 }}>{p.tagline}</p>
+                    <div style={{ width: 32, height: 1, background: p.id === "summer" ? "linear-gradient(90deg,#000,transparent)" : `linear-gradient(90deg,${gold},transparent)`, marginBottom: 20 }} />
+                    {p.desc.split("\n\n").slice(0, 3).map((para, pi) => (
+                      <p key={pi} style={{ fontFamily: sans, fontSize: 13, lineHeight: 1.9, color: p.id === "summer" ? "#1a1a1a" : "#FBF7EE", fontWeight: 300, marginBottom: 12 }}>{para}</p>
+                    ))}
+                    <div style={{ marginTop: 20, borderTop: `1px solid ${p.id === "summer" ? "rgba(0,0,0,.08)" : "rgba(199,171,117,.08)"}`, paddingTop: 16, marginBottom: 20 }}>
+                      {p.details.map(([k, v]) => (
+                        <div key={k} style={{ display: "grid", gridTemplateColumns: "90px 1fr", gap: 12, padding: "9px 0", borderBottom: `1px solid ${p.id === "summer" ? "rgba(0,0,0,.05)" : "rgba(199,171,117,.06)"}` }}>
+                          <span style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.2em", color: gold, textTransform: "uppercase", paddingTop: 2 }}>{k}</span>
+                          <span style={{ fontFamily: sans, fontSize: 12, color: p.id === "summer" ? "#1a1a1a" : "#FBF7EE", fontWeight: 300, lineHeight: 1.6, whiteSpace: "pre-line" }}>{v}</span>
+                        </div>
+                      ))}
+                    </div>
+                    <p style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.35em", color: gold, textTransform: "uppercase", fontWeight: 600, marginBottom: 12 }}>{p.featuresLabel}</p>
+                    {p.features.map((f, j) => (
+                      <div key={j} style={{ display: "flex", gap: 12, padding: "9px 0", borderBottom: `1px solid ${p.id === "summer" ? "rgba(0,0,0,.05)" : "rgba(199,171,117,.06)"}`, alignItems: "flex-start" }}>
+                        <span style={{ fontFamily: serif, fontSize: 11, color: "rgba(199,171,117,.4)", fontStyle: "italic", flexShrink: 0, paddingTop: 2 }}>{String(j + 1).padStart(2, "0")}</span>
+                        <span style={{ fontFamily: sans, fontSize: 12, color: p.id === "summer" ? "#1a1a1a" : "#FBF7EE", fontWeight: 300, lineHeight: 1.7 }}>{f}</span>
+                      </div>
+                    ))}
+                    <div style={{ marginTop: 28, display: "flex", gap: 12, flexWrap: "wrap" }}>
+                      <button onClick={() => openInquiry && openInquiry(p.id)} style={{ fontFamily: sans, padding: "13px 28px", background: gold, border: "none", color: "#000", fontSize: 11, fontWeight: 700, letterSpacing: "0.15em", textTransform: "uppercase", cursor: "pointer", flex: 1 }}>
+                        {p.flagship ? "APPLY — FLAGSHIP →" : "APPLY NOW →"}
+                      </button>
+                      <button onClick={() => setPage(p.flagship ? "flagship-detail" : p.id)} style={{ fontFamily: sans, padding: "13px 20px", background: "transparent", border: `1px solid rgba(199,171,117,.35)`, color: gold, fontSize: 11, fontWeight: 500, letterSpacing: "0.12em", textTransform: "uppercase", cursor: "pointer", flex: 1 }}>LEARN MORE →</button>
+                    </div>
                   </div>
                 )}
               </div>
@@ -2795,6 +2860,59 @@ function ApplyPage({ setPage, openInquiry }) {
 }
 
 // ── SCHEDULE TABS ──
+function SummerContent({ setPage, isMobile, summerLeft, gold }) {
+  return (
+    <div style={{ display: "flex", flexDirection: "column", gap: 2 }}>
+      {[
+        { label: "WAVE 1 — JULY", dates: "July 6 – July 18, 2026", items: [["Schedule", "Mon–Fri · 9:30 AM – 3:30 PM"], ["Duration", "9 days + Field Trip"], ["Guest Speakers", "Daily · every session"], ["Finale", "Shark Tank · July 18"]] },
+        { label: "WAVE 2 — AUGUST", dates: "Aug 3 – Aug 15, 2026", items: [["Schedule", "Mon–Fri · 9:30 AM – 3:30 PM"], ["Duration", "9 days + Field Trip"], ["Guest Speakers", "Daily · every session"], ["Finale", "Shark Tank · Aug 15"]] },
+      ].map((t, i) => (
+        <div key={i} style={{ background: "#080808", padding: "24px 24px" }}>
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 4 }}>
+            <span style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 8, letterSpacing: "0.35em", color: gold, fontWeight: 600, textTransform: "uppercase" }}>{t.label}</span>
+            <span style={{ fontFamily: "'Avenir','Avenir Next','Century Gothic',sans-serif", fontSize: 9, color: "#4DB87A", letterSpacing: "0.1em", fontWeight: 600, border: "1px solid #4DB87A", padding: "2px 8px" }}>ENROLLING NOW</span>
+          </div>
+          <p style={{ fontFamily: "'Cormorant Garamond',Georgia,serif", fontSize: 16, color: "#FBF7EE", marginBottom: 16 }}>{t.dates}</p>
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12, marginBottom: 16 }}>
+            {t.items.map(([k, v]) => (
+              <div key={k}>
+                <div style={{ fontFamily: "'Avenir','Avenir Next','Century Gothic',sans-serif", fontSize: 9, color: "rgba(199,171,117,.6)", marginBottom: 3, letterSpacing: "0.1em", textTransform: "uppercase" }}>{k}</div>
+                <div style={{ fontFamily: "'Avenir','Avenir Next','Century Gothic',sans-serif", fontSize: 12, color: "#FBF7EE" }}>{v}</div>
+              </div>
+            ))}
+          </div>
+          <button onClick={() => setPage("apply")} style={{ fontFamily: "'Avenir','Avenir Next','Century Gothic',sans-serif", width: "100%", padding: "9px 0", border: `1px solid rgba(199,171,117,.25)`, color: gold, fontSize: 10, fontWeight: 600, letterSpacing: "0.15em", background: "transparent", cursor: "pointer" }}>APPLY NOW →</button>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+function FlagshipContent({ setPage, isMobile, flagshipLeft, gold }) {
+  return (
+    <div style={{ display: "flex", flexDirection: "column", gap: 2 }}>
+      {[
+        { label: "WEEKDAY TRACK", schedule: "Tuesday & Thursday · 4:00–6:15 PM", items: [["Starts", "September 2026"], ["Duration", "10 Months"], ["Sessions", "Tue & Thu evenings"], ["Ends", "June 2027 · Graduation"], ["Price", "$1,900 / month"], ["Seats", "20 per cohort"]] },
+        { label: "SATURDAY TRACK", schedule: "Every Saturday · 10:30 AM–3:00 PM", items: [["Starts", "September 2026"], ["Duration", "10 Months"], ["Sessions", "Full-day Saturdays"], ["Ends", "June 2027 · Graduation"], ["Price", "$1,900 / month"], ["Seats", "20 per cohort"]] },
+      ].map((t, i) => (
+        <div key={i} style={{ background: "#080808", padding: "24px 24px" }}>
+          <span style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 8, letterSpacing: "0.35em", color: gold, fontWeight: 600, textTransform: "uppercase" }}>{t.label}</span>
+          <p style={{ fontFamily: "'Cormorant Garamond',Georgia,serif", fontSize: 16, color: "#FBF7EE", marginBottom: 16, marginTop: 4 }}>{t.schedule}</p>
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12, marginBottom: 16 }}>
+            {t.items.map(([k, v]) => (
+              <div key={k}>
+                <div style={{ fontFamily: "'Avenir','Avenir Next','Century Gothic',sans-serif", fontSize: 9, color: "rgba(199,171,117,.6)", marginBottom: 3, letterSpacing: "0.1em", textTransform: "uppercase" }}>{k}</div>
+                <div style={{ fontFamily: "'Avenir','Avenir Next','Century Gothic',sans-serif", fontSize: 12, color: "#FBF7EE" }}>{v}</div>
+              </div>
+            ))}
+          </div>
+          <button onClick={() => setPage("apply")} style={{ fontFamily: "'Avenir','Avenir Next','Century Gothic',sans-serif", width: "100%", padding: "9px 0", background: "transparent", border: "1px solid rgba(199,171,117,.3)", color: gold, fontSize: 10, fontWeight: 700, letterSpacing: "0.15em", cursor: "pointer" }}>INQUIRE NOW →</button>
+        </div>
+      ))}
+    </div>
+  );
+}
+
 function ScheduleTabs({ setPage, isMobile, waves, gold }) {
   const [activeProgram, setActiveProgram] = useState("summer");
   const [activeWave, setActiveWave] = useState(0);
