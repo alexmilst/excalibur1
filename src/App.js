@@ -2999,71 +2999,108 @@ function HomePage({ setPage, openInquiry }) {
       </div>
 
       {/* HERO */}
-      <section style={{ minHeight: "100vh", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", textAlign: "center", padding: isMobile ? "80px 24px 60px" : "60px 80px", position: "relative", overflow: "hidden", background: "#000" }}>
+      <section style={{ minHeight: isMobile ? "auto" : "100vh", display: "flex", flexDirection: "column", justifyContent: "stretch", position: "relative", overflow: "hidden", background: "#000" }}>
 
-        {/* Faint EXCALIBUR wordmark  -  gallery watermark */}
-        <div style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center", pointerEvents: "none", overflow: "hidden" }}>
-          <span style={{ fontFamily: "'Forum', serif", fontSize: "clamp(80px,14vw,180px)", color: "rgba(199,171,117,.03)", letterSpacing: "0.3em", textTransform: "uppercase", userSelect: "none", whiteSpace: "nowrap" }}>EXCALIBUR</span>
-        </div>
-
-        {/* CONTENT */}
-        <div style={{ position: "relative", zIndex: 1, display: "flex", flexDirection: "column", alignItems: "center", maxWidth: 820 }}>
-
-          <Fade>
-            <p style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.5em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 32 }}>
-              Founding Class &nbsp;·&nbsp; Orange County &nbsp;·&nbsp; 2026
-            </p>
-          </Fade>
-
-          <Fade d={.08}>
-            <img
-              src="https://i.ibb.co/rKSp526b/upsclae-logo.png"
-              alt="Excalibur Academy"
-              style={{ width: isMobile ? 240 : 360, height: "auto", objectFit: "contain", marginBottom: 36, opacity: 0.95 }}
-              onError={e => e.target.style.display = "none"}
-            />
-          </Fade>
-
-          <Fade d={.14}>
-            <p style={{ fontFamily: "'Forum', 'Copperplate', Georgia, serif", fontWeight: 400, fontSize: isMobile ? "clamp(28px,6vw,40px)" : "clamp(36px,4vw,58px)", letterSpacing: "0.26em", color: "#FBF7EE", textTransform: "uppercase", marginBottom: 6, lineHeight: 1.1 }}>
-              Excalibur Academy
-            </p>
-            <p style={{ fontFamily: serif, fontSize: isMobile ? 17 : 16, letterSpacing: "0.18em", color: gold, fontStyle: "italic", marginBottom: 40, opacity: 0.9 }}>
-              Forging the Leaders of Tomorrow
-            </p>
-          </Fade>
-
-          {/* Divider with diamond */}
-          <Fade d={.18}>
-            <div style={{ display: "flex", alignItems: "center", gap: 16, marginBottom: 40, width: "100%" }}>
-              <div style={{ flex: 1, height: 1, background: "linear-gradient(90deg, transparent, rgba(199,171,117,.3))" }} />
-              <span style={{ fontFamily: serif, fontSize: 14, color: "#C7AB75" }}>✦</span>
-              <div style={{ flex: 1, height: 1, background: "linear-gradient(270deg, transparent, rgba(199,171,117,.3))" }} />
+        {isMobile ? (
+          /* ── MOBILE: photo then content stacked ── */
+          <>
+            <div style={{ position: "relative", height: 280, overflow: "hidden" }}>
+              <img src="https://i.imgur.com/5lWMfOb.jpeg" alt="Excalibur Academy" style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center top" }} onError={e => e.target.style.display="none"} />
+              <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to bottom, transparent 40%, rgba(0,0,0,.85) 100%)" }} />
             </div>
-          </Fade>
-
-          <Fade d={.22}>
-            <h1 style={{ fontFamily: serif, fontStyle: "italic", fontSize: isMobile ? "clamp(20px,4.5vw,30px)" : "clamp(22px,2.2vw,34px)", fontWeight: 300, lineHeight: 1.4, color: "#FBF7EE", maxWidth: 660, marginBottom: 10 }}>
-              The Future Belongs to Those Who Build It.
-            </h1>
-            <h1 style={{ fontFamily: serif, fontSize: isMobile ? "clamp(22px,5vw,34px)" : "clamp(26px,2.6vw,40px)", fontWeight: 600, lineHeight: 1.25, color: gold, maxWidth: 660, marginBottom: 36 }}>
-              Become Who You Are.
-            </h1>
-          </Fade>
-
-          <Fade d={.28}>
-            <p style={{ fontFamily: sans, fontSize: isMobile ? 14 : 16, lineHeight: 1.85, color: "#FBF7EE", maxWidth: 580, marginBottom: 44, fontWeight: 300 }}>A premier institute where Fortune 100 executives, real entrepreneurs, investors, and distinguished professors teach the next generation to lead the world — not follow it.</p>
-          </Fade>
-
-          <Fade d={.34}>
-            <div style={{ display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap", flexDirection: isMobile ? "column" : "row", alignItems: "center", marginBottom: 36 }}>
-              <button onClick={() => setPage("apply")} style={{ fontFamily: sans, background: gold, color: "#000", padding: "14px 44px", fontSize: 11, fontWeight: 700, letterSpacing: "0.22em", textTransform: "uppercase", border: "none", cursor: "pointer" }}>Join the Founding Class</button>
-              <button onClick={() => setPage("programs")} style={{ fontFamily: sans, border: `1px solid rgba(199,171,117,.35)`, color: gold, padding: "14px 32px", fontSize: 11, fontWeight: 500, letterSpacing: "0.18em", textTransform: "uppercase", background: "transparent", cursor: "pointer" }}>Explore Programs</button>
+            <div style={{ padding: "40px 24px 60px", textAlign: "center", display: "flex", flexDirection: "column", alignItems: "center" }}>
+              <p style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.5em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 24 }}>Founding Class &nbsp;·&nbsp; Orange County &nbsp;·&nbsp; 2026</p>
+              <img src="https://i.ibb.co/rKSp526b/upsclae-logo.png" alt="Excalibur Academy" style={{ width: 200, height: "auto", objectFit: "contain", marginBottom: 24, opacity: 0.95 }} onError={e => e.target.style.display="none"} />
+              <p style={{ fontFamily: "'Forum', 'Copperplate', Georgia, serif", fontWeight: 400, fontSize: "clamp(26px,6vw,36px)", letterSpacing: "0.26em", color: "#FBF7EE", textTransform: "uppercase", marginBottom: 6, lineHeight: 1.1 }}>Excalibur Academy</p>
+              <p style={{ fontFamily: serif, fontSize: 16, letterSpacing: "0.18em", color: gold, fontStyle: "italic", marginBottom: 28, opacity: 0.9 }}>Forging the Leaders of Tomorrow</p>
+              <div style={{ display: "flex", alignItems: "center", gap: 16, marginBottom: 28, width: "100%", maxWidth: 320 }}>
+                <div style={{ flex: 1, height: 1, background: "linear-gradient(90deg, transparent, rgba(199,171,117,.3))" }} />
+                <span style={{ fontFamily: serif, fontSize: 14, color: "#C7AB75" }}>✦</span>
+                <div style={{ flex: 1, height: 1, background: "linear-gradient(270deg, transparent, rgba(199,171,117,.3))" }} />
+              </div>
+              <h1 style={{ fontFamily: serif, fontStyle: "italic", fontSize: "clamp(20px,4.5vw,28px)", fontWeight: 300, lineHeight: 1.4, color: "#FBF7EE", marginBottom: 8 }}>The Future Belongs to Those Who Build It.</h1>
+              <h1 style={{ fontFamily: serif, fontSize: "clamp(22px,5vw,32px)", fontWeight: 600, lineHeight: 1.25, color: gold, marginBottom: 24 }}>Become Who You Are.</h1>
+              <p style={{ fontFamily: sans, fontSize: 14, lineHeight: 1.85, color: "#FBF7EE", marginBottom: 32, fontWeight: 300 }}>A premier institute where Fortune 100 executives, real entrepreneurs, investors, and distinguished professors teach the next generation to lead the world — not follow it.</p>
+              <div style={{ display: "flex", gap: 10, flexDirection: "column", alignItems: "center", width: "100%", marginBottom: 24 }}>
+                <button onClick={() => setPage("apply")} style={{ fontFamily: sans, background: gold, color: "#000", padding: "14px 44px", fontSize: 11, fontWeight: 700, letterSpacing: "0.22em", textTransform: "uppercase", border: "none", cursor: "pointer", width: "100%" }}>Join the Founding Class</button>
+                <button onClick={() => setPage("programs")} style={{ fontFamily: sans, background: "transparent", color: gold, padding: "13px 32px", fontSize: 11, fontWeight: 500, letterSpacing: "0.18em", textTransform: "uppercase", border: `1px solid rgba(199,171,117,.35)`, cursor: "pointer", width: "100%" }}>Explore Programs</button>
+              </div>
+              <p style={{ fontFamily: sans, fontSize: 11, color: "rgba(199,171,117,.6)", letterSpacing: "0.12em" }}>Ages 15–18 &nbsp;·&nbsp; 20 Students Per Cohort &nbsp;·&nbsp; Orange County, CA</p>
             </div>
-            <p style={{ fontFamily: eyebrow_font, fontSize: 9, color: gold, letterSpacing: "0.3em", textTransform: "uppercase" }}>Ages 15–18 &nbsp;·&nbsp; 20 Students Per Cohort &nbsp;·&nbsp; Orange County, CA</p>
-          </Fade>
+          </>
+        ) : (
+          /* ── DESKTOP: two-column split ── */
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", minHeight: "100vh" }}>
 
-        </div>
+            {/* LEFT — content */}
+            <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", padding: "80px 60px 60px 80px", position: "relative", zIndex: 1 }}>
+
+              {/* Faint EXCALIBUR watermark */}
+              <div style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "flex-start", paddingLeft: 40, pointerEvents: "none", overflow: "hidden" }}>
+                <span style={{ fontFamily: "'Forum', serif", fontSize: "clamp(60px,10vw,140px)", color: "rgba(199,171,117,.025)", letterSpacing: "0.3em", textTransform: "uppercase", userSelect: "none", whiteSpace: "nowrap" }}>EXCALIBUR</span>
+              </div>
+
+              <Fade>
+                <p style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.5em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 32 }}>
+                  Founding Class &nbsp;·&nbsp; Orange County &nbsp;·&nbsp; 2026
+                </p>
+              </Fade>
+
+              <Fade d={.08}>
+                <img src="https://i.ibb.co/rKSp526b/upsclae-logo.png" alt="Excalibur Academy" style={{ width: 300, height: "auto", objectFit: "contain", marginBottom: 32, opacity: 0.95 }} onError={e => e.target.style.display="none"} />
+              </Fade>
+
+              <Fade d={.14}>
+                <p style={{ fontFamily: "'Forum', 'Copperplate', Georgia, serif", fontWeight: 400, fontSize: "clamp(28px,3vw,46px)", letterSpacing: "0.26em", color: "#FBF7EE", textTransform: "uppercase", marginBottom: 6, lineHeight: 1.1 }}>
+                  Excalibur Academy
+                </p>
+                <p style={{ fontFamily: serif, fontSize: 16, letterSpacing: "0.18em", color: gold, fontStyle: "italic", marginBottom: 36, opacity: 0.9 }}>
+                  Forging the Leaders of Tomorrow
+                </p>
+              </Fade>
+
+              <Fade d={.18}>
+                <div style={{ display: "flex", alignItems: "center", gap: 16, marginBottom: 36 }}>
+                  <div style={{ flex: 1, height: 1, background: "linear-gradient(90deg, transparent, rgba(199,171,117,.3))" }} />
+                  <span style={{ fontFamily: serif, fontSize: 14, color: "#C7AB75" }}>✦</span>
+                  <div style={{ flex: 1, height: 1, background: "linear-gradient(270deg, transparent, rgba(199,171,117,.3))" }} />
+                </div>
+              </Fade>
+
+              <Fade d={.22}>
+                <h1 style={{ fontFamily: serif, fontStyle: "italic", fontSize: "clamp(20px,2.2vw,32px)", fontWeight: 300, lineHeight: 1.4, color: "#FBF7EE", marginBottom: 10 }}>
+                  The Future Belongs to Those Who Build It.
+                </h1>
+                <h1 style={{ fontFamily: serif, fontSize: "clamp(24px,2.6vw,38px)", fontWeight: 600, lineHeight: 1.25, color: gold, marginBottom: 32 }}>
+                  Become Who You Are.
+                </h1>
+              </Fade>
+
+              <Fade d={.28}>
+                <p style={{ fontFamily: sans, fontSize: 15, lineHeight: 1.85, color: "#FBF7EE", maxWidth: 500, marginBottom: 40, fontWeight: 300 }}>A premier institute where Fortune 100 executives, real entrepreneurs, investors, and distinguished professors teach the next generation to lead the world — not follow it.</p>
+              </Fade>
+
+              <Fade d={.34}>
+                <div style={{ display: "flex", gap: 12, flexWrap: "wrap", marginBottom: 36 }}>
+                  <button onClick={() => setPage("apply")} style={{ fontFamily: sans, background: gold, color: "#000", padding: "14px 44px", fontSize: 11, fontWeight: 700, letterSpacing: "0.22em", textTransform: "uppercase", border: "none", cursor: "pointer" }}>Join the Founding Class</button>
+                  <button onClick={() => setPage("programs")} style={{ fontFamily: sans, background: "transparent", color: gold, padding: "13px 28px", fontSize: 11, fontWeight: 500, letterSpacing: "0.18em", textTransform: "uppercase", border: `1px solid rgba(199,171,117,.35)`, cursor: "pointer" }}>Explore Programs</button>
+                </div>
+              </Fade>
+
+              <Fade d={.38}>
+                <p style={{ fontFamily: sans, fontSize: 12, color: "rgba(199,171,117,.7)", letterSpacing: "0.12em" }}>Ages 15–18 &nbsp;·&nbsp; 20 Students Per Cohort &nbsp;·&nbsp; Orange County, CA</p>
+              </Fade>
+            </div>
+
+            {/* RIGHT — photo full height */}
+            <div style={{ position: "relative", overflow: "hidden" }}>
+              <img src="https://i.imgur.com/5lWMfOb.jpeg" alt="Excalibur Academy" style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center top" }} onError={e => e.target.style.display="none"} />
+              {/* Subtle left-edge fade to blend with black left panel */}
+              <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to right, rgba(0,0,0,.35) 0%, transparent 30%)" }} />
+            </div>
+
+          </div>
+        )}
       </section>
 
       {/* STATS  -  chessboard scatter */}
