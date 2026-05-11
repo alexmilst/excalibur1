@@ -379,8 +379,8 @@ function Nav({ page, setPage }) {
     about: "https://i.imgur.com/sAPvGtO.jpeg",
     programs: "https://i.imgur.com/1clG3YB.jpeg",
     "summer-detail": "https://i.imgur.com/N4OB8dS.jpeg",
-    "flagship-detail": "https://i.imgur.com/eyeb9rX.jpeg",
-    intensive: "https://i.imgur.com/P86gddQ.png",
+    "flagship-detail": "https://i.imgur.com/HB0upuZ.jpeg",
+    intensive: "https://i.imgur.com/eyeb9rX.jpeg",
     curriculum: "https://i.imgur.com/vG8mtVQ.jpeg",
     faculty: "https://i.imgur.com/Cv3LTsu.jpeg",
     beyond: "https://i.imgur.com/1QP3p5p.jpeg",
@@ -1240,24 +1240,46 @@ function CurriculumPage({ setPage, openInquiry }) {
     { n: "08", sector: "Legal & Professional Services", desc: "Contracts, IP, equity agreements every entrepreneur needs to understand." },
     { n: "09", sector: "Manufacturing & Supply Chain", desc: "How physical things are made, moved, and sold at scale." },
     { n: "10", sector: "Energy & Sustainability", desc: "Renewable economics, carbon markets, the greatest entrepreneurial opportunity ahead." },
-    { n: "11", sector: "Sports, Fitness & Wellness", desc: "Athlete branding, sponsorship, franchise valuation." },
+    { n: "11", sector: "Automotive & Sports", desc: "Automotive business models, motorsport economics, franchise valuation, athlete branding." },
     { n: "12", sector: "Luxury & Premium Brands", desc: "Psychology of desire, scarcity, heritage, and premium pricing." },
   ];
 
   const tenMonthArc = [
-    { m: "Month 1–2", t: "Foundation", items: ["Public Speaking I & II", "Mindset & identity", "First pitch night", "Business model primer"] },
-    { m: "Month 3", t: "Financial Literacy", items: ["Reading a P&L", "Unit economics", "Pricing strategy", "Guest: Finance pro"] },
-    { m: "Month 4", t: "The Art of Selling", items: ["Consultative selling", "Psychology of persuasion", "Objection handling", "Live roleplay"] },
-    { m: "Month 5", t: "Stocks, Crypto & Market Literacy", items: ["How markets work", "Stock analysis", "Crypto fundamentals", "Trading simulation"] },
-    { m: "Month 6", t: "AI & Technology", items: ["How AI works", "No-code tools", "AI-powered research", "Build a tool"] },
-    { m: "Month 7", t: "Speaking III + Finance II", items: ["Advanced rhetoric", "Investor Briefing I", "Mid-year competition", "Sector: Finance"] },
-    { m: "Month 7–8", t: "Junior Consultant", items: ["Assigned to real business", "On-site observation", "Customer research", "Boardroom Finale"] },
-    { m: "Month 9", t: "Public Speaking IV", items: ["Advanced narrative", "Sector speaker series", "Externship begins", "City Champ prep"] },
-    { m: "Month 10", t: "Leadership", items: ["Five forms of power", "Emotional intelligence", "CEO crisis simulation", "Conflict resolution"] },
-    { m: "Month 11", t: "Micro-Business Launch", items: ["Assigned mentor & funding", "Build real venture", "Weekly check-ins", "Revenue target"] },
-    { m: "Month 12", t: "Graduation", items: ["Financial Literacy III", "Investor Briefing II", "Gala & Graduation prep", "Portfolio & ceremony"] },
-    { m: "Throughout", t: "Sector Rotation", items: ["12 industries, 12 speakers", "Sector Journal", "One case study/month", "Real practitioner every time"] },
-    { m: "Throughout", t: "Intellectual Depth", items: ["Stoic philosophy", "Literary analysis", "Social arts", "Writing with precision"] },
+    {
+      phase: "Phase 1", label: "Foundations", span: "Months 1 – 2",
+      desc: "Voice, mindset, and the first principles of business.",
+      months: [
+        { m: "Month 1", t: "Public Speaking I", items: ["Voice mechanics & posture", "Impromptu drills", "First pitch night", "Mindset & identity"] },
+        { m: "Month 2", t: "Financial Literacy", items: ["Reading a P&L", "Unit economics", "Pricing strategy", "Guest: Finance professional"] },
+      ],
+    },
+    {
+      phase: "Phase 2", label: "Core Disciplines", span: "Months 3 – 5",
+      desc: "The full business curriculum. Each discipline taught by a practitioner.",
+      months: [
+        { m: "Month 3", t: "Business Model Analysis", items: ["How companies create value", "Model archetypes", "Live case deconstructions", "Competitive moats"] },
+        { m: "Month 4", t: "Sales & Marketing", items: ["Consultative selling", "Psychology of persuasion", "Objection handling", "Live roleplay"] },
+        { m: "Month 5", t: "Stocks, Crypto & Market Literacy", items: ["How markets work", "Stock & crypto analysis", "Risk management", "Trading simulation"] },
+      ],
+    },
+    {
+      phase: "Phase 3", label: "Application", span: "Months 6 – 8",
+      desc: "Disciplines applied to real engagements. The Junior Consultant Program begins.",
+      months: [
+        { m: "Month 6", t: "AI & Technology", items: ["How AI works", "AI tools for business", "AI-powered research", "Build a workflow"] },
+        { m: "Month 7", t: "Leadership & Influence", items: ["Five forms of power", "Emotional intelligence", "CEO crisis simulation", "Conflict resolution"] },
+        { m: "Month 7–8", t: "Junior Consultant Program", items: ["Assigned to real local business", "On-site observation", "Customer research", "Boardroom Finale"] },
+      ],
+    },
+    {
+      phase: "Phase 4", label: "Mastery & Launch", span: "Months 9 – 10",
+      desc: "Intellectual depth, the micro-business launch, and Academy Gala & Graduation.",
+      months: [
+        { m: "Month 8", t: "Intellectual Depth & The Art of Class", items: ["Philosophy applied to leadership", "Cultural intelligence", "Social arts", "Writing with precision"] },
+        { m: "Month 9", t: "College Admissions & Personal Development", items: ["Application strategy", "Personal narrative", "Portfolio presentation", "1:1 advisor sessions"] },
+        { m: "Month 10", t: "Micro-Business Launch & Graduation", items: ["Mentor-led venture development", "Market testing & customer discovery", "Academy Gala & Graduation", "Bound Excalibur Portfolio"] },
+      ],
+    },
   ];
 
   return (
@@ -1443,7 +1465,7 @@ function CurriculumPage({ setPage, openInquiry }) {
           <div>
             <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 8, letterSpacing: "0.5em", color: gold, fontWeight: 700, textTransform: "uppercase", marginBottom: 16 }}>Beyond the Classroom</p>
             <h2 style={{ fontFamily: serif, fontSize: isMobile ? 26 : 38, fontWeight: 600, color: "#FBF7EE", lineHeight: 1.05, marginBottom: 12 }}>The curriculum is only the beginning.</h2>
-            <p style={{ fontFamily: sans, fontSize: 14, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.85, marginBottom: 28 }}>Junior Consulting. Apprentice Externships. Micro-Business Launches. Field trips to Silicon Valley, SpaceX, Anthropic, Daytona, and more. Competitions judged by real investors. Discover what Excalibur students do beyond the classroom.</p>
+            <p style={{ fontFamily: sans, fontSize: 14, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.85, marginBottom: 28 }}>Junior Consulting. Apprentice Externships. Micro-Business Launches. Field trips to Silicon Valley, SpaceX, Yosemite Summit, TED Talks, Daytona NASCAR Racing, and more. Monthly competitions judged by real investors. Discover what Excalibur students do beyond the classroom.</p>
           </div>
           <div style={{ display: "flex", flexDirection: "column", gap: 12, alignItems: isMobile ? "flex-start" : "flex-end" }}>
             <button onClick={() => setPage("beyond")} style={{ fontFamily: sans, padding: "14px 40px", background: gold, border: "none", color: "#000", fontSize: 11, fontWeight: 700, letterSpacing: "0.2em", textTransform: "uppercase", cursor: "pointer" }}>What's Beyond the Classroom →</button>
@@ -1463,6 +1485,57 @@ function CurriculumPage({ setPage, openInquiry }) {
 
       {/* ── SOIREE ── */}
       <SoireeInviteBlock openInquiry={openInquiry} setPage={setPage} />
+
+      {/* FAMILY CONSULTATION FORM */}
+      <div style={{ background: "#000", padding: isMobile ? "52px 24px" : "72px 80px", borderTop: "1px solid rgba(199,171,117,.1)" }}>
+        <div style={{ maxWidth: 740, margin: "0 auto" }}>
+          <p style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.4em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 16 }}>Request a Consultation</p>
+          <h2 style={{ fontFamily: serif, fontSize: isMobile ? 28 : 40, fontWeight: 600, color: "#FBF7EE", lineHeight: 1.05, marginBottom: 8 }}>Schedule a Family Consultation</h2>
+          <p style={{ fontFamily: sans, fontSize: 14, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.8, marginBottom: 36, maxWidth: 580 }}>Please submit your information to schedule a private admissions consultation. A dedicated Enrollment Coordinator will guide your family through program options, admissions steps, curriculum, tuition and next steps.</p>
+          <div style={{ background: "#080808", borderTop: `2px solid ${gold}`, padding: "36px 32px" }}>
+            <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 9, letterSpacing: "0.25em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 12 }}>Parent / Guardian</p>
+            <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 10, marginBottom: 10 }}>
+              {[["First Name", "text"], ["Last Name", "text"]].map(([ph, type]) => (
+                <input key={ph} type={type} placeholder={ph} className="inquiry-input" style={{ background: "#000", border: "1px solid rgba(199,171,117,.2)", color: "#FBF7EE", padding: "13px 16px", fontFamily: "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
+              ))}
+            </div>
+            <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 10, marginBottom: 10 }}>
+              {[["Email Address", "email"], ["Phone Number", "tel"]].map(([ph, type]) => (
+                <input key={ph} type={type} placeholder={ph} className="inquiry-input" style={{ background: "#000", border: "1px solid rgba(199,171,117,.2)", color: "#FBF7EE", padding: "13px 16px", fontFamily: "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
+              ))}
+            </div>
+            <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr 80px", gap: 10, marginBottom: 24 }}>
+              <input type="text" placeholder="City *" className="inquiry-input" style={{ background: "#000", border: "1px solid rgba(199,171,117,.2)", color: "#FBF7EE", padding: "13px 16px", fontFamily: "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} required />
+              <input type="text" placeholder="State" className="inquiry-input" style={{ background: "#000", border: "1px solid rgba(199,171,117,.2)", color: "#FBF7EE", padding: "13px 16px", fontFamily: "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
+              <input type="text" placeholder="ZIP *" className="inquiry-input" style={{ background: "#000", border: "1px solid rgba(199,171,117,.2)", color: "#FBF7EE", padding: "13px 16px", fontFamily: "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} required />
+            </div>
+            <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 9, letterSpacing: "0.25em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 12 }}>Student</p>
+            <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 10, marginBottom: 10 }}>
+              {[["First Name", "text"], ["Last Name", "text"]].map(([ph, type]) => (
+                <input key={ph} type={type} placeholder={ph} className="inquiry-input" style={{ background: "#000", border: "1px solid rgba(199,171,117,.2)", color: "#FBF7EE", padding: "13px 16px", fontFamily: "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
+              ))}
+            </div>
+            <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 10, marginBottom: 10 }}>
+              <input type="text" placeholder="Age" className="inquiry-input" style={{ background: "#000", border: "1px solid rgba(199,171,117,.2)", color: "#FBF7EE", padding: "13px 16px", fontFamily: "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
+              <input type="text" placeholder="Current Grade / Year" className="inquiry-input" style={{ background: "#000", border: "1px solid rgba(199,171,117,.2)", color: "#FBF7EE", padding: "13px 16px", fontFamily: "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
+            </div>
+            <input type="text" placeholder="Program of Interest (Flagship, Six-Week, Summer)" className="inquiry-input" style={{ background: "#000", border: "1px solid rgba(199,171,117,.2)", color: "#FBF7EE", padding: "13px 16px", fontFamily: "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%", marginBottom: 24 }} />
+            <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 9, letterSpacing: "0.25em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 12, marginTop: 0 }}>Consultation Preferences</p>
+            <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 10, marginBottom: 10 }}>
+              <select className="inquiry-input" defaultValue="" style={{ background: "#000", border: "1px solid rgba(199,171,117,.2)", color: "#FBF7EE", padding: "13px 16px", fontFamily: "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%", appearance: "none" }}>
+                <option value="" disabled>Preferred Contact Method</option>
+                <option value="phone">Phone Call</option>
+                <option value="email">Email</option>
+                <option value="either">Either</option>
+              </select>
+              <input type="text" placeholder="Preferred Consultation Dates" className="inquiry-input" style={{ background: "#000", border: "1px solid rgba(199,171,117,.2)", color: "#FBF7EE", padding: "13px 16px", fontFamily: "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
+            </div>
+            <input type="text" placeholder="Preferred Times (e.g. mornings, evenings, weekends)" className="inquiry-input" style={{ background: "#000", border: "1px solid rgba(199,171,117,.2)", color: "#FBF7EE", padding: "13px 16px", fontFamily: "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%", marginBottom: 10 }} />
+            <textarea placeholder="Additional notes or questions (optional)" className="inquiry-input" rows={4} style={{ background: "#000", border: "1px solid rgba(199,171,117,.2)", color: "#FBF7EE", padding: "13px 16px", fontFamily: "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%", marginBottom: 28, resize: "vertical" }} />
+            <button onClick={() => openInquiry && openInquiry("curriculum")} style={{ fontFamily: "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif", padding: "15px 40px", background: gold, border: "none", color: "#000", fontSize: 12, fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", cursor: "pointer", width: "100%" }}>REQUEST CONSULTATION — WE'LL BE IN TOUCH WITHIN 24 HOURS</button>
+          </div>
+        </div>
+      </div>
 
     </div>
   );
@@ -1656,260 +1729,295 @@ function FullProgramPage({ setPage, openInquiry }) {
 // ─────────────────────────────────────────────
 function IntensivePage({ setPage, openInquiry }) {
   const isMobile = useIsMobile();
-  // breadcrumb marker
   const [activeWave, setActiveWave] = useState(0);
-  return (
-    <div style={{ background: "#000", paddingTop: 0 }}>
-      <div style={{ maxWidth: 900, margin: "0 auto", padding: isMobile ? "36px 16px 32px" : "60px 40px 48px", textAlign: "center", position: "relative" }}>
-        <div style={{ position: "absolute", inset: 0, background: "radial-gradient(ellipse 60% 60% at 50% 0%, rgba(199,171,117,.03) 0%, transparent 70%)" }} />
-        <Fade>
-          <Eyebrow>SIX-WEEK INTENSIVE</Eyebrow>
-          <h1 style={{ fontFamily: serif, fontSize: "clamp(40px,5.5vw,68px)", fontWeight: 600, color: "#FBF7EE", lineHeight: 1.05, marginBottom: 16 }}>The compressed formation.</h1>
-          <p style={{ fontFamily: serif, fontSize: 20, color: "#FBF7EE", fontStyle: "italic", lineHeight: 1.7, maxWidth: 640, margin: "0 auto 16px" }}>A compressed version of the flagship curriculum. One discipline per week, building toward a Shark Tank–style Finale. Two tracks — Monday & Wednesday evenings or Sunday mornings.</p>
-          <p style={{ fontFamily: sans, fontSize: 15, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.9, maxWidth: 680, margin: "0 auto 36px" }}>Students progress through the Academy's core disciplines — public speaking, financial literacy, business models, sales and persuasion, technology, and leadership — building toward a culminating Shark Tank–style finale. Instruction is rigorous and applied, emphasizing critical thinking, public speaking, and decision-making.</p>
-          <div style={{ display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap" }}>
-            <button onClick={() => setPage("apply")} style={{ fontFamily: sans, background: gold, color: "#000", padding: "13px 40px", fontSize: 12, fontWeight: 700, letterSpacing: 2, border: "none", cursor: "pointer" }}>Apply for Intensive</button>
-            <button onClick={() => setPage("full-program")} style={{ fontFamily: sans, border: `1px solid rgba(199,171,117,.3)`, color: gold, padding: "13px 28px", fontSize: 12, fontWeight: 500, letterSpacing: 1.5, background: "transparent", cursor: "pointer" }}>View Full Program</button>
-          </div>
-        </Fade>
-      </div>
-      <Hr />
+  const [activeMod, setActiveMod] = useState(0);
+  React.useEffect(() => { if (isMobile) setActiveMod(null); }, [isMobile]);
 
-      {/* Stats */}
-      <div style={{ maxWidth: 1100, margin: "0 auto", padding: isMobile ? "36px 16px" : "56px 40px" }}>
-        <Fade>
-          <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr 1fr" : "repeat(4, 1fr)", gap: 2, background: "#111" }}>
-            {[["6 Weeks", "program duration"], ["12 Sessions", "3 hours each"], ["20 Students", "per cohort"], ["4 Waves", "per year"]].map(([v, l], i) => (
-              <div key={i} style={{ background: "#080808", padding: "24px 18px", textAlign: "center" }}>
-                <div style={{ fontFamily: serif, fontSize: 30, fontWeight: 600, color: gold }}>{v}</div>
-                <div style={{ fontFamily: sans, fontSize: 11, color: "#FBF7EE", marginTop: 5, fontWeight: 300 }}>{l}</div>
-              </div>
-            ))}
-          </div>
-        </Fade>
-      </div>
-      <Hr />
-
-      {/* Program Structure + Schedule */}
-      <div style={{ maxWidth: 1100, margin: "0 auto", padding: isMobile ? "48px 16px" : "72px 40px" }}>
-        <Fade>
-          <Eyebrow>PROGRAM STRUCTURE</Eyebrow>
-          <SectionTitle>Six weeks. Twelve sessions. One standard.</SectionTitle>
-          <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: isMobile ? 32 : 64, marginTop: 32 }}>
-            <div>
-              <p style={{ fontFamily: sans, fontSize: 15, lineHeight: 1.9, color: "#FBF7EE", fontWeight: 300, marginBottom: 20 }}>Six weeks in duration. Twelve total sessions. One core discipline per week. Every session follows the same consistent three-block model used across all Excalibur programs.</p>
-              {["Public Speaking & Rhetoric", "Specialist Instruction", "Applied Leadership — The War Room"].map((item, i) => (
-                <div key={i} style={{ display: "flex", gap: 14, marginBottom: 12, alignItems: "flex-start" }}>
-                  <div style={{ width: 16, height: 1.5, background: "rgba(199,171,117,.5)", marginTop: 9, flexShrink: 0 }} />
-                  <span style={{ fontFamily: sans, fontSize: 14, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.6 }}>{item}</span>
-                </div>
-              ))}
-              <p style={{ fontFamily: sans, fontSize: 14, lineHeight: 1.9, color: "#FBF7EE", fontWeight: 300, marginTop: 20 }}>Each week combines instruction, discussion, and hands-on application.</p>
-            </div>
-            <div>
-              <Eyebrow>SCHEDULE OPTIONS</Eyebrow>
-              <div style={{ display: "flex", flexDirection: "column", gap: 2 }}>
-                {[
-                  { label: "WEEKDAY TRACK — GROUP A", schedule: "Monday & Wednesday evenings", time: "4:00–6:30 PM" },
-                  { label: "WEEKEND TRACK — GROUP B", schedule: "Sunday mornings", time: "10:30 AM–3:45 PM" },
-                ].map((t, i) => (
-                  <div key={i} style={{ background: i === 0 ? "#0A0908" : "#080808", padding: "24px 28px", borderTop: `2px solid ${i === 0 ? gold : "rgba(199,171,117,.2)"}` }}>
-                    <Eyebrow>{t.label}</Eyebrow>
-                    <h3 style={{ fontFamily: serif, fontSize: 20, color: "#FBF7EE", fontWeight: 600, marginBottom: 4 }}>{t.schedule}</h3>
-                    <p style={{ fontFamily: serif, fontSize: 16, color: gold }}>{t.time}</p>
-                  </div>
-                ))}
-              </div>
-              <p style={{ fontFamily: sans, fontSize: 12, color: "#FBF7EE", fontWeight: 300, marginTop: 14, lineHeight: 1.7 }}>Both tracks deliver identical curricular content and instructional time.</p>
-            </div>
-          </div>
-        </Fade>
-      </div>
-      <Hr />
-
-      {/* 6-week arc */}
-      <div style={{ maxWidth: 1100, margin: "0 auto", padding: isMobile ? "48px 16px" : "72px 40px", background: "#050505" }}>
-        <Fade><Eyebrow>THE SIX-WEEK ARC</Eyebrow><SectionTitle>One discipline per week.</SectionTitle></Fade>
-        <Fade d={.08}>
-          <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr 1fr 1fr" : "repeat(6, 1fr)", gap: 2, background: "#111", marginTop: 36 }}>
-            {[
-              { w: "Week 1", t: "Public Speaking & Rhetoric", items: ["Voice mechanics", "Impromptu drills", "60-sec pitch"], hi: true },
-              { w: "Week 2", t: "Financial Literacy", items: ["Reading a P&L", "Unit economics", "Business acumen"], hi: false },
-              { w: "Week 3", t: "Business Models", items: ["8 model archetypes", "Real case study", "Competitive analysis"], hi: true },
-              { w: "Week 4", t: "Sales & Persuasion", items: ["Consultative selling", "Objection handling", "Cialdini's principles"], hi: false },
-              { w: "Week 5", t: "Technology & Leadership", items: ["AI as biz tool", "Five forms of power", "Crisis simulation"], hi: true },
-              { w: "Week 6", t: "Shark Tank–inspired Finale", items: ["Live investor pitch", "Business presentation", "Prizes & portfolio"], hi: false },
-            ].map((row, i) => (
-              <div key={i} style={{ background: row.hi ? "#0A0A08" : "#080808", padding: "24px 16px", borderTop: `2px solid ${row.hi ? gold : "rgba(199,171,117,.12)"}` }}>
-                <p style={{ fontFamily: sans, fontSize: 9, letterSpacing: 2, color: gold, marginBottom: 6, fontWeight: 500 }}>{row.w}</p>
-                <h4 style={{ fontFamily: serif, fontSize: 15, fontWeight: 600, color: "#FBF7EE", marginBottom: 10, lineHeight: 1.2 }}>{row.t}</h4>
-                {row.items.map((item, j) => <div key={j} style={{ fontFamily: sans, fontSize: 11, color: "#FBF7EE", marginBottom: 3, fontWeight: 300 }}>— {item}</div>)}
-              </div>
-            ))}
-          </div>
-        </Fade>
-      </div>
-
-      {/* Culminating Experience */}
-      <div style={{ maxWidth: 1100, margin: "0 auto", padding: isMobile ? "48px 16px" : "72px 40px" }}>
-        <Fade>
-          <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: isMobile ? 40 : 72, alignItems: "center" }}>
-            <div>
-              <Eyebrow>CULMINATING EXPERIENCE</Eyebrow>
-              <SectionTitle>The Shark Tank Finale.</SectionTitle>
-              <p style={{ fontFamily: sans, fontSize: 15, lineHeight: 1.9, color: "#FBF7EE", fontWeight: 300, marginTop: 20 }}>The program concludes with a Shark Tank–style finale, where students pitch complete business ideas to real entrepreneurs and investors. Winning teams are awarded prizes and early funding support.</p>
-            </div>
-            <div style={{ display: "flex", flexDirection: "column", gap: 2 }}>
-              {[
-                { prize: "$2,000", label: "Best Business Concept" },
-                { prize: "$1,000", label: "Best Pitch" },
-                { prize: "$500", label: "Most Innovative" },
-                { prize: "Tech Pack", label: "Business Accessories Prizes" },
-              ].map((p, i) => (
-                <div key={i} style={{ background: "#080808", padding: "20px 28px", display: "flex", justifyContent: "space-between", alignItems: "center", borderLeft: `2px solid ${i === 0 ? gold : "rgba(199,171,117,.12)"}` }}>
-                  <span style={{ fontFamily: sans, fontSize: 13, color: "#FBF7EE", fontWeight: 300 }}>{p.label}</span>
-                  <span style={{ fontFamily: serif, fontSize: 20, color: gold, fontWeight: 600 }}>{p.prize}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-        </Fade>
-      </div>
-
-      {/* Wave Calendar */}
-      <div style={{ maxWidth: 1100, margin: "0 auto", padding: isMobile ? "48px 16px" : "72px 40px" }}>
-        <Fade><Eyebrow>2026 WAVE CALENDAR</Eyebrow><SectionTitle>Four Waves. Eight Cohorts.</SectionTitle></Fade>
-        <Fade d={.08}>
-          <div style={{ display: "flex", gap: 8, marginTop: 32, marginBottom: 28, flexWrap: "wrap" }}>
-            {waves.map((w, i) => <SBtn key={i} active={activeWave === i} onClick={() => setActiveWave(i)}>{w.name} · {w.season}</SBtn>)}
-          </div>
-          <div style={{ border: "1px solid #151515" }}>
-            <div style={{ background: "#060606", padding: "22px 32px", borderBottom: "1px solid #151515", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-              <div>
-                <h3 style={{ fontFamily: serif, fontSize: 20, fontWeight: 600, color: "#FBF7EE", marginBottom: 3 }}>{waves[activeWave].name} — {waves[activeWave].season} 2026</h3>
-                <p style={{ fontFamily: sans, fontSize: 12, color: "#FBF7EE", fontWeight: 300 }}>{waves[activeWave].dates} · Applications close {waves[activeWave].deadline}</p>
-              </div>
-              <span style={{ fontFamily: sans, fontSize: 10, letterSpacing: 2, padding: "5px 12px", border: `1px solid ${sc(waves[activeWave].status)}`, color: sc(waves[activeWave].status) }}>{sl(waves[activeWave].status)}</span>
-            </div>
-            <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 1, background: "#111" }}>
-              {[{ label: "WEEKDAY TRACK A", t: waves[activeWave].wd }, { label: "WEEKEND TRACK B", t: waves[activeWave].we }].map(({ label, t }, i) => {
-                return (
-                  <div key={i} style={{ background: "#080808", padding: "28px 28px" }}>
-                    <Eyebrow>{label}</Eyebrow>
-                    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12, marginBottom: 20 }}>
-                      {[["Days", t.days], ["Time", t.time], ["Duration", "6 Weeks"], ["Location", "Orange County"]].map(([k, v]) => (
-                        <div key={k}><div style={{ fontFamily: sans, fontSize: 9, letterSpacing: 1.5, color: "#FBF7EE", marginBottom: 3 }}>{k}</div><div style={{ fontFamily: serif, fontSize: 14, color: "#FBF7EE" }}>{v}</div></div>
-                      ))}
-                    </div>
-                    <button onClick={() => setPage("apply")} style={{ fontFamily: sans, width: "100%", marginTop: 16, padding: "9px 0", border: "1px solid rgba(199,171,117,.25)", color: gold, fontSize: 10, fontWeight: 600, letterSpacing: 2, background: "transparent", cursor: "pointer" }}>INQUIRE NOW →</button>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-        </Fade>
-      </div>
-      <Hr />
-
-      {/* Tuition */}
-      <div style={{ maxWidth: 700, margin: "0 auto", padding: isMobile ? "48px 16px" : "72px 40px", textAlign: "center" }}>
-        <Fade>
-          <Eyebrow>TUITION</Eyebrow>
-          <div style={{ background: "#080808", border: "1px solid #151515", borderTop: `2px solid ${gold}`, padding: "44px 36px" }}>
-            <div style={{ fontFamily: serif, fontSize: 48, fontWeight: 600, color: "#FBF7EE", lineHeight: 1 }}>$3,900</div>
-            <div style={{ fontFamily: sans, fontSize: 13, color: "#FBF7EE", marginBottom: 24 }}>per wave · four waves per year</div>
-            <p style={{ fontFamily: sans, fontSize: 14, color: "#FBF7EE", lineHeight: 1.8, fontWeight: 300, marginBottom: 20 }}>Includes all twelve sessions, guest speaker access, materials, Shark Tank Finale with real investors, and bound graduation portfolio. Spring, Summer, Fall, and Winter waves available.</p>
-            <p style={{ fontFamily: sans, fontSize: 12, color: "#FBF7EE", marginBottom: 28 }}>Intensive graduates who enroll in the Full Program receive a $500 credit toward their first month's tuition.</p>
-            <button onClick={() => setPage("apply")} style={{ fontFamily: sans, background: gold, color: "#000", padding: "13px 44px", fontSize: 12, fontWeight: 700, letterSpacing: 2, border: "none", cursor: "pointer" }}>APPLY FOR THE INTENSIVE</button>
-          </div>
-        </Fade>
-      </div>
-    </div>
-  );
-}
-
-// ── Standalone schedule section for ProgramsPage ──
-function DailyScheduleSection({ sectionRef }) {
-  const isMobile = useIsMobile();
-  const [activeTab, setActiveTab] = useState("summer");
-  const [activeBlock, setActiveBlock] = useState(0);
-  const tabs = [
-    { id: "summer", label: "Summer Intensive", sched: summerSchedule, subtitle: "Monday – Friday · 9:30 AM – 3:30 PM · July 6–18 & Aug 3–15, 2026" },
-    { id: "flagship-wd", label: "Flagship — Weekday", sched: flagshipWeekdaySchedule, subtitle: "Tuesday & Thursday · 4:00–6:15 PM · September 2026 – June 2027" },
-    { id: "flagship-sat", label: "Flagship — Saturday", sched: flagshipSaturdaySchedule, subtitle: "Every Saturday · 10:30 AM–3:00 PM · September 2026 – June 2027" },
-    { id: "six-week", label: "Six-Week Intensive", sched: sixWeekSchedule, subtitle: "Monday & Wednesday · 4:00–7:00 PM · Four waves per year" },
+  const waves = [
+    { label: "WAVE 1 — FALL", dates: "October 5 – November 14, 2026", days: "Mon & Wed · 4:00–6:30 PM / Sunday · 10:30 AM–3:45 PM", status: "ENROLLING SOON" },
+    { label: "WAVE 2 — WINTER", dates: "January 5 – February 13, 2027", days: "Mon & Wed · 4:00–6:30 PM / Sunday · 10:30 AM–3:45 PM", status: "OPENING SOON" },
+    { label: "WAVE 3 — SPRING", dates: "April 7 – May 15, 2027", days: "Mon & Wed · 4:00–6:30 PM / Sunday · 10:30 AM–3:45 PM", status: "OPENING SOON" },
+    { label: "WAVE 4 — POST-FLAGSHIP", dates: "June 16 – July 24, 2027", days: "Mon & Wed · 4:00–6:30 PM / Sunday · 10:30 AM–3:45 PM", status: "OPENING SOON" },
   ];
-  const current = tabs.find(t => t.id === activeTab) || tabs[0];
+
+  const intensiveModules = [
+    { n: "Week 1", title: "Public Speaking & Executive Communication", desc: "Public speaking is a central discipline in every Excalibur program. Students get on their feet, speak to the room, practice eye contact, strengthen their voice, and learn how to communicate with confidence. The work develops from foundational mechanics into rhetoric, debate, impromptu speaking, persuasive delivery, and pitch preparation. With repeated practice and direct feedback, students build the kind of presence that carries into interviews, presentations, leadership roles, and every room ahead." },
+    { n: "Week 2", title: "Business Fundamentals & Entrepreneurial Mindset", desc: "How businesses are actually built — and what separates the ones that grow from the ones that don’t. Students examine real companies, deconstruct their models, map competitive advantage, and apply structured frameworks to their own ideas. Idea validation, market sizing, problem-solution fit, and the eight business model archetypes." },
+    { n: "Week 3", title: "Marketing, Sales & Customer Psychology", desc: "Who is your customer and why would they choose you? This week covers brand positioning, customer segmentation, Cialdini’s principles of persuasion, digital channel strategy, consultative selling, objection handling, and the anatomy of a great pitch. Students leave with a working understanding of how great brands are built and why people buy." },
+    { n: "Week 4", title: "Stocks, Crypto & Market Literacy", desc: "How equity markets work, how to read a stock, the fundamentals of crypto, risk management principles, and the psychology behind trading decisions. Includes a live paper trading simulation and a structured investor panel exercise. Students learn to think about capital, risk, and market behavior the way practitioners do — not as spectators." },
+    { n: "Week 5", title: "AI & Technology as a Business Tool", desc: "AI is not replacing serious professionals — it is multiplying the output of the ones who know how to use it. This week is entirely practical: students use AI tools to research markets, draft and refine copy, build investor decks, analyze competitors, generate business model assumptions, and automate research tasks. Equally important: understanding where judgment, relationships, and creative thinking remain irreplaceable." },
+    { n: "Week 6", title: "Leadership, Intellectual Depth & The Pitch Finale", desc: "The final week combines two disciplines: leadership as a practiced standard — the five forms of power, emotional intelligence, decision-making under pressure, and the habits of people who operate at the highest level — and intellectual depth: how to think clearly, carry yourself with distinction, and move with ease across conversations, rooms, and contexts. The week culminates in the Excalibur Venture Finale." },
+  ];
+
   return (
-    <div ref={sectionRef} style={{ maxWidth: 1100, margin: "0 auto", padding: isMobile ? "48px 16px" : "72px 40px" }}>
-      <Fade>
-        <div style={{ textAlign: "center", marginBottom: 40 }}>
-          <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 9, letterSpacing: "0.4em", color: "#8B6914", fontWeight: 700, textTransform: "uppercase", marginBottom: 12 }}>A Day at Excalibur</p>
-          <h2 style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: "clamp(26px,3vw,38px)", fontWeight: 600, color: "#111", lineHeight: 1.1, marginBottom: 8 }}>What a real session looks like.</h2>
-          <p style={{ fontFamily: sans, fontSize: 14, color: "#444", fontWeight: 300, lineHeight: 1.7 }}>Click any block to meet the instructor and see exactly what happens in that session.</p>
+    <div style={{ background: "#000" }}>
+      <Breadcrumb items={[{label:"Our Programs",page:"programs"},{label:"Six-Week Intensive",page:"intensive"}]} setPage={setPage} />
+
+      {/* HERO */}
+      {isMobile ? (
+        <div style={{ background: "#000" }}>
+          <div style={{ position: "relative", height: 220, overflow: "hidden" }}>
+            <img src="https://i.imgur.com/eyeb9rX.jpeg" alt="Six-Week Intensive" style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center" }} />
+            <div style={{ position: "absolute", top: 16, left: 16 }}>
+              <button onClick={() => setPage("programs")} style={{ fontFamily: sans, background: "rgba(0,0,0,.5)", border: "1px solid rgba(199,171,117,.3)", color: gold, padding: "8px 16px", fontSize: 10, letterSpacing: "0.15em", cursor: "pointer", textTransform: "uppercase" }}>← OUR PROGRAMS</button>
+            </div>
+          </div>
+          <div style={{ background: "#000", padding: "28px 24px 20px" }}>
+            <p style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.42em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 14 }}>Intensive Track · The Ignition</p>
+            <h1 style={{ fontFamily: "'Cormorant Garamond', 'Didot', Georgia, serif", fontSize: 30, fontWeight: 300, fontStyle: "italic", color: "#FBF7EE", lineHeight: 1.1, marginBottom: 6 }}>Six-Week Intensive</h1>
+            <p style={{ fontFamily: "'Cormorant Garamond', 'Didot', Georgia, serif", fontSize: 18, color: gold, fontStyle: "italic", fontWeight: 300 }}>From Dream to Discipline. Four Waves Per Year.</p>
+          </div>
         </div>
-      </Fade>
-      <Fade d={.06}>
-        <div style={{ display: "flex", justifyContent: "center", gap: 8, marginBottom: 24, flexWrap: "wrap" }}>
-          {tabs.map(t => (
-            <button key={t.id} onClick={() => setActiveTab(t.id)} style={{ fontFamily: sans, padding: "9px 18px", background: activeTab === t.id ? "#111" : "transparent", border: `1px solid ${activeTab === t.id ? "#111" : "rgba(0,0,0,.2)"}`, color: activeTab === t.id ? "#fff" : "#555", fontSize: 11, cursor: "pointer", letterSpacing: "0.1em", textTransform: "uppercase", fontWeight: activeTab === t.id ? 600 : 400, transition: "all .2s" }}>{t.label}</button>
+      ) : (
+        <div style={{ position: "relative", height: 480, overflow: "hidden" }}>
+          <img src="https://i.imgur.com/eyeb9rX.jpeg" alt="Six-Week Intensive" style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center" }} />
+          <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(0,0,0,.92) 0%, rgba(0,0,0,.2) 60%)" }} />
+          <div style={{ position: "absolute", bottom: 56, left: 72 }}>
+            <p style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.42em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 14 }}>Intensive Track · The Ignition</p>
+            <h1 style={{ fontFamily: "'Cormorant Garamond', 'Didot', Georgia, serif", fontSize: 56, fontWeight: 300, fontStyle: "italic", color: "#FBF7EE", lineHeight: 1.05, marginBottom: 6 }}>Six-Week Intensive</h1>
+            <p style={{ fontFamily: "'Cormorant Garamond', 'Didot', Georgia, serif", fontSize: 26, color: gold, fontStyle: "italic", fontWeight: 300 }}>From Dream to Discipline. Four Waves Per Year.</p>
+          </div>
+          <div style={{ position: "absolute", top: 24, left: 24 }}>
+            <button onClick={() => setPage("programs")} style={{ fontFamily: sans, background: "rgba(0,0,0,.5)", border: "1px solid rgba(199,171,117,.3)", color: gold, padding: "8px 16px", fontSize: 10, letterSpacing: "0.15em", cursor: "pointer", textTransform: "uppercase" }}>← OUR PROGRAMS</button>
+          </div>
+        </div>
+      )}
+
+      {/* STATS STRIP — black */}
+      <div style={{ background: "#000", borderBottom: "1px solid rgba(199,171,117,.1)" }}>
+        <div style={{ maxWidth: 1100, margin: "0 auto", display: "grid", gridTemplateColumns: isMobile ? "repeat(2,1fr)" : "repeat(4,1fr)", borderLeft: "1px solid rgba(199,171,117,.1)" }}>
+          {[["6 Weeks", "Program Duration"], ["2 Sessions", "Per Week Per Track"], ["20 Students", "Per Cohort"], ["4 Waves", "Per Year"]].map(([val, lbl]) => (
+            <div key={lbl} style={{ padding: isMobile ? "24px 16px" : "32px 36px", borderRight: "1px solid rgba(199,171,117,.1)", borderBottom: isMobile ? "1px solid rgba(199,171,117,.1)" : "none" }}>
+              <p style={{ fontFamily: serif, fontSize: isMobile ? 22 : 28, fontWeight: 600, color: "#FBF7EE", lineHeight: 1.1, marginBottom: 6 }}>{val}</p>
+              <p style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.25em", color: gold, textTransform: "uppercase", fontWeight: 600 }}>{lbl}</p>
+            </div>
           ))}
         </div>
-        <DailyScheduleBlock schedule={current.sched} title={current.label} subtitle={current.subtitle} />
-      </Fade>
-    </div>
-  );
-}
+      </div>
 
-function SummerContent({ setPage, isMobile, summerLeft }) {
-  return (
-    <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 1, background: "#111" }}>
-      {[
-        { label: "WAVE 1 — JULY", dates: "July 6 – 18, 2026", left: summerLeft[0], items: [["Schedule", "Mon–Fri · 9:30 AM–3:30 PM"], ["Duration", "2 weeks"], ["Guest Speakers", "Daily"], ["Finale", "Shark Tank · July 18"]] },
-        { label: "WAVE 2 — AUGUST", dates: "Aug 3 – 15, 2026", left: summerLeft[1], items: [["Schedule", "Mon–Fri · 9:30 AM–3:30 PM"], ["Duration", "2 weeks"], ["Guest Speakers", "Daily"], ["Finale", "Shark Tank · Aug 15"]] },
-      ].map((t, i) => {
-        return (
-          <div key={i} style={{ background: "#080808", padding: "24px 24px" }}>
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 4 }}>
-              <Eyebrow>{t.label}</Eyebrow>
-              <span style={{ fontFamily: sans, fontSize: 9, color: "#4DB87A", letterSpacing: "0.1em", fontWeight: 600, border: "1px solid #4DB87A", padding: "2px 8px" }}>ENROLLING NOW</span>
+      {/* OVERVIEW — ivory white */}
+      <div style={{ background: "#F5F3EE", padding: isMobile ? "52px 24px" : "80px 80px" }}>
+        <div style={{ maxWidth: 1100, margin: "0 auto", display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 400px", gap: isMobile ? 36 : 72, alignItems: "start" }}>
+          <div>
+            <div style={{ display: "flex", alignItems: "center", gap: 14, marginBottom: 20 }}>
+              <div style={{ width: 32, height: "1px", background: "rgba(139,105,20,.4)" }} />
+              <p style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.45em", color: "#8B6914", fontWeight: 600, textTransform: "uppercase", margin: 0 }}>Program Overview</p>
             </div>
-            <p style={{ fontFamily: serif, fontSize: 15, color: "#FBF7EE", marginBottom: 16 }}>{t.dates}</p>
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10, marginBottom: 16 }}>
-              {t.items.map(([k, v]) => (<div key={k}><div style={{ fontFamily: sans, fontSize: 9, color: "#FBF7EE", marginBottom: 3, letterSpacing: "0.1em", textTransform: "uppercase" }}>{k}</div><div style={{ fontFamily: sans, fontSize: 12, color: "#FBF7EE" }}>{v}</div></div>))}
-            </div>
+            <h2 style={{ fontFamily: "'Cormorant Garamond', 'Didot', Georgia, serif", fontSize: isMobile ? 30 : 46, fontWeight: 300, fontStyle: "italic", color: "#000", lineHeight: 1.05, marginBottom: 28 }}>Six weeks in four concentrations<br />across the year.</h2>
+            <p style={{ fontFamily: sans, fontSize: 14, lineHeight: 2.0, color: "#1a1a1a", fontWeight: 300, marginBottom: 16 }}>The Six-Week Intensive is a concentrated version of the Excalibur curriculum, offered four times a year as a focused, high-impact program for students ready for a serious experience without the full ten-month commitment.</p>
+            <p style={{ fontFamily: sans, fontSize: 14, lineHeight: 2.0, color: "#1a1a1a", fontWeight: 300, marginBottom: 16 }}>Each wave runs six weeks with two sessions per week. Students choose their track: Group A meets Monday and Wednesday evenings, Group B meets Sunday mornings and afternoons. Both tracks are taught by the same faculty who lead the Flagship Program, delivering an intensive version of the full curriculum with the same standard of instruction.</p>
+            <p style={{ fontFamily: sans, fontSize: 14, lineHeight: 2.0, color: "#1a1a1a", fontWeight: 300, marginBottom: 16 }}>Every session follows the same three-block model used across all Excalibur programs: public speaking, specialist instruction, and The War Room. Two distinguished guest speakers join each wave, drawn from business, entrepreneurship, technology, and leadership. The Intensive is led by the same core faculty as the Flagship, holding every student to the same standard of instruction.</p>
+            <p style={{ fontFamily: sans, fontSize: 14, lineHeight: 2.0, color: "#1a1a1a", fontWeight: 300 }}>At the heart of the Six-Week Intensive is the Venture Launchpad — a structured venture-building arc woven across all six weeks. From the first session, students begin developing a real business concept: validating a problem, sizing a market, building a brand, mapping competitors, and constructing a go-to-market strategy. Week by week, the venture grows — from raw idea through business fundamentals, marketing and customer psychology, competitive analysis, AI-powered research tools, and sales and pitch mechanics — until it is ready to be defended live before a panel of real investors at the Shark Tank–inspired Venture Finale.</p>
+          </div>
+          <div>
+            {[["Tracks", "Group A: Mon & Wed \u00b7 4:00\u20136:30 PM\nGroup B: Sunday \u00b7 10:30 AM\u20133:45 PM"], ["Sessions", "30 hours per wave"], ["Guest Speakers", "2 per wave, senior practitioners"], ["Finale", "Shark Tank\u2013Inspired Venture Finale \u00b7 Real investors"], ["Tuition", "$3,900 per wave"], ["Eligibility", "Ages 15\u201318 \u00b7 Rising juniors & seniors"], ["Location", "South Orange County, CA"]].map(([k, v]) => (
+              <div key={k} style={{ display: "grid", gridTemplateColumns: "96px 1fr", gap: 14, padding: "11px 0", borderBottom: "1px solid rgba(0,0,0,.08)" }}>
+                <span style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.2em", color: "#8B6914", textTransform: "uppercase", paddingTop: 2 }}>{k}</span>
+                <span style={{ fontFamily: sans, fontSize: 13, color: "#1a1a1a", fontWeight: 300, lineHeight: 1.6, whiteSpace: "pre-line" }}>{v}</span>
+              </div>
+            ))}
 
-            <div style={{ display: "flex", gap: 8 }}>
-              <button onClick={() => setPage("apply")} style={{ fontFamily: sans, flex: 1, padding: "9px 0", background: gold, border: "none", color: "#000", fontSize: 10, fontWeight: 700, letterSpacing: "0.15em", cursor: "pointer" }}>APPLY NOW →</button>
-              <button onClick={() => setPage("summer-detail")} style={{ fontFamily: sans, flex: 1, padding: "9px 0", border: "1px solid rgba(199,171,117,.3)", color: gold, fontSize: 10, fontWeight: 500, letterSpacing: "0.12em", background: "transparent", cursor: "pointer" }}>LEARN MORE →</button>
+            <div style={{ marginTop: 28, paddingTop: 20, borderTop: "1px solid rgba(0,0,0,.08)" }}>
+              <p style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.3em", color: "#8B6914", fontWeight: 600, textTransform: "uppercase", marginBottom: 14 }}>What’s Included</p>
+              {["Daily public speaking and communication training","Specialist instruction across six disciplines","Two distinguished guest speakers per wave","The War Room — case studies, simulations, and team challenges","Excalibur Venture Finale before real investors and judges","Certificate of Completion and Excalibur Portfolio","Access to Excalibur Alumni Network","Priority consideration for the Ten-Month Flagship"].map((f, i) => (
+                <div key={i} style={{ display: "flex", gap: 10, padding: "7px 0", borderBottom: "1px solid rgba(0,0,0,.06)", alignItems: "flex-start" }}>
+                  <div style={{ width: 4, height: 4, borderRadius: "50%", background: "#8B6914", flexShrink: 0, marginTop: 7 }} />
+                  <p style={{ fontFamily: sans, fontSize: 12, color: "#1a1a1a", fontWeight: 300, lineHeight: 1.6 }}>{f}</p>
+                </div>
+              ))}
+            </div>
+            <div style={{ marginTop: 20, display: "flex", gap: 10, flexWrap: "wrap" }}>
+              <button onClick={() => openInquiry && openInquiry("intensive")} style={{ fontFamily: sans, padding: "12px 20px", background: "#000", border: "none", color: "#fff", fontSize: 10, fontWeight: 700, letterSpacing: "0.15em", textTransform: "uppercase", cursor: "pointer", flex: 1 }}>REQUEST INFORMATION →</button>
+              <button onClick={() => setPage("faculty")} style={{ fontFamily: sans, padding: "12px 20px", background: "transparent", border: "1px solid rgba(0,0,0,.2)", color: "#000", fontSize: 10, fontWeight: 500, letterSpacing: "0.13em", textTransform: "uppercase", cursor: "pointer", flex: 1 }}>MEET THE FACULTY →</button>
             </div>
           </div>
-        );
-      })}
-    </div>
-  );
-}
+        </div>
+      </div>
 
-function FlagshipContent({ setPage, isMobile, flagshipLeft }) {
-  return (
-    <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 1, background: "#111" }}>
-      {[
-        { label: "WEEKDAY TRACK", schedule: "Tue & Thu · 4:00–6:15 PM", left: flagshipLeft[0], items: [["Starts", "September 2026"], ["Duration", "10 Months"], ["Sessions", "Tue & Thu evenings"], ["Ends", "June 2027"], ["Price", "$1,900/month"], ["Seats", "20 per cohort"]] },
-        { label: "SATURDAY TRACK", schedule: "Saturday · 10:30 AM–3:00 PM", left: flagshipLeft[1], items: [["Starts", "September 2026"], ["Duration", "10 Months"], ["Sessions", "Full-day Saturdays"], ["Ends", "June 2027"], ["Price", "$1,900/month"], ["Seats", "20 per cohort"]] },
-      ].map((t, i) => {
-        return (
-          <div key={i} style={{ background: "#080808", padding: "24px 24px" }}>
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 4 }}>
-              <Eyebrow>{t.label}</Eyebrow>
-            </div>
-            <p style={{ fontFamily: serif, fontSize: 15, color: "#FBF7EE", marginBottom: 16 }}>{t.schedule}</p>
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10, marginBottom: 16 }}>
-              {t.items.map(([k, v]) => (<div key={k}><div style={{ fontFamily: sans, fontSize: 9, color: "#FBF7EE", marginBottom: 3, letterSpacing: "0.1em", textTransform: "uppercase" }}>{k}</div><div style={{ fontFamily: sans, fontSize: 12, color: "#FBF7EE" }}>{v}</div></div>))}
-            </div>
-            <button onClick={() => setPage("apply")} style={{ fontFamily: sans, width: "100%", padding: "9px 0", background: "transparent", border: `1px solid rgba(199,171,117,.3)`, color: gold, fontSize: 10, fontWeight: 700, letterSpacing: "0.15em", cursor: "pointer" }}>INQUIRE NOW →</button>
+      {/* WAVE DATES — black */}
+      <div style={{ background: "#0A0A0A", padding: isMobile ? "52px 24px" : "80px 80px", borderTop: "1px solid rgba(199,171,117,.08)" }}>
+        <div style={{ maxWidth: 1100, margin: "0 auto" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 14, marginBottom: 16 }}>
+            <div style={{ width: 32, height: "1px", background: `linear-gradient(90deg, ${gold}, transparent)` }} />
+            <p style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.45em", color: gold, fontWeight: 600, textTransform: "uppercase", margin: 0 }}>2026 – 2027 Waves</p>
           </div>
-        );
-      })}
+          <h2 style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: isMobile ? 28 : 40, fontWeight: 300, fontStyle: "italic", color: "#FBF7EE", marginBottom: 40 }}>Four opportunities to begin.</h2>
+          <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(4, 1fr)", gap: 2 }}>
+            {waves.map((w, i) => (
+              <div key={i} style={{ background: "#080808", padding: "28px 24px", borderTop: `2px solid ${i === activeWave ? gold : "rgba(199,171,117,.15)"}`, cursor: "pointer" }} onClick={() => setActiveWave(i)}>
+                <p style={{ fontFamily: eyebrow_font, fontSize: 8, letterSpacing: "0.3em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 10 }}>{w.label}</p>
+                <p style={{ fontFamily: serif, fontSize: 15, fontWeight: 600, color: "#FBF7EE", lineHeight: 1.3, marginBottom: 8 }}>{w.dates}</p>
+                <p style={{ fontFamily: sans, fontSize: 11, color: "rgba(251,247,238,.6)", fontWeight: 300, lineHeight: 1.5, whiteSpace: "pre-line", marginBottom: 12 }}>{w.days}</p>
+                <span style={{ fontFamily: eyebrow_font, fontSize: 8, letterSpacing: "0.2em", color: gold, fontWeight: 700, textTransform: "uppercase", border: `1px solid ${gold}`, padding: "3px 8px" }}>{w.status}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* CURRICULUM — ivory white */}
+      <div style={{ background: "#F5F3EE", padding: isMobile ? "52px 24px" : "80px 80px" }}>
+        <div style={{ maxWidth: 1100, margin: "0 auto" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 14, marginBottom: 16 }}>
+            <div style={{ width: 32, height: "1px", background: "rgba(139,105,20,.4)" }} />
+            <p style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.45em", color: "#8B6914", fontWeight: 600, textTransform: "uppercase", margin: 0 }}>The Curriculum</p>
+          </div>
+          <h2 style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: isMobile ? 28 : 40, fontWeight: 300, fontStyle: "italic", color: "#000", marginBottom: 8 }}>Six disciplines. Six weeks.</h2>
+          <p style={{ fontFamily: sans, fontSize: 14, color: "#444", fontWeight: 300, lineHeight: 1.8, maxWidth: 580, marginBottom: 40 }}>A focused version of Excalibur’s curriculum. One discipline per week, built for rapid formation and genuine application.</p>
+          <div style={{ border: "1px solid rgba(0,0,0,.08)" }}>
+            {intensiveModules.map((m, i) => (
+              <div key={i} style={{ borderBottom: i < intensiveModules.length - 1 ? "1px solid rgba(0,0,0,.07)" : "none", background: i === activeMod ? "#fff" : "#FAFAF8" }}>
+                <div onClick={() => setActiveMod(activeMod === i ? null : i)} style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "72px 1fr 24px", gap: isMobile ? 8 : 24, padding: isMobile ? "18px 20px" : "20px 28px", cursor: "pointer", alignItems: "center" }}>
+                  <span style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.2em", color: "#8B6914", fontWeight: 600 }}>{m.n}</span>
+                  <h4 style={{ fontFamily: serif, fontSize: isMobile ? 16 : 18, fontWeight: 600, color: "#000", lineHeight: 1.2 }}>{m.title}</h4>
+                  <span style={{ fontFamily: sans, fontSize: 16, color: "#8B6914", fontWeight: 300, textAlign: "right" }}>{activeMod === i ? "−" : "+"}</span>
+                </div>
+                {activeMod === i && (
+                  <div style={{ padding: isMobile ? "0 20px 20px" : "0 28px 24px" }}>
+                    <div style={{ width: 32, height: "1px", background: "rgba(139,105,20,.3)", marginBottom: 12 }} />
+                    <p style={{ fontFamily: sans, fontSize: 13, lineHeight: 1.9, color: "#333", fontWeight: 300 }}>{m.desc}</p>
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* DAILY SCHEDULE — black */}
+      <div style={{ background: "#0A0A0A", padding: isMobile ? "52px 24px" : "80px 80px", borderTop: "1px solid rgba(199,171,117,.08)" }}>
+        <div style={{ maxWidth: 1100, margin: "0 auto" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 14, marginBottom: 16 }}>
+            <div style={{ width: 32, height: "1px", background: `linear-gradient(90deg, ${gold}, transparent)` }} />
+            <p style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.45em", color: gold, fontWeight: 600, textTransform: "uppercase", margin: 0 }}>Session Structure</p>
+          </div>
+          <h2 style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: isMobile ? 28 : 40, fontWeight: 300, fontStyle: "italic", color: "#FBF7EE", marginBottom: 40 }}>What a session looks like.</h2>
+          <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: isMobile ? 32 : 48 }}>
+            {/* Group A — Weekday */}
+            <div style={{ border: "1px solid rgba(199,171,117,.15)", borderTop: `2px solid ${gold}` }}>
+              <div style={{ padding: "20px 24px", borderBottom: "1px solid rgba(199,171,117,.1)" }}>
+                <p style={{ fontFamily: eyebrow_font, fontSize: 8, letterSpacing: "0.3em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 6 }}>Group A · Weekday Track</p>
+                <p style={{ fontFamily: serif, fontSize: 16, color: "#FBF7EE", fontWeight: 300, fontStyle: "italic" }}>Monday & Wednesday · 4:00–6:30 PM</p>
+              </div>
+              {[["4:00 PM", "40 min", "Public Speaking & Rhetoric"],["4:40 PM", "15 min", "Snack Break"],["4:55 PM", "40 min", "Specialist Instruction"],["5:35 PM", "15 min", "Short Break"],["5:50 PM", "40 min", "The War Room"],["6:30 PM", "—", "Debrief & Session Close"]].map(([t, d, b], i) => (
+                <div key={i} style={{ display: "grid", gridTemplateColumns: "68px 44px 1fr", gap: 8, padding: "11px 24px", borderBottom: "1px solid rgba(199,171,117,.06)", alignItems: "center" }}>
+                  <span style={{ fontFamily: sans, fontSize: 11, color: gold, fontWeight: 600 }}>{t}</span>
+                  <span style={{ fontFamily: sans, fontSize: 10, color: "rgba(251,247,238,.75)", fontWeight: 300 }}>{d}</span>
+                  <span style={{ fontFamily: sans, fontSize: 12, color: "#FBF7EE", fontWeight: 300 }}>{b}</span>
+                </div>
+              ))}
+            </div>
+            {/* Group B — Sunday */}
+            <div style={{ border: "1px solid rgba(199,171,117,.15)", borderTop: `2px solid ${gold}` }}>
+              <div style={{ padding: "20px 24px", borderBottom: "1px solid rgba(199,171,117,.1)" }}>
+                <p style={{ fontFamily: eyebrow_font, fontSize: 8, letterSpacing: "0.3em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 6 }}>Group B · Sunday Track</p>
+                <p style={{ fontFamily: serif, fontSize: 16, color: "#FBF7EE", fontWeight: 300, fontStyle: "italic" }}>Sunday · 10:30 AM–3:45 PM</p>
+              </div>
+              {[["10:30 AM", "40 min", "Block 1a · Public Speaking"],["11:10 AM", "40 min", "Block 1b · Rhetoric & Pitch"],["11:50 AM", "30 min", "Lunch Break"],["12:20 PM", "80 min", "Specialist Instruction"],["1:40 PM", "15 min", "Break"],["1:55 PM", "40 min", "Block 3a · War Room"],["2:35 PM", "15 min", "Break"],["2:50 PM", "40 min", "Block 3b · War Room"],["3:30 PM", "5 min", "Debrief & Close"]].map(([t, d, b], i) => (
+                <div key={i} style={{ display: "grid", gridTemplateColumns: "68px 44px 1fr", gap: 8, padding: "11px 24px", borderBottom: "1px solid rgba(199,171,117,.06)", alignItems: "center" }}>
+                  <span style={{ fontFamily: sans, fontSize: 11, color: gold, fontWeight: 600 }}>{t}</span>
+                  <span style={{ fontFamily: sans, fontSize: 10, color: "rgba(251,247,238,.75)", fontWeight: 300 }}>{d}</span>
+                  <span style={{ fontFamily: sans, fontSize: 12, color: "#FBF7EE", fontWeight: 300 }}>{b}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* VENTURE FINALE — ivory */}
+      <div style={{ background: "#F5F3EE", padding: isMobile ? "52px 24px" : "80px 80px" }}>
+        <div style={{ maxWidth: 1100, margin: "0 auto", display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: isMobile ? 36 : 64, alignItems: "center" }}>
+          <div>
+            <div style={{ display: "flex", alignItems: "center", gap: 14, marginBottom: 16 }}>
+              <div style={{ width: 32, height: "1px", background: "rgba(139,105,20,.4)" }} />
+              <p style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.45em", color: "#8B6914", fontWeight: 600, textTransform: "uppercase", margin: 0 }}>The Culmination</p>
+            </div>
+            <h2 style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: isMobile ? 28 : 42, fontWeight: 300, fontStyle: "italic", color: "#000", lineHeight: 1.1, marginBottom: 20 }}>The Excalibur<br />Venture Finale.</h2>
+            <p style={{ fontFamily: sans, fontSize: 14, lineHeight: 1.95, color: "#1a1a1a", fontWeight: 300 }}>Every wave culminates in the Excalibur Venture Finale — a live pitch competition where student teams present before a panel of real investors, entrepreneurs, and executives. Students are evaluated on concept strength, market thinking, pitch delivery, and composure under questioning. Prizes are awarded to the strongest performances.</p>
+          </div>
+          <div style={{ background: "#0A0A0A", padding: "36px 32px", borderTop: `2px solid ${gold}` }}>
+            <p style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: isMobile ? 18 : 24, fontWeight: 300, fontStyle: "italic", color: "#FBF7EE", lineHeight: 1.5, marginBottom: 20 }}>"Teams are evaluated on concept strength, pitch delivery, market research, and composure under pressure. Prizes awarded to the strongest performances."</p>
+            <button onClick={() => openInquiry && openInquiry("intensive")} style={{ fontFamily: sans, padding: "11px 24px", background: gold, border: "none", color: "#000", fontSize: 10, fontWeight: 700, letterSpacing: "0.15em", textTransform: "uppercase", cursor: "pointer" }}>APPLY NOW →</button>
+          </div>
+        </div>
+      </div>
+
+      {/* ADMISSIONS — black */}
+      <div style={{ background: "#0A0A0A", padding: isMobile ? "52px 24px" : "80px 80px", borderTop: "1px solid rgba(199,171,117,.08)" }}>
+        <div style={{ maxWidth: 1100, margin: "0 auto", display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: isMobile ? 36 : 80 }}>
+          <div>
+            <div style={{ display: "flex", alignItems: "center", gap: 14, marginBottom: 16 }}>
+              <div style={{ width: 32, height: "1px", background: `linear-gradient(90deg, ${gold}, transparent)` }} />
+              <p style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.45em", color: gold, fontWeight: 600, textTransform: "uppercase", margin: 0 }}>Admissions</p>
+            </div>
+            <h2 style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: isMobile ? 28 : 40, fontWeight: 300, fontStyle: "italic", color: "#FBF7EE", lineHeight: 1.1, marginBottom: 20 }}>Who This Program<br />Is For.</h2>
+            <p style={{ fontFamily: sans, fontSize: 14, lineHeight: 1.95, color: "#FBF7EE", fontWeight: 300, marginBottom: 14 }}>The Six-Week Intensive is built for ambitious high school students ages 15–18 ready to experience a concentrated, serious program without the year-long commitment of the Flagship.</p>
+            <p style={{ fontFamily: sans, fontSize: 14, lineHeight: 1.95, color: "#FBF7EE", fontWeight: 300 }}>Excalibur looks for curiosity, maturity, and a genuine interest in business, leadership, and how the world works. No prior experience required. The student who leans forward. The one who asks questions, is ready to be challenged, and wants to leave the experience genuinely different from when they arrived.</p>
+          </div>
+          <div style={{ display: "flex", flexDirection: "column", justifyContent: "center" }}>
+            <div style={{ border: `1px solid rgba(199,171,117,.15)`, borderTop: `2px solid ${gold}`, padding: "28px 28px" }}>
+              <p style={{ fontFamily: serif, fontSize: isMobile ? 22 : 28, fontWeight: 300, color: "#FBF7EE", fontStyle: "italic", lineHeight: 1.3, marginBottom: 24 }}>"Six weeks can change how a student thinks, speaks, and carries themselves. That is the point."</p>
+              <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
+                <button onClick={() => openInquiry && openInquiry("intensive")} style={{ fontFamily: sans, padding: "13px 32px", background: gold, border: "none", color: "#000", fontSize: 10, fontWeight: 700, letterSpacing: "0.15em", textTransform: "uppercase", cursor: "pointer", flex: 1 }}>APPLY NOW →</button>
+                <button onClick={() => setPage("flagship-detail")} style={{ fontFamily: sans, padding: "12px 20px", background: "transparent", border: `1px solid rgba(199,171,117,.3)`, color: gold, fontSize: 10, fontWeight: 500, letterSpacing: "0.13em", textTransform: "uppercase", cursor: "pointer", flex: 1 }}>VIEW FLAGSHIP →</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* FAMILY CONSULTATION FORM */}
+      <div style={{ background: "#000", padding: isMobile ? "52px 24px" : "72px 80px", borderTop: "1px solid rgba(199,171,117,.1)" }}>
+        <div style={{ maxWidth: 740, margin: "0 auto" }}>
+          <p style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.4em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 16 }}>Request a Consultation</p>
+          <h2 style={{ fontFamily: serif, fontSize: isMobile ? 28 : 40, fontWeight: 600, color: "#FBF7EE", lineHeight: 1.05, marginBottom: 8 }}>Schedule a Family Consultation</h2>
+          <p style={{ fontFamily: sans, fontSize: 14, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.8, marginBottom: 36, maxWidth: 580 }}>Please submit your information to schedule a private admissions consultation. A dedicated Enrollment Coordinator will guide your family through program options, admissions steps, curriculum, tuition and next steps.</p>
+          <div style={{ background: "#080808", borderTop: `2px solid ${gold}`, padding: "36px 32px" }}>
+            <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 9, letterSpacing: "0.25em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 12 }}>Parent / Guardian</p>
+            <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 10, marginBottom: 10 }}>
+              {[["First Name", "text"], ["Last Name", "text"]].map(([ph, type]) => (
+                <input key={ph} type={type} placeholder={ph} className="inquiry-input" style={{ background: "#000", border: "1px solid rgba(199,171,117,.2)", color: "#FBF7EE", padding: "13px 16px", fontFamily: "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
+              ))}
+            </div>
+            <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 10, marginBottom: 10 }}>
+              {[["Email Address", "email"], ["Phone Number", "tel"]].map(([ph, type]) => (
+                <input key={ph} type={type} placeholder={ph} className="inquiry-input" style={{ background: "#000", border: "1px solid rgba(199,171,117,.2)", color: "#FBF7EE", padding: "13px 16px", fontFamily: "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
+              ))}
+            </div>
+            <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr 80px", gap: 10, marginBottom: 24 }}>
+              <input type="text" placeholder="City *" className="inquiry-input" style={{ background: "#000", border: "1px solid rgba(199,171,117,.2)", color: "#FBF7EE", padding: "13px 16px", fontFamily: "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} required />
+              <input type="text" placeholder="State" className="inquiry-input" style={{ background: "#000", border: "1px solid rgba(199,171,117,.2)", color: "#FBF7EE", padding: "13px 16px", fontFamily: "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
+              <input type="text" placeholder="ZIP *" className="inquiry-input" style={{ background: "#000", border: "1px solid rgba(199,171,117,.2)", color: "#FBF7EE", padding: "13px 16px", fontFamily: "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} required />
+            </div>
+            <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 9, letterSpacing: "0.25em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 12 }}>Student</p>
+            <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 10, marginBottom: 10 }}>
+              {[["First Name", "text"], ["Last Name", "text"]].map(([ph, type]) => (
+                <input key={ph} type={type} placeholder={ph} className="inquiry-input" style={{ background: "#000", border: "1px solid rgba(199,171,117,.2)", color: "#FBF7EE", padding: "13px 16px", fontFamily: "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
+              ))}
+            </div>
+            <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 10, marginBottom: 10 }}>
+              <input type="text" placeholder="Age" className="inquiry-input" style={{ background: "#000", border: "1px solid rgba(199,171,117,.2)", color: "#FBF7EE", padding: "13px 16px", fontFamily: "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
+              <input type="text" placeholder="Current Grade / Year" className="inquiry-input" style={{ background: "#000", border: "1px solid rgba(199,171,117,.2)", color: "#FBF7EE", padding: "13px 16px", fontFamily: "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
+            </div>
+            <input type="text" placeholder="Preferred Wave (Fall, Winter, Spring, or Post-Flagship)" className="inquiry-input" style={{ background: "#000", border: "1px solid rgba(199,171,117,.2)", color: "#FBF7EE", padding: "13px 16px", fontFamily: "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%", marginBottom: 24 }} />
+            <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 9, letterSpacing: "0.25em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 12, marginTop: 0 }}>Consultation Preferences</p>
+            <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 10, marginBottom: 10 }}>
+              <select className="inquiry-input" defaultValue="" style={{ background: "#000", border: "1px solid rgba(199,171,117,.2)", color: "#FBF7EE", padding: "13px 16px", fontFamily: "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%", appearance: "none" }}>
+                <option value="" disabled>Preferred Contact Method</option>
+                <option value="phone">Phone Call</option>
+                <option value="email">Email</option>
+                <option value="either">Either</option>
+              </select>
+              <input type="text" placeholder="Preferred Consultation Dates" className="inquiry-input" style={{ background: "#000", border: "1px solid rgba(199,171,117,.2)", color: "#FBF7EE", padding: "13px 16px", fontFamily: "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
+            </div>
+            <input type="text" placeholder="Preferred Times (e.g. mornings, evenings, weekends)" className="inquiry-input" style={{ background: "#000", border: "1px solid rgba(199,171,117,.2)", color: "#FBF7EE", padding: "13px 16px", fontFamily: "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%", marginBottom: 10 }} />
+            <textarea placeholder="Additional notes or questions (optional)" className="inquiry-input" rows={4} style={{ background: "#000", border: "1px solid rgba(199,171,117,.2)", color: "#FBF7EE", padding: "13px 16px", fontFamily: "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%", marginBottom: 28, resize: "vertical" }} />
+            <button onClick={() => openInquiry && openInquiry("intensive")} style={{ fontFamily: "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif", padding: "15px 40px", background: gold, border: "none", color: "#000", fontSize: 12, fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", cursor: "pointer", width: "100%" }}>REQUEST CONSULTATION — WE'LL BE IN TOUCH WITHIN 24 HOURS</button>
+          </div>
+        </div>
+      </div>
+
     </div>
   );
 }
@@ -1940,140 +2048,6 @@ function IntensiveContent({ setPage, isMobile, waves, activeWave, setActiveWave 
 }
 
 // ── MOBILE PROGRAM CONTENT HELPERS ──
-function SummerProgramContent({ prog, openInquiry, setPage, scrollToSchedule }) {
-  const g = "#C7AB75";
-  const sr = "'Cormorant Garamond', Georgia, serif";
-  const sn = "'Lato', sans-serif";
-  const ey = "'DM Sans', sans-serif";
-  return (
-    <div>
-
-      {/* 2  -  PHOTO  -  full-width, fixed height, same as desktop */}
-      <div style={{ overflow: "hidden", height: 220 }}>
-        <img src={prog.photo} alt={prog.title} style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center", display: "block" }} />
-      </div>
-
-      {/* 3  -  MAIN CONTENT  -  white background */}
-      <div style={{ background: "#fff" }}>
-
-        {/* Header block */}
-        <div style={{ padding: "32px 20px 24px" }}>
-          <div style={{ display: "flex", gap: 10, alignItems: "center", marginBottom: 16, flexWrap: "wrap" }}>
-            <span style={{ fontFamily: sn, fontSize: 8, color: prog.statusColor, border: `1px solid ${prog.statusColor}`, padding: "3px 10px", letterSpacing: "0.15em", fontWeight: 600 }}>{prog.status}</span>
-            <span style={{ fontFamily: ey, fontSize: 8, letterSpacing: "0.3em", color: "rgba(0,0,0,.35)", textTransform: "uppercase" }}>{prog.tag}</span>
-          </div>
-          <h2 style={{ fontFamily: sr, fontSize: 34, fontWeight: 600, color: "#000", lineHeight: 1.0, marginBottom: 6 }}>{prog.title}</h2>
-          <p style={{ fontFamily: sr, fontSize: 15, color: "#8B6914", fontStyle: "italic", marginBottom: 20, lineHeight: 1.4 }}>{prog.tagline}</p>
-          <div style={{ width: 32, height: 1, background: "linear-gradient(90deg, #000, transparent)", marginBottom: 22 }} />
-          {prog.desc.split("\n\n").map((para, i) => (
-            <p key={i} style={{ fontFamily: sn, fontSize: 13, lineHeight: 1.9, color: "#1a1a1a", fontWeight: 300, marginBottom: 14 }}>{para}</p>
-          ))}
-        </div>
-
-        {/* Details grid */}
-        <div style={{ borderTop: "1px solid rgba(0,0,0,.07)", borderBottom: "1px solid rgba(0,0,0,.07)", margin: "0 20px" }}>
-          {prog.details.map(([k, v]) => (
-            <div key={k} style={{ display: "grid", gridTemplateColumns: "80px 1fr", gap: 12, padding: "11px 0", borderBottom: "1px solid rgba(0,0,0,.05)" }}>
-              <span style={{ fontFamily: ey, fontSize: 8, letterSpacing: "0.2em", color: "rgba(0,0,0,.38)", textTransform: "uppercase", paddingTop: 2 }}>{k}</span>
-              <span style={{ fontFamily: sn, fontSize: 12, color: "#1a1a1a", fontWeight: 300, lineHeight: 1.6, whiteSpace: "pre-line" }}>{v}</span>
-            </div>
-          ))}
-        </div>
-
-        {/* Features */}
-        <div style={{ padding: "28px 20px 0" }}>
-          <p style={{ fontFamily: ey, fontSize: 8, letterSpacing: "0.35em", color: "#8B6914", textTransform: "uppercase", fontWeight: 600, marginBottom: 16 }}>{prog.featuresLabel}</p>
-          {prog.features.map((f, j) => (
-            <div key={j} style={{ display: "flex", gap: 14, padding: "11px 0", borderBottom: "1px solid rgba(0,0,0,.06)", alignItems: "flex-start" }}>
-              <span style={{ fontFamily: sr, fontSize: 10, color: "rgba(0,0,0,.18)", fontStyle: "italic", flexShrink: 0, paddingTop: 2 }}>{String(j + 1).padStart(2, "0")}</span>
-              <span style={{ fontFamily: sn, fontSize: 12, color: "#1a1a1a", fontWeight: 300, lineHeight: 1.75 }}>{f}</span>
-            </div>
-          ))}
-        </div>
-
-        {/* A Day at Excalibur CTA  -  matches desktop right-column block */}
-        <div style={{ margin: "28px 20px", background: "#000", padding: "24px 22px" }}>
-          <p style={{ fontFamily: ey, fontSize: 8, letterSpacing: "0.4em", color: g, fontWeight: 600, textTransform: "uppercase", marginBottom: 10 }}>A Day at Excalibur</p>
-          <h3 style={{ fontFamily: sr, fontSize: 20, fontWeight: 600, color: "#FBF7EE", lineHeight: 1.1, marginBottom: 8 }}>What a real session looks like.</h3>
-          <p style={{ fontFamily: sn, fontSize: 12, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.8, marginBottom: 18 }}>Tap to see the full daily schedule for the Summer Intensive.</p>
-          <button onClick={scrollToSchedule} style={{ fontFamily: sn, background: g, border: "none", color: "#000", padding: "12px 22px", fontSize: 10, fontWeight: 700, letterSpacing: "0.15em", textTransform: "uppercase", cursor: "pointer", width: "100%" }}>VIEW FULL DAY SCHEDULE →</button>
-        </div>
-
-        {/* CTA Buttons */}
-        <div style={{ padding: "0 20px 36px", display: "flex", flexDirection: "column", gap: 10 }}>
-          <button onClick={() => openInquiry && openInquiry(prog.id)} style={{ fontFamily: sn, padding: "15px 28px", background: "#000", border: "none", color: "#fff", fontSize: 11, fontWeight: 700, letterSpacing: "0.15em", textTransform: "uppercase", cursor: "pointer", width: "100%" }}>APPLY NOW →</button>
-          <button onClick={() => setPage("summer-detail")} style={{ fontFamily: sn, padding: "15px 22px", background: "transparent", border: "1px solid rgba(0,0,0,.2)", color: "#000", fontSize: 11, fontWeight: 500, letterSpacing: "0.12em", textTransform: "uppercase", cursor: "pointer", width: "100%" }}>LEARN MORE →</button>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function DarkProgramContent({ prog, openInquiry, setPage }) {
-  const g = "#C7AB75";
-  const sr = "'Cormorant Garamond', Georgia, serif";
-  const sn = "'Lato', sans-serif";
-  const ey = "'DM Sans', sans-serif";
-  const hasPic = !!prog.photo;
-  return (
-    <div style={{ background: "#000" }}>
-
-      {/* Photo strip if program has one (Flagship) */}
-      {hasPic && (
-        <div style={{ overflow: "hidden", height: 220 }}>
-          <img src={prog.photo} alt={prog.title} style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center", display: "block" }} />
-        </div>
-      )}
-
-      {/* Main content */}
-      <div style={{ padding: "32px 20px 0" }}>
-        <div style={{ display: "flex", gap: 10, alignItems: "center", marginBottom: 16, flexWrap: "wrap" }}>
-          <span style={{ fontFamily: sn, fontSize: 8, color: prog.statusColor, border: `1px solid ${prog.statusColor}`, padding: "3px 10px", letterSpacing: "0.15em", fontWeight: 600 }}>{prog.status}</span>
-          <span style={{ fontFamily: ey, fontSize: 8, letterSpacing: "0.3em", color: "rgba(199,171,117,.35)", textTransform: "uppercase" }}>{prog.tag}</span>
-        </div>
-        <h2 style={{ fontFamily: sr, fontSize: 34, fontWeight: 600, color: "#FBF7EE", lineHeight: 1.0, marginBottom: 6 }}>{prog.title}</h2>
-        <p style={{ fontFamily: sr, fontSize: 15, color: g, fontStyle: "italic", marginBottom: 20, lineHeight: 1.4 }}>{prog.tagline}</p>
-        <div style={{ width: 32, height: 1, background: `linear-gradient(90deg, ${g}, transparent)`, marginBottom: 22 }} />
-        {prog.desc.split("\n\n").map((para, i) => (
-          <p key={i} style={{ fontFamily: sn, fontSize: 13, lineHeight: 1.9, color: "#FBF7EE", fontWeight: 300, marginBottom: 14 }}>{para}</p>
-        ))}
-      </div>
-
-      {/* Details */}
-      <div style={{ borderTop: "1px solid rgba(199,171,117,.07)", borderBottom: "1px solid rgba(199,171,117,.07)", margin: "0 20px" }}>
-        {prog.details.map(([k, v]) => (
-          <div key={k} style={{ display: "grid", gridTemplateColumns: "80px 1fr", gap: 12, padding: "11px 0", borderBottom: "1px solid rgba(199,171,117,.05)" }}>
-            <span style={{ fontFamily: ey, fontSize: 8, letterSpacing: "0.2em", color: "rgba(199,171,117,.38)", textTransform: "uppercase", paddingTop: 2 }}>{k}</span>
-            <span style={{ fontFamily: sn, fontSize: 12, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.6, whiteSpace: "pre-line" }}>{v}</span>
-          </div>
-        ))}
-      </div>
-
-      {/* Features */}
-      <div style={{ padding: "28px 20px 0" }}>
-        <p style={{ fontFamily: ey, fontSize: 8, letterSpacing: "0.35em", color: g, textTransform: "uppercase", fontWeight: 600, marginBottom: 16 }}>{prog.featuresLabel}</p>
-        {prog.features.map((f, j) => (
-          <div key={j} style={{ display: "flex", gap: 14, padding: "11px 0", borderBottom: "1px solid rgba(199,171,117,.06)", alignItems: "flex-start" }}>
-            <span style={{ fontFamily: sr, fontSize: 10, color: "rgba(199,171,117,.25)", fontStyle: "italic", flexShrink: 0, paddingTop: 2 }}>{String(j + 1).padStart(2, "0")}</span>
-            <span style={{ fontFamily: sn, fontSize: 12, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.75 }}>{f}</span>
-          </div>
-        ))}
-      </div>
-
-      {/* CTA Buttons */}
-      <div style={{ padding: "28px 20px 36px", display: "flex", flexDirection: "column", gap: 10 }}>
-        <button onClick={() => openInquiry && openInquiry(prog.id)} style={{ fontFamily: sn, padding: "15px 28px", background: g, border: "none", color: "#000", fontSize: 11, fontWeight: 700, letterSpacing: "0.15em", textTransform: "uppercase", cursor: "pointer", width: "100%" }}>
-          {prog.flagship ? "APPLY — FLAGSHIP →" : "APPLY NOW →"}
-        </button>
-        <button onClick={() => setPage(prog.flagship ? "flagship-detail" : prog.id)} style={{ fontFamily: sn, padding: "15px 20px", background: "transparent", border: `1px solid rgba(199,171,117,.3)`, color: g, fontSize: 11, fontWeight: 500, letterSpacing: "0.12em", textTransform: "uppercase", cursor: "pointer", width: "100%" }}>LEARN MORE →</button>
-      </div>
-    </div>
-  );
-}
-
-// ─────────────────────────────────────────────
-// PAGE: PROGRAMS OVERVIEW
-// ─────────────────────────────────────────────
 function ProgramsPage({ setPage, openInquiry }) {
   const isMobile = useIsMobile();
   const [activeWave, setActiveWave] = useState(0);
@@ -2112,7 +2086,7 @@ function ProgramsPage({ setPage, openInquiry }) {
       tag: "TEN-MONTH FLAGSHIP", id: "full-program", flagship: true, status: "ENROLLING SOON", statusColor: gold,
       title: "Ten-Month Program",
       tagline: "The complete formation.",
-      photo: "https://i.imgur.com/eyeb9rX.jpeg",
+      photo: "https://i.imgur.com/HB0upuZ.jpeg",
       desc: "The Excalibur Ten-Month Flagship is the Academy’s primary program — a complete, ten-month course of excellence for ambitious high school students in Orange County, California.\n\nOffered in two parallel tracks — Weekday (Tuesday & Thursday evenings) and Saturday (morning) — both deliver identical curriculum, the same faculty, and the same standard of instruction. Students choose the track that fits their schedule; the formation they receive is the same.\n\nAcross ten months, students progress through all ten core disciplines: Public Speaking & Rhetoric, Financial Literacy, Business Model Analysis, The Art of Selling & Marketing, Stocks, Crypto & Market Literacy, AI & Technology, Leadership & Influence, Intellectual Depth & The Art of Class, Industry Sectors Rotation, and College Admissions & Personal Development.\n\nEach month, a dedicated specialist — a working executive, investor, or entrepreneur — leads the core curriculum block. The Lead Instructor runs the applied workshops and executive business simulations in every session. The Public Speaking Instructor opens every class.\n\nBeyond the classroom, students complete three real-world engagements: the Junior Consultant Program (advising a real local business), the Apprentice Externship (4–6 weeks embedded inside a company), and the Micro-business launch in teams with a dedicated mentor.\n\nThe program concludes in June with Academy Gala & Graduation Day — the Flagship capstone — where student teams present their micro-businesses before families, mentors, investors, invited guests, and a panel of judges.\n\nGraduates leave with the Excalibur Academy Portfolio — a professionally assembled record designed to support college applications — along with real-world experience, lasting friendships, greater confidence, and skills for every arena ahead.",
       details: [
         ["Schedule", "Weekday: Tue & Thu · 4:00–6:30 PM (Group B)\nor Saturday: 10:30 AM–3:45 PM (Group A)"],
@@ -2140,7 +2114,7 @@ function ProgramsPage({ setPage, openInquiry }) {
       tag: "SIX-WEEK INTENSIVE", id: "intensive", flagship: false, status: "ENROLLING SOON", statusColor: gold,
       title: "Six-Week Intensive",
       tagline: "The compressed formation.",
-      photo: "https://i.imgur.com/P86gddQ.png",
+      photo: "https://i.imgur.com/eyeb9rX.jpeg",
       desc: "A compressed version of the flagship curriculum. One discipline per week, building toward a Shark Tank–style Finale. Two tracks — Monday & Wednesday evenings or Sunday mornings. Twelve total sessions, structured as 12 sessions of three hours each.",
       details: [
         ["Schedule", "Mon & Wed evenings · 4:00–6:30 PM (Group A)\nor Sunday (Group B)"],
@@ -2765,6 +2739,57 @@ function ApplyPage({ setPage, openInquiry }) {
 
       <SoireeInviteBlock openInquiry={openInquiry} setPage={setPage} />
 
+      {/* FAMILY CONSULTATION FORM */}
+      <div style={{ background: "#000", padding: isMobile ? "52px 24px" : "72px 80px", borderTop: "1px solid rgba(199,171,117,.1)" }}>
+        <div style={{ maxWidth: 740, margin: "0 auto" }}>
+          <p style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.4em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 16 }}>Request a Consultation</p>
+          <h2 style={{ fontFamily: serif, fontSize: isMobile ? 28 : 40, fontWeight: 600, color: "#FBF7EE", lineHeight: 1.05, marginBottom: 8 }}>Schedule a Family Consultation</h2>
+          <p style={{ fontFamily: sans, fontSize: 14, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.8, marginBottom: 36, maxWidth: 580 }}>Please submit your information to schedule a private admissions consultation. A dedicated Enrollment Coordinator will guide your family through program options, admissions steps, curriculum, tuition and next steps.</p>
+          <div style={{ background: "#080808", borderTop: `2px solid ${gold}`, padding: "36px 32px" }}>
+            <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 9, letterSpacing: "0.25em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 12 }}>Parent / Guardian</p>
+            <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 10, marginBottom: 10 }}>
+              {[["First Name", "text"], ["Last Name", "text"]].map(([ph, type]) => (
+                <input key={ph} type={type} placeholder={ph} className="inquiry-input" style={{ background: "#000", border: "1px solid rgba(199,171,117,.2)", color: "#FBF7EE", padding: "13px 16px", fontFamily: "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
+              ))}
+            </div>
+            <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 10, marginBottom: 10 }}>
+              {[["Email Address", "email"], ["Phone Number", "tel"]].map(([ph, type]) => (
+                <input key={ph} type={type} placeholder={ph} className="inquiry-input" style={{ background: "#000", border: "1px solid rgba(199,171,117,.2)", color: "#FBF7EE", padding: "13px 16px", fontFamily: "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
+              ))}
+            </div>
+            <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr 80px", gap: 10, marginBottom: 24 }}>
+              <input type="text" placeholder="City *" className="inquiry-input" style={{ background: "#000", border: "1px solid rgba(199,171,117,.2)", color: "#FBF7EE", padding: "13px 16px", fontFamily: "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} required />
+              <input type="text" placeholder="State" className="inquiry-input" style={{ background: "#000", border: "1px solid rgba(199,171,117,.2)", color: "#FBF7EE", padding: "13px 16px", fontFamily: "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
+              <input type="text" placeholder="ZIP *" className="inquiry-input" style={{ background: "#000", border: "1px solid rgba(199,171,117,.2)", color: "#FBF7EE", padding: "13px 16px", fontFamily: "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} required />
+            </div>
+            <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 9, letterSpacing: "0.25em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 12 }}>Student</p>
+            <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 10, marginBottom: 10 }}>
+              {[["First Name", "text"], ["Last Name", "text"]].map(([ph, type]) => (
+                <input key={ph} type={type} placeholder={ph} className="inquiry-input" style={{ background: "#000", border: "1px solid rgba(199,171,117,.2)", color: "#FBF7EE", padding: "13px 16px", fontFamily: "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
+              ))}
+            </div>
+            <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 10, marginBottom: 10 }}>
+              <input type="text" placeholder="Age" className="inquiry-input" style={{ background: "#000", border: "1px solid rgba(199,171,117,.2)", color: "#FBF7EE", padding: "13px 16px", fontFamily: "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
+              <input type="text" placeholder="Current Grade / Year" className="inquiry-input" style={{ background: "#000", border: "1px solid rgba(199,171,117,.2)", color: "#FBF7EE", padding: "13px 16px", fontFamily: "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
+            </div>
+            <input type="text" placeholder="Program of Interest (Flagship, Six-Week, Summer)" className="inquiry-input" style={{ background: "#000", border: "1px solid rgba(199,171,117,.2)", color: "#FBF7EE", padding: "13px 16px", fontFamily: "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%", marginBottom: 24 }} />
+            <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 9, letterSpacing: "0.25em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 12, marginTop: 0 }}>Consultation Preferences</p>
+            <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 10, marginBottom: 10 }}>
+              <select className="inquiry-input" defaultValue="" style={{ background: "#000", border: "1px solid rgba(199,171,117,.2)", color: "#FBF7EE", padding: "13px 16px", fontFamily: "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%", appearance: "none" }}>
+                <option value="" disabled>Preferred Contact Method</option>
+                <option value="phone">Phone Call</option>
+                <option value="email">Email</option>
+                <option value="either">Either</option>
+              </select>
+              <input type="text" placeholder="Preferred Consultation Dates" className="inquiry-input" style={{ background: "#000", border: "1px solid rgba(199,171,117,.2)", color: "#FBF7EE", padding: "13px 16px", fontFamily: "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
+            </div>
+            <input type="text" placeholder="Preferred Times (e.g. mornings, evenings, weekends)" className="inquiry-input" style={{ background: "#000", border: "1px solid rgba(199,171,117,.2)", color: "#FBF7EE", padding: "13px 16px", fontFamily: "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%", marginBottom: 10 }} />
+            <textarea placeholder="Additional notes or questions (optional)" className="inquiry-input" rows={4} style={{ background: "#000", border: "1px solid rgba(199,171,117,.2)", color: "#FBF7EE", padding: "13px 16px", fontFamily: "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%", marginBottom: 28, resize: "vertical" }} />
+            <button onClick={() => openInquiry && openInquiry("admissions")} style={{ fontFamily: "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif", padding: "15px 40px", background: gold, border: "none", color: "#000", fontSize: 12, fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", cursor: "pointer", width: "100%" }}>REQUEST CONSULTATION — WE'LL BE IN TOUCH WITHIN 24 HOURS</button>
+          </div>
+        </div>
+      </div>
+
     </div>
   );
 }
@@ -3385,7 +3410,7 @@ function HomePage({ setPage, openInquiry }) {
       {/* THREE PROGRAMS */}
       <section style={{ padding: isMobile ? "60px 16px" : "80px 40px", background: "#050505" }}>
         <div style={{ maxWidth: 1100, margin: "0 auto" }}>
-          <Fade><div style={{ textAlign: "center", marginBottom: 52 }}><Eyebrow>THREE PATHS INTO EXCALIBUR</Eyebrow><SectionTitle center>Choose Your Entry Point</SectionTitle><Sub center>From two-week summer intensives and six-week sprint programmes to a ten-month Flagship — weekday and weekend tracks, designed around your schedule.<br /><br />Three paths into Excalibur.</Sub></div></Fade>
+          <Fade><div style={{ textAlign: "center", marginBottom: 52 }}><Eyebrow>THREE PATHS INTO EXCALIBUR</Eyebrow><SectionTitle center>Choose Your Entry Point</SectionTitle><Sub center>From two-week summer intensives and six-week sprint to a ten-month after-school Flagship program — weekday and weekend tracks, designed around your schedule.<br /><br />Three paths into Excalibur.</Sub></div></Fade>
 
           {/* SUMMER  -  full width on top */}
           <Fade d={.06}>
@@ -3431,29 +3456,9 @@ function HomePage({ setPage, openInquiry }) {
             </div>
           </Fade>
 
-          {/* INTENSIVE + FLAGSHIP  -  side by side below */}
+          {/* FLAGSHIP + INTENSIVE  -  side by side */}
           <Fade d={.1}>
             <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 2, background: "#111" }}>
-
-              {/* INTENSIVE */}
-              <div style={{ background: "#080808", padding: isMobile ? "40px 28px" : "52px 48px", borderTop: "2px solid rgba(199,171,117,.2)" }}>
-                <Eyebrow>INTENSIVE TRACK · THE IGNITION</Eyebrow>
-                <h3 style={{ fontFamily: serif, fontSize: 36, fontWeight: 600, color: "#FBF7EE", lineHeight: 1, marginBottom: 6 }}>Six-Week Intensive</h3>
-                <p style={{ fontFamily: serif, fontSize: 15, color: gold, fontStyle: "italic", marginBottom: 20 }}>Four waves per year · Spring, Summer, Fall, Winter</p>
-                <p style={{ fontFamily: sans, fontSize: 13, lineHeight: 1.85, color: "#FBF7EE", fontWeight: 300, marginBottom: 24 }}>Offered in four waves annually, the Six-Week Intensive distills the complete Excalibur curriculum into a focused, high‑impact experience. Six weeks in duration. One core discipline per week. Every session follows the same consistent three-block model used across all Excalibur programs: public speaking, specialist block and applied workshop with startup simulations, case studies and team exercises.</p>
-                <div style={{ height: 1, background: "rgba(199,171,117,.08)", marginBottom: 20 }} />
-                {["A limited version of Excalibur’s curriculum", "Flexible weekday evening or Sunday half-day format", "Guest speakers from leading national companies and various industry sectors", "Public speaking training in every class", "Team-based micro-venture project with faculty guidance", "Judged Shark Tank–inspired Finale before invited guests, families, and professionals", "Access to the Excalibur alumni network", "Priority consideration for the Ten-Month Flagship Program"].map((f, j) => (
-                  <div key={j} style={{ display: "flex", gap: 12, marginBottom: 11, alignItems: "flex-start" }}>
-                    <div style={{ width: 14, height: 1, background: "rgba(199,171,117,.4)", marginTop: 8, flexShrink: 0 }} />
-                    <span style={{ fontFamily: sans, fontSize: 13, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.65 }}>{f}</span>
-                  </div>
-                ))}
-                <div style={{ marginTop: 32, display: "flex", alignItems: "baseline", gap: 8, marginBottom: 18 }}>
-                  <span style={{ fontFamily: serif, fontSize: 32, color: "#FBF7EE", fontWeight: 600 }}>$3,900</span>
-                  <span style={{ fontFamily: sans, fontSize: 12, color: "#FBF7EE", fontWeight: 300 }}>/ wave</span>
-                </div>
-                <button onClick={() => setPage("intensive")} style={{ fontFamily: sans, padding: "11px 26px", background: "transparent", border: `1px solid rgba(199,171,117,.3)`, color: gold, fontSize: 11, fontWeight: 600, letterSpacing: "0.15em", textTransform: "uppercase", cursor: "pointer" }}>EXPLORE INTENSIVE →</button>
-              </div>
 
               {/* FULL PROGRAM */}
               <div style={{ background: "#090907", padding: isMobile ? "40px 28px" : "52px 48px", borderTop: `2px solid ${gold}`, position: "relative" }}>
@@ -3461,8 +3466,20 @@ function HomePage({ setPage, openInquiry }) {
                 <Eyebrow>FULL IMMERSION</Eyebrow>
                 <h3 style={{ fontFamily: serif, fontSize: 36, fontWeight: 600, color: "#FBF7EE", lineHeight: 1, marginBottom: 6 }}>Flagship Ten-Month Program</h3>
                 <p style={{ fontFamily: serif, fontSize: 15, color: gold, fontStyle: "italic", marginBottom: 20 }}>The complete formation.</p>
-                <p style={{ fontFamily: sans, fontSize: 13, lineHeight: 1.85, color: "#FBF7EE", fontWeight: 300, marginBottom: 24 }}>The Full Formation is Excalibur’s ten-month flagship — a deep, immersive course of study for students ready for complete entrepreneurial, intellectual, and personal formation across all modules, ten industry sectors, and real-world applied engagements.</p>
+                <p style={{ fontFamily: sans, fontSize: 13, lineHeight: 1.85, color: "#FBF7EE", fontWeight: 300, marginBottom: 24 }}>The Full Formation is Excalibur's ten-month flagship — a deep, immersive course of study for students ready for complete entrepreneurial, intellectual, and personal formation across all modules, ten industry sectors, and real-world applied engagements.</p>
                 <div style={{ height: 1, background: "rgba(199,171,117,.12)", marginBottom: 20 }} />
+                {[
+                  ["Group A", "Saturday · 10:30 AM–3:45 PM"],
+                  ["Group B", "Tue & Thu · 4:00–6:30 PM"],
+                  ["Duration", "10 Months · Sep 2026 – Jun 2027"],
+                  ["Eligibility", "Ages 16–17 · 20 students per cohort"],
+                ].map(([k, v], i) => (
+                  <div key={i} style={{ display: "flex", gap: 16, padding: "10px 0", borderBottom: "1px solid rgba(199,171,117,.08)", alignItems: "flex-start" }}>
+                    <span style={{ fontFamily: sans, fontSize: 10, color: gold, letterSpacing: "0.08em", minWidth: 100, paddingTop: 1, fontWeight: 500 }}>{k}</span>
+                    <span style={{ fontFamily: sans, fontSize: 12, color: "#FBF7EE", fontWeight: 300 }}>{v}</span>
+                  </div>
+                ))}
+                <div style={{ height: 1, background: "rgba(199,171,117,.12)", marginBottom: 20, marginTop: 4 }} />
                 {["Full ten-month curriculum across all ten curriculum modules", "All ten industry sectors with guest leaders", "Junior Consultant Program — real local business engagement", "Apprentice Externship — 4–6 weeks inside a real company", "Micro-business launch in teams with a dedicated mentor", "Monthly Pitch Night and Competitions", "Bound graduation portfolio of all academic and professional work", "Selective Day and Weekend Field Trips (Daytona, SpaceX Launch, Silicon Valley Incubators & Accelerators, TED Talks, LA & SF Tech Weeks, Yosemite Summit)", "Eligibility for London and Geneva international summer school 2027 programs"].map((f, j) => (
                   <div key={j} style={{ display: "flex", gap: 12, marginBottom: 11, alignItems: "flex-start" }}>
                     <div style={{ width: 14, height: 1, background: gold, marginTop: 8, flexShrink: 0 }} />
@@ -3474,6 +3491,42 @@ function HomePage({ setPage, openInquiry }) {
                   <span style={{ fontFamily: sans, fontSize: 12, color: "#FBF7EE", fontWeight: 300 }}>/ month</span>
                 </div>
                 <button onClick={() => setPage("full-program")} style={{ fontFamily: sans, padding: "11px 26px", background: gold, border: "none", color: "#000", fontSize: 11, fontWeight: 700, letterSpacing: "0.15em", textTransform: "uppercase", cursor: "pointer" }}>EXPLORE FULL PROGRAM →</button>
+              </div>
+
+              {/* INTENSIVE */}
+              <div style={{ background: "#080808", padding: isMobile ? "40px 28px" : "52px 48px", borderTop: "2px solid rgba(199,171,117,.2)" }}>
+                <Eyebrow>INTENSIVE TRACK · THE IGNITION</Eyebrow>
+                <h3 style={{ fontFamily: serif, fontSize: 36, fontWeight: 600, color: "#FBF7EE", lineHeight: 1, marginBottom: 6 }}>Six-Week Intensive</h3>
+                <p style={{ fontFamily: serif, fontSize: 15, color: gold, fontStyle: "italic", marginBottom: 20 }}>Four waves per year · Spring, Summer, Fall, Winter</p>
+                <p style={{ fontFamily: sans, fontSize: 13, lineHeight: 1.85, color: "#FBF7EE", fontWeight: 300, marginBottom: 24 }}>Offered in four waves annually, the Six-Week Intensive distills the complete Excalibur curriculum into a focused, high‑impact experience. Six weeks in duration. One core discipline per week. Every session follows the same consistent three-block model used across all Excalibur programs: public speaking, specialist block and applied workshop with startup simulations, case studies and team exercises.</p>
+                <div style={{ height: 1, background: "rgba(199,171,117,.08)", marginBottom: 20 }} />
+                {[
+                  ["Group A", "Mon & Wed · 4:00–6:30 PM"],
+                  ["Group B", "Sunday · 10:30 AM–3:45 PM"],
+                  ["Duration", "6 Weeks · 30 Hours Per Wave"],
+                  ["Wave 1 — Fall", "Oct 5 – Nov 14, 2026 · Enrolling Soon"],
+                  ["Wave 2 — Winter", "Jan 5 – Feb 13, 2027"],
+                  ["Wave 3 — Spring", "Apr 7 – May 15, 2027"],
+                  ["Finale", "Shark Tank–Inspired · Real Investors"],
+                  ["Eligibility", "Ages 15–18 · 20 students per wave"],
+                ].map(([k, v], i) => (
+                  <div key={i} style={{ display: "flex", gap: 16, padding: "10px 0", borderBottom: "1px solid rgba(199,171,117,.06)", alignItems: "flex-start" }}>
+                    <span style={{ fontFamily: sans, fontSize: 10, color: gold, letterSpacing: "0.08em", minWidth: 100, paddingTop: 1, fontWeight: 500 }}>{k}</span>
+                    <span style={{ fontFamily: sans, fontSize: 12, color: "#FBF7EE", fontWeight: 300 }}>{v}</span>
+                  </div>
+                ))}
+                <div style={{ height: 1, background: "rgba(199,171,117,.08)", marginBottom: 20, marginTop: 4 }} />
+                {["A limited version of Excalibur's curriculum", "Flexible weekday evening or Sunday half-day format", "Guest speakers from leading national companies and various industry sectors", "Public speaking training in every class", "Team-based micro-venture project with faculty guidance", "Judged Shark Tank–inspired Finale before invited guests, families, and professionals", "Access to the Excalibur alumni network", "Priority consideration for the Ten-Month Flagship Program"].map((f, j) => (
+                  <div key={j} style={{ display: "flex", gap: 12, marginBottom: 11, alignItems: "flex-start" }}>
+                    <div style={{ width: 14, height: 1, background: "rgba(199,171,117,.4)", marginTop: 8, flexShrink: 0 }} />
+                    <span style={{ fontFamily: sans, fontSize: 13, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.65 }}>{f}</span>
+                  </div>
+                ))}
+                <div style={{ marginTop: 32, display: "flex", alignItems: "baseline", gap: 8, marginBottom: 18 }}>
+                  <span style={{ fontFamily: serif, fontSize: 32, color: "#FBF7EE", fontWeight: 600 }}>$3,900</span>
+                  <span style={{ fontFamily: sans, fontSize: 12, color: "#FBF7EE", fontWeight: 300 }}>/ wave</span>
+                </div>
+                <button onClick={() => setPage("intensive")} style={{ fontFamily: sans, padding: "11px 26px", background: "transparent", border: `1px solid rgba(199,171,117,.3)`, color: gold, fontSize: 11, fontWeight: 600, letterSpacing: "0.15em", textTransform: "uppercase", cursor: "pointer" }}>EXPLORE INTENSIVE →</button>
               </div>
 
             </div>
@@ -3755,6 +3808,58 @@ function HomePage({ setPage, openInquiry }) {
           <p style={{ fontFamily: eyebrow_font, color: "#FBF7EE", fontSize: 9, marginTop: 24, letterSpacing: "0.2em", fontWeight: 600 }}>APPLY@EXCALIBURACADEMY.ORG</p>
         </Fade>
       </section>
+
+      {/* FAMILY CONSULTATION FORM */}
+      <div style={{ background: "#000", padding: isMobile ? "52px 24px" : "72px 80px", borderTop: "1px solid rgba(199,171,117,.1)" }}>
+        <div style={{ maxWidth: 740, margin: "0 auto" }}>
+          <p style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.4em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 16 }}>Request a Consultation</p>
+          <h2 style={{ fontFamily: serif, fontSize: isMobile ? 28 : 40, fontWeight: 600, color: "#FBF7EE", lineHeight: 1.05, marginBottom: 8 }}>Schedule a Family Consultation</h2>
+          <p style={{ fontFamily: sans, fontSize: 14, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.8, marginBottom: 36, maxWidth: 580 }}>Please submit your information to schedule a private admissions consultation. A dedicated Enrollment Coordinator will guide your family through program options, admissions steps, curriculum, tuition and next steps.</p>
+          <div style={{ background: "#080808", borderTop: `2px solid ${gold}`, padding: "36px 32px" }}>
+            <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 9, letterSpacing: "0.25em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 12 }}>Parent / Guardian</p>
+            <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 10, marginBottom: 10 }}>
+              {[["First Name", "text"], ["Last Name", "text"]].map(([ph, type]) => (
+                <input key={ph} type={type} placeholder={ph} className="inquiry-input" style={{ background: "#000", border: "1px solid rgba(199,171,117,.2)", color: "#FBF7EE", padding: "13px 16px", fontFamily: "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
+              ))}
+            </div>
+            <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 10, marginBottom: 10 }}>
+              {[["Email Address", "email"], ["Phone Number", "tel"]].map(([ph, type]) => (
+                <input key={ph} type={type} placeholder={ph} className="inquiry-input" style={{ background: "#000", border: "1px solid rgba(199,171,117,.2)", color: "#FBF7EE", padding: "13px 16px", fontFamily: "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
+              ))}
+            </div>
+            <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr 80px", gap: 10, marginBottom: 24 }}>
+              <input type="text" placeholder="City *" className="inquiry-input" style={{ background: "#000", border: "1px solid rgba(199,171,117,.2)", color: "#FBF7EE", padding: "13px 16px", fontFamily: "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} required />
+              <input type="text" placeholder="State" className="inquiry-input" style={{ background: "#000", border: "1px solid rgba(199,171,117,.2)", color: "#FBF7EE", padding: "13px 16px", fontFamily: "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
+              <input type="text" placeholder="ZIP *" className="inquiry-input" style={{ background: "#000", border: "1px solid rgba(199,171,117,.2)", color: "#FBF7EE", padding: "13px 16px", fontFamily: "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} required />
+            </div>
+            <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 9, letterSpacing: "0.25em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 12 }}>Student</p>
+            <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 10, marginBottom: 10 }}>
+              {[["First Name", "text"], ["Last Name", "text"]].map(([ph, type]) => (
+                <input key={ph} type={type} placeholder={ph} className="inquiry-input" style={{ background: "#000", border: "1px solid rgba(199,171,117,.2)", color: "#FBF7EE", padding: "13px 16px", fontFamily: "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
+              ))}
+            </div>
+            <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 10, marginBottom: 10 }}>
+              <input type="text" placeholder="Age" className="inquiry-input" style={{ background: "#000", border: "1px solid rgba(199,171,117,.2)", color: "#FBF7EE", padding: "13px 16px", fontFamily: "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
+              <input type="text" placeholder="Current Grade / Year" className="inquiry-input" style={{ background: "#000", border: "1px solid rgba(199,171,117,.2)", color: "#FBF7EE", padding: "13px 16px", fontFamily: "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
+            </div>
+            <input type="text" placeholder="Program of Interest (Flagship, Six-Week, Summer)" className="inquiry-input" style={{ background: "#000", border: "1px solid rgba(199,171,117,.2)", color: "#FBF7EE", padding: "13px 16px", fontFamily: "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%", marginBottom: 24 }} />
+            <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 9, letterSpacing: "0.25em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 12, marginTop: 0 }}>Consultation Preferences</p>
+            <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 10, marginBottom: 10 }}>
+              <select className="inquiry-input" defaultValue="" style={{ background: "#000", border: "1px solid rgba(199,171,117,.2)", color: "#FBF7EE", padding: "13px 16px", fontFamily: "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%", appearance: "none" }}>
+                <option value="" disabled>Preferred Contact Method</option>
+                <option value="phone">Phone Call</option>
+                <option value="email">Email</option>
+                <option value="either">Either</option>
+              </select>
+              <input type="text" placeholder="Preferred Consultation Dates" className="inquiry-input" style={{ background: "#000", border: "1px solid rgba(199,171,117,.2)", color: "#FBF7EE", padding: "13px 16px", fontFamily: "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
+            </div>
+            <input type="text" placeholder="Preferred Times (e.g. mornings, evenings, weekends)" className="inquiry-input" style={{ background: "#000", border: "1px solid rgba(199,171,117,.2)", color: "#FBF7EE", padding: "13px 16px", fontFamily: "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%", marginBottom: 10 }} />
+            <textarea placeholder="Additional notes or questions (optional)" className="inquiry-input" rows={4} style={{ background: "#000", border: "1px solid rgba(199,171,117,.2)", color: "#FBF7EE", padding: "13px 16px", fontFamily: "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%", marginBottom: 28, resize: "vertical" }} />
+            <button onClick={() => openInquiry && openInquiry("home")} style={{ fontFamily: "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif", padding: "15px 40px", background: gold, border: "none", color: "#000", fontSize: 12, fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", cursor: "pointer", width: "100%" }}>REQUEST CONSULTATION — WE'LL BE IN TOUCH WITHIN 24 HOURS</button>
+          </div>
+        </div>
+      </div>
+
     </div>
   );
 }
@@ -3898,6 +4003,58 @@ function BeyondPage({ setPage, openInquiry }) {
         <div style={{ display: "flex", gap: 14, justifyContent: "center", flexWrap: "wrap" }}>
           <button onClick={() => openInquiry && openInquiry()} style={{ fontFamily: sans, padding: "14px 48px", background: gold, border: "none", color: "#000", fontSize: 12, fontWeight: 700, letterSpacing: "0.2em", textTransform: "uppercase", cursor: "pointer" }}>APPLY NOW →</button>
           <button onClick={() => setPage("flagship-detail")} style={{ fontFamily: sans, padding: "14px 32px", background: "transparent", border: "1px solid rgba(199,171,117,.35)", color: gold, fontSize: 11, fontWeight: 500, letterSpacing: "0.15em", textTransform: "uppercase", cursor: "pointer" }}>Explore Flagship →</button>
+        </div>
+      </div>
+
+
+      {/* FAMILY CONSULTATION FORM */}
+      <div style={{ background: "#000", padding: isMobile ? "52px 24px" : "72px 80px", borderTop: "1px solid rgba(199,171,117,.1)" }}>
+        <div style={{ maxWidth: 740, margin: "0 auto" }}>
+          <p style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.4em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 16 }}>Request a Consultation</p>
+          <h2 style={{ fontFamily: serif, fontSize: isMobile ? 28 : 40, fontWeight: 600, color: "#FBF7EE", lineHeight: 1.05, marginBottom: 8 }}>Schedule a Family Consultation</h2>
+          <p style={{ fontFamily: sans, fontSize: 14, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.8, marginBottom: 36, maxWidth: 580 }}>Please submit your information to schedule a private admissions consultation. A dedicated Enrollment Coordinator will guide your family through program options, admissions steps, curriculum, tuition and next steps.</p>
+          <div style={{ background: "#080808", borderTop: `2px solid ${gold}`, padding: "36px 32px" }}>
+            <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 9, letterSpacing: "0.25em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 12 }}>Parent / Guardian</p>
+            <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 10, marginBottom: 10 }}>
+              {[["First Name", "text"], ["Last Name", "text"]].map(([ph, type]) => (
+                <input key={ph} type={type} placeholder={ph} className="inquiry-input" style={{ background: "#000", border: "1px solid rgba(199,171,117,.2)", color: "#FBF7EE", padding: "13px 16px", fontFamily: "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
+              ))}
+            </div>
+            <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 10, marginBottom: 10 }}>
+              {[["Email Address", "email"], ["Phone Number", "tel"]].map(([ph, type]) => (
+                <input key={ph} type={type} placeholder={ph} className="inquiry-input" style={{ background: "#000", border: "1px solid rgba(199,171,117,.2)", color: "#FBF7EE", padding: "13px 16px", fontFamily: "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
+              ))}
+            </div>
+            <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr 80px", gap: 10, marginBottom: 24 }}>
+              <input type="text" placeholder="City *" className="inquiry-input" style={{ background: "#000", border: "1px solid rgba(199,171,117,.2)", color: "#FBF7EE", padding: "13px 16px", fontFamily: "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} required />
+              <input type="text" placeholder="State" className="inquiry-input" style={{ background: "#000", border: "1px solid rgba(199,171,117,.2)", color: "#FBF7EE", padding: "13px 16px", fontFamily: "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
+              <input type="text" placeholder="ZIP *" className="inquiry-input" style={{ background: "#000", border: "1px solid rgba(199,171,117,.2)", color: "#FBF7EE", padding: "13px 16px", fontFamily: "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} required />
+            </div>
+            <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 9, letterSpacing: "0.25em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 12 }}>Student</p>
+            <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 10, marginBottom: 10 }}>
+              {[["First Name", "text"], ["Last Name", "text"]].map(([ph, type]) => (
+                <input key={ph} type={type} placeholder={ph} className="inquiry-input" style={{ background: "#000", border: "1px solid rgba(199,171,117,.2)", color: "#FBF7EE", padding: "13px 16px", fontFamily: "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
+              ))}
+            </div>
+            <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 10, marginBottom: 10 }}>
+              <input type="text" placeholder="Age" className="inquiry-input" style={{ background: "#000", border: "1px solid rgba(199,171,117,.2)", color: "#FBF7EE", padding: "13px 16px", fontFamily: "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
+              <input type="text" placeholder="Current Grade / Year" className="inquiry-input" style={{ background: "#000", border: "1px solid rgba(199,171,117,.2)", color: "#FBF7EE", padding: "13px 16px", fontFamily: "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
+            </div>
+            <input type="text" placeholder="Program of Interest (Flagship, Six-Week, Summer)" className="inquiry-input" style={{ background: "#000", border: "1px solid rgba(199,171,117,.2)", color: "#FBF7EE", padding: "13px 16px", fontFamily: "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%", marginBottom: 24 }} />
+            <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 9, letterSpacing: "0.25em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 12, marginTop: 0 }}>Consultation Preferences</p>
+            <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 10, marginBottom: 10 }}>
+              <select className="inquiry-input" defaultValue="" style={{ background: "#000", border: "1px solid rgba(199,171,117,.2)", color: "#FBF7EE", padding: "13px 16px", fontFamily: "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%", appearance: "none" }}>
+                <option value="" disabled>Preferred Contact Method</option>
+                <option value="phone">Phone Call</option>
+                <option value="email">Email</option>
+                <option value="either">Either</option>
+              </select>
+              <input type="text" placeholder="Preferred Consultation Dates" className="inquiry-input" style={{ background: "#000", border: "1px solid rgba(199,171,117,.2)", color: "#FBF7EE", padding: "13px 16px", fontFamily: "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
+            </div>
+            <input type="text" placeholder="Preferred Times (e.g. mornings, evenings, weekends)" className="inquiry-input" style={{ background: "#000", border: "1px solid rgba(199,171,117,.2)", color: "#FBF7EE", padding: "13px 16px", fontFamily: "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%", marginBottom: 10 }} />
+            <textarea placeholder="Additional notes or questions (optional)" className="inquiry-input" rows={4} style={{ background: "#000", border: "1px solid rgba(199,171,117,.2)", color: "#FBF7EE", padding: "13px 16px", fontFamily: "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%", marginBottom: 28, resize: "vertical" }} />
+            <button onClick={() => openInquiry && openInquiry("beyond")} style={{ fontFamily: "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif", padding: "15px 40px", background: gold, border: "none", color: "#000", fontSize: 12, fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", cursor: "pointer", width: "100%" }}>REQUEST CONSULTATION — WE'LL BE IN TOUCH WITHIN 24 HOURS</button>
+          </div>
         </div>
       </div>
 
@@ -5309,7 +5466,7 @@ function FlagshipDetailPage({ setPage, openInquiry }) {
       {isMobile ? (
         <div style={{ background: "#000" }}>
           <div style={{ position: "relative", height: 220, overflow: "hidden" }}>
-            <img src="https://i.imgur.com/eyeb9rX.jpeg" alt="Ten-Month Flagship" style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center" }} />
+            <img src="https://i.imgur.com/HB0upuZ.jpeg" alt="Ten-Month Flagship" style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center" }} />
             <div style={{ position: "absolute", top: 16, left: 16 }}>
               <button onClick={() => setPage("programs")} style={{ fontFamily: sans, background: "rgba(0,0,0,.5)", border: "1px solid rgba(199,171,117,.3)", color: gold, padding: "8px 16px", fontSize: 10, letterSpacing: "0.15em", cursor: "pointer", textTransform: "uppercase" }}>← OUR PROGRAMS</button>
             </div>
@@ -5322,7 +5479,7 @@ function FlagshipDetailPage({ setPage, openInquiry }) {
         </div>
       ) : (
       <div style={{ position: "relative", height: 480, overflow: "hidden" }}>
-        <img src="https://i.imgur.com/eyeb9rX.jpeg" alt="Ten-Month Flagship" style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center" }} />
+        <img src="https://i.imgur.com/HB0upuZ.jpeg" alt="Ten-Month Flagship" style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center" }} />
         <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(0,0,0,.9) 0%, rgba(0,0,0,.3) 60%, transparent 100%)" }} />
         <div style={{ position: "absolute", bottom: 52, left: 72, maxWidth: 640 }}>
           <p style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.4em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 10 }}>Ten-Month Flagship · September 2026 – June 2027</p>
@@ -5875,6 +6032,57 @@ function FlagshipDetailPage({ setPage, openInquiry }) {
         </div>
       </div>
 
+      {/* FAMILY CONSULTATION FORM */}
+      <div style={{ background: "#000", padding: isMobile ? "52px 24px" : "72px 80px", borderTop: "1px solid rgba(199,171,117,.1)" }}>
+        <div style={{ maxWidth: 740, margin: "0 auto" }}>
+          <p style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.4em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 16 }}>Request a Consultation</p>
+          <h2 style={{ fontFamily: serif, fontSize: isMobile ? 28 : 40, fontWeight: 600, color: "#FBF7EE", lineHeight: 1.05, marginBottom: 8 }}>Schedule a Family Consultation</h2>
+          <p style={{ fontFamily: sans, fontSize: 14, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.8, marginBottom: 36, maxWidth: 580 }}>Please submit your information to schedule a private admissions consultation. A dedicated Enrollment Coordinator will guide your family through program options, admissions steps, curriculum, tuition and next steps.</p>
+          <div style={{ background: "#080808", borderTop: `2px solid ${gold}`, padding: "36px 32px" }}>
+            <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 9, letterSpacing: "0.25em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 12 }}>Parent / Guardian</p>
+            <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 10, marginBottom: 10 }}>
+              {[["First Name", "text"], ["Last Name", "text"]].map(([ph, type]) => (
+                <input key={ph} type={type} placeholder={ph} className="inquiry-input" style={{ background: "#000", border: "1px solid rgba(199,171,117,.2)", color: "#FBF7EE", padding: "13px 16px", fontFamily: "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
+              ))}
+            </div>
+            <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 10, marginBottom: 10 }}>
+              {[["Email Address", "email"], ["Phone Number", "tel"]].map(([ph, type]) => (
+                <input key={ph} type={type} placeholder={ph} className="inquiry-input" style={{ background: "#000", border: "1px solid rgba(199,171,117,.2)", color: "#FBF7EE", padding: "13px 16px", fontFamily: "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
+              ))}
+            </div>
+            <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr 80px", gap: 10, marginBottom: 24 }}>
+              <input type="text" placeholder="City *" className="inquiry-input" style={{ background: "#000", border: "1px solid rgba(199,171,117,.2)", color: "#FBF7EE", padding: "13px 16px", fontFamily: "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} required />
+              <input type="text" placeholder="State" className="inquiry-input" style={{ background: "#000", border: "1px solid rgba(199,171,117,.2)", color: "#FBF7EE", padding: "13px 16px", fontFamily: "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
+              <input type="text" placeholder="ZIP *" className="inquiry-input" style={{ background: "#000", border: "1px solid rgba(199,171,117,.2)", color: "#FBF7EE", padding: "13px 16px", fontFamily: "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} required />
+            </div>
+            <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 9, letterSpacing: "0.25em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 12 }}>Student</p>
+            <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 10, marginBottom: 10 }}>
+              {[["First Name", "text"], ["Last Name", "text"]].map(([ph, type]) => (
+                <input key={ph} type={type} placeholder={ph} className="inquiry-input" style={{ background: "#000", border: "1px solid rgba(199,171,117,.2)", color: "#FBF7EE", padding: "13px 16px", fontFamily: "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
+              ))}
+            </div>
+            <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 10, marginBottom: 10 }}>
+              <input type="text" placeholder="Age" className="inquiry-input" style={{ background: "#000", border: "1px solid rgba(199,171,117,.2)", color: "#FBF7EE", padding: "13px 16px", fontFamily: "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
+              <input type="text" placeholder="Current Grade / Year" className="inquiry-input" style={{ background: "#000", border: "1px solid rgba(199,171,117,.2)", color: "#FBF7EE", padding: "13px 16px", fontFamily: "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
+            </div>
+            <input type="text" placeholder="Preferred Track (Weekday or Saturday)" className="inquiry-input" style={{ background: "#000", border: "1px solid rgba(199,171,117,.2)", color: "#FBF7EE", padding: "13px 16px", fontFamily: "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%", marginBottom: 24 }} />
+            <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 9, letterSpacing: "0.25em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 12, marginTop: 0 }}>Consultation Preferences</p>
+            <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 10, marginBottom: 10 }}>
+              <select className="inquiry-input" defaultValue="" style={{ background: "#000", border: "1px solid rgba(199,171,117,.2)", color: "#FBF7EE", padding: "13px 16px", fontFamily: "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%", appearance: "none" }}>
+                <option value="" disabled>Preferred Contact Method</option>
+                <option value="phone">Phone Call</option>
+                <option value="email">Email</option>
+                <option value="either">Either</option>
+              </select>
+              <input type="text" placeholder="Preferred Consultation Dates" className="inquiry-input" style={{ background: "#000", border: "1px solid rgba(199,171,117,.2)", color: "#FBF7EE", padding: "13px 16px", fontFamily: "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
+            </div>
+            <input type="text" placeholder="Preferred Times (e.g. mornings, evenings, weekends)" className="inquiry-input" style={{ background: "#000", border: "1px solid rgba(199,171,117,.2)", color: "#FBF7EE", padding: "13px 16px", fontFamily: "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%", marginBottom: 10 }} />
+            <textarea placeholder="Additional notes or questions (optional)" className="inquiry-input" rows={4} style={{ background: "#000", border: "1px solid rgba(199,171,117,.2)", color: "#FBF7EE", padding: "13px 16px", fontFamily: "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%", marginBottom: 28, resize: "vertical" }} />
+            <button onClick={() => openInquiry && openInquiry("flagship")} style={{ fontFamily: "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif", padding: "15px 40px", background: gold, border: "none", color: "#000", fontSize: 12, fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", cursor: "pointer", width: "100%" }}>REQUEST CONSULTATION — WE'LL BE IN TOUCH WITHIN 24 HOURS</button>
+          </div>
+        </div>
+      </div>
+
       {/* ── MAY 23 SOIREE ── */}
       <SoireeInviteBlock openInquiry={openInquiry} setPage={setPage} />
     </div>
@@ -5884,91 +6092,6 @@ function FlagshipDetailPage({ setPage, openInquiry }) {
 // ─────────────────────────────────────────────
 // PAGE: SUMMER INTENSIVE DETAIL
 // ─────────────────────────────────────────────
-function SummerModulePage({ slug, setPage }) {
-  const isMobile = useIsMobile();
-  const mod = summerModules.find(m => m.slug === slug);
-  if (!mod) return null;
-  return (
-    <div style={{ background: "#000", paddingTop: 0 }}>
-      {/* Breadcrumb */}
-      <div style={{ maxWidth: 1100, margin: "0 auto", padding: isMobile ? "24px 16px 0" : "32px 40px 0" }}>
-        <div style={{ display: "flex", gap: 8, alignItems: "center", flexWrap: "wrap" }}>
-          {[["Home", "home"], ["Our Programs", "programs"], ["Summer Intensive", "summer-detail"]].map(([l, p]) => (
-            <span key={p} style={{ display: "flex", alignItems: "center", gap: 8 }}>
-              <span onClick={() => setPage(p)} style={{ fontFamily: sans, fontSize: 11, color: "rgba(251,247,238,0.4)", cursor: "pointer", letterSpacing: 1 }} onMouseEnter={e => e.target.style.color = gold} onMouseLeave={e => e.target.style.color = "rgba(251,247,238,0.4)"}>{l}</span>
-              <span style={{ color: "#333" }}>/</span>
-            </span>
-          ))}
-          <span style={{ fontFamily: sans, fontSize: 11, color: gold, letterSpacing: 1 }}>{mod.title}</span>
-        </div>
-      </div>
-
-      {/* Hero */}
-      <div style={{ maxWidth: 1100, margin: "0 auto", padding: isMobile ? "40px 16px 52px" : "48px 40px 60px" }}>
-        <Fade>
-          <p style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.4em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 16 }}>Summer Intensive · Discipline</p>
-          <h1 style={{ fontFamily: serif, fontSize: isMobile ? "clamp(30px,6vw,48px)" : "clamp(38px,5vw,64px)", fontWeight: 600, color: "#FBF7EE", lineHeight: 1.05, marginBottom: 16, maxWidth: 800 }}>{mod.title}</h1>
-          <p style={{ fontFamily: serif, fontSize: isMobile ? 18 : 22, color: "#FBF7EE", fontStyle: "italic", lineHeight: 1.6, maxWidth: 680 }}>{mod.tagline}</p>
-        </Fade>
-      </div>
-      <div style={{ height: "1px", background: "linear-gradient(90deg, transparent, rgba(199,171,117,.3), transparent)" }} />
-
-      {/* Body */}
-      <div style={{ maxWidth: 1100, margin: "0 auto", padding: isMobile ? "48px 16px" : "72px 40px" }}>
-        <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 340px", gap: isMobile ? 40 : 72, alignItems: "start" }}>
-          <div>
-            <Fade>
-              <p style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.4em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 20 }}>About This Discipline</p>
-              {mod.body.split('\n\n').map((para, i) => (
-                <p key={i} style={{ fontFamily: sans, fontSize: 16, lineHeight: 1.95, color: "#FBF7EE", fontWeight: 300, marginBottom: 24 }}>{para}</p>
-              ))}
-            </Fade>
-            <Fade d={.06}>
-              <div style={{ marginTop: 52 }}>
-                <p style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.4em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 20 }}>What You Will Learn</p>
-                {mod.whatYouLearn.map((item, i) => (
-                  <div key={i} style={{ display: "flex", gap: 16, padding: "13px 0", borderBottom: "1px solid rgba(199,171,117,.08)" }}>
-                    <div style={{ width: 4, height: 4, borderRadius: "50%", background: gold, flexShrink: 0, marginTop: 8 }} />
-                    <p style={{ fontFamily: sans, fontSize: 14, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.7 }}>{item}</p>
-                  </div>
-                ))}
-              </div>
-            </Fade>
-            <Fade d={.08}>
-              <div style={{ marginTop: 52, borderTop: "1px solid rgba(199,171,117,.1)", paddingTop: 40 }}>
-                <p style={{ fontFamily: serif, fontSize: isMobile ? 20 : 26, color: gold, fontStyle: "italic", lineHeight: 1.5 }}>{mod.quote}</p>
-              </div>
-            </Fade>
-          </div>
-          <div>
-            {/* Outcomes */}
-            <div style={{ border: "1px solid rgba(199,171,117,.15)", padding: "28px 24px", marginBottom: 24 }}>
-              <p style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.4em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 20 }}>By the End of This Discipline</p>
-              {mod.outcomes.map((o, i) => (
-                <div key={i} style={{ display: "flex", gap: 14, padding: "11px 0", borderBottom: i < mod.outcomes.length - 1 ? "1px solid rgba(199,171,117,.07)" : "none" }}>
-                  <div style={{ width: 4, height: 4, borderRadius: "50%", background: gold, flexShrink: 0, marginTop: 7 }} />
-                  <p style={{ fontFamily: sans, fontSize: 13, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.65 }}>{o}</p>
-                </div>
-              ))}
-            </div>
-            {/* Other summer disciplines */}
-            <div style={{ border: "1px solid rgba(199,171,117,.1)", padding: "24px" }}>
-              <p style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.4em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 16 }}>All Summer Disciplines</p>
-              {summerModules.filter(m => m.slug !== slug).map((m, i) => (
-                <div key={i} onClick={() => setPage(`summer-module:${m.slug}`)} style={{ padding: "10px 0", borderBottom: "1px solid rgba(199,171,117,.07)", cursor: "pointer" }}
-                  onMouseEnter={e => e.currentTarget.style.color = gold} onMouseLeave={e => e.currentTarget.style.color = "inherit"}>
-                  <p style={{ fontFamily: sans, fontSize: 12, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.5 }}>{m.title}</p>
-                </div>
-              ))}
-            </div>
-            <button onClick={() => setPage("summer-detail")} style={{ fontFamily: sans, marginTop: 20, width: "100%", padding: "13px", background: "transparent", border: "1px solid rgba(199,171,117,.3)", color: gold, fontSize: 11, fontWeight: 600, letterSpacing: "0.15em", textTransform: "uppercase", cursor: "pointer" }}>← Back to Summer Intensive</button>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
-
 function SummerDetailPage({ setPage, openInquiry }) {
   const isMobile = useIsMobile();
 
@@ -6275,7 +6398,7 @@ function SummerDetailPage({ setPage, openInquiry }) {
         <div style={{ maxWidth: 740, margin: "0 auto" }}>
           <p style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.4em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 16 }}>Request a Consultation</p>
           <h2 style={{ fontFamily: serif, fontSize: isMobile ? 28 : 40, fontWeight: 600, color: "#FBF7EE", lineHeight: 1.05, marginBottom: 8 }}>Schedule a Family Consultation</h2>
-          <p style={{ fontFamily: sans, fontSize: 14, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.8, marginBottom: 36, maxWidth: 580 }}>Submit your information to schedule a private admissions consultation. A dedicated Enrollment Coordinator will guide your family through program options, admissions steps, availability, and next steps.</p>
+          <p style={{ fontFamily: sans, fontSize: 14, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.8, marginBottom: 36, maxWidth: 580 }}>Please submit your information to schedule a private admissions consultation. A dedicated Enrollment Coordinator will guide your family through program options, admissions steps, curriculum, tuition and next steps.</p>
           <div style={{ background: "#080808", borderTop: `2px solid ${gold}`, padding: "36px 32px" }}>
             <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 9, letterSpacing: "0.25em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 12 }}>Parent / Guardian</p>
             <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 10, marginBottom: 10 }}>
@@ -6336,7 +6459,91 @@ function SummerDetailPage({ setPage, openInquiry }) {
   );
 }
 
-// ── EVENTS PAGE ──
+function SummerModulePage({ slug, setPage }) {
+  const isMobile = useIsMobile();
+  const mod = summerModules.find(m => m.slug === slug);
+  if (!mod) return null;
+  return (
+    <div style={{ background: "#000", paddingTop: 0 }}>
+      {/* Breadcrumb */}
+      <div style={{ maxWidth: 1100, margin: "0 auto", padding: isMobile ? "24px 16px 0" : "32px 40px 0" }}>
+        <div style={{ display: "flex", gap: 8, alignItems: "center", flexWrap: "wrap" }}>
+          {[["Home", "home"], ["Our Programs", "programs"], ["Summer Intensive", "summer-detail"]].map(([l, p]) => (
+            <span key={p} style={{ display: "flex", alignItems: "center", gap: 8 }}>
+              <span onClick={() => setPage(p)} style={{ fontFamily: sans, fontSize: 11, color: "rgba(251,247,238,0.4)", cursor: "pointer", letterSpacing: 1 }} onMouseEnter={e => e.target.style.color = gold} onMouseLeave={e => e.target.style.color = "rgba(251,247,238,0.4)"}>{l}</span>
+              <span style={{ color: "#333" }}>/</span>
+            </span>
+          ))}
+          <span style={{ fontFamily: sans, fontSize: 11, color: gold, letterSpacing: 1 }}>{mod.title}</span>
+        </div>
+      </div>
+
+      {/* Hero */}
+      <div style={{ maxWidth: 1100, margin: "0 auto", padding: isMobile ? "40px 16px 52px" : "48px 40px 60px" }}>
+        <Fade>
+          <p style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.4em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 16 }}>Summer Intensive · Discipline</p>
+          <h1 style={{ fontFamily: serif, fontSize: isMobile ? "clamp(30px,6vw,48px)" : "clamp(38px,5vw,64px)", fontWeight: 600, color: "#FBF7EE", lineHeight: 1.05, marginBottom: 16, maxWidth: 800 }}>{mod.title}</h1>
+          <p style={{ fontFamily: serif, fontSize: isMobile ? 18 : 22, color: "#FBF7EE", fontStyle: "italic", lineHeight: 1.6, maxWidth: 680 }}>{mod.tagline}</p>
+        </Fade>
+      </div>
+      <div style={{ height: "1px", background: "linear-gradient(90deg, transparent, rgba(199,171,117,.3), transparent)" }} />
+
+      {/* Body */}
+      <div style={{ maxWidth: 1100, margin: "0 auto", padding: isMobile ? "48px 16px" : "72px 40px" }}>
+        <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 340px", gap: isMobile ? 40 : 72, alignItems: "start" }}>
+          <div>
+            <Fade>
+              <p style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.4em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 20 }}>About This Discipline</p>
+              {mod.body.split('\n\n').map((para, i) => (
+                <p key={i} style={{ fontFamily: sans, fontSize: 16, lineHeight: 1.95, color: "#FBF7EE", fontWeight: 300, marginBottom: 24 }}>{para}</p>
+              ))}
+            </Fade>
+            <Fade d={.06}>
+              <div style={{ marginTop: 52 }}>
+                <p style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.4em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 20 }}>What You Will Learn</p>
+                {mod.whatYouLearn.map((item, i) => (
+                  <div key={i} style={{ display: "flex", gap: 16, padding: "13px 0", borderBottom: "1px solid rgba(199,171,117,.08)" }}>
+                    <div style={{ width: 4, height: 4, borderRadius: "50%", background: gold, flexShrink: 0, marginTop: 8 }} />
+                    <p style={{ fontFamily: sans, fontSize: 14, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.7 }}>{item}</p>
+                  </div>
+                ))}
+              </div>
+            </Fade>
+            <Fade d={.08}>
+              <div style={{ marginTop: 52, borderTop: "1px solid rgba(199,171,117,.1)", paddingTop: 40 }}>
+                <p style={{ fontFamily: serif, fontSize: isMobile ? 20 : 26, color: gold, fontStyle: "italic", lineHeight: 1.5 }}>{mod.quote}</p>
+              </div>
+            </Fade>
+          </div>
+          <div>
+            {/* Outcomes */}
+            <div style={{ border: "1px solid rgba(199,171,117,.15)", padding: "28px 24px", marginBottom: 24 }}>
+              <p style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.4em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 20 }}>By the End of This Discipline</p>
+              {mod.outcomes.map((o, i) => (
+                <div key={i} style={{ display: "flex", gap: 14, padding: "11px 0", borderBottom: i < mod.outcomes.length - 1 ? "1px solid rgba(199,171,117,.07)" : "none" }}>
+                  <div style={{ width: 4, height: 4, borderRadius: "50%", background: gold, flexShrink: 0, marginTop: 7 }} />
+                  <p style={{ fontFamily: sans, fontSize: 13, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.65 }}>{o}</p>
+                </div>
+              ))}
+            </div>
+            {/* Other summer disciplines */}
+            <div style={{ border: "1px solid rgba(199,171,117,.1)", padding: "24px" }}>
+              <p style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.4em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 16 }}>All Summer Disciplines</p>
+              {summerModules.filter(m => m.slug !== slug).map((m, i) => (
+                <div key={i} onClick={() => setPage(`summer-module:${m.slug}`)} style={{ padding: "10px 0", borderBottom: "1px solid rgba(199,171,117,.07)", cursor: "pointer" }}
+                  onMouseEnter={e => e.currentTarget.style.color = gold} onMouseLeave={e => e.currentTarget.style.color = "inherit"}>
+                  <p style={{ fontFamily: sans, fontSize: 12, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.5 }}>{m.title}</p>
+                </div>
+              ))}
+            </div>
+            <button onClick={() => setPage("summer-detail")} style={{ fontFamily: sans, marginTop: 20, width: "100%", padding: "13px", background: "transparent", border: "1px solid rgba(199,171,117,.3)", color: gold, fontSize: 11, fontWeight: 600, letterSpacing: "0.15em", textTransform: "uppercase", cursor: "pointer" }}>← Back to Summer Intensive</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function EventsPage({ setPage, openInquiry }) {
   const isMobile = useIsMobile();
   return (
