@@ -284,6 +284,16 @@ const coaches = [
     bio: "Christopher Sanders is a servant leader, keynote speaker, and doctoral candidate whose career spans law enforcement, higher education, and transformational personal development. A Deputy Sheriff II with the Orange County Sheriff's Department, he brings to every session the clarity, composure, and command presence that comes from operating under genuine high-stakes pressure. He holds an MBA in Strategic Management from Davenport University — graduating with a 3.95 GPA — and is completing a Doctorate in Public Administration at the University of La Verne. He has served as an Adjunct Professor at Rancho Santiago Community College District and at Davenport University, where he taught across multiple disciplines for nearly four years. Beyond the classroom, Christopher runs his own leadership and mindset development seminars — most recently his Living Life Unchained series in Irvine, California — focused on breaking limiting beliefs, building discipline-based systems, and creating lasting behavioral change in adults and young professionals. His StrengthsFinder profile reflects the qualities that define his teaching: Achiever, Futuristic, Focus, Strategic, and Positivity. At Excalibur Academy, Christopher owns the public speaking block that runs through every single session — developing voice mechanics, physical presence, impromptu delivery, advanced rhetoric, and the kind of composure under pressure that most teenagers have never been asked to find."
   },
   {
+    name: "Anastasia Milstein",
+    role: "Director of Business Development",
+    img: "https://i.imgur.com/placeholder.jpeg",
+    isLogo: false,
+    shortBio: "Anastasia leads strategic partnerships, VIP relations, and student experience opportunities at Excalibur. A Brown University graduate with a Master's from IE University Madrid and studies at Sorbonne University Paris, she brings international business fluency shaped by life in Madrid, Paris, and Milan. With experience securing 15+ multi-million-dollar deals and high-value partnerships, Anastasia secures distinguished speakers, investors, externship partners, and exclusive field experiences — ensuring every opportunity meets Excalibur's highest standard.",
+    tags: ["Strategic Partnerships", "VIP Relations", "Business Development", "International Business"],
+    linkedin: "",
+    bio: "Anastasia Milstein serves as Director of Business Development at Excalibur Academy, where she leads strategic partnerships, VIP relations, and experiential growth for the Academy's student programs.\n\nAn Ivy League graduate of Brown University with a degree in International Relations, Anastasia also holds a Master's in Business and Innovation from IE University in Madrid and completed a Business & Global Management program at Sorbonne University in Paris. Having lived in Madrid, Paris, and Milan, she brings a distinctly international perspective, polished communication style, and deep cultural fluency to her work. Networking and VIP relationship-building are her natural fluency, with experience securing multiple multi-million-dollar deals and high-value partnerships.\n\nAt Excalibur, Anastasia is responsible for securing prominent local and national guest speakers, investors for student competitions, partner organizations for externships and apprenticeships, and exclusive real-world learning opportunities — from Silicon Valley accelerator and incubator visits to special-access industry experiences such as SpaceX launch programming.\n\nHer role is centered on building the relationships that turn Excalibur from a classroom into a true leadership ecosystem. Through tailored outreach, high-level stewardship, and a relentlessly curated approach to quality, Anastasia helps ensure that Excalibur students are surrounded by exceptional mentors, serious opportunities, and experiences designed to expand their ambition, confidence, and understanding of the world."
+  },
+  {
     name: "Amina Abdulaeva",
     role: "Operations Director",
     img: "https://i.imgur.com/SeOkgm8.jpeg",
@@ -1402,12 +1412,28 @@ function CurriculumPage({ setPage, openInquiry }) {
             <h2 style={{ fontFamily: serif, fontSize: isMobile ? 28 : 44, fontWeight: 600, color: "#FBF7EE", lineHeight: 1.05, marginBottom: 8 }}>What a Year Looks Like.</h2>
             <p style={{ fontFamily: sans, fontSize: 14, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.8, marginBottom: 40, maxWidth: 600 }}>Ten months, structured across four phases. Every month builds on the last.</p>
           </Fade>
-          <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr 1fr" : "repeat(4, 1fr)", gap: 2, background: "#111" }}>
-            {tenMonthArc.map((row, i) => (
-              <div key={i} style={{ background: "#080808", padding: "24px 20px", borderTop: `2px solid ${i === 0 ? gold : "rgba(199,171,117,.06)"}` }}>
-                <p style={{ fontFamily: sans, fontSize: 9, letterSpacing: "0.18em", color: gold, marginBottom: 6, fontWeight: 600 }}>{row.m}</p>
-                <h4 style={{ fontFamily: serif, fontSize: 16, fontWeight: 600, color: "#FBF7EE", marginBottom: 10, lineHeight: 1.2 }}>{row.t}</h4>
-                {row.items.map((item, j) => <div key={j} style={{ fontFamily: sans, fontSize: 11, color: "#FBF7EE", marginBottom: 4, fontWeight: 300 }}>— {item}</div>)}
+          <div style={{ display: "flex", flexDirection: "column", gap: 3 }}>
+            {tenMonthArc.map((phase, pi) => (
+              <div key={pi}>
+                <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "180px 1fr", background: "#111", borderLeft: `3px solid ${gold}`, marginBottom: 2 }}>
+                  <div style={{ padding: isMobile ? "14px 20px" : "18px 24px", borderRight: "1px solid rgba(199,171,117,.08)" }}>
+                    <p style={{ fontFamily: sans, fontSize: 8, letterSpacing: "0.3em", color: gold, fontWeight: 700, textTransform: "uppercase", marginBottom: 4 }}>{phase.phase}</p>
+                    <p style={{ fontFamily: serif, fontSize: isMobile ? 16 : 18, fontWeight: 600, color: "#FBF7EE", lineHeight: 1.1, marginBottom: 2 }}>{phase.label}</p>
+                    <p style={{ fontFamily: sans, fontSize: 10, color: "rgba(199,171,117,.6)", fontWeight: 300 }}>{phase.span}</p>
+                  </div>
+                  <div style={{ padding: isMobile ? "10px 20px 14px" : "18px 28px", display: "flex", alignItems: "center" }}>
+                    <p style={{ fontFamily: sans, fontSize: 13, color: "rgba(251,247,238,.65)", fontWeight: 300, fontStyle: "italic" }}>{phase.desc}</p>
+                  </div>
+                </div>
+                <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : `repeat(${phase.months.length}, 1fr)`, gap: 2 }}>
+                  {phase.months.map((row, i) => (
+                    <div key={i} style={{ background: "#080808", padding: "18px 20px", borderTop: "1px solid rgba(199,171,117,.06)" }}>
+                      <p style={{ fontFamily: sans, fontSize: 9, letterSpacing: "0.18em", color: gold, marginBottom: 5, fontWeight: 600 }}>{row.m}</p>
+                      <h4 style={{ fontFamily: serif, fontSize: 15, fontWeight: 600, color: "#FBF7EE", marginBottom: 10, lineHeight: 1.2 }}>{row.t}</h4>
+                      {row.items.map((item, j) => <div key={j} style={{ fontFamily: sans, fontSize: 11, color: "#FBF7EE", marginBottom: 4, fontWeight: 300 }}>— {item}</div>)}
+                    </div>
+                  ))}
+                </div>
               </div>
             ))}
           </div>
@@ -3060,7 +3086,7 @@ function ScheduleTabs({ setPage, isMobile, waves, gold }) {
   );
 }
 function CoachCard({ c, i, setPage }) {
-  const hasFacultyPage = ["Alexander Milstein", "Chip Pankow", "Bill Morris", "Erik Dostal", "Christopher Sanders", "Amina Abdulaeva"].includes(c.name);
+  const hasFacultyPage = ["Alexander Milstein", "Chip Pankow", "Bill Morris", "Erik Dostal", "Christopher Sanders", "Anastasia Milstein", "Amina Abdulaeva"].includes(c.name);
 
   return (
     <div style={{ background: "#080808", borderTop: i === 0 ? `2px solid ${gold}` : "2px solid rgba(199,171,117,.1)", overflow: "hidden" }}>
@@ -3184,7 +3210,7 @@ function HomePage({ setPage, openInquiry }) {
               {/* Eyebrow — small, spaced, gold */}
               {/* Logo */}
               <Fade d={.06}>
-                <img src="https://i.ibb.co/rKSp526b/upsclae-logo.png" alt="Excalibur Academy" style={{ width: 320, height: "auto", objectFit: "contain", marginBottom: 20, opacity: 0.95, display: "block" }} onError={e => e.target.style.display="none"} />
+                <img src="https://i.ibb.co/rKSp526b/upsclae-logo.png" alt="Excalibur Academy" style={{ width: 320, height: "auto", objectFit: "contain", marginBottom: 20, opacity: 0.95, display: "block", margin: "0 auto 20px" }} onError={e => e.target.style.display="none"} />
               </Fade>
 
               {/* Academy name — one line, Forum serif */}
@@ -3214,7 +3240,7 @@ function HomePage({ setPage, openInquiry }) {
 
               {/* Body paragraph */}
               <Fade d={.26}>
-                <p style={{ fontFamily: sans, fontSize: 13, lineHeight: 1.9, color: "rgba(251,247,238,0.8)", fontWeight: 300, marginBottom: 44, maxWidth: 440, textAlign: "justify" }}>
+                <p style={{ fontFamily: sans, fontSize: 13, lineHeight: 1.9, color: "rgba(251,247,238,0.8)", fontWeight: 300, marginBottom: 44, maxWidth: 440, textAlign: "justify", margin: "0 auto 44px" }}>
                   A premier institute where Fortune 100 executives, real entrepreneurs, investors, and distinguished professors teach the next generation to lead the world — not follow it.
                 </p>
               </Fade>
@@ -4274,6 +4300,33 @@ const facultyProfiles = {
       "Doctoral Candidate, Public Administration — University of La Verne",
       "Adjunct Professor: Rancho Santiago CCD · Davenport University",
       "Keynote speaker · Mindset coach · Living Life Unchained seminar leader",
+    ],
+  },
+  "anastasia-milstein": {
+    name: "Anastasia Milstein",
+    role: "Director of Business Development",
+    img: "https://i.imgur.com/placeholder.jpeg",
+    tags: ["Strategic Partnerships", "VIP Relations", "Business Development", "International Business"],
+    linkedin: "",
+    credentials: [
+      "Director of Business Development — Excalibur Academy, Orange County, California",
+      "Bachelor's degree — Brown University, International Relations",
+      "Master's in Business and Innovation — IE University, Madrid",
+      "Business & Global Management — Sorbonne University, Paris",
+      "Lived and worked in Madrid, Paris, and Milan",
+      "15+ multi-million-dollar deals and high-value partnerships secured",
+    ],
+    tagline: "The relationships that turn a classroom into a leadership ecosystem.",
+    intro: "Anastasia Milstein serves as Director of Business Development at Excalibur Academy, where she leads strategic partnerships, VIP relations, and experiential growth for the Academy's student programs.",
+    sections: [
+      {
+        heading: "International Education & Background",
+        body: "An Ivy League graduate of Brown University with a degree in International Relations, Anastasia also holds a Master's in Business and Innovation from IE University in Madrid and completed a Business & Global Management program at Sorbonne University in Paris. Having lived in Madrid, Paris, and Milan, she brings a distinctly international perspective, polished communication style, and deep cultural fluency to her work.",
+      },
+      {
+        heading: "At Excalibur Academy",
+        body: "At Excalibur, Anastasia is responsible for securing prominent local and national guest speakers, investors for student competitions, partner organizations for externships and apprenticeships, and exclusive real-world learning opportunities — from Silicon Valley accelerator and incubator visits to special-access industry experiences such as SpaceX launch programming.\n\nHer role is centered on building the relationships that turn Excalibur from a classroom into a true leadership ecosystem. Through tailored outreach, high-level stewardship, and a relentlessly curated approach to quality, Anastasia helps ensure that Excalibur students are surrounded by exceptional mentors, serious opportunities, and experiences designed to expand their ambition, confidence, and understanding of the world.",
+      },
     ],
   },
   "amina-abdulaeva": {
