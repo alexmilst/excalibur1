@@ -1060,8 +1060,8 @@ function ModulePage({ slug, setPage }) {
 }
 
 // ── SOIRÉE INVITE BLOCK — reusable across pages ──
-function SoireeInviteBlock({ openInquiry, setPage = () => {} }) {
-  const [showForm, setShowForm] = useState(false);
+function SoireeInviteBlock({ openInquiry, setPage = () => {}, autoOpen = false, onFormClose = () => {} }) {
+  const [showForm, setShowForm] = useState(autoOpen);
   const [submitted, setSubmitted] = useState(false);
   const [sending, setSending] = useState(false);
   const [form, setForm] = useState({
@@ -1070,6 +1070,10 @@ function SoireeInviteBlock({ openInquiry, setPage = () => {} }) {
   });
   const isMobile = useIsMobile();
   const setF = (k, v) => setForm(f => ({ ...f, [k]: v }));
+
+  React.useEffect(() => {
+    if (autoOpen) setShowForm(true);
+  }, [autoOpen]);
 
   const iStyle = { width: "100%", padding: "12px 16px", background: "#000", border: "1px solid rgba(199,171,117,.25)", color: "#FBF7EE", fontFamily: "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif", fontSize: 14, outline: "none", boxSizing: "border-box" };
   const focus = e => e.target.style.borderColor = gold;
@@ -6713,6 +6717,15 @@ function SummerModulePage({ slug, setPage }) {
 
 function EventsPage({ setPage, openInquiry }) {
   const isMobile = useIsMobile();
+  const [soireeOpen, setSoireeOpen] = React.useState(false);
+  const soireeRef = React.useRef(null);
+
+  const openSoireeForm = () => {
+    setSoireeOpen(true);
+    setTimeout(() => {
+      if (soireeRef.current) soireeRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
+    }, 50);
+  };
   return (
     <div style={{ background: "#000", paddingTop: 0 }}>
       <Breadcrumb items={[{label:"Events",page:"events"}]} setPage={setPage} />
@@ -6776,7 +6789,7 @@ function EventsPage({ setPage, openInquiry }) {
                   </div>
                 ))}
                 <div style={{ marginTop: 36 }}>
-                  <button onClick={() => openInquiry && openInquiry()} style={{ fontFamily: sans, padding: "14px 36px", background: gold, border: "none", color: "#000", fontSize: 10, fontWeight: 700, letterSpacing: "0.2em", textTransform: "uppercase", cursor: "pointer" }}>Request Invitation →</button>
+                  <button onClick={openSoireeForm} style={{ fontFamily: sans, padding: "14px 36px", background: gold, border: "none", color: "#000", fontSize: 10, fontWeight: 700, letterSpacing: "0.2em", textTransform: "uppercase", cursor: "pointer" }}>Request Invitation →</button>
                 </div>
               </div>
 
@@ -6822,7 +6835,9 @@ function EventsPage({ setPage, openInquiry }) {
       </div>
 
       {/* ── SOIREE POSTCARD  -  unchanged ── */}
-      <SoireeInviteBlock openInquiry={openInquiry} setPage={setPage} />
+      <div ref={soireeRef}>
+        <SoireeInviteBlock openInquiry={openInquiry} setPage={setPage} autoOpen={soireeOpen} onFormClose={() => setSoireeOpen(false)} />
+      </div>
 
     </div>
   );
@@ -7116,10 +7131,19 @@ export default function ExcaliburApp() {
   }, []);
 
   const setPage = useCallback((p) => {
-    if (p === "apply") { setPageRaw("apply-now"); window.scrollTo(0,0); return; }
+    if (p === "apply") { setPageRaw("apply-now"); window.scrollTo(0,0); document.documentElement.scrollTop = 0; document.body.scrollTop = 0; return; }
     setPageRaw(p);
     window.scrollTo(0, 0);
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
   }, [openInquiry]);
+
+  // Scroll to top on every page change — covers mobile edge cases
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+  }, [page]);
 
   const renderPage = () => {
     if (page === "home") return <HomePage setPage={setPage} openInquiry={openInquiry} />;
