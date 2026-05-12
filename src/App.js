@@ -6782,14 +6782,14 @@ function EventsPage({ setPage, openInquiry }) {
 
               {/* Right  -  description */}
               <div>
-                <h2 style={{ fontFamily: serif, fontSize: isMobile ? 24 : 36, fontWeight: 300, color: "#FBF7EE", lineHeight: 1.2, marginBottom: 28 }}>The official launch of Excalibur Academy — and a personal introduction to the people, programs, and standards behind it.</h2>
+                <h2 style={{ fontFamily: serif, fontSize: isMobile ? 24 : 36, fontWeight: 300, color: "#FBF7EE", lineHeight: 1.2, marginBottom: 28 }}>The official launch of Excalibur Academy — and a personal introduction to the leadership, faculty, programs, standards and value behind our institute.</h2>
                 <div style={{ width: 36, height: "1px", background: `linear-gradient(90deg, ${gold}, transparent)`, marginBottom: 28 }} />
-                <p style={{ fontFamily: sans, fontSize: 14, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.9, marginBottom: 16 }}>Before the first program begins, Excalibur is hosting a private evening reception for a carefully selected number of families at Laguna Niguel City Hall Ballroom. This is the Academy's official launch event and Family Information Session — combined into one intimate, memorable evening.</p>
-                <p style={{ fontFamily: sans, fontSize: 14, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.9, marginBottom: 16 }}>The evening includes candid conversations with the Academy's lead faculty and founding team, a full overview of Excalibur's programs, structure, expectations, and logistics — and a chance for families and prospective students to experience the standard of the Academy before enrollment opens.</p>
+                <p style={{ fontFamily: sans, fontSize: 14, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.9, marginBottom: 16 }}>Families will meet the Academy's lead faculty and founding team, receive a full overview of our Summer Intensives and Academic-Year programs, and learn more about Excalibur's curriculum, structure, expectations, admissions process, and student experience.</p>
+                <p style={{ fontFamily: sans, fontSize: 14, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.9, marginBottom: 16 }}>More than an information session, the evening is designed to give families and prospective students a first impression of the standard, atmosphere, and ambition of the Academy itself.</p>
                 <p style={{ fontFamily: sans, fontSize: 14, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.9, marginBottom: 28 }}>Prospective students attending the evening will be asked one question: <span style={{ fontFamily: serif, fontStyle: "italic", color: gold }}>"What is your dream?"</span></p>
                 <div style={{ borderTop: "1px solid rgba(199,171,117,.12)", paddingTop: 24 }}>
                   <p style={{ fontFamily: serif, fontSize: 16, color: gold, letterSpacing: "0.1em", marginBottom: 12, fontStyle: "italic" }}>By Personal Invitation Only</p>
-                  <p style={{ fontFamily: sans, fontSize: 12, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.8 }}>Invitations are extended personally by the Excalibur team. Families may request an invitation. We will be in touch personally with event details and next steps.</p>
+                  <p style={{ fontFamily: sans, fontSize: 12, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.8 }}>Due to high demand and intentionally limited cohort sizes of no more than 20 students, invitations are extended personally by the Excalibur team. Families who wish to attend the evening are invited to complete the invitation request form below.</p>
                 </div>
               </div>
             </div>
@@ -6802,11 +6802,11 @@ function EventsPage({ setPage, openInquiry }) {
         <div style={{ maxWidth: 1100, margin: "0 auto" }}>
           <Fade>
             <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 8, letterSpacing: "0.55em", color: gold, fontWeight: 700, textTransform: "uppercase", marginBottom: 16 }}>The Evening</p>
-            <h2 style={{ fontFamily: serif, fontSize: isMobile ? 26 : 38, fontWeight: 300, color: "#FBF7EE", lineHeight: 1.05, marginBottom: 48 }}>What to Expect</h2>
+            <h2 style={{ fontFamily: serif, fontSize: isMobile ? 26 : 38, fontWeight: 300, color: "#FBF7EE", lineHeight: 1.05, marginBottom: 8 }}>The Soirée Program</h2>
           </Fade>
           <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(4,1fr)", gap: 0 }}>
             {[
-              { n: "01", title: "Welcome Reception", desc: "An intimate welcome on the estate grounds. Families are introduced to the Excalibur team, faculty, and one another in a relaxed, private setting." },
+              { n: "01", title: "Welcome Reception", desc: "Guests are welcomed into an elegant reception with live jazz, hors d’œuvres, and refreshments, offering families the opportunity to meet the Excalibur team, faculty, and one another in a warm, relaxed, and private setting." },
               { n: "02", title: "Program Overview", desc: "A candid walk through Excalibur's programs, structure, curriculum, faculty model, and student experience — led by the Academy's founding team." },
               { n: "03", title: "Faculty Introductions", desc: "A personal introduction to Excalibur's lead faculty and visiting practitioners. An opportunity to ask questions directly and understand who will be in the room." },
               { n: "04", title: "Student Moment", desc: "Prospective students will be asked to reflect on one question: \u201cWhat is your dream?\u201d \u2014 the first step in understanding what kind of student is right for Excalibur." },
