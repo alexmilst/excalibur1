@@ -415,7 +415,7 @@ function Nav({ page, setPage }) {
     ["Faculty", "faculty", null],
     ["The Arena", "beyond", null],
     ["Admissions", "admissions", null],
-    ["Contact", "apply", null],
+    ["Contact", "contact", null],
     ["Events", "events", null],
   ];
   const go = (p) => { setPage(p); setMenuOpen(false); setProgramsOpen(false); setHoveredNav(null); };
@@ -683,7 +683,7 @@ function PortfolioIndexWhite({ isMobile, setPage }) {
 // ── FOOTER ──
 function Footer({ setPage }) {
   const isMobile = useIsMobile();
-  const allLinks = [["HOME","home"],["THE ACADEMY","about"],["OUR PROGRAMS","programs"],["CURRICULUM","curriculum"],["FACULTY","faculty"],["THE ARENA","beyond"],["ADMISSIONS","apply"],["CONTACT","apply"],["EVENTS","apply"]];
+  const allLinks = [["HOME","home"],["THE ACADEMY","about"],["OUR PROGRAMS","programs"],["CURRICULUM","curriculum"],["FACULTY","faculty"],["THE ARENA","beyond"],["ADMISSIONS","apply"],["CONTACT","contact"],["EVENTS","events"]];
   return (
     <footer style={{ background: "#000", borderTop: "1px solid rgba(199,171,117,.15)" }}>
       {/* Brand + Nav */}
@@ -2562,19 +2562,38 @@ function ApplyPage({ setPage, openInquiry }) {
     <div style={{ background: "#000", paddingTop: 0 }}>
 
       {/* ── HERO ── */}
-      <div style={{ position: "relative", overflow: "hidden", height: isMobile ? 420 : 580 }}>
-        <img src="https://i.imgur.com/aDzpYsK.jpeg" alt="Excalibur Admissions" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "center top" }} />
-        <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to bottom, rgba(0,0,0,.2) 0%, rgba(0,0,0,.9) 100%)" }} />
-        <div style={{ position: "absolute", bottom: isMobile ? 36 : 64, left: isMobile ? 24 : 72, maxWidth: 720 }}>
-          <Fade>
-            <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 8, letterSpacing: "0.55em", color: gold, fontWeight: 700, textTransform: "uppercase", marginBottom: 18 }}>Admissions · Excalibur Academy</p>
-            <h1 style={{ fontFamily: serif, fontSize: isMobile ? "clamp(34px,7vw,48px)" : "clamp(48px,5vw,72px)", fontWeight: 300, color: "#FBF7EE", lineHeight: 1.0, marginBottom: 16, letterSpacing: "0.02em" }}>For students ready to<br />turn dreams into reality.</h1>
-            <div style={{ width: 48, height: "1px", background: `linear-gradient(90deg, ${gold}, transparent)`, marginBottom: 18 }} />
-            <p style={{ fontFamily: sans, fontSize: isMobile ? 13 : 15, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.85, maxWidth: 580 }}>Excalibur Academy admits a limited number of students into each cohort to preserve the quality of instruction, discussion, mentorship, and feedback. The admissions process is personal, selective, and intentionally straightforward. It is designed to understand the student, answer the family's questions, and ensure a strong fit for the Academy.</p>
-            <p style={{ fontFamily: serif, fontSize: isMobile ? 13 : 15, color: gold, fontStyle: "italic", marginTop: 16 }}>Applications are now open for Summer 2026.</p>
-          </Fade>
+      {isMobile ? (
+        <>
+          <div style={{ position: "relative", overflow: "hidden", height: 260 }}>
+            <img src="https://i.imgur.com/aDzpYsK.jpeg" alt="Excalibur Admissions" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "center top" }} />
+            <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to bottom, rgba(0,0,0,.1) 0%, rgba(0,0,0,.6) 100%)" }} />
+            <div style={{ position: "absolute", bottom: 24, left: 24 }}>
+              <h1 style={{ fontFamily: serif, fontSize: 42, fontWeight: 300, color: "#FBF7EE", lineHeight: 1.0, letterSpacing: "0.02em" }}>Admissions</h1>
+            </div>
+          </div>
+          <div style={{ background: "#000", padding: "32px 24px 40px" }}>
+            <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 8, letterSpacing: "0.55em", color: gold, fontWeight: 700, textTransform: "uppercase", marginBottom: 14 }}>Admissions · Excalibur Academy</p>
+            <h2 style={{ fontFamily: serif, fontSize: 26, fontWeight: 300, color: "#FBF7EE", lineHeight: 1.15, marginBottom: 14, letterSpacing: "0.01em" }}>For students ready to turn dreams into reality.</h2>
+            <div style={{ width: 36, height: "1px", background: `linear-gradient(90deg, ${gold}, transparent)`, marginBottom: 16 }} />
+            <p style={{ fontFamily: sans, fontSize: 13, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.85 }}>Excalibur Academy admits a limited number of students into each cohort to preserve the quality of instruction, discussion, mentorship, and feedback. The admissions process is personal, selective, and intentionally straightforward. It is designed to understand the student, answer the family's questions, and ensure a strong fit for the Academy.</p>
+            <p style={{ fontFamily: serif, fontSize: 13, color: gold, fontStyle: "italic", marginTop: 14 }}>Applications are now open for Summer 2026.</p>
+          </div>
+        </>
+      ) : (
+        <div style={{ position: "relative", overflow: "hidden", height: 580 }}>
+          <img src="https://i.imgur.com/aDzpYsK.jpeg" alt="Excalibur Admissions" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "center top" }} />
+          <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to bottom, rgba(0,0,0,.2) 0%, rgba(0,0,0,.9) 100%)" }} />
+          <div style={{ position: "absolute", bottom: 64, left: 72, maxWidth: 720 }}>
+            <Fade>
+              <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 8, letterSpacing: "0.55em", color: gold, fontWeight: 700, textTransform: "uppercase", marginBottom: 18 }}>Admissions · Excalibur Academy</p>
+              <h1 style={{ fontFamily: serif, fontSize: "clamp(48px,5vw,72px)", fontWeight: 300, color: "#FBF7EE", lineHeight: 1.0, marginBottom: 16, letterSpacing: "0.02em" }}>For students ready to<br />turn dreams into reality.</h1>
+              <div style={{ width: 48, height: "1px", background: `linear-gradient(90deg, ${gold}, transparent)`, marginBottom: 18 }} />
+              <p style={{ fontFamily: sans, fontSize: 15, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.85, maxWidth: 580 }}>Excalibur Academy admits a limited number of students into each cohort to preserve the quality of instruction, discussion, mentorship, and feedback. The admissions process is personal, selective, and intentionally straightforward. It is designed to understand the student, answer the family's questions, and ensure a strong fit for the Academy.</p>
+              <p style={{ fontFamily: serif, fontSize: 15, color: gold, fontStyle: "italic", marginTop: 16 }}>Applications are now open for Summer 2026.</p>
+            </Fade>
+          </div>
         </div>
-      </div>
+      )}
 
       {/* ── PROGRAMS ACCEPTING APPLICATIONS ── */}
       <div style={{ background: "#000", padding: isMobile ? "60px 24px" : "80px 80px", borderBottom: "1px solid rgba(199,171,117,.1)" }}>
@@ -7106,6 +7125,113 @@ function ApplicationPage({ setPage, defaultProgram }) {
 }
 
 
+function ContactPage({ setPage, openInquiry }) {
+  const isMobile = useIsMobile();
+  return (
+    <div style={{ background: "#000" }}>
+      <Breadcrumb items={[{ label: "Contact", page: "contact" }]} setPage={setPage} />
+
+      {/* HERO */}
+      {isMobile ? (
+        <>
+          <div style={{ position: "relative", overflow: "hidden", height: 240 }}>
+            <img src="https://i.imgur.com/6JPQ4CN.jpeg" alt="Contact Excalibur" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "center" }} />
+            <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to bottom, rgba(0,0,0,.1) 0%, rgba(0,0,0,.65) 100%)" }} />
+            <div style={{ position: "absolute", bottom: 24, left: 24 }}>
+              <h1 style={{ fontFamily: serif, fontSize: 42, fontWeight: 300, color: "#FBF7EE", letterSpacing: "0.02em" }}>Contact</h1>
+            </div>
+          </div>
+          <div style={{ background: "#000", padding: "28px 24px 8px" }}>
+            <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 8, letterSpacing: "0.45em", color: gold, fontWeight: 700, textTransform: "uppercase", marginBottom: 10 }}>Get in Touch</p>
+            <p style={{ fontFamily: sans, fontSize: 13, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.85 }}>Reach the Excalibur team directly or submit the form below to schedule a private family consultation.</p>
+          </div>
+        </>
+      ) : (
+        <div style={{ position: "relative", overflow: "hidden", height: 460 }}>
+          <img src="https://i.imgur.com/6JPQ4CN.jpeg" alt="Contact Excalibur" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "center" }} />
+          <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to bottom, rgba(0,0,0,.2) 0%, rgba(0,0,0,.88) 100%)" }} />
+          <div style={{ position: "absolute", bottom: 64, left: 72, maxWidth: 640 }}>
+            <Fade>
+              <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 8, letterSpacing: "0.55em", color: gold, fontWeight: 700, textTransform: "uppercase", marginBottom: 16 }}>Get in Touch · Excalibur Academy</p>
+              <h1 style={{ fontFamily: serif, fontSize: "clamp(48px,5vw,72px)", fontWeight: 300, color: "#FBF7EE", lineHeight: 1.0, marginBottom: 14, letterSpacing: "0.02em" }}>Contact</h1>
+              <div style={{ width: 48, height: "1px", background: `linear-gradient(90deg, ${gold}, transparent)`, marginBottom: 16 }} />
+              <p style={{ fontFamily: sans, fontSize: 15, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.85, maxWidth: 520 }}>Reach the Excalibur team directly or submit the form below to schedule a private family consultation.</p>
+            </Fade>
+          </div>
+        </div>
+      )}
+
+      {/* CONTACT EMAILS */}
+      <div style={{ background: "#0A0A0A", borderBottom: "1px solid rgba(199,171,117,.08)" }}>
+        <div style={{ maxWidth: 1100, margin: "0 auto", display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", borderLeft: "1px solid rgba(199,171,117,.08)" }}>
+          {[
+            { label: "Admissions", email: "apply@excaliburacademy.org", desc: "Program inquiries, applications, enrollment, and admissions questions." },
+            { label: "Support & General", email: "support@excaliburacademy.org", desc: "Family support, scheduling, portal access, and general correspondence." },
+          ].map(({ label, email, desc }) => (
+            <div key={label} style={{ padding: isMobile ? "32px 24px" : "44px 52px", borderRight: "1px solid rgba(199,171,117,.08)", borderBottom: isMobile ? "1px solid rgba(199,171,117,.08)" : "none" }}>
+              <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 9, letterSpacing: "0.35em", color: gold, fontWeight: 700, textTransform: "uppercase", marginBottom: 10 }}>{label}</p>
+              <a href={`mailto:${email}`} style={{ fontFamily: serif, fontSize: isMobile ? 18 : 22, color: "#FBF7EE", fontWeight: 300, fontStyle: "italic", textDecoration: "none", display: "block", marginBottom: 10, letterSpacing: "0.01em" }}>{email}</a>
+              <p style={{ fontFamily: sans, fontSize: 13, color: "rgba(251,247,238,.5)", fontWeight: 300, lineHeight: 1.7 }}>{desc}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* CONSULTATION FORM */}
+      <div style={{ background: "#000", padding: isMobile ? "52px 24px" : "72px 80px" }}>
+        <div style={{ maxWidth: 740, margin: "0 auto" }}>
+          <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 9, letterSpacing: "0.4em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 16 }}>Request a Consultation</p>
+          <h2 style={{ fontFamily: serif, fontSize: isMobile ? 28 : 40, fontWeight: 600, color: "#FBF7EE", lineHeight: 1.05, marginBottom: 8 }}>Schedule a Family Consultation</h2>
+          <p style={{ fontFamily: sans, fontSize: 14, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.8, marginBottom: 36, maxWidth: 580 }}>Please submit your information to schedule a private admissions consultation. A dedicated Enrollment Coordinator will guide your family through program options, admissions steps, curriculum, tuition and next steps.</p>
+          <div style={{ background: "#080808", borderTop: `2px solid ${gold}`, padding: "36px 32px" }}>
+            <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 9, letterSpacing: "0.25em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 12 }}>Parent / Guardian</p>
+            <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 10, marginBottom: 10 }}>
+              {[["First Name", "text"], ["Last Name", "text"]].map(([ph, type]) => (
+                <input key={ph} type={type} placeholder={ph} style={{ background: "#000", border: "1px solid rgba(199,171,117,.2)", color: "#FBF7EE", padding: "13px 16px", fontFamily: "'Avenir','Avenir Next','Century Gothic',sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
+              ))}
+            </div>
+            <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 10, marginBottom: 10 }}>
+              {[["Email Address", "email"], ["Phone Number", "tel"]].map(([ph, type]) => (
+                <input key={ph} type={type} placeholder={ph} style={{ background: "#000", border: "1px solid rgba(199,171,117,.2)", color: "#FBF7EE", padding: "13px 16px", fontFamily: "'Avenir','Avenir Next','Century Gothic',sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
+              ))}
+            </div>
+            <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr 80px", gap: 10, marginBottom: 24 }}>
+              <input type="text" placeholder="City *" style={{ background: "#000", border: "1px solid rgba(199,171,117,.2)", color: "#FBF7EE", padding: "13px 16px", fontFamily: "'Avenir','Avenir Next','Century Gothic',sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
+              <input type="text" placeholder="State" style={{ background: "#000", border: "1px solid rgba(199,171,117,.2)", color: "#FBF7EE", padding: "13px 16px", fontFamily: "'Avenir','Avenir Next','Century Gothic',sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
+              <input type="text" placeholder="ZIP *" style={{ background: "#000", border: "1px solid rgba(199,171,117,.2)", color: "#FBF7EE", padding: "13px 16px", fontFamily: "'Avenir','Avenir Next','Century Gothic',sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
+            </div>
+            <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 9, letterSpacing: "0.25em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 12 }}>Student</p>
+            <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 10, marginBottom: 10 }}>
+              {[["First Name", "text"], ["Last Name", "text"]].map(([ph, type]) => (
+                <input key={ph} type={type} placeholder={ph} style={{ background: "#000", border: "1px solid rgba(199,171,117,.2)", color: "#FBF7EE", padding: "13px 16px", fontFamily: "'Avenir','Avenir Next','Century Gothic',sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
+              ))}
+            </div>
+            <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 10, marginBottom: 10 }}>
+              <input type="text" placeholder="Age" style={{ background: "#000", border: "1px solid rgba(199,171,117,.2)", color: "#FBF7EE", padding: "13px 16px", fontFamily: "'Avenir','Avenir Next','Century Gothic',sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
+              <input type="text" placeholder="Current Grade / Year" style={{ background: "#000", border: "1px solid rgba(199,171,117,.2)", color: "#FBF7EE", padding: "13px 16px", fontFamily: "'Avenir','Avenir Next','Century Gothic',sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
+            </div>
+            <input type="text" placeholder="Program of Interest (Flagship, Six-Week, Summer)" style={{ background: "#000", border: "1px solid rgba(199,171,117,.2)", color: "#FBF7EE", padding: "13px 16px", fontFamily: "'Avenir','Avenir Next','Century Gothic',sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%", marginBottom: 24 }} />
+            <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 9, letterSpacing: "0.25em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 12 }}>Consultation Preferences</p>
+            <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 10, marginBottom: 10 }}>
+              <select defaultValue="" style={{ background: "#000", border: "1px solid rgba(199,171,117,.2)", color: "#FBF7EE", padding: "13px 16px", fontFamily: "'Avenir','Avenir Next','Century Gothic',sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%", appearance: "none" }}>
+                <option value="" disabled>Preferred Contact Method</option>
+                <option value="phone">Phone Call</option>
+                <option value="email">Email</option>
+                <option value="either">Either</option>
+              </select>
+              <input type="text" placeholder="Preferred Consultation Dates" style={{ background: "#000", border: "1px solid rgba(199,171,117,.2)", color: "#FBF7EE", padding: "13px 16px", fontFamily: "'Avenir','Avenir Next','Century Gothic',sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
+            </div>
+            <input type="text" placeholder="Preferred Times (e.g. mornings, evenings, weekends)" style={{ background: "#000", border: "1px solid rgba(199,171,117,.2)", color: "#FBF7EE", padding: "13px 16px", fontFamily: "'Avenir','Avenir Next','Century Gothic',sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%", marginBottom: 10 }} />
+            <textarea placeholder="Additional notes or questions (optional)" rows={4} style={{ background: "#000", border: "1px solid rgba(199,171,117,.2)", color: "#FBF7EE", padding: "13px 16px", fontFamily: "'Avenir','Avenir Next','Century Gothic',sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%", marginBottom: 28, resize: "vertical" }} />
+            <button onClick={() => openInquiry && openInquiry("contact")} style={{ fontFamily: "'Avenir','Avenir Next','Century Gothic',sans-serif", padding: "15px 40px", background: gold, border: "none", color: "#000", fontSize: 12, fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", cursor: "pointer", width: "100%" }}>REQUEST CONSULTATION — WE'LL BE IN TOUCH WITHIN 24 HOURS</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  );
+}
+
 export default function ExcaliburApp() {
   const [page, setPageRaw] = useState("home");
   const [inquiryOpen, setInquiryOpen] = useState(false);
@@ -7156,6 +7282,7 @@ export default function ExcaliburApp() {
     if (page === "events") return <EventsPage setPage={setPage} openInquiry={openInquiry} />;
     if (page === "faculty") return <FacultyPage setPage={setPage} openInquiry={openInquiry} />;
     if (page.startsWith("faculty:")) return <FacultyProfilePage slug={page.replace("faculty:", "")} setPage={setPage} />;
+    if (page === "contact") return <ContactPage setPage={setPage} openInquiry={openInquiry} />;
     if (page === "apply") return <ApplyPage setPage={setPage} openInquiry={openInquiry} />;
     if (page === "admissions") return <ApplyPage setPage={setPage} openInquiry={openInquiry} />;
     if (page === "apply-now") return <ApplicationPage setPage={setPage} defaultProgram={inquiryProgram} />;
