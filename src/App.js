@@ -274,6 +274,16 @@ const coaches = [
     bio: "Erik Dostal is the founder and president of CA Institute, a comprehensive educational institution he built from the ground up into a leading international provider of English language, business, and professional education — serving over 6,000 students across 25 international franchise locations. Over nearly three decades, Erik has demonstrated what it means to build an educational institution that operates at genuine scale: generating $4.8M in annual revenues, sustaining 20% year-over-year growth, and closing franchise deals spanning multiple continents. He holds an MA in TESOL from the University of Chichester and NILE, an MBA from IDRAC Business School, and a BA in Cultural Anthropology from Chapman University, where he was also a collegiate athlete. A former U.S. Youth National Team soccer player, Erik has channeled his competitive background into youth development, coaching, and the design of high-performance learning environments. He has authored multiple textbooks and publications on teaching methodology, language acquisition, and business education, and has organized international language symposiums attracting thousands of delegates from around the world. A former advisor to the Czech Ministry of Education and a certified international academic accreditor, his work has received recognition including European Small Business Awards recognition across multiple years. At Excalibur Academy, Erik brings the rare combination of deep pedagogical expertise, proven franchise and systems-building experience, and a practitioner's understanding of what it takes to build educational institutions that last."
   },
   {
+    name: "Keree James",
+    role: "Head of Rhetoric & Executive Communication",
+    img: "https://i.imgur.com/x2Ssu7g.jpeg",
+    isLogo: false,
+    shortBio: "Award-Winning Coach. Founder of Anchorset Consulting in Newport Beach. Recognized as a Top 10 Trainer in North America by Dale Carnegie — one of the most competitive distinctions in the professional training world — Keree James has spent over 25 years doing one thing: helping people speak with authority, lead with presence, and own every room they walk into. A Dale Carnegie Certified Senior Trainer, Certified DiSC Practitioner, and Executive Coach, Keree began her career as a public school English teacher — learning firsthand how people find their voice and why they hold it back. At Excalibur, Keree teaches students not just how to speak, but how to be heard, turning a training room into a turning point.",
+    tags: ["Public Speaking", "Leadership Development", "Dale Carnegie Certified", "Top 10 Trainer N. America", "Executive Coach", "DiSC Practitioner"],
+    linkedin: "",
+    bio: "Certified Trainer. Award-Winning Coach. For over 25 years, a career built at the intersection of education and leadership development. Recognized as a Top 10 Trainer in North America by Dale Carnegie, one of the most competitive distinctions in the professional training world, Keree James has spent her career doing one thing: helping people speak with authority, lead with presence, and own every room they walk into.\n\nAs a Dale Carnegie Certified Senior Trainer, Certified DiSC Practitioner, and Co-Active Coaching-trained practitioner, Keree brings methodology, mastery, and real-world application to the front of the room. She began her career as a public school English teacher, where she learned firsthand how people find their voice and why they hold it back. That insight is what turns a training room into a turning point.\n\nFounder of Anchorset Consulting, LLC, based in Newport Beach, Keree works with clients locally and nationally as both a coach and facilitator, designing leadership and communication programs that create lasting behavioral change. She holds a Bachelor of Arts in English with a minor in Education from UC Irvine and a Master of Arts in Education from National University.\n\nAt Excalibur, she teaches students not just how to speak, but how to be heard.",
+  },
+  {
     name: "Christopher Sanders",
     role: "Senior Public Speaking Instructor",
     img: "https://i.imgur.com/EELzLmn.jpeg",
@@ -3109,7 +3119,7 @@ function ScheduleTabs({ setPage, isMobile, waves, gold }) {
   );
 }
 function CoachCard({ c, i, setPage }) {
-  const hasFacultyPage = ["Alexander Milstein", "Chip Pankow", "Bill Morris", "Erik Dostal", "Christopher Sanders", "Anastasia Milstein", "Amina Abdulaeva"].includes(c.name);
+  const hasFacultyPage = ["Alexander Milstein", "Chip Pankow", "Bill Morris", "Erik Dostal", "Christopher Sanders", "Keree James", "Anastasia Milstein", "Amina Abdulaeva"].includes(c.name);
 
   return (
     <div style={{ background: "#080808", borderTop: i === 0 ? `2px solid ${gold}` : "2px solid rgba(199,171,117,.1)", overflow: "hidden", display: "flex", flexDirection: "column" }}>
@@ -4302,6 +4312,31 @@ const facultyProfiles = {
       "Published textbook author · International academic accreditor",
       "European Small Business Awards recognition",
       "U.S. Youth National Soccer Team player",
+    ],
+  },
+  "keree-james": {
+    name: "Keree James",
+    role: "Head of Rhetoric & Executive Communication",
+    img: "https://i.imgur.com/x2Ssu7g.jpeg",
+    tags: ["Public Speaking", "Leadership Development", "Dale Carnegie Certified", "Top 10 Trainer N. America", "Executive Coach", "DiSC Practitioner"],
+    linkedin: "",
+    headline: "Top 10 Dale Carnegie Trainer in North America. 25+ years turning communication into command.",
+    credentials: [
+      "Head of Rhetoric & Executive Communication — Excalibur Academy, Orange County, California",
+      "Top 10 Trainer in North America — Dale Carnegie",
+      "Dale Carnegie Certified Senior Trainer",
+      "Certified DiSC Practitioner",
+      "Co-Active Coaching-trained practitioner",
+      "Founder — Anchorset Consulting, LLC, Newport Beach",
+      "Bachelor of Arts in English (minor in Education) — UC Irvine",
+      "Master of Arts in Education — National University",
+      "Former Public School English Teacher",
+    ],
+    paras: [
+      "Recognized as a Top 10 Trainer in North America by Dale Carnegie — one of the most competitive distinctions in the professional training world — Keree James has spent over 25 years doing one thing: helping people speak with authority, lead with presence, and own every room they walk into.",
+      "As a Dale Carnegie Certified Senior Trainer, Certified DiSC Practitioner, and Co-Active Coaching-trained practitioner, Keree brings methodology, mastery, and real-world application to the front of the room. She began her career as a public school English teacher, where she learned firsthand how people find their voice — and why they hold it back. That insight is what turns a training room into a turning point.",
+      "Founder of Anchorset Consulting, LLC, based in Newport Beach, Keree works with clients locally and nationally as both a coach and facilitator, designing leadership and communication programs that create lasting behavioral change. She holds a Bachelor of Arts in English with a minor in Education from UC Irvine and a Master of Arts in Education from National University.",
+      "At Excalibur, she teaches students not just how to speak, but how to be heard.",
     ],
   },
   "christopher-sanders": {
@@ -6411,7 +6446,7 @@ function SummerDetailPage({ setPage, openInquiry }) {
           <h2 style={{ fontFamily: serif, fontSize: isMobile ? 26 : 36, fontWeight: 600, color: "#000", lineHeight: 1.1, marginBottom: 8 }}>The Mentors In the Room.</h2>
           <p style={{ fontFamily: sans, fontSize: 13, color: "#444", fontWeight: 300, lineHeight: 1.7, maxWidth: 680, marginBottom: 48 }}>Excalibur faculty come from the arenas where leadership is tested: a CEO who built the world's first autonomous racing series, directed the Formula BMW program, and oversaw a $13B NASDAQ listing, a former Citigroup Managing Director and Georgetown MBA professor with 100+ M&amp;A transactions, 600+ CEO advisory engagements, EVP/CFO leadership at two NYSE-listed companies, TEDx speaking engagement, and a doctoral candidate serving as an Orange County Sheriff's Department spokesman. They have led companies, advised CEOs, taught MBA students, spoken on stages from West Point to Ivy League institutions, and now bring that experience directly to Excalibur students.</p>
           <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(2, 1fr)", gap: isMobile ? 24 : 32, alignItems: "stretch" }}>
-            {coaches.filter(c => ["Bill Morris", "Chip Pankow", "Erik Dostal", "Christopher Sanders"].includes(c.name)).map((co, i) => (
+            {coaches.filter(c => ["Bill Morris", "Chip Pankow", "Erik Dostal", "Christopher Sanders", "Keree James"].includes(c.name)).map((co, i) => (
               <CoachCard key={i} c={co} i={i} setPage={setPage} light={true} />
             ))}
           </div>
