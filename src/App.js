@@ -1523,8 +1523,6 @@ function CurriculumPage({ setPage, openInquiry }) {
         </div>
       </div>
 
-      {/* ── SOIREE ── */}
-      <SoireeInviteBlock openInquiry={openInquiry} setPage={setPage} />
 
       {/* FAMILY CONSULTATION FORM */}
       <div style={{ background: "#000", padding: isMobile ? "52px 24px" : "72px 80px", borderTop: "1px solid rgba(199,171,117,.1)" }}>
@@ -2518,7 +2516,6 @@ function ProgramsPage({ setPage, openInquiry }) {
         </div>
       </div>
 
-    <SoireeInviteBlock openInquiry={openInquiry} setPage={setPage} />
     </div>
   );
 }
@@ -2861,7 +2858,6 @@ function ApplyPage({ setPage, openInquiry }) {
         </div>
       </div>
 
-      <SoireeInviteBlock openInquiry={openInquiry} setPage={setPage} />
 
       {/* FAMILY CONSULTATION FORM */}
       <div style={{ background: "#000", padding: isMobile ? "52px 24px" : "72px 80px", borderTop: "1px solid rgba(199,171,117,.1)" }}>
@@ -3466,7 +3462,6 @@ function HomePage({ setPage, openInquiry }) {
       </section>
 
 
-      <SoireeInviteBlock openInquiry={openInquiry} setPage={setPage} />
 
       {/* FOUNDER QUOTE */}
       <section style={{ background: "#080808", borderTop: "1px solid rgba(199,171,117,.07)", borderBottom: "1px solid rgba(199,171,117,.07)", padding: isMobile ? "60px 24px" : "80px 40px" }}>
@@ -3975,7 +3970,7 @@ function HomePage({ setPage, openInquiry }) {
             {[
               { n: "I", head: "A Cohort of Twenty", body: "Each wave is limited to twenty students. Student receives direct faculty attention and mentorship, and becomes part of the Excalibur family." },
               { n: "II", head: "A Dedicated Family Coordinator", body: "From first inquiry through graduation, each family is assigned a personal coordinator. One point of contact. Direct communication, guidance and support from first contact." },
-              { n: "III", head: "Private Invitation to the May Soirée", body: "An intimate family information evening. Meet the faculty, the leadership team, and the families who will form the summer cohorts. By personal invitation only." },
+              
             ].map(({ n, head, body }, i) => (
               <div key={i} style={{ padding: isMobile ? "28px 0" : "36px 0", borderBottom: "1px solid rgba(199,171,117,.08)", display: "grid", gridTemplateColumns: isMobile ? "1fr" : "48px 1fr", gap: isMobile ? 12 : 36, alignItems: "flex-start", textAlign: "left" }}>
                 <span style={{ fontFamily: serif, fontSize: isMobile ? 16 : 20, fontWeight: 300, color: "rgba(199,171,117,.35)", lineHeight: 1, letterSpacing: "0.1em", fontStyle: "italic", paddingTop: 4 }}>{n}</span>
@@ -4174,8 +4169,6 @@ function BeyondPage({ setPage, openInquiry }) {
         </div>
       </div>
 
-      {/* ── SOIREE & APPLY ── */}
-      <SoireeInviteBlock openInquiry={openInquiry} setPage={setPage} />
 
       {/* ── APPLY CTA ── */}
       <div style={{ background: "#000", padding: isMobile ? "60px 24px" : "80px 80px", textAlign: "center", borderTop: "1px solid rgba(199,171,117,.12)" }}>
@@ -4864,7 +4857,6 @@ function AboutPage({ setPage, openInquiry }) {
         ))}
       </div>
 
-      <SoireeInviteBlock openInquiry={openInquiry} setPage={setPage} />
     </div>
   );
 }
@@ -6312,8 +6304,6 @@ function FlagshipDetailPage({ setPage, openInquiry }) {
         </div>
       </div>
 
-      {/* ── MAY 23 SOIREE ── */}
-      <SoireeInviteBlock openInquiry={openInquiry} setPage={setPage} />
     </div>
   );
 }
@@ -6545,13 +6535,6 @@ function SummerDetailPage({ setPage, openInquiry }) {
         </div>
       </div>
 
-      {/* SOIREE POSTCARD */}
-      <div style={{ background: "#000", padding: isMobile ? "40px 24px" : "52px 80px" }}>
-        <div style={{ maxWidth: 1100, margin: "0 auto" }}>
-          <SoireeInviteBlock openInquiry={openInquiry} setPage={setPage} />
-        </div>
-      </div>
-
       {/* HOW TO APPLY  -  full width horizontal luxury steps */}
       <div style={{ background: "#FAFAF8", padding: isMobile ? "52px 24px" : "72px 80px", borderTop: "1px solid rgba(0,0,0,.06)" }}>
         <div style={{ maxWidth: 1100, margin: "0 auto" }}>
@@ -6775,15 +6758,7 @@ function SummerModulePage({ slug, setPage }) {
 
 function EventsPage({ setPage, openInquiry }) {
   const isMobile = useIsMobile();
-  const [soireeOpen, setSoireeOpen] = React.useState(false);
-  const soireeRef = React.useRef(null);
 
-  const openSoireeForm = () => {
-    setSoireeOpen(true);
-    setTimeout(() => {
-      if (soireeRef.current) soireeRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
-    }, 50);
-  };
   return (
     <div style={{ background: "#000", paddingTop: 0 }}>
       <Breadcrumb items={[{label:"Events",page:"events"}]} setPage={setPage} />
@@ -6818,7 +6793,7 @@ function EventsPage({ setPage, openInquiry }) {
                   <div style={{ width: 8, height: 8, borderRadius: "50%", background: "#4DB87A", flexShrink: 0 }} />
                   <span style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 9, letterSpacing: "0.22em", color: "#4DB87A", fontWeight: 700, textTransform: "uppercase" }}>Registration Open</span>
                 </div>
-                <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 8, letterSpacing: "0.45em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 16 }}>Academy Launch & Family Information Soirée</p>
+                <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 8, letterSpacing: "0.45em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 16 }}>Private Event · By Invitation Only</p>
                 {/* Date  -  monumental */}
                 <div style={{ fontFamily: serif, fontSize: isMobile ? 80 : 112, fontWeight: 300, color: "#FBF7EE", lineHeight: 1, letterSpacing: "-0.03em", marginBottom: 8 }}>May 27</div>
                 <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 16 }}>
@@ -6847,7 +6822,7 @@ function EventsPage({ setPage, openInquiry }) {
                   </div>
                 ))}
                 <div style={{ marginTop: 36 }}>
-                  <button onClick={openSoireeForm} style={{ fontFamily: sans, padding: "14px 36px", background: gold, border: "none", color: "#000", fontSize: 10, fontWeight: 700, letterSpacing: "0.2em", textTransform: "uppercase", cursor: "pointer" }}>Request Invitation →</button>
+
                 </div>
               </div>
 
@@ -6873,7 +6848,7 @@ function EventsPage({ setPage, openInquiry }) {
         <div style={{ maxWidth: 1100, margin: "0 auto" }}>
           <Fade>
             <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 8, letterSpacing: "0.55em", color: gold, fontWeight: 700, textTransform: "uppercase", marginBottom: 16 }}>The Evening</p>
-            <h2 style={{ fontFamily: serif, fontSize: isMobile ? 26 : 38, fontWeight: 300, color: "#FBF7EE", lineHeight: 1.05, marginBottom: 8 }}>The Soirée Program</h2>
+            <h2 style={{ fontFamily: serif, fontSize: isMobile ? 26 : 38, fontWeight: 300, color: "#FBF7EE", lineHeight: 1.05, marginBottom: 8 }}>The Evening</h2>
           </Fade>
           <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(4,1fr)", gap: 0 }}>
             {[
@@ -6892,10 +6867,7 @@ function EventsPage({ setPage, openInquiry }) {
         </div>
       </div>
 
-      {/* ── SOIREE POSTCARD  -  unchanged ── */}
-      <div ref={soireeRef}>
-        <SoireeInviteBlock openInquiry={openInquiry} setPage={setPage} autoOpen={soireeOpen} onFormClose={() => setSoireeOpen(false)} />
-      </div>
+
 
     </div>
   );
