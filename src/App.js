@@ -3122,9 +3122,9 @@ function CoachCard({ c, i, setPage }) {
   const hasFacultyPage = ["Alexander Milstein", "Chip Pankow", "Bill Morris", "Erik Dostal", "Christopher Sanders", "Keree James", "Anastasia Milstein", "Amina Abdulaeva"].includes(c.name);
 
   return (
-    <div style={{ background: "#080808", borderTop: i === 0 ? `2px solid ${gold}` : "2px solid rgba(199,171,117,.1)", overflow: "hidden", display: "flex", flexDirection: "column" }}>
-      {/* Photo  -  full portrait, same as faculty page */}
-      <div style={{ height: 0, paddingBottom: "110%", overflow: "hidden", position: "relative", background: "#0D0D0B" }}>
+    <div style={{ background: "#080808", borderTop: i === 0 ? `2px solid ${gold}` : "2px solid rgba(199,171,117,.1)", overflow: "hidden", display: "flex", flexDirection: "column", height: "100%" }}>
+      {/* Photo */}
+      <div style={{ height: 0, paddingBottom: "110%", overflow: "hidden", position: "relative", background: "#0D0D0B", flexShrink: 0 }}>
         {c.isLogo ? (
           <>
             <div style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center" }}>
@@ -3144,16 +3144,18 @@ function CoachCard({ c, i, setPage }) {
         </div>
       </div>
 
-      {/* Tags + shortBio */}
-      <div style={{ padding: "20px 24px 24px", flex: 1, display: "flex", flexDirection: "column" }}>
-        <div style={{ display: "flex", gap: 4, flexWrap: "wrap", marginBottom: 14 }}>
-          {c.tags && c.tags.map((t, j) => <span key={j} style={{ fontFamily: sans, fontSize: 9, color: "#FBF7EE", border: "1px solid #1a1a1a", padding: "2px 7px" }}>{t}</span>)}
+      {/* Tags + shortBio — flex: 1 forces this to fill ALL remaining height equally */}
+      <div style={{ padding: "20px 24px 24px", flex: 1, display: "flex", flexDirection: "column", justifyContent: "space-between", minHeight: 320 }}>
+        <div>
+          <div style={{ display: "flex", gap: 4, flexWrap: "wrap", marginBottom: 14 }}>
+            {c.tags && c.tags.map((t, j) => <span key={j} style={{ fontFamily: sans, fontSize: 9, color: "#FBF7EE", border: "1px solid #1a1a1a", padding: "2px 7px" }}>{t}</span>)}
+          </div>
+          <p style={{ fontFamily: sans, fontSize: 13, lineHeight: 1.85, color: "#FBF7EE", fontWeight: 300, marginBottom: 0 }}>
+            {c.shortBio || c.bio}
+          </p>
         </div>
-        <p style={{ fontFamily: sans, fontSize: 13, lineHeight: 1.85, color: "#FBF7EE", fontWeight: 300, marginBottom: hasFacultyPage ? 14 : 0 }}>
-          {c.shortBio || c.bio}
-        </p>
         {hasFacultyPage && (
-          <div style={{ display: "flex", alignItems: "center", gap: 16, flexWrap: "wrap" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 16, flexWrap: "wrap", marginTop: 20 }}>
             <button
               onClick={() => setPage(`faculty:${c.name.toLowerCase().replace(/ /g, "-")}`)}
               style={{ fontFamily: sans, fontSize: 11, color: gold, background: "transparent", border: "none", cursor: "pointer", padding: 0, letterSpacing: "0.08em", fontWeight: 600 }}
@@ -3817,12 +3819,14 @@ function HomePage({ setPage, openInquiry }) {
             <p style={{ fontFamily: sans, fontSize: 14, color: "#111", fontWeight: 300, lineHeight: 1.7, maxWidth: 680, margin: "0 auto" }}>Excalibur faculty come from the arenas where leadership is tested: a CEO who built the world’s first autonomous racing series, directed the Formula BMW program, and oversaw a $13B NASDAQ listing, a former Citigroup Managing Director and Georgetown MBA professor with 100+ M&A transactions, 600+ CEO advisory engagements, EVP/CFO leadership at two NYSE-listed companies, TEDx speaking engagement, and a doctoral candidate serving as an Orange County Sheriff’s Department spokesman. They have led companies, advised CEOs, taught MBA students, spoken on stages from West Point to Ivy League institutions, and now bring that experience directly to Excalibur students.</p>
           </div></Fade>
           <Fade d={.08}>
-            <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(3, 1fr)", gap: 2, background: "#E8E4DC", alignItems: "stretch" }}>
-              {coaches.map((co, i) => (
-                <Fade key={i} d={i * .04}>
-                  <CoachCard c={co} i={i} setPage={setPage} light={true} />
-                </Fade>
-              ))}
+            <div style={{ background: "#000", padding: 2 }}>
+              <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(3, 1fr)", gap: 2, background: "#000", alignItems: "stretch" }}>
+                {coaches.map((co, i) => (
+                  <Fade key={i} d={i * .04}>
+                    <CoachCard c={co} i={i} setPage={setPage} light={true} />
+                  </Fade>
+                ))}
+              </div>
             </div>
           </Fade>
           <Fade d={.12}><div style={{ textAlign: "center", marginTop: 32 }}><button onClick={() => setPage("faculty")} style={{ fontFamily: sans, background: "transparent", border: "1px solid #000", color: "#000", padding: "11px 28px", fontSize: 11, fontWeight: 600, letterSpacing: "0.15em", textTransform: "uppercase", cursor: "pointer" }}>Meet Our Faculty →</button></div></Fade>
