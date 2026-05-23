@@ -4670,7 +4670,7 @@ function AboutPage({ setPage, openInquiry }) {
                 <img src="https://i.imgur.com/PGjUc7X.jpeg" alt="Excalibur Academy" style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center top" }} onError={e => e.target.style.display="none"} />
               </div>
               <div style={{ borderLeft: "3px solid #C7AB75", paddingLeft: 20 }}>
-                <p style={{ fontFamily: sans, fontSize: 16, lineHeight: 1.9, color: "#111", fontWeight: 300 }}>By the end of the program, every student will have pitched before live audiences, analyzed and advised real businesses, launched a micro venture, worked in teams under pressure, and competed in Shark Tank-style finals before real investors. In our flagship program, students launch in teams a real micro-venture and graduate with a bound portfolio of work that sets them apart for university admissions — and beyond.</p>
+                <p style={{ fontFamily: sans, fontSize: 16, lineHeight: 1.9, color: "#111", fontWeight: 300 }}>Across Excalibur programs, student will pitch before live audiences, analyze and advise real businesses, complete externships in the industry of their choice, launch a micro venture or MVP product, work in teams under pressure, compete in Shark Tank-style finals before real investors, and graduate with a bound portfolio of work that sets them apart for university admissions — and beyond.</p>
               </div>
             </div>
           </div>
