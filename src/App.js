@@ -6201,44 +6201,43 @@ function FlagshipDetailPage({ setPage, openInquiry }) {
       </div>
 
       {/* ── ADMISSIONS PROCESS ── */}
-      <div style={{ background: "#000" }}>
-        <div style={{ maxWidth: 1100, margin: "0 auto", padding: isMobile ? "52px 24px" : "72px 80px" }}>
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", flexWrap: "wrap", gap: 24, marginBottom: 56 }}>
-            <div>
-              <p style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.4em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 16 }}>Admissions</p>
-              <h2 style={{ fontFamily: serif, fontSize: isMobile ? 30 : 44, fontWeight: 600, color: "#FBF7EE", lineHeight: 1.0, marginBottom: 0 }}>Four steps.</h2>
-            </div>
-            <p style={{ fontFamily: sans, fontSize: 13, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.8, maxWidth: 400 }}>The process is intentionally personal and respectful of each family’s time. Its purpose is to understand the student, answer the family’s questions, and ensure a strong fit for the Excalibur cohort.</p>
-          </div>
-          <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(4,1fr)", gap: 1, background: "rgba(199,171,117,.08)" }}>
+      {/* ── HOW TO APPLY ── */}
+      <div style={{ background: "#FAFAF8", padding: isMobile ? "52px 24px" : "72px 80px", borderTop: "1px solid rgba(0,0,0,.06)" }}>
+        <div style={{ maxWidth: 1100, margin: "0 auto" }}>
+          <p style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.45em", color: "#8B6914", fontWeight: 600, textTransform: "uppercase", marginBottom: 20 }}>Admissions Process</p>
+          <h2 style={{ fontFamily: serif, fontSize: isMobile ? 26 : 38, fontWeight: 600, color: "#000", lineHeight: 1.05, marginBottom: 52 }}>How to Apply</h2>
+          <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(3,1fr)", position: "relative", marginBottom: 0 }}>
+            {!isMobile && (
+              <div style={{ position: "absolute", top: 22, left: 44, right: 44, height: "1px", background: "linear-gradient(90deg, rgba(0,0,0,.04), rgba(0,0,0,.15), rgba(0,0,0,.04))", zIndex: 0 }} />
+            )}
             {[
-              { n: "01", title: "Submit Your Application", time: "10–15 minutes", desc: "A short online form covering your background, interests, and what draws you to Excalibur. No essays. No transcripts. Just an honest picture of who your student is.", green: false },
-              { n: "02", title: "Committee Review", time: "Within 3 days", desc: "Every application is reviewed by the Excalibur admissions committee — not an algorithm. We read each one carefully, looking for the qualities that define a student who will thrive here.", green: false },
-              { n: "03", title: "Admissions Interview", time: "15–20 minutes", desc: "Shortlisted students are invited to a brief, relaxed conversation with a member of our admissions team. This is not a test. It is a chance to understand your student — and for them to understand us.", green: false },
-              { n: "04", title: "Decision & Enrollment", time: "Within 5 days total", desc: "Decisions are delivered promptly. Upon acceptance, your seat is held for 72 hours. Enrollment is confirmed with a deposit, and you become part of the founding class.", green: true },
-            ].map((s, i) => (
-              <div key={i} style={{ background: "#0A0A08", padding: isMobile ? "32px 24px" : "44px 36px", borderTop: `2px solid ${s.green ? "#90D4A0" : i === 0 ? gold : "rgba(199,171,117,.10)"}`, position: "relative", overflow: "hidden" }}>
-                <div style={{ position: "absolute", bottom: 16, right: 20, fontFamily: serif, fontSize: 80, fontWeight: 600, color: "rgba(199,171,117,.04)", lineHeight: 1 }}>{s.n}</div>
-                <div style={{ fontFamily: serif, fontSize: 42, fontWeight: 300, color: s.green ? "#90D4A0" : gold, lineHeight: 1, marginBottom: 20 }}>{s.n}</div>
-                <h4 style={{ fontFamily: serif, fontSize: 18, fontWeight: 600, color: "#FBF7EE", marginBottom: 8, lineHeight: 1.2 }}>{s.title}</h4>
-                <p style={{ fontFamily: sans, fontSize: 10, color: s.green ? "#90D4A0" : gold, letterSpacing: "0.12em", marginBottom: 16, fontWeight: 600 }}>{s.time}</p>
-                <div style={{ width: 24, height: 1, background: s.green ? "#90D4A0" : gold, marginBottom: 16 }} />
-                <p style={{ fontFamily: sans, fontSize: 12, lineHeight: 1.8, color: "#FBF7EE", fontWeight: 300 }}>{s.desc}</p>
+              { n: "01", title: "Submit Application", desc: "Begin by submitting a brief application for admissions review using the form below. Excalibur is selective, and each applicant is considered individually." },
+              { n: "02", title: "Admissions Consultation", desc: "A member of the admissions team will contact the family within 24 hours to answer questions, discuss the student's goals, and walk through program options and track availability." },
+              { n: "03", title: "Enrollment Confirmation", desc: "Upon acceptance, enrollment is confirmed by deposit. Each cohort is limited to 20 students to preserve the quality of instruction, mentorship, and direct feedback." },
+            ].map((step, i) => (
+              <div key={i} style={{ padding: isMobile ? "28px 0" : "0 28px 0 0", borderTop: isMobile ? "1px solid rgba(199,171,117,.1)" : "none", borderLeft: !isMobile && i > 0 ? "1px solid rgba(199,171,117,.1)" : "none", paddingLeft: !isMobile && i > 0 ? 28 : 0, position: "relative", zIndex: 1 }}>
+                <div style={{ width: 44, height: 44, border: "1px solid rgba(0,0,0,.2)", display: "flex", alignItems: "center", justifyContent: "center", marginBottom: 24, background: "#FAFAF8" }}>
+                  <span style={{ fontFamily: serif, fontSize: 18, fontWeight: 300, color: "#8B6914" }}>{step.n}</span>
+                </div>
+                <p style={{ fontFamily: serif, fontSize: isMobile ? 16 : 17, fontWeight: 600, color: "#000", lineHeight: 1.25, marginBottom: 12 }}>{step.title}</p>
+                <p style={{ fontFamily: sans, fontSize: 12, color: "#333", fontWeight: 300, lineHeight: 1.8 }}>{step.desc}</p>
               </div>
             ))}
           </div>
-        </div>
-      </div>
 
-      {/* ── ENROLL FORM ── */}
-      <div style={{ background: "#000", padding: isMobile ? "52px 24px" : "72px 80px" }}>
-        <div style={{ maxWidth: 900, margin: "0 auto" }}>
-          <div style={{ textAlign: "center", marginBottom: 52 }}>
-            <p style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.4em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 16 }}>Founding Class · September 2026</p>
-            <h2 style={{ fontFamily: serif, fontSize: isMobile ? 30 : 44, fontWeight: 600, color: "#FBF7EE", lineHeight: 1.05, marginBottom: 12 }}>Choose your program.</h2>
-            <p style={{ fontFamily: sans, fontSize: 14, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.8, maxWidth: 480, margin: "0 auto" }}>Select your program and track, then fill in your details. Our enrollment coordinator will be in touch within 48 hours.</p>
+          {/* Step 04 */}
+          <div style={{ borderTop: "1px solid rgba(0,0,0,.1)", marginTop: 40, paddingTop: 36, display: "grid", gridTemplateColumns: isMobile ? "1fr" : "56px 1fr", gap: isMobile ? 20 : 36, alignItems: "start" }}>
+            <div style={{ width: 44, height: 44, border: "1px solid rgba(0,0,0,.2)", display: "flex", alignItems: "center", justifyContent: "center", background: "#FAFAF8", flexShrink: 0 }}>
+              <span style={{ fontFamily: serif, fontSize: 18, fontWeight: 300, color: "#8B6914" }}>04</span>
+            </div>
+            <div>
+              <p style={{ fontFamily: serif, fontSize: isMobile ? 16 : 17, fontWeight: 600, color: "#000", lineHeight: 1.25, marginBottom: 16 }}>Family Onboarding &amp; Orientation</p>
+              <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: isMobile ? 14 : 52 }}>
+                <p style={{ fontFamily: sans, fontSize: 12, color: "#333", fontWeight: 300, lineHeight: 1.9 }}>Accepted families receive formal onboarding materials including the welcome packet, program overview, schedule details, and student and family portal access covering schedules, communications, and administrative updates.</p>
+                <p style={{ fontFamily: sans, fontSize: 12, color: "#333", fontWeight: 300, lineHeight: 1.9 }}>Prior to the start of the program, families are invited to a Family Orientation Session to meet lead faculty, the operations team, and fellow families — and to become fully acquainted with the Academy environment, expectations, and logistics.</p>
+              </div>
+            </div>
           </div>
-          <FlagshipEnrollSelector openInquiry={openInquiry} isMobile={isMobile} />
         </div>
       </div>
 
