@@ -416,7 +416,7 @@ function Nav({ page, setPage }) {
     ["Home", "home", null],
     ["The Academy", "about", null],
     ["Our Programs", "programs", [
-      { label: "Summer Intensive", page: "summer-detail", sub: "July & August · Two Weeks" },
+      { label: "Summer Intensive", page: "summer-detail", sub: "July 27 – August 8 · Two Weeks" },
       { label: "Flagship 10-Month", page: "flagship-detail", sub: "Full Immersion · Sep–Jun" },
       { label: "Six-Week Intensive", page: "intensive", sub: "Four Waves Per Year" },
       { label: "View All Programs", page: "programs", sub: "Compare All Three" },
@@ -2124,9 +2124,9 @@ function ProgramsPage({ setPage, openInquiry }) {
       title: "Summer Intensive",
       tagline: "Two weeks. Full days. Venture & Leadership Launchpad.",
       photo: "https://i.imgur.com/ua2WSIA.jpeg",
-      desc: "The Summer Intensive is a two-week, full-day program offered in July and August for high school students ages 15–18 who are ready to turn ambition into discipline and action.\n\nEvery day begins with public speaking and executive communication training. Students are on their feet from the first morning — practicing voice, presence, eye contact, persuasion, and composure under pressure.\n\nThe core of the program is venture development. Working in teams, students research a market, identify a real problem, define their customer, study the competition, build a marketing strategy, and structure a business plan.\n\nApplied workshops, AI tool sessions, and daily guest speakers from business and entrepreneurship support the venture work throughout the two weeks, helping students turn an idea into a pitch-ready concept.\n\nThe program culminates in the Shark Tank Inspired — Excalibur Venture Finale — a live pitch competition where student teams present their business plans before investors, entrepreneurs, executives, and invited judges.\n\nTeams are evaluated on the strength of their concept, market research, customer insight, marketing strategy, business logic, and composure under questioning. Awards are presented for the strongest performances, with prizes ranging from premium business accessories to custom surfboards, scooters, event tickets and cash awards.",
+      desc: "The Summer Intensive is a two-week, full-day program running July 27 – August 8, 2026, for high school students ages 15–18 who are ready to turn ambition into discipline and action.\n\nEvery day begins with public speaking and executive communication training. Students are on their feet from the first morning — practicing voice, presence, eye contact, persuasion, and composure under pressure.\n\nThe core of the program is venture development. Working in teams, students research a market, identify a real problem, define their customer, study the competition, build a marketing strategy, and structure a business plan.\n\nApplied workshops, AI tool sessions, and daily guest speakers from business and entrepreneurship support the venture work throughout the two weeks, helping students turn an idea into a pitch-ready concept.\n\nThe program culminates in the Shark Tank Inspired — Excalibur Venture Finale — a live pitch competition where student teams present their business plans before investors, entrepreneurs, executives, and invited judges.\n\nTeams are evaluated on the strength of their concept, market research, customer insight, marketing strategy, business logic, and composure under questioning. Awards are presented for the strongest performances, with prizes ranging from premium business accessories to custom surfboards, scooters, event tickets and cash awards.",
       details: [
-        ["Schedule", "Wave I: July 6–18, 2026  ·  Wave II: August 3–15, 2026\nMonday–Friday · 9:30 AM–3:30 PM"],
+        ["Schedule", "July 27 – August 8, 2026\nMonday–Friday · 9:30 AM–3:30 PM"],
         ["Class Size", "Limited to 20 students per wave"],
         ["Tuition", "$410 / full day · $4,500 per wave"],
         ["Included", "Catered lunches from local restaurants, distinguished guest speakers, faculty-led workshops, pitch development, and The Excalibur Venture Grand Finale before families and invited professionals."],
@@ -2612,7 +2612,7 @@ function ApplyPage({ setPage, openInquiry }) {
             {[
               {
                 status: "ACCEPTING APPLICATIONS NOW", statusColor: "#4DB87A",
-                label: "Summer Intensive", dates: "July & August 2026",
+                label: "Summer Intensive", dates: "July 27 – Aug 8, 2026",
                 price: "$410 / full day", period: "· $4,500 per wave",
                 desc: "A two-week intensive for high school students aged 15–18 (rising juniors and seniors) who want to experience Excalibur's core model in a concentrated format.\n\nStudents train in public speaking, business, leadership, AI, sales, venture development, and applied strategy — culminating in The Excalibur Venture Court, a Shark Tank–inspired pitch finale before families, investors, entrepreneurs, and invited judges.\n\nLimited enrollment per wave. 20 per cohort.",
                 page: "summer-detail",
@@ -2827,7 +2827,7 @@ function ApplyPage({ setPage, openInquiry }) {
           </Fade>
           <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(3,1fr)", gap: 0 }}>
             {[
-              { label: "Summer Intensive", price: "$410", period: "per full day · $4,500 per wave", detail: "Two waves — July & August 2026.\n20 students per wave." },
+              { label: "Summer Intensive", price: "$410", period: "per full day · $4,500 per wave", detail: "One wave — July 27 – August 8, 2026.\n20 students." },
               { label: "Six-Week Intensive", price: "$3,900", period: "per wave", detail: "Four waves per year.\nWeekday evening or weekend formats." },
               { label: "Ten-Month Flagship", price: "$1,990", period: "per month", detail: "September 2026 – June 2027.\nWeekday or Saturday track." },
             ].map((t, i) => (
@@ -2919,8 +2919,7 @@ function SummerContent({ setPage, isMobile, summerLeft, gold }) {
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: 2 }}>
       {[
-        { label: "WAVE 1 — JULY", dates: "July 6 – July 18, 2026", items: [["Schedule", "Mon–Fri · 9:30 AM – 3:30 PM"], ["Duration", "9 days + Field Trip"], ["Guest Speakers", "Daily · every session"], ["Finale", "Shark Tank · July 18"]] },
-        { label: "WAVE 2 — AUGUST", dates: "Aug 3 – Aug 15, 2026", items: [["Schedule", "Mon–Fri · 9:30 AM – 3:30 PM"], ["Duration", "9 days + Field Trip"], ["Guest Speakers", "Daily · every session"], ["Finale", "Shark Tank · Aug 15"]] },
+        { label: "WAVE — JULY 27", dates: "July 27 – August 8, 2026", items: [["Schedule", "Mon–Fri · 9:30 AM – 3:30 PM"], ["Duration", "9 days + Field Trip"], ["Guest Speakers", "Daily · every session"], ["Finale", "Shark Tank · Aug 8"]] },
       ].map((t, i) => (
         <div key={i} style={{ background: "#080808", padding: "24px 24px" }}>
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 4 }}>
@@ -3025,8 +3024,7 @@ function ScheduleTabs({ setPage, isMobile, waves, gold }) {
       {activeProgram === "summer" && (
         <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 1, background: "#111" }}>
           {[
-            { label: "WAVE 1 — JULY", dates: "July 6 – July 18, 2026", left: summerLeft[0], items: [["Schedule", "Mon–Fri · 9:30 AM – 3:30 PM"], ["Duration", "9 days + Field Trip"], ["Guest Speakers", "Daily · every session"], ["Finale", "Shark Tank · July 18"]] },
-            { label: "WAVE 2 — AUGUST", dates: "Aug 3 – Aug 15, 2026", left: summerLeft[1], items: [["Schedule", "Mon–Fri · 9:30 AM – 3:30 PM"], ["Duration", "9 days + Field Trip"], ["Guest Speakers", "Daily · every session"], ["Finale", "Shark Tank · Aug 15"]] },
+            { label: "WAVE — JULY 27", dates: "July 27 – August 8, 2026", left: summerLeft[0], items: [["Schedule", "Mon–Fri · 9:30 AM – 3:30 PM"], ["Duration", "9 days + Field Trip"], ["Guest Speakers", "Daily · every session"], ["Finale", "Shark Tank · Aug 8"]] },
           ].map((t, i) => {
             return (
               <div key={i} style={{ background: "#080808", padding: "28px 32px" }}>
@@ -3194,7 +3192,7 @@ function HomePage({ setPage, openInquiry }) {
       {/* FOUNDING BANNER */}
       <div style={{ background: gold, padding: isMobile ? "10px 16px" : "10px 40px", textAlign: "center" }}>
         <p style={{ fontFamily: sans, fontSize: isMobile ? 9 : 11, letterSpacing: isMobile ? "0.1em" : "0.22em", color: "#000", fontWeight: 700, textTransform: "uppercase", lineHeight: 1.5 }}>
-          {isMobile ? <>SUMMER INTENSIVE · JULY 6–18 & AUG 3–15 · MON–FRI · 20 STUDENTS PER WAVE · <span style={{ cursor: "pointer", textDecoration: "underline" }} onClick={() => setPage("apply")}>Apply Now</span></> : <>✦ &nbsp; Summer Intensive &nbsp;·&nbsp; July 6–18 &amp; August 3–15 &nbsp;·&nbsp; Mon–Fri &nbsp;·&nbsp; 20 Students Per Wave &nbsp;·&nbsp; <span style={{ cursor: "pointer", textDecoration: "underline", textUnderlineOffset: 3 }} onClick={() => setPage("apply")}>Apply Now</span> &nbsp; ✦</>}
+          {isMobile ? <>SUMMER INTENSIVE · JULY 27 – AUG 8 · MON–FRI · 20 STUDENTS PER WAVE · <span style={{ cursor: "pointer", textDecoration: "underline" }} onClick={() => setPage("apply")}>Apply Now</span></> : <>✦ &nbsp; Summer Intensive &nbsp;·&nbsp; July 27 – August 8 &nbsp;·&nbsp; Mon–Fri &nbsp;·&nbsp; 20 Students Per Wave &nbsp;·&nbsp; <span style={{ cursor: "pointer", textDecoration: "underline", textUnderlineOffset: 3 }} onClick={() => setPage("apply")}>Apply Now</span> &nbsp; ✦</>}
         </p>
       </div>
 
@@ -3310,7 +3308,7 @@ function HomePage({ setPage, openInquiry }) {
       <section style={{ background: "#050504", borderTop: "1px solid rgba(199,171,117,.10)", borderBottom: "1px solid rgba(199,171,117,.10)", overflow: "hidden" }}>
         {isMobile ? (
           <div ref={statsRef} style={{ display: "grid", gridTemplateColumns: "1fr 1fr" }}>
-            {[["10", " Months", "academic year program"], ["6", " Weeks", "intensive track"], ["20", "", "students per cohort"], ["10", "", "curriculum modules"], ["30+", "", "guest speakers / year"], ["2", "", "summer waves"]].map(([num, suf, l], i) => (
+            {[["10", " Months", "academic year program"], ["6", " Weeks", "intensive track"], ["20", "", "students per cohort"], ["10", "", "curriculum modules"], ["30+", "", "guest speakers / year"], ["1", "", "summer wave"]].map(([num, suf, l], i) => (
               <div key={i} style={{ padding: "28px 16px", textAlign: "center", borderLeft: i % 2 === 1 ? "1px solid rgba(199,171,117,.10)" : "none", borderTop: i >= 2 ? "1px solid rgba(199,171,117,.10)" : "none", display: "flex", flexDirection: "column", alignItems: "center" }}>
                 <div style={{ width: 16, height: 1, background: "rgba(199,171,117,.35)", marginBottom: 12 }} />
                 <div style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: 44, fontWeight: 300, color: "#FBF7EE", lineHeight: 1 }}>
@@ -3323,7 +3321,7 @@ function HomePage({ setPage, openInquiry }) {
           </div>
         ) : (
           <div ref={statsRef} style={{ maxWidth: 1200, margin: "0 auto", display: "grid", gridTemplateColumns: "repeat(6, 1fr)" }}>
-            {[["10", " Months", "academic year program"], ["6", " Weeks", "intensive track"], ["20", "", "students per cohort"], ["10", "", "curriculum modules"], ["30+", "", "guest speakers / year"], ["2", "", "summer waves"]].map(([num, suf, l], i) => {
+            {[["10", " Months", "academic year program"], ["6", " Weeks", "intensive track"], ["20", "", "students per cohort"], ["10", "", "curriculum modules"], ["30+", "", "guest speakers / year"], ["1", "", "summer wave"]].map(([num, suf, l], i) => {
               const isHigh = i % 2 === 0;
               return (
                 <div key={i} style={{
@@ -3404,24 +3402,18 @@ function HomePage({ setPage, openInquiry }) {
                   Summer Intensive 2026
                 </h2>
                 <p style={{ fontFamily: "'Cormorant Garamond', 'Didot', Georgia, serif", fontSize: isMobile ? 18 : 22, fontWeight: 300, color: gold, fontStyle: "italic", marginBottom: 28, letterSpacing: "0.04em" }}>
-                  July &amp; August Waves
+                  July 27 – August 8
                 </p>
 
                 {/* Body copy */}
                 <p style={{ fontFamily: sans, fontSize: isMobile ? 14 : 14, lineHeight: 1.9, color: "#FBF7EE", fontWeight: 300 }}>
-                  Offered in two waves — July and August — this full-day, Monday-through-Friday intensive is led by senior faculty, former Fortune 100 executives, accomplished leaders, top industry specialists, and distinguished guest speakers. Designed specifically for high school students ages 15–18 who are ready to turn ambition into discipline and action. Students move from idea to venture concept: researching the market, shaping the business model, building the pitch, practicing executive communication, and learning how to defend their thinking under pressure. The program culminates in the Shark Tank Inspired Excalibur Venture Finale, where teams present before real investors and invited judges.
+                  A full-day, Monday-through-Friday intensive is led by senior faculty, former Fortune 100 executives, accomplished leaders, top industry specialists, and distinguished guest speakers. Designed specifically for high school students ages 15–18 who are ready to turn ambition into discipline and action. Students move from idea to venture concept: researching the market, shaping the business model, building the pitch, practicing executive communication, and learning how to defend their thinking under pressure. The program culminates in the Shark Tank Inspired Excalibur Venture Finale, where teams present before real investors and invited judges.
                 </p>
 
               </div>
 
               {/* RIGHT  -  details panel */}
               <div style={{ border: `1px solid rgba(199,171,117,.15)`, borderTop: `2px solid ${gold}`, display: "flex", flexDirection: "column" }}>
-                {/* "You Asked. We Listened."  -  bold statement block */}
-                <div style={{ background: gold, padding: isMobile ? "20px 18px" : "22px 22px", position: "relative", overflow: "hidden", flexShrink: 0 }}>
-                  <div style={{ position: "absolute", right: -10, top: "50%", transform: "translateY(-50%)", fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: 80, fontWeight: 300, color: "rgba(0,0,0,.08)", lineHeight: 1, userSelect: "none", pointerEvents: "none" }}>✦</div>
-                  <p style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.38em", color: "rgba(0,0,0,.55)", fontWeight: 700, textTransform: "uppercase", marginBottom: 8, position: "relative", zIndex: 1 }}>You Asked. We Listened.</p>
-                  <p style={{ fontFamily: "'Cormorant Garamond', 'Didot', Georgia, serif", fontSize: isMobile ? 18 : 21, fontWeight: 600, color: "#000", lineHeight: 1.25, marginBottom: 0, letterSpacing: "0.01em", position: "relative", zIndex: 1 }}>Due to high demand and our commitment to keeping cohort sizes small — and experience for each student personalized — <em>we are introducing a second two-week intensive wave in August 2026.</em></p>
-                </div>
                 {/* Panel header */}
                 <div style={{ padding: "12px 22px", borderBottom: `1px solid rgba(199,171,117,.1)`, borderTop: `1px solid rgba(199,171,117,.1)` }}>
                   <p style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: 15, color: "#FBF7EE", fontStyle: "italic", fontWeight: 300, margin: 0 }}>Program Details</p>
@@ -3429,8 +3421,7 @@ function HomePage({ setPage, openInquiry }) {
                 <div style={{ padding: "0 22px", flex: 1 }}>
                   {[
                     ["Sessions", "9:30 AM – 3:30 PM · Mon–Fri"],
-                    ["Wave 1", "July 6 – 18, 2026"],
-                    ["Wave 2", "August 3 – 15, 2026"],
+                    ["Wave", "July 27 – August 8, 2026"],
                     ["Finale", "Excalibur Venture Finale · Real investors"],
                     ["Guest Speakers", "Distinguished speaker rotating daily"],
                     ["Eligibility", "Ages 15–18 · 20 students per wave"],
@@ -3593,15 +3584,14 @@ function HomePage({ setPage, openInquiry }) {
                 <Eyebrow>SUMMER INTENSIVE · JULY &amp; AUGUST</Eyebrow>
                 <h3 style={{ fontFamily: serif, fontSize: isMobile ? 34 : 42, fontWeight: 600, color: "#FBF7EE", lineHeight: 1, marginBottom: 8 }}>Summer Intensive</h3>
                 <p style={{ fontFamily: serif, fontSize: 16, color: gold, fontStyle: "italic", marginBottom: 20 }}>Two weeks. Full days. Real stakes.</p>
-                <p style={{ fontFamily: sans, fontSize: 13, lineHeight: 1.85, color: "#FBF7EE", fontWeight: 300 }}>Two waves — July 6–18 and August 3–15. Full days, Monday through Friday, led by senior faculty, Fortune 500 executives, and distinguished guest speakers. Every session culminates in a Shark Tank-inspired finale before real investors and families.</p>
+                <p style={{ fontFamily: sans, fontSize: 13, lineHeight: 1.85, color: "#FBF7EE", fontWeight: 300 }}>July 27 – August 8. Full days, Monday through Friday, led by senior faculty, Fortune 500 executives, and distinguished guest speakers. Every session culminates in a Shark Tank-inspired finale before real investors and families.</p>
               </div>
               {!isMobile && <div style={{ background: "rgba(199,171,117,.08)" }} />}
               {/* Middle: details */}
               <div style={{ padding: isMobile ? "0 28px 28px" : "52px 44px", display: "flex", flexDirection: "column", gap: 0 }}>
                 {[
                   ["Sessions", "9:30 AM – 3:30 PM · Mon–Fri"],
-                  ["Wave 1", "July 6 – 18, 2026"],
-                  ["Wave 2", "August 3 – 15, 2026"],
+                  ["Wave", "July 27 – August 8, 2026"],
                   ["Guest Speakers", "Distinguished speaker rotating daily"],
                   ["Finale", "Shark Tank–inspired with real investors and judges"],
                   ["Eligibility", "Ages 15–18 (rising juniors and seniors) · 20 students per wave"],
@@ -3962,8 +3952,8 @@ function HomePage({ setPage, openInquiry }) {
           </h2>
           {/* Countdown  -  clean, minimal, no boxes */}
           <div style={{ marginBottom: 56 }}>
-            <p style={{ fontFamily: eyebrow_font, fontSize: 10, letterSpacing: "0.3em", color: "#C7AB75", textTransform: "uppercase", marginBottom: 20 }}>Wave 1 starts July 6, 2026</p>
-            <CountdownTimer targetDate="2026-07-06T09:30:00" label="Days Until Summer July Wave Begins" />
+            <p style={{ fontFamily: eyebrow_font, fontSize: 10, letterSpacing: "0.3em", color: "#C7AB75", textTransform: "uppercase", marginBottom: 20 }}>Wave starts July 27, 2026</p>
+            <CountdownTimer targetDate="2026-07-27T09:30:00" label="Days Until Summer Wave Begins" />
           </div>
           {/* Three bold statements */}
           <div style={{ maxWidth: 700, margin: "0 auto 60px", display: "flex", flexDirection: "column", gap: 0 }}>
@@ -4905,7 +4895,7 @@ function ComingSoonPage({ onUnlock }) {
 
         {/* Eyebrow */}
         <p style={{ fontFamily: eyebrow_font, fontSize: 10, letterSpacing: "0.4em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 20, borderBottom: "1px solid rgba(199,171,117,.3)", paddingBottom: 8, display: "inline-block" }}>
-          Waitlist Now Open for Summer Intensive July & August Waves 2026 &nbsp;·&nbsp; Apply Now &nbsp;·&nbsp; Limited Cohort &nbsp;·&nbsp; 20 Students Only
+          Enrollment Now Open for Summer Intensive · July 27 – August 8, 2026 &nbsp;·&nbsp; Apply Now &nbsp;·&nbsp; Limited Cohort &nbsp;·&nbsp; 20 Students Only
         </p>
 
         {/* Title  -  uniform uppercase via textTransform to match homepage */}
@@ -4931,7 +4921,7 @@ function ComingSoonPage({ onUnlock }) {
         {/* Program cards  -  all gold */}
         <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(3,1fr)", gap: 2, background: "#111", marginBottom: 52, width: "100%", maxWidth: 880 }}>
           {[
-            { label: "SUMMER INTENSIVE", dates: "July & August 2026", detail: "Mon–Fri · 9:30 AM–3:30 PM · $410/day · $4,500 per wave" },
+            { label: "SUMMER INTENSIVE", dates: "July 27 – Aug 8, 2026", detail: "Mon–Fri · 9:30 AM–3:30 PM · $410/day · $4,500 per wave" },
             { label: "TEN-MONTH FLAGSHIP", dates: "September 2026 – June 2027", detail: "Weekday or Weekend Track · $1,900 / month", flagship: true },
             { label: "SIX-WEEK INTENSIVE", dates: "Four waves · 2026", detail: "Mon & Wed evenings or Saturdays · $3,900 / wave" },
           ].map((p, i) => (
@@ -5166,8 +5156,7 @@ function InquiryModal({ open, onClose, defaultProgram }) {
   );
 
   const programs = [
-    { id: "summer-wave1", label: "Summer Intensive · Wave 1 (July)" },
-    { id: "summer-wave2", label: "Summer Intensive · Wave 2 (August)" },
+    { id: "summer-wave1", label: "Summer Intensive · Wave (July 27 – Aug 8)" },
     { id: "six-week", label: "Six-Week Intensive" },
     { id: "flagship", label: "Ten-Month Flagship Program" },
   ];
@@ -6341,7 +6330,7 @@ function SummerDetailPage({ setPage, openInquiry }) {
             </div>
           </div>
           <div style={{ background: "#000", padding: "28px 24px 20px" }}>
-            <p style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.42em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 14 }}>Summer Intensive · July & August 2026</p>
+            <p style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.42em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 14 }}>Summer Intensive · July 27 – August 8, 2026</p>
             <h1 style={{ fontFamily: "'Cormorant Garamond', 'Didot', Georgia, serif", fontSize: 30, fontWeight: 300, fontStyle: "italic", color: "#FBF7EE", lineHeight: 1.1, marginBottom: 6, letterSpacing: "0.01em" }}>Two-Weeks. Full Day Immersion.</h1>
             <p style={{ fontFamily: "'Cormorant Garamond', 'Didot', Georgia, serif", fontSize: 20, color: gold, fontStyle: "italic", fontWeight: 300, letterSpacing: "0.02em" }}>Elite Mentorship. Real Momentum.</p>
           </div>
@@ -6351,7 +6340,7 @@ function SummerDetailPage({ setPage, openInquiry }) {
         <img src="https://i.imgur.com/N4OB8dS.jpeg" alt="Summer Intensive" style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center" }} />
         <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(0,0,0,.92) 0%, rgba(0,0,0,.15) 60%)" }} />
         <div style={{ position: "absolute", bottom: 56, left: 72 }}>
-          <p style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.42em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 14 }}>Summer Intensive · July & August 2026</p>
+          <p style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.42em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 14 }}>Summer Intensive · July 27 – August 8, 2026</p>
           <h1 style={{ fontFamily: "'Cormorant Garamond', 'Didot', Georgia, serif", fontSize: 52, fontWeight: 300, fontStyle: "italic", color: "#FBF7EE", lineHeight: 1.1, marginBottom: 6, letterSpacing: "0.01em" }}>Two-Weeks. Full Day Immersion.</h1>
           <p style={{ fontFamily: "'Cormorant Garamond', 'Didot', Georgia, serif", fontSize: 32, color: gold, fontStyle: "italic", fontWeight: 300, letterSpacing: "0.02em" }}>Elite Mentorship. Real Momentum.</p>
         </div>
@@ -6374,11 +6363,11 @@ function SummerDetailPage({ setPage, openInquiry }) {
 
           <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 380px", gap: isMobile ? 32 : 64, alignItems: "start" }}>
             <div>
-              <p style={{ fontFamily: sans, fontSize: isMobile ? 14 : 15, lineHeight: 2.0, color: "#1a1a1a", fontWeight: 300, marginBottom: 18 }}>The Summer Intensive is a two-week, full-day program offered in July and August for high school students ages 15–18 who are ready to turn ambition into discipline and action.</p>
+              <p style={{ fontFamily: sans, fontSize: isMobile ? 14 : 15, lineHeight: 2.0, color: "#1a1a1a", fontWeight: 300, marginBottom: 18 }}>The Summer Intensive is a two-week, full-day program running July 27 – August 8, 2026, for high school students ages 15–18 who are ready to turn ambition into discipline and action.</p>
               <p style={{ fontFamily: sans, fontSize: isMobile ? 14 : 15, lineHeight: 2.0, color: "#1a1a1a", fontWeight: 300 }}>Students move from idea to venture concept: researching the market, shaping the business model, building the pitch, practicing executive communication, and learning how to defend their thinking under pressure.</p>
             </div>
             <div>
-              {[["Waves", "Wave I: July 6–18, 2026\nWave II: August 3–15, 2026"], ["Schedule", "Monday–Friday · 9:30 AM–3:30 PM"], ["Class Size", "Limited to 20 students per wave"], ["Tuition", "$410 / full day · $4,500 per wave"], ["Eligibility", "Ages 15–18 · Rising juniors and seniors"], ["Location", "South Orange County, CA"]].map(([k, v]) => (
+              {[["Wave", "July 27 – August 8, 2026"], ["Schedule", "Monday–Friday · 9:30 AM–3:30 PM"], ["Class Size", "Limited to 20 students per wave"], ["Tuition", "$410 / full day · $4,500 per wave"], ["Eligibility", "Ages 15–18 · Rising juniors and seniors"], ["Location", "South Orange County, CA"]].map(([k, v]) => (
                 <div key={k} style={{ display: "grid", gridTemplateColumns: "80px 1fr", gap: 14, padding: "10px 0", borderBottom: "1px solid rgba(0,0,0,.08)" }}>
                   <span style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.2em", color: "#8B6914", textTransform: "uppercase", paddingTop: 2 }}>{k}</span>
                   <span style={{ fontFamily: sans, fontSize: 13, color: "#1a1a1a", fontWeight: 300, lineHeight: 1.6, whiteSpace: "pre-line" }}>{v}</span>
@@ -6506,8 +6495,8 @@ function SummerDetailPage({ setPage, openInquiry }) {
         <div style={{ maxWidth: 1100, margin: "0 auto" }}>
           <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 9, letterSpacing: "0.4em", color: "#8B6914", fontWeight: 700, textTransform: "uppercase", marginBottom: 16 }}>A Day at Excalibur</p>
           <h2 style={{ fontFamily: serif, fontSize: isMobile ? 26 : 36, fontWeight: 600, color: "#111", lineHeight: 1.1, marginBottom: 8 }}>What a summer session looks like.</h2>
-          <p style={{ fontFamily: sans, fontSize: 14, color: "#444", fontWeight: 300, lineHeight: 1.8, marginBottom: 32, maxWidth: 560 }}>Monday through Friday. 9:30 AM to 3:30 PM. July 6–18 & August 3–15, 2026.</p>
-          <DailyScheduleBlock schedule={schedule} title="SUMMER INTENSIVE" subtitle="Monday – Friday · 9:30 AM – 3:30 PM · July 6–18 & Aug 3–15, 2026" />
+          <p style={{ fontFamily: sans, fontSize: 14, color: "#444", fontWeight: 300, lineHeight: 1.8, marginBottom: 32, maxWidth: 560 }}>Monday through Friday. 9:30 AM to 3:30 PM. July 27 – August 8, 2026.</p>
+          <DailyScheduleBlock schedule={schedule} title="SUMMER INTENSIVE" subtitle="Monday – Friday · 9:30 AM – 3:30 PM · July 27 – August 8, 2026" />
         </div>
       </div>
 
@@ -6583,15 +6572,14 @@ function SummerDetailPage({ setPage, openInquiry }) {
           <p style={{ fontFamily: sans, fontSize: 14, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.8, marginBottom: 40, maxWidth: 580 }}>Select your wave and complete your program application. Our Enrollment Coordinator will be in touch within 24 hours.</p>
           <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 2, background: "#111", marginBottom: 2 }}>
             {[
-              { label: "WAVE 1 — JULY", wave: "Wave 1", dates: "July 6 – 18, 2026", days: "Monday – Friday · 9:30 AM – 3:30 PM", tag: "● Enrollment Open", tagColor: "#4DB87A" },
-              { label: "WAVE 2 — AUGUST", wave: "Wave 2", dates: "August 3 – 15, 2026", days: "Monday – Friday · 9:30 AM – 3:30 PM", tag: "● Enrollment Open", tagColor: "#4DB87A" },
+              { label: "WAVE — JULY 27", wave: "Wave 1", dates: "July 27 – August 8, 2026", days: "Monday – Friday · 9:30 AM – 3:30 PM", tag: "● Enrollment Open", tagColor: "#4DB87A" },
             ].map((w, i) => (
               <div key={i} style={{ background: "#080808", padding: isMobile ? "36px 24px" : "48px 44px", borderTop: `2px solid ${gold}` }}>
                 <p style={{ fontFamily: eyebrow_font, fontSize: 8, letterSpacing: "0.4em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 12 }}>{w.label}</p>
                 <h3 style={{ fontFamily: serif, fontSize: 28, fontWeight: 600, color: "#FBF7EE", marginBottom: 6, lineHeight: 1 }}>{w.wave}</h3>
                 <p style={{ fontFamily: serif, fontSize: 16, color: gold, fontStyle: "italic", marginBottom: 20 }}>{w.dates}</p>
                 <div style={{ height: "1px", background: "rgba(199,171,117,.1)", marginBottom: 20 }} />
-                {[["Schedule", w.label === "WAVE 1 — JULY" ? "Mon–Fri 9:30 AM–3:30 PM · July 18 Saturday Venture Finale" : "Mon–Fri 9:30 AM–3:30 PM · Aug 15 Saturday Venture Finale"], ["Duration", "Two Weeks"], ["Class Size", "Limited to 20 students"], ["Tuition", "$410 / full day · $4,500 per wave"], ["Includes", "Catered lunches · Guest speakers · Workshops · Start-up simulations · Shark Tank-inspired Finale"]].map(([k, v]) => (
+                {[["Schedule", "Mon–Fri · 9:30 AM–3:30 PM · Aug 8 Saturday Venture Finale"], ["Duration", "Two Weeks"], ["Class Size", "Limited to 20 students"], ["Tuition", "$410 / full day · $4,500 per wave"], ["Includes", "Catered lunches · Guest speakers · Workshops · Start-up simulations · Shark Tank-inspired Finale"]].map(([k, v]) => (
                   <div key={k} style={{ display: "flex", gap: 16, padding: "9px 0", borderBottom: "1px solid rgba(199,171,117,.06)", alignItems: "flex-start" }}>
                     <span style={{ fontFamily: sans, fontSize: 8, letterSpacing: "0.2em", color: gold, textTransform: "uppercase", minWidth: 72, flexShrink: 0, paddingTop: 1 }}>{k}</span>
                     <span style={{ fontFamily: sans, fontSize: 12, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.6 }}>{v}</span>
@@ -6900,8 +6888,7 @@ function ApplicationPage({ setPage, defaultProgram }) {
     { id: "flagship", label: "TEN-MONTH FLAGSHIP", title: "Ten-Month Program", price: "From $1,990 / month", desc: "All nine disciplines, real-world engagements, competitions, field trips, and the Excalibur Academy Portfolio. September–June.", page: "flagship-detail" },
   ];
   const waves = [
-    { id: "wave1", label: "WAVE 1", title: "July 6–18, 2026", sub: "Monday through Friday", detail: "Two weeks. Full days. Limited to 20 students." },
-    { id: "wave2", label: "WAVE 2", title: "August 3–15, 2026", sub: "Monday through Friday", detail: "Identical structure to Wave 1. August availability." },
+    { id: "wave1", label: "WAVE", title: "July 27 – August 8, 2026", sub: "Monday through Friday", detail: "Two weeks. Full days. Limited to 20 students." },
   ];
   const tracks = [
     { id: "weekday", label: "WEEKDAY TRACK", title: "Tuesday & Thursday", sub: "4:00 – 7:00 PM", detail: "Evening sessions. Fits any weekend schedule." },
