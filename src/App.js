@@ -1848,7 +1848,7 @@ function IntensivePage({ setPage, openInquiry }) {
             <p style={{ fontFamily: sans, fontSize: 14, lineHeight: 2.0, color: "#1a1a1a", fontWeight: 300 }}>At the heart of the Six-Week Intensive is the Venture Launchpad — a structured venture-building arc woven across all six weeks. From the first session, students begin developing a real business concept: validating a problem, sizing a market, building a brand, mapping competitors, and constructing a go-to-market strategy. Week by week, the venture grows — from raw idea through business fundamentals, marketing and customer psychology, competitive analysis, AI-powered research tools, and sales and pitch mechanics — until it is ready to be defended live before a panel of real investors at the Shark Tank–inspired Venture Finale.</p>
           </div>
           <div>
-            {[["Tracks", "Group A: Mon & Wed \u00b7 4:00\u20136:30 PM\nGroup B: Sunday \u00b7 10:30 AM\u20133:45 PM"], ["Sessions", "30 hours per wave"], ["Guest Speakers", "2 per wave, senior practitioners"], ["Finale", "Shark Tank\u2013Inspired Venture Finale \u00b7 Real investors"], ["Tuition", "$3,900 per wave"], ["Eligibility", "Ages 15\u201318 \u00b7 Rising juniors & seniors"], ["Location", "South Orange County, CA"]].map(([k, v]) => (
+            {[["Tracks", "Group A: Mon & Wed \u00b7 4:00\u20136:30 PM\nGroup B: Sunday \u00b7 10:30 AM\u20133:45 PM"], ["Sessions", "30 hours per wave"], ["Guest Speakers", "2 per wave, senior practitioners"], ["Finale", "Shark Tank\u2013Inspired Venture Finale \u00b7 Real investors"], ["Tuition", "$3,900 per wave"], ["Eligibility", "Ages 15\u201318 \u00b7 High school students"], ["Location", "South Orange County, CA"]].map(([k, v]) => (
               <div key={k} style={{ display: "grid", gridTemplateColumns: "96px 1fr", gap: 14, padding: "11px 0", borderBottom: "1px solid rgba(0,0,0,.08)" }}>
                 <span style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.2em", color: "#8B6914", textTransform: "uppercase", paddingTop: 2 }}>{k}</span>
                 <span style={{ fontFamily: sans, fontSize: 13, color: "#1a1a1a", fontWeight: 300, lineHeight: 1.6, whiteSpace: "pre-line" }}>{v}</span>
@@ -1990,7 +1990,7 @@ function IntensivePage({ setPage, openInquiry }) {
               <p style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.45em", color: gold, fontWeight: 600, textTransform: "uppercase", margin: 0 }}>Admissions</p>
             </div>
             <h2 style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: isMobile ? 28 : 40, fontWeight: 300, fontStyle: "italic", color: "#FBF7EE", lineHeight: 1.1, marginBottom: 20 }}>Who This Program<br />Is For.</h2>
-            <p style={{ fontFamily: sans, fontSize: 14, lineHeight: 1.95, color: "#FBF7EE", fontWeight: 300, marginBottom: 14 }}>The Six-Week Intensive is built for ambitious high school students ages 15–18 ready to experience a concentrated, serious program without the year-long commitment of the Flagship.</p>
+            <p style={{ fontFamily: sans, fontSize: 14, lineHeight: 1.95, color: "#FBF7EE", fontWeight: 300, marginBottom: 14 }}>The Six-Week Intensive is built for ambitious high school students ages 14–17 ready to experience a concentrated, serious program without the year-long commitment of the Flagship.</p>
             <p style={{ fontFamily: sans, fontSize: 14, lineHeight: 1.95, color: "#FBF7EE", fontWeight: 300 }}>Excalibur looks for curiosity, maturity, and a genuine interest in business, leadership, and how the world works. No prior experience required. The student who leans forward. The one who asks questions, is ready to be challenged, and wants to leave the experience genuinely different from when they arrived.</p>
           </div>
           <div style={{ display: "flex", flexDirection: "column", justifyContent: "center" }}>
@@ -2124,7 +2124,7 @@ function ProgramsPage({ setPage, openInquiry }) {
       title: "Summer Intensive",
       tagline: "Two weeks. Full days. Venture & Leadership Launchpad.",
       photo: "https://i.imgur.com/ua2WSIA.jpeg",
-      desc: "The Summer Intensive is a two-week, full-day program running July 27 – August 8, 2026, for high school students ages 15–18 who are ready to turn ambition into discipline and action.\n\nEvery day begins with public speaking and executive communication training. Students are on their feet from the first morning — practicing voice, presence, eye contact, persuasion, and composure under pressure.\n\nThe core of the program is venture development. Working in teams, students research a market, identify a real problem, define their customer, study the competition, build a marketing strategy, and structure a business plan.\n\nApplied workshops, AI tool sessions, and daily guest speakers from business and entrepreneurship support the venture work throughout the two weeks, helping students turn an idea into a pitch-ready concept.\n\nThe program culminates in the Shark Tank Inspired — Excalibur Venture Finale — a live pitch competition where student teams present their business plans before investors, entrepreneurs, executives, and invited judges.\n\nTeams are evaluated on the strength of their concept, market research, customer insight, marketing strategy, business logic, and composure under questioning. Awards are presented for the strongest performances, with prizes ranging from premium business accessories to custom surfboards, scooters, event tickets and cash awards.",
+      desc: "The Summer Intensive is a two-week, full-day program running July 27 – August 8, 2026, for high school students ages 14–17 who are ready to turn ambition into discipline and action.\n\nEvery day begins with public speaking and executive communication training. Students are on their feet from the first morning — practicing voice, presence, eye contact, persuasion, and composure under pressure.\n\nThe core of the program is venture development. Working in teams, students research a market, identify a real problem, define their customer, study the competition, build a marketing strategy, and structure a business plan.\n\nApplied workshops, AI tool sessions, and daily guest speakers from business and entrepreneurship support the venture work throughout the two weeks, helping students turn an idea into a pitch-ready concept.\n\nThe program culminates in the Shark Tank Inspired — Excalibur Venture Finale — a live pitch competition where student teams present their business plans before investors, entrepreneurs, executives, and invited judges.\n\nTeams are evaluated on the strength of their concept, market research, customer insight, marketing strategy, business logic, and composure under questioning. Awards are presented for the strongest performances, with prizes ranging from premium business accessories to custom surfboards, scooters, event tickets and cash awards.",
       details: [
         ["Schedule", "July 27 – August 8, 2026\nMonday–Friday · 9:30 AM–3:30 PM"],
         ["Class Size", "Limited to 20 students per wave"],
@@ -2614,14 +2614,14 @@ function ApplyPage({ setPage, openInquiry }) {
                 status: "ACCEPTING APPLICATIONS NOW", statusColor: "#4DB87A",
                 label: "Summer Intensive", dates: "July 27 – Aug 8, 2026",
                 price: "$410 / full day", period: "· $4,500 per wave",
-                desc: "A two-week intensive for high school students aged 15–18 (rising juniors and seniors) who want to experience Excalibur's core model in a concentrated format.\n\nStudents train in public speaking, business, leadership, AI, sales, venture development, and applied strategy — culminating in The Excalibur Venture Court, a Shark Tank–inspired pitch finale before families, investors, entrepreneurs, and invited judges.\n\nLimited enrollment per wave. 20 per cohort.",
+                desc: "A two-week intensive for high school students aged 14–17 (high school students) who want to experience Excalibur's core model in a concentrated format.\n\nStudents train in public speaking, business, leadership, AI, sales, venture development, and applied strategy — culminating in The Excalibur Venture Court, a Shark Tank–inspired pitch finale before families, investors, entrepreneurs, and invited judges.\n\nLimited enrollment per wave. 20 per cohort.",
                 page: "summer-detail",
               },
               {
                 status: "ENROLLING SOON", statusColor: gold,
                 label: "Ten-Month Flagship", dates: "September 2026 – June 2027",
                 price: "$1,990", period: "per month",
-                desc: "Excalibur's complete September-to-June program for ambitious high school juniors and seniors.\n\nStudents move through all ten core disciplines, complete real-world engagements, participate in selected expeditions, present at Excalibur Academy Gala & Graduation Day, and graduate with the Excalibur Academy Portfolio — a professionally assembled record of work designed to support college applications and distinguish students through evidence of leadership, communication, execution, and real-world experience.",
+                desc: "Excalibur's complete September-to-June program for ambitious high school high school students.\n\nStudents move through all ten core disciplines, complete real-world engagements, participate in selected expeditions, present at Excalibur Academy Gala & Graduation Day, and graduate with the Excalibur Academy Portfolio — a professionally assembled record of work designed to support college applications and distinguish students through evidence of leadership, communication, execution, and real-world experience.",
                 page: "flagship-detail",
               },
               {
@@ -3223,7 +3223,7 @@ function HomePage({ setPage, openInquiry }) {
                 <button onClick={() => setPage("apply")} style={{ fontFamily: sans, background: gold, color: "#000", padding: "14px 44px", fontSize: 11, fontWeight: 700, letterSpacing: "0.22em", textTransform: "uppercase", border: "none", cursor: "pointer", width: "100%" }}>Join the Founding Class</button>
                 <button onClick={() => setPage("programs")} style={{ fontFamily: sans, background: "transparent", color: gold, padding: "13px 32px", fontSize: 11, fontWeight: 500, letterSpacing: "0.18em", textTransform: "uppercase", border: `1px solid rgba(199,171,117,.35)`, cursor: "pointer", width: "100%" }}>Explore Programs</button>
               </div>
-              <p style={{ fontFamily: sans, fontSize: 11, color: gold, letterSpacing: "0.12em" }}>Ages 15–18 &nbsp;·&nbsp; 20 Students Per Cohort &nbsp;·&nbsp; Orange County, CA</p>
+              <p style={{ fontFamily: sans, fontSize: 11, color: gold, letterSpacing: "0.12em" }}>Ages 14–17 &nbsp;·&nbsp; 20 Students Per Cohort &nbsp;·&nbsp; Orange County, CA</p>
             </div>
           </>
         ) : (
@@ -3285,7 +3285,7 @@ function HomePage({ setPage, openInquiry }) {
               {/* Bottom gold rule + ages line */}
               <Fade d={.38}>
                 <div style={{ display: "flex", alignItems: "center", gap: 10, justifyContent: "center" }}>
-                  <p style={{ fontFamily: sans, fontSize: 10, color: gold, letterSpacing: "0.16em", textTransform: "uppercase" }}>Ages 15–18 &nbsp;·&nbsp; 20 Per Cohort &nbsp;·&nbsp; Orange County, CA</p>
+                  <p style={{ fontFamily: sans, fontSize: 10, color: gold, letterSpacing: "0.16em", textTransform: "uppercase" }}>Ages 14–17 &nbsp;·&nbsp; 20 Per Cohort &nbsp;·&nbsp; Orange County, CA</p>
                 </div>
               </Fade>
 
@@ -3399,7 +3399,7 @@ function HomePage({ setPage, openInquiry }) {
 
                 {/* Heading */}
                 <h2 style={{ fontFamily: "'Cormorant Garamond', 'Didot', Georgia, serif", fontSize: isMobile ? 38 : 56, fontWeight: 300, fontStyle: "italic", color: "#FBF7EE", lineHeight: 1.0, marginBottom: 6, letterSpacing: "0.01em" }}>
-                  Summer Intensive 2026
+                  Summer Intensive — Excalibur Venture Launchpad
                 </h2>
                 <p style={{ fontFamily: "'Cormorant Garamond', 'Didot', Georgia, serif", fontSize: isMobile ? 18 : 22, fontWeight: 300, color: gold, fontStyle: "italic", marginBottom: 28, letterSpacing: "0.04em" }}>
                   July 27 – August 8
@@ -3407,7 +3407,7 @@ function HomePage({ setPage, openInquiry }) {
 
                 {/* Body copy */}
                 <p style={{ fontFamily: sans, fontSize: isMobile ? 14 : 14, lineHeight: 1.9, color: "#FBF7EE", fontWeight: 300 }}>
-                  A full-day, Monday-through-Friday intensive is led by senior faculty, former Fortune 100 executives, accomplished leaders, top industry specialists, and distinguished guest speakers. Designed specifically for high school students ages 15–18 who are ready to turn ambition into discipline and action. Students move from idea to venture concept: researching the market, shaping the business model, building the pitch, practicing executive communication, and learning how to defend their thinking under pressure. The program culminates in the Shark Tank Inspired Excalibur Venture Finale, where teams present before real investors and invited judges.
+                  July 27 – August 8. Full days, Monday through Friday, led by senior faculty, Wall Street executives, successful entrepreneurs, and distinguished guest speakers. The wave culminates in a Shark Tank-inspired Venture finale before real investors and families.
                 </p>
 
               </div>
@@ -3423,8 +3423,8 @@ function HomePage({ setPage, openInquiry }) {
                     ["Sessions", "9:30 AM – 3:30 PM · Mon–Fri"],
                     ["Wave", "July 27 – August 8, 2026"],
                     ["Finale", "Excalibur Venture Finale · Real investors"],
-                    ["Guest Speakers", "Distinguished speaker rotating daily"],
-                    ["Eligibility", "Ages 15–18 · 20 students per wave"],
+                    ["Guest Speakers", "Distinguished guest speakers from different industries"],
+                    ["Eligibility", "Ages 14–18 · 20 students per wave"],
                   ].map(([k, v], i) => (
                     <div key={i} style={{ display: "grid", gridTemplateColumns: "82px 1fr", gap: 10, padding: "10px 0", borderBottom: "1px solid rgba(199,171,117,.07)", alignItems: "flex-start" }}>
                       <span style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.14em", color: gold, textTransform: "uppercase", paddingTop: 2, flexShrink: 0, fontWeight: 600 }}>{k}</span>
@@ -3499,7 +3499,7 @@ function HomePage({ setPage, openInquiry }) {
           {/* Left panel  -  founding statement + session model */}
           <div style={{ padding: isMobile ? "48px 28px" : "64px 72px" }}>
             <p style={{ fontFamily: serif, fontSize: isMobile ? 17 : 19, lineHeight: 1.85, color: "#111", fontWeight: 400, marginBottom: 28, fontStyle: "italic", borderLeft: `2px solid rgba(199,171,117,.5)`, paddingLeft: 20 }}>
-              Excalibur Leadership Academy is a premier institute for entrepreneurship and leadership for ambitious teenagers aged 15–18 in Orange County, California. We are building the institution we wish had existed when we were young — one where students are mentored by accomplished adults who have built companies, led teams, and operated under real stakes.
+              Excalibur Leadership Academy is a premier institute for entrepreneurship and leadership for ambitious high school students aged 14–17 in Orange County, California. We are building the institution we wish had existed when we were young — one where students are mentored by accomplished adults who have built companies, led teams, and operated under real stakes.
             </p>
             <p style={{ fontFamily: sans, fontSize: 13, lineHeight: 1.9, color: "#1a1a1a", fontWeight: 300, marginBottom: 20 }}>
               Our sessions &amp; events take place across South Orange County, in historic and business venues inspired by the traditions of European elite education and American spirit of leadership and excellence.
@@ -3594,7 +3594,7 @@ function HomePage({ setPage, openInquiry }) {
                   ["Wave", "July 27 – August 8, 2026"],
                   ["Guest Speakers", "Distinguished speaker rotating daily"],
                   ["Finale", "Shark Tank–inspired with real investors and judges"],
-                  ["Eligibility", "Ages 15–18 (rising juniors and seniors) · 20 students per wave"],
+                  ["Eligibility", "Ages 14–17 (high school students) · 20 students per wave"],
                 ].map(([k, v], i) => (
                   <div key={i} style={{ display: "flex", gap: 16, padding: "11px 0", borderBottom: "1px solid rgba(199,171,117,.06)", alignItems: "flex-start" }}>
                     <span style={{ fontFamily: sans, fontSize: 10, color: gold, letterSpacing: "0.08em", minWidth: 90, paddingTop: 1, fontWeight: 500 }}>{k}</span>
@@ -3636,7 +3636,7 @@ function HomePage({ setPage, openInquiry }) {
                   ["Group B", "Tue & Thu · 4:00–6:30 PM"],
                   ["Duration", "10 Months · Sep 2026 – Jun 2027"],
                   ["Finale", "Academy Gala & Graduation · June 2027"],
-                  ["Eligibility", "Ages 16–17 · 20 students per cohort"],
+                  ["Eligibility", "Ages 14–17 · 20 students per cohort"],
                 ].map(([k, v], i) => (
                   <div key={i} style={{ display: "flex", gap: 16, padding: "10px 0", borderBottom: "1px solid rgba(199,171,117,.08)", alignItems: "flex-start" }}>
                     <span style={{ fontFamily: sans, fontSize: 10, color: gold, letterSpacing: "0.08em", minWidth: 100, paddingTop: 1, fontWeight: 500 }}>{k}</span>
@@ -3673,7 +3673,7 @@ function HomePage({ setPage, openInquiry }) {
                   ["Wave 3 — Spring", "Apr 7 – May 15, 2027"],
                   ["Wave 4 — Summer", "Jul 6 – Aug 14, 2027"],
                   ["Finale", "Shark Tank–Inspired · Real Investors"],
-                  ["Eligibility", "Ages 15–18 · 20 students per wave"],
+                  ["Eligibility", "Ages 14–18 · 20 students per wave"],
                 ].map(([k, v], i) => (
                   <div key={i} style={{ display: "flex", gap: 16, padding: "10px 0", borderBottom: "1px solid rgba(199,171,117,.06)", alignItems: "flex-start" }}>
                     <span style={{ fontFamily: sans, fontSize: 10, color: gold, letterSpacing: "0.08em", minWidth: 100, paddingTop: 1, fontWeight: 500 }}>{k}</span>
@@ -4650,7 +4650,7 @@ function AboutPage({ setPage, openInquiry }) {
             <div>
               <p style={{ fontFamily: eyebrow_font, fontSize: 10, letterSpacing: "0.4em", color: "#111", fontWeight: 600, textTransform: "uppercase", marginBottom: 14 }}>The Academy</p>
               <h2 style={{ fontFamily: serif, fontSize: isMobile ? 26 : 36, fontWeight: 600, color: "#000", lineHeight: 1.1, marginBottom: 28 }}>Forging the leaders of tomorrow</h2>
-              <p style={{ fontFamily: sans, fontSize: 16, lineHeight: 1.9, color: "#111", fontWeight: 300, marginBottom: 18 }}>Excalibur Leadership Academy is a premier institute for entrepreneurship, business, and leadership for ambitious teenagers aged 15–18 in Orange County, California. We are building the institution we wish had existed when we were young — one where students are mentored by accomplished adults who have built companies, led teams, and operated under real stakes.</p>
+              <p style={{ fontFamily: sans, fontSize: 16, lineHeight: 1.9, color: "#111", fontWeight: 300, marginBottom: 18 }}>Excalibur Leadership Academy is a premier institute for entrepreneurship, business, and leadership for ambitious high school students aged 14–17 in Orange County, California. We are building the institution we wish had existed when we were young — one where students are mentored by accomplished adults who have built companies, led teams, and operated under real stakes.</p>
               <p style={{ fontFamily: sans, fontSize: 16, lineHeight: 1.9, color: "#111", fontWeight: 300, marginBottom: 18 }}>Our sessions &amp; events take place across South Orange County, in historic and business venues inspired by the traditions of European elite education and American spirit of leadership and excellence.</p>
               <p style={{ fontFamily: sans, fontSize: 16, lineHeight: 1.9, color: "#111", fontWeight: 300, marginBottom: 18 }}>Every session follows a rigorous three-block format: rhetoric and public speaking with a speaking coach, real-world business analysis and applied workshops led by senior faculty, and deep domain instruction from rotating specialists for every industry. No filler. No theory divorced from practice — only formation that builds confidence, judgment, and mental fortitude.</p>
               <p style={{ fontFamily: sans, fontSize: 16, lineHeight: 1.9, color: "#111", fontWeight: 300 }}>Our faculty are not simply career academics. They are entrepreneurs, Fortune 100 executives, investors, Wall Street "sharks" and professionals who teach from lived experience. Students learn public speaking, financial literacy &amp; trading, business strategy, sales and marketing, leadership, technology and AI, and the social arts through live case studies, startup simulations, consulting projects, and competitive pitch forums.</p>
@@ -4839,7 +4839,7 @@ function AboutPage({ setPage, openInquiry }) {
 
       {/* STATS */}
       <div style={{ display: "grid", gridTemplateColumns: isMobile ? "repeat(2,1fr)" : "repeat(4,1fr)", gap: 2, background: "#111" }}>
-        {[["15–18", "Age range"], ["20", "Students per cohort"], ["10", "Months flagship"], ["10", "Curriculum modules"]].map(([v, l], i) => (
+        {[["14–17", "Age range"], ["20", "Students per cohort"], ["10", "Months flagship"], ["10", "Curriculum modules"]].map(([v, l], i) => (
           <div key={i} style={{ background: "#080808", padding: "36px 20px", textAlign: "center", borderTop: `2px solid ${i === 0 ? gold : "rgba(199,171,117,.1)"}` }}>
             <div style={{ fontFamily: serif, fontSize: 44, fontWeight: 600, color: gold, lineHeight: 1 }}>{v}</div>
             <div style={{ fontFamily: sans, color: "#FBF7EE", fontSize: 13, marginTop: 10, letterSpacing: "0.05em" }}>{l}</div>
@@ -4914,7 +4914,7 @@ function ComingSoonPage({ onUnlock }) {
         {/* Status banner */}
         <div style={{ background: "rgba(199,171,117,.05)", border: "1px solid rgba(199,171,117,.18)", padding: isMobile ? "20px 24px" : "24px 48px", marginBottom: 44, maxWidth: 660 }}>
           <p style={{ fontFamily: eyebrow_font, fontSize: 10, letterSpacing: "0.4em", color: "#4DB87A", fontWeight: 600, textTransform: "uppercase", marginBottom: 12 }}>● Admissions Opening Soon</p>
-          <p style={{ fontFamily: sans, fontSize: isMobile ? 13 : 15, color: "#FBF7EE", lineHeight: 1.75, fontWeight: 300 }}>For junior and high school seniors.</p>
+          <p style={{ fontFamily: sans, fontSize: isMobile ? 13 : 15, color: "#FBF7EE", lineHeight: 1.75, fontWeight: 300 }}>For high school students.</p>
           <p style={{ fontFamily: sans, fontSize: isMobile ? 13 : 15, color: "#FBF7EE", lineHeight: 1.75, fontWeight: 300, marginTop: 4 }}>Enrollment limited to 20 students per cohort.</p>
         </div>
 
@@ -5740,7 +5740,7 @@ function FlagshipDetailPage({ setPage, openInquiry }) {
                 <p style={{ fontFamily: serif, fontSize: 22, fontWeight: 600, color: "#FBF7EE" }}>Ten-Month Flagship</p>
                 <p style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.22em", color: gold, textTransform: "uppercase" }}>Inaugural Class &#183; September 2026</p>
               </div>
-              {[["Dates", "September 2026 &#8211; June 2027"], ["Weekday Track", "Tue &amp; Thu &#183; 4:00&#8211;6:30 PM"], ["Saturday Track", "Saturday &#183; 10:30 AM&#8211;3:45 PM"], ["Class Size", "20 students per track"], ["Eligibility", "Ages 15&#8211;18 &#183; Juniors &amp; Seniors"]].map(([k, v]) => (
+              {[["Dates", "September 2026 &#8211; June 2027"], ["Weekday Track", "Tue &amp; Thu &#183; 4:00&#8211;6:30 PM"], ["Saturday Track", "Saturday &#183; 10:30 AM&#8211;3:45 PM"], ["Class Size", "20 students per track"], ["Eligibility", "Ages 14&#8211;17 &#183; High School Students"]].map(([k, v]) => (
                 <div key={k} style={{ display: "grid", gridTemplateColumns: "130px 1fr", gap: 16, padding: "14px 0", borderBottom: "1px solid rgba(199,171,117,.07)" }}>
                   <span style={{ fontFamily: eyebrow_font, fontSize: 8, letterSpacing: "0.2em", color: gold, textTransform: "uppercase", paddingTop: 3, fontWeight: 600 }} dangerouslySetInnerHTML={{ __html: k }} />
                   <span style={{ fontFamily: sans, fontSize: 13, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.5 }} dangerouslySetInnerHTML={{ __html: v }} />
@@ -6362,11 +6362,11 @@ function SummerDetailPage({ setPage, openInquiry }) {
 
           <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 380px", gap: isMobile ? 32 : 64, alignItems: "start" }}>
             <div>
-              <p style={{ fontFamily: sans, fontSize: isMobile ? 14 : 15, lineHeight: 2.0, color: "#1a1a1a", fontWeight: 300, marginBottom: 18 }}>The Summer Intensive is a two-week, full-day program running July 27 – August 8, 2026, for high school students ages 15–18 who are ready to turn ambition into discipline and action.</p>
+              <p style={{ fontFamily: sans, fontSize: isMobile ? 14 : 15, lineHeight: 2.0, color: "#1a1a1a", fontWeight: 300, marginBottom: 18 }}>The Summer Intensive is a two-week, full-day program running July 27 – August 8, 2026, for high school students ages 14–17 who are ready to turn ambition into discipline and action.</p>
               <p style={{ fontFamily: sans, fontSize: isMobile ? 14 : 15, lineHeight: 2.0, color: "#1a1a1a", fontWeight: 300 }}>Students move from idea to venture concept: researching the market, shaping the business model, building the pitch, practicing executive communication, and learning how to defend their thinking under pressure.</p>
             </div>
             <div>
-              {[["Wave", "July 27 – August 8, 2026"], ["Schedule", "Monday–Friday · 9:30 AM–3:30 PM"], ["Class Size", "Limited to 20 students per wave"], ["Tuition", "$410 / full day · $4,500 per wave"], ["Eligibility", "Ages 15–18 · Rising juniors and seniors"], ["Location", "South Orange County, CA"]].map(([k, v]) => (
+              {[["Wave", "July 27 – August 8, 2026"], ["Schedule", "Monday–Friday · 9:30 AM–3:30 PM"], ["Class Size", "Limited to 20 students per wave"], ["Tuition", "$410 / full day · $4,500 per wave"], ["Eligibility", "Ages 14–17 · High school students"], ["Location", "South Orange County, CA"]].map(([k, v]) => (
                 <div key={k} style={{ display: "grid", gridTemplateColumns: "80px 1fr", gap: 14, padding: "10px 0", borderBottom: "1px solid rgba(0,0,0,.08)" }}>
                   <span style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.2em", color: "#8B6914", textTransform: "uppercase", paddingTop: 2 }}>{k}</span>
                   <span style={{ fontFamily: sans, fontSize: 13, color: "#1a1a1a", fontWeight: 300, lineHeight: 1.6, whiteSpace: "pre-line" }}>{v}</span>
@@ -6479,7 +6479,7 @@ function SummerDetailPage({ setPage, openInquiry }) {
           <div>
             <p style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.45em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 20 }}>Admissions</p>
             <h3 style={{ fontFamily: serif, fontSize: isMobile ? 24 : 30, fontWeight: 600, color: "#FBF7EE", lineHeight: 1.1, marginBottom: 16 }}>Who This Program Is For</h3>
-            <p style={{ fontFamily: sans, fontSize: 14, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.85, marginBottom: 20 }}>The Summer Intensive is built for ambitious students ages 15–18 ready to think like founders, work in teams, take initiative, and turn ambition into discipline and action. Excalibur looks for curiosity, drive, maturity, and the willingness to learn not only about business, but about oneself.</p>
+            <p style={{ fontFamily: sans, fontSize: 14, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.85, marginBottom: 20 }}>The Summer Intensive is built for ambitious students ages 14–17 ready to think like founders, work in teams, take initiative, and turn ambition into discipline and action. Excalibur looks for curiosity, drive, maturity, and the willingness to learn not only about business, but about oneself.</p>
             <p style={{ fontFamily: sans, fontSize: 14, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.85, marginBottom: 20 }}>This is not a traditional summer camp or passive enrichment program. It is a focused, immersive environment where students are challenged to think deeply, dream boldly, speak clearly, take initiative, make mistakes, build resilience, and grow through challenge.</p>
             <p style={{ fontFamily: sans, fontSize: 14, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.85 }}>We are not looking for the most polished resume. We look for curiosity, maturity, and a genuine interest in business, leadership, and how the world actually works. The student who leans forward. The one who asks questions, is ready to make mistakes, learn to step outside the comfort zone and rise to a higher standard.</p>
           </div>
@@ -6882,7 +6882,7 @@ function ApplicationPage({ setPage, defaultProgram }) {
   const updateStudent = (i, k, v) => { const s = [...students]; s[i] = { ...s[i], [k]: v }; setStudents(s); };
 
   const programs = [
-    { id: "summer", label: "SUMMER INTENSIVE", title: "Summer Intensive", price: "$410 / full day · $4,500 per wave", desc: "Two weeks, full days, Mon–Fri. For students aged 15–18 (rising juniors and seniors). Public speaking, business, AI, sales and a Shark Tank–style Venture Court finale. 20 students per wave.", page: "summer-detail" },
+    { id: "summer", label: "SUMMER INTENSIVE", title: "Summer Intensive", price: "$410 / full day · $4,500 per wave", desc: "Two weeks, full days, Mon–Fri. For students aged 14–17 (high school students). Public speaking, business, AI, sales and a Shark Tank–style Venture Court finale. 20 students per wave.", page: "summer-detail" },
     { id: "six-week", label: "SIX-WEEK INTENSIVE", title: "Six-Week Intensive", price: "$3,900 / wave", desc: "Full curriculum in six concentrated weeks. Weekday evening or Sunday half-day formats. Judged Academy Gala & Graduation Day finale.", page: "intensive" },
     { id: "flagship", label: "TEN-MONTH FLAGSHIP", title: "Ten-Month Program", price: "From $1,990 / month", desc: "All nine disciplines, real-world engagements, competitions, field trips, and the Excalibur Academy Portfolio. September–June.", page: "flagship-detail" },
   ];
