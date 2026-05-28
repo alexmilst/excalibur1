@@ -3406,9 +3406,38 @@ function HomePage({ setPage, openInquiry }) {
                 </p>
 
                 {/* Body copy */}
-                <p style={{ fontFamily: sans, fontSize: isMobile ? 14 : 14, lineHeight: 1.9, color: "#FBF7EE", fontWeight: 300 }}>
-                  July 27 – August 8. Full days, Monday through Friday, led by senior faculty, Wall Street executives, successful entrepreneurs, and distinguished guest speakers. The wave culminates in a Shark Tank-inspired Venture finale before real investors and families.
+                <p style={{ fontFamily: sans, fontSize: 14, lineHeight: 1.9, color: "#FBF7EE", fontWeight: 300, marginBottom: 24 }}>
+                  July 27 – August 8. Full days, Monday through Friday, led by senior faculty, Wall Street executives, successful entrepreneurs, and distinguished guest speakers. The wave culminates in a Shark Tank-inspired Venture finale before real investors, community leaders and families.
                 </p>
+
+                {/* Two Tracks */}
+                <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 8, marginBottom: 24 }}>
+                  <div style={{ background: "rgba(255,255,255,.04)", border: "0.5px solid rgba(199,171,117,.15)", padding: "16px 18px" }}>
+                    <p style={{ fontFamily: eyebrow_font, fontSize: 8, letterSpacing: "0.3em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 5 }}>Track A</p>
+                    <p style={{ fontFamily: serif, fontSize: 18, fontWeight: 300, fontStyle: "italic", color: "#FBF7EE", marginBottom: 3 }}>Frontier</p>
+                    <p style={{ fontFamily: sans, fontSize: 10, color: gold, letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 8 }}>Commercial Market Venture</p>
+                    <p style={{ fontFamily: sans, fontSize: 12, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.7 }}>Build a scalable venture from the ground up — customer discovery, MVP, and first traction before the Finale.</p>
+                  </div>
+                  <div style={{ background: "rgba(199,171,117,.05)", border: "0.5px solid rgba(199,171,117,.3)", padding: "16px 18px" }}>
+                    <p style={{ fontFamily: eyebrow_font, fontSize: 8, letterSpacing: "0.3em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 5 }}>Track B</p>
+                    <p style={{ fontFamily: serif, fontSize: 18, fontWeight: 300, fontStyle: "italic", color: "#FBF7EE", marginBottom: 3 }}>Vanguard</p>
+                    <p style={{ fontFamily: sans, fontSize: 10, color: gold, letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 8 }}>Community Impact Venture</p>
+                    <p style={{ fontFamily: sans, fontSize: 12, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.7 }}>Identify a real OC community problem and build a viable venture to address it — judged by investors and community officials.</p>
+                  </div>
+                </div>
+
+                {/* What's Included */}
+                <div style={{ borderTop: "1px solid rgba(199,171,117,.1)", paddingTop: 20 }}>
+                  <p style={{ fontFamily: eyebrow_font, fontSize: 8, letterSpacing: "0.3em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 14 }}>What's Included</p>
+                  <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 0 }}>
+                    {["Daily public speaking & executive presence","Specialist instruction · core curriculum","Venture development workshops daily","Distinguished guest speakers every other day","Excalibur Venture Finale · real investors","Certificate of completion & portfolio","Catered lunches, snacks & refreshments","Priority for Ten-Month Flagship Program"].map((item, i) => (
+                      <div key={i} style={{ display: "flex", gap: 8, padding: "6px 0", alignItems: "flex-start" }}>
+                        <span style={{ color: gold, fontSize: 10, marginTop: 3, flexShrink: 0 }}>—</span>
+                        <span style={{ fontFamily: sans, fontSize: 12, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.55 }}>{item}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
 
               </div>
 
@@ -3431,6 +3460,10 @@ function HomePage({ setPage, openInquiry }) {
                       <span style={{ fontFamily: sans, fontSize: 12, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.55 }}>{v}</span>
                     </div>
                   ))}
+                </div>
+                {/* Photo */}
+                <div style={{ overflow: "hidden", height: 180, flexShrink: 0 }}>
+                  <img src="https://i.imgur.com/RtayEwZ.jpeg" alt="Summer Intensive" style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center" }} />
                 </div>
                 {/* Tuition */}
                 <div style={{ padding: "16px 22px", borderTop: `1px solid rgba(199,171,117,.1)` }}>
@@ -6305,13 +6338,14 @@ function SummerDetailPage({ setPage, openInquiry }) {
 
   const dailySchedule = [
     { time: "9:15 AM", block: "Arrival & Welcome", dur: "15 min", color: "rgba(199,171,117,.1)", desc: "Students are welcomed by the Teaching Assistants, settle in with their cohort, and begin the day in an atmosphere that feels lively, polished, and personal. There is time to connect, get comfortable, and step into the rhythm of the program before the first session begins." },
-    { time: "9:30 AM", block: "Public Speaking & Executive Presence", dur: "60 min", color: "rgba(199,171,117,.08)", role: "Senior Rhetoric Faculty", desc: "Voice mechanics, posture, eye contact, persuasive delivery, impromptu drills, pitch rehearsal. Students are on their feet every single day — building presence, confidence, and command from Day 1." },
+    { time: "9:30 AM", block: "Public Speaking — Block A", dur: "60 min", color: "rgba(199,171,117,.08)", role: "Senior Rhetoric Faculty", desc: "Voice mechanics, posture, eye contact, persuasive delivery, impromptu drills, pitch rehearsal. Students are on their feet every single day — building presence, confidence, and command from Day 1." },
     { time: "10:30 AM", block: "Snack Break", dur: "15 min", color: "transparent", desc: "A structured pause between sessions, with catered snacks and refreshments provided by the Academy — from light bites and fruit bowls to healthy açaí bowls, smoothies, milkshakes, and seasonal selections. Students recharge, listen to lounge music, and continue conversations informally with classmates, Teaching Assistants, faculty, and instructors. Often, some of the most interesting exchanges of the day happen here — between sessions, in the moments when ideas keep moving." },
-    { time: "10:45 AM", block: "Specialist Instruction", dur: "60 min", color: "rgba(199,171,117,.06)", role: "Subject Matter Expert / Practitioner", desc: "Each day's specialist block brings a real practitioner into the room to teach the day's core discipline — entrepreneurship, market research, sales, leadership, AI, pitch psychology, and more. Instruction is live, applied, and tied directly to each team's venture work." },
-    { time: "12:00 PM", block: "Catered Lunch", dur: "45 min", color: "transparent", desc: "Students enjoy a catered three-course lunch from a rotating selection of local restaurants, with menus that may include Mediterranean mezze and grilled entrées, coastal California salads and seasonal bowls, Italian pastas, Japanese bento-style selections, and modern American favorites. Lunch is also a time for conversation — with classmates, Teaching Assistants, faculty, and instructors — in a relaxed but polished setting. Dietary restrictions and allergies are requested before the program begins." },
-    { time: "12:45 PM", block: "Venture Workshop", dur: "150 min", color: "rgba(199,171,117,.05)", role: "Lead Faculty + Teaching Assistants", desc: "The engine of the program. Teams are in active venture mode — customer discovery, MVP development, market testing, branding, traction generation, and pitch building. Faculty and TAs rotate between teams, challenging every assumption." },
-    { time: "3:15 PM", block: "Guest Speaker", dur: "30 min", color: "rgba(199,171,117,.12)", role: "Entrepreneur · Investor · Executive", desc: "Every other day features a distinguished guest — founders, investors, executives, and community leaders — who join the room for a real conversation. Students can ask anything. These are not keynotes. They are live exchanges with people who have done what students are learning to do." },
-    { time: "3:45 PM", block: "Debrief & Session Close", dur: "15 min", color: "rgba(199,171,117,.04)", desc: "Each day ends with a structured debrief: what was learned, what challenged the group, and what ideas can be carried forward. Students leave with one clear takeaway from the day — a concept, question, habit, or standard to apply beyond the classroom." },
+    { time: "10:45 AM", block: "Public Speaking — Block B", dur: "30 min", color: "rgba(199,171,117,.08)", role: "Senior Rhetoric Faculty", desc: "The second public speaking block continues the morning session — persuasive exercises, live feedback, pitch drills, and structured peer critique. The total daily public speaking block runs 90 minutes across both sessions." },
+    { time: "11:15 AM", block: "Specialist Instruction", dur: "60 min", color: "rgba(199,171,117,.06)", role: "Subject Matter Expert / Practitioner", desc: "Each day's specialist block brings a real practitioner into the room to teach the day's core discipline — entrepreneurship, market research, sales, leadership, AI, pitch psychology, and more. Instruction is live, applied, and tied directly to each team's venture work." },
+    { time: "12:15 PM", block: "Catered Lunch", dur: "45 min", color: "transparent", desc: "Students enjoy a catered three-course lunch from a rotating selection of local restaurants, with menus that may include Mediterranean mezze and grilled entrées, coastal California salads and seasonal bowls, Italian pastas, Japanese bento-style selections, and modern American favorites. Lunch is also a time for conversation — with classmates, Teaching Assistants, faculty, and instructors — in a relaxed but polished setting. Dietary restrictions and allergies are requested before the program begins." },
+    { time: "1:00 PM", block: "Venture Workshop", dur: "150 min", color: "rgba(199,171,117,.05)", role: "Lead Faculty + Teaching Assistants", desc: "The engine of the program. Teams are in active venture mode — customer discovery, MVP development, market testing, branding, traction generation, and pitch building. Faculty and TAs rotate between teams, challenging every assumption." },
+    { time: "3:30 PM", block: "Guest Speaker", dur: "30 min", color: "rgba(199,171,117,.12)", role: "Entrepreneur · Investor · Executive", desc: "Every other day features a distinguished guest — founders, investors, executives, and community leaders — who join the room for a real conversation. Students can ask anything. These are not keynotes. They are live exchanges with people who have done what students are learning to do." },
+    { time: "4:00 PM", block: "Debrief & Session Close", dur: "15 min", color: "rgba(199,171,117,.04)", desc: "Each day ends with a structured debrief: what was learned, what challenged the group, and what ideas can be carried forward. Students leave with one clear takeaway from the day — a concept, question, habit, or standard to apply beyond the classroom." },
   ];
 
   const days = [
@@ -6439,7 +6473,7 @@ function SummerDetailPage({ setPage, openInquiry }) {
             <div style={{ width: 32, height: "1px", background: "rgba(139,105,20,.4)" }} />
             <p style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.45em", color: "#8B6914", fontWeight: 600, textTransform: "uppercase", margin: 0 }}>Venture Tracks</p>
           </div>
-          <h2 style={{ fontFamily: serif, fontSize: isMobile ? 28 : 44, fontWeight: 300, fontStyle: "italic", color: "#000", lineHeight: 1.05, marginBottom: 12 }}>Choose your track<br />during admissions.</h2>
+          <h2 style={{ fontFamily: serif, fontSize: isMobile ? 28 : 44, fontWeight: 300, fontStyle: "italic", color: "#000", lineHeight: 1.05, marginBottom: 12 }}>Choose your track during admissions.</h2>
           <p style={{ fontFamily: sans, fontSize: 14, color: "#444", fontWeight: 300, lineHeight: 1.8, marginBottom: 36, maxWidth: 600 }}>Both tracks follow the identical 10-day curriculum, the same faculty, and the same Finale. The difference is the problem each team is built to solve.</p>
           <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 16 }}>
             {/* Track A - Frontier */}
@@ -6483,7 +6517,7 @@ function SummerDetailPage({ setPage, openInquiry }) {
             <div style={{ width: 32, height: "1px", background: "rgba(139,105,20,.4)" }} />
             <p style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.45em", color: "#8B6914", fontWeight: 600, textTransform: "uppercase", margin: 0 }}>Portfolio & Beyond</p>
           </div>
-          <h2 style={{ fontFamily: serif, fontSize: isMobile ? 26 : 40, fontWeight: 300, fontStyle: "italic", color: "#000", lineHeight: 1.05, marginBottom: 12 }}>The Excalibur<br />Summer Portfolio.</h2>
+          <h2 style={{ fontFamily: serif, fontSize: isMobile ? 26 : 40, fontWeight: 300, fontStyle: "italic", color: "#000", lineHeight: 1.05, marginBottom: 12 }}>The Excalibur Summer Portfolio.</h2>
           <p style={{ fontFamily: sans, fontSize: 14, color: "#444", fontWeight: 300, lineHeight: 1.8, marginBottom: 8, maxWidth: 680 }}>Every student leaves with a professional portfolio documenting the full scope of their work — customer research, market validation, venture strategy, MVP development, traction metrics, and the final Shark Tank-inspired presentation before a live panel of executives, investors, community leaders, and entrepreneurs.</p>
           <p style={{ fontFamily: sans, fontSize: 14, color: "#444", fontWeight: 300, lineHeight: 1.8, marginBottom: 36, maxWidth: 680 }}>Tangible work. Real-world experience. Measurable progress. A portfolio built around execution, not attendance — shaping young leaders, founders, and builders who act, lead, and deliver.</p>
           <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 0, border: "0.5px solid rgba(0,0,0,.1)" }}>
