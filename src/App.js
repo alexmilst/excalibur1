@@ -1159,10 +1159,10 @@ function SoireeInviteBlock({ openInquiry, setPage = () => {}, autoOpen = false, 
                   </div>
                   <p style={{ fontFamily: serif, fontSize: isMobile ? 18 : 24, color: "#FBF7EE", lineHeight: 1.3, marginBottom: 16, fontWeight: 400 }}>Academy Launch & Family Information Soirée</p>
                   <p style={{ fontFamily: "'Cormorant Garamond', 'Didot', Georgia, serif", fontSize: isMobile ? 15 : 18, color: gold, lineHeight: 1.4, marginBottom: 6, fontStyle: "italic", fontWeight: 700, letterSpacing: "0.12em" }}>at</p>
-                  <p style={{ fontFamily: "'Cormorant Garamond', 'Didot', 'Bodoni MT', Georgia, serif", fontSize: isMobile ? 28 : 42, color: "#FBF7EE", lineHeight: 1.1, marginBottom: 6, fontWeight: 300, fontStyle: "italic", letterSpacing: "0.04em" }}>Laguna Niguel City Hall Ballroom</p>
+                  <p style={{ fontFamily: "'Cormorant Garamond', 'Didot', 'Bodoni MT', Georgia, serif", fontSize: isMobile ? 28 : 42, color: "#FBF7EE", lineHeight: 1.1, marginBottom: 6, fontWeight: 300, fontStyle: "italic", letterSpacing: "0.04em" }}>23 Corporate Plaza Drive, Newport Beach</p>
                   <div style={{ display: "flex", alignItems: "center", gap: 12, justifyContent: "center", marginBottom: 36 }}>
                     <div style={{ width: 28, height: "1px", background: "rgba(199,171,117,0.4)" }} />
-                    <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 9, color: gold, lineHeight: 1, fontWeight: 600, letterSpacing: "0.35em", textTransform: "uppercase", margin: 0 }}>Laguna Niguel · California</p>
+                    <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 9, color: gold, lineHeight: 1, fontWeight: 600, letterSpacing: "0.35em", textTransform: "uppercase", margin: 0 }}>Newport Beach · California</p>
                     <div style={{ width: 28, height: "1px", background: "rgba(199,171,117,0.4)" }} />
                   </div>
                   <div style={{ width: 52, height: "1px", background: `linear-gradient(90deg, transparent, ${gold}, transparent)`, marginBottom: 28 }} />
@@ -1855,7 +1855,7 @@ function IntensivePage({ setPage, openInquiry }) {
             <p style={{ fontFamily: sans, fontSize: 14, lineHeight: 2.0, color: "#1a1a1a", fontWeight: 300 }}>At the heart of the Six-Week Intensive is the Venture Launchpad — a structured venture-building arc woven across all six weeks. From the first session, students begin developing a real business concept: validating a problem, sizing a market, building a brand, mapping competitors, and constructing a go-to-market strategy. Week by week, the venture grows — from raw idea through business fundamentals, marketing and customer psychology, competitive analysis, AI-powered research tools, and sales and pitch mechanics — until it is ready to be defended live before a panel of real investors at the Shark Tank–inspired Venture Finale.</p>
           </div>
           <div>
-            {[["Tracks", "Group A: Mon & Wed \u00b7 4:00\u20136:30 PM\nGroup B: Sunday \u00b7 10:30 AM\u20133:45 PM"], ["Sessions", "30 hours per wave"], ["Guest Speakers", "2 per wave, senior practitioners"], ["Finale", "Shark Tank\u2013Inspired Venture Finale \u00b7 Real investors"], ["Tuition", "$3,900 per wave"], ["Eligibility", "Ages 15\u201318 \u00b7 High school students"], ["Location", "South Orange County, CA"]].map(([k, v]) => (
+            {[["Tracks", "Group A: Mon & Wed \u00b7 4:00\u20136:30 PM\nGroup B: Sunday \u00b7 10:30 AM\u20133:45 PM"], ["Sessions", "30 hours per wave"], ["Guest Speakers", "2 per wave, senior practitioners"], ["Finale", "Shark Tank\u2013Inspired Venture Finale \u00b7 Real investors"], ["Tuition", "$3,900 per wave"], ["Eligibility", "Ages 14\u201317 \u00b7 High school students"], ["Location", "South Orange County, CA"]].map(([k, v]) => (
               <div key={k} style={{ display: "grid", gridTemplateColumns: "96px 1fr", gap: 14, padding: "11px 0", borderBottom: "1px solid rgba(0,0,0,.08)" }}>
                 <span style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.2em", color: "#8B6914", textTransform: "uppercase", paddingTop: 2 }}>{k}</span>
                 <span style={{ fontFamily: sans, fontSize: 13, color: "#1a1a1a", fontWeight: 300, lineHeight: 1.6, whiteSpace: "pre-line" }}>{v}</span>
@@ -4023,7 +4023,7 @@ function HomePage({ setPage, openInquiry }) {
             ))}
           </div>
           <button onClick={() => setPage("apply")} style={{ fontFamily: sans, background: gold, color: "#000", padding: isMobile ? "16px 40px" : "18px 60px", fontSize: isMobile ? 13 : 14, fontWeight: 700, letterSpacing: "0.2em", textTransform: "uppercase", border: "none", cursor: "pointer" }}>JOIN THE WAITLIST</button>
-          <p style={{ fontFamily: eyebrow_font, color: "#FBF7EE", fontSize: 9, marginTop: 24, letterSpacing: "0.2em", fontWeight: 600 }}>APPLY@EXCALIBURACADEMY.ORG</p>
+          <p style={{ fontFamily: eyebrow_font, color: "#FBF7EE", fontSize: 9, marginTop: 24, letterSpacing: "0.2em", fontWeight: 600 }}>ADMISSIONS@EXCALIBURACADEMY.ORG</p>
         </Fade>
       </section>
 
@@ -5051,7 +5051,7 @@ function ComingSoonPage({ onUnlock }) {
               {/* Card content */}
               <p style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.4em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 18 }}>Excalibur Academy · May 2026</p>
               <p style={{ fontFamily: serif, fontSize: isMobile ? 18 : 23, color: "#FBF7EE", lineHeight: 1.45, marginBottom: 18 }}>
-                Academy Launch and Family Information Soirée<br />at Laguna Niguel City Hall Ballroom
+                Academy Launch and Family Information Soirée<br />Newport Beach, Orange County
               </p>
               <div style={{ width: 48, height: 1, background: `linear-gradient(90deg, transparent, ${gold}, transparent)`, margin: "0 auto 20px" }} />
               <p style={{ fontFamily: sans, fontSize: isMobile ? 12 : 13, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.85, maxWidth: 520, margin: "0 auto 18px" }}>
@@ -5118,7 +5118,7 @@ function ComingSoonPage({ onUnlock }) {
 
       {/* Footer */}
       <div style={{ position: "relative", zIndex: 1, textAlign: "center", padding: "24px 40px", borderTop: "1px solid rgba(199,171,117,.07)" }}>
-        <p style={{ fontFamily: sans, fontSize: 11, color: "rgba(251,247,238,0.4)" }}>admissions@excaliburacademy.org &nbsp;·&nbsp; support@excaliburacademy.org &nbsp;·&nbsp; Orange County, California</p>
+        <p style={{ fontFamily: sans, fontSize: 11, color: "#FBF7EE" }}>admissions@excaliburacademy.org &nbsp;·&nbsp; support@excaliburacademy.org &nbsp;·&nbsp; Orange County, California</p>
       </div>
     </div>
   );
@@ -7065,16 +7065,16 @@ function EventsPage({ setPage, openInquiry }) {
                   <p style={{ fontFamily: "'Cormorant Garamond', 'Didot', Georgia, serif", fontSize: isMobile ? 15 : 18, color: gold, fontStyle: "italic", fontWeight: 600, letterSpacing: "0.1em", margin: 0 }}>Tuesday &nbsp;·&nbsp; 2026 &nbsp;·&nbsp; 6:00 – 8:00 PM</p>
                   <div style={{ width: 14, height: "1px", background: `linear-gradient(90deg, ${gold}, transparent)` }} />
                 </div>
-                <p style={{ fontFamily: "'Cormorant Garamond', 'Didot', 'Bodoni MT', Georgia, serif", fontSize: isMobile ? 24 : 36, color: "#FBF7EE", lineHeight: 1.1, marginBottom: 6, fontWeight: 300, fontStyle: "italic", letterSpacing: "0.04em" }}>Laguna Niguel City Hall Ballroom</p>
+                <p style={{ fontFamily: "'Cormorant Garamond', 'Didot', 'Bodoni MT', Georgia, serif", fontSize: isMobile ? 24 : 36, color: "#FBF7EE", lineHeight: 1.1, marginBottom: 6, fontWeight: 300, fontStyle: "italic", letterSpacing: "0.04em" }}>23 Corporate Plaza Drive, Newport Beach</p>
                 <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 40 }}>
                   <div style={{ width: 22, height: "1px", background: "rgba(199,171,117,0.4)" }} />
-                  <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 9, color: gold, letterSpacing: "0.32em", textTransform: "uppercase", fontWeight: 600, margin: 0 }}>Laguna Niguel · California</p>
+                  <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 9, color: gold, letterSpacing: "0.32em", textTransform: "uppercase", fontWeight: 600, margin: 0 }}>Newport Beach · California</p>
                   <div style={{ width: 22, height: "1px", background: "rgba(199,171,117,0.4)" }} />
                 </div>
                 <div style={{ width: 40, height: "1px", background: `linear-gradient(90deg, ${gold}, transparent)`, marginBottom: 32 }} />
                 {/* Details table */}
                 {[
-                  ["Location", "Laguna Niguel City Hall Ballroom, Laguna Niguel, CA"],
+                  ["Location", "23 Corporate Plaza Drive, Newport Beach, CA"],
                   ["Format", "Private Evening Reception"],
                   ["Time", "6:00 – 8:00 PM"],
                   ["Dress Code", "Black Tie"],
