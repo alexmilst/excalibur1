@@ -714,13 +714,12 @@ function Footer({ setPage }) {
           {/* Business info */}
           <div style={{ display: "flex", flexDirection: "column", gap: 5 }}>
             <span style={{ fontFamily: eyebrow_font, fontSize: 9, color: gold, letterSpacing: "0.25em", textTransform: "uppercase", fontWeight: 600, marginBottom: 4 }}>Excalibur Academy LLC</span>
-            <span style={{ fontFamily: sans, fontSize: 11, color: "#FBF7EE", fontWeight: 300, letterSpacing: "0.03em" }}>125 Newport Center Drive</span>
-            <span style={{ fontFamily: sans, fontSize: 11, color: "#FBF7EE", fontWeight: 300, letterSpacing: "0.03em" }}>Newport Beach, CA 92660</span>
+            <span style={{ fontFamily: sans, fontSize: 11, color: "#FBF7EE", fontWeight: 300, letterSpacing: "0.03em" }}>23 Corporate Plaza Drive, Newport Beach, CA 92660</span>
           </div>
           {/* Applications email */}
           <div style={{ display: "flex", flexDirection: "column", gap: 5, borderLeft: isMobile ? "none" : "1px solid rgba(199,171,117,.15)", paddingLeft: isMobile ? 0 : 48 }}>
             <span style={{ fontFamily: eyebrow_font, fontSize: 9, color: gold, letterSpacing: "0.25em", textTransform: "uppercase", fontWeight: 600, marginBottom: 4 }}>ADMISSIONS</span>
-            <a href="mailto:apply@excaliburacademy.org" style={{ fontFamily: serif, fontSize: 13, color: "#FBF7EE", textDecoration: "none", letterSpacing: "0.05em", fontStyle: "italic", transition: "color .2s" }} onMouseEnter={e => e.target.style.color = gold} onMouseLeave={e => e.target.style.color = "#FBF7EE"}>apply@excaliburacademy.org</a>
+            <a href="mailto:admissions@excaliburacademy.org" style={{ fontFamily: serif, fontSize: 13, color: "#FBF7EE", textDecoration: "none", letterSpacing: "0.05em", fontStyle: "italic", transition: "color .2s" }} onMouseEnter={e => e.target.style.color = gold} onMouseLeave={e => e.target.style.color = "#FBF7EE"}>admissions@excaliburacademy.org</a>
           </div>
           {/* Support email */}
           <div style={{ display: "flex", flexDirection: "column", gap: 5, borderLeft: isMobile ? "none" : "1px solid rgba(199,171,117,.15)", paddingLeft: isMobile ? 0 : 48 }}>
@@ -732,7 +731,7 @@ function Footer({ setPage }) {
       {/* Copyright */}
       <div style={{ maxWidth: 1200, margin: "0 auto", padding: isMobile ? "20px 24px" : "20px 60px", display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 8 }}>
         <p style={{ fontFamily: sans, fontSize: 9, color: "#C7AB75", letterSpacing: "0.08em", textTransform: "uppercase" }}>© 2026 Excalibur Academy LLC · Orange County, California</p>
-        <p style={{ fontFamily: sans, fontSize: 9, color: "#C7AB75", letterSpacing: "0.06em" }}>125 Newport Center Drive, Newport Beach, CA 92660</p>
+        <p style={{ fontFamily: sans, fontSize: 9, color: "#C7AB75", letterSpacing: "0.06em" }}>23 Corporate Plaza Drive, Newport Beach, CA 92660</p>
       </div>
     </footer>
   );
@@ -1152,10 +1151,10 @@ function SoireeInviteBlock({ openInquiry, setPage = () => {}, autoOpen = false, 
                     <div style={{ flex: 1, height: "1px", background: "linear-gradient(90deg, rgba(199,171,117,.35), transparent)" }} />
                   </div>
                   {/* Date */}
-                  <p style={{ fontFamily: serif, fontSize: isMobile ? 72 : 96, fontWeight: 300, color: "#FBF7EE", lineHeight: 1, letterSpacing: "-0.03em", marginBottom: 6 }}>May 27</p>
+                  <p style={{ fontFamily: serif, fontSize: isMobile ? 72 : 96, fontWeight: 300, color: "#FBF7EE", lineHeight: 1, letterSpacing: "-0.03em", marginBottom: 6 }}>June 30</p>
                   <div style={{ display: "flex", alignItems: "center", gap: 10, justifyContent: "center", marginBottom: 8 }}>
                     <div style={{ width: 18, height: "1px", background: `linear-gradient(90deg, transparent, ${gold})` }} />
-                    <p style={{ fontFamily: "'Cormorant Garamond', 'Didot', Georgia, serif", fontSize: isMobile ? 16 : 20, color: gold, fontStyle: "italic", fontWeight: 600, letterSpacing: "0.12em", margin: 0 }}>Wednesday &nbsp;·&nbsp; 6:00 – 8:00 PM</p>
+                    <p style={{ fontFamily: "'Cormorant Garamond', 'Didot', Georgia, serif", fontSize: isMobile ? 16 : 20, color: gold, fontStyle: "italic", fontWeight: 600, letterSpacing: "0.12em", margin: 0 }}>Tuesday &nbsp;·&nbsp; 6:00 – 8:00 PM</p>
                     <div style={{ width: 18, height: "1px", background: `linear-gradient(90deg, ${gold}, transparent)` }} />
                   </div>
                   <p style={{ fontFamily: serif, fontSize: isMobile ? 18 : 24, color: "#FBF7EE", lineHeight: 1.3, marginBottom: 16, fontWeight: 400 }}>Academy Launch & Family Information Soirée</p>
@@ -1524,6 +1523,9 @@ function CurriculumPage({ setPage, openInquiry }) {
       </div>
 
 
+      {/* ── SOIREE ── */}
+      <SoireeInviteBlock openInquiry={openInquiry} setPage={setPage} />
+
       {/* FAMILY CONSULTATION FORM */}
       <div style={{ background: "#000", padding: isMobile ? "52px 24px" : "72px 80px", borderTop: "1px solid rgba(199,171,117,.1)" }}>
         <div style={{ maxWidth: 740, margin: "0 auto" }}>
@@ -1557,7 +1559,12 @@ function CurriculumPage({ setPage, openInquiry }) {
               <input type="text" placeholder="Age" className="inquiry-input" style={{ background: "#000", border: "1px solid rgba(199,171,117,.2)", color: "#FBF7EE", padding: "13px 16px", fontFamily: "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
               <input type="text" placeholder="Current Grade / Year" className="inquiry-input" style={{ background: "#000", border: "1px solid rgba(199,171,117,.2)", color: "#FBF7EE", padding: "13px 16px", fontFamily: "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
             </div>
-            <input type="text" placeholder="Program of Interest (Flagship, Six-Week, Summer)" className="inquiry-input" style={{ background: "#000", border: "1px solid rgba(199,171,117,.2)", color: "#FBF7EE", padding: "13px 16px", fontFamily: "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%", marginBottom: 24 }} />
+            <select defaultValue="" style={{ background: "#000", border: "1px solid rgba(199,171,117,.2)", color: "#FBF7EE", padding: "13px 16px", fontFamily: "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%", marginBottom: 24, appearance: "none" }}>
+              <option value="" disabled>Program of Interest</option>
+              <option value="flagship">Flagship Ten-Month Program</option>
+              <option value="sixweek">Six-Week Intensive</option>
+              <option value="summer">Summer Intensive</option>
+            </select>
             <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 9, letterSpacing: "0.25em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 12, marginTop: 0 }}>Consultation Preferences</p>
             <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 10, marginBottom: 10 }}>
               <select className="inquiry-input" defaultValue="" style={{ background: "#000", border: "1px solid rgba(199,171,117,.2)", color: "#FBF7EE", padding: "13px 16px", fontFamily: "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%", appearance: "none" }}>
@@ -2004,6 +2011,9 @@ function IntensivePage({ setPage, openInquiry }) {
           </div>
         </div>
       </div>
+
+      {/* ── SOIREE ── */}
+      <SoireeInviteBlock openInquiry={openInquiry} setPage={setPage} />
 
       {/* FAMILY CONSULTATION FORM */}
       <div style={{ background: "#000", padding: isMobile ? "52px 24px" : "72px 80px", borderTop: "1px solid rgba(199,171,117,.1)" }}>
@@ -2859,6 +2869,9 @@ function ApplyPage({ setPage, openInquiry }) {
       </div>
 
 
+      {/* ── SOIREE ── */}
+      <SoireeInviteBlock openInquiry={openInquiry} setPage={setPage} />
+
       {/* FAMILY CONSULTATION FORM */}
       <div style={{ background: "#000", padding: isMobile ? "52px 24px" : "72px 80px", borderTop: "1px solid rgba(199,171,117,.1)" }}>
         <div style={{ maxWidth: 740, margin: "0 auto" }}>
@@ -2892,7 +2905,12 @@ function ApplyPage({ setPage, openInquiry }) {
               <input type="text" placeholder="Age" className="inquiry-input" style={{ background: "#000", border: "1px solid rgba(199,171,117,.2)", color: "#FBF7EE", padding: "13px 16px", fontFamily: "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
               <input type="text" placeholder="Current Grade / Year" className="inquiry-input" style={{ background: "#000", border: "1px solid rgba(199,171,117,.2)", color: "#FBF7EE", padding: "13px 16px", fontFamily: "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
             </div>
-            <input type="text" placeholder="Program of Interest (Flagship, Six-Week, Summer)" className="inquiry-input" style={{ background: "#000", border: "1px solid rgba(199,171,117,.2)", color: "#FBF7EE", padding: "13px 16px", fontFamily: "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%", marginBottom: 24 }} />
+            <select defaultValue="" style={{ background: "#000", border: "1px solid rgba(199,171,117,.2)", color: "#FBF7EE", padding: "13px 16px", fontFamily: "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%", marginBottom: 24, appearance: "none" }}>
+              <option value="" disabled>Program of Interest</option>
+              <option value="flagship">Flagship Ten-Month Program</option>
+              <option value="sixweek">Six-Week Intensive</option>
+              <option value="summer">Summer Intensive</option>
+            </select>
             <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 9, letterSpacing: "0.25em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 12, marginTop: 0 }}>Consultation Preferences</p>
             <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 10, marginBottom: 10 }}>
               <select className="inquiry-input" defaultValue="" style={{ background: "#000", border: "1px solid rgba(199,171,117,.2)", color: "#FBF7EE", padding: "13px 16px", fontFamily: "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%", appearance: "none" }}>
@@ -4009,6 +4027,9 @@ function HomePage({ setPage, openInquiry }) {
         </Fade>
       </section>
 
+      {/* ── SOIREE ── */}
+      <SoireeInviteBlock openInquiry={openInquiry} setPage={setPage} />
+
       {/* FAMILY CONSULTATION FORM */}
       <div style={{ background: "#000", padding: isMobile ? "52px 24px" : "72px 80px", borderTop: "1px solid rgba(199,171,117,.1)" }}>
         <div style={{ maxWidth: 740, margin: "0 auto" }}>
@@ -4042,7 +4063,12 @@ function HomePage({ setPage, openInquiry }) {
               <input type="text" placeholder="Age" className="inquiry-input" style={{ background: "#000", border: "1px solid rgba(199,171,117,.2)", color: "#FBF7EE", padding: "13px 16px", fontFamily: "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
               <input type="text" placeholder="Current Grade / Year" className="inquiry-input" style={{ background: "#000", border: "1px solid rgba(199,171,117,.2)", color: "#FBF7EE", padding: "13px 16px", fontFamily: "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
             </div>
-            <input type="text" placeholder="Program of Interest (Flagship, Six-Week, Summer)" className="inquiry-input" style={{ background: "#000", border: "1px solid rgba(199,171,117,.2)", color: "#FBF7EE", padding: "13px 16px", fontFamily: "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%", marginBottom: 24 }} />
+            <select defaultValue="" style={{ background: "#000", border: "1px solid rgba(199,171,117,.2)", color: "#FBF7EE", padding: "13px 16px", fontFamily: "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%", marginBottom: 24, appearance: "none" }}>
+              <option value="" disabled>Program of Interest</option>
+              <option value="flagship">Flagship Ten-Month Program</option>
+              <option value="sixweek">Six-Week Intensive</option>
+              <option value="summer">Summer Intensive</option>
+            </select>
             <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 9, letterSpacing: "0.25em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 12, marginTop: 0 }}>Consultation Preferences</p>
             <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 10, marginBottom: 10 }}>
               <select className="inquiry-input" defaultValue="" style={{ background: "#000", border: "1px solid rgba(199,171,117,.2)", color: "#FBF7EE", padding: "13px 16px", fontFamily: "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%", appearance: "none" }}>
@@ -4205,6 +4231,9 @@ function BeyondPage({ setPage, openInquiry }) {
       </div>
 
 
+      {/* ── SOIREE ── */}
+      <SoireeInviteBlock openInquiry={openInquiry} setPage={setPage} />
+
       {/* FAMILY CONSULTATION FORM */}
       <div style={{ background: "#000", padding: isMobile ? "52px 24px" : "72px 80px", borderTop: "1px solid rgba(199,171,117,.1)" }}>
         <div style={{ maxWidth: 740, margin: "0 auto" }}>
@@ -4238,7 +4267,12 @@ function BeyondPage({ setPage, openInquiry }) {
               <input type="text" placeholder="Age" className="inquiry-input" style={{ background: "#000", border: "1px solid rgba(199,171,117,.2)", color: "#FBF7EE", padding: "13px 16px", fontFamily: "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
               <input type="text" placeholder="Current Grade / Year" className="inquiry-input" style={{ background: "#000", border: "1px solid rgba(199,171,117,.2)", color: "#FBF7EE", padding: "13px 16px", fontFamily: "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
             </div>
-            <input type="text" placeholder="Program of Interest (Flagship, Six-Week, Summer)" className="inquiry-input" style={{ background: "#000", border: "1px solid rgba(199,171,117,.2)", color: "#FBF7EE", padding: "13px 16px", fontFamily: "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%", marginBottom: 24 }} />
+            <select defaultValue="" style={{ background: "#000", border: "1px solid rgba(199,171,117,.2)", color: "#FBF7EE", padding: "13px 16px", fontFamily: "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%", marginBottom: 24, appearance: "none" }}>
+              <option value="" disabled>Program of Interest</option>
+              <option value="flagship">Flagship Ten-Month Program</option>
+              <option value="sixweek">Six-Week Intensive</option>
+              <option value="summer">Summer Intensive</option>
+            </select>
             <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 9, letterSpacing: "0.25em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 12, marginTop: 0 }}>Consultation Preferences</p>
             <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 10, marginBottom: 10 }}>
               <select className="inquiry-input" defaultValue="" style={{ background: "#000", border: "1px solid rgba(199,171,117,.2)", color: "#FBF7EE", padding: "13px 16px", fontFamily: "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%", appearance: "none" }}>
@@ -5051,7 +5085,7 @@ function ComingSoonPage({ onUnlock }) {
               <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 1, background: `linear-gradient(90deg, transparent, ${gold}, transparent)` }} />
               <span style={{ fontFamily: serif, fontSize: 28, color: gold, display: "block", marginBottom: 16 }}>✦</span>
               <p style={{ fontFamily: serif, fontSize: 22, color: "#FBF7EE", marginBottom: 12 }}>Thank you.</p>
-              <p style={{ fontFamily: sans, fontSize: 14, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.8 }}>Our admissions team will follow up personally with details for the May 27 evening. We would be honored to welcome your family.</p>
+              <p style={{ fontFamily: sans, fontSize: 14, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.8 }}>Our admissions team will follow up personally with event details and your private invitation. We would be honored to welcome your family.</p>
             </div>
           </div>
         )}
@@ -5084,7 +5118,7 @@ function ComingSoonPage({ onUnlock }) {
 
       {/* Footer */}
       <div style={{ position: "relative", zIndex: 1, textAlign: "center", padding: "24px 40px", borderTop: "1px solid rgba(199,171,117,.07)" }}>
-        <p style={{ fontFamily: sans, fontSize: 11, color: "rgba(251,247,238,0.4)" }}>apply@excaliburacademy.org &nbsp;·&nbsp; support@excaliburacademy.org &nbsp;·&nbsp; Orange County, California</p>
+        <p style={{ fontFamily: sans, fontSize: 11, color: "rgba(251,247,238,0.4)" }}>admissions@excaliburacademy.org &nbsp;·&nbsp; support@excaliburacademy.org &nbsp;·&nbsp; Orange County, California</p>
       </div>
     </div>
   );
@@ -5357,7 +5391,7 @@ function InquiryModal({ open, onClose, defaultProgram }) {
               {/* Private invitation + package */}
               <div>
                 <Label>Admissions Package & Private Invitation</Label>
-                <p style={{ fontFamily: sans, fontSize: 12, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.7, marginBottom: 14 }}>Would you like to receive your private invitation to the May 27 family evening and admissions package by post?</p>
+                <p style={{ fontFamily: sans, fontSize: 12, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.7, marginBottom: 14 }}>Would you like to receive a private invitation to our Family Information Evening and admissions package by post?</p>
                 <div style={{ display: "flex", gap: 8 }}>
                   {["Yes — send by post", "Email only"].map(opt => <Chip key={opt} label={opt} active={form.sendPackage === opt} onClick={() => set("sendPackage", opt)} />)}
                 </div>
@@ -6274,6 +6308,9 @@ function FlagshipDetailPage({ setPage, openInquiry }) {
         </div>
       </div>
 
+      {/* ── SOIREE ── */}
+      <SoireeInviteBlock openInquiry={openInquiry} setPage={setPage} />
+
       {/* FAMILY CONSULTATION FORM */}
       <div style={{ background: "#000", padding: isMobile ? "52px 24px" : "72px 80px", borderTop: "1px solid rgba(199,171,117,.1)" }}>
         <div style={{ maxWidth: 740, margin: "0 auto" }}>
@@ -6840,6 +6877,9 @@ function SummerDetailPage({ setPage, openInquiry }) {
         </div>
       </div>
 
+      {/* ── SOIREE ── */}
+      <SoireeInviteBlock openInquiry={openInquiry} setPage={setPage} />
+
       {/* FAMILY CONSULTATION FORM */}
       <div style={{ background: "#000", padding: isMobile ? "52px 24px" : "72px 80px", borderTop: "1px solid rgba(199,171,117,.1)" }}>
         <div style={{ maxWidth: 740, margin: "0 auto" }}>
@@ -7019,10 +7059,10 @@ function EventsPage({ setPage, openInquiry }) {
                 </div>
                 <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 8, letterSpacing: "0.45em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 16 }}>Private Event · By Invitation Only</p>
                 {/* Date  -  monumental */}
-                <div style={{ fontFamily: serif, fontSize: isMobile ? 80 : 112, fontWeight: 300, color: "#FBF7EE", lineHeight: 1, letterSpacing: "-0.03em", marginBottom: 8 }}>May 27</div>
+                <div style={{ fontFamily: serif, fontSize: isMobile ? 80 : 112, fontWeight: 300, color: "#FBF7EE", lineHeight: 1, letterSpacing: "-0.03em", marginBottom: 8 }}>June 30</div>
                 <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 16 }}>
                   <div style={{ width: 14, height: "1px", background: `linear-gradient(90deg, transparent, ${gold})` }} />
-                  <p style={{ fontFamily: "'Cormorant Garamond', 'Didot', Georgia, serif", fontSize: isMobile ? 15 : 18, color: gold, fontStyle: "italic", fontWeight: 600, letterSpacing: "0.1em", margin: 0 }}>Wednesday &nbsp;·&nbsp; 2026 &nbsp;·&nbsp; 6:00 – 8:00 PM</p>
+                  <p style={{ fontFamily: "'Cormorant Garamond', 'Didot', Georgia, serif", fontSize: isMobile ? 15 : 18, color: gold, fontStyle: "italic", fontWeight: 600, letterSpacing: "0.1em", margin: 0 }}>Tuesday &nbsp;·&nbsp; 2026 &nbsp;·&nbsp; 6:00 – 8:00 PM</p>
                   <div style={{ width: 14, height: "1px", background: `linear-gradient(90deg, ${gold}, transparent)` }} />
                 </div>
                 <p style={{ fontFamily: "'Cormorant Garamond', 'Didot', 'Bodoni MT', Georgia, serif", fontSize: isMobile ? 24 : 36, color: "#FBF7EE", lineHeight: 1.1, marginBottom: 6, fontWeight: 300, fontStyle: "italic", letterSpacing: "0.04em" }}>Laguna Niguel City Hall Ballroom</p>
@@ -7332,7 +7372,7 @@ function ApplicationPage({ setPage, defaultProgram }) {
 
                 {/* Package */}
                 <Label>Admissions Package & Private Invitation</Label>
-                <p style={{ fontFamily: "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif", fontSize: 15, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.7, marginBottom: 12 }}>Would you like to receive your private invitation to the May 27 family evening and admissions package by post?</p>
+                <p style={{ fontFamily: "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif", fontSize: 15, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.7, marginBottom: 12 }}>Would you like to receive a private invitation to our Family Information Evening and admissions package by post?</p>
                 <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginBottom: 24 }}>
                   {["Yes — send by post", "Email only"].map(opt => <Chip key={opt} label={opt} active={form.sendPackage === opt} onClick={() => set("sendPackage", opt)} />)}
                 </div>
@@ -7399,7 +7439,7 @@ function ContactPage({ setPage, openInquiry }) {
       <div style={{ background: "#0A0A0A", borderBottom: "1px solid rgba(199,171,117,.08)" }}>
         <div style={{ maxWidth: 1100, margin: "0 auto", display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", borderLeft: "1px solid rgba(199,171,117,.08)" }}>
           {[
-            { label: "Admissions", email: "apply@excaliburacademy.org", desc: "Program inquiries, applications, enrollment, and admissions questions." },
+            { label: "Admissions", email: "admissions@excaliburacademy.org", desc: "Program inquiries, applications, enrollment, and admissions questions." },
             { label: "Support & General", email: "support@excaliburacademy.org", desc: "Family support, scheduling, portal access, and general correspondence." },
           ].map(({ label, email, desc }) => (
             <div key={label} style={{ padding: isMobile ? "32px 24px" : "44px 52px", borderRight: "1px solid rgba(199,171,117,.08)", borderBottom: isMobile ? "1px solid rgba(199,171,117,.08)" : "none" }}>
@@ -7444,7 +7484,12 @@ function ContactPage({ setPage, openInquiry }) {
               <input type="text" placeholder="Age" style={{ background: "#000", border: "1px solid rgba(199,171,117,.2)", color: "#FBF7EE", padding: "13px 16px", fontFamily: "'Avenir','Avenir Next','Century Gothic',sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
               <input type="text" placeholder="Current Grade / Year" style={{ background: "#000", border: "1px solid rgba(199,171,117,.2)", color: "#FBF7EE", padding: "13px 16px", fontFamily: "'Avenir','Avenir Next','Century Gothic',sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
             </div>
-            <input type="text" placeholder="Program of Interest (Flagship, Six-Week, Summer)" style={{ background: "#000", border: "1px solid rgba(199,171,117,.2)", color: "#FBF7EE", padding: "13px 16px", fontFamily: "'Avenir','Avenir Next','Century Gothic',sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%", marginBottom: 24 }} />
+            <select defaultValue="" style={{ background: "#000", border: "1px solid rgba(199,171,117,.2)", color: "#FBF7EE", padding: "13px 16px", fontFamily: "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%", marginBottom: 24, appearance: "none" }}>
+              <option value="" disabled>Program of Interest</option>
+              <option value="flagship">Flagship Ten-Month Program</option>
+              <option value="sixweek">Six-Week Intensive</option>
+              <option value="summer">Summer Intensive</option>
+            </select>
             <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 9, letterSpacing: "0.25em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 12 }}>Consultation Preferences</p>
             <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 10, marginBottom: 10 }}>
               <select defaultValue="" style={{ background: "#000", border: "1px solid rgba(199,171,117,.2)", color: "#FBF7EE", padding: "13px 16px", fontFamily: "'Avenir','Avenir Next','Century Gothic',sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%", appearance: "none" }}>
