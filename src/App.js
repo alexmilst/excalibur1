@@ -6435,7 +6435,7 @@ function SummerDetailPage({ setPage, openInquiry }) {
       {/* META STRIP */}
       <div style={{ background: "#0A0A0A", borderBottom: "1px solid rgba(199,171,117,.1)" }}>
         <div style={{ maxWidth: 1100, margin: "0 auto", display: "grid", gridTemplateColumns: isMobile ? "repeat(2,1fr)" : "repeat(6,1fr)", borderLeft: "1px solid rgba(199,171,117,.08)" }}>
-          {[["Format","Mon – Fri · Full Day"],["Hours","9:30 AM – 4:00 PM"],["Ages","14 – 17"],["Enrollment","Limited · 20 Students"],["Tuition","$4,500"],["Finale","Saturday Aug 8, 2026"]].map(([l,v]) => (
+          {[["Format","Mon – Fri · Full Day"],["Hours","9:30 AM – 4:00 PM"],["Ages","14 – 17"],["Enrollment","Limited · 20 Students"],["Tuition","$4,500"],["Finale","Saturday August 8, 2026"]].map(([l,v]) => (
             <div key={l} style={{ padding: isMobile ? "20px 16px" : "28px 24px", borderRight: "1px solid rgba(199,171,117,.08)", borderBottom: isMobile ? "1px solid rgba(199,171,117,.08)" : "none" }}>
               <p style={{ fontFamily: eyebrow_font, fontSize: 8, letterSpacing: "0.3em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 6 }}>{l}</p>
               <p style={{ fontFamily: sans, fontSize: 12, color: "#FBF7EE", fontWeight: 300 }}>{v}</p>
@@ -7159,26 +7159,40 @@ function ApplicationPage({ setPage, defaultProgram }) {
   const updateStudent = (i, k, v) => { const s = [...students]; s[i] = { ...s[i], [k]: v }; setStudents(s); };
 
   const programs = [
-    { id: "summer", label: "SUMMER INTENSIVE", title: "Summer Intensive", price: "$410 / full day · $4,500 per wave", desc: "Two weeks, full days, Mon–Fri. For students aged 14–17 (high school students). Public speaking, business, AI, sales and a Shark Tank–style Venture Court finale. 20 students per wave.", page: "summer-detail" },
-    { id: "six-week", label: "SIX-WEEK INTENSIVE", title: "Six-Week Intensive", price: "$3,900 / wave", desc: "Full curriculum in six concentrated weeks. Weekday evening or Sunday half-day formats. Judged Academy Gala & Graduation Day finale.", page: "intensive" },
-    { id: "flagship", label: "TEN-MONTH FLAGSHIP", title: "Ten-Month Program", price: "From $1,990 / month", desc: "All nine disciplines, real-world engagements, competitions, field trips, and the Excalibur Academy Portfolio. September–June.", page: "flagship-detail" },
+    { id: "summer", label: "SUMMER INTENSIVE", title: "Summer Intensive", price: "$4,500 per wave", dates: "July 27 – August 8, 2026 · Finale Saturday Aug 8", page: "summer-detail" },
+    { id: "six-week", label: "SIX-WEEK INTENSIVE", title: "Six-Week Intensive", price: "$3,900 per wave", dates: "Four waves — Fall, Winter, Spring, Summer", page: "intensive" },
+    { id: "flagship", label: "TEN-MONTH FLAGSHIP", title: "Flagship Formation Program", price: "From $1,900 / month", dates: "September 2026 – June 2027", page: "flagship-detail" },
   ];
   const waves = [
-    { id: "wave1", label: "WAVE", title: "July 27 – August 8, 2026", sub: "Monday through Friday", detail: "Two weeks. Full days. Limited to 20 students." },
+    { id: "wave1", label: "WAVE — SUMMER", title: "July 27 – August 8, 2026", sub: "Monday through Friday · 9:30 AM – 4:00 PM" },
   ];
-  const tracks = [
-    { id: "weekday", label: "WEEKDAY TRACK", title: "Tuesday & Thursday", sub: "4:00 – 7:00 PM", detail: "Evening sessions. Fits any weekend schedule." },
-    { id: "saturday", label: "SATURDAY TRACK", title: "Every Saturday", sub: "9:00 AM – 3:00 PM", detail: "Full-day immersion. Deeper workshops and extended speaker time." },
-    { id: "either", label: "NO PREFERENCE", title: "Either Track", sub: "", detail: "The admissions team will confirm availability with you." },
+  const sixWeekWaves = [
+    { id: "fall", label: "WAVE 1 — FALL", title: "Oct 5 – Nov 14, 2026", sub: "6 Weeks · 30 Hours", status: "Enrolling Soon" },
+    { id: "winter", label: "WAVE 2 — WINTER", title: "Jan 5 – Feb 13, 2027", sub: "6 Weeks · 30 Hours", status: "Opening Soon" },
+    { id: "spring", label: "WAVE 3 — SPRING", title: "Apr 7 – May 15, 2027", sub: "6 Weeks · 30 Hours", status: "Opening Soon" },
+    { id: "summer2", label: "WAVE 4 — SUMMER", title: "Jul 6 – Aug 14, 2027", sub: "6 Weeks · 30 Hours", status: "Opening Soon" },
   ];
+  const sixWeekTracks = [
+    { id: "weekday", label: "GROUP A — WEEKDAY", title: "Monday & Wednesday", sub: "4:00 – 6:30 PM" },
+    { id: "saturday", label: "GROUP B — WEEKEND", title: "Every Sunday", sub: "10:30 AM – 3:45 PM" },
+    { id: "either", label: "NO PREFERENCE", title: "Either Track", sub: "" },
+  ];
+  const flagshipTracks = [
+    { id: "weekday", label: "GROUP B — WEEKDAY", title: "Tuesday & Thursday", sub: "4:00 – 6:30 PM" },
+    { id: "saturday", label: "GROUP A — SATURDAY", title: "Every Saturday", sub: "10:30 AM – 3:45 PM" },
+    { id: "either", label: "NO PREFERENCE", title: "Either Track", sub: "" },
+  ];
+  const tracks = prog === "flagship" ? flagshipTracks : sixWeekTracks;
   const grades = ["9th Grade", "10th Grade", "11th Grade", "12th Grade"];
   const contactMethods = ["Phone Call", "Email", "Text Message", "WhatsApp"];
   const contactTimes = ["Morning (9–12)", "Afternoon (12–5)", "Evening (5–8)", "Weekends"];
 
   const isSummer = prog === "summer";
-  const needsWave = isSummer;
+  const isSixWeek = prog === "six-week";
+  const needsWave = isSummer || isSixWeek;
   const needsTrack = prog === "six-week" || prog === "flagship";
   const readyToFill = prog && (needsWave ? wave : true) && (needsTrack ? track : true);
+  const currentWaves = isSixWeek ? sixWeekWaves : waves;
 
   const iStyle = { background: "#000", border: "1px solid rgba(199,171,117,.2)", color: "#FBF7EE", padding: "13px 16px", fontFamily: "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif", fontSize: 15, fontWeight: 300, outline: "none", width: "100%" };
   const focus = e => e.target.style.borderColor = gold;
@@ -7258,8 +7272,8 @@ function ApplicationPage({ setPage, defaultProgram }) {
                 <div key={p.id} onClick={() => { setProg(p.id); setWave(null); setTrack(null); }} style={{ background: prog === p.id ? "#0C0C0A" : "#080808", padding: "28px 24px", cursor: "pointer", borderTop: `2px solid ${prog === p.id ? gold : "transparent"}`, transition: "all .25s" }}>
                   <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 8, letterSpacing: "0.3em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 10 }}>{p.label}</p>
                   <h4 style={{ fontFamily: "'Cormorant Garamond',Georgia,serif", fontSize: 20, fontWeight: 600, color: "#FBF7EE", marginBottom: 6, lineHeight: 1.2 }}>{p.title}</h4>
-                  <p style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: 30, color: gold, marginBottom: 10 }}>{p.price}</p>
-                  <p style={{ fontFamily: "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif", fontSize: 15, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.6, marginBottom: 14 }}>{p.desc}</p>
+                  <p style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: 28, color: gold, marginBottom: 6 }}>{p.price}</p>
+                  <p style={{ fontFamily: "'Avenir','Avenir Next','Century Gothic',sans-serif", fontSize: 12, color: "#FBF7EE", fontWeight: 300, marginBottom: 14 }}>{p.dates}</p>
                   <button onClick={e => { e.stopPropagation(); setPage(p.page); }} style={{ fontFamily: "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif", fontSize: 9, letterSpacing: "0.16em", color: gold, background: "transparent", border: "none", cursor: "pointer", padding: 0, textTransform: "uppercase" }}>Explore Program →</button>
                   {prog === p.id && <p style={{ fontFamily: "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif", fontSize: 10, color: gold, letterSpacing: "0.18em", marginTop: 10 }}>✓ SELECTED</p>}
                 </div>
@@ -7270,14 +7284,20 @@ function ApplicationPage({ setPage, defaultProgram }) {
           {/* STEP 2  -  WAVE (summer only) */}
           {prog && needsWave && (
             <div style={{ marginBottom: 40 }}>
-              <SectionHead n="2" done={!!wave} label="Choose Your Wave" />
-              <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 2, background: "#111" }}>
-                {waves.map(w => (
+              <SectionHead n="2" done={!!wave} label={isSixWeek ? "Choose Your Wave" : "Choose Your Wave"} />
+              <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : isSixWeek ? "repeat(2,1fr)" : "1fr 1fr", gap: 2, background: "#111" }}>
+                {currentWaves.map(w => (
                   <div key={w.id} onClick={() => setWave(w.id)} style={{ background: wave === w.id ? "#0C0C0A" : "#080808", padding: "28px 24px", cursor: "pointer", borderTop: `2px solid ${wave === w.id ? gold : "transparent"}`, transition: "all .25s" }}>
                     <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 8, letterSpacing: "0.3em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 10 }}>{w.label}</p>
                     <h4 style={{ fontFamily: "'Cormorant Garamond',Georgia,serif", fontSize: 22, fontWeight: 600, color: "#FBF7EE", marginBottom: 4 }}>{w.title}</h4>
-                    <p style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: 15, color: gold, marginBottom: 10 }}>{w.sub}</p>
-                    <p style={{ fontFamily: "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif", fontSize: 15, color: "#FBF7EE", fontWeight: 300 }}>{w.detail}</p>
+                    <p style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: 15, color: gold, marginBottom: isSummer ? 14 : 6 }}>{w.sub}</p>
+                    {isSummer && [["Dates", "July 27 – August 8, 2026"], ["Schedule", "Monday – Friday · 9:30 AM – 4:00 PM"], ["Finale", "Saturday August 8, 2026 · Excalibur Venture Finale"], ["Tuition", "$4,500 per wave"], ["Enrollment", "Limited to 20 students"]].map(([k, v]) => (
+                      <div key={k} style={{ display: "flex", gap: 12, padding: "6px 0", borderBottom: "1px solid rgba(199,171,117,.06)", alignItems: "flex-start" }}>
+                        <span style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 8, letterSpacing: "0.15em", color: gold, textTransform: "uppercase", minWidth: 64, flexShrink: 0, paddingTop: 2 }}>{k}</span>
+                        <span style={{ fontFamily: "'Avenir','Avenir Next','Century Gothic',sans-serif", fontSize: 12, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.5 }}>{v}</span>
+                      </div>
+                    ))}
+                    {isSixWeek && w.status && <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 9, color: w.status === "Enrolling Soon" ? "#4DB87A" : "rgba(199,171,117,.5)", letterSpacing: "0.1em", fontWeight: 600, marginTop: 8 }}>● {w.status}</p>}
                     {wave === w.id && <p style={{ fontFamily: "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif", fontSize: 10, color: gold, letterSpacing: "0.18em", marginTop: 14 }}>✓ SELECTED</p>}
                   </div>
                 ))}
@@ -7288,14 +7308,13 @@ function ApplicationPage({ setPage, defaultProgram }) {
           {/* STEP 2/3  -  TRACK (six-week & flagship) */}
           {prog && needsTrack && (
             <div style={{ marginBottom: 40 }}>
-              <SectionHead n="2" done={!!track} label="Choose Your Track" />
+              <SectionHead n={isSixWeek ? "3" : "2"} done={!!track} label="Choose Your Track" />
               <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(3,1fr)", gap: 2, background: "#111" }}>
                 {tracks.map(t => (
                   <div key={t.id} onClick={() => setTrack(t.id)} style={{ background: track === t.id ? "#0C0C0A" : "#080808", padding: "28px 24px", cursor: "pointer", borderTop: `2px solid ${track === t.id ? gold : "transparent"}`, transition: "all .25s" }}>
                     <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 8, letterSpacing: "0.3em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 10 }}>{t.label}</p>
                     <h4 style={{ fontFamily: "'Cormorant Garamond',Georgia,serif", fontSize: 22, fontWeight: 600, color: "#FBF7EE", marginBottom: 4 }}>{t.title}</h4>
                     {t.sub && <p style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: 16, color: gold, marginBottom: 10 }}>{t.sub}</p>}
-                    <p style={{ fontFamily: "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif", fontSize: 15, color: "#FBF7EE", fontWeight: 300 }}>{t.detail}</p>
                     {track === t.id && <p style={{ fontFamily: "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif", fontSize: 10, color: gold, letterSpacing: "0.18em", marginTop: 14 }}>✓ SELECTED</p>}
                   </div>
                 ))}
@@ -7306,7 +7325,7 @@ function ApplicationPage({ setPage, defaultProgram }) {
           {/* STEP 3  -  FORM */}
           {readyToFill && (
             <div style={{ marginBottom: 40 }}>
-              <SectionHead n={needsWave || needsTrack ? "3" : "2"} done={false} label="Your Information" />
+              <SectionHead n={isSixWeek ? "4" : needsWave || needsTrack ? "3" : "2"} done={false} label="Your Information" />
               <div style={{ background: "#080808", borderTop: `2px solid ${gold}`, padding: isMobile ? "28px 22px" : "36px 40px" }}>
                 <p style={{ fontFamily: "'Avenir', 'Avenir Next', 'Century Gothic', sans-serif", fontSize: 15, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.75, marginBottom: 32 }}>Fill in your details and our admissions team will be in touch within 24 hours with your full information package and next steps.</p>
 
