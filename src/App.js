@@ -1489,8 +1489,8 @@ function CurriculumPage({ setPage, openInquiry }) {
               <img src="https://i.imgur.com/gvG5P1q.png" alt="" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
               <div style={{ position: "absolute", inset: 0, background: "rgba(0,0,0,.3)" }} />
               <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, background: "#010000", padding: "28px 36px" }}>
-                <p style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.35em", color:"#010000", fontWeight: 600, textTransform: "uppercase", marginBottom: 8 }}>College Application Context</p>
-                <p style={{ fontFamily: serif, fontSize: 16, color:"#010000", fontStyle: "italic" }}>Why Excalibur Students Stand Apart</p>
+                <p style={{ fontFamily: "Lato, sans-serif", fontSize: 10, letterSpacing: "2px", color: "#010000", fontWeight: 700, textTransform: "uppercase", marginBottom: 8 }}>College Application Context</p>
+                <p style={{ fontFamily: "Cormorant Garamond, serif", fontSize: 25, color: "#010000", fontStyle: "italic" }}>Why Excalibur Students Stand Apart</p>
               </div>
             </div>
           </div>
@@ -4437,17 +4437,17 @@ function HomePage({ setPage, openInquiry }) {
               <img src="https://i.imgur.com/f87iq9i.jpeg" alt="" style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center center" }} />
               <div style={{ position: "absolute", inset: 0, background: "rgba(0,0,0,.35)" }} />
               <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, background: "#E4D5C1", padding: "28px 36px" }}>
-                <p style={{ fontFamily: sans, fontSize: 10, letterSpacing: "0.2em", color: "#010000", fontWeight: 700, textTransform: "uppercase", marginBottom: 10 }}>The Excalibur Graduate</p>
-                <h2 style={{ fontFamily: "Garamond, serif", fontSize: "clamp(28px,3vw,42px)", fontWeight: 400, color: "#010000", lineHeight: 1.0, marginBottom: 8, textTransform: "uppercase", letterSpacing: "0.04em" }}>Excalibur “Ivy” Portfolio</h2>
-                <p style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: 16, color: "#010000", fontStyle: "italic" }}>A record of work, judgment, and growth.</p>
+                <p style={{ fontFamily: "Lato, sans-serif", fontSize: 10, letterSpacing: "2px", color: "#010000", fontWeight: 700, textTransform: "uppercase", marginBottom: 10 }}>The Excalibur Graduate</p>
+                <h2 style={{ fontFamily: "Garamond, serif", fontSize: "clamp(28px,3vw,42px)", fontWeight: 600, color: "#A48D6E", lineHeight: 1.0, marginBottom: 8 }}>Excalibur “Ivy” Portfolio</h2>
+                <p style={{ fontFamily: "Cormorant Garamond, serif", fontSize: 20, color: "#E4D5C1", fontStyle: "italic" }}>A record of work, judgment, and growth</p>
               </div>
             </div>
             <div style={{ overflow: "hidden", position: "relative" }}>
               <img src="https://i.imgur.com/gvG5P1q.png" alt="" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
               <div style={{ position: "absolute", inset: 0, background: "rgba(0,0,0,.3)" }} />
               <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, background: "#E4D5C1", padding: "28px 36px" }}>
-                <p style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.35em", color: "#010000", fontWeight: 600, textTransform: "uppercase", marginBottom: 8 }}>College Application Context</p>
-                <p style={{ fontFamily: serif, fontSize: 16, color: "#010000", fontStyle: "italic" }}>Why Excalibur Students Stand Apart</p>
+                <p style={{ fontFamily: "Lato, sans-serif", fontSize: 10, letterSpacing: "2px", color: "#010000", fontWeight: 700, textTransform: "uppercase", marginBottom: 8 }}>College Application Context</p>
+                <p style={{ fontFamily: "Cormorant Garamond, serif", fontSize: 25, color: "#010000", fontStyle: "italic" }}>Why Excalibur Students Stand Apart</p>
               </div>
             </div>
           </div>
@@ -4456,9 +4456,9 @@ function HomePage({ setPage, openInquiry }) {
             <img src="https://i.imgur.com/f87iq9i.jpeg" alt="" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
             <div style={{ position: "absolute", inset: 0, background: "rgba(0,0,0,.5)" }} />
             <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, background: "#E4D5C1", padding: "20px 24px" }}>
-              <p style={{ fontFamily: sans, fontSize: 10, letterSpacing: "0.2em", color: "#010000", fontWeight: 700, textTransform: "uppercase", marginBottom: 8 }}>The Excalibur Graduate</p>
-              <h2 style={{ fontFamily: "'Bodoni Cyrillic', 'Bodoni MT', serif", fontSize: 26, fontWeight: 400, color: "#010000", lineHeight: 1.05, marginBottom: 6, textTransform: "uppercase", letterSpacing: "0.04em" }}>Excalibur “Ivy” Portfolio</h2>
-              <p style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: 14, color: "#010000", fontStyle: "italic" }}>A record of work, judgment, and growth.</p>
+              <p style={{ fontFamily: "Lato, sans-serif", fontSize: 10, letterSpacing: "2px", color: "#010000", fontWeight: 700, textTransform: "uppercase", marginBottom: 10 }}>The Excalibur Graduate</p>
+              <h2 style={{ fontFamily: "Garamond, serif", fontSize: 26, fontWeight: 600, color: "#A48D6E", lineHeight: 1.05, marginBottom: 6 }}>Excalibur “Ivy” Portfolio</h2>
+              <p style={{ fontFamily: "Cormorant Garamond, serif", fontSize: 20, color: "#E4D5C1", fontStyle: "italic" }}>A record of work, judgment, and growth</p>
             </div>
           </div>
         )}
