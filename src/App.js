@@ -3583,17 +3583,17 @@ function HomePage({ setPage, openInquiry }) {
 
                 {/* Two Venture Tracks */}
                 <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 8, marginBottom: 24 }}>
-                  <div style={{ background: "#0F0F0F", border: "0.5px solid rgba(216,183,140,.15)", padding: "16px 18px" }}>
-                    <p style={{ fontFamily: lora, fontSize: 11, letterSpacing: "0.3em", color:"#A48D6E", fontWeight: 600, textTransform: "uppercase", marginBottom: 5 }}>Track A</p>
-                    <p style={{ fontFamily: "'Cinzel', serif", fontSize: 18, fontWeight: 300, color:"#A48D6E", marginBottom: 3 , textTransform: "uppercase" }}>Da Vinci</p>
-                    <p style={{ fontFamily: sans, fontSize: 11, color:"#E4D5C1", letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 8 }}>Commercial Market Venture</p>
-                    <p style={{ fontFamily: lora, fontSize: 13, color:"#A48D6E", fontWeight: 300, lineHeight: 1.7, textAlign: "justify" }}>Build a scalable venture from the ground up — customer discovery, MVP, and evidence of demand before the Finale.</p>
+                  <div style={{ background: "rgba(228,214,193,1)", border: "1px solid rgba(164,141,110,1)", padding: "16px 18px" }}>
+                    <p style={{ fontFamily: lora, fontSize: 11, letterSpacing: "0.3em", color:"rgba(16,15,12,1)", fontWeight: 600, textTransform: "uppercase", marginBottom: 5 }}>Track A</p>
+                    <p style={{ fontFamily: "'Cinzel', serif", fontSize: 18, fontWeight: 300, color:"rgba(16,15,12,1)", marginBottom: 3 , textTransform: "uppercase" }}>Da Vinci</p>
+                    <p style={{ fontFamily: sans, fontSize: 11, color:"rgba(16,15,12,1)", letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 8 }}>Commercial Market Venture</p>
+                    <p style={{ fontFamily: lora, fontSize: 13, color:"rgba(16,15,12,1)", fontWeight: 300, lineHeight: 1.7, textAlign: "justify" }}>Build a scalable venture from the ground up — customer discovery, MVP, and evidence of demand before the Finale.</p>
                   </div>
-                  <div style={{ background: "#0F0F0F", border: "0.5px solid rgba(216,183,140,.3)", padding: "16px 18px" }}>
-                    <p style={{ fontFamily: lora, fontSize: 11, letterSpacing: "0.3em", color: "#A48D6E", fontWeight: 600, textTransform: "uppercase", marginBottom: 5 }}>Track B</p>
-                    <p style={{ fontFamily: "'Cinzel', serif", fontSize: 18, fontWeight: 300, color: "#A48D6E", marginBottom: 3 , textTransform: "uppercase" }}>Medici</p>
-                    <p style={{ fontFamily: sans, fontSize: 11, color: "#E4D5C1", letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 8 }}>Community Impact Venture</p>
-                    <p style={{ fontFamily: lora, fontSize: 13, color: "#A48D6E", fontWeight: 300, lineHeight: 1.7, textAlign: "justify" }}>Identify a real OC community problem and build a viable venture to address it — judged by investors and community officials.</p>
+                  <div style={{ background: "#e4d7c2", border: "1.5px solid rgba(216,183,140,.3)", padding: "16px 18px" }}>
+                    <p style={{ fontFamily: lora, fontSize: 11, letterSpacing: "0.3em", color: "rgba(16,15,12,1)", fontWeight: 600, textTransform: "uppercase", marginBottom: 5 }}>Track B</p>
+                    <p style={{ fontFamily: "'Cinzel', serif", fontSize: 18, fontWeight: 300, color: "rgba(16,15,12,1)", marginBottom: 3 , textTransform: "uppercase" }}>Medici</p>
+                    <p style={{ fontFamily: sans, fontSize: 11, color: "rgba(16,15,12,1)", letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 8 }}>Community Impact Venture</p>
+                    <p style={{ fontFamily: lora, fontSize: 13, color: "rgba(16,15,12,1)", fontWeight: 300, lineHeight: 1.7, textAlign: "justify" }}>Identify a real OC community problem and build a viable venture to address it — judged by investors and community officials.</p>
                   </div>
                 </div>
 
@@ -3638,8 +3638,8 @@ function HomePage({ setPage, openInquiry }) {
                 </div>
                 {/* Tuition */}
                 <div style={{ padding: "16px 22px", borderTop: `1px solid rgba(216,183,140,.1)` }}>
-                  <p style={{ fontFamily: "'Cinzel', serif", fontSize: 30, fontWeight: 300, color: "#E4D5C1", lineHeight: 1, marginBottom: 6, textTransform: "uppercase" }}>$4,500<span style={{ fontSize: 14 }}> / wave</span></p>
-                  <p style={{ fontFamily: sans, fontSize: 12, color: "#A48D6E", fontWeight: 400, letterSpacing: "0.08em" }}>11 days · 70 total hours</p>
+                  <p style={{ fontFamily: "'Cinzel', serif", fontSize: 41, fontWeight: 300, color: "#E4D5C1", lineHeight: 1, marginBottom: 6, textTransform: "uppercase" }}>$4,500<span style={{ fontSize: 14 }}> / wave</span></p>
+                  <p style={{ fontFamily: "Lora, serif", fontSize: 12, color: "#A48D6E", fontWeight: 400, letterSpacing: "0.08em" }}>11 days · 70 total hours</p>
                 </div>
                 {/* CTA buttons */}
                 <div style={{ padding: "14px 22px", borderTop: `1px solid rgba(216,183,140,.1)`, display: "flex", gap: 8, flexWrap: "wrap" }}>
@@ -3690,8 +3690,8 @@ function HomePage({ setPage, openInquiry }) {
           <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to right, rgba(0,0,0,.75) 0%, rgba(0,0,0,.2) 60%, transparent 100%)" }} />
           <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(0,0,0,.85) 0%, transparent 55%)" }} />
           <div style={{ position: "absolute", bottom: isMobile ? 28 : 52, left: isMobile ? 28 : 72, maxWidth: 540 }}>
-            <p style={{ fontFamily: sans, fontSize: 11, letterSpacing: "0.2em", color: "#A48D6E", fontWeight: 700, textTransform: "uppercase", marginBottom: 12 }}>About the Academy</p>
-            <h2 style={{ fontFamily: serif, fontSize: isMobile ? "clamp(30px,6vw,40px)" : "clamp(38px,4vw,56px)", fontWeight: 400, color: "#A48D6E", lineHeight: 1.1, letterSpacing: "0.08em", textTransform: "uppercase", marginBottom: 14 }}>The Academy</h2>
+            <p style={{ fontFamily: sans, fontSize: 14, letterSpacing: "0.2em", color: "#A48D6E", fontWeight: 400, textTransform: "uppercase", marginBottom: 12 }}>About the Academy</p>
+            <h2 style={{ fontFamily: "Garamond, serif", fontSize: isMobile ? "clamp(30px,6vw,40px)" : "60px", fontWeight: 400, color: "#A48D6E", lineHeight: 1.1, letterSpacing: "0.08em", textTransform: "uppercase", marginBottom: 14 }}>The Academy</h2>
 
           </div>
 
@@ -3732,7 +3732,7 @@ function HomePage({ setPage, openInquiry }) {
 
             {/* Closing italic line — moved here from right column on desktop */}
             {!isMobile && (
-              <p style={{ fontFamily: serif, fontSize: 26, color:"#010000", fontWeight: 400, fontStyle: "italic", lineHeight: 1.6, marginTop: 32 }}>
+              <p style={{ fontFamily: serif, fontSize: 30, color:"#010000", fontWeight: 400, fontStyle: "italic", lineHeight: 1.52, marginTop: 32, textAlign: "left" }}>
                 Excalibur Academy forges students with the confidence, discipline, and courage to lead what comes next.
               </p>
             )}
@@ -3766,14 +3766,19 @@ function HomePage({ setPage, openInquiry }) {
                 What cannot be replaced are human capacities: confidence under pressure, ownership of outcomes, the courage to keep going, the judgment to regroup or stop, the manners to move well among people, and the ability to lead through uncertainty. Entrepreneurs have powered business revolutions, built modern industry, and are now shaping the age of AI.
               </p>
               {isMobile && (
-                <p style={{ fontFamily: serif, fontSize: 20, color:"#010000", fontWeight: 400, fontStyle: "italic", lineHeight: 1.6, marginBottom: 28 }}>
+                <p style={{ fontFamily: serif, fontSize: 30, color:"#010000", fontWeight: 400, fontStyle: "italic", lineHeight: 1.52, marginBottom: 28, textAlign: "left" }}>
                   Excalibur Academy forges students with the confidence, discipline, and courage to lead what comes next.
                 </p>
               )}
             </div>
 
             <div style={{ marginTop: "auto" }}>
-              <button onClick={() => setPage("programs")} style={{ fontFamily: sans, background: "transparent", border: "1px solid rgba(0,0,0,.25)", color:"#010000", padding: "11px 26px", fontSize: 11, fontWeight: 600, letterSpacing: "0.15em", textTransform: "uppercase", cursor: "pointer" }}>Explore Programs →</button>
+              <button
+                onClick={() => setPage("programs")}
+                style={{ fontFamily: sans, background: "rgba(16,15,12,1)", border: "1px solid rgba(164,141,110,1)", color:"rgba(164,141,110,1)", padding: "11px 26px", fontSize: 11, fontWeight: 400, letterSpacing: "0.15em", textTransform: "uppercase", cursor: "pointer" }}
+              >
+                Explore Programs →
+              </button>
             </div>
           </div>
         </div>
