@@ -3672,7 +3672,7 @@ function HomePage({ setPage, openInquiry }) {
                 <p style={{ fontFamily: serif, fontSize: isMobile ? 20 : "clamp(18px,2.4vw,26px)", lineHeight: 1.7, color: "#0F0F0F", fontWeight: isMobile ? 700 : 400, fontStyle: "italic", marginBottom: 28 }}>
                   "There are people who walk the path — and people who cut it. At Excalibur Academy, we forge the second kind. The leaders. The innovators. The architects. The warriors. The dreamers. The ones who defy gravity. We are not preparing students to follow the future. We are preparing them to lead it. What sets them apart will not be what they are taught — but what they come to believe about themselves. That is where everything begins."
                 </p>
-                <p style={{ fontFamily: "'Times New Roman', Times, serif", fontSize: 13, color: "#34150F", letterSpacing: "0.22em", textTransform: "uppercase", fontWeight: 400 }}>
+                <p style={{ fontFamily: "Garamond, serif", fontSize: 13, color: "#34150F", letterSpacing: "0.22em", textTransform: "uppercase", fontWeight: 400 }}>
                   Alexander Milstein &nbsp;·&nbsp; Founder, Excalibur Academy
                 </p>
               </div>
@@ -3790,7 +3790,7 @@ function HomePage({ setPage, openInquiry }) {
           <div style={{ maxWidth: 860, margin: "0 auto", textAlign: "center", position: "relative", zIndex: 1 }}>
             {/* Top rule */}
             <div style={{ width: 40, height: 1, background: "#E4D5C1", margin: "0 auto 32px" }} />
-            <p style={{ fontFamily: serif, fontSize: isMobile ? 22 : 32, color:"#E4D5C1", fontWeight: 700, fontStyle: "normal", lineHeight: 1.65, letterSpacing: "0.01em", marginBottom: 36 }}>
+            <p style={{ fontFamily: serif, fontSize: 30, color:"#E4D5C1", fontWeight: 400, fontStyle: "normal", lineHeight: 1.65, letterSpacing: "0.01em", marginBottom: 36 }}>
               &ldquo;By the end of the program, every student will have pitched before live audiences, analyzed real businesses and presented advisory recommendations, launched a micro venture, worked in teams under pressure, and competed in Shark Tank-inspired finals before invited investors, founders, executives, and practitioners.&rdquo;
             </p>
             {/* Bottom rule */}
@@ -3803,7 +3803,7 @@ function HomePage({ setPage, openInquiry }) {
       {/* THREE PROGRAMS */}
       <section style={{ padding: isMobile ? "60px 16px" : "80px 40px", background: "#100F0C", borderTop: "1px solid rgba(188,166,150,.1)" }}>
         <div style={{ maxWidth: 1100, margin: "0 auto" }}>
-          <Fade><div style={{ textAlign: "center", marginBottom: 52 }}><p style={{ fontFamily: sans, fontSize: 12, letterSpacing: "0.2em", color:"#E4D5C1", fontWeight: 700, textTransform:"uppercase", marginBottom:16 }}>Three Paths Into Excalibur</p><h2 style={{ fontFamily: "'Times New Roman', Times, serif", fontSize:isMobile?"clamp(32px,5vw,48px)":"clamp(36px,4vw,56px)", fontWeight:400, color:"#A48D6E", lineHeight:1.06, letterSpacing:"0.08em", textTransform:"uppercase", marginBottom:16 }}>Choose Your Entry Point</h2><p style={{ fontFamily: lora, fontSize: 16, color:"#E4D5C1", fontWeight: 400, lineHeight: 1.9, letterSpacing:"0.02em", textAlign:"center", maxWidth:620, margin:"0 auto" }}>From two-week summer intensives to a full semester after-school Flagship program — weekday and weekend tracks, designed around student's schedule. Three paths into Excalibur.</p></div></Fade>
+          <Fade><div style={{ textAlign: "center", marginBottom: 52 }}><p style={{ fontFamily: sans, fontSize: 12, letterSpacing: "0.2em", color:"#E4D5C1", fontWeight: 700, textTransform:"uppercase", marginBottom:16 }}>Three Paths Into Excalibur</p><h2 style={{ fontFamily: "Garamond, serif", fontSize:isMobile?"clamp(32px,5vw,48px)":"clamp(36px,4vw,56px)", fontWeight:400, color:"#A48D6E", lineHeight:1.06, letterSpacing:"0.08em", textTransform:"uppercase", marginBottom:16 }}>Choose Your Entry Point</h2><p style={{ fontFamily: lora, fontSize: 16, color:"#E4D5C1", fontWeight: 400, lineHeight: 1.9, letterSpacing:"0.02em", textAlign:"center", maxWidth:620, margin:"0 auto" }}>From two-week summer intensives to a full semester after-school Flagship program — weekday and weekend tracks, designed around student's schedule. Three paths into Excalibur.</p></div></Fade>
 
           {/* ── THREE HERO CATEGORY CARDS ── */}
           <div style={{ display:"grid", gridTemplateColumns:isMobile?"1fr":"1fr 1fr 1fr", gap:2, marginBottom:2 }}>
@@ -3818,7 +3818,7 @@ function HomePage({ setPage, openInquiry }) {
               <img src="https://i.imgur.com/9SFko3s.jpeg" alt="Summer Intensive" style={{ position:"absolute", inset:0, width:"100%", height:"100%", objectFit:"cover", objectPosition:"center", transition:"transform 0.7s ease" }} />
               <div className="card-overlay" style={{ position:"absolute", inset:0, background:"linear-gradient(to top, rgba(0,0,0,0.97) 0%, rgba(0,0,0,0.75) 45%, rgba(0,0,0,0.2) 100%)", transition:"background 0.4s ease" }} />
               <div style={{ position:"absolute", inset:0, padding:isMobile?"28px":"40px", display:"flex", flexDirection:"column", justifyContent:"flex-end" }}>
-                <h3 style={{ fontFamily:"'Cinzel', serif", fontSize:isMobile?32:48, fontWeight:400, color:"#E4D5C1", lineHeight:1, letterSpacing:"0.08em", textTransform:"uppercase", marginBottom:12 }}>Summer Intensive</h3>
+                <h3 style={{ fontFamily:"'Cinzel', serif", fontSize:35, fontWeight:400, color:"#E4D5C1", lineHeight:1, letterSpacing:"0.08em", textTransform:"uppercase", marginBottom:12 }}>Summer Intensive</h3>
                 <p style={{ fontFamily:serif, fontSize:18, color:"#E4D5C1", fontStyle:"italic", fontWeight:400, lineHeight:1.5, marginBottom:8 }}>Two Weeks. Full Days. Real Ventures.</p>
                 <p style={{ fontFamily:lora, fontSize:13, color:"#A48D6E", fontWeight:400, letterSpacing:"0.04em", marginBottom:24 }}>July 27 – August 8, 2026</p>
                 <button style={{ fontFamily:sans, fontSize:9, fontWeight:700, letterSpacing:"0.2em", textTransform:"uppercase", background:"transparent", border:"1px solid rgba(228,213,193,0.4)", color:"#E4D5C1", padding:"10px 20px", cursor:"pointer", alignSelf:"flex-start", transition:"all 0.2s" }}
@@ -3839,7 +3839,7 @@ function HomePage({ setPage, openInquiry }) {
               <img src="https://i.imgur.com/wBie2YG.jpeg" alt="Flagship Overview" style={{ position:"absolute", inset:0, width:"100%", height:"100%", objectFit:"cover", objectPosition:"center", transition:"transform 0.7s ease" }} />
               <div className="card-overlay" style={{ position:"absolute", inset:0, background:"linear-gradient(to top, rgba(0,0,0,0.97) 0%, rgba(0,0,0,0.75) 45%, rgba(0,0,0,0.2) 100%)", transition:"background 0.4s ease" }} />
               <div style={{ position:"absolute", inset:0, padding:isMobile?"28px":"40px", display:"flex", flexDirection:"column", justifyContent:"flex-end" }}>
-                <h3 style={{ fontFamily:"'Cinzel', serif", fontSize:isMobile?32:48, fontWeight:400, color:"#E4D5C1", lineHeight:1, letterSpacing:"0.08em", textTransform:"uppercase", marginBottom:12 }}>The Flagship</h3>
+                <h3 style={{ fontFamily:"'Cinzel', serif", fontSize:35, fontWeight:400, color:"#E4D5C1", lineHeight:1, letterSpacing:"0.08em", textTransform:"uppercase", marginBottom:12 }}>The Flagship</h3>
                 <p style={{ fontFamily:serif, fontSize:18, color:"#E4D5C1", fontStyle:"italic", fontWeight:400, lineHeight:1.5, marginBottom:8 }}>Premier After-School Program. Two Semesters. Weekday & Weekend Cohorts.</p>
                 <p style={{ fontFamily:lora, fontSize:13, color:"#A48D6E", fontWeight:400, letterSpacing:"0.04em", marginBottom:24 }}>Foundation &amp; Venture Semesters · Two tracks</p>
                 <button style={{ fontFamily:sans, fontSize:9, fontWeight:700, letterSpacing:"0.2em", textTransform:"uppercase", background:"transparent", border:"1px solid rgba(228,213,193,0.4)", color:"#E4D5C1", padding:"10px 20px", cursor:"pointer", alignSelf:"flex-start", transition:"all 0.2s" }}
@@ -3860,7 +3860,7 @@ function HomePage({ setPage, openInquiry }) {
               <img src="https://i.imgur.com/ikVekYZ.jpeg" alt="Six-Week Intensive" style={{ position:"absolute", inset:0, width:"100%", height:"100%", objectFit:"cover", objectPosition:"center", transition:"transform 0.7s ease" }} />
               <div className="card-overlay" style={{ position:"absolute", inset:0, background:"linear-gradient(to top, rgba(0,0,0,0.97) 0%, rgba(0,0,0,0.75) 45%, rgba(0,0,0,0.2) 100%)", transition:"background 0.4s ease" }} />
               <div style={{ position:"absolute", inset:0, padding:isMobile?"28px":"40px", display:"flex", flexDirection:"column", justifyContent:"flex-end" }}>
-                <h3 style={{ fontFamily:"'Cinzel', serif", fontSize:isMobile?32:48, fontWeight:400, color:"#E4D5C1", lineHeight:1, letterSpacing:"0.08em", textTransform:"uppercase", marginBottom:12 }}>The Ignition</h3>
+                <h3 style={{ fontFamily:"'Cinzel', serif", fontSize:35, fontWeight:400, color:"#E4D5C1", lineHeight:1, letterSpacing:"0.08em", textTransform:"uppercase", marginBottom:12 }}>The Ignition</h3>
                 <p style={{ fontFamily:serif, fontSize:18, color:"#E4D5C1", fontStyle:"italic", fontWeight:400, lineHeight:1.5, marginBottom:8 }}>Four waves per year. Six weeks of ignition.</p>
                 <p style={{ fontFamily:lora, fontSize:13, color:"#A48D6E", fontWeight:400, letterSpacing:"0.04em", marginBottom:24 }}>Oct 2026 · Jan · Apr · Jul 2027</p>
                 <button style={{ fontFamily:sans, fontSize:9, fontWeight:700, letterSpacing:"0.2em", textTransform:"uppercase", background:"transparent", border:"1px solid rgba(228,213,193,0.4)", color:"#E4D5C1", padding:"10px 20px", cursor:"pointer", alignSelf:"flex-start", transition:"all 0.2s" }}
@@ -9498,7 +9498,7 @@ function FlagshipDetailPage2({ setPage, openInquiry }) {
           ].map((p,i) => (
             <div key={i} style={{ display:"grid", gridTemplateColumns:isMobile?"1fr":"80px 1fr 1fr", borderBottom:"1px solid rgba(164,141,110,.12)", padding:isMobile?"32px 24px":"44px 48px", gap:isMobile?16:48, alignItems:"start" }}>
               <div>
-                <span style={{ fontFamily:ag, fontSize:isMobile?32:48, fontWeight:600, color:"#A48D6E", lineHeight:1 }}>{p.n}</span>
+                <span style={{ fontFamily:ag, fontSize:35, fontWeight:600, color:"#A48D6E", lineHeight:1 }}>{p.n}</span>
               </div>
               <div style={{ borderRight:isMobile?"none":"1px solid rgba(164,141,110,.12)", paddingRight:isMobile?0:48 }}>
                 <p style={{ fontFamily:ag, fontSize:isMobile?20:26, fontWeight:600, color:"#E4D5C1", lineHeight:1.15, marginBottom:8 }}>{p.title}</p>
@@ -9863,7 +9863,7 @@ function FlagshipDetailPage2({ setPage, openInquiry }) {
           ].map((p,i) => (
             <div key={i} style={{ display:"grid", gridTemplateColumns:isMobile?"1fr":"80px 1fr 1fr", borderBottom:"1px solid rgba(164,141,110,.12)", padding:isMobile?"32px 24px":"44px 48px", gap:isMobile?16:48, alignItems:"start" }}>
               <div>
-                <span style={{ fontFamily:ag, fontSize:isMobile?32:48, fontWeight:600, color:"#A48D6E", lineHeight:1 }}>{p.n}</span>
+                <span style={{ fontFamily:ag, fontSize:35, fontWeight:600, color:"#A48D6E", lineHeight:1 }}>{p.n}</span>
               </div>
               <div style={{ borderRight:isMobile?"none":"1px solid rgba(164,141,110,.12)", paddingRight:isMobile?0:48 }}>
                 <p style={{ fontFamily:ag, fontSize:isMobile?20:26, fontWeight:600, color:"#E4D5C1", lineHeight:1.15, marginBottom:8 }}>{p.title}</p>
@@ -9960,7 +9960,7 @@ function FlagshipDetailPage2({ setPage, openInquiry }) {
           <div style={{ display:"flex", alignItems:"center", gap:24 }}>
             <div>
               <p style={{ fontFamily:"'Garet', sans-serif", fontSize:7, letterSpacing:"0.4em", color:"#100F0C", textTransform:"uppercase", margin:0, fontWeight:700 }}>Est. 2026 · Newport Beach, California</p>
-              <h2 style={{ fontFamily:ag, fontSize:isMobile?32:48, fontWeight:300, color:"#100F0C", lineHeight:1, letterSpacing:"-0.04em", margin:"4px 0 0" }}>Excalibur <em style={{ color:"#A48D6E", fontStyle:"italic" }}>Édition</em></h2>
+              <h2 style={{ fontFamily:ag, fontSize:35, fontWeight:300, color:"#100F0C", lineHeight:1, letterSpacing:"-0.04em", margin:"4px 0 0" }}>Excalibur <em style={{ color:"#A48D6E", fontStyle:"italic" }}>Édition</em></h2>
             </div>
           </div>
           <div style={{ textAlign:isMobile?"left":"right" }}>
@@ -10718,7 +10718,7 @@ function FlagshipDetailPage2({ setPage, openInquiry }) {
             <div style={{ display:"grid", gridTemplateColumns:isMobile?"1fr":"1fr 1fr", gap:isMobile?28:80, alignItems:"start" }}>
               <div>
                 <p style={{ fontFamily:"'Garet', sans-serif", fontSize:8, letterSpacing:"0.45em", color:"#A48D6E", fontWeight:600, textTransform:"uppercase", marginBottom:16 }}>Full Academic Year</p>
-                <h3 style={{ fontFamily:ag, fontSize:isMobile?32:48, fontWeight:300, color:"#E4D5C1", letterSpacing:"-0.03em", lineHeight:1, margin:"0 0 8px" }}>Recommended Academic Pathway</h3>
+                <h3 style={{ fontFamily:ag, fontSize:35, fontWeight:300, color:"#E4D5C1", letterSpacing:"-0.03em", lineHeight:1, margin:"0 0 8px" }}>Recommended Academic Pathway</h3>
                 <p style={{ fontFamily:"'Garet', sans-serif", fontSize:7, letterSpacing:"0.25em", color:"#A48D6E", textTransform:"uppercase", fontWeight:500, margin:0 }}>One application · Two semesters</p>
               </div>
               <div>
@@ -12264,7 +12264,7 @@ function FoundationDetailPage({ setPage, openInquiry }) {
               { n:"IV", title:"The Outcome", sub:"Portfolio entry · Professional feedback · Real evidence.", body:"A client-facing consulting report, a formal boardroom presentation, professional feedback from the participating business, and a documented example of applied business judgment that no classroom exercise can replicate — included in the Excalibur graduation portfolio." },
             ].map((p,i) => (
               <div key={i} style={{ borderTop:"1px solid rgba(16,15,12,.1)", padding:isMobile?"32px 0":"44px 48px", display:"grid", gridTemplateColumns:isMobile?"1fr":"56px 1fr", gap:isMobile?"8px 0":"0 32px", alignItems:"start" }}>
-                <span style={{ fontFamily:ag, fontSize:isMobile?32:48, fontWeight:300, color:"#A48D6E", lineHeight:1 }}>{p.n}</span>
+                <span style={{ fontFamily:ag, fontSize:35, fontWeight:300, color:"#A48D6E", lineHeight:1 }}>{p.n}</span>
                 <div>
                   <h4 style={{ fontFamily:ag, fontSize:isMobile?18:22, fontWeight:600, color:"#E4D5C1", lineHeight:1.2, marginBottom:8 }}>{p.title}</h4>
                   <p style={{ fontFamily:sans, fontSize:7, letterSpacing:"0.18em", color:"#A48D6E", textTransform:"uppercase", lineHeight:1.6, marginBottom:12 }}>{p.sub}</p>
@@ -12444,7 +12444,7 @@ function FoundationDetailPage({ setPage, openInquiry }) {
           ].map((p,i) => (
             <div key={i} style={{ display:"grid", gridTemplateColumns:isMobile?"1fr":"80px 1fr 1fr", borderBottom:"1px solid rgba(164,141,110,.12)", padding:isMobile?"32px 24px":"44px 48px", gap:isMobile?16:48, alignItems:"start" }}>
               <div>
-                <span style={{ fontFamily:ag, fontSize:isMobile?32:48, fontWeight:600, color:"#A48D6E", lineHeight:1 }}>{p.n}</span>
+                <span style={{ fontFamily:ag, fontSize:35, fontWeight:600, color:"#A48D6E", lineHeight:1 }}>{p.n}</span>
               </div>
               <div style={{ borderRight:isMobile?"none":"1px solid rgba(164,141,110,.12)", paddingRight:isMobile?0:48 }}>
                 <p style={{ fontFamily:ag, fontSize:isMobile?20:26, fontWeight:600, color:"#d9c7a9", lineHeight:1.15, marginBottom:8 }}>{p.title}</p>
@@ -12801,7 +12801,7 @@ function FoundationDetailPage({ setPage, openInquiry }) {
             <div style={{ display:"grid", gridTemplateColumns:isMobile?"1fr":"1fr 1fr", gap:isMobile?28:80, alignItems:"start" }}>
               <div>
                 <p style={{ fontFamily:sans, fontSize:8, letterSpacing:"0.45em", color:"#A48D6E", fontWeight:600, textTransform:"uppercase", marginBottom:16 }}>Full Academic Year</p>
-                <h3 style={{ fontFamily:ag, fontSize:isMobile?32:48, fontWeight:300, color:"#E4D5C1", letterSpacing:"-0.03em", lineHeight:1, margin:"0 0 8px" }}>Recommended Academic Pathway</h3>
+                <h3 style={{ fontFamily:ag, fontSize:35, fontWeight:300, color:"#E4D5C1", letterSpacing:"-0.03em", lineHeight:1, margin:"0 0 8px" }}>Recommended Academic Pathway</h3>
                 <p style={{ fontFamily:sans, fontSize:7, letterSpacing:"0.25em", color:"#A48D6E", textTransform:"uppercase", fontWeight:500, margin:0 }}>One application · Two semesters</p>
               </div>
               <div>
@@ -13967,7 +13967,7 @@ function VentureDetailPage({ setPage, openInquiry }) {
           ].map((p,i) => (
             <div key={i} style={{ display:"grid", gridTemplateColumns:isMobile?"1fr":"80px 1fr 1fr", borderBottom:"1px solid rgba(164,141,110,.12)", padding:isMobile?"32px 24px":"44px 48px", gap:isMobile?16:48, alignItems:"start" }}>
               <div>
-                <span style={{ fontFamily:ag, fontSize:isMobile?32:48, fontWeight:600, color:"#A48D6E", lineHeight:1 }}>{p.n}</span>
+                <span style={{ fontFamily:ag, fontSize:35, fontWeight:600, color:"#A48D6E", lineHeight:1 }}>{p.n}</span>
               </div>
               <div style={{ borderRight:isMobile?"none":"1px solid rgba(164,141,110,.12)", paddingRight:isMobile?0:48 }}>
                 <p style={{ fontFamily:ag, fontSize:isMobile?20:26, fontWeight:600, color:"#d9c7a9", lineHeight:1.15, marginBottom:8 }}>{p.title}</p>
