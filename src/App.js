@@ -4025,13 +4025,15 @@ function HomePage({ setPage, openInquiry }) {
                     <span style={{ fontFamily:sans, display:"block", fontSize:10, letterSpacing:"0.2em", textTransform:"uppercase", color:"#010000", fontWeight:700, marginBottom:6 }}>Venture Curriculum</span>
                     <h4 style={{ fontFamily:"'Bodoni Cyrillic', serif", fontSize:20, lineHeight:1.1, letterSpacing:"0.08em", textTransform:"uppercase", fontWeight:400, color:"#010000", margin:"0 0 4px" }}>Entrepreneurship Modules</h4>
                     <p style={{ fontFamily:serif, fontSize:20, lineHeight:1.4, color:"#010000", fontStyle:"italic", fontWeight:400, margin:"0 0 8px" }}>Venture Disciplines</p>
-                    <p style={{ fontFamily:"'Raleway', sans-serif", fontSize:14, lineHeight:1.9, color:"#010000", fontWeight:400, letterSpacing:"0.02em", textAlign:"justify", margin:0 }}>Entrepreneurial Mindset, Marketing &amp; Branding, Competitive Analysis, AI as a Business Tool, Sales &amp; The Pitch, Financial Modeling, Legal Foundations for Founders, and Capital Raising — each applied directly to the student's own venture concept.</p>
+                    <p style={{ fontFamily:"'Raleway', sans-serif", fontSize:14, lineHeight:1.9, color:"#010000", fontWeight:400, letterSpacing:"0.02em", textAlign:"justify", margin:0 }}>
+                      Entrepreneurial Mindset, Marketing &amp; Branding, Competitive Analysis, AI as a Business Tool, Sales &amp; Communication, Venture Planning.
+                    </p>
                   </div>
                   <div style={{ borderTop:"1px solid rgba(0,0,0,.12)", paddingTop:14, paddingBottom:14 }}>
-                    <span style={{ fontFamily:sans, display:"block", fontSize:10, letterSpacing:"0.2em", textTransform:"uppercase", color:"#010000", fontWeight:700, marginBottom:6 }}>From Idea to Market Validation</span>
                     <h4 style={{ fontFamily:"'Bodoni Cyrillic', serif", fontSize:20, lineHeight:1.1, letterSpacing:"0.08em", textTransform:"uppercase", fontWeight:400, color:"#010000", margin:"0 0 4px" }}>Micro-Venture Launch</h4>
-                    <p style={{ fontFamily:serif, fontSize:20, lineHeight:1.4, color:"#010000", fontStyle:"italic", fontWeight:400, margin:"0 0 8px" }}>Two Venture Tracks</p>
-                    <p style={{ fontFamily:"'Raleway', sans-serif", fontSize:14, lineHeight:1.9, color:"#010000", fontWeight:400, letterSpacing:"0.02em", textAlign:"justify", margin:0 }}>Students choose one track at enrollment: Da Vinci (commercial market venture) or Medici (community-impact venture venture). Sixteen weeks of mentored venture development in teams, from idea to market validation and first revenue, culminating in Shark Tank-inspired Finale before invited investors, founders, executives, and practitioners and community leaders.</p>
+                    <p style={{ fontFamily:"'Raleway', sans-serif", fontSize:14, lineHeight:1.9, color:"#010000", fontWeight:400, letterSpacing:"0.02em", textAlign:"justify", margin:0 }}>
+                      Students choose one track at enrollment: Da Vinci (commercial market venture) or Medici (community-impact venture).
+                    </p>
                   </div>
                   <div style={{ borderTop:"1px solid rgba(0,0,0,.12)", display:"grid", gridTemplateColumns:isMobile?"1fr":"1fr 1fr", gap:0, marginTop:4 }}>
                     <div style={{ padding:"14px 14px 14px 0", borderRight:isMobile?"none":"1px solid rgba(0,0,0,.1)" }}>
@@ -4048,9 +4050,12 @@ function HomePage({ setPage, openInquiry }) {
                     </div>
                   </div>
                 </div>
-                <button onClick={() => setPage("venture-detail")} style={{ fontFamily:sans, fontSize:10, letterSpacing:"0.16em", textTransform:"uppercase", color:"#E4D5C1", fontWeight:700, background:"#320E0E", border:"none", cursor:"pointer", padding:"12px 28px", marginTop:22, display:"inline-block" }}>Explore Venture Semester</button>
-              </div>
-            </div>
+                <button
+                  onClick={() => setPage("venture-detail")}
+                  style={{ fontFamily:sans, fontSize:10, letterSpacing:"0.16em", textTransform:"uppercase", color:"#E4D5C1", fontWeight:700, background:"#320E0E", border:"none", cursor:"pointer", padding:"12px 28px", marginTop:22, display:"inline-block" }}
+                >
+                  Learn More
+                </button>
           </div>
         </div>
       </div>
@@ -4063,18 +4068,29 @@ function HomePage({ setPage, openInquiry }) {
       <div style={{ background: "#0F0F0F", padding: isMobile ? "0 20px 56px" : "0 80px 72px" }}>
         <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr 1fr" : "repeat(4, 1fr)", gap: isMobile ? 12 : 16, maxWidth: 1100, margin: "0 auto" }}>
           {[
-            { n: "01", title: "Public Speaking & Executive Communication", desc: "Every session includes voice, rhetoric, executive presence, debate, pitch practice, and the discipline of speaking with clarity and authority." },
-            { n: "02", title: "Business & Entrepreneurship", desc: "Foundation develops business, finance, leadership, negotiation, AI, communication foundations. Venture applies those disciplines to customer discovery, validation, financial modeling, pitching, and capital strategy." },
-            { n: "03", title: "The Art of Class & Intellectual Depth", desc: "Signature formation in presence, etiquette, conversation, cultural fluency, philosophy, statesmanship, networking, and social intelligence." },
-            { n: "04", title: "Venture Launchpad", desc: "Da Vinci or Medici track. 16 weeks of live venture building with faculty coaching, culminating in the Shark Tank-inspired Finale before invited investors, founders, executives, and practitioners." },
+            { n: "01", title: "Public Speaking & Executive Communication", desc: "Every session includes voice, rhetoric, executive communication and body language, Oxford style debates, drills & pitch practice, perfecting the discipline of speaking with clarity and authority." },
+            { n: "02", title: "Business & Entrepreneurship", desc: "Foundation Semester develops business, finance, leadership, negotiation, AI, and communication skills. Venture Semester applies those disciplines to customer discovery, validation, and venture development." },
+            { n: "03", title: "The Art of Class & Intellectual Depth", desc: "Signature formation in class, etiquette, conversation, cultural fluency, philosophy, statesmanship, networking, and social intelligence." },
+            { n: "04", title: "Venture Launchpad", desc: "Venture Semester Only. 16 weeks of live venture building with faculty coaching, culminating in the Shark Tank-inspired Finale before real investors." },
           ].map((b, i) => (
-            <div key={i} style={{ background: "#E4D5C1", padding: isMobile ? "28px 20px" : "40px 36px", display: "flex", flexDirection: "column" }}>
+            <div key={i} style={{ background: "#E4D5C1", padding: isMobile ? "28px 20px" : "40px 36px", display: "flex", flexDirection: "column" }} >
               <p style={{ fontFamily: sans, fontSize: 9, letterSpacing: "0.3em", color: "rgba(0,0,0,0.3)", fontWeight: 700, textTransform: "uppercase", marginBottom: 20 }}>{b.n}</p>
               <h3 style={{ fontFamily: eyebrow_font, fontSize: isMobile ? 15 : 17, fontWeight: 400, color: "#010000", lineHeight: 1.2, letterSpacing: "0.04em", textTransform: "uppercase", marginBottom: 14, flex: 1 }}>{b.title}</h3>
-              <p style={{ fontFamily: "'Raleway', sans-serif", fontSize: isMobile ? 13 : 14, lineHeight: 1.85, color: "#320E0E", fontWeight: 300, margin: 0 }}>{b.desc}</p>
+              <p
+                style={{
+                  fontFamily: i === 3 ? "'Raleway', sans-serif" : "Lora, serif",
+                  fontSize: i === 3 ? (isMobile ? 13 : 14) : 13,
+                  lineHeight: 1.85,
+                  color: i === 1 ? "#000000" : i === 3 ? "#320E0E" : "rgba(16, 15, 12, 1)",
+                  fontWeight: 300,
+                  margin: i === 3 ? "0 -32px 0 -19px" : "0 -20px"
+                }}
+              >
+                {b.desc}
+              </p>
             </div>
           ))}
-        </div>
+      </div>
       </div>
 
       {/* CURRICULUM */}

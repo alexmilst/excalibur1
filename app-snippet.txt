@@ -1,0 +1,26 @@
+        <p style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.45em", color: "#E4D5C1", fontWeight: 700, textTransform: "uppercase", marginBottom: 14 }}>Every Session</p>
+        <h2 style={{ fontFamily: eyebrow_font, fontSize: isMobile ? 32 : 44, fontWeight: 400, color: "#A48D6E", lineHeight: 1.0, marginBottom: 0, letterSpacing: "0.12em", textTransform: "uppercase" }}>A Session at Excalibur</h2>
+      </div>
+      <div style={{ background: "#0F0F0F", padding: isMobile ? "0 20px 56px" : "0 80px 72px" }}>
+        <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr 1fr" : "repeat(4, 1fr)", gap: isMobile ? 12 : 16, maxWidth: 1100, margin: "0 auto" }}>
+          {[
+            { n: "01", title: "Public Speaking & Executive Communication", desc: "Every session includes voice, rhetoric, executive presence, debate, pitch practice, and the discipline of speaking with clarity and authority." },
+            { n: "02", title: "Business & Entrepreneurship", desc: "Foundation develops business, finance, leadership, negotiation, AI, communication foundations. Venture applies those disciplines to customer discovery, validation, financial modeling, pitching, and capital strategy." },
+            { n: "03", title: "The Art of Class & Intellectual Depth", desc: "Signature formation in presence, etiquette, conversation, cultural fluency, philosophy, statesmanship, networking, and social intelligence." },
+            { n: "04", title: "Venture Launchpad", desc: "Da Vinci or Medici track. 16 weeks of live venture building with faculty coaching, culminating in the Shark Tank-inspired Finale before invited investors, founders, executives, and practitioners." },
+          ].map((b, i) => (
+            <div key={i} style={{ background: "#E4D5C1", padding: isMobile ? "28px 20px" : "40px 36px", display: "flex", flexDirection: "column" }}>
+              <p style={{ fontFamily: sans, fontSize: 9, letterSpacing: "0.3em", color: "rgba(0,0,0,0.3)", fontWeight: 700, textTransform: "uppercase", marginBottom: 20 }}>{b.n}</p>
+              <h3 style={{ fontFamily: eyebrow_font, fontSize: isMobile ? 15 : 17, fontWeight: 400, color: "#010000", lineHeight: 1.2, letterSpacing: "0.04em", textTransform: "uppercase", marginBottom: 14, flex: 1 }}>{b.title}</h3>
+              <p style={{ fontFamily: "'Raleway', sans-serif", fontSize: isMobile ? 13 : 14, lineHeight: 1.85, color: "#320E0E", fontWeight: 300, margin: 0 }}>{b.desc}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* CURRICULUM */}
+      <div style={{ background:"#E4D5C1", padding:isMobile?"52px 24px":"80px 80px", borderTop:"1px solid rgba(0,0,0,.08)" }}>
+        <div style={{ maxWidth:1100, margin:"0 auto" }}>
+          <p style={{ fontFamily:sans, fontSize:10, letterSpacing:"0.45em", color:"#010000", fontWeight:600, textTransform:"uppercase", marginBottom:12 }}>INSIDE THE CLASSROOM</p>
+          <div style={{ marginBottom:36 }}><h2 style={{ fontFamily:"Garamond, serif", fontSize:isMobile?38:55, fontWeight:400, color:"#010000", lineHeight:0.95, letterSpacing:"0.06em", textTransform:"uppercase", margin:"0 0 4px" }}>Excalibur</h2><h2 style={{ fontFamily:"'Cormorant Garamond', Georgia, serif", fontSize:isMobile?"clamp(46px,6vw,80px)":"clamp(44px,6vw,80px)", fontWeight:300, color:"#010000", lineHeight:0.95, letterSpacing:"-0.04em", margin:0, fontStyle:"italic" }}>Formation & Curriculum</h2></div>
+          <div style={{ display:"flex", alignItems:"flex-end", gap:0, marginBottom:48, borderBottom:"1px solid rgba(0,0,0,.2)" }}>
