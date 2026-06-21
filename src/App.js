@@ -4087,8 +4087,8 @@ function HomePage({ setPage, openInquiry }) {
       {/* CURRICULUM */}
       <div style={{ background:"#E4D5C1", padding:isMobile?"52px 24px":"80px 80px", borderTop:"1px solid rgba(0,0,0,.08)" }}>
         <div style={{ maxWidth:1100, margin:"0 auto" }}>
-          <p style={{ fontFamily:eyebrow_font, fontSize:10, letterSpacing:"0.45em", color:"#010000", fontWeight:700, textTransform:"uppercase", marginBottom:12 }}>INSIDE THE CLASSROOM</p>
-          <div style={{ marginBottom:36 }}><h2 style={{ fontFamily:"'adobe-garamond-pro', 'Garamond', serif", fontSize:isMobile?38:48, fontWeight:400, color:"#010000", lineHeight:0.95, letterSpacing:"0.06em", textTransform:"uppercase", margin:"0 0 4px" }}>Excalibur</h2><h2 style={{ fontFamily:"'Cormorant Garamond', Georgia, serif", fontSize:isMobile?"clamp(46px,6vw,80px)":"clamp(44px,6vw,80px)", fontWeight:300, color:"#010000", lineHeight:0.95, letterSpacing:"-0.04em", margin:0, fontStyle:"italic" }}>Formation & Curriculum</h2></div>
+          <p style={{ fontFamily:sans, fontSize:10, letterSpacing:"0.45em", color:"#010000", fontWeight:600, textTransform:"uppercase", marginBottom:12 }}>INSIDE THE CLASSROOM</p>
+          <div style={{ marginBottom:36 }}><h2 style={{ fontFamily:"Garamond, serif", fontSize:isMobile?38:55, fontWeight:400, color:"#010000", lineHeight:0.95, letterSpacing:"0.06em", textTransform:"uppercase", margin:"0 0 4px" }}>Excalibur</h2><h2 style={{ fontFamily:"'Cormorant Garamond', Georgia, serif", fontSize:isMobile?"clamp(46px,6vw,80px)":"clamp(44px,6vw,80px)", fontWeight:300, color:"#010000", lineHeight:0.95, letterSpacing:"-0.04em", margin:0, fontStyle:"italic" }}>Formation & Curriculum</h2></div>
           <div style={{ display:"flex", alignItems:"flex-end", gap:0, marginBottom:48, borderBottom:"1px solid rgba(0,0,0,.2)" }}>
             {[{lbl:"Core Modules",val:"master"},{lbl:"War Room",val:"warroom"},{lbl:"Art of Class",val:"aoc"},{lbl:"Venture Modules",val:"vmods"},{lbl:"Venture Studio",val:"vstudio"}].map((t,i) => (
               <button key={t.val} onClick={() => setActiveCurrTab(t.val)} style={{ fontFamily:serif, fontSize:isMobile?20:26, fontWeight:activeCurrTab===t.val?600:500, color:"#010000", background:"none", border:"none", borderBottom:activeCurrTab===t.val?`2px solid #010000`:"2px solid transparent", marginBottom:-1, padding:isMobile?"12px 20px 14px":"14px 32px 16px", cursor:"pointer", transition:"all .2s", letterSpacing:"-0.01em" }}>
@@ -4147,7 +4147,7 @@ function HomePage({ setPage, openInquiry }) {
                         </div>
                         <div style={{ display:"flex", alignItems:"center", justifyContent:"flex-end" }}>
                           {m.slug && (
-                            <button onClick={e=>{e.stopPropagation();setActiveModF(open?null:i)}} style={{ fontFamily:sans, fontSize:9, letterSpacing:"0.16em", padding:"13px 24px", background:"#100F0C", border:`1px solid rgba(188,166,150,.2)`, color:"#D9C7A9", textTransform:"uppercase", cursor:"pointer", fontWeight:700, whiteSpace:"nowrap", transition:"all .2s" }}
+                            <button onClick={e=>{e.stopPropagation();setActiveModF(open?null:i)}} style={{ fontFamily:sans, fontSize:9, letterSpacing:"0.16em", marginTop:16, padding:"13px 24px", background:"#100F0C", border:`1px solid rgba(188,166,150,.2)`, color:"#D9C7A9", textTransform:"uppercase", cursor:"pointer", fontWeight:700, whiteSpace:"nowrap", transition:"all .2s" }}
                               onMouseEnter={e=>{e.currentTarget.style.background="#320E0E";e.currentTarget.style.color="#A48D6E"}}
                               onMouseLeave={e=>{e.currentTarget.style.background="#100F0C";e.currentTarget.style.color="#D9C7A9"}}>
                               {open ? "Close ×" : "View Module →"}
@@ -4162,12 +4162,12 @@ function HomePage({ setPage, openInquiry }) {
                           <div style={{ display:"grid", gridTemplateColumns:isMobile?"1fr":"1fr 1fr", gap:"0 64px" }}>
                             <div>
                               <p style={{ fontFamily:eyebrow_font, fontSize:8, color:"#010000", letterSpacing:"0.3em", textTransform:"uppercase", fontWeight:400, marginBottom:12 }}>{m.sub}</p>
-                              <p style={{ fontFamily:serif, fontSize:16, color:"#010000", fontStyle:"italic", marginBottom:20, lineHeight:1.6 }}>{m.tagline}</p>
-                              <p style={{ fontFamily:sans, fontSize:13, lineHeight:1.95, color:"#010000", fontWeight:300, marginBottom:20 }}>{m.body.includes('This semester') ? m.body.split('This semester')[0].trim() : m.body}</p>
+                              <p style={{ fontFamily:"Cormorant Garamond, serif", fontSize:22, color:"#010000", fontStyle:"italic", marginBottom:20, lineHeight:1.6 }}>{m.tagline}</p>
+                              <p style={{ fontFamily:"Lora, serif", fontSize:13, lineHeight:1.95, color:"#010000", fontWeight:300, marginBottom:20 }}>{m.body.includes('This semester') ? m.body.split('This semester')[0].trim() : m.body}</p>
                               {m.slug && <button onClick={e=>{e.stopPropagation();setPage(`module:${m.slug}`)}} style={{ fontFamily:sans, fontSize:10, letterSpacing:"0.16em", padding:"12px 28px", background:"#100F0C", border:"1px solid rgba(188,166,150,.2)", color:"#D9C7A9", textTransform:"uppercase", cursor:"pointer", fontWeight:700, display:"inline-block", transition:"all .2s" }} onMouseEnter={e=>{e.currentTarget.style.background="#320E0E";e.currentTarget.style.color="#A48D6E"}} onMouseLeave={e=>{e.currentTarget.style.background="#100F0C";e.currentTarget.style.color="#D9C7A9"}}>View Module →</button>}
                             </div>
                             <div style={{ marginTop:isMobile?24:0 }}>
-                              <p style={{ fontFamily:eyebrow_font, fontSize:12, color:"#010000", letterSpacing:"0.3em", textTransform:"uppercase", fontWeight:400, marginBottom:16 }}>What students learn</p>
+                              <p style={{ fontFamily:"Times, serif", fontSize:12, color:"#010000", letterSpacing:"0.3em", textTransform:"uppercase", fontWeight:500, marginTop:14, marginBottom:16 }}>What students learn</p>
                               {(m.learn||[]).map((x,j) => (
                                 <div key={j} style={{ display:"flex", gap:12, marginBottom:10, alignItems:"flex-start" }}>
                                   <div style={{ width:16, height:1, background:"#010000", marginTop:9, flexShrink:0 }}/>
@@ -4284,7 +4284,7 @@ function HomePage({ setPage, openInquiry }) {
                               <div>{m.body.split("\n\n").map((para,pi) => <p key={pi} style={{ fontFamily:sans, fontSize:13, lineHeight:1.95, color:"#010000", fontWeight:300, marginBottom:pi < m.body.split("\n\n").length-1 ? 16 : 0 }}>{para}</p>)}</div>
                             </div>
                             <div style={{ marginTop:isMobile?24:0 }}>
-                              <p style={{ fontFamily:eyebrow_font, fontSize:12, color:"#010000", letterSpacing:"0.3em", textTransform:"uppercase", fontWeight:400, marginBottom:16 }}>What students learn</p>
+                              <p style={{ fontFamily:"Times, serif", fontSize:12, color:"#010000", letterSpacing:"0.3em", textTransform:"uppercase", fontWeight:500, marginTop:14, marginBottom:16 }}>What students learn</p>
                               {m.learn.map((x,j) => (
                                 <div key={j} style={{ display:"flex", gap:12, marginBottom:10, alignItems:"flex-start" }}>
                                   <div style={{ width:16, height:1, background:"#010000", marginTop:9, flexShrink:0 }}/>
