@@ -10724,8 +10724,8 @@ function FlagshipDetailPage2({ setPage, openInquiry }) {
             ))}
             <div style={{ borderTop:"1px solid rgba(216,183,140,.1)", paddingTop:32, display:"flex", gap:12, flexWrap:"wrap" }}>
               <button onClick={()=>setPage&&setPage("apply")} style={{ fontFamily:"'Garet', sans-serif", fontSize:9, letterSpacing:"0.25em", padding:"16px 40px", background:"#E4D5C1", border:"none", color:"#100F0C", textTransform:"uppercase", cursor:"pointer", fontWeight:600 }}>Apply to Foundation →</button>
-              <button onClick={()=>setPage&&setPage("apply")} style={{ fontFamily:"'Garet', sans-serif", fontSize:9, letterSpacing:"0.25em", padding:"16px 32px", background:"transparent", border:"1px solid rgba(216,183,140,.35)", color:"#A48D6E", textTransform:"uppercase", cursor:"pointer", fontWeight:700 }}>Apply to Venture →</button>
-              <button onClick={()=>setPage&&setPage("apply")} style={{ fontFamily:"'Garet', sans-serif", fontSize:9, letterSpacing:"0.25em", padding:"16px 32px", background:"transparent", border:"1px solid rgba(216,183,140,.35)", color:"#A48D6E", textTransform:"uppercase", cursor:"pointer", fontWeight:700 }}>Apply — Full Year →</button>
+              <button onClick={()=>setPage&&setPage("apply")} style={{ fontFamily:"'Garet', sans-serif", fontSize:9, letterSpacing:"0.25em", padding:"16px 32px", background:"transparent", border:"1px solid rgba(216,183,140,.35)", color:"#A48D6E", textTransform:"uppercase", cursor:"pointer", fontWeight:600 }}>Apply to Venture →</button>
+              <button onClick={()=>setPage&&setPage("apply")} style={{ fontFamily:"'Garet', sans-serif", fontSize:9, letterSpacing:"0.25em", padding:"16px 32px", background:"transparent", border:"1px solid rgba(216,183,140,.35)", color:"#A48D6E", textTransform:"uppercase", cursor:"pointer", fontWeight:600 }}>Apply — Full Year →</button>
             </div>
           </div>
 
@@ -10736,7 +10736,7 @@ function FlagshipDetailPage2({ setPage, openInquiry }) {
         <div style={{ maxWidth: 740, margin: "0 auto" }}>
           <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 9, letterSpacing: "0.4em", color: "#100F0C", fontWeight: 600, textTransform: "uppercase", marginBottom: 16 }}>Private Admissions Consultation</p>
           <h2 style={{ fontFamily: "'Cormorant Garamond',Georgia,serif", fontSize: isMobile ? 32 : 44, fontWeight: 300, color: "#100F0C", lineHeight: 1.05, marginBottom: 10 }}>Schedule a Family Consultation</h2>
-          <p style={{ fontFamily: "'Avenir','Avenir Next','Century Gothic',sans-serif", fontSize: 14, color: "#100F0C", fontWeight: 300, lineHeight: 1.8, marginBottom: 40, maxWidth: 580 }}>Please submit your information to schedule a private admissions consultation. A dedicated Program Pathways Coordinator will guide your family through program options, admissions steps, curriculum, tuition, schedule fit, and next steps.</p>
+          <p style={{ fontFamily: "'Avenir','Avenir Next','Century Gothic',sans-serif", fontSize: 14, color: "#100F0C", fontWeight: 300, lineHeight: 1.8, marginBottom: 40, maxWidth: 580 }}>Please submit your information to schedule a private admissions consultation. A dedicated Program Pathways advisor will follow up personally.</p>
 
           {consultStatus === "success" ? (
             <div style={{ background: "#100F0C", padding: "40px 32px", textAlign: "center" }}>
@@ -10747,29 +10747,29 @@ function FlagshipDetailPage2({ setPage, openInquiry }) {
             <div style={{ borderTop: "2px solid #100F0C", padding: "36px 32px", background: "#E4D5C1" }}>
               <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 9, letterSpacing: "0.25em", color: "#100F0C", fontWeight: 600, textTransform: "uppercase", marginBottom: 12 }}>Parent / Guardian</p>
               <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 10, marginBottom: 10 }}>
-                <input type="text" placeholder="First Name" value={consultForm.parentFirst} onChange={e=>setConsultForm(p=>({...p,parentFirst:e.target.value}))} style={{ background: "#E4D5C1", border: "1px solid rgba(16,15,12,.2)", color: "#100F0C", padding: "13px 16px", fontFamily: lora, fontSize: 13, fontWeight: 400, outline: "none", width: "100%" }} />
-                <input type="text" placeholder="Last Name" value={consultForm.parentLast} onChange={e=>setConsultForm(p=>({...p,parentLast:e.target.value}))} style={{ background: "#E4D5C1", border: "1px solid rgba(16,15,12,.2)", color: "#100F0C", padding: "13px 16px", fontFamily: lora, fontSize: 13, fontWeight: 400, outline: "none", width: "100%" }} />
+                <input type="text" placeholder="First Name" value={consultForm.parentFirst} onChange={e=>setConsultForm(p=>({...p,parentFirst:e.target.value}))} style={{ background: "#E4D5C1", border: "1px solid rgba(16,15,12,.2)", color: "#100F0C", padding: "13px 16px", fontFamily: lora, fontSize: 13, fontWeight: 400, outline: "none" }} />
+                <input type="text" placeholder="Last Name" value={consultForm.parentLast} onChange={e=>setConsultForm(p=>({...p,parentLast:e.target.value}))} style={{ background: "#E4D5C1", border: "1px solid rgba(16,15,12,.2)", color: "#100F0C", padding: "13px 16px", fontFamily: lora, fontSize: 13, fontWeight: 400, outline: "none" }} />
               </div>
               <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 10, marginBottom: 10 }}>
-                <input type="email" placeholder="Email Address" value={consultForm.email} onChange={e=>setConsultForm(p=>({...p,email:e.target.value}))} style={{ background: "#E4D5C1", border: "1px solid rgba(16,15,12,.2)", color: "#100F0C", padding: "13px 16px", fontFamily: lora, fontSize: 13, fontWeight: 400, outline: "none", width: "100%" }} />
-                <input type="tel" placeholder="Phone Number" value={consultForm.phone} onChange={e=>setConsultForm(p=>({...p,phone:e.target.value}))} style={{ background: "#E4D5C1", border: "1px solid rgba(16,15,12,.2)", color: "#100F0C", padding: "13px 16px", fontFamily: lora, fontSize: 13, fontWeight: 400, outline: "none", width: "100%" }} />
+                <input type="email" placeholder="Email Address" value={consultForm.email} onChange={e=>setConsultForm(p=>({...p,email:e.target.value}))} style={{ background: "#E4D5C1", border: "1px solid rgba(16,15,12,.2)", color: "#100F0C", padding: "13px 16px", fontFamily: lora, fontSize: 13, fontWeight: 400, outline: "none" }} />
+                <input type="tel" placeholder="Phone Number" value={consultForm.phone} onChange={e=>setConsultForm(p=>({...p,phone:e.target.value}))} style={{ background: "#E4D5C1", border: "1px solid rgba(16,15,12,.2)", color: "#100F0C", padding: "13px 16px", fontFamily: lora, fontSize: 13, fontWeight: 400, outline: "none" }} />
               </div>
               <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr 80px", gap: 10, marginBottom: 24 }}>
-                <input type="text" placeholder="City *" value={consultForm.city} onChange={e=>setConsultForm(p=>({...p,city:e.target.value}))} style={{ background: "#E4D5C1", border: "1px solid rgba(16,15,12,.2)", color: "#100F0C", padding: "13px 16px", fontFamily: lora, fontSize: 13, fontWeight: 400, outline: "none", width: "100%" }} />
-                <input type="text" placeholder="State" value={consultForm.state} onChange={e=>setConsultForm(p=>({...p,state:e.target.value}))} style={{ background: "#E4D5C1", border: "1px solid rgba(16,15,12,.2)", color: "#100F0C", padding: "13px 16px", fontFamily: lora, fontSize: 13, fontWeight: 400, outline: "none", width: "100%" }} />
-                <input type="text" placeholder="ZIP *" value={consultForm.zip} onChange={e=>setConsultForm(p=>({...p,zip:e.target.value}))} style={{ background: "#E4D5C1", border: "1px solid rgba(16,15,12,.2)", color: "#100F0C", padding: "13px 16px", fontFamily: lora, fontSize: 13, fontWeight: 400, outline: "none", width: "100%" }} />
+                <input type="text" placeholder="City *" value={consultForm.city} onChange={e=>setConsultForm(p=>({...p,city:e.target.value}))} style={{ background: "#E4D5C1", border: "1px solid rgba(16,15,12,.2)", color: "#100F0C", padding: "13px 16px", fontFamily: lora, fontSize: 13, fontWeight: 400, outline: "none" }} />
+                <input type="text" placeholder="State" value={consultForm.state} onChange={e=>setConsultForm(p=>({...p,state:e.target.value}))} style={{ background: "#E4D5C1", border: "1px solid rgba(16,15,12,.2)", color: "#100F0C", padding: "13px 16px", fontFamily: lora, fontSize: 13, fontWeight: 400, outline: "none" }} />
+                <input type="text" placeholder="ZIP *" value={consultForm.zip} onChange={e=>setConsultForm(p=>({...p,zip:e.target.value}))} style={{ background: "#E4D5C1", border: "1px solid rgba(16,15,12,.2)", color: "#100F0C", padding: "13px 16px", fontFamily: lora, fontSize: 13, fontWeight: 400, outline: "none" }} />
               </div>
 
               <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 9, letterSpacing: "0.25em", color: "#100F0C", fontWeight: 600, textTransform: "uppercase", marginBottom: 12 }}>Student</p>
               <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 10, marginBottom: 10 }}>
-                <input type="text" placeholder="First Name" value={consultForm.studentFirst} onChange={e=>setConsultForm(p=>({...p,studentFirst:e.target.value}))} style={{ background: "#E4D5C1", border: "1px solid rgba(16,15,12,.2)", color: "#100F0C", padding: "13px 16px", fontFamily: lora, fontSize: 13, fontWeight: 400, outline: "none", width: "100%" }} />
-                <input type="text" placeholder="Last Name" value={consultForm.studentLast} onChange={e=>setConsultForm(p=>({...p,studentLast:e.target.value}))} style={{ background: "#E4D5C1", border: "1px solid rgba(16,15,12,.2)", color: "#100F0C", padding: "13px 16px", fontFamily: lora, fontSize: 13, fontWeight: 400, outline: "none", width: "100%" }} />
+                <input type="text" placeholder="First Name" value={consultForm.studentFirst} onChange={e=>setConsultForm(p=>({...p,studentFirst:e.target.value}))} style={{ background: "#E4D5C1", border: "1px solid rgba(16,15,12,.2)", color: "#100F0C", padding: "13px 16px", fontFamily: lora, fontSize: 13, fontWeight: 400, outline: "none" }} />
+                <input type="text" placeholder="Last Name" value={consultForm.studentLast} onChange={e=>setConsultForm(p=>({...p,studentLast:e.target.value}))} style={{ background: "#E4D5C1", border: "1px solid rgba(16,15,12,.2)", color: "#100F0C", padding: "13px 16px", fontFamily: lora, fontSize: 13, fontWeight: 400, outline: "none" }} />
               </div>
               <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 10, marginBottom: 10 }}>
-                <input type="text" placeholder="Age" value={consultForm.age} onChange={e=>setConsultForm(p=>({...p,age:e.target.value}))} style={{ background: "#E4D5C1", border: "1px solid rgba(16,15,12,.2)", color: "#100F0C", padding: "13px 16px", fontFamily: lora, fontSize: 13, fontWeight: 400, outline: "none", width: "100%" }} />
-                <input type="text" placeholder="Current Grade" value={consultForm.grade} onChange={e=>setConsultForm(p=>({...p,grade:e.target.value}))} style={{ background: "#E4D5C1", border: "1px solid rgba(16,15,12,.2)", color: "#100F0C", padding: "13px 16px", fontFamily: lora, fontSize: 13, fontWeight: 400, outline: "none", width: "100%" }} />
+                <input type="text" placeholder="Age" value={consultForm.age} onChange={e=>setConsultForm(p=>({...p,age:e.target.value}))} style={{ background: "#E4D5C1", border: "1px solid rgba(16,15,12,.2)", color: "#100F0C", padding: "13px 16px", fontFamily: lora, fontSize: 13, fontWeight: 400, outline: "none" }} />
+                <input type="text" placeholder="Current Grade" value={consultForm.grade} onChange={e=>setConsultForm(p=>({...p,grade:e.target.value}))} style={{ background: "#E4D5C1", border: "1px solid rgba(16,15,12,.2)", color: "#100F0C", padding: "13px 16px", fontFamily: lora, fontSize: 13, fontWeight: 400, outline: "none" }} />
               </div>
-              <select value={consultForm.program} onChange={e=>setConsultForm(p=>({...p,program:e.target.value}))} style={{ background: "#E4D5C1", border: "1px solid rgba(16,15,12,.2)", color: "#100F0C", padding: "13px 16px", fontFamily: lora, fontSize: 13, fontWeight: 400, outline: "none", width: "100%", marginBottom: 24, appearance: "none" }}>
+              <select value={consultForm.program} onChange={e=>setConsultForm(p=>({...p,program:e.target.value}))} style={{ background: "#E4D5C1", border: "1px solid rgba(16,15,12,.2)", color: "#100F0C", padding: "13px 16px", fontFamily: lora, fontSize: 13, fontWeight: 400, outline: "none", appearance: "none", marginBottom: 24 }}>
                 <option value="flagship">Flagship Program — Full Year, Foundation Semester, or Venture Semester</option>
                 <option value="sixweek">Six-Week Intensive</option>
                 <option value="summer">Summer Intensive</option>
@@ -10777,16 +10777,16 @@ function FlagshipDetailPage2({ setPage, openInquiry }) {
 
               <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 9, letterSpacing: "0.25em", color: "#100F0C", fontWeight: 600, textTransform: "uppercase", marginBottom: 12 }}>Consultation Preferences</p>
               <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 10, marginBottom: 10 }}>
-                <select value={consultForm.contactMethod} onChange={e=>setConsultForm(p=>({...p,contactMethod:e.target.value}))} style={{ background: "#E4D5C1", border: "1px solid rgba(16,15,12,.2)", color: "#100F0C", padding: "13px 16px", fontFamily: lora, fontSize: 13, fontWeight: 400, outline: "none", width: "100%", appearance: "none" }}>
+                <select value={consultForm.contactMethod} onChange={e=>setConsultForm(p=>({...p,contactMethod:e.target.value}))} style={{ background: "#E4D5C1", border: "1px solid rgba(16,15,12,.2)", color: "#100F0C", padding: "13px 16px", fontFamily: lora, fontSize: 13, fontWeight: 400, outline: "none", appearance: "none" }}>
                   <option value="" disabled>Preferred Contact Method</option>
                   <option value="phone">Phone Call</option>
                   <option value="email">Email</option>
                   <option value="either">Either</option>
                 </select>
-                <input type="text" placeholder="Preferred Consultation Date(s)" value={consultForm.dates} onChange={e=>setConsultForm(p=>({...p,dates:e.target.value}))} style={{ background: "#E4D5C1", border: "1px solid rgba(16,15,12,.2)", color: "#100F0C", padding: "13px 16px", fontFamily: lora, fontSize: 13, fontWeight: 400, outline: "none", width: "100%" }} />
+                <input type="text" placeholder="Preferred Consultation Date(s)" value={consultForm.dates} onChange={e=>setConsultForm(p=>({...p,dates:e.target.value}))} style={{ background: "#E4D5C1", border: "1px solid rgba(16,15,12,.2)", color: "#100F0C", padding: "13px 16px", fontFamily: lora, fontSize: 13, fontWeight: 400, outline: "none" }} />
               </div>
-              <input type="text" placeholder="Preferred Times (for example, mornings, evenings, or weekends)" value={consultForm.times} onChange={e=>setConsultForm(p=>({...p,times:e.target.value}))} style={{ background: "#E4D5C1", border: "1px solid rgba(16,15,12,.2)", color: "#100F0C", padding: "13px 16px", fontFamily: lora, fontSize: 13, fontWeight: 400, outline: "none", width: "100%", marginBottom: 10 }} />
-              <textarea placeholder="Questions or context you would like us to know (optional)" value={consultForm.notes} onChange={e=>setConsultForm(p=>({...p,notes:e.target.value}))} rows={4} style={{ background: "#E4D5C1", border: "1px solid rgba(16,15,12,.2)", color: "#100F0C", padding: "13px 16px", fontFamily: lora, fontSize: 13, fontWeight: 400, outline: "none", width: "100%", marginBottom: 28, resize: "vertical" }} />
+              <input type="text" placeholder="Preferred Times (for example, mornings, evenings, or weekends)" value={consultForm.times} onChange={e=>setConsultForm(p=>({...p,times:e.target.value}))} style={{ background: "#E4D5C1", border: "1px solid rgba(16,15,12,.2)", color: "#100F0C", padding: "13px 16px", fontFamily: lora, fontSize: 13, fontWeight: 400, outline: "none", marginBottom: 10 }} />
+              <textarea placeholder="Questions or context you would like us to know (optional)" value={consultForm.notes} onChange={e=>setConsultForm(p=>({...p,notes:e.target.value}))} rows={4} style={{ background: "#E4D5C1", border: "1px solid rgba(16,15,12,.2)", color: "#100F0C", padding: "13px 16px", fontFamily: lora, fontSize: 13, fontWeight: 400, outline: "none", marginBottom: 28, resize: "vertical" }} />
 
               <button
                 onClick={async () => {
@@ -12433,9 +12433,9 @@ function FoundationDetailPage({ setPage, openInquiry }) {
               <img src="https://i.imgur.com/f87iq9i.jpeg" alt="" style={{ width:"100%", height:"100%", objectFit:"cover" }}/>
               <div style={{ position:"absolute", inset:0, background:"rgba(0,0,0,.35)" }}/>
               <div style={{ position:"absolute", bottom:0, left:0, right:0, background:"#34150F", padding:"28px 36px" }}>
-                <p style={{ fontFamily:sans, fontSize:9, letterSpacing:"0.45em", color:"#A48D6E", fontWeight:600, textTransform:"uppercase", marginBottom:10 }}>The Excalibur Graduate</p>
+                <p style={{ fontFamily:"Lato, sans-serif", fontSize:10, letterSpacing:"2px", color:"#010000", fontWeight:700, textTransform:"uppercase", marginBottom:10 }}>The Excalibur Graduate</p>
                 <h2 style={{ fontFamily:ag, fontSize:"clamp(28px,3vw,42px)", fontWeight:600, color:"#A48D6E", lineHeight:1.0, marginBottom:8 }}>Excalibur “Ivy” Portfolio</h2>
-                <p style={{ fontFamily:ag, fontSize:16, color:"#E4D5C1", fontStyle:"italic" }}>A record of work, judgment, and growth.</p>
+                <p style={{ fontFamily:ag, fontSize:20, color:"#E4D5C1", fontStyle:"italic" }}>A record of work, judgment, and growth</p>
               </div>
             </div>
             <div style={{ overflow:"hidden", position:"relative" }}>
@@ -14266,16 +14266,16 @@ function VentureDetailPage({ setPage, openInquiry }) {
               <img src="https://i.imgur.com/f87iq9i.jpeg" alt="" style={{ width:"100%", height:"100%", objectFit:"cover" }}/>
               <div style={{ position:"absolute", inset:0, background:"rgba(0,0,0,.35)" }}/>
               <div style={{ position:"absolute", bottom:0, left:0, right:0, background:"#100F0C", padding:"28px 36px" }}>
-                <p style={{ fontFamily:sans, fontSize:9, letterSpacing:"0.45em", color:"#A48D6E", fontWeight:400, textTransform:"uppercase", marginBottom:10 }}>The Excalibur Graduate</p>
-                <h2 style={{ fontFamily:ag, fontSize:"clamp(28px,3vw,42px)", fontWeight:600, color:"#A48D6E", lineHeight:1.0, marginBottom:8 }}>Excalibur “Ivy” Portfolio</h2>
-                <p style={{ fontFamily:ag, fontSize:16, color:"#E4D5C1", fontStyle:"italic" }}>A record of work, judgment, and growth.</p>
+                <p style={{ fontFamily:"Lato, sans-serif", fontSize:10, letterSpacing:"2px", color:"#010000", fontWeight:700, textTransform:"uppercase", marginBottom:10 }}>The Excalibur Graduate</p>
+                <h2 style={{ fontFamily:"Garamond, serif", fontSize:"clamp(28px,3vw,42px)", fontWeight:600, color:"#A48D6E", lineHeight:1.0, marginBottom:8 }}>Excalibur “Ivy” Portfolio</h2>
+                <p style={{ fontFamily:"Cormorant Garamond, serif", fontSize:20, color:"#E4D5C1", fontStyle:"italic" }}>A record of work, judgment, and growth</p>
               </div>
             </div>
             <div style={{ overflow:"hidden", position:"relative" }}>
               <img src="https://i.imgur.com/gvG5P1q.png" alt="" style={{ width:"100%", height:"100%", objectFit:"cover" }}/>
               <div style={{ position:"absolute", inset:0, background:"rgba(0,0,0,.3)" }}/>
               <div style={{ position:"absolute", bottom:0, left:0, right:0, background:"rgba(0,0,0,.85)", padding:"28px 36px" }}>
-                <p style={{ fontFamily:sans, fontSize:9, letterSpacing:"0.35em", color:"#A48D6E", fontWeight:400, textTransform:"uppercase", marginBottom:8 }}>College Application Context</p>
+                <p style={{ fontFamily:"Lato, sans-serif", fontSize:10, letterSpacing:"2px", color:"#010000", fontWeight:700, textTransform:"uppercase", marginBottom:8 }}>College Application Context</p>
                 <p style={{ fontFamily:"Cormorant Garamond, serif", fontSize:25, color:"#E4D5C1", fontStyle:"italic" }}>Why Excalibur Students Stand Apart</p>
               </div>
             </div>
