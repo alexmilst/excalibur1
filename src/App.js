@@ -611,7 +611,6 @@ function PortfolioFolder({ isMobile }) {
           <h4 style={{ fontFamily: serif, fontSize: isMobile ? 22 : 24, fontWeight: 600, color: isOpen(i) ? "#d8b78c" : "#FBF7EE", lineHeight: 1.3, marginBottom: 14 }}>{item.title}</h4>
           {isOpen(i) && (
             <div className={isMobile ? "mod-content" : ""}>
-              <div style={{ width: 24, height: 1, background: `linear-gradient(90deg, #d8b78c, transparent)`, marginBottom: 12 }} />
               <p style={{ fontFamily: serif, fontSize: 13, color: "#FBF7EE", fontStyle: "italic", lineHeight: 1.5, marginBottom: 12 }}>{item.tagline}</p>
               <div style={{ fontFamily: sans, fontSize: 13, lineHeight: 1.8, color: "#FBF7EE", fontWeight: 300 }}>
                 {item.body.split('\n\n').map((para, pi) => (
@@ -747,7 +746,6 @@ function Footer({ setPage }) {
           {/* Applications email */}
           <div style={{ display: "flex", flexDirection: "column", gap: 5, borderLeft: isMobile ? "none" : "1px solid rgba(188,166,150,.15)", paddingLeft: isMobile ? 0 : 48 }}>
             <span style={{ fontFamily: eyebrow_font, fontSize: 9, color: "#BCA696", letterSpacing: "0.25em", textTransform: "uppercase", fontWeight: 600, marginBottom: 4 }}>ADMISSIONS</span>
-            <a href="mailto:admissions@excaliburacademy.org" style={{ fontFamily: serif, fontSize: 13, color: "#BCA696", textDecoration: "none", letterSpacing: "0.05em", fontStyle: "italic", transition: "color .2s" }} onMouseEnter={e => e.target.style.color = "#E4D5C1"} onMouseLeave={e => e.target.style.color = "#BCA696"}>admissions@excaliburacademy.org</a>
           </div>
           {/* Support email */}
           <div style={{ display: "flex", flexDirection: "column", gap: 5, borderLeft: isMobile ? "none" : "1px solid rgba(188,166,150,.15)", paddingLeft: isMobile ? 0 : 48 }}>
@@ -1177,7 +1175,6 @@ function SoireeInviteBlock({ openInquiry, setPage = () => {}, autoOpen = false, 
                   <div style={{ display: "flex", alignItems: "center", gap: 10, justifyContent: "center", marginBottom: 8 }}>
                     <div style={{ width: 18, height: "1px", background: `linear-gradient(90deg, transparent, #d8b78c)` }} />
                     <p style={{ fontFamily: "'Cormorant Garamond', 'Didot', Georgia, serif", fontSize: isMobile ? 16 : 20, color: "#d8b78c", fontStyle: "italic", fontWeight: 600, letterSpacing: "0.12em", margin: 0 }}>Tuesday &nbsp;·&nbsp; 6:00 – 8:00 PM</p>
-                    <div style={{ width: 18, height: "1px", background: `linear-gradient(90deg, #d8b78c, transparent)` }} />
                   </div>
                   <p style={{ fontFamily: serif, fontSize: isMobile ? 18 : 24, color: "#FBF7EE", lineHeight: 1.3, marginBottom: 16, fontWeight: 400 }}>Excalibur Academy Family Information Evening</p>
                   <p style={{ fontFamily: "'Cormorant Garamond', 'Didot', Georgia, serif", fontSize: isMobile ? 15 : 18, color: "#d8b78c", lineHeight: 1.4, marginBottom: 6, fontStyle: "italic", fontWeight: 700, letterSpacing: "0.12em" }}>at</p>
@@ -1509,7 +1506,6 @@ function CurriculumPage({ setPage, openInquiry }) {
         )}
         <div style={{ maxWidth: 1100, margin: "0 auto", padding: isMobile ? "36px 24px 0" : "52px 80px 0", display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: isMobile ? 20 : 80 }}>
           <div>
-            <div style={{ width: 36, height: 1, background: `linear-gradient(90deg, #d8b78c, transparent)`, marginBottom: 16 }} />
             <p style={{ fontFamily: sans, fontSize: isMobile ? 14 : 15, lineHeight: 1.85, color: "#FBF7EE", fontWeight: 300 }}>Every Excalibur student graduates with a portfolio of documented, verifiable work — one that no other program in the country offers with this level of excellence, breadth, faculty distinction, and diversity of experience.. This portfolio reflects sustained performance, leadership under pressure, and accountability for outcomes.</p>
           </div>
           <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", gap: 16 }}>
@@ -3255,9 +3251,6 @@ function ApplyPage({ setPage, openInquiry }) {
               <input type="text" placeholder="Preferred Times (for example, mornings, evenings, or weekends)" value={consultForm.times} onChange={e => setConsultForm(p => ({ ...p, times: e.target.value }))} style={{ ...inputStyle, marginBottom: 10 }} />
               <textarea placeholder="Questions or context you would like us to know (optional)" value={consultForm.notes} onChange={e => setConsultForm(p => ({ ...p, notes: e.target.value }))} rows={4} style={{ ...inputStyle, marginBottom: 28, resize: "vertical" }} />
 
-              {consultStatus === "error" && (
-                <p style={{ fontFamily: lora, fontSize: 12, color: "#c0392b", marginBottom: 16 }}>We were unable to submit the form. Please try again or contact admissions@excaliburacademy.org directly.</p>
-              )}
 
               <button
                 onClick={async () => {
@@ -4445,7 +4438,7 @@ function HomePage({ setPage, openInquiry }) {
               <div style={{ position: "absolute", inset: 0, background: "rgba(0,0,0,.35)" }} />
               <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, background: "#E4D5C1", padding: "28px 36px" }}>
                 <p style={{ fontFamily: sans, fontSize: 10, letterSpacing: "0.2em", color: "#010000", fontWeight: 700, textTransform: "uppercase", marginBottom: 10 }}>The Excalibur Graduate</p>
-                <h2 style={{ fontFamily: "'Bodoni Cyrillic', 'Bodoni MT', serif", fontSize: "clamp(28px,3vw,42px)", fontWeight: 400, color: "#010000", lineHeight: 1.0, marginBottom: 8, textTransform: "uppercase", letterSpacing: "0.04em" }}>Excalibur “Ivy” Portfolio</h2>
+                <h2 style={{ fontFamily: "Garamond, serif", fontSize: "clamp(28px,3vw,42px)", fontWeight: 400, color: "#010000", lineHeight: 1.0, marginBottom: 8, textTransform: "uppercase", letterSpacing: "0.04em" }}>Excalibur “Ivy” Portfolio</h2>
                 <p style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: 16, color: "#010000", fontStyle: "italic" }}>A record of work, judgment, and growth.</p>
               </div>
             </div>
@@ -4473,7 +4466,6 @@ function HomePage({ setPage, openInquiry }) {
         {/* Intro + eight components */}
         <div style={{ maxWidth: 1100, margin: "0 auto", padding: isMobile ? "36px 24px 0" : "52px 80px 0", display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: isMobile ? 20 : 80, alignItems: "start" }}>
           <div>
-            <div style={{ width: 36, height: 1, background: `linear-gradient(90deg, #d8b78c, transparent)`, marginBottom: 16 }} />
             <p style={{ fontFamily: sans, fontSize: isMobile ? 14 : 15, lineHeight: 1.85, color: "#010000", fontWeight: 300 }}>Every Excalibur student graduates with a portfolio of documented, verifiable work — one that no other program in the country offers with this level of excellence, breadth, faculty distinction, and diversity of experience.. This portfolio reflects sustained performance, leadership under pressure, and accountability for outcomes.</p>
           </div>
           <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", gap: 16 }}>
@@ -4510,18 +4502,6 @@ function HomePage({ setPage, openInquiry }) {
 
       </section>
 
-            {/* SCARCITY SIGNAL */}
-      <section style={{ background: "#34150F", padding: isMobile ? "36px 24px" : "32px 40px" }}>
-        <div style={{ maxWidth: 1100, margin: "0 auto", display: "flex", gap: isMobile ? 20 : 32, alignItems: "center", justifyContent: "center", flexWrap: "wrap", textAlign: "center" }}>
-          <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-            <div style={{ width: 7, height: 7, borderRadius: "50%", background: "#A48D6E", flexShrink: 0 }} />
-            <p style={{ fontFamily: "'Raleway', sans-serif", fontSize: isMobile ? 16 : 20, color:"#D9C7A9", lineHeight: 1.3, fontWeight: 400 }}>Summer Intensive 2026 is now accepting applications. <span style={{ color:"#D9C7A9" }}>Limited cohort.</span></p>
-          </div>
-          <button onClick={() => setPage("apply")} style={{ fontFamily: sans, background: "#A48D6E", color:"#D9C7A9", padding: isMobile ? "12px 28px" : "13px 36px", fontSize: 12, fontWeight: 700, letterSpacing: "0.18em", cursor: "pointer", textTransform: "uppercase", border: "none", flexShrink: 0 }}>SECURE YOUR PLACE →</button>
-        </div>
-      </section>
-
-      {/* FINAL CTA */}
       <section style={{ background: "#100F0C", position: "relative", overflow: "hidden" }}>
         <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: "1px", background: "linear-gradient(90deg, transparent, #BCA696, transparent)" }} />
 
@@ -4571,7 +4551,6 @@ function HomePage({ setPage, openInquiry }) {
               </div>
 
               <button onClick={() => setPage("apply")} style={{ fontFamily: "'Lato', sans-serif", background: "#D9C7A9", color: "#100F0C", padding: "14px 36px", fontSize: 10, fontWeight: 700, letterSpacing: "0.22em", textTransform: "uppercase", border: "none", cursor: "pointer", marginTop: 44, display: "block" }}>Apply for Summer Intensive →</button>
-              <p style={{ fontFamily: "'Lato', sans-serif", color: "#A48D6E", fontSize: 10, marginTop: 16, letterSpacing: "0.18em", fontWeight: 700, textTransform: "uppercase" }}>admissions@excaliburacademy.org</p>
             </Fade>
           </div>
 
@@ -5473,7 +5452,6 @@ function FacultyProfilePage({ slug, setPage }) {
 
         {/* Bio  -  left */}
         <div style={{ background: "#010000", padding: isMobile ? "48px 28px" : "72px 72px" }}>
-          <div style={{ width: 36, height: 1, background: `linear-gradient(90deg, #d8b78c, transparent)`, marginBottom: 36 }} />
           {f.paras.map((para, i) => (
             <p key={i} style={{ fontFamily: sans, fontSize: isMobile ? 14 : 15, lineHeight: 1.95, color: "#FBF7EE", fontWeight: 300, marginBottom: 22 }}>{para}</p>
           ))}
@@ -6013,7 +5991,6 @@ function ComingSoonPage({ onUnlock }) {
                 <p style={{ fontFamily: "'Bembo Book MT Std', Georgia, serif", fontSize: isMobile ? 14 : 15, lineHeight: 1.9, color: "#FBF7EE", fontWeight: 400 }}>
                   A CEO who built the world's first autonomous racing series, led the Formula BMW program — helping develop drivers who went on to become Formula 1 World Champions — and oversaw a $13B NASDAQ listing. Secured over $100M in institutional funding. Guinness World Record holder and professional racing driver.
                 </p>
-                <div style={{ width: 32, height: 1, background: `linear-gradient(90deg, #d8b78c, transparent)`, margin: "20px auto 0" }} />
               </div>
               {/* Divider */}
               {!isMobile && <div style={{ background:"#010000", margin: "0 0" }} />}
@@ -6023,7 +6000,6 @@ function ComingSoonPage({ onUnlock }) {
                 <p style={{ fontFamily: "'Bembo Book MT Std', Georgia, serif", fontSize: isMobile ? 14 : 15, lineHeight: 1.9, color:"#FBF7EE", fontWeight: 400 }}>
                   A former Citigroup Managing Director with 100+ M&A transactions and 600+ CEO advisory engagements. EVP and CFO of two NYSE-listed companies. Georgetown MBA professor, TEDx speaker, published author, and member of three corporate boards.
                 </p>
-                <div style={{ width: 32, height: 1, background: `linear-gradient(90deg, #d8b78c, transparent)`, margin: "20px auto 0" }} />
               </div>
             </div>
             {/* Bottom ornament */}
@@ -6113,7 +6089,6 @@ function ComingSoonPage({ onUnlock }) {
 
       {/* Footer */}
       <div style={{ position: "relative", zIndex: 1, textAlign: "center", padding: "24px 40px", borderTop: "1px solid rgba(216,183,140,.07)" }}>
-        <p style={{ fontFamily: sans, fontSize: 11, color: "#FBF7EE" }}>admissions@excaliburacademy.org &nbsp;·&nbsp; Orange County, California</p>
       </div>
     </div>
   );
@@ -7798,7 +7773,6 @@ function EventsPage({ setPage, openInquiry }) {
                 <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 16 }}>
                   <div style={{ width: 14, height: "1px", background: `linear-gradient(90deg, transparent, #d8b78c)` }} />
                   <p style={{ fontFamily: "'Cormorant Garamond', 'Didot', Georgia, serif", fontSize: isMobile ? 15 : 18, color:"#FBF7EE", fontStyle: "italic", fontWeight: 600, letterSpacing: "0.1em", margin: 0 }}>Tuesday &nbsp;·&nbsp; 2026 &nbsp;·&nbsp; 6:00 – 8:00 PM</p>
-                  <div style={{ width: 14, height: "1px", background: `linear-gradient(90deg, #d8b78c, transparent)` }} />
                 </div>
                 <p style={{ fontFamily: "'Cormorant Garamond', 'Didot', 'Bodoni MT', Georgia, serif", fontSize: isMobile ? 24 : 36, color:"#FBF7EE", lineHeight: 1.1, marginBottom: 6, fontWeight: 300, fontStyle: "italic", letterSpacing: "0.04em" }}>23 Corporate Plaza Drive, Newport Beach</p>
                 <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 40 }}>
@@ -7806,7 +7780,6 @@ function EventsPage({ setPage, openInquiry }) {
                   <p style={{ fontFamily: "'Forum', sans-serif", fontSize: 9, color:"#FBF7EE", letterSpacing: "0.32em", textTransform: "uppercase", fontWeight: 600, margin: 0 }}>Newport Beach · California</p>
                   <div style={{ width: 22, height: "1px", background:"#010000" }} />
                 </div>
-                <div style={{ width: 40, height: "1px", background: `linear-gradient(90deg, #d8b78c, transparent)`, marginBottom: 32 }} />
                 {/* Details table */}
                 {[
                   ["Location", "23 Corporate Plaza Drive, Newport Beach, CA"],
@@ -7828,7 +7801,6 @@ function EventsPage({ setPage, openInquiry }) {
               {/* Right  -  description */}
               <div>
                 <h2 style={{ fontFamily: serif, fontSize: isMobile ? 24 : 36, fontWeight: 300, color:"#d8b78c", lineHeight: 1.2, marginBottom: 28 }}>A private introduction to Excalibur Academy: its leadership, faculty, programs, standards, and student experience.</h2>
-                <div style={{ width: 36, height: "1px", background: `linear-gradient(90deg, #d8b78c, transparent)`, marginBottom: 28 }} />
                 <p style={{ fontFamily: sans, fontSize: 14, color:"#FBF7EE", fontWeight: 300, lineHeight: 1.9, marginBottom: 16 }}>Families will meet the Academy's lead faculty and founding team, receive an overview of the Summer Intensive and Academic-Year programs, and learn more about Excalibur's curriculum, structure, expectations, admissions process, and student experience.</p>
                 <p style={{ fontFamily: sans, fontSize: 14, color:"#FBF7EE", fontWeight: 300, lineHeight: 1.9, marginBottom: 16 }}>More than an information session, the evening is designed to give families and prospective students a first impression of the Academy's standards, atmosphere, and expectations.</p>
                 <p style={{ fontFamily: sans, fontSize: 14, color:"#FBF7EE", fontWeight: 300, lineHeight: 1.9, marginBottom: 28 }}>Prospective students attending the evening will be asked one question: <span style={{ fontFamily: serif, fontStyle: "italic", color:"#FBF7EE" }}>"What is your dream?"</span></p>
@@ -8198,7 +8170,6 @@ function ContactPage({ setPage, openInquiry }) {
       <div style={{ borderBottom: `1px solid rgba(164,141,110,.1)` }}>
         <div style={{ maxWidth: 1100, margin: "0 auto", display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr" }}>
           {[
-            { label: "Admissions", email: "admissions@excaliburacademy.org", desc: "Program inquiries, applications, enrollment, and admissions questions." },
             { label: "Family Support", email: "support@excaliburacademy.org", desc: "Family support, scheduling, program questions, and general correspondence." },
           ].map(({ label, email, desc }) => (
             <div key={label} style={{ padding: isMobile ? "36px 28px" : "52px 80px", borderRight: !isMobile ? `1px solid rgba(164,141,110,.1)` : "none", borderBottom: isMobile ? `1px solid rgba(164,141,110,.1)` : "none" }}>
@@ -8272,9 +8243,6 @@ function ContactPage({ setPage, openInquiry }) {
               <input type="text" placeholder="Preferred Times (for example, mornings, evenings, or weekends)" value={form.times} onChange={e => setForm(p => ({ ...p, times: e.target.value }))} style={{ ...inputStyle, marginBottom: 10 }} />
               <textarea placeholder="Questions or context you would like us to know (optional)" value={form.notes} onChange={e => setForm(p => ({ ...p, notes: e.target.value }))} rows={4} style={{ ...inputStyle, marginBottom: 28, resize: "vertical" }} />
 
-              {status === "error" && (
-                <p style={{ fontFamily: lora, fontSize: 12, color: "#c0392b", marginBottom: 14 }}>We were unable to submit the form. Please try again or contact admissions@excaliburacademy.org directly.</p>
-              )}
 
               <button
                 onClick={async () => {
@@ -10820,19 +10788,15 @@ function FlagshipDetailPage2({ setPage, openInquiry }) {
               <input type="text" placeholder="Preferred Times (for example, mornings, evenings, or weekends)" value={consultForm.times} onChange={e=>setConsultForm(p=>({...p,times:e.target.value}))} style={{ background: "#E4D5C1", border: "1px solid rgba(16,15,12,.2)", color: "#100F0C", padding: "13px 16px", fontFamily: lora, fontSize: 13, fontWeight: 400, outline: "none", width: "100%", marginBottom: 10 }} />
               <textarea placeholder="Questions or context you would like us to know (optional)" value={consultForm.notes} onChange={e=>setConsultForm(p=>({...p,notes:e.target.value}))} rows={4} style={{ background: "#E4D5C1", border: "1px solid rgba(16,15,12,.2)", color: "#100F0C", padding: "13px 16px", fontFamily: lora, fontSize: 13, fontWeight: 400, outline: "none", width: "100%", marginBottom: 28, resize: "vertical" }} />
 
-              {consultStatus === "error" && (
-                <p style={{ fontFamily: "'Avenir','Avenir Next','Century Gothic',sans-serif", fontSize: 12, color: "#8b0000", marginBottom: 16 }}>We were unable to submit the form. Please try again or contact admissions@excaliburacademy.org directly.</p>
-              )}
-
               <button
                 onClick={async () => {
                   const ok = await sendEmail({
                     subject: "Excalibur Admissions - Family Consultation Request",
-                    from_name: `${consultForm.parentFirst} ${consultForm.parentLast}`,
+                    from_name: consultForm.parentFirst + " " + consultForm.parentLast,
                     email: consultForm.email,
                     phone: consultForm.phone,
                     city: consultForm.city, state: consultForm.state, zip: consultForm.zip,
-                    student_name: `${consultForm.studentFirst} ${consultForm.studentLast}`,
+                    student_name: consultForm.studentFirst + " " + consultForm.studentLast,
                     student_age: consultForm.age, student_grade: consultForm.grade,
                     program_interest: consultForm.program,
                     contact_method: consultForm.contactMethod,
@@ -10842,8 +10806,10 @@ function FlagshipDetailPage2({ setPage, openInquiry }) {
                   });
                   setConsultStatus(ok ? "success" : "error");
                 }}
-                style={{ fontFamily: "'Lato', sans-serif", padding: "16px 40px", background: "#100F0C", border: "none", color: "#A48D6E", fontSize: 11, fontWeight: 600, letterSpacing: "0.15em", textTransform: "uppercase", cursor: "pointer", width: "100%" }}
-              >REQUEST A PRIVATE CONSULTATION</button>
+                style={{ fontFamily: lora, padding: "15px 40px", background: gold, border: "1px solid #D9C7A9", color: dark, fontSize: 11, fontWeight: 600, letterSpacing: "0.15em", textTransform: "uppercase", cursor: "pointer", width: "100%" }}
+              >
+                REQUEST A PRIVATE CONSULTATION
+              </button>
             </div>
           )}
         </div>
@@ -12476,8 +12442,8 @@ function FoundationDetailPage({ setPage, openInquiry }) {
               <img src="https://i.imgur.com/gvG5P1q.png" alt="" style={{ width:"100%", height:"100%", objectFit:"cover" }}/>
               <div style={{ position:"absolute", inset:0, background:"rgba(0,0,0,.3)" }}/>
               <div style={{ position:"absolute", bottom:0, left:0, right:0, background:"rgba(0,0,0,.85)", padding:"28px 36px" }}>
-                <p style={{ fontFamily:sans, fontSize:9, letterSpacing:"0.35em", color:"#A48D6E", fontWeight:600, textTransform:"uppercase", marginBottom:8 }}>College Application Context</p>
-                <p style={{ fontFamily:ag, fontSize:16, color:"#E4D5C1", fontStyle:"italic" }}>Why Excalibur students stand apart.</p>
+                <p style={{ fontFamily:"Lato, sans-serif", fontSize:10, letterSpacing:"2px", color:"#010000", fontWeight:700, textTransform:"uppercase", marginBottom:8 }}>College Application Context</p>
+                <p style={{ fontFamily:"Cormorant Garamond, serif", fontSize:25, color:"#E4D5C1", fontStyle:"italic" }}>Why Excalibur Students Stand Apart</p>
               </div>
             </div>
           </div>
@@ -12486,14 +12452,13 @@ function FoundationDetailPage({ setPage, openInquiry }) {
             <img src="https://i.imgur.com/f87iq9i.jpeg" alt="" style={{ width:"100%", height:"100%", objectFit:"cover" }}/>
             <div style={{ position:"absolute", inset:0, background:"rgba(0,0,0,.5)" }}/>
             <div style={{ position:"absolute", bottom:0, left:0, right:0, background:"#34150F", padding:"20px 24px" }}>
-              <h2 style={{ fontFamily:ag, fontSize:26, fontWeight:600, color:"#A48D6E", lineHeight:1.05, marginBottom:6 }}>Excalibur “Ivy” Portfolio</h2>
-              <p style={{ fontFamily:ag, fontSize:14, color:"#E4D5C1", fontStyle:"italic" }}>A record of work, judgment, and growth.</p>
+              <h2 style={{ fontFamily:"Garamond, serif", fontSize:26, fontWeight:600, color:"#A48D6E", lineHeight:1.05, marginBottom:6 }}>Excalibur “Ivy” Portfolio</h2>
+              <p style={{ fontFamily:"Cormorant Garamond, serif", fontSize:20, color:"#E4D5C1", fontStyle:"italic" }}>A record of work, judgment, and growth</p>
             </div>
           </div>
         )}
         <div style={{ maxWidth:1100, margin:"0 auto", padding:isMobile?"36px 24px 0":"52px 80px 0", display:"grid", gridTemplateColumns:isMobile?"1fr":"1fr 1fr", gap:isMobile?20:80 }}>
           <div>
-            <div style={{ width:36, height:1, background:"linear-gradient(90deg,#000,transparent)", marginBottom:16 }}/>
             <p style={{ fontFamily:lora, fontSize:isMobile?14:15, lineHeight:1.85, color:"#E4D5C1", fontWeight:300 }}>Every Excalibur student graduates with a bound portfolio of documented, verifiable work — one that no other program in Orange County produces. This portfolio reflects sustained performance, leadership under pressure, and accountability for outcomes across both semesters.</p>
           </div>
           <div style={{ display:"flex", flexDirection:"column", justifyContent:"center", gap:16 }}>
@@ -14311,7 +14276,7 @@ function VentureDetailPage({ setPage, openInquiry }) {
               <div style={{ position:"absolute", inset:0, background:"rgba(0,0,0,.3)" }}/>
               <div style={{ position:"absolute", bottom:0, left:0, right:0, background:"rgba(0,0,0,.85)", padding:"28px 36px" }}>
                 <p style={{ fontFamily:sans, fontSize:9, letterSpacing:"0.35em", color:"#A48D6E", fontWeight:400, textTransform:"uppercase", marginBottom:8 }}>College Application Context</p>
-                <p style={{ fontFamily:ag, fontSize:16, color:"#E4D5C1", fontStyle:"italic" }}>Why Excalibur students stand apart.</p>
+                <p style={{ fontFamily:"Cormorant Garamond, serif", fontSize:25, color:"#E4D5C1", fontStyle:"italic" }}>Why Excalibur Students Stand Apart</p>
               </div>
             </div>
           </div>
@@ -14320,14 +14285,13 @@ function VentureDetailPage({ setPage, openInquiry }) {
             <img src="https://i.imgur.com/f87iq9i.jpeg" alt="" style={{ width:"100%", height:"100%", objectFit:"cover" }}/>
             <div style={{ position:"absolute", inset:0, background:"rgba(0,0,0,.5)" }}/>
             <div style={{ position:"absolute", bottom:0, left:0, right:0, background:"#100F0C", padding:"20px 24px" }}>
-              <h2 style={{ fontFamily:ag, fontSize:26, fontWeight:600, color:"#A48D6E", lineHeight:1.05, marginBottom:6 }}>Excalibur “Ivy” Portfolio</h2>
-              <p style={{ fontFamily:ag, fontSize:14, color:"#E4D5C1", fontStyle:"italic" }}>A record of work, judgment, and growth.</p>
+              <h2 style={{ fontFamily:"Garamond, serif", fontSize:26, fontWeight:600, color:"#A48D6E", lineHeight:1.05, marginBottom:6 }}>Excalibur “Ivy” Portfolio</h2>
+              <p style={{ fontFamily:"Cormorant Garamond, serif", fontSize:20, color:"#E4D5C1", fontStyle:"italic" }}>A record of work, judgment, and growth</p>
             </div>
           </div>
         )}
         <div style={{ maxWidth:1100, margin:"0 auto", padding:isMobile?"36px 24px 0":"52px 80px 0", display:"grid", gridTemplateColumns:isMobile?"1fr":"1fr 1fr", gap:isMobile?20:80 }}>
           <div>
-            <div style={{ width:36, height:1, background:"linear-gradient(90deg,#000,transparent)", marginBottom:16 }}/>
             <p style={{ fontFamily:lora, fontSize:isMobile?14:15, lineHeight:1.85, color:"#100F0C", fontWeight:300 }}>Every Excalibur student graduates with a bound portfolio of documented, verifiable work — one that no other program in Orange County produces. This portfolio reflects sustained performance, leadership under pressure, and accountability for outcomes across both semesters.</p>
           </div>
           <div style={{ display:"flex", flexDirection:"column", justifyContent:"center", gap:16 }}>
