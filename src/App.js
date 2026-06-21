@@ -4388,7 +4388,7 @@ function HomePage({ setPage, openInquiry }) {
       <section style={{ background: "#E4D5C1", padding: isMobile ? "60px 16px" : "80px 40px" }}>
         <div style={{ maxWidth: 1100, margin: "0 auto" }}>
           <Fade><div style={{ textAlign: "center", marginBottom: 48 }}>
-            <p style={{ fontFamily: sans, fontSize: 10, letterSpacing: "0.2em", color:"#010000", fontWeight: 700, textTransform: "uppercase", marginBottom: 12 }}>FACULTY & LEADERSHIP</p>
+            <p style={{ fontFamily: sans, fontSize: 12, letterSpacing: "0.2em", color:"#010000", fontWeight: 500, textTransform: "uppercase", marginBottom: 12 }}>EXCALIBUR TEAM</p>
             <h2 style={{ fontFamily: "\'Bodoni Cyrillic\', serif", fontSize: isMobile ? 26 : 36, fontWeight: 400, color:"#010000", lineHeight: 1.1, letterSpacing: "0.04em", textTransform: "uppercase", marginBottom: 16 }}>Faculty & Leadership</h2>
             <p style={{ fontFamily: "\'Raleway\', sans-serif", fontSize: 14, color:"#010000", fontWeight: 400, lineHeight: 1.9, maxWidth: 680, margin: "0 auto", textAlign: "justify" }}>Excalibur faculty come from the arenas where leadership is tested: a CEO who built the world's first autonomous racing series, directed the Formula BMW program, and oversaw a $13B NASDAQ listing, a former Citigroup Managing Director and Georgetown MBA professor with 100+ M&A transactions, 600+ CEO advisory engagements, EVP/CFO leadership at two NYSE-listed companies, TEDx speaker, and a doctoral candidate serving as an Orange County Sheriff's Department spokesman. They have led companies, advised CEOs, taught MBA students, spoken on stages from West Point to Ivy League institutions, and bring that experience into the Excalibur classroom.</p>
           </div></Fade>
