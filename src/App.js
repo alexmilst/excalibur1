@@ -3527,14 +3527,14 @@ function HomePage({ setPage, openInquiry }) {
             <div style={{ position: "absolute", top: 12, right: 12, width: 16, height: 16, borderTop: `1px solid rgba(188,166,150,.4)`, borderRight: `1px solid rgba(216,183,140,.4)` }} />
             <div style={{ position: "absolute", bottom: 12, left: 12, width: 16, height: 16, borderBottom: `1px solid rgba(188,166,150,.4)`, borderLeft: `1px solid rgba(216,183,140,.4)` }} />
             <div style={{ position: "absolute", bottom: 12, right: 12, width: 16, height: 16, borderBottom: `1px solid rgba(188,166,150,.4)`, borderRight: `1px solid rgba(216,183,140,.4)` }} />
-            <p style={{ fontFamily: "'Times New Roman', Times, serif", fontSize: 15, letterSpacing: "0.25em", color: "#BCA696", fontWeight: 700, textTransform: "uppercase", padding: "20px 28px 0", textAlign: "center" }}>Industry Leaders & Executives — Your Mentors</p>
+            <p style={{ fontFamily: "Garamond, serif", fontSize: 17, letterSpacing: "0.25em", color: "rgba(164,141,110,1)", textTransform: "uppercase", padding: "20px 28px 0", textAlign: "center" }}>Industry Leaders & Executives — Your Mentors</p>
             <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1px 1fr", padding: isMobile ? "16px 24px 24px" : "20px 40px 28px", gap: isMobile ? 20 : 0 }}>
               <div style={{ padding: isMobile ? "0" : "0 36px 0 0" }}>
-                <p style={{ fontFamily: lora, fontSize: 14, lineHeight: 1.85, color: "#f4e9d6", fontWeight: 300 }}>A CEO who built the world's first autonomous racing series, directed the Formula BMW program — helping develop drivers who went on to become Formula 1 World Champions — and oversaw a $13 billion NASDAQ listing. Secured over $100M in institutional funding. Guinness World Record holder. Professional Auto &amp; Rally Racer.</p>
+                <p style={{ fontFamily: lora, fontSize: 14, lineHeight: 1.85, color: "#f4e9d6", fontWeight: 200 }}>A CEO who built the world's first autonomous racing series, directed the Formula BMW program — helping develop drivers who went on to become Formula 1 World Champions — and oversaw a $13 billion NASDAQ listing. Secured over $100M in institutional funding. Guinness World Record holder. Professional Auto &amp; Rally Racer.</p>
               </div>
               {!isMobile && <div style={{ background:"#34150F" }} />}
               <div style={{ padding: isMobile ? "0" : "0 0 0 36px" }}>
-                <p style={{ fontFamily: lora, fontSize: 14, lineHeight: 1.85, color: "#f4e9d6", fontWeight: 300 }}>A former Citigroup Managing Director with 100+ M&amp;A transactions and 600+ CEO advisory engagements. EVP and CFO of two NYSE-listed companies. Adjunct Professor at Georgetown University's McDonough School of Business and TEDx speaker. Has spoken at institutions from West Point to Stanford.</p>
+                <p style={{ fontFamily: lora, fontSize: 14, lineHeight: 1.85, color: "#f4e9d6", fontWeight: 200 }}>A former Citigroup Managing Director with 100+ M&amp;A transactions and 600+ CEO advisory engagements. EVP and CFO of two NYSE-listed companies. Adjunct Professor at Georgetown University's McDonough School of Business and TEDx speaker. Has spoken at institutions from West Point to Stanford.</p>
               </div>
             </div>
             <div style={{ textAlign: "center", paddingBottom: 16 }}>
