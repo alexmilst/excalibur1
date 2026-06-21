@@ -3882,16 +3882,16 @@ function HomePage({ setPage, openInquiry }) {
       <div style={{ background:"#E4D5C1", borderTop:"1px solid rgba(16,15,12,.1)", display:"grid", gridTemplateColumns:isMobile?"1fr":"1fr 1fr", overflow:"hidden" }}>
         {/* LEFT — content */}
         <div style={{ padding:isMobile?"52px 28px":"80px 80px", display:"flex", flexDirection:"column", justifyContent:"center" }}>
-          <p style={{ fontFamily: sans, fontSize:10, letterSpacing:"0.2em", textTransform:"uppercase", color:"#34150F", fontWeight:700, marginBottom:24 }}>The Excalibur Flagship · Foundation &amp; Venture Semesters</p>
-          <h2 style={{ fontFamily:eyebrow_font, fontSize:isMobile?"clamp(38px,8vw,56px)":"clamp(44px,4.5vw,68px)", fontWeight:400, lineHeight:1.0, letterSpacing:"0.08em", textTransform:"uppercase", color:"#34150F", margin:"0 0 14px" }}>
-            Flagship Overview.
+          <p style={{ fontFamily: sans, fontSize:10, letterSpacing:"0.2em", textTransform:"uppercase", color:"#34150F", fontWeight:700, marginBottom:24 }}>Foundation &amp; Venture Semesters</p>
+          <h2 style={{ fontFamily:"Garamond, serif", fontSize:"60px", fontWeight:400, lineHeight:1.0, letterSpacing:"0.08em", textTransform:"uppercase", color:"#34150F", margin:"0 0 14px" }}>
+            Flagship Overview
           </h2>
           <p style={{ fontFamily:"'Cormorant Garamond', Georgia, serif", fontStyle:"italic", fontSize:isMobile?"clamp(33px,7vw,51px)":"clamp(39px,3.5vw,63px)", fontWeight:400, color:"#34150F", margin:"0 0 28px", lineHeight:1.1 }}>
             Two semesters. After school program. Limited Cohort.
           </p>
-          <p style={{ fontFamily: sans, fontSize:isMobile?14:16, lineHeight:1.9, color:"#100F0C", fontWeight:400, letterSpacing:"0.02em", textAlign:"justify", marginBottom:36 }}>An academic-year formation across two semesters — the Foundation and the Venture. Business. Leadership. Public Speaking. The Art of Class. Real-world engagements. And a venture, built from the ground up, presented before invited investors, founders, executives, and practitioners.</p>
+          <p style={{ fontFamily: "Lora, serif", fontSize:15, lineHeight:1.9, color:"#100F0C", fontWeight:400, letterSpacing:"0.02em", textAlign:"justify", marginBottom:36 }}>An academic-year formation across two semesters — the Foundation and the Venture. Business. Leadership. Public Speaking.</p>
           <div style={{ display:"flex", flexDirection:"column", gap:16 }}>
-            {[["Foundation Semester","Sep 8 – Dec 19, 2026 · 16 weeks"],["Venture Semester","Jan 26 – May 22, 2027 · 16 weeks"],["Saturday Track","SAT 10:30 – 3:30 PM"],["Weekday Track","Tuesday & Thursday · 4:00 - 6:30 PM"]].map(([k,v],i) => (
+            {[["Foundation Semester","Sep 8 – Dec 19, 2026 · 14 weeks"],["Venture Semester","Jan 26 – May 22, 2027 · 16 weeks"],["WEEKEND Track","Saturday 10:30 – 3:30 PM"],["Weekday Track","Tuesday & Thursday · 4:00 - 6:30 PM"]].map(([k,v],i) => (
               <div key={i} style={{ display:"flex", gap:20, paddingBottom:16, borderBottom:"1px solid rgba(16,15,12,.15)", alignItems:"flex-start" }}>
                 <span style={{ fontFamily: sans, fontSize:10, letterSpacing:"0.12em", textTransform:"uppercase", color:"#34150F", fontWeight:700, width:160, minWidth:160, flexShrink:0, paddingTop:2 }}>{k}</span>
                 <span style={{ fontFamily: sans, fontSize:14, color:"#100F0C", fontWeight:400, lineHeight:1.55 }}>{v}</span>
@@ -3937,7 +3937,7 @@ function HomePage({ setPage, openInquiry }) {
             <div style={{ padding:28, background:"#E4D5C1", border:"1px solid rgba(16,15,12,.15)" }}>
               <p style={{ fontFamily: sans, fontSize:10, letterSpacing:"0.2em", textTransform:"uppercase", color:"#010000", fontWeight:700, marginBottom:16 }}>Available Tracks</p>
               <div style={{ borderTop:"1px solid rgba(0,0,0,.2)" }}>
-                {[{ name:"Weekday Track", time:"Tuesday & Thursday · 4:00–6:30 PM", meta:"Two focused after-school sessions each week for students who prefer a consistent academic rhythm." },{ name:"Saturday Track", time:"Saturday · 10:30 AM - 3:45 PM", meta:"One weekly immersion for students who prefer a concentrated weekend format." }].map((tr,i) => (
+                {[{ name:"Weekday Track", time:"Tuesday & Thursday · 4:00–6:30 PM", meta:"Two focused after-school sessions each week for students who prefer a consistent academic rhythm." },{ name:"WEEKEND Track", time:"Saturday · 10:30 AM - 3:45 PM", meta:"One weekly immersion for students who prefer a concentrated weekend format." }].map((tr,i) => (
                   <div key={i} style={{ padding:"16px 0", borderBottom:"1px solid rgba(0,0,0,.2)" }}>
                     <div style={{ fontFamily: serif, fontSize:26, lineHeight:1.05, marginBottom:6, letterSpacing:"0.08em", textTransform:"uppercase", fontWeight:700, color:"#010000" }}>{tr.name}</div>
                     <div style={{ fontFamily: serif, fontSize:20, letterSpacing:"0.04em", textTransform:"uppercase", color:"#010000", fontWeight:400, fontStyle:"italic", marginBottom:7 }}>{tr.time}</div>
@@ -9548,7 +9548,7 @@ function FlagshipDetailPage2({ setPage, openInquiry }) {
             <div style={{ display:"grid", gridTemplateColumns:isMobile?"1fr":"repeat(3,1fr)" }}>
               {[
                 ["Duration","16 weeks · January 26 - May 22, 2027"],
-                ["Saturday Track","Saturday · 10:30 AM - 3:30 PM"],
+                ["WEEKEND Track","Saturday · 10:30 AM - 3:30 PM"],
                 ["Weekday Track","Tuesday & Thursday · 4:00 - 6:30 PM"],
                 ["Group Size","20 students per group"],
                 ["Weekly Hours","5 hours per week"],
