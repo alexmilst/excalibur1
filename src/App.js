@@ -1129,7 +1129,7 @@ function SoireeInviteBlock({ openInquiry, setPage = () => {}, autoOpen = false, 
   };
 
   return (
-    <section style={{ padding: isMobile ? "52px 16px" : "80px 40px", background: "#010000" }}>
+    <section style={{ padding: isMobile ? "52px 16px" : "80px 40px", background: "rgba(16, 15, 12, 1)" }}>
       <div style={{ maxWidth: 960, margin: "0 auto" }}>
         <div style={{ border: "1px solid rgba(216,183,140,.4)", position: "relative", background: "#010000" }} className="soiree-card">
           {/* Top gold line */}
@@ -1173,22 +1173,21 @@ function SoireeInviteBlock({ openInquiry, setPage = () => {}, autoOpen = false, 
                   {/* Date */}
                   <p style={{ fontFamily: serif, fontSize: isMobile ? 72 : 96, fontWeight: 300, color: "#FBF7EE", lineHeight: 1, letterSpacing: "-0.03em", marginBottom: 6 }}>June 30</p>
                   <div style={{ display: "flex", alignItems: "center", gap: 10, justifyContent: "center", marginBottom: 8 }}>
-                    <div style={{ width: 18, height: "1px", background: `linear-gradient(90deg, transparent, #d8b78c)` }} />
-                    <p style={{ fontFamily: "'Cormorant Garamond', 'Didot', Georgia, serif", fontSize: isMobile ? 16 : 20, color: "#d8b78c", fontStyle: "italic", fontWeight: 600, letterSpacing: "0.12em", margin: 0 }}>Tuesday &nbsp;·&nbsp; 6:00 – 8:00 PM</p>
+                    <p style={{ fontFamily: "'Cormorant Garamond', 'Didot', Georgia, serif", fontSize: isMobile ? 16 : 20, color: "#d8b78c", fontStyle: "italic", fontWeight: 400, letterSpacing: "0.12em", margin: 0 }}>Tuesday &nbsp;·&nbsp; 6:00 – 8:00 PM</p>
                   </div>
-                  <p style={{ fontFamily: serif, fontSize: isMobile ? 18 : 24, color: "#FBF7EE", lineHeight: 1.3, marginBottom: 16, fontWeight: 400 }}>Excalibur Academy Family Information Evening</p>
+                  <p style={{ fontFamily: serif, fontSize: isMobile ? 18 : 24, color: "#FBF7EE", lineHeight: 1.3, fontStyle: "italic", marginBottom: 16, fontWeight: 400 }}>  Family Information Soirée</p>
                   <p style={{ fontFamily: "'Cormorant Garamond', 'Didot', Georgia, serif", fontSize: isMobile ? 15 : 18, color: "#d8b78c", lineHeight: 1.4, marginBottom: 6, fontStyle: "italic", fontWeight: 700, letterSpacing: "0.12em" }}>at</p>
-                  <p style={{ fontFamily: "'Cormorant Garamond', 'Didot', 'Bodoni MT', Georgia, serif", fontSize: isMobile ? 28 : 42, color: "#FBF7EE", lineHeight: 1.1, marginBottom: 6, fontWeight: 300, fontStyle: "italic", letterSpacing: "0.04em" }}>23 Corporate Plaza Drive, Newport Beach</p>
+                  <p style={{ fontFamily: "'Cormorant Garamond', 'Didot', 'Bodoni MT', Georgia, serif", fontSize: isMobile ? 28 : 42, color: "#FBF7EE", lineHeight: 1.1, marginBottom: 6, fontWeight: 300, fontStyle: "italic", letterSpacing: "0.04em" }}>Crown Valley Ballroom Laguna Niguel Community Center</p>
                   <div style={{ display: "flex", alignItems: "center", gap: 12, justifyContent: "center", marginBottom: 36 }}>
                     <div style={{ width: 28, height: "1px", background:"#010000" }} />
-                    <p style={{ fontFamily: "'Forum', sans-serif", fontSize: 9, color: "#d8b78c", lineHeight: 1, fontWeight: 600, letterSpacing: "0.35em", textTransform: "uppercase", margin: 0 }}>Newport Beach · California</p>
+                    <p style={{ fontFamily: "'Forum', sans-serif", fontSize: 13, color: "#d8b78c", lineHeight: 1, fontWeight: 600, letterSpacing: "0.35em", textTransform: "uppercase", margin: 0 }}>LAGUNA NIGUEL · California</p>
                     <div style={{ width: 28, height: "1px", background:"#010000" }} />
                   </div>
                   <div style={{ width: 52, height: "1px", background: `linear-gradient(90deg, transparent, #d8b78c, transparent)`, marginBottom: 28 }} />
                   {/* Body */}
                   <p style={{ fontFamily: "'Lato', sans-serif", fontSize: isMobile ? 13 : 14, color: "#FBF7EE", fontWeight: 300, lineHeight: 2.0, maxWidth: 520, marginBottom: 28 }}>A private family information evening introducing Excalibur Academy, its faculty, programs, curriculum, admissions process, and student experience. The evening includes live jazz, hors d’oeuvres, faculty introductions, program & curriculum presentations, as well as the opportunity to meet the founder, leadership team, and other prospective Excalibur families.</p>
                   {/* By Invitation */}
-                  <p style={{ fontFamily: serif, fontSize: 17, color: "#d8b78c", letterSpacing: "0.15em", marginBottom: 28, textTransform: "uppercase" }}>Limited Attendance · Invitation Requested</p>
+                  <p style={{ fontFamily: serif, fontSize: 20, color: "#d8b78c", letterSpacing: "0.15em", lineHeight: 29, lineHeight: 28, marginBottom: 28, textTransform: "uppercase" }}>Limited Attendance · Invitation Requested</p>
                   {/* Dream question */}
                   <div style={{ border: "1px solid rgba(216,183,140,.25)", padding: isMobile ? "18px 18px" : "24px 36px", textAlign: "center", maxWidth: 540, marginBottom: 32, position: "relative", width: "100%" }}>
                     <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 1, background: "linear-gradient(90deg, transparent, rgba(216,183,140,.4), transparent)" }} />
@@ -1200,7 +1199,7 @@ function SoireeInviteBlock({ openInquiry, setPage = () => {}, autoOpen = false, 
                     <button onClick={() => setShowForm(true)} style={{ fontFamily: sans, background: "#d8b78c", color:"#010000", padding: "13px 22px", fontSize: 11, fontWeight: 700, letterSpacing: "0.15em", textTransform: "uppercase", border: "none", cursor: "pointer", flex: 1 }}>Request an Invitation</button>
                     <button onClick={() => setPage("events")} style={{ fontFamily: sans, background: "transparent", color: "#010000", padding: "13px 22px", fontSize: 11, fontWeight: 500, letterSpacing: "0.15em", textTransform: "uppercase", border: "1px solid rgba(216,183,140,.35)", cursor: "pointer", flex: 1 }}>Event Information →</button>
                   </div>
-                  <p style={{ fontFamily: "'Lato', sans-serif", fontSize: 11, color:"#d8b78c", marginTop: 4, lineHeight: 1.7, maxWidth: 420 }}>Attendance is limited. Confirmed families will receive event details directly from the admissions team.</p>
+                  <p style={{ fontFamily: "'Lato', sans-serif", fontSize: 13, color:"#d8b78c", marginTop: 4, lineHeight: 1.7, maxWidth: 420 }}>Attendance is limited. Confirmed families will receive event details directly from the admissions team.</p>
                 </div>
               </div> {/* close inner grid */}
               </div> {/* close flex column wrapper */}
@@ -4527,8 +4526,8 @@ function HomePage({ setPage, openInquiry }) {
         {/* TOP — full-width editorial heading block */}
         <div style={{ padding: isMobile ? "80px 24px 60px" : "110px 80px 72px", textAlign: "center", borderBottom: "1px solid rgba(217,199,169,.1)" }}>
           <Fade>
-            <span style={{ fontFamily: "'Lato', sans-serif", fontSize: 10, letterSpacing: "0.3em", color: "#A48D6E", fontWeight: 700, textTransform: "uppercase" }}>Summer Intensive 2026</span>
-            <h2 style={{ fontFamily: "'Cinzel', serif", fontSize: isMobile ? "clamp(32px,7vw,52px)" : "clamp(40px,5vw,68px)", fontWeight: 400, lineHeight: 0.95, letterSpacing: "0.12em", textTransform: "uppercase", color: "#D9C7A9", margin: "20px 0 0" }}>
+            <span style={{ fontFamily: "'Lato', sans-serif", fontSize: 13, letterSpacing: "0.3em", color: "#A48D6E", fontWeight: 500, textTransform: "uppercase" }}>Summer Intensive 2026</span>
+            <h2 style={{ fontFamily: "'Cinzel', serif", fontSize: isMobile ? "clamp(32px,7vw,52px)" : "clamp(40px,5vw,68px)", fontWeight: 400, lineHeight: 52, letterSpacing: "0.12em", textTransform: "uppercase", color: "#D9C7A9", margin: "20px 0 0" }}>
               Summer Venture Launchpad
             </h2>
             <h2 style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: isMobile ? "clamp(32px,7vw,52px)" : "clamp(40px,5vw,68px)", fontWeight: 400, fontStyle: "italic", lineHeight: 0.95, letterSpacing: "0.03em", textTransform: "uppercase", color: "#A48D6E", margin: "12px 0 0" }}>
@@ -4576,13 +4575,13 @@ function HomePage({ setPage, openInquiry }) {
           {/* Right: countdown */}
           <div style={{ padding: isMobile ? "48px 24px 64px" : "64px 72px", display: "flex", flexDirection: "column", justifyContent: "center" }}>
             <Fade d={.1}>
-              <p style={{ fontFamily: "'Lato', sans-serif", fontSize: 9, letterSpacing: "0.3em", color: "#A48D6E", fontWeight: 700, textTransform: "uppercase", marginBottom: 32 }}>Summer Intensive Begins</p>
+              <p style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: 15, letterSpacing: "0.3em", color: "#A48D6E", fontWeight: 500, textTransform: "uppercase", textAlign: "center", marginBottom: 32 }}>Summer Intensive Begins IN</p>
               <div style={{ textAlign: "center" }}>
                 <div style={{ display: "flex", alignItems: "baseline", justifyContent: "center", gap: 16 }}>
                   <div style={{ fontFamily: "'Cinzel', serif", fontSize: "clamp(100px,18vw,180px)", fontWeight: 400, color: "#D9C7A9", lineHeight: 1, letterSpacing: "0.02em" }}>44</div>
-                  <div style={{ fontFamily: "'Cinzel', serif", fontSize: 13, letterSpacing: "0.25em", color: "#A48D6E", textTransform: "uppercase", fontWeight: 400, paddingBottom: 16 }}>Days</div>
+                  <div style={{ fontFamily: "'Cinzel', serif", fontSize: 25, letterSpacing: "0.25em", color: "#A48D6E", textTransform: "uppercase", fontWeight: 400, paddingBottom: 16 }}>Days</div>
                 </div>
-                <div style={{ fontFamily: "'Lato', sans-serif", fontSize: 10, letterSpacing: "0.55em", color: "#A48D6E", textTransform: "uppercase", marginTop: 8 }}>Until Second Summer Wave Begins</div>
+                <div style={{ fontFamily: "'Lato', sans-serif", fontSize: 10, letterSpacing: "0.55em", color: "#A48D6E", textTransform: "uppercase", marginTop: 8 }}></div>
               </div>
               <p style={{ fontFamily: "'Cinzel', serif", fontSize: 13, letterSpacing: "0.18em", color: "#D9C7A9", textTransform: "uppercase", marginTop: 20, fontWeight: 700, lineHeight: 1.7, textAlign: "center" }}>July 27 – August 8, 2026<br/>Orange County, CA</p>
             </Fade>
@@ -4605,7 +4604,7 @@ function HomePage({ setPage, openInquiry }) {
           ))}
           <div style={{ marginTop: 48, textAlign: "center" }}>
             <button onClick={() => setPage("apply")} style={{ fontFamily: sans, background: "#E4D5C1", color: "#0F0F0F", padding: isMobile ? "16px 40px" : "18px 60px", fontSize: isMobile ? 13 : 14, fontWeight: 700, letterSpacing: "0.2em", textTransform: "uppercase", border: "none", cursor: "pointer" }}>APPLY FOR ADMISSION →</button>
-            <p style={{ fontFamily: sans, color: "#A48D6E", fontSize: 11, marginTop: 20, letterSpacing: "0.2em", fontWeight: 700, textTransform: "uppercase" }}>ADMISSIONS@EXCALIBURACADEMY.ORG</p>
+            <p style={{ fontFamily: sans, color: "#A48D6E", fontSize: 13, marginTop: 20, letterSpacing: "0.26em", fontWeight: 500, textTransform: "uppercase" }}>ADMISSIONS@EXCALIBURACADEMY.ORG</p>
           </div>
         </div>
       </section>
