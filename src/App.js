@@ -4615,11 +4615,11 @@ function HomePage({ setPage, openInquiry }) {
       {/* FAMILY CONSULTATION FORM */}
       <div style={{ background: "#E4D5C1", padding: isMobile ? "52px 24px" : "72px 80px", borderTop: "1px solid rgba(0,0,0,.08)" }}>
         <div style={{ maxWidth: 740, margin: "0 auto" }}>
-          <p style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.4em", color:"#010000", fontWeight: 600, textTransform: "uppercase", color: "#010000", marginBottom: 16 }}>Private Admissions Consultation</p>
+          <p style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.4em", color:"#010000", fontWeight: 600, textTransform: "uppercase", color: "#A48D6E", marginBottom: 16 }}>Private Admissions Consultation</p>
           <h2 style={{ fontFamily: serif, fontSize: isMobile ? 28 : 40, fontWeight: 600, color:"#010000", lineHeight: 1.05, marginBottom: 8 }}>Schedule a Family Consultation</h2>
-          <p style={{ fontFamily: sans, fontSize: 14, color:"#010000", fontWeight: 300, lineHeight: 1.8, marginBottom: 36, maxWidth: 580 }}>Please submit your information to schedule a private admissions consultation. A dedicated Program Pathways Coordinator will guide your family through program options, admissions steps, curriculum, tuition, schedule fit, and next steps.</p>
+          <p style={{ fontFamily: sans, fontSize: 15, color:"#010000", fontWeight: 300, lineHeight: 1.8, marginBottom: 36, maxWidth: 580 }}>Please submit your information to schedule a private admissions consultation. A dedicated Program Pathways Coordinator will guide your family through program options, admissions steps, curriculum, tuition, schedule fit, and next steps.</p>
           <div style={{ background: "#E4D5C1", borderTop: `2px solid #010000`, padding: "36px 32px" }}>
-            <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 9, letterSpacing: "0.25em", color: "#010000", fontWeight: 600, textTransform: "uppercase", marginBottom: 12 }}>Parent / Guardian</p>
+            <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 9, letterSpacing: "0.25em", color: "#A48D6E", fontWeight: 600, textTransform: "uppercase", marginBottom: 12 }}>Parent / Guardian</p>
             <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 10, marginBottom: 10 }}>
               {[["First Name", "text"], ["Last Name", "text"]].map(([ph, type]) => (
                 <input key={ph} type={type} placeholder={ph} className="inquiry-input" style={{ background: "#FBF7EE", border: "1px solid rgba(0,0,0,.2)", color: "#010000", padding: "13px 16px", fontFamily: "'Lato', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
@@ -4635,7 +4635,7 @@ function HomePage({ setPage, openInquiry }) {
               <input type="text" placeholder="State" className="inquiry-input" style={{ background: "#FBF7EE", border: "1px solid rgba(0,0,0,.2)", color: "#010000", padding: "13px 16px", fontFamily: "'Lato', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
               <input type="text" placeholder="ZIP *" className="inquiry-input" style={{ background: "#FBF7EE", border: "1px solid rgba(0,0,0,.2)", color: "#010000", padding: "13px 16px", fontFamily: "'Lato', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} required />
             </div>
-            <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 9, letterSpacing: "0.25em", color: "#010000", fontWeight: 600, textTransform: "uppercase", marginBottom: 12 }}>Student</p>
+            <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 9, letterSpacing: "0.25em", border: "1px solid #A48D6E", color: "#A48D6E", fontWeight: 600, textTransform: "uppercase", marginBottom: 12 }}>Student</p>
             <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 10, marginBottom: 10 }}>
               {[["First Name", "text"], ["Last Name", "text"]].map(([ph, type]) => (
                 <input key={ph} type={type} placeholder={ph} className="inquiry-input" style={{ background: "#FBF7EE", border: "1px solid rgba(0,0,0,.2)", color: "#010000", padding: "13px 16px", fontFamily: "'Lato', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
@@ -4651,7 +4651,7 @@ function HomePage({ setPage, openInquiry }) {
               <option value="sixweek">Six-Week Intensive</option>
               <option value="summer">Summer Intensive</option>
             </select>
-            <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 9, letterSpacing: "0.25em", color: "#010000", fontWeight: 600, textTransform: "uppercase", marginBottom: 12, marginTop: 0 }}>Consultation Preferences</p>
+            <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 9, letterSpacing: "0.25em", color: "#A48D6E", fontWeight: 600, textTransform: "uppercase", marginBottom: 12, marginTop: 0 }}>Consultation Preferences</p>
             <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 10, marginBottom: 10 }}>
               <select className="inquiry-input" defaultValue="" style={{ background: "#FBF7EE", border: "1px solid rgba(0,0,0,.2)", color: "#010000", padding: "13px 16px", fontFamily: "'Lato', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%", appearance: "none" }}>
                 <option value="" disabled>Preferred Contact Method</option>
@@ -4663,7 +4663,7 @@ function HomePage({ setPage, openInquiry }) {
             </div>
             <input type="text" placeholder="Preferred Times (for example, mornings, evenings, or weekends)" className="inquiry-input" style={{ background: "#FBF7EE", border: "1px solid rgba(0,0,0,.2)", color: "#010000", padding: "13px 16px", fontFamily: "'Lato', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%", marginBottom: 10 }} />
             <textarea placeholder="Questions or context you would like us to know (optional)" className="inquiry-input" rows={4} style={{ background: "#FBF7EE", border: "1px solid rgba(0,0,0,.2)", color: "#010000", padding: "13px 16px", fontFamily: "'Lato', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%", marginBottom: 28, resize: "vertical" }} />
-            <button onClick={() => openInquiry && openInquiry("home")} style={{ fontFamily: "'Lato', sans-serif", padding: "15px 40px", background: "#100F0C", border: "none", color: "#D9C7A9", fontSize: 11, fontWeight: 600, letterSpacing: "0.15em", textTransform: "uppercase", cursor: "pointer", width: "100%" }}>REQUEST A PRIVATE CONSULTATION</button>
+            <button onClick={() => openInquiry && openInquiry("home")} style={{ fontFamily: "'Lato', sans-serif", padding: "15px 40px", background: "#DAC8AA", border: "none", color: "#100F0C", fontSize: 11, fontWeight: 600, letterSpacing: "0.15em", textTransform: "uppercase", cursor: "pointer", width: "100%" }}>REQUEST A PRIVATE CONSULTATION</button>
           </div>
         </div>
       </div>
