@@ -7094,11 +7094,11 @@ function SummerDetailPage({ setPage, openInquiry }) {
 
             {/* Track A - Da Vinci */}
             <div style={{ background: "#E4D5C1", padding: isMobile ? "32px 24px" : "44px 40px" }}>
-              <p style={{ fontFamily: "'Lora', Georgia, serif", fontSize: 11, letterSpacing: "0.4em", color: "#100F0C", textTransform: "uppercase", fontWeight: 600, marginBottom: 8 }}>Track A</p>
+              <p style={{ fontFamily: "'Lora', Georgia, serif", fontSize: 11, letterSpacing: "0.4em", color: "#100F0C", textTransform: "uppercase", fontWeight: 600, marginBottom: 8, lineHeight: 1.4 }}>Track A</p>
               <h3 style={{ fontFamily: serif, fontSize: isMobile ? 36 : 48, fontWeight: 300, fontStyle: "italic", color: "#100F0C", lineHeight: 1, marginBottom: 16 }}>Da Vinci</h3>
-              <p style={{ fontFamily: "'Lora', Georgia, serif", fontSize: 13, letterSpacing: "0.2em", textTransform: "uppercase", color: "#100F0C", fontWeight: 600, marginBottom: 24, paddingBottom: 24, borderBottom: "0.5px solid rgba(16,15,12,.2)" }}>Commercial Market Venture</p>
+              <p style={{ fontFamily: "'Lora', Georgia, serif", fontSize: 13, letterSpacing: "0.2em", textTransform: "uppercase", color: "#100F0C", fontWeight: 600, marginBottom: 24, paddingBottom: 24, borderBottom: "0.5px solid rgba(16,15,12,.2)", lineHeight: 1.4 }}>Commercial Market Venture</p>
               <p style={{ fontFamily: "'Lora', Georgia, serif", fontSize: 15, fontWeight: 400, lineHeight: 1.6, color: "#100F0C", marginBottom: 24, textAlign: "justify" }}>Identify a real market opportunity, validate genuine customer demand, and build a scalable venture from the ground up. Teams move from idea to customer discovery to MVP to first traction — working toward customer validation, early traction, pre-orders and a clear presentation of market demand before the Finale.</p>
-              <p style={{ fontFamily: "'Lora', Georgia, serif", fontSize: 11, letterSpacing: "0.3em", color: "#100F0C", textTransform: "uppercase", fontWeight: 600, marginBottom: 10 }}>Venture Types</p>
+              <p style={{ fontFamily: "'Lora', Georgia, serif", fontSize: 11, letterSpacing: "0.3em", color: "#100F0C", textTransform: "uppercase", fontWeight: 600, marginBottom: 10, lineHeight: 1.4 }}>Venture Types</p>
               <div style={{ display: "flex", flexWrap: "wrap", gap: 6, marginBottom: 28 }}>
                 {["AI Agent","SaaS Platform","Lifestyle Brand","Niche Media","Wellness App","Peer Marketplace","B2B Tool","Pet Wellness","Surf Brand"].map(t => (
                   <span key={t} style={{ fontFamily: "'Lora', Georgia, serif", fontSize: 11, fontWeight: 400, color: "#E4D5C1", background: "#100F0C", padding: "4px 12px", borderRadius: 20 }}>{t}</span>
@@ -7109,7 +7109,7 @@ function SummerDetailPage({ setPage, openInquiry }) {
 
             {/* Track B - Medici */}
             <div style={{ background: "#E4D5C1", padding: isMobile ? "32px 24px" : "44px 40px" }}>
-              <p style={{ fontFamily: "'Lora', Georgia, serif", fontSize: 11, letterSpacing: "0.4em", color: "#100F0C", textTransform: "uppercase", fontWeight: 600, marginBottom: 8 }}>Track B</p>
+              <p style={{ fontFamily: "'Lora', Georgia, serif", fontSize: 11, letterSpacing: "0.4em", color: "#100F0C", textTransform: "uppercase", fontWeight: 600, marginBottom: 8, lineHeight: 1.4 }}>Track B</p>
               <h3 style={{ fontFamily: serif, fontSize: isMobile ? 36 : 48, fontWeight: 300, fontStyle: "italic", color: "#100F0C", lineHeight: 1, marginBottom: 16 }}>Medici</h3>
               <p style={{ fontFamily: "'Lora', Georgia, serif", fontSize: 13, letterSpacing: "0.2em", textTransform: "uppercase", color: "#100F0C", fontWeight: 600, marginBottom: 24, paddingBottom: 24, borderBottom: "0.5px solid rgba(16,15,12,.2)" }}>Community Impact Venture</p>
               <p style={{ fontFamily: "'Lora', Georgia, serif", fontSize: 15, fontWeight: 400, lineHeight: 1.6, color: "#100F0C", marginBottom: 24, textAlign: "justify" }}>Identify a real problem affecting Orange County and build a venture with a viable business model to address it. Teams conduct field research, engage directly with the community, and pursue first customers, pilot commitments, and letters of support — presenting to investors, executives, and invited community officials on Finale day.</p>
