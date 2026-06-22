@@ -4011,7 +4011,7 @@ function HomePage({ setPage, openInquiry }) {
       <div style={{ background: "#0F0F0F", padding: isMobile ? "0 20px 56px" : "0 80px 72px" }}>
         <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr 1fr" : "repeat(4, 1fr)", gap: isMobile ? 12 : 16, maxWidth: 1100, margin: "0 auto" }}>
           {[
-            { n: "01", title: "Public Speaking & Executive Communication", desc: "Every session includes public speaking training, executive communication, Oxford debates desc: "Every session includes voice, rhetoric, executive communication and body language, Oxford style debates, drills & pitch practice, perfecting the discipline of speaking with clarity and authority." drills, pitch practice, perfecting the discipline of speaking with clarity and authority." },
+            { n: "01", title: "Public Speaking & Executive Communication", desc: "Every session includes public speaking training, executive communication, Oxford debates & drills, pitch practice, perfecting the discipline of speaking with clarity and authority." },
             { n: "02", title: "Business & Entrepreneurship", desc: "Foundation Semester develops business, finance, leadership, negotiation, AI, and communication skills. Venture Semester applies those disciplines to customer discovery, validation, and venture development." },
             { n: "03", title: "The Art of Class & Intellectual Depth", desc: "Signature formation in class, etiquette, conversation, cultural fluency, philosophy, statesmanship, networking, and social intelligence." },
             { n: "04", title: "Venture Launchpad", desc: "Venture Semester Only. 16 weeks of live venture building with faculty coaching, culminating in the Shark Tank-inspired Finale before real investors." },
