@@ -1544,7 +1544,64 @@ function CurriculumPage({ setPage, openInquiry }) {
       {/* ── SOIREE ── */}
       <SoireeInviteBlock openInquiry={openInquiry} setPage={setPage} />
 
-        );
+      {/* FAMILY CONSULTATION FORM */}
+      <div style={{ background: "#E4D5C1", padding: isMobile ? "52px 24px" : "72px 80px", borderTop: "1px solid rgba(0,0,0,.08)" }}>
+        <div style={{ maxWidth: 740, margin: "0 auto" }}>
+          <p style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.4em", color:"#010000", fontWeight: 600, textTransform: "uppercase", color: "#010000", marginBottom: 16 }}>Private Admissions Consultation</p>
+          <h2 style={{ fontFamily: serif, fontSize: isMobile ? 28 : 40, fontWeight: 600, color:"#010000", lineHeight: 1.05, marginBottom: 8 }}>Schedule a Family Consultation</h2>
+          <p style={{ fontFamily: sans, fontSize: 14, color:"#010000", fontWeight: 300, lineHeight: 1.8, marginBottom: 36, maxWidth: 580 }}>Please submit your information to schedule a private admissions consultation. A dedicated Program Pathways Coordinator will guide your family through program options, admissions steps, curriculum, tuition, schedule fit, and next steps.</p>
+          <div style={{ background: "#E4D5C1", borderTop: `2px solid #010000`, padding: "36px 32px" }}>
+            <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 9, letterSpacing: "0.25em", color: "#010000", fontWeight: 600, textTransform: "uppercase", marginBottom: 12 }}>Parent / Guardian</p>
+            <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 10, marginBottom: 10 }}>
+              {[["First Name", "text"], ["Last Name", "text"]].map(([ph, type]) => (
+                <input key={ph} type={type} placeholder={ph} className="inquiry-input" style={{ background: "#FBF7EE", border: "1px solid rgba(0,0,0,.2)", color: "#010000", padding: "13px 16px", fontFamily: "'Lato', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
+              ))}
+            </div>
+            <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 10, marginBottom: 10 }}>
+              {[["Email Address", "email"], ["Phone Number", "tel"]].map(([ph, type]) => (
+                <input key={ph} type={type} placeholder={ph} className="inquiry-input" style={{ background: "#FBF7EE", border: "1px solid rgba(0,0,0,.2)", color: "#010000", padding: "13px 16px", fontFamily: "'Lato', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
+              ))}
+            </div>
+            <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr 80px", gap: 10, marginBottom: 24 }}>
+              <input type="text" placeholder="City *" className="inquiry-input" style={{ background: "#FBF7EE", border: "1px solid rgba(0,0,0,.2)", color: "#010000", padding: "13px 16px", fontFamily: "'Lato', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} required />
+              <input type="text" placeholder="State" className="inquiry-input" style={{ background: "#FBF7EE", border: "1px solid rgba(0,0,0,.2)", color: "#010000", padding: "13px 16px", fontFamily: "'Lato', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
+              <input type="text" placeholder="ZIP *" className="inquiry-input" style={{ background: "#FBF7EE", border: "1px solid rgba(0,0,0,.2)", color: "#010000", padding: "13px 16px", fontFamily: "'Lato', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} required />
+            </div>
+            <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 9, letterSpacing: "0.25em", color: "#010000", fontWeight: 600, textTransform: "uppercase", marginBottom: 12 }}>Student</p>
+            <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 10, marginBottom: 10 }}>
+              {[["First Name", "text"], ["Last Name", "text"]].map(([ph, type]) => (
+                <input key={ph} type={type} placeholder={ph} className="inquiry-input" style={{ background: "#FBF7EE", border: "1px solid rgba(0,0,0,.2)", color: "#010000", padding: "13px 16px", fontFamily: "'Lato', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
+              ))}
+            </div>
+            <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 10, marginBottom: 10 }}>
+              <input type="text" placeholder="Age" className="inquiry-input" style={{ background: "#FBF7EE", border: "1px solid rgba(0,0,0,.2)", color: "#010000", padding: "13px 16px", fontFamily: "'Lato', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
+              <input type="text" placeholder="Current Grade" className="inquiry-input" style={{ background: "#FBF7EE", border: "1px solid rgba(0,0,0,.2)", color: "#010000", padding: "13px 16px", fontFamily: "'Lato', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
+            </div>
+            <select defaultValue="" style={{ background: "#E4D5C1", border: "1px solid rgba(16,15,12,.2)", color: "#100F0C", padding: "13px 16px", fontFamily: "'Lora', Georgia, serif", fontSize: 13, fontWeight: 400, outline: "none", width: "100%", marginBottom: 24, appearance: "none" }}>
+              <option value="" disabled>Program of Interest</option>
+              <option value="flagship">Flagship Program — Full Year, Foundation Semester, or Venture Semester</option>
+              <option value="sixweek">Six-Week Intensive</option>
+              <option value="summer">Summer Intensive</option>
+            </select>
+            <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 9, letterSpacing: "0.25em", color: "#010000", fontWeight: 600, textTransform: "uppercase", marginBottom: 12, marginTop: 0 }}>Consultation Preferences</p>
+            <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 10, marginBottom: 10 }}>
+              <select className="inquiry-input" defaultValue="" style={{ background: "#FBF7EE", border: "1px solid rgba(0,0,0,.2)", color: "#010000", padding: "13px 16px", fontFamily: "'Lato', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%", appearance: "none" }}>
+                <option value="" disabled>Preferred Contact Method</option>
+                <option value="phone">Phone Call</option>
+                <option value="email">Email</option>
+                <option value="either">Either</option>
+              </select>
+              <input type="text" placeholder="Preferred Consultation Date(s)" className="inquiry-input" style={{ background: "#FBF7EE", border: "1px solid rgba(0,0,0,.2)", color: "#010000", padding: "13px 16px", fontFamily: "'Lato', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
+            </div>
+            <input type="text" placeholder="Preferred Times (for example, mornings, evenings, or weekends)" className="inquiry-input" style={{ background: "#FBF7EE", border: "1px solid rgba(0,0,0,.2)", color: "#010000", padding: "13px 16px", fontFamily: "'Lato', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%", marginBottom: 10 }} />
+            <textarea placeholder="Questions or context you would like us to know (optional)" className="inquiry-input" rows={4} style={{ background: "#FBF7EE", border: "1px solid rgba(0,0,0,.2)", color: "#010000", padding: "13px 16px", fontFamily: "'Lato', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%", marginBottom: 28, resize: "vertical" }} />
+            <button onClick={() => openInquiry && openInquiry("curriculum")} style={{ fontFamily: "'Lato', sans-serif", padding: "15px 40px", background: "#100F0C", border: "none", color: "#D9C7A9", fontSize: 11, fontWeight: 600, letterSpacing: "0.15em", textTransform: "uppercase", cursor: "pointer", width: "100%" }}>REQUEST A PRIVATE CONSULTATION</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  );
 }
 
 // ─────────────────────────────────────────────
@@ -3999,6 +4056,8 @@ function HomePage({ setPage, openInquiry }) {
                 >
                   Learn More
                 </button>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -4011,7 +4070,7 @@ function HomePage({ setPage, openInquiry }) {
       <div style={{ background: "#0F0F0F", padding: isMobile ? "0 20px 56px" : "0 80px 72px" }}>
         <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr 1fr" : "repeat(4, 1fr)", gap: isMobile ? 12 : 16, maxWidth: 1100, margin: "0 auto" }}>
           {[
-            { n: "01", title: "Public Speaking & Executive Communication", desc: "Every session includes public speaking training, executive communication, Oxford debates & drills, pitch practice, perfecting the discipline of speaking with clarity and authority." },
+            { n: "01", title: "Public Speaking & Executive Communication", desc: "Every session includes voice, rhetoric, executive communication and body language, Oxford style debates, drills & pitch practice, perfecting the discipline of speaking with clarity and authority." },
             { n: "02", title: "Business & Entrepreneurship", desc: "Foundation Semester develops business, finance, leadership, negotiation, AI, and communication skills. Venture Semester applies those disciplines to customer discovery, validation, and venture development." },
             { n: "03", title: "The Art of Class & Intellectual Depth", desc: "Signature formation in class, etiquette, conversation, cultural fluency, philosophy, statesmanship, networking, and social intelligence." },
             { n: "04", title: "Venture Launchpad", desc: "Venture Semester Only. 16 weeks of live venture building with faculty coaching, culminating in the Shark Tank-inspired Finale before real investors." },
@@ -4021,12 +4080,13 @@ function HomePage({ setPage, openInquiry }) {
               <h3 style={{ fontFamily: eyebrow_font, fontSize: isMobile ? 15 : 17, fontWeight: 400, color: "#010000", lineHeight: 1.2, letterSpacing: "0.04em", textTransform: "uppercase", marginBottom: 14, flex: 1 }}>{b.title}</h3>
               <p
                 style={{
-                  fontFamily: i === 3 ? "'Raleway', sans-serif" : "Lora, serif",
-                  fontSize: i === 3 ? (isMobile ? 13 : 14) : 13,
+                  fontFamily: "Lora, serif",
+                  fontSize: 13,
                   lineHeight: 1.85,
-                  color: i === 1 ? "#000000" : i === 3 ? "#320E0E" : "rgba(16, 15, 12, 1)",
+                  color: i === 1 ? "#000000" : "rgba(16, 15, 12, 1)",
                   fontWeight: 300,
-                  margin: i === 3 ? "0 -32px 0 -19px" : "0 -20px"
+                  textAlign: "justify",
+                  margin: "0 -20px"
                 }}
               >
                 {b.desc}
@@ -4397,7 +4457,7 @@ function HomePage({ setPage, openInquiry }) {
               <div style={{ position: "absolute", inset: 0, background: "rgba(0,0,0,.35)" }} />
               <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, background: "#E4D5C1", padding: "28px 36px" }}>
                 <p style={{ fontFamily: "Lato, sans-serif", fontSize: 10, letterSpacing: "2px", color: "#010000", fontWeight: 700, textTransform: "uppercase", marginBottom: 10 }}>The Excalibur Graduate</p>
-                <h2 style={{ fontFamily: "Garamond, serif", fontSize: "clamp(28px,3vw,42px)", fontWeight: 600, color: "#A48D6E", lineHeight: 1.0, marginBottom: 8 }}>Excalibur “Ivy” Portfolio</h2>
+                <h2 style={{ fontFamily: "Times, serif", fontSize: "clamp(28px,3vw,42px)", fontWeight: 600, color: "#010000", lineHeight: 1.0, marginBottom: 8 }}>Excalibur “Ivy” Portfolio</h2>
                 <p style={{ fontFamily: "Cormorant Garamond, serif", fontSize: 20, color: "#E4D5C1", fontStyle: "italic" }}>A record of work, judgment, and growth</p>
               </div>
             </div>
@@ -4416,7 +4476,7 @@ function HomePage({ setPage, openInquiry }) {
             <div style={{ position: "absolute", inset: 0, background: "rgba(0,0,0,.5)" }} />
             <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, background: "#E4D5C1", padding: "20px 24px" }}>
               <p style={{ fontFamily: "Lato, sans-serif", fontSize: 10, letterSpacing: "2px", color: "#010000", fontWeight: 700, textTransform: "uppercase", marginBottom: 10 }}>The Excalibur Graduate</p>
-              <h2 style={{ fontFamily: "Garamond, serif", fontSize: 26, fontWeight: 600, color: "#A48D6E", lineHeight: 1.05, marginBottom: 6 }}>Excalibur “Ivy” Portfolio</h2>
+              <h2 style={{ fontFamily: "Times, serif", fontSize: 26, fontWeight: 600, color: "#010000", lineHeight: 1.05, marginBottom: 6 }}>Excalibur “Ivy” Portfolio</h2>
               <p style={{ fontFamily: "Cormorant Garamond, serif", fontSize: 20, color: "#E4D5C1", fontStyle: "italic" }}>A record of work, judgment, and growth</p>
             </div>
           </div>
@@ -4441,14 +4501,14 @@ function HomePage({ setPage, openInquiry }) {
           <div style={{ maxWidth: 1100, margin: "0 auto", display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: isMobile ? 36 : 80 }}>
             <div>
               <p style={{ fontFamily: sans, fontSize: 10, letterSpacing: "0.2em", color: "#010000", fontWeight: 700, textTransform: "uppercase", marginBottom: 14 }}>A Portfolio of Documented Work</p>
-              <h2 style={{ fontFamily: "'Bodoni Cyrillic', 'Bodoni MT', serif", fontSize: isMobile ? 26 : 36, fontWeight: 400, color: "#010000", lineHeight: 1.05, marginBottom: 12, textTransform: "uppercase", letterSpacing: "0.04em" }}>College Application Context</h2>
-              <p style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: 17, color: "#010000", fontStyle: "italic", marginBottom: 22, lineHeight: 1.3, fontWeight: 400 }}>Why Excalibur Students Stand Apart</p>
+              <h2 style={{ fontFamily: "'Bodoni Cyrillic', 'Bodoni MT', serif", fontSize: isMobile ? 26 : 36, fontWeight: 400, color: "#010000", lineHeight: 1.05, marginBottom: 12, textTransform: "uppercase", letterSpacing: "0.04em" }}>College Application</h2>
+              <p style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: 22, color: "#010000", fontStyle: "italic", marginBottom: 22, lineHeight: 1.3, fontWeight: 400 }}>Why Excalibur Students Stand Apart</p>
               <div style={{ width: 36, height: 1, background: "linear-gradient(90deg, rgba(0,0,0,.35), transparent)", marginBottom: 22 }} />
-              <p style={{ fontFamily: sans, fontSize: 14, lineHeight: 1.9, color: "#010000", fontWeight: 300, marginBottom: 16 }}>An Excalibur graduate approaches college admission with proof of applied applied leadership, serious work experience and personal growth. A consulting report. An externship record. A micro-business launch. Competition results. A graduation portfolio. Faculty recommendations written by top executives and professionals who watched them operate, lead, and execute.</p>
-              <p style={{ fontFamily: sans, fontSize: 14, lineHeight: 1.9, color: "#010000", fontWeight: 300 }}>Students work with Excalibur’s college advisor on application strategy, personal narrative, portfolio presentation, recommendation preparation, interview readiness, and how their Excalibur experience can strengthen their college applications and future academic goals.</p>
+              <p style={{ fontFamily: "Lora, serif", fontSize: 14, lineHeight: 1.9, color: "#010000", fontWeight: 300, marginBottom: 16 }}>An Excalibur graduate approaches college admission with proof of applied applied leadership, serious work experience and personal growth. A consulting report. An externship record. A micro-business launch. Competition results. A graduation portfolio. Faculty recommendations written by top executives and professionals who watched them operate, lead, and execute.</p>
+              <p style={{ fontFamily: "Lora, serif", fontSize: 14, lineHeight: 1.9, color: "#010000", fontWeight: 300 }}>Students work with Excalibur’s college advisor on application strategy, personal narrative, portfolio presentation, recommendation preparation, interview readiness, and how their Excalibur experience can strengthen their college applications and future academic goals.</p>
             </div>
             <div style={{ display: "flex", flexDirection: "column", justifyContent: "center" }}>
-              <p style={{ fontFamily: sans, fontSize: 10, letterSpacing: "0.2em", color: "#010000", fontWeight: 700, textTransform: "uppercase", marginBottom: 24 }}>What This Means in Practice</p>
+              <p style={{ fontFamily: "Times, serif", fontWeight: 700, fontSize: 10, letterSpacing: "0.2em", color: "#010000", textTransform: "uppercase", marginBottom: 24 }}>What This Means in Practice</p>
               {["Portfolio reviewed and built by admissions counselors specifically for university applications", "Faculty feedback and recommendation support grounded in direct observation of student's work", "Verified competition results and externship documentation", "Interview preparation built around real, specific experience", "A narrative unavailable to most students due to lack of comparable experience"].map((f, i) => (
                 <div key={i} style={{ display: "flex", gap: 14, marginBottom: 16, alignItems: "flex-start" }}>
                   <div style={{ width: 16, height: 1.5, background: "rgba(0,0,0,.3)", marginTop: 9, flexShrink: 0 }} />
