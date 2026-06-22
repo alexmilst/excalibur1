@@ -4604,7 +4604,7 @@ function HomePage({ setPage, openInquiry }) {
           ))}
           <div style={{ marginTop: 48, textAlign: "center" }}>
             <button onClick={() => setPage("apply")} style={{ fontFamily: sans, background: "#E4D5C1", color: "#0F0F0F", padding: isMobile ? "16px 40px" : "18px 60px", fontSize: isMobile ? 13 : 14, fontWeight: 700, letterSpacing: "0.2em", textTransform: "uppercase", border: "none", cursor: "pointer" }}>APPLY FOR ADMISSION →</button>
-            <p style={{ fontFamily: sans, color: "#A48D6E", fontSize: 13, marginTop: 20, letterSpacing: "0.26em", fontWeight: 500, textTransform: "uppercase" }}>ADMISSIONS@EXCALIBURACADEMY.ORG</p>
+            <p style={{ fontFamily: "Times, serif", color: "#A48D6E", fontSize: 13, marginTop: 20, letterSpacing: "0.26em", fontWeight: 500, textTransform: "uppercase" }}>ADMISSIONS@EXCALIBURACADEMY.ORG</p>
           </div>
         </div>
       </section>
