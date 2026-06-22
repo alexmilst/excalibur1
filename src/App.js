@@ -4613,7 +4613,7 @@ function HomePage({ setPage, openInquiry }) {
       <SoireeInviteBlock openInquiry={openInquiry} setPage={setPage} />
 
       {/* FAMILY CONSULTATION FORM */}
-      <div style={{ background: "#E4D5C1", padding: isMobile ? "52px 24px" : "72px 80px", borderTop: "1px solid rgba(0,0,0,.08)" }}>
+      <div style={{ background: "rgba(16, 15, 12, 1)", padding: isMobile ? "52px 24px" : "72px 80px", borderTop: "1px solid rgba(0,0,0,.08)" }}>
         <div style={{ maxWidth: 740, margin: "0 auto" }}>
           <p style={{ fontFamily: "'Lato', sans-serif", fontSize: 9, letterSpacing: "0.4em", color: "#A48D6E", fontWeight: 600, textTransform: "uppercase", marginBottom: 16 }}>Private Admissions Consultation</p>
           <h2 style={{ fontFamily: serif, fontSize: isMobile ? 28 : 40, fontWeight: 600, color: "#A48D6E", lineHeight: 1.05, marginBottom: 8 }}>Schedule a Family Consultation</h2>
