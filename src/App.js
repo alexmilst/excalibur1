@@ -6995,46 +6995,46 @@ function SummerDetailPage({ setPage, openInquiry }) {
         <div style={{ maxWidth: 820, margin: "0 auto" }}>
 
           {/* Eyebrow — italic Cormorant bold */}
-          <p style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: 15, fontStyle: "italic", letterSpacing: "0.28em", color: "#100F0C", fontWeight: 700, textTransform: "uppercase", marginBottom: 22 }}>Summer Intensive</p>
+          <p style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: 16, fontStyle: "italic", letterSpacing: "0.28em", color: "#100F0C", fontWeight: 800, textTransform: "uppercase", marginBottom: 22 }}>Summer Intensive</p>
 
           {/* Main title — Adobe Garamond all-caps */}
-          <h1 style={{ fontFamily: "'adobe-garamond-pro', Georgia, serif", fontSize: isMobile ? "2.6rem" : "3.8rem", fontWeight: 400, fontStyle: "normal", color: "#100F0C", letterSpacing: ".0325em", lineHeight: 1.15, textTransform: "uppercase", marginBottom: 36 }}>Summer Venture Launchpad<br />in South OC.</h1>
+          <h1 style={{ fontFamily: "'adobe-garamond-pro', Georgia, serif", fontSize: isMobile ? "2.6rem" : "3.8rem", fontWeight: 400, fontStyle: "normal", color: "#100F0C", letterSpacing: ".0325em", lineHeight: 1.15, textTransform: "uppercase", marginBottom: 36 }}>Summer Venture Launchpad in South OC</h1>
 
           {/* Overview paragraph — italic Cormorant */}
           <p style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: "1.4rem", fontStyle: "italic", fontWeight: 400, color: "#100F0C", lineHeight: 1.7, maxWidth: 680, margin: "0 auto 48px" }}>
-            July 27 – August 8. Full days, Monday through Friday, led by senior faculty, accomplished executives, entrepreneurs, and invited speakers and Academy guests, and invited speakers and Academy guests. The wave culminates in a Excalibur Venture Finale before invited investors, founders, executives, and practitioners, community leaders and families.
+            July 27 – August 8. Full days - Monday through Friday.Led by senior faculty, top CEOs & executives, entrepreneurs, invited guest speakers and industry leaders. The summer wave culminates in a Shark Tank-inspired Excalibur Venture Finale before real investors, community leaders and families.
           </p>
 
           {/* Wave info grid */}
           <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(3, 1fr)", gap: isMobile ? 4 : 0, borderTop: "1px solid rgba(16,15,12,.15)", paddingTop: 32, textAlign: isMobile ? "center" : "left" }}>
             <div style={{ padding: isMobile ? "0 0 16px" : "0 28px 0 0", borderRight: isMobile ? "none" : "1px solid rgba(16,15,12,.15)", borderBottom: isMobile ? "1px solid rgba(16,15,12,.1)" : "none", marginBottom: isMobile ? 16 : 0 }}>
-              <p style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: "1.27rem", fontStyle: "italic", fontWeight: 700, color: "#100F0C", lineHeight: 1.8 }}>
-                First Wave: <span style={{ fontWeight: 400 }}>Applications Full. Wave Full.</span>
+              <p style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: 25, fontStyle: "italic", fontWeight: 700, color: "#100F0C", lineHeight: 1.8 }}>
+                First Wave: <span style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: 21, fontWeight: 400 }}>Applications Closed. Wave Full.</span>
               </p>
-              <p style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: "1.27rem", fontStyle: "italic", fontWeight: 700, color: "#100F0C", lineHeight: 1.8 }}>
-                Second Wave: <span style={{ fontWeight: 400 }}>July 27 – August 8, 2026</span>
+              <p style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: 25, fontStyle: "italic", fontWeight: 700, color: "#100F0C", lineHeight: 1.8 }}>
+                Second Wave: <span style={{ fontWeight: 400, fontSize: 20 }}>July 27 – August 8, 2026</span>
               </p>
               <p style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: "1.27rem", fontStyle: "italic", fontWeight: 700, color: "#100F0C", lineHeight: 1.8 }}>
                 Mon – Fri: <span style={{ fontWeight: 400 }}>9:30 AM – 4:00 PM</span>
               </p>
             </div>
             <div style={{ padding: isMobile ? "16px 0" : "0 28px", borderRight: isMobile ? "none" : "1px solid rgba(16,15,12,.15)", borderBottom: isMobile ? "1px solid rgba(16,15,12,.1)" : "none", marginBottom: isMobile ? 16 : 0 }}>
-              <p style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: "1.27rem", fontStyle: "italic", fontWeight: 700, color: "#100F0C", lineHeight: 1.8 }}>
-                Class Size: <span style={{ fontWeight: 400 }}>Limited to 20 students</span>
+              <p style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: 25, fontStyle: "italic", fontWeight: 700, color: "#100F0C", lineHeight: 1.8 }}>
+                Class Size: <span style={{ fontWeight: 400, fontSize: 22 }}>Limited to 20 students</span>
               </p>
-              <p style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: "1.27rem", fontStyle: "italic", fontWeight: 700, color: "#100F0C", lineHeight: 1.8 }}>
-                Ages: <span style={{ fontWeight: 400 }}>14–17 · High school students</span>
+              <p style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: 25, fontStyle: "italic", fontWeight: 700, color: "#100F0C", lineHeight: 1.8 }}>
+                Ages:<span style={{ fontWeight: 400, fontSize: 20 }}>14–18 years oldHigh school students</span>
               </p>
             </div>
             <div style={{ padding: isMobile ? "16px 0 0" : "0 0 0 28px" }}>
-              <p style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: "1.27rem", fontStyle: "italic", fontWeight: 700, color: "#100F0C", lineHeight: 1.8 }}>
+              <p style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: 25, fontStyle: "italic", fontWeight: 700, color: "#100F0C", lineHeight: 1.8 }}>
                 Tuition: <span style={{ fontWeight: 400 }}>$4,500 per wave</span>
               </p>
-              <p style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: "1.27rem", fontStyle: "italic", fontWeight: 700, color: "#100F0C", lineHeight: 1.8 }}>
+              <p style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: 25, fontStyle: "italic", fontWeight: 700, color: "#100F0C", lineHeight: 1.8 }}>
                 Daily Rate: <span style={{ fontWeight: 400 }}>$410 / day</span>
               </p>
-              <p style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: "1.27rem", fontStyle: "italic", fontWeight: 700, color: "#100F0C", lineHeight: 1.8 }}>
-                Location: <span style={{ fontWeight: 400 }}>South Orange County, CA</span>
+              <p style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: 25, fontStyle: "italic", fontWeight: 700, color: "#100F0C", lineHeight: 1.8 }}>
+                Location: <span style={{ fontWeight: 400 }}>Dana Point, CA</span>
               </p>
             </div>
           </div>
@@ -7085,10 +7085,10 @@ function SummerDetailPage({ setPage, openInquiry }) {
           <p style={{ fontFamily: "'Lora', Georgia, serif", fontSize: 15, letterSpacing: "0.45em", color: "#A48D6E", fontWeight: 600, textTransform: "uppercase", marginBottom: 18 }}>Venture Tracks</p>
 
           {/* Heading — same style as editorial header */}
-          <h2 style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: isMobile ? "2rem" : "3.8rem", fontWeight: 400, fontStyle: "normal", color: "#A48D6E", letterSpacing: ".0325em", lineHeight: 1.15, textTransform: "uppercase", marginBottom: 20 }}>CHOOSE YOUR TRACK DURING ADMISSIONS</h2>
+          <h2 style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: isMobile ? "2rem" : "3.8rem", fontWeight: 400, fontStyle: "normal", color: "#A48D6E", letterSpacing: ".0325em", lineHeight: 1.15, textTransform: "uppercase", marginBottom: 20 }}>CHOOSE YOUR VENTURE TRACK&nbsp;</h2>
 
           {/* Subparagraph — Lora 16px */}
-          <p style={{ fontFamily: "'Lora', Georgia, serif", fontSize: 16, color: "#E4D5C1", fontWeight: 400, lineHeight: 1.7, marginBottom: 48, maxWidth: 640, textAlign: isMobile ? "justify" : "left" }}>Both tracks follow the identical 10-day curriculum, the same faculty, and the same Finale. The difference is the problem each team is built to solve.</p>
+          <p style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: 24, color: "#E4D5C1", fontWeight: 400, lineHeight: 1.7, marginBottom: 48, maxWidth: 640, textAlign: "justify" }}>Both tracks follow the identical two week curriculum, faculty, and Finale. The difference is the problem each team is built to solve.</p>
 
           <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 16 }}>
 
@@ -7096,8 +7096,8 @@ function SummerDetailPage({ setPage, openInquiry }) {
             <div style={{ background: "#E4D5C1", padding: isMobile ? "32px 24px" : "44px 40px" }}>
               <p style={{ fontFamily: "'Lora', Georgia, serif", fontSize: 11, letterSpacing: "0.4em", color: "#100F0C", textTransform: "uppercase", fontWeight: 600, marginBottom: 8 }}>Track A</p>
               <h3 style={{ fontFamily: serif, fontSize: isMobile ? 36 : 48, fontWeight: 300, fontStyle: "italic", color: "#100F0C", lineHeight: 1, marginBottom: 4 }}>Da Vinci</h3>
-              <p style={{ fontFamily: "'Lora', Georgia, serif", fontSize: 11, letterSpacing: "0.2em", textTransform: "uppercase", color: "#100F0C", fontWeight: 400, marginBottom: 24, paddingBottom: 24, borderBottom: "0.5px solid rgba(16,15,12,.2)" }}>Commercial Market Venture</p>
-              <p style={{ fontFamily: "'Lora', Georgia, serif", fontSize: 15, fontWeight: 400, lineHeight: 1.7, color: "#100F0C", marginBottom: 24 }}>Identify a real market opportunity, validate genuine customer demand, and build a scalable venture from the ground up. Teams move from idea to customer discovery to MVP to first traction — working toward customer validation, early traction, pre-orders and a clear presentation of market demand before the Finale.</p>
+              <p style={{ fontFamily: "'Lora', Georgia, serif", fontSize: 13, letterSpacing: "0.2em", textTransform: "uppercase", color: "#100F0C", fontWeight: 600, marginBottom: 24, paddingBottom: 24, borderBottom: "0.5px solid rgba(16,15,12,.2)" }}>Commercial Market Venture</p>
+              <p style={{ fontFamily: "'Lora', Georgia, serif", fontSize: 15, fontWeight: 400, lineHeight: 1.7, color: "#100F0C", marginBottom: 24, textAlign: "justify" }}>Identify a real market opportunity, validate genuine customer demand, and build a scalable venture from the ground up. Teams move from idea to customer discovery to MVP to first traction — working toward customer validation, early traction, pre-orders and a clear presentation of market demand before the Finale.</p>
               <p style={{ fontFamily: "'Lora', Georgia, serif", fontSize: 11, letterSpacing: "0.3em", color: "#100F0C", textTransform: "uppercase", fontWeight: 600, marginBottom: 10 }}>Venture Types</p>
               <div style={{ display: "flex", flexWrap: "wrap", gap: 6, marginBottom: 28 }}>
                 {["AI Agent","SaaS Platform","Lifestyle Brand","Niche Media","Wellness App","Peer Marketplace","B2B Tool","Pet Wellness","Surf Brand"].map(t => (
@@ -7111,8 +7111,8 @@ function SummerDetailPage({ setPage, openInquiry }) {
             <div style={{ background: "#E4D5C1", padding: isMobile ? "32px 24px" : "44px 40px" }}>
               <p style={{ fontFamily: "'Lora', Georgia, serif", fontSize: 11, letterSpacing: "0.4em", color: "#100F0C", textTransform: "uppercase", fontWeight: 600, marginBottom: 8 }}>Track B</p>
               <h3 style={{ fontFamily: serif, fontSize: isMobile ? 36 : 48, fontWeight: 300, fontStyle: "italic", color: "#100F0C", lineHeight: 1, marginBottom: 4 }}>Medici</h3>
-              <p style={{ fontFamily: "'Lora', Georgia, serif", fontSize: 11, letterSpacing: "0.2em", textTransform: "uppercase", color: "#100F0C", fontWeight: 400, marginBottom: 24, paddingBottom: 24, borderBottom: "0.5px solid rgba(16,15,12,.2)" }}>Community Impact Venture</p>
-              <p style={{ fontFamily: "'Lora', Georgia, serif", fontSize: 15, fontWeight: 400, lineHeight: 1.7, color: "#100F0C", marginBottom: 24 }}>Identify a real problem affecting Orange County and build a venture with a viable business model to address it. Teams conduct field research, engage directly with the community, and pursue first customers, pilot commitments, and letters of support — presenting to investors, executives, and invited community officials on Finale day.</p>
+              <p style={{ fontFamily: "'Lora', Georgia, serif", fontSize: 13, letterSpacing: "0.2em", textTransform: "uppercase", color: "#100F0C", fontWeight: 600, marginBottom: 24, paddingBottom: 24, borderBottom: "0.5px solid rgba(16,15,12,.2)" }}>Community Impact Venture</p>
+              <p style={{ fontFamily: "'Lora', Georgia, serif", fontSize: 15, fontWeight: 400, lineHeight: 1.7, color: "#100F0C", marginBottom: 24, textAlign: "justify" }}>Identify a real problem affecting Orange County and build a venture with a viable business model to address it. Teams conduct field research, engage directly with the community, and pursue first customers, pilot commitments, and letters of support — presenting to investors, executives, and invited community officials on Finale day.</p>
               <p style={{ fontFamily: "'Lora', Georgia, serif", fontSize: 11, letterSpacing: "0.3em", color: "#100F0C", textTransform: "uppercase", fontWeight: 600, marginBottom: 10 }}>Community Problems</p>
               <div style={{ display: "flex", flexWrap: "wrap", gap: 6, marginBottom: 28 }}>
                 {["E-bike safety","Beach parking","Summer traffic","Surf access","Youth wellbeing","Senior isolation","Coastal wellness","Small business visibility","Youth sports access"].map(t => (
@@ -7138,13 +7138,13 @@ function SummerDetailPage({ setPage, openInquiry }) {
 
           {/* First paragraph with drop cap E */}
           <div style={{ marginBottom: 28 }}>
-            <p style={{ fontFamily: "'Lora', Georgia, serif", fontSize: 15, lineHeight: 1.7, color: "#e5ddd0", fontWeight: 400, textAlign: "justify" }}>
+            <p style={{ fontFamily: "'Lora', Georgia, serif", fontSize: 17, lineHeight: 1.7, color: "#e5ddd0", fontWeight: 400, textAlign: "justify" }}>
               <span style={{ fontFamily: "'adobe-garamond-pro', Georgia, serif", fontSize: isMobile ? "4.8rem" : "6.4rem", fontWeight: 400, lineHeight: 0.8, float: "left", marginRight: 10, marginTop: 8, color: "#d9c7a9" }}>E</span>
               very student leaves with a professional portfolio documenting the full scope of their work — customer research, market validation, venture strategy, MVP development, traction metrics, and the final Excalibur Venture Finale presentation before a live panel of invited executives, investors, community leaders, and entrepreneurs.
             </p>
           </div>
           <div style={{ clear: "both" }} />
-          <p style={{ fontFamily: "'Lora', Georgia, serif", fontSize: 15, lineHeight: 1.7, color: "#e5ddd0", fontWeight: 400, marginBottom: 28, textAlign: "justify" }}>Tangible work. Real-world experience. Measurable progress. A portfolio built around execution, not attendance — shaping young leaders, founders, and builders who act, and deliver.</p>
+          <p style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: 23, lineHeight: 1.7, color: "#e5ddd0", fontWeight: 400, marginBottom: 28, textAlign: "justify" }}>Tangible work. Real-world experience. Measurable progress. A portfolio built around execution, not attendance — shaping young leaders, founders, and builders who act, and deliver.</p>
 
           {/* Portfolio list grid */}
           <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(4, 1fr)", gap: 16 }}>
@@ -7177,22 +7177,22 @@ function SummerDetailPage({ setPage, openInquiry }) {
           <p style={{ fontFamily: "'Lora', Georgia, serif", fontSize: 15, letterSpacing: "0.45em", color: "#100F0C", fontWeight: 600, textTransform: "uppercase", marginBottom: 18 }}>Portfolio &amp; Beyond</p>
 
           {/* Section heading */}
-          <h2 style={{ fontFamily: "'adobe-garamond-pro', Georgia, serif", fontSize: isMobile ? "2rem" : "3.8rem", fontWeight: 400, fontStyle: "normal", color: "#100F0C", letterSpacing: ".0325em", lineHeight: 1.15, textTransform: "uppercase", marginBottom: 40 }}>Program Completion<br />Summary</h2>
+          <h2 style={{ fontFamily: "'adobe-garamond-pro', Georgia, serif", fontSize: isMobile ? "2rem" : "3.8rem", fontWeight: 400, fontStyle: "normal", color: "#100F0C", letterSpacing: ".0325em", lineHeight: 1.15, textTransform: "uppercase", marginBottom: 40 }}>PORTFOLIO Program Completion Summary</h2>
 
           {/* Body paragraph */}
-          <p style={{ fontFamily: "'Lora', Georgia, serif", fontSize: 15, lineHeight: 1.7, color: "#100F0C", fontWeight: 400, marginBottom: 48, textAlign: "justify" }}>A formal summary of the student's venture work, leadership role, market validation, and final presentation before Excalibur faculty, executives, investors, and community leaders. Formal summary of the student's venture work, leadership role, market validation, and final presentation for college applications, résumés, interviews, and future opportunities.</p>
+          <p style={{ fontFamily: "'Lora', Georgia, serif", fontSize: 18, lineHeight: 1.7, color: "#100F0C", fontWeight: 400, marginBottom: 48, textAlign: "justify" }}>A formal summary of the student's venture work, leadership role, market validation, and final presentation before Excalibur faculty, executives, investors, and community leaders. Formal summary of the student's venture work, leadership role, market validation, and final presentation for college applications, résumés, interviews, and future opportunities.</p>
 
           {/* Cards — #34150F fills */}
           <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 16 }}>
             <div style={{ background: "#34150F", padding: isMobile ? "32px 24px" : "44px 40px" }}>
               <p style={{ fontFamily: "'Lora', Georgia, serif", fontSize: 11, letterSpacing: "0.4em", color: "#E4D5C1", textTransform: "uppercase", fontWeight: 600, marginBottom: 16 }}>Track A</p>
-              <h3 style={{ fontFamily: serif, fontSize: isMobile ? 28 : 36, fontWeight: 300, fontStyle: "italic", color: "#a48d6e", lineHeight: 1, marginBottom: 12 }}>Da Vinci</h3>
-              <p style={{ fontFamily: "'Lora', Georgia, serif", fontSize: 15, fontWeight: 400, lineHeight: 1.7, color: "#E4D5C1", marginBottom: 0 }}>"Co-founded a venture at Excalibur Academy's Summer Intensive — identified a market opportunity, conducted customer discovery and validation, built an MVP, established first business relationships and a professional network, and generated early market traction including customer acquisition, signups, pre-orders, and first revenue. Presented a live business case to a panel of investors and executives. August 2026."</p>
+              <h3 style={{ fontFamily: serif, fontSize: isMobile ? 28 : 45, fontWeight: 300, fontStyle: "italic", color: "#a48d6e", lineHeight: 1, marginBottom: 12 }}>Da Vinci</h3>
+              <p style={{ fontFamily: "Georgia, serif", fontSize: 15, fontWeight: 200, lineHeight: 30.5, color: "#E4D5C1", marginBottom: 0, textAlign: "justify" }}>"Co-founded a venture at Excalibur Academy's Summer Intensive — identified a market opportunity, conducted customer discovery and validation, built an MVP, established first business relationships and a professional network, and generated early market traction including customer acquisition, signups, pre-orders, and first revenue. Presented a live business case to a panel of investors and executives."</p>
             </div>
             <div style={{ background: "#34150F", padding: isMobile ? "32px 24px" : "44px 40px" }}>
               <p style={{ fontFamily: "'Lora', Georgia, serif", fontSize: 11, letterSpacing: "0.4em", color: "#E4D5C1", textTransform: "uppercase", fontWeight: 600, marginBottom: 16 }}>Track B</p>
-              <h3 style={{ fontFamily: serif, fontSize: isMobile ? 28 : 36, fontWeight: 300, fontStyle: "italic", color: "#a48d6e", lineHeight: 1, marginBottom: 12 }}>Medici</h3>
-              <p style={{ fontFamily: "'Lora', Georgia, serif", fontSize: 15, fontWeight: 400, lineHeight: 1.7, color: "#E4D5C1", marginBottom: 0 }}>"Identified a real problem in Orange County, built a venture to address it, conducted community testing and validation, secured first market traction — including pre-orders, signups, pilot commitments, and letters of support from local organizations and community stakeholders — and presented to city officials and a panel of investors and executives at Excalibur Academy's Venture Finale. August 2026."</p>
+              <h3 style={{ fontFamily: serif, fontSize: isMobile ? 28 : 45, fontWeight: 300, fontStyle: "italic", color: "#a48d6e", lineHeight: 1, marginBottom: 12 }}>Medici</h3>
+              <p style={{ fontFamily: "Georgia, serif", fontSize: 15, fontWeight: 200, lineHeight: 30, color: "#E4D5C1", marginBottom: 0, textAlign: "justify" }}>"Identified a real problem in Orange County, built a venture to address it, conducted community testing and validation, secured first market traction — including pre-orders, signups, pilot commitments, and letters of support from local organizations and community stakeholders — and presented to city officials and a panel of investors and executives at Excalibur Academy's Venture Finale."</p>
             </div>
           </div>
 
