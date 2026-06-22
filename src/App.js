@@ -4485,7 +4485,7 @@ function HomePage({ setPage, openInquiry }) {
         {/* Intro + eight components */}
         <div style={{ maxWidth: 1100, margin: "0 auto", padding: isMobile ? "36px 24px 0" : "52px 80px 0", display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: isMobile ? 20 : 80, alignItems: "start" }}>
           <div>
-            <p style={{ fontFamily: sans, fontSize: isMobile ? 14 : 15, lineHeight: 1.85, color: "#010000", fontWeight: 300 }}>Every Excalibur student graduates with a portfolio of documented, verifiable work — one that no other program in the country offers with this level of excellence, breadth, faculty distinction, and diversity of experience.. This portfolio reflects sustained performance, leadership under pressure, and accountability for outcomes.</p>
+            <p style={{ fontFamily: "Lora, serif", fontSize: isMobile ? 14 : 15, lineHeight: 1.85, color: "#010000", fontWeight: 300 }}>Every Excalibur student graduates with a portfolio of documented, verifiable work — one that no other program in the country offers with this level of excellence, breadth, faculty distinction, and diversity of experience.. This portfolio reflects sustained performance, leadership under pressure, and accountability for outcomes.</p>
           </div>
           <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", gap: 16 }}>
             <div style={{ width: 24, height: 1, background: "#d8b78c" }} />
