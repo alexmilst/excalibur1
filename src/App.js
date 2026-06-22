@@ -3959,7 +3959,6 @@ function HomePage({ setPage, openInquiry }) {
           </div>
           <div style={{ background:"#E4D5C1", display:"grid", gridTemplateRows:isMobile?"300px auto":"480px auto" }}>
             <div style={{ position:"relative", backgroundImage:"linear-gradient(to top,rgba(0,0,0,.32),rgba(0,0,0,.06)),url('https://i.imgur.com/81P6A7H.jpeg')", backgroundSize:"cover", backgroundPosition:"top center", borderBottom:"1px solid rgba(0,0,0,.1)" }}>
-              <p style={{ position:"absolute", left:28, bottom:22, fontFamily: sans, fontSize:10, letterSpacing:"0.2em", textTransform:"uppercase", color:"#E4D5C1", fontWeight:700, margin:0 }}>Program Overview</p>
             </div>
             <div style={{ padding:isMobile?"32px 24px":"46px 42px 48px", background:"#E4D5C1" }}>
               <div style={{ border:"1px solid rgba(0,0,0,.15)", marginBottom:36 }}>
