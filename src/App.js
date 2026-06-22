@@ -1192,11 +1192,11 @@ function SoireeInviteBlock({ openInquiry, setPage = () => {}, autoOpen = false, 
                   <div style={{ border: "1px solid rgba(216,183,140,.25)", padding: isMobile ? "18px 18px" : "24px 36px", textAlign: "center", maxWidth: 540, marginBottom: 32, position: "relative", width: "100%" }}>
                     <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 1, background: "linear-gradient(90deg, transparent, rgba(216,183,140,.4), transparent)" }} />
                     <p style={{ fontFamily: "'Lora', serif", fontSize: 16, letterSpacing: "0.08em", color: "#FBF7EE", fontWeight: 400, fontStyle: "italic", marginBottom: 14 }}>On the evening, prospective students &amp; parents will be asked to share an answer to one question</p>
-                    <p style={{ fontFamily: "'Playfair Display', 'Didot', 'Bodoni MT', Georgia, serif", fontSize: isMobile ? 20 : 30, color: "#A48D6E", fontWeight: 400, lineHeight: 1.25, fontStyle: "italic" }}>"What is your dream?"</p>
+                    <p style={{ border: "1px solid rgba(164, 141, 110, 1)", fontFamily: "'Playfair Display', 'Didot', 'Bodoni MT', Georgia, serif", fontSize: isMobile ? 20 : 30, color: "#A48D6E", fontWeight: 400, lineHeight: 1.25, fontStyle: "italic" }}>"What is your dream?"</p>
                   </div>
                   {/* Buttons */}
                   <div style={{ display: "flex", gap: 10, flexDirection: isMobile ? "column" : "row", width: "100%", maxWidth: 460, marginBottom: 14 }}>
-                    <button onClick={() => setShowForm(true)} style={{ fontFamily: sans, background: "#d8b78c", color:"#010000", padding: "13px 22px", fontSize: 11, fontWeight: 700, letterSpacing: "0.15em", textTransform: "uppercase", border: "none", cursor: "pointer", flex: 1 }}>Request an Invitation</button>
+                    <button onClick={() => setShowForm(true)} style={{ fontFamily: sans, background: "#A48D6E", color:"#010000", padding: "13px 22px", fontSize: 11, fontWeight: 700, letterSpacing: "0.15em", textTransform: "uppercase", border: "none", cursor: "pointer", flex: 1 }}>Request an Invitation</button>
                     <button onClick={() => setPage("events")} style={{ fontFamily: sans, background: "transparent", color: "#E4D5C1", padding: "13px 22px", fontSize: 11, fontWeight: 500, letterSpacing: "0.15em", textTransform: "uppercase", border: "1px solid rgba(216,183,140,.35)", cursor: "pointer", flex: 1 }}>Event Information →</button>
                   </div>
                   <p style={{ fontFamily: "'Lora', serif", fontSize: 14, color: "#A48D6E", marginTop: 4, lineHeight: 1.7, maxWidth: 420 }}>Attendance is limited. Confirmed families will receive event details directly from the admissions team.</p>
