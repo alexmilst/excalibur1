@@ -425,10 +425,10 @@ function Nav({ page, setPage }) {
     ["The Academy", "about", null],
     ["View Programs", "programs", [
       { label: "Summer Intensive", page: "summer-detail", sub: "July 27 – August 8 · Two Weeks" },
-      { label: "Flagship Academic Year", page: "flagship2", sub: "Full Year · Foundation + Venture" },
-      { label: "Flagship Overview", page: "flagship2", sub: "Foundation & Venture · 2026–2027" },
-      { label: "Foundation Semester", page: "foundation-detail", sub: "In Depth · Sep 2026 – Dec 2026" },
-      { label: "Venture Semester", page: "venture-detail", sub: "In Depth · Feb – May 2027" },
+      { label: "Flagship Overview", page: "flagship2", sub: "Foundation & Venture · 2026–2027", children: [
+        { label: "Foundation Semester", page: "foundation-detail", sub: "In Depth · Sep 2026 – Dec 2026" },
+        { label: "Venture Semester", page: "venture-detail", sub: "In Depth · Feb – May 2027" },
+      ] },
       { label: "Six-Week Intensive", page: "intensive", sub: "Four Waves Per Year" },
       { label: "View All Programs", page: "programs", sub: "Compare Program Pathways" },
     ]],
@@ -523,14 +523,32 @@ function Nav({ page, setPage }) {
               {subs && programsOpen && (
                 <div style={{ paddingLeft: isMobile ? 20 : 36, paddingBottom: 12, borderBottom: "1px solid rgba(16,15,12,.1)" }}>
                   {subs.map((sub) => (
-                    <div key={sub.page} onClick={() => go(sub.page)} style={{ display: "flex", alignItems: "center", gap: 16, padding: "10px 0", cursor: "pointer", borderBottom: "1px solid rgba(16,15,12,.07)" }}
-                      onMouseEnter={e => { e.currentTarget.querySelector(".sl").style.textDecoration = "underline"; e.currentTarget.querySelector(".sl").style.textUnderlineOffset = "3px"; }}
-                      onMouseLeave={e => { e.currentTarget.querySelector(".sl").style.textDecoration = "none"; }}
-                    >
-                      <div>
-                        <div className="sl" style={{ fontFamily: "'adobe-garamond-pro', 'Garamond', 'Cormorant Garamond', serif", fontSize: isMobile ? 18 : 22, fontWeight: 600, color:"#100F0C", lineHeight: 1.2, textTransform: "uppercase", letterSpacing: "0.04em" }}>{sub.label}</div>
-                        <div style={{ fontFamily: "'Lato', sans-serif", fontSize: 9, color:"rgba(16,15,12,.55)", letterSpacing: "0.14em", textTransform: "uppercase", marginTop: 2 }}>{sub.sub}</div>
+                    <div key={sub.page + sub.label}>
+                      <div onClick={() => go(sub.page)} style={{ display: "flex", alignItems: "center", gap: 16, padding: "10px 0", cursor: "pointer", borderBottom: "1px solid rgba(16,15,12,.07)" }}
+                        onMouseEnter={e => { e.currentTarget.querySelector(".sl").style.textDecoration = "underline"; e.currentTarget.querySelector(".sl").style.textUnderlineOffset = "3px"; }}
+                        onMouseLeave={e => { e.currentTarget.querySelector(".sl").style.textDecoration = "none"; }}
+                      >
+                        <div>
+                          <div className="sl" style={{ fontFamily: "'adobe-garamond-pro', 'Garamond', 'Cormorant Garamond', serif", fontSize: isMobile ? 18 : 22, fontWeight: 600, color:"#100F0C", lineHeight: 1.2, textTransform: "uppercase", letterSpacing: "0.04em" }}>{sub.label}</div>
+                          <div style={{ fontFamily: "'Lato', sans-serif", fontSize: 9, color:"rgba(16,15,12,.55)", letterSpacing: "0.14em", textTransform: "uppercase", marginTop: 2 }}>{sub.sub}</div>
+                        </div>
                       </div>
+                      {sub.children && (
+                        <div style={{ paddingLeft: isMobile ? 18 : 28 }}>
+                          {sub.children.map((child) => (
+                            <div key={child.page} onClick={() => go(child.page)} style={{ display: "flex", alignItems: "center", gap: 16, padding: "8px 0", cursor: "pointer", borderBottom: "1px solid rgba(16,15,12,.05)" }}
+                              onMouseEnter={e => { e.currentTarget.querySelector(".scl").style.textDecoration = "underline"; e.currentTarget.querySelector(".scl").style.textUnderlineOffset = "3px"; }}
+                              onMouseLeave={e => { e.currentTarget.querySelector(".scl").style.textDecoration = "none"; }}
+                            >
+                              <span style={{ fontFamily: "'adobe-garamond-pro', 'Garamond', 'Cormorant Garamond', serif", fontSize: 14, color:"#100F0C", opacity: 0.4 }}>—</span>
+                              <div>
+                                <div className="scl" style={{ fontFamily: "'adobe-garamond-pro', 'Garamond', 'Cormorant Garamond', serif", fontSize: isMobile ? 15 : 17, fontWeight: 600, color:"#100F0C", lineHeight: 1.2, textTransform: "uppercase", letterSpacing: "0.03em" }}>{child.label}</div>
+                                <div style={{ fontFamily: "'Lato', sans-serif", fontSize: 8, color:"rgba(16,15,12,.5)", letterSpacing: "0.12em", textTransform: "uppercase", marginTop: 2 }}>{child.sub}</div>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      )}
                     </div>
                   ))}
                 </div>
@@ -727,7 +745,7 @@ function Footer({ setPage }) {
       <div style={{ maxWidth: 1200, margin: "0 auto", padding: isMobile ? "48px 24px 32px" : "60px 60px 40px", borderBottom: "1px solid rgba(188,166,150,.1)", display: "flex", flexDirection: isMobile ? "column" : "row", justifyContent: "space-between", alignItems: isMobile ? "flex-start" : "flex-end", gap: 32 }}>
         <div onClick={() => setPage("home")} style={{ cursor: "pointer" }}>
           <div style={{ fontFamily: "'Forum', serif", fontSize: isMobile ? 22 : 34, color: "#BCA696", letterSpacing: "0.12em", textTransform: "uppercase", lineHeight: 1, marginBottom: 10 }}>Excalibur Academy</div>
-          <div style={{ fontFamily: serif, fontSize: isMobile ? 13 : 15, color: "#BCA696", fontStyle: "italic", fontWeight: 300, letterSpacing: "0.03em" }}>Forging the leaders of tomorrow.</div>
+          <div style={{ fontFamily: serif, fontSize: isMobile ? 13 : 15, color: "#BCA696", fontStyle: "italic", fontWeight: 300, letterSpacing: "0.03em" }}>Forging the leaders of tomorrow</div>
         </div>
         <nav style={{ display: "flex", gap: isMobile ? 16 : 28, flexWrap: "wrap", alignItems: "center" }}>
           {allLinks.map(([l, p]) => (
@@ -741,11 +759,12 @@ function Footer({ setPage }) {
           {/* Business info */}
           <div style={{ display: "flex", flexDirection: "column", gap: 5 }}>
             <span style={{ fontFamily: eyebrow_font, fontSize: 11, color: "#BCA696", letterSpacing: "0.25em", textTransform: "uppercase", fontWeight: 600, marginBottom: 4 }}>Excalibur Academy LLC</span>
-            <span style={{ fontFamily: sans, fontSize: 17, color: "#BCA696", fontStyle: "italic", fontWeight: 300, letterSpacing: "0.03em" }}>Orange County, California</span>
+            <span style={{ fontFamily: serif, fontSize: 18, color: "#BCA696", fontStyle: "italic", letterSpacing: "0.05em" }}>Orange County, California</span>
           </div>
           {/* Applications email */}
           <div style={{ display: "flex", flexDirection: "column", gap: 5, borderLeft: isMobile ? "none" : "1px solid rgba(188,166,150,.15)", paddingLeft: isMobile ? 0 : 48 }}>
             <span style={{ fontFamily: eyebrow_font, fontSize: 11, color: "#BCA696", letterSpacing: "0.25em", textTransform: "uppercase", fontWeight: 800, marginBottom: 4 }}>ADMISSIONS</span>
+            <a href="mailto:admissions@excaliburacademy.org" style={{ fontFamily: serif, fontSize: 18, color: "rgba(228, 214, 193, 1)", textDecoration: "none", letterSpacing: "0.05em", fontStyle: "italic", transition: "color .2s" }} onMouseEnter={e => e.target.style.color = "#E4D5C1"} onMouseLeave={e => e.target.style.color = "#BCA696"}>admissions@excaliburacademy.org</a>
           </div>
           {/* Support email */}
           <div style={{ display: "flex", flexDirection: "column", gap: 5, borderLeft: isMobile ? "none" : "1px solid rgba(188,166,150,.15)", paddingLeft: isMobile ? 0 : 48 }}>
@@ -1543,13 +1562,13 @@ function CurriculumPage({ setPage, openInquiry }) {
       <SoireeInviteBlock openInquiry={openInquiry} setPage={setPage} />
 
       {/* FAMILY CONSULTATION FORM */}
-      <div style={{ background: "#E4D5C1", padding: isMobile ? "52px 24px" : "72px 80px", borderTop: "1px solid rgba(0,0,0,.08)" }}>
+      <div style={{ background: "rgba(16, 15, 12, 1)", padding: isMobile ? "52px 24px" : "72px 80px", borderTop: "1px solid rgba(0,0,0,.08)" }}>
         <div style={{ maxWidth: 740, margin: "0 auto" }}>
-          <p style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.4em", color:"#010000", fontWeight: 600, textTransform: "uppercase", color: "#010000", marginBottom: 16 }}>Private Admissions Consultation</p>
-          <h2 style={{ fontFamily: serif, fontSize: isMobile ? 28 : 40, fontWeight: 600, color:"#010000", lineHeight: 1.05, marginBottom: 8 }}>Schedule a Family Consultation</h2>
-          <p style={{ fontFamily: sans, fontSize: 14, color:"#010000", fontWeight: 300, lineHeight: 1.8, marginBottom: 36, maxWidth: 580 }}>Please submit your information to schedule a private admissions consultation. A dedicated Program Pathways Coordinator will guide your family through program options, admissions steps, curriculum, tuition, schedule fit, and next steps.</p>
-          <div style={{ background: "#E4D5C1", borderTop: `2px solid #010000`, padding: "36px 32px" }}>
-            <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 9, letterSpacing: "0.25em", color: "#010000", fontWeight: 600, textTransform: "uppercase", marginBottom: 12 }}>Parent / Guardian</p>
+          <p style={{ fontFamily: "'Lato', sans-serif", fontSize: 9, letterSpacing: "0.4em", color: "#A48D6E", fontWeight: 600, textTransform: "uppercase", marginBottom: 16 }}>Private Admissions Consultation</p>
+          <h2 style={{ fontFamily: serif, fontSize: isMobile ? 28 : 40, fontWeight: 600, color: "#A48D6E", lineHeight: 1.05, marginBottom: 8 }}>Schedule a Family Consultation</h2>
+          <p style={{ fontFamily: sans, fontSize: 15, color: "#E4D6C1", fontWeight: 300, lineHeight: 1.8, marginBottom: 36, maxWidth: 580 }}>Please submit your information to schedule a private admissions consultation. A dedicated Program Pathways Coordinator will guide your family through program options, admissions steps, curriculum, tuition, schedule fit, and next steps.</p>
+          <div style={{ background: "rgba(16, 15, 12, 1)", borderTop: `2px solid #A48D6E`, padding: "36px 32px" }}>
+            <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 11, letterSpacing: "0.25em", color: "#A48D6E", fontWeight: 600, textTransform: "uppercase", marginBottom: 12 }}>Parent / Guardian</p>
             <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 10, marginBottom: 10 }}>
               {[["First Name", "text"], ["Last Name", "text"]].map(([ph, type]) => (
                 <input key={ph} type={type} placeholder={ph} className="inquiry-input" style={{ background: "#FBF7EE", border: "1px solid rgba(0,0,0,.2)", color: "#010000", padding: "13px 16px", fontFamily: "'Lato', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
@@ -1565,7 +1584,7 @@ function CurriculumPage({ setPage, openInquiry }) {
               <input type="text" placeholder="State" className="inquiry-input" style={{ background: "#FBF7EE", border: "1px solid rgba(0,0,0,.2)", color: "#010000", padding: "13px 16px", fontFamily: "'Lato', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
               <input type="text" placeholder="ZIP *" className="inquiry-input" style={{ background: "#FBF7EE", border: "1px solid rgba(0,0,0,.2)", color: "#010000", padding: "13px 16px", fontFamily: "'Lato', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} required />
             </div>
-            <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 9, letterSpacing: "0.25em", color: "#010000", fontWeight: 600, textTransform: "uppercase", marginBottom: 12 }}>Student</p>
+            <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 11, letterSpacing: "0.25em", borderStyle: "none", color: "#A48D6E", fontWeight: 600, textTransform: "uppercase", marginBottom: 12 }}>Student</p>
             <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 10, marginBottom: 10 }}>
               {[["First Name", "text"], ["Last Name", "text"]].map(([ph, type]) => (
                 <input key={ph} type={type} placeholder={ph} className="inquiry-input" style={{ background: "#FBF7EE", border: "1px solid rgba(0,0,0,.2)", color: "#010000", padding: "13px 16px", fontFamily: "'Lato', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
@@ -1575,13 +1594,13 @@ function CurriculumPage({ setPage, openInquiry }) {
               <input type="text" placeholder="Age" className="inquiry-input" style={{ background: "#FBF7EE", border: "1px solid rgba(0,0,0,.2)", color: "#010000", padding: "13px 16px", fontFamily: "'Lato', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
               <input type="text" placeholder="Current Grade" className="inquiry-input" style={{ background: "#FBF7EE", border: "1px solid rgba(0,0,0,.2)", color: "#010000", padding: "13px 16px", fontFamily: "'Lato', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
             </div>
-            <select defaultValue="" style={{ background: "#E4D5C1", border: "1px solid rgba(16,15,12,.2)", color: "#100F0C", padding: "13px 16px", fontFamily: "'Lora', Georgia, serif", fontSize: 13, fontWeight: 400, outline: "none", width: "100%", marginBottom: 24, appearance: "none" }}>
+            <select defaultValue="" style={{ background: "#fcf7ee", border: "1px solid rgba(16,15,12,.2)", color: "#100F0C", padding: "13px 16px", fontFamily: "'Lora', Georgia, serif", fontSize: 13, fontWeight: 400, outline: "none", width: "100%", marginBottom: 24, appearance: "none" }}>
               <option value="" disabled>Program of Interest</option>
               <option value="flagship">Flagship Program — Full Year, Foundation Semester, or Venture Semester</option>
               <option value="sixweek">Six-Week Intensive</option>
               <option value="summer">Summer Intensive</option>
             </select>
-            <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 9, letterSpacing: "0.25em", color: "#010000", fontWeight: 600, textTransform: "uppercase", marginBottom: 12, marginTop: 0 }}>Consultation Preferences</p>
+            <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 11, letterSpacing: "0.25em", color: "#A48D6E", fontWeight: 600, textTransform: "uppercase", marginBottom: 12, marginTop: 0 }}>Consultation Preferences</p>
             <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 10, marginBottom: 10 }}>
               <select className="inquiry-input" defaultValue="" style={{ background: "#FBF7EE", border: "1px solid rgba(0,0,0,.2)", color: "#010000", padding: "13px 16px", fontFamily: "'Lato', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%", appearance: "none" }}>
                 <option value="" disabled>Preferred Contact Method</option>
@@ -1593,7 +1612,7 @@ function CurriculumPage({ setPage, openInquiry }) {
             </div>
             <input type="text" placeholder="Preferred Times (for example, mornings, evenings, or weekends)" className="inquiry-input" style={{ background: "#FBF7EE", border: "1px solid rgba(0,0,0,.2)", color: "#010000", padding: "13px 16px", fontFamily: "'Lato', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%", marginBottom: 10 }} />
             <textarea placeholder="Questions or context you would like us to know (optional)" className="inquiry-input" rows={4} style={{ background: "#FBF7EE", border: "1px solid rgba(0,0,0,.2)", color: "#010000", padding: "13px 16px", fontFamily: "'Lato', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%", marginBottom: 28, resize: "vertical" }} />
-            <button onClick={() => openInquiry && openInquiry("curriculum")} style={{ fontFamily: "'Lato', sans-serif", padding: "15px 40px", background: "#100F0C", border: "none", color: "#D9C7A9", fontSize: 11, fontWeight: 600, letterSpacing: "0.15em", textTransform: "uppercase", cursor: "pointer", width: "100%" }}>REQUEST A PRIVATE CONSULTATION</button>
+            <button onClick={() => openInquiry && openInquiry("curriculum")} style={{ fontFamily: "'Lato', sans-serif", padding: "15px 40px", background: "#DAC8AA", border: "none", color: "#100F0C", fontSize: 11, fontWeight: 600, letterSpacing: "0.15em", textTransform: "uppercase", cursor: "pointer", width: "100%" }}>REQUEST A PRIVATE CONSULTATION</button>
           </div>
         </div>
       </div>
@@ -1793,252 +1812,77 @@ function ClosedProgramPage({ setPage, openInquiry }) {
 // ─────────────────────────────────────────────
 function IntensivePage({ setPage, openInquiry }) {
   const isMobile = useIsMobile();
-  const [activeWave, setActiveWave] = useState(0);
-  const [activeMod, setActiveMod] = useState(0);
-  const [activeCurrTab, setActiveCurrTab] = useState("master");
-  React.useEffect(() => { if (isMobile) setActiveMod(null); }, [isMobile]);
+  const [notifyForm, setNotifyForm] = React.useState({ firstName: "", lastName: "", email: "" });
+  const [notifyStatus, setNotifyStatus] = React.useState("idle");
+  const setNotify = (k, v) => setNotifyForm(f => ({ ...f, [k]: v }));
 
-  const waves = [
-    { label: "WAVE 1 — FALL", dates: "October 5 – November 14, 2026", days: "Mon & Wed · 4:00–6:30 PM / Sunday · 10:30 AM–3:30 PM", status: "ENROLLING SOON" },
-    { label: "WAVE 2 — WINTER", dates: "January 5 – February 13, 2027", days: "Mon & Wed · 4:00–6:30 PM / Sunday · 10:30 AM–3:30 PM", status: "OPENING SOON" },
-    { label: "WAVE 3 — SPRING", dates: "April 7 – May 15, 2027", days: "Mon & Wed · 4:00–6:30 PM / Sunday · 10:30 AM–3:30 PM", status: "OPENING SOON" },
-    { label: "WAVE 4 — POST-FLAGSHIP", dates: "June 16 – July 24, 2027", days: "Mon & Wed · 4:00–6:30 PM / Sunday · 10:30 AM–3:30 PM", status: "OPENING SOON" },
-  ];
+  const handleNotifySubmit = async () => {
+    if (!notifyForm.email || !notifyForm.firstName) return;
+    setNotifyStatus("sending");
+    const ok = await sendEmail({
+      subject: "Six-Week Intensive — Notify Me When Open",
+      from_name: `${notifyForm.firstName} ${notifyForm.lastName}`,
+      email: notifyForm.email,
+      message: "Requesting notification when Six-Week Intensive applications open.",
+    });
+    setNotifyStatus(ok ? "success" : "error");
+  };
 
-  const intensiveModules = [
-    { n: "Week 1", title: "Public Speaking & Executive Communication", desc: "Public speaking is a central discipline in every Excalibur program. Students get on their feet, speak to the room, practice eye contact, strengthen their voice, and learn how to communicate with confidence. The work develops from foundational mechanics into rhetoric, debate, impromptu speaking, persuasive delivery, and pitch preparation. With repeated practice and direct feedback, students build the kind of presence that carries into interviews, presentations, leadership roles, and every room ahead." },
-    { n: "Week 2", title: "Business Fundamentals & Entrepreneurial Mindset", desc: "How businesses are actually built — and what separates the ones that grow from the ones that don’t. Students examine real companies, deconstruct their models, map competitive advantage, and apply structured frameworks to their own ideas. Idea validation, market sizing, problem-solution fit, and the eight business model archetypes." },
-    { n: "Week 3", title: "Marketing, Sales & Customer Psychology", desc: "Who is your customer and why would they choose you? This week covers brand positioning, customer segmentation, Cialdini’s principles of persuasion, digital channel strategy, consultative selling, objection handling, and the anatomy of a great pitch. Students leave with a working understanding of how great brands are built and why people buy." },
-    { n: "Week 4", title: "Capital Markets, Investing & Wealth Management", desc: "How equity markets work, how to read a stock, the fundamentals of crypto, risk management principles, and the psychology behind trading decisions. Includes a live paper trading simulation and a structured investor panel exercise. Students learn to think about capital, risk, and market behavior the way practitioners do — not as spectators." },
-    { n: "Week 5", title: "AI & Technology as a Business Tool", desc: "AI is not replacing serious professionals — it is multiplying the output of the ones who know how to use it. This week is entirely practical: students use AI tools to research markets, draft and refine copy, build investor decks, analyze competitors, generate business model assumptions, and automate research tasks. Equally important: understanding where judgment, relationships, and creative thinking remain irreplaceable." },
-    { n: "Week 6", title: "Leadership, Intellectual Depth & The Pitch Finale", desc: "The final week combines two disciplines: leadership as a practiced standard — the five forms of power, emotional intelligence, decision-making under pressure, and the habits of people who operate at the highest level — and intellectual depth: how to think clearly, carry yourself with distinction, and move with ease across conversations, rooms, and contexts. The week culminates in the Excalibur Venture Finale." },
-  ];
+  const notifyInputStyle = { background: "#FBF7EE", border: "1px solid rgba(0,0,0,.2)", color: "#010000", padding: "13px 16px", fontFamily: "'Lato', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" };
 
   return (
     <div style={{ background: "#010000" }}>
-      <Breadcrumb items={[{label:"View Programs",page:"programs"},{label:"Six-Week Intensive",page:"intensive"}]} setPage={setPage} />
+      <Breadcrumb items={[{ label: "View Programs", page: "programs" }]} setPage={setPage} />
 
-      {/* HERO */}
-      {isMobile ? (
-        <div style={{ background: "#010000" }}>
-          <div style={{ position: "relative", height: 220, overflow: "hidden" }}>
-            <img src="https://i.imgur.com/axBolWd.jpeg" alt="Six-Week Intensive" style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center" }} />
-            <div style={{ position: "absolute", top: 16, left: 16 }}>
-              <button onClick={() => setPage("programs")} style={{ fontFamily: sans, background: "rgba(0,0,0,.5)", border: "1px solid rgba(216,183,140,.3)", color: "#FBF7EE", padding: "8px 16px", fontSize: 10, letterSpacing: "0.15em", cursor: "pointer", textTransform: "uppercase" }}>← OUR PROGRAMS</button>
-            </div>
-          </div>
-          <div style={{ background: "#010000", padding: "28px 24px 20px" }}>
-            <p style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.42em", color:"#A48D6E", fontWeight: 600, textTransform: "uppercase", marginBottom: 14 }}>Six-Week Intensive · Excalibur Academy</p>
-            <h1 style={{ fontFamily: "'Cormorant Garamond', 'Didot', Georgia, serif", fontSize: 30, fontWeight: 300, fontStyle: "italic", color:"#d8b78c", lineHeight: 1.1, marginBottom: 6 }}>Six-Week Intensive</h1>
-            <p style={{ fontFamily: "'Cormorant Garamond', 'Didot', Georgia, serif", fontSize: 18, color:"#010000", fontStyle: "italic", fontWeight: 300 }}>From Dream to Discipline. Four Waves Per Year.</p>
-          </div>
-        </div>
-      ) : (
-        <div style={{ position: "relative", height: 480, overflow: "hidden" }}>
-          <img src="https://i.imgur.com/axBolWd.jpeg" alt="Six-Week Intensive" style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center" }} />
-          <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(0,0,0,.92) 0%, rgba(0,0,0,.2) 60%)" }} />
-          <div style={{ position: "absolute", bottom: 56, left: 72 }}>
-            <p style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.42em", color: "#FBF7EE", fontWeight: 600, textTransform: "uppercase", marginBottom: 14 }}>Six-Week Intensive · Excalibur Academy</p>
-            <h1 style={{ fontFamily: "'Cormorant Garamond', 'Didot', Georgia, serif", fontSize: 56, fontWeight: 300, fontStyle: "italic", color: "#d8b78c", lineHeight: 1.05, marginBottom: 6 }}>Six-Week Intensive</h1>
-            <p style={{ fontFamily: "'Cormorant Garamond', 'Didot', Georgia, serif", fontSize: 26, color: "#FBF7EE", fontStyle: "italic", fontWeight: 300 }}>From Dream to Discipline. Four Waves Per Year.</p>
-          </div>
-          <div style={{ position: "absolute", top: 24, left: 24 }}>
-            <button onClick={() => setPage("programs")} style={{ fontFamily: sans, background: "rgba(0,0,0,.5)", border: "1px solid rgba(216,183,140,.3)", color: "#FBF7EE", padding: "8px 16px", fontSize: 10, letterSpacing: "0.15em", cursor: "pointer", textTransform: "uppercase" }}>← OUR PROGRAMS</button>
-          </div>
-        </div>
-      )}
-
-      {/* STATS STRIP — black */}
-      <div style={{ background: "#100F0C", borderBottom: "1px solid rgba(216,183,140,.1)" }}>
-        <div style={{ maxWidth: 1100, margin: "0 auto", display: "grid", gridTemplateColumns: isMobile ? "repeat(2,1fr)" : "repeat(4,1fr)", borderLeft: "1px solid rgba(216,183,140,.1)" }}>
-          {[["6 Weeks", "Program Duration"], ["2 Sessions / Week", "Per Week Per Track"], ["20 Students", "Per Cohort"], ["4 Waves", "Per Year"]].map(([val, lbl]) => (
-            <div key={lbl} style={{ padding: isMobile ? "24px 16px" : "32px 36px", borderRight: "1px solid rgba(216,183,140,.1)", borderBottom: isMobile ? "1px solid rgba(216,183,140,.1)" : "none" }}>
-              <p style={{ fontFamily: serif, fontSize: isMobile ? 22 : 28, fontWeight: 600, color: "#d8b78c", lineHeight: 1.1, marginBottom: 6 }}>{val}</p>
-              <p style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.25em", color: "#FBF7EE", textTransform: "uppercase", fontWeight: 600 }}>{lbl}</p>
-            </div>
-          ))}
+      {/* EDITORIAL HEADER */}
+      <div style={{ background: "#E4D5C1", padding: isMobile ? "60px 28px 52px" : "88px 80px 72px", textAlign: "center" }}>
+        <div style={{ maxWidth: 820, margin: "0 auto" }}>
+          <p style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: 16, fontStyle: "italic", letterSpacing: "0.28em", color: "#100F0C", fontWeight: 800, textTransform: "uppercase", marginBottom: 22 }}>Six-Week Intensive</p>
+          <h1 style={{ fontFamily: "'adobe-garamond-pro', Georgia, serif", fontSize: isMobile ? "2.6rem" : "3.8rem", fontWeight: 400, fontStyle: "normal", color: "#100F0C", letterSpacing: ".0325em", lineHeight: 1.15, textTransform: "uppercase", marginBottom: 24 }}>Program Coming Soon</h1>
+          <p style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: "1.4rem", fontStyle: "italic", fontWeight: 400, color: "#100F0C", lineHeight: 1.7, maxWidth: 640, margin: "0 auto" }}>
+            The Six-Week Intensive is being prepared for an upcoming wave.<br />Applications are not yet open for this program.
+          </p>
         </div>
       </div>
 
-      {/* OVERVIEW — ivory white */}
-      <div style={{ background: "#100F0C", padding: isMobile ? "52px 24px" : "80px 80px" }}>
-        <div style={{ maxWidth: 1100, margin: "0 auto", display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 400px", gap: isMobile ? 36 : 72, alignItems: "start" }}>
-          <div>
-            <div style={{ display: "flex", alignItems: "center", gap: 14, marginBottom: 20 }}>
-                            <p style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.45em", color:"#A48D6E", fontWeight: 600, textTransform: "uppercase", margin: 0 }}>Program Overview</p>
+      {/* DETAILS */}
+      <div style={{ background: "#100F0C", padding: isMobile ? "60px 28px" : "88px 80px", textAlign: "center" }}>
+        <div style={{ maxWidth: 640, margin: "0 auto" }}>
+          <p style={{ fontFamily: "'Lora', Georgia, serif", fontSize: 15, letterSpacing: "0.45em", color: "#A48D6E", fontWeight: 600, textTransform: "uppercase", marginBottom: 24 }}>Stay Informed</p>
+          <p style={{ fontFamily: "'Lora', Georgia, serif", fontSize: 16, color: "#E4D5C1", fontWeight: 400, lineHeight: 1.85, marginBottom: 40 }}>
+            Offered in four waves annually — Fall, Winter, Spring, and Summer — the Six-Week Intensive will condense core elements of the Excalibur curriculum into a focused, high-impact experience. Submit your information below and a member of our admissions team will notify your family as soon as enrollment opens.
+          </p>
+
+          {notifyStatus === "success" ? (
+            <div style={{ background: "#34150F", padding: "36px 32px", borderTop: "2px solid #A48D6E", textAlign: "center" }}>
+              <p style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: 26, fontWeight: 300, color: "#A48D6E", marginBottom: 10 }}>Thank you. You're on the list.</p>
+              <p style={{ fontFamily: "'Lora', Georgia, serif", fontSize: 14, color: "#E4D5C1", fontWeight: 400, lineHeight: 1.8 }}>A member of our admissions team will notify your family as soon as enrollment opens for the Six-Week Intensive.</p>
             </div>
-            <h2 style={{ fontFamily: "'Cormorant Garamond', 'Didot', Georgia, serif", fontSize: isMobile ? 30 : 46, fontWeight: 600, fontStyle: "italic", color:"#d8b78c", lineHeight: 1.05, marginBottom: 28 }}>Six focused weeks.<br />Four opportunities to begin.</h2>
-            <p style={{ fontFamily: sans, fontSize: 14, lineHeight: 2.0, color:"#E4D5C1", fontWeight: 300, marginBottom: 16 }}>The Six-Week Intensive is a concentrated version of the Excalibur curriculum, offered four times a year as a focused, high-impact program for students ready for a serious Excalibur experience in a shorter format.</p>
-            <p style={{ fontFamily: sans, fontSize: 14, lineHeight: 2.0, color:"#E4D5C1", fontWeight: 300, marginBottom: 16 }}>Each wave runs six weeks with two sessions per week. Students choose their track: Group A meets Monday and Wednesday evenings, Group B meets Sunday mornings and afternoons. Both tracks are taught by the same faculty who lead the Flagship Overview, delivering an intensive version of the full curriculum with the same standard of instruction.</p>
-            <p style={{ fontFamily: sans, fontSize: 14, lineHeight: 2.0, color:"#E4D5C1", fontWeight: 300, marginBottom: 16 }}>Every session follows the same three-block model used across all Excalibur programs: public speaking, specialist instruction, and The War Room. Two invited speakers and Academy guests join each wave, drawn from business, entrepreneurship, technology, and leadership. The Intensive is led by the same core faculty as the Flagship, holding students to the same standard of preparation, participation, and feedback.</p>
-            <p style={{ fontFamily: sans, fontSize: 14, lineHeight: 2.0, color:"#E4D5C1", fontWeight: 300 }}>At the heart of the Six-Week Intensive is the Venture Launchpad — a structured venture-building arc woven across all six weeks. From the first session, students begin developing a real venture concept: validating a problem, sizing a market, building a brand, mapping competitors, and constructing a go-to-market strategy. Week by week, the venture grows — from raw idea through business fundamentals, marketing and customer psychology, competitive analysis, AI-powered research tools, and sales and pitch mechanics — until it is ready to be defended live before a panel of invited investors, founders, executives, and practitioners at the Shark Tank–inspired Venture Finale.</p>
-          </div>
-          <div>
-            {[["Tracks", "Group A: Mon & Wed \u00b7 4:00\u20136:30 PM\nGroup B: Sunday \u00b7 10:30 AM\u20133:45 PM"], ["Sessions", "30 hours per wave"], ["Guest Speakers", "2 per wave, senior practitioners"], ["Finale", "Shark Tank\u2013Inspired Venture Finale \u00b7 Invited review panel"], ["Tuition", "$3,900 per wave"], ["Eligibility", "Ages 14\u201317 \u00b7 High school students"], ["Location", "South Orange County, CA"]].map(([k, v]) => (
-              <div key={k} style={{ display: "grid", gridTemplateColumns: "96px 1fr", gap: 14, padding: "11px 0", borderBottom: "1px solid rgba(216,183,140,.15)" }}>
-                <span style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.2em", color:"#A48D6E", textTransform: "uppercase", paddingTop: 2 }}>{k}</span>
-                <span style={{ fontFamily: sans, fontSize: 13, color:"#E4D5C1", fontWeight: 300, lineHeight: 1.6, whiteSpace: "pre-line" }}>{v}</span>
+          ) : (
+            <div style={{ textAlign: "left" }}>
+              <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 10, marginBottom: 10 }}>
+                <input type="text" placeholder="First Name" value={notifyForm.firstName} onChange={e => setNotify("firstName", e.target.value)} style={notifyInputStyle} />
+                <input type="text" placeholder="Last Name" value={notifyForm.lastName} onChange={e => setNotify("lastName", e.target.value)} style={notifyInputStyle} />
               </div>
-            ))}
-
-            <div style={{ marginTop: 28, paddingTop: 20, borderTop: "1px solid rgba(0,0,0,.08)" }}>
-              <p style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.3em", color:"#A48D6E", fontWeight: 600, textTransform: "uppercase", marginBottom: 14 }}>Program Includes</p>
-              {["Daily public speaking and communication training","Specialist instruction across six disciplines","Two invited speakers and Academy guests per wave","The War Room — case studies, simulations, and team challenges","Excalibur Venture Finale before invited investors, founders, executives, and practitioners and faculty and invited panelists","Certificate of Completion and Excalibur Portfolio","Access to Excalibur Alumni Network","Priority consideration for the Ten-Month Flagship"].map((f, i) => (
-                <div key={i} style={{ display: "flex", gap: 10, padding: "7px 0", borderBottom: "1px solid rgba(216,183,140,.1)", alignItems: "flex-start" }}>
-                  <div style={{ width: 4, height: 4, borderRadius: "50%", background: "#d8b78c", flexShrink: 0, marginTop: 7 }} />
-                  <p style={{ fontFamily: sans, fontSize: 12, color:"#E4D5C1", fontWeight: 300, lineHeight: 1.6 }}>{f}</p>
-                </div>
-              ))}
+              <input type="email" placeholder="Email Address" value={notifyForm.email} onChange={e => setNotify("email", e.target.value)} style={{ ...notifyInputStyle, marginBottom: 24 }} />
+              <button
+                onClick={handleNotifySubmit}
+                disabled={notifyStatus === "sending" || !notifyForm.email || !notifyForm.firstName}
+                style={{ fontFamily: "'Lora', Georgia, serif", padding: "16px 40px", background: (!notifyForm.email || !notifyForm.firstName) ? "rgba(164,141,110,.4)" : "#A48D6E", border: "none", color: "#100F0C", fontSize: 12, fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", cursor: (!notifyForm.email || !notifyForm.firstName) ? "not-allowed" : "pointer", width: "100%" }}
+              >{notifyStatus === "sending" ? "Sending..." : "Notify Me When Open →"}</button>
             </div>
-            <div style={{ marginTop: 20, display: "flex", gap: 10, flexWrap: "wrap" }}>
-              <button onClick={() => openInquiry && openInquiry("intensive")} style={{ fontFamily: sans, padding: "12px 20px", background: "#010000", border: "none", color: "#FBF7EE", fontSize: 10, fontWeight: 700, letterSpacing: "0.15em", textTransform: "uppercase", cursor: "pointer", flex: 1 }}>REQUEST INFORMATION →</button>
-              <button onClick={() => setPage("faculty")} style={{ fontFamily: sans, padding: "12px 20px", background: "transparent", border: "1px solid rgba(0,0,0,.2)", color:"#010000", fontSize: 10, fontWeight: 500, letterSpacing: "0.13em", textTransform: "uppercase", cursor: "pointer", flex: 1 }}>MEET THE FACULTY →</button>
-            </div>
-          </div>
+          )}
         </div>
       </div>
-
-      {/* WAVE DATES — black */}
-      <div style={{ background: "#100F0C", padding: isMobile ? "52px 24px" : "80px 80px", borderTop: "1px solid rgba(216,183,140,.08)" }}>
-        <div style={{ maxWidth: 1100, margin: "0 auto" }}>
-          <div style={{ display: "flex", alignItems: "center", gap: 14, marginBottom: 16 }}>
-
-            <p style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.45em", color:"#A48D6E", fontWeight: 600, textTransform: "uppercase", margin: 0 }}>2026 – 2027 Waves</p>
-          </div>
-          <h2 style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: isMobile ? 28 : 40, fontWeight: 600, fontStyle: "italic", color:"#d8b78c", marginBottom: 40 }}>Four opportunities to begin</h2>
-          <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(4, 1fr)", gap: 2 }}>
-            {waves.map((w, i) => (
-              <div key={i} style={{ background: "#010000", padding: "28px 24px", borderTop: `2px solid ${i === activeWave ? "#d8b78c" : "rgba(216,183,140,.15)"}`, cursor: "pointer" }} onClick={() => setActiveWave(i)}>
-                <p style={{ fontFamily: eyebrow_font, fontSize: 8, letterSpacing: "0.3em", color: "#FBF7EE", fontWeight: 600, textTransform: "uppercase", marginBottom: 10 }}>{w.label}</p>
-                <p style={{ fontFamily: serif, fontSize: 15, fontWeight: 600, color: "#d8b78c", lineHeight: 1.3, marginBottom: 8 }}>{w.dates}</p>
-                <p style={{ fontFamily: sans, fontSize: 11, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.5, whiteSpace: "pre-line", marginBottom: 12 }}>{w.days}</p>
-                <span style={{ fontFamily: eyebrow_font, fontSize: 8, letterSpacing: "0.2em", color: "#FBF7EE", fontWeight: 700, textTransform: "uppercase", border: `1px solid #d8b78c`, padding: "3px 8px" }}>{w.status}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-
-      {/* CURRICULUM — ivory white */}
-      <div style={{ background: "#100F0C", padding: isMobile ? "52px 24px" : "80px 80px" }}>
-        <div style={{ maxWidth: 1100, margin: "0 auto" }}>
-          <div style={{ display: "flex", alignItems: "center", gap: 14, marginBottom: 16 }}>
-                        <p style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.45em", color:"#A48D6E", fontWeight: 600, textTransform: "uppercase", margin: 0 }}>The Curriculum</p>
-          </div>
-          <h2 style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: isMobile ? 28 : 40, fontWeight: 600, fontStyle: "italic", color:"#d8b78c", marginBottom: 8 }}>Six weeks. Six applied disciplines.</h2>
-          <p style={{ fontFamily: sans, fontSize: 14, color:"#E4D5C1", fontWeight: 300, lineHeight: 1.8, maxWidth: 580, marginBottom: 40 }}>A focused version of Excalibur’s curriculum. One discipline per week, built for focused formation and practical application.</p>
-          <div style={{ border: "1px solid rgba(0,0,0,.08)" }}>
-            {intensiveModules.map((m, i) => (
-              <div key={i} style={{ borderBottom: i < intensiveModules.length - 1 ? "1px solid rgba(0,0,0,.07)" : "none", background: i === activeMod ? "#FBF7EE" : "#FBF7EE" }}>
-                <div onClick={() => setActiveMod(activeMod === i ? null : i)} style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "72px 1fr 24px", gap: isMobile ? 8 : 24, padding: isMobile ? "18px 20px" : "20px 28px", cursor: "pointer", alignItems: "center" }}>
-                  <span style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.2em", color:"#010000", fontWeight: 600 }}>{m.n}</span>
-                  <h4 style={{ fontFamily: serif, fontSize: isMobile ? 16 : 18, fontWeight: 600, color:"#d8b78c", lineHeight: 1.2 }}>{m.title}</h4>
-                  <span style={{ fontFamily: sans, fontSize: 16, color:"#E4D5C1", fontWeight: 300, textAlign: "right" }}>{activeMod === i ? "−" : "+"}</span>
-                </div>
-                {activeMod === i && (
-                  <div style={{ padding: isMobile ? "0 20px 20px" : "0 28px 24px" }}>
-                    <p style={{ fontFamily: sans, fontSize: 13, lineHeight: 1.9, color:"#E4D5C1", fontWeight: 300 }}>{m.desc}</p>
-                  </div>
-                )}
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-
-      {/* DAILY SCHEDULE — black */}
-      <div style={{ background: "#100F0C", padding: isMobile ? "52px 24px" : "80px 80px", borderTop: "1px solid rgba(216,183,140,.08)" }}>
-        <div style={{ maxWidth: 1100, margin: "0 auto" }}>
-          <div style={{ display: "flex", alignItems: "center", gap: 14, marginBottom: 16 }}>
-
-            <p style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.45em", color:"#A48D6E", fontWeight: 600, textTransform: "uppercase", margin: 0 }}>Session Structure</p>
-          </div>
-          <h2 style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: isMobile ? 28 : 40, fontWeight: 600, fontStyle: "italic", color:"#d8b78c", marginBottom: 40 }}>A Session at Excalibur</h2>
-          <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: isMobile ? 32 : 48 }}>
-            {/* Group A — Weekday */}
-            <div style={{ border: "1px solid rgba(216,183,140,.15)", borderTop: `2px solid #d8b78c` }}>
-              <div style={{ padding: "20px 24px", borderBottom: "1px solid rgba(216,183,140,.1)" }}>
-                <p style={{ fontFamily: eyebrow_font, fontSize: 8, letterSpacing: "0.3em", color:"#010000", fontWeight: 600, textTransform: "uppercase", marginBottom: 6 }}>Group A · Weekday Track</p>
-                <p style={{ fontFamily: serif, fontSize: 16, color:"#010000", fontWeight: 300, fontStyle: "italic" }}>Monday & Wednesday · 4:00–6:30 PM</p>
-              </div>
-              {[["4:00 PM", "40 min", "Public Speaking & Rhetoric"],["4:40 PM", "15 min", "Short Break"],["4:55 PM", "40 min", "Specialist Instruction"],["5:35 PM", "15 min", "Short Break"],["5:50 PM", "40 min", "The War Room"],["6:30 PM", "—", "Debrief & Session Close"]].map(([t, d, b], i) => (
-                <div key={i} style={{ display: "grid", gridTemplateColumns: "68px 44px 1fr", gap: 8, padding: "11px 24px", borderBottom: "1px solid rgba(216,183,140,.06)", alignItems: "center" }}>
-                  <span style={{ fontFamily: sans, fontSize: 11, color:"#010000", fontWeight: 600 }}>{t}</span>
-                  <span style={{ fontFamily: sans, fontSize: 10, color:"#d8b78c", fontWeight: 300 }}>{d}</span>
-                  <span style={{ fontFamily: sans, fontSize: 12, color:"#E4D5C1", fontWeight: 300 }}>{b}</span>
-                </div>
-              ))}
-            </div>
-            {/* Group B — Sunday */}
-            <div style={{ border: "1px solid rgba(216,183,140,.15)", borderTop: `2px solid #d8b78c` }}>
-              <div style={{ padding: "20px 24px", borderBottom: "1px solid rgba(216,183,140,.1)" }}>
-                <p style={{ fontFamily: eyebrow_font, fontSize: 8, letterSpacing: "0.3em", color:"#010000", fontWeight: 600, textTransform: "uppercase", marginBottom: 6 }}>Group B · Sunday Track</p>
-                <p style={{ fontFamily: serif, fontSize: 16, color:"#010000", fontWeight: 300, fontStyle: "italic" }}>Sunday · 10:30 AM–3:30 PM</p>
-              </div>
-              {[["10:30 AM", "40 min", "Block 1a · Public Speaking"],["11:10 AM", "40 min", "Block 1b · Rhetoric & Pitch"],["11:50 AM", "30 min", "Lunch & Conversation"],["12:20 PM", "80 min", "Specialist Instruction"],["1:40 PM", "15 min", "Break"],["1:55 PM", "40 min", "Block 3a · War Room"],["2:35 PM", "15 min", "Break"],["2:50 PM", "40 min", "Block 3b · War Room"],["3:30 PM", "5 min", "Debrief & Close"]].map(([t, d, b], i) => (
-                <div key={i} style={{ display: "grid", gridTemplateColumns: "68px 44px 1fr", gap: 8, padding: "11px 24px", borderBottom: "1px solid rgba(216,183,140,.06)", alignItems: "center" }}>
-                  <span style={{ fontFamily: sans, fontSize: 11, color:"#010000", fontWeight: 600 }}>{t}</span>
-                  <span style={{ fontFamily: sans, fontSize: 10, color:"#d8b78c", fontWeight: 300 }}>{d}</span>
-                  <span style={{ fontFamily: sans, fontSize: 12, color:"#E4D5C1", fontWeight: 300 }}>{b}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* VENTURE FINALE — ivory */}
-      <div style={{ background: "#100F0C", padding: isMobile ? "52px 24px" : "80px 80px" }}>
-        <div style={{ maxWidth: 1100, margin: "0 auto", display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: isMobile ? 36 : 64, alignItems: "center" }}>
-          <div>
-            <div style={{ display: "flex", alignItems: "center", gap: 14, marginBottom: 16 }}>
-                            <p style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.45em", color:"#A48D6E", fontWeight: 600, textTransform: "uppercase", margin: 0 }}>The Culmination</p>
-            </div>
-            <h2 style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: isMobile ? 28 : 42, fontWeight: 600, fontStyle: "italic", color:"#d8b78c", lineHeight: 1.1, marginBottom: 20 }}>The Excalibur<br />Venture Finale</h2>
-            <p style={{ fontFamily: sans, fontSize: 14, lineHeight: 1.95, color:"#E4D5C1", fontWeight: 300 }}>Every wave culminates in the Excalibur Venture Finale — a live pitch competition where student teams present before invited entrepreneurs, executives, investors, and guests. Students are evaluated on concept strength, market thinking, pitch delivery, and composure under questioning. Recognition is awarded to the strongest performances.</p>
-          </div>
-          <div style={{ background: "#010000", padding: "36px 32px", borderTop: `2px solid #d8b78c` }}>
-            <p style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: isMobile ? 18 : 24, fontWeight: 300, fontStyle: "italic", color:"#010000", lineHeight: 1.5, marginBottom: 20 }}>"Teams are evaluated on concept strength, pitch delivery, market research, and composure under pressure. Recognition awarded for the strongest work."</p>
-            <button onClick={() => openInquiry && openInquiry("intensive")} style={{ fontFamily: sans, padding: "11px 24px", background: "#d8b78c", border: "none", color: "#010000", fontSize: 10, fontWeight: 700, letterSpacing: "0.15em", textTransform: "uppercase", cursor: "pointer" }}>APPLY FOR ADMISSION →</button>
-          </div>
-        </div>
-      </div>
-
-      {/* ADMISSIONS — black */}
-      <div style={{ background: "#100F0C", padding: isMobile ? "52px 24px" : "80px 80px", borderTop: "1px solid rgba(216,183,140,.08)" }}>
-        <div style={{ maxWidth: 1100, margin: "0 auto", display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: isMobile ? 36 : 80 }}>
-          <div>
-            <div style={{ display: "flex", alignItems: "center", gap: 14, marginBottom: 16 }}>
-
-              <p style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.45em", color:"#A48D6E", fontWeight: 600, textTransform: "uppercase", margin: 0 }}>Admissions</p>
-            </div>
-            <h2 style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: isMobile ? 28 : 40, fontWeight: 600, fontStyle: "italic", color:"#d8b78c", lineHeight: 1.1, marginBottom: 20 }}>Who This Program<br />Is For</h2>
-            <p style={{ fontFamily: sans, fontSize: 14, lineHeight: 1.95, color:"#E4D5C1", fontWeight: 300, marginBottom: 14 }}>The Six-Week Intensive is designed for ambitious high-school students ages 14–17 who are ready for a concentrated, serious Excalibur experience without committing to the full academic year.</p>
-            <p style={{ fontFamily: sans, fontSize: 14, lineHeight: 1.95, color:"#E4D5C1", fontWeight: 300 }}>Excalibur looks for curiosity, maturity, and a genuine interest in business, leadership, and how the world works. No prior business experience is required. Excalibur looks for the student who leans forward, asks thoughtful questions, welcomes challenge, and wants to leave the experience more confident, capable, and serious than when they arrived.</p>
-          </div>
-          <div style={{ display: "flex", flexDirection: "column", justifyContent: "center" }}>
-            <div style={{ border: `1px solid rgba(216,183,140,.15)`, borderTop: `2px solid #d8b78c`, padding: "28px 28px" }}>
-              <p style={{ fontFamily: serif, fontSize: isMobile ? 22 : 28, fontWeight: 600, color:"#010000", fontStyle: "italic", lineHeight: 1.3, marginBottom: 24 }}>"Six focused weeks can change how a student thinks, speaks, and carries themselves. That is the purpose."</p>
-              <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
-                <button onClick={() => openInquiry && openInquiry("intensive")} style={{ fontFamily: sans, padding: "13px 32px", background: "#d8b78c", border: "none", color: "#010000", fontSize: 10, fontWeight: 700, letterSpacing: "0.15em", textTransform: "uppercase", cursor: "pointer", flex: 1 }}>APPLY FOR ADMISSION →</button>
-                <button onClick={() => setPage("flagship-detail")} style={{ fontFamily: sans, padding: "12px 20px", background: "transparent", border: `1px solid rgba(216,183,140,.3)`, color:"#010000", fontSize: 10, fontWeight: 500, letterSpacing: "0.13em", textTransform: "uppercase", cursor: "pointer", flex: 1 }}>VIEW FLAGSHIP →</button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* ── SOIREE ── */}
-      <SoireeInviteBlock openInquiry={openInquiry} setPage={setPage} />
 
       {/* FAMILY CONSULTATION FORM */}
-      <div style={{ background: "#E4D5C1", padding: isMobile ? "52px 24px" : "72px 80px", borderTop: "1px solid rgba(0,0,0,.08)" }}>
+      <div style={{ background: "rgba(16, 15, 12, 1)", padding: isMobile ? "52px 24px" : "72px 80px", borderTop: "1px solid rgba(0,0,0,.08)" }}>
         <div style={{ maxWidth: 740, margin: "0 auto" }}>
-          <p style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.4em", color:"#A48D6E", fontWeight: 600, textTransform: "uppercase", color: "#010000", marginBottom: 16 }}>Private Admissions Consultation</p>
-          <h2 style={{ fontFamily: serif, fontSize: isMobile ? 28 : 40, fontWeight: 600, color:"#010000", lineHeight: 1.05, marginBottom: 8 }}>Schedule a Family Consultation</h2>
-          <p style={{ fontFamily: sans, fontSize: 14, color:"#E4D5C1", fontWeight: 300, lineHeight: 1.8, marginBottom: 36, maxWidth: 580 }}>Please submit your information to schedule a private admissions consultation. A dedicated Program Pathways Coordinator will guide your family through program options, admissions steps, curriculum, tuition, schedule fit, and next steps.</p>
-          <div style={{ background: "#E4D5C1", borderTop: `2px solid #010000`, padding: "36px 32px" }}>
-            <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 9, letterSpacing: "0.25em", color: "#010000", fontWeight: 600, textTransform: "uppercase", marginBottom: 12 }}>Parent / Guardian</p>
+          <p style={{ fontFamily: "'Lato', sans-serif", fontSize: 9, letterSpacing: "0.4em", color: "#A48D6E", fontWeight: 600, textTransform: "uppercase", marginBottom: 16 }}>Private Admissions Consultation</p>
+          <h2 style={{ fontFamily: serif, fontSize: isMobile ? 28 : 40, fontWeight: 600, color: "#A48D6E", lineHeight: 1.05, marginBottom: 8 }}>Schedule a Family Consultation</h2>
+          <p style={{ fontFamily: sans, fontSize: 15, color: "#E4D6C1", fontWeight: 300, lineHeight: 1.8, marginBottom: 36, maxWidth: 580 }}>Please submit your information to schedule a private admissions consultation. A dedicated Program Pathways Coordinator will guide your family through program options, admissions steps, curriculum, tuition, schedule fit, and next steps.</p>
+          <div style={{ background: "rgba(16, 15, 12, 1)", borderTop: `2px solid #A48D6E`, padding: "36px 32px" }}>
+            <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 11, letterSpacing: "0.25em", color: "#A48D6E", fontWeight: 600, textTransform: "uppercase", marginBottom: 12 }}>Parent / Guardian</p>
             <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 10, marginBottom: 10 }}>
               {[["First Name", "text"], ["Last Name", "text"]].map(([ph, type]) => (
                 <input key={ph} type={type} placeholder={ph} className="inquiry-input" style={{ background: "#FBF7EE", border: "1px solid rgba(0,0,0,.2)", color: "#010000", padding: "13px 16px", fontFamily: "'Lato', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
@@ -2054,7 +1898,7 @@ function IntensivePage({ setPage, openInquiry }) {
               <input type="text" placeholder="State" className="inquiry-input" style={{ background: "#FBF7EE", border: "1px solid rgba(0,0,0,.2)", color: "#010000", padding: "13px 16px", fontFamily: "'Lato', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
               <input type="text" placeholder="ZIP *" className="inquiry-input" style={{ background: "#FBF7EE", border: "1px solid rgba(0,0,0,.2)", color: "#010000", padding: "13px 16px", fontFamily: "'Lato', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} required />
             </div>
-            <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 9, letterSpacing: "0.25em", color: "#010000", fontWeight: 600, textTransform: "uppercase", marginBottom: 12 }}>Student</p>
+            <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 11, letterSpacing: "0.25em", borderStyle: "none", color: "#A48D6E", fontWeight: 600, textTransform: "uppercase", marginBottom: 12 }}>Student</p>
             <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 10, marginBottom: 10 }}>
               {[["First Name", "text"], ["Last Name", "text"]].map(([ph, type]) => (
                 <input key={ph} type={type} placeholder={ph} className="inquiry-input" style={{ background: "#FBF7EE", border: "1px solid rgba(0,0,0,.2)", color: "#010000", padding: "13px 16px", fontFamily: "'Lato', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
@@ -2064,8 +1908,13 @@ function IntensivePage({ setPage, openInquiry }) {
               <input type="text" placeholder="Age" className="inquiry-input" style={{ background: "#FBF7EE", border: "1px solid rgba(0,0,0,.2)", color: "#010000", padding: "13px 16px", fontFamily: "'Lato', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
               <input type="text" placeholder="Current Grade" className="inquiry-input" style={{ background: "#FBF7EE", border: "1px solid rgba(0,0,0,.2)", color: "#010000", padding: "13px 16px", fontFamily: "'Lato', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
             </div>
-            <input type="text" placeholder="Preferred Program or Wave" className="inquiry-input" style={{ background: "#FBF7EE", border: "1px solid rgba(0,0,0,.2)", color: "#010000", padding: "13px 16px", fontFamily: "'Lato', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%", marginBottom: 24 }} />
-            <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 9, letterSpacing: "0.25em", color: "#010000", fontWeight: 600, textTransform: "uppercase", marginBottom: 12, marginTop: 0 }}>Consultation Preferences</p>
+            <select defaultValue="" style={{ background: "#fcf7ee", border: "1px solid rgba(16,15,12,.2)", color: "#100F0C", padding: "13px 16px", fontFamily: "'Lora', Georgia, serif", fontSize: 13, fontWeight: 400, outline: "none", width: "100%", marginBottom: 24, appearance: "none" }}>
+              <option value="" disabled>Program of Interest</option>
+              <option value="flagship">Flagship Program — Full Year, Foundation Semester, or Venture Semester</option>
+              <option value="sixweek">Six-Week Intensive</option>
+              <option value="summer">Summer Intensive</option>
+            </select>
+            <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 11, letterSpacing: "0.25em", color: "#A48D6E", fontWeight: 600, textTransform: "uppercase", marginBottom: 12, marginTop: 0 }}>Consultation Preferences</p>
             <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 10, marginBottom: 10 }}>
               <select className="inquiry-input" defaultValue="" style={{ background: "#FBF7EE", border: "1px solid rgba(0,0,0,.2)", color: "#010000", padding: "13px 16px", fontFamily: "'Lato', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%", appearance: "none" }}>
                 <option value="" disabled>Preferred Contact Method</option>
@@ -2077,7 +1926,7 @@ function IntensivePage({ setPage, openInquiry }) {
             </div>
             <input type="text" placeholder="Preferred Times (for example, mornings, evenings, or weekends)" className="inquiry-input" style={{ background: "#FBF7EE", border: "1px solid rgba(0,0,0,.2)", color: "#010000", padding: "13px 16px", fontFamily: "'Lato', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%", marginBottom: 10 }} />
             <textarea placeholder="Questions or context you would like us to know (optional)" className="inquiry-input" rows={4} style={{ background: "#FBF7EE", border: "1px solid rgba(0,0,0,.2)", color: "#010000", padding: "13px 16px", fontFamily: "'Lato', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%", marginBottom: 28, resize: "vertical" }} />
-            <button onClick={() => openInquiry && openInquiry("intensive")} style={{ fontFamily: "'Lato', sans-serif", padding: "15px 40px", background: "#100F0C", border: "none", color: "#D9C7A9", fontSize: 11, fontWeight: 600, letterSpacing: "0.15em", textTransform: "uppercase", cursor: "pointer", width: "100%" }}>REQUEST A PRIVATE CONSULTATION</button>
+            <button onClick={() => openInquiry && openInquiry("intensive")} style={{ fontFamily: "'Lato', sans-serif", padding: "15px 40px", background: "#DAC8AA", border: "none", color: "#100F0C", fontSize: 11, fontWeight: 600, letterSpacing: "0.15em", textTransform: "uppercase", cursor: "pointer", width: "100%" }}>REQUEST A PRIVATE CONSULTATION</button>
           </div>
         </div>
       </div>
@@ -3186,94 +3035,59 @@ function ApplyPage({ setPage, openInquiry }) {
         </div>
       </div>
 
-      {/* ══════════════════════════════════════════════════════
-          REQUEST A CONSULTATION FORM
-      ══════════════════════════════════════════════════════ */}
-      <div style={{ background: dark, padding: isMobile ? "52px 28px" : "72px 80px", borderTop: `1px solid rgba(164,141,110,.2)` }}>
-        <div style={{ maxWidth: 820, margin: "0 auto" }}>
-          <Fade>
-            <p style={{ fontFamily: lora, fontSize: 11, letterSpacing: "0.45em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 18 }}>Private Admissions Consultation</p>
-            <h2 style={{ fontFamily: cg, fontSize: isMobile ? "clamp(28px,7vw,56px)" : "4.2rem", fontWeight: 400, color: parch, lineHeight: 1.2, letterSpacing: "0.01em", marginBottom: 20 }}>Schedule a Family Consultation</h2>
-            <p style={{ fontFamily: lora, fontSize: 15, color: parch, fontWeight: 400, lineHeight: 1.7, marginBottom: 48, maxWidth: 640, textAlign: "justify" }}>Please submit your information to schedule a private admissions consultation. A dedicated Program Pathways Coordinator will guide your family through program options, admissions steps, curriculum, tuition, schedule fit, and next steps. A member of the admissions team will respond personally as soon as possible.</p>
-          </Fade>
-
-          {consultStatus === "success" ? (
-            <div style={{ background: ox, padding: "48px 40px", borderTop: `2px solid ${gold}`, textAlign: "center" }}>
-              <p style={{ fontFamily: cg, fontSize: 32, fontWeight: 300, color: gold, marginBottom: 12 }}>Thank you. Your request has been received.</p>
-              <p style={{ fontFamily: lora, fontSize: 14, color: parch, fontWeight: 400, lineHeight: 1.8 }}>Your consultation request has been received. A member of our admissions team will follow up personally with next steps.</p>
+      {/* FAMILY CONSULTATION FORM */}
+      <div style={{ background: "rgba(16, 15, 12, 1)", padding: isMobile ? "52px 24px" : "72px 80px", borderTop: "1px solid rgba(0,0,0,.08)" }}>
+        <div style={{ maxWidth: 740, margin: "0 auto" }}>
+          <p style={{ fontFamily: "'Lato', sans-serif", fontSize: 9, letterSpacing: "0.4em", color: "#A48D6E", fontWeight: 600, textTransform: "uppercase", marginBottom: 16 }}>Private Admissions Consultation</p>
+          <h2 style={{ fontFamily: serif, fontSize: isMobile ? 28 : 40, fontWeight: 600, color: "#A48D6E", lineHeight: 1.05, marginBottom: 8 }}>Schedule a Family Consultation</h2>
+          <p style={{ fontFamily: sans, fontSize: 15, color: "#E4D6C1", fontWeight: 300, lineHeight: 1.8, marginBottom: 36, maxWidth: 580 }}>Please submit your information to schedule a private admissions consultation. A dedicated Program Pathways Coordinator will guide your family through program options, admissions steps, curriculum, tuition, schedule fit, and next steps.</p>
+          <div style={{ background: "rgba(16, 15, 12, 1)", borderTop: `2px solid #A48D6E`, padding: "36px 32px" }}>
+            <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 11, letterSpacing: "0.25em", color: "#A48D6E", fontWeight: 600, textTransform: "uppercase", marginBottom: 12 }}>Parent / Guardian</p>
+            <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 10, marginBottom: 10 }}>
+              {[["First Name", "text"], ["Last Name", "text"]].map(([ph, type]) => (
+                <input key={ph} type={type} placeholder={ph} className="inquiry-input" style={{ background: "#FBF7EE", border: "1px solid rgba(0,0,0,.2)", color: "#010000", padding: "13px 16px", fontFamily: "'Lato', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
+              ))}
             </div>
-          ) : (
-            <div style={{ background: dark, borderTop: `1px solid ${gold}`, padding: isMobile ? "32px 0" : "36px 32px" }}>
-
-              <p style={{ fontFamily: lora, fontSize: 11, letterSpacing: "0.3em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 12 }}>Parent / Guardian</p>
-              <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 10, marginBottom: 10 }}>
-                <input type="text" placeholder="First Name" value={consultForm.parentFirst} onChange={e => setConsultForm(p => ({ ...p, parentFirst: e.target.value }))} style={inputStyle} />
-                <input type="text" placeholder="Last Name" value={consultForm.parentLast} onChange={e => setConsultForm(p => ({ ...p, parentLast: e.target.value }))} style={inputStyle} />
-              </div>
-              <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 10, marginBottom: 10 }}>
-                <input type="email" placeholder="Email Address" value={consultForm.email} onChange={e => setConsultForm(p => ({ ...p, email: e.target.value }))} style={inputStyle} />
-                <input type="tel" placeholder="Phone Number" value={consultForm.phone} onChange={e => setConsultForm(p => ({ ...p, phone: e.target.value }))} style={inputStyle} />
-              </div>
-              <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr 80px", gap: 10, marginBottom: 24 }}>
-                <input type="text" placeholder="City *" value={consultForm.city} onChange={e => setConsultForm(p => ({ ...p, city: e.target.value }))} style={inputStyle} />
-                <input type="text" placeholder="State" value={consultForm.state} onChange={e => setConsultForm(p => ({ ...p, state: e.target.value }))} style={inputStyle} />
-                <input type="text" placeholder="ZIP *" value={consultForm.zip} onChange={e => setConsultForm(p => ({ ...p, zip: e.target.value }))} style={inputStyle} />
-              </div>
-
-              <p style={{ fontFamily: lora, fontSize: 11, letterSpacing: "0.3em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 12 }}>Student</p>
-              <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 10, marginBottom: 10 }}>
-                <input type="text" placeholder="First Name" value={consultForm.studentFirst} onChange={e => setConsultForm(p => ({ ...p, studentFirst: e.target.value }))} style={inputStyle} />
-                <input type="text" placeholder="Last Name" value={consultForm.studentLast} onChange={e => setConsultForm(p => ({ ...p, studentLast: e.target.value }))} style={inputStyle} />
-              </div>
-              <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 10, marginBottom: 10 }}>
-                <input type="text" placeholder="Age" value={consultForm.age} onChange={e => setConsultForm(p => ({ ...p, age: e.target.value }))} style={inputStyle} />
-                <input type="text" placeholder="Current Grade" value={consultForm.grade} onChange={e => setConsultForm(p => ({ ...p, grade: e.target.value }))} style={inputStyle} />
-              </div>
-              <select value={consultForm.program} onChange={e => setConsultForm(p => ({ ...p, program: e.target.value }))} style={{ ...inputStyle, marginBottom: 24, appearance: "none" }}>
-                <option value="summer">Summer Intensive</option>
-                <option value="foundation">Flagship — Foundation Semester</option>
-                <option value="venture">Flagship — Venture Semester</option>
-                <option value="full-year">Flagship — Full Academic Year</option>
+            <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 10, marginBottom: 10 }}>
+              {[["Email Address", "email"], ["Phone Number", "tel"]].map(([ph, type]) => (
+                <input key={ph} type={type} placeholder={ph} className="inquiry-input" style={{ background: "#FBF7EE", border: "1px solid rgba(0,0,0,.2)", color: "#010000", padding: "13px 16px", fontFamily: "'Lato', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
+              ))}
+            </div>
+            <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr 80px", gap: 10, marginBottom: 24 }}>
+              <input type="text" placeholder="City *" className="inquiry-input" style={{ background: "#FBF7EE", border: "1px solid rgba(0,0,0,.2)", color: "#010000", padding: "13px 16px", fontFamily: "'Lato', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} required />
+              <input type="text" placeholder="State" className="inquiry-input" style={{ background: "#FBF7EE", border: "1px solid rgba(0,0,0,.2)", color: "#010000", padding: "13px 16px", fontFamily: "'Lato', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
+              <input type="text" placeholder="ZIP *" className="inquiry-input" style={{ background: "#FBF7EE", border: "1px solid rgba(0,0,0,.2)", color: "#010000", padding: "13px 16px", fontFamily: "'Lato', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} required />
+            </div>
+            <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 11, letterSpacing: "0.25em", borderStyle: "none", color: "#A48D6E", fontWeight: 600, textTransform: "uppercase", marginBottom: 12 }}>Student</p>
+            <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 10, marginBottom: 10 }}>
+              {[["First Name", "text"], ["Last Name", "text"]].map(([ph, type]) => (
+                <input key={ph} type={type} placeholder={ph} className="inquiry-input" style={{ background: "#FBF7EE", border: "1px solid rgba(0,0,0,.2)", color: "#010000", padding: "13px 16px", fontFamily: "'Lato', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
+              ))}
+            </div>
+            <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 10, marginBottom: 10 }}>
+              <input type="text" placeholder="Age" className="inquiry-input" style={{ background: "#FBF7EE", border: "1px solid rgba(0,0,0,.2)", color: "#010000", padding: "13px 16px", fontFamily: "'Lato', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
+              <input type="text" placeholder="Current Grade" className="inquiry-input" style={{ background: "#FBF7EE", border: "1px solid rgba(0,0,0,.2)", color: "#010000", padding: "13px 16px", fontFamily: "'Lato', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
+            </div>
+            <select defaultValue="" style={{ background: "#fcf7ee", border: "1px solid rgba(16,15,12,.2)", color: "#100F0C", padding: "13px 16px", fontFamily: "'Lora', Georgia, serif", fontSize: 13, fontWeight: 400, outline: "none", width: "100%", marginBottom: 24, appearance: "none" }}>
+              <option value="" disabled>Program of Interest</option>
+              <option value="flagship">Flagship Program — Full Year, Foundation Semester, or Venture Semester</option>
+              <option value="sixweek">Six-Week Intensive</option>
+              <option value="summer">Summer Intensive</option>
+            </select>
+            <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 11, letterSpacing: "0.25em", color: "#A48D6E", fontWeight: 600, textTransform: "uppercase", marginBottom: 12, marginTop: 0 }}>Consultation Preferences</p>
+            <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 10, marginBottom: 10 }}>
+              <select className="inquiry-input" defaultValue="" style={{ background: "#FBF7EE", border: "1px solid rgba(0,0,0,.2)", color: "#010000", padding: "13px 16px", fontFamily: "'Lato', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%", appearance: "none" }}>
+                <option value="" disabled>Preferred Contact Method</option>
+                <option value="phone">Phone Call</option>
+                <option value="email">Email</option>
+                <option value="either">Either</option>
               </select>
-
-              <p style={{ fontFamily: lora, fontSize: 11, letterSpacing: "0.3em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 12 }}>Consultation Preferences</p>
-              <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 10, marginBottom: 10 }}>
-                <select value={consultForm.contactMethod} onChange={e => setConsultForm(p => ({ ...p, contactMethod: e.target.value }))} style={{ ...inputStyle, appearance: "none" }}>
-                  <option value="" disabled>Preferred Contact Method</option>
-                  <option value="phone">Phone Call</option>
-                  <option value="email">Email</option>
-                  <option value="either">Either</option>
-                </select>
-                <input type="text" placeholder="Preferred Consultation Date(s)" value={consultForm.dates} onChange={e => setConsultForm(p => ({ ...p, dates: e.target.value }))} style={inputStyle} />
-              </div>
-              <input type="text" placeholder="Preferred Times (for example, mornings, evenings, or weekends)" value={consultForm.times} onChange={e => setConsultForm(p => ({ ...p, times: e.target.value }))} style={{ ...inputStyle, marginBottom: 10 }} />
-              <textarea placeholder="Questions or context you would like us to know (optional)" value={consultForm.notes} onChange={e => setConsultForm(p => ({ ...p, notes: e.target.value }))} rows={4} style={{ ...inputStyle, marginBottom: 28, resize: "vertical" }} />
-
-
-              <button
-                onClick={async () => {
-                  const ok = await sendEmail({
-                    subject: "Admissions — Family Consultation Request",
-                    from_name: `${consultForm.parentFirst} ${consultForm.parentLast}`,
-                    email: consultForm.email,
-                    phone: consultForm.phone,
-                    city: consultForm.city, state: consultForm.state, zip: consultForm.zip,
-                    student_name: `${consultForm.studentFirst} ${consultForm.studentLast}`,
-                    student_age: consultForm.age, student_grade: consultForm.grade,
-                    program_interest: consultForm.program,
-                    contact_method: consultForm.contactMethod,
-                    preferred_dates: consultForm.dates,
-                    preferred_times: consultForm.times,
-                    notes: consultForm.notes,
-                  });
-                  setConsultStatus(ok ? "success" : "error");
-                }}
-                style={{ fontFamily: lora, padding: "15px 40px", background: gold, border: `1px solid ${gold}`, color: dark, fontSize: 11, fontWeight: 600, letterSpacing: "0.15em", textTransform: "uppercase", cursor: "pointer", width: "100%" }}
-              >
-                REQUEST A PRIVATE CONSULTATION
-              </button>
+              <input type="text" placeholder="Preferred Consultation Date(s)" className="inquiry-input" style={{ background: "#FBF7EE", border: "1px solid rgba(0,0,0,.2)", color: "#010000", padding: "13px 16px", fontFamily: "'Lato', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
             </div>
-          )}
+            <input type="text" placeholder="Preferred Times (for example, mornings, evenings, or weekends)" className="inquiry-input" style={{ background: "#FBF7EE", border: "1px solid rgba(0,0,0,.2)", color: "#010000", padding: "13px 16px", fontFamily: "'Lato', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%", marginBottom: 10 }} />
+            <textarea placeholder="Questions or context you would like us to know (optional)" className="inquiry-input" rows={4} style={{ background: "#FBF7EE", border: "1px solid rgba(0,0,0,.2)", color: "#010000", padding: "13px 16px", fontFamily: "'Lato', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%", marginBottom: 28, resize: "vertical" }} />
+            <button onClick={() => openInquiry && openInquiry("admissions")} style={{ fontFamily: "'Lato', sans-serif", padding: "15px 40px", background: "#DAC8AA", border: "none", color: "#100F0C", fontSize: 11, fontWeight: 600, letterSpacing: "0.15em", textTransform: "uppercase", cursor: "pointer", width: "100%" }}>REQUEST A PRIVATE CONSULTATION</button>
+          </div>
         </div>
       </div>
 
@@ -6974,16 +6788,16 @@ function SummerDetailPage({ setPage, openInquiry }) {
   ];
 
   const days = [
-    { n: "Day 1", title: "Orientation, Leadership & Team Formation", date: "Mon July 27", theme: "What makes leaders persuasive?" },
-    { n: "Day 2", title: "Market Research, AI Tools & Opportunity Discovery", date: "Tue July 28", theme: "A good idea means nothing without demand." },
-    { n: "Day 3", title: "Customer Validation & Branding", date: "Wed July 29", theme: "The market decides.", speaker: true },
-    { n: "Day 4", title: "Sales, Persuasion & MVP Development", date: "Thu July 30", theme: "Nothing happens until somebody sells." },
-    { n: "Day 5", title: "Revenue & Live Market Testing", date: "Fri July 31", theme: "Ideas are cheap. Execution matters.", speaker: true },
-    { n: "Day 6", title: "Leadership & Execution", date: "Mon Aug 3", theme: "Pressure reveals leadership." },
-    { n: "Day 7", title: "Marketing, Relationship-Building & Influence", date: "Tue Aug 4", theme: "Relationships are leverage.", speaker: true },
-    { n: "Day 8", title: "Pitch Building & Audience Psychology", date: "Wed Aug 5", theme: "A great idea poorly presented loses." },
-    { n: "Day 9", title: "Demo Day Rehearsal", date: "Thu Aug 6", theme: "Preparation creates confidence.", speaker: true },
-    { n: "Day 10", title: "Final Preparation Day", date: "Fri Aug 7", theme: "One more day. Make it count." },
+    { n: "Day 1", title: "Founder Orientation & Venture Selection", date: "Mon July 27", theme: "From idea to opportunity.", work: "Team formation · Founder roles & responsibilities · Problem & customer selection · 60-second problem pitch" },
+    { n: "Day 2", title: "Market Discovery & Customer Research", date: "Tue July 28", theme: "A good idea is not enough. Demand must be found.", work: "Market research · Competitor mapping · AI-assisted research · Customer interview design · First outreach list" },
+    { n: "Day 3", title: "Customer Validation & Offer Design", date: "Wed July 29", theme: "The market decides what matters.", speaker: true, work: "Customer discovery review · Offer design · Value proposition & pricing hypothesis · Landing page draft" },
+    { n: "Day 4", title: "MVP Build Sprint I", date: "Thu July 30", theme: "Build the smallest version that can test demand.", work: "MVP format selection · Landing page or prototype · Brand identity · Outreach message draft" },
+    { n: "Day 5", title: "MVP Build Sprint II & Market Test Preparation", date: "Fri July 31", theme: "Do not pitch theory. Put something in front of people.", speaker: true, work: "MVP refinement · Sales script & outreach campaign · Revenue model draft · First pitch checkpoint" },
+    { n: "Day 6", title: "Market Feedback, Pivot & Execution Plan", date: "Mon Aug 3", theme: "Feedback is not criticism. It is information.", work: "Weekend traction review · Customer feedback analysis · Offer refinement · Pricing adjustment" },
+    { n: "Day 7", title: "Sales, Marketing & Growth Sprint", date: "Tue Aug 4", theme: "A venture must earn attention and trust.", speaker: true, work: "Sales psychology · Marketing message · Customer acquisition channels · Outreach round two" },
+    { n: "Day 8", title: "Revenue Model, Metrics & Investor Logic", date: "Wed Aug 5", theme: "A venture must make sense, not just sound exciting.", work: "Revenue model · Pricing logic & unit economics · Traction metrics · Investor-style critique" },
+    { n: "Day 9", title: "Pitch Architecture & Boardroom Defense", date: "Thu Aug 6", theme: "A great idea poorly presented loses.", speaker: true, work: "Pitch deck structure · Founder narrative · Q&A defense · Faculty critique" },
+    { n: "Day 10", title: "Final Rehearsal & Venture Portfolio", date: "Fri Aug 7", theme: "Preparation creates command.", work: "Final deck polish · Pitch choreography · Portfolio case study · Final rehearsal under pressure" },
   ];
 
   return (
@@ -7300,7 +7114,50 @@ function SummerDetailPage({ setPage, openInquiry }) {
           <h2 style={{ fontFamily: "'adobe-garamond-pro', Georgia, serif", fontSize: isMobile ? "2.4rem" : "4.2rem", fontWeight: 400, fontStyle: "normal", color: "#100F0C", letterSpacing: ".0325em", lineHeight: 1.15, textTransform: "uppercase", marginBottom: 20 }}>SUMMER PROGRAM SCHEDULE</h2>
 
           {/* Subheading */}
-          <p style={{ fontFamily: "'Lora', Georgia, serif", fontSize: 18, color: "#100F0C", fontWeight: 400, lineHeight: 1.7, marginBottom: 48 }}> </p>
+          <p style={{ fontFamily: "'Lora', Georgia, serif", fontSize: 18, color: "#100F0C", fontWeight: 400, lineHeight: 1.7, marginBottom: 28, textAlign: "justify" }}>Venture Launchpad is a two-week founder simulation designed for ambitious high school students who want to experience the real process of building, testing, and presenting a venture.</p>
+
+          <p style={{ fontFamily: "'Lora', Georgia, serif", fontSize: 15, color: "#100F0C", fontWeight: 400, lineHeight: 1.8, marginBottom: 18, textAlign: "justify" }}>Students do not simply learn about entrepreneurship. They form teams, identify a real problem, research the market, validate demand, build a simple MVP or launchable offer, test their idea with real people, gather early traction signals, and prepare a final pitch for the Excalibur Venture Finale.</p>
+
+          <p style={{ fontFamily: "'Lora', Georgia, serif", fontSize: 15, color: "#100F0C", fontWeight: 400, lineHeight: 1.8, marginBottom: 18, textAlign: "justify" }}>The goal is not to create a fantasy business plan. The goal is to help students experience what founders actually do: find demand, build quickly, communicate clearly, test assumptions, adapt under pressure, and present with confidence.</p>
+
+          <p style={{ fontFamily: "'Lora', Georgia, serif", fontSize: 15, color: "#100F0C", fontWeight: 400, lineHeight: 1.8, marginBottom: 48, textAlign: "justify" }}>By the end of the intensive, each team will have developed a portfolio-ready venture case study including market research, customer validation, a simple MVP or launchable offer, sales and outreach materials, a pricing and revenue model, early traction signals, and a final pitch presentation.</p>
+
+          {/* The Daily Founder Rhythm */}
+          <p style={{ fontFamily: "'Lora', Georgia, serif", fontSize: 13, letterSpacing: "0.3em", color: "#100F0C", textTransform: "uppercase", fontWeight: 600, marginBottom: 18 }}>The Daily Founder Rhythm</p>
+          <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr 1fr" : "repeat(4,1fr)", gap: 1, marginBottom: 40, background: "#A48D6E" }}>
+            {[
+              ["Executive Communication Lab", "Daily training in public speaking, persuasion, debate, pitch delivery, executive presence, and boardroom communication."],
+              ["Founder Briefing", "A focused masterclass in business, AI, branding, sales, finance, market research, leadership, customer psychology, or investor logic."],
+              ["Venture Studio", "Hands-on team work where students build their venture, test assumptions, develop assets, refine their MVP, and prepare their final presentation."],
+              ["The Boardroom", "Daily critique, pitch drills, pressure testing, advisor feedback, Q&A preparation, and team accountability."],
+            ].map(([l, v]) => (
+              <div key={l} style={{ background: "#100F0C", padding: "22px 22px" }}>
+                <p style={{ fontFamily: "'Lora', Georgia, serif", fontSize: 11, letterSpacing: "0.2em", color: "#A48D6E", textTransform: "uppercase", fontWeight: 600, marginBottom: 10 }}>{l}</p>
+                <p style={{ fontFamily: "'Lora', Georgia, serif", fontSize: 13, fontWeight: 300, lineHeight: 1.6, color: "#E4D5C1" }}>{v}</p>
+              </div>
+            ))}
+          </div>
+
+          {/* Program Experience */}
+          <p style={{ fontFamily: "'Lora', Georgia, serif", fontSize: 13, letterSpacing: "0.3em", color: "#100F0C", textTransform: "uppercase", fontWeight: 600, marginBottom: 18 }}>Program Experience</p>
+          <p style={{ fontFamily: "'Lora', Georgia, serif", fontSize: 15, color: "#100F0C", fontWeight: 400, lineHeight: 1.8, marginBottom: 18, textAlign: "justify" }}>Venture Launchpad is built around action. Students work in teams throughout the program, learning how to lead, collaborate, delegate, disagree productively, make decisions, and move an idea forward under time pressure.</p>
+
+          <p style={{ fontFamily: "'Lora', Georgia, serif", fontSize: 15, color: "#100F0C", fontWeight: 400, lineHeight: 1.8, marginBottom: 18, textAlign: "justify" }}>The intensive also extends beyond the classroom. Students receive founder assignments between sessions, but these are not traditional homework tasks completed quietly behind a screen. Instead, students are expected to work as founders do: meeting with their teams, brainstorming ideas, dividing responsibilities, conducting customer research, testing assumptions, preparing outreach, visiting relevant local environments, speaking with potential users, gathering feedback, and refining their venture in real time.</p>
+
+          <p style={{ fontFamily: "'Lora', Georgia, serif", fontSize: 15, color: "#100F0C", fontWeight: 400, lineHeight: 1.8, marginBottom: 48, textAlign: "justify" }}>The goal is to help students understand that entrepreneurship is not simply about having ideas. It is about communication, initiative, teamwork, execution, and the courage to bring an idea into contact with the real world.</p>
+
+          {/* Venture Outcomes */}
+          <p style={{ fontFamily: "'Lora', Georgia, serif", fontSize: 13, letterSpacing: "0.3em", color: "#100F0C", textTransform: "uppercase", fontWeight: 600, marginBottom: 18 }}>Venture Outcomes</p>
+          <p style={{ fontFamily: "'Lora', Georgia, serif", fontSize: 15, color: "#100F0C", fontWeight: 400, lineHeight: 1.8, marginBottom: 22, textAlign: "justify" }}>By the end of the program, each team will work toward developing:</p>
+          <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: "10px 32px", marginBottom: 22 }}>
+            {["A clear problem and customer profile","Market and competitor research","Customer validation evidence","A simple MVP, prototype, landing page, service package, or launchable offer","A pricing and revenue model","Sales and outreach materials","Early traction signals — waitlist signups, pre-order interest, pilot commitments, letters of interest, customer interviews, or first sales","A final pitch deck and live presentation","A portfolio-ready venture case study"].map((f, i) => (
+              <div key={i} style={{ display: "flex", gap: 12, alignItems: "flex-start" }}>
+                <div style={{ width: 16, height: 1.5, background: "rgba(16,15,12,.4)", marginTop: 9, flexShrink: 0 }} />
+                <span style={{ fontFamily: "'Lora', Georgia, serif", fontSize: 14, color: "#100F0C", fontWeight: 400, lineHeight: 1.7 }}>{f}</span>
+              </div>
+            ))}
+          </div>
+          <p style={{ fontFamily: "'Lora', Georgia, serif", fontSize: 15, color: "#100F0C", fontWeight: 400, lineHeight: 1.8, marginBottom: 40, textAlign: "justify" }}>Not every venture will produce the same type of traction. Some teams may secure early customers or pre-order interest. Others may gather waitlist signups, pilot conversations, customer interviews, referral introductions, or meaningful market feedback. The emphasis is on real-world testing, not theoretical planning.</p>
 
           {/* Daily format summary bar */}
           <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr 1fr" : "repeat(4,1fr)", gap: 1, marginBottom: 40, background: "#A48D6E" }}>
@@ -7335,7 +7192,10 @@ function SummerDetailPage({ setPage, openInquiry }) {
                     </div>
                     <div>
                       <p style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: isMobile ? 18 : 22, fontWeight: 400, color:"#A48D6E", lineHeight: 1.2, marginBottom: 3 }}>{d.title}</p>
-                      <p style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: 15, fontStyle: "italic", fontWeight: 400, color: "#E4D5C1" }}>"{d.theme}"</p>
+                      <p style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: 15, fontStyle: "italic", fontWeight: 400, color: "#E4D5C1", marginBottom: d.work ? 6 : 0 }}>"{d.theme}"</p>
+                      {d.work && (
+                        <p style={{ fontFamily: "'Lora', Georgia, serif", fontSize: 11, letterSpacing: "0.04em", color: "rgba(228,213,193,.65)", fontWeight: 400, lineHeight: 1.6 }}>{d.work}</p>
+                      )}
                     </div>
                     {d.speaker && !isMobile && (
                       <span style={{ fontFamily: "'Lora', Georgia, serif", fontSize: 9, letterSpacing: "0.15em", color: "#E4D5C1", border: "1px solid rgba(164,141,110,.4)", padding: "4px 10px", textTransform: "uppercase", whiteSpace: "nowrap", background:"#100F0C", fontWeight: 600 }}>Guest Speaker</span>
@@ -7343,6 +7203,21 @@ function SummerDetailPage({ setPage, openInquiry }) {
                   </div>
                 ))}
               </div>
+
+              {/* Weekend Field Sprint — appears only after Week I */}
+              {week === "I" && (
+                <div style={{ padding: isMobile ? "32px 0 0" : "44px 0 0", marginTop: 16, borderTop: "1px solid rgba(16,15,12,.15)" }}>
+                  <p style={{ fontFamily: "'Lora', Georgia, serif", fontSize: 11, letterSpacing: "0.3em", color: "#100F0C", textTransform: "uppercase", fontWeight: 600, marginBottom: 10 }}>Weekend Field Sprint · August 1 – August 2</p>
+                  <p style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: isMobile ? 22 : 26, fontWeight: 400, fontStyle: "italic", color: "#100F0C", lineHeight: 1.3, marginBottom: 16 }}>Founders do not build only in classrooms.</p>
+                  <p style={{ fontFamily: "'Lora', Georgia, serif", fontSize: 14, color: "#100F0C", fontWeight: 400, lineHeight: 1.8, marginBottom: 16, textAlign: "justify" }}>Between Week I and Week II, students enter the Weekend Field Sprint: a structured period of team-based venture work, market testing, networking, and real-world discovery. Teams continue working outside the classroom — meeting in person or virtually, dividing responsibilities, preparing outreach, speaking with potential customers, testing their offer, gathering feedback, and refining their MVP or launch materials.</p>
+                  <p style={{ fontFamily: "'Lora', Georgia, serif", fontSize: 14, color: "#100F0C", fontWeight: 400, lineHeight: 1.8, marginBottom: 22, textAlign: "justify" }}>Where parent-approved, students may also attend relevant community events in teams with TAs or parents, visit local businesses, observe customer environments, conduct informal market research, and speak with potential users, partners, mentors, and early supporters connected to their venture topic. Each team returns on Monday with real market feedback, traction data, and a clearer understanding of what the market actually wants.</p>
+                  <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
+                    {["Team strategy meeting","Customer interviews","Local field research","Networking conversations","Outreach to potential users or partners","Landing page or waitlist testing","Pre-order or pilot interest outreach","MVP refinement","Pitch practice"].map(t => (
+                      <span key={t} style={{ fontFamily: "'Lora', Georgia, serif", fontSize: 11, fontWeight: 400, color: "#100F0C", background: "rgba(164,141,110,.25)", padding: "4px 12px", borderRadius: 20 }}>{t}</span>
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
           ))}
         </div>
@@ -7350,28 +7225,45 @@ function SummerDetailPage({ setPage, openInquiry }) {
 
       {/* VENTURE FINALE */}
       <div style={{ background: "#E4D5C1", padding: isMobile ? "60px 28px" : "88px 80px" }}>
-        <div style={{ maxWidth: 820, margin: "0 auto" }}>
+        <div style={{ maxWidth: 1100, margin: "0 auto" }}>
 
           {/* Eyebrow */}
-          <p style={{ fontFamily: "'Lora', Georgia, serif", fontSize: 15, letterSpacing: "0.45em", color: "#100F0C", fontWeight: 600, textTransform: "uppercase", marginBottom: 18 }}>The Culmination · Saturday August 8, 2026</p>
+          <p style={{ fontFamily: "'Lora', Georgia, serif", fontSize: 15, letterSpacing: "0.45em", color: "#100F0C", fontWeight: 600, textTransform: "uppercase", marginBottom: 18 }}>The Culmination · Saturday, August 8</p>
 
           {/* Section heading — Adobe Garamond, matches Program Overview */}
-          <h2 style={{ fontFamily: "'adobe-garamond-pro', Georgia, serif", fontSize: isMobile ? "2rem" : "3.8rem", fontWeight: 400, fontStyle: "normal", color: "#100F0C", letterSpacing: ".0325em", lineHeight: 1.15, textTransform: "uppercase", marginBottom: 40 }}>Excalibur<br />Venture Finale</h2>
+          <h2 style={{ fontFamily: "'adobe-garamond-pro', Georgia, serif", fontSize: isMobile ? "2rem" : "3.8rem", fontWeight: 400, fontStyle: "normal", color: "#100F0C", letterSpacing: ".0325em", lineHeight: 1.15, textTransform: "uppercase", marginBottom: 40 }}>Shark Tank-Inspired<br />Venture Finale</h2>
 
-          {/* Body paragraphs with drop cap T */}
-          <div style={{ marginBottom: 28 }}>
-            <p style={{ fontFamily: "'Lora', Georgia, serif", fontSize: 15, lineHeight: 1.7, color: "#100F0C", fontWeight: 400, textAlign: "justify" }}>
-              <span style={{ fontFamily: "'adobe-garamond-pro', Georgia, serif", fontSize: isMobile ? "4.8rem" : "6.4rem", fontWeight: 400, lineHeight: 0.8, float: "left", marginRight: 10, marginTop: 8, color: "#100F0C" }}>T</span>
-              he Venture Finale takes place at a selected South Orange County venue, where families gather alongside investors, executives, entrepreneurs, and community leaders. One by one, each team takes the floor to present what they have built — ten days of research, strategy, execution, and growth, defended before people who understand what real leadership and enterprise require.
-            </p>
+          {/* Editorial two-column split, justified, drop cap on opening paragraph */}
+          <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: isMobile ? 24 : 56, marginBottom: 48 }}>
+            <div>
+              <div style={{ marginBottom: 18 }}>
+                <p style={{ fontFamily: "'Lora', Georgia, serif", fontSize: 15, lineHeight: 1.8, color: "#100F0C", fontWeight: 400, textAlign: "justify" }}>
+                  <span style={{ fontFamily: "'adobe-garamond-pro', Georgia, serif", fontSize: isMobile ? "4.4rem" : "5.4rem", fontWeight: 400, lineHeight: 0.8, float: "left", marginRight: 10, marginTop: 6, color: "#100F0C" }}>T</span>
+                  he program concludes with the Excalibur Venture Finale: a formal presentation day where student teams present their ventures before real investors, community leaders, families and invited guests. One by one, each team takes the floor to present what they have built — ten days of research, strategy, execution, and growth, defended before people who understand what real leadership and enterprise require.
+                </p>
+              </div>
+              <div style={{ clear: "both" }} />
+              <p style={{ fontFamily: "'Lora', Georgia, serif", fontSize: 15, lineHeight: 1.8, color: "#100F0C", fontWeight: 400, marginBottom: 18, textAlign: "justify" }}>Each team delivers a polished venture pitch, shares its market research, presents its MVP or launchable offer, explains its revenue model, and discusses the early traction gathered during the program.</p>
+              <p style={{ fontFamily: "'Lora', Georgia, serif", fontSize: 15, lineHeight: 1.8, color: "#100F0C", fontWeight: 400, marginBottom: 18, textAlign: "justify" }}>The Finale is not a theoretical class presentation. It is the public culmination of two weeks of founder training, market testing, communication work, team execution, and real-world feedback.</p>
+              <p style={{ fontFamily: "'Lora', Georgia, serif", fontSize: 15, lineHeight: 1.8, color: "#100F0C", fontWeight: 400, textAlign: "justify" }}>Teams are evaluated on concept strength, market research, customer insight, marketing strategy, business logic, and composure under questioning. Medici track teams are additionally evaluated by invited community officials.</p>
+            </div>
+            <div>
+              <p style={{ fontFamily: "'Lora', Georgia, serif", fontSize: 11, letterSpacing: "0.3em", color: "#100F0C", textTransform: "uppercase", fontWeight: 600, marginBottom: 16 }}>Final Presentation Includes</p>
+              <div style={{ display: "flex", flexDirection: "column", gap: 10, marginBottom: 22 }}>
+                {["The problem","The customer","The market opportunity","The MVP or launchable offer","Validation evidence","Revenue model","Traction signals","Go-to-market strategy","Team roles","Final ask or next step"].map((f, i) => (
+                  <div key={i} style={{ display: "flex", gap: 12, alignItems: "flex-start" }}>
+                    <div style={{ width: 16, height: 1.5, background: "rgba(16,15,12,.4)", marginTop: 9, flexShrink: 0 }} />
+                    <span style={{ fontFamily: "'Lora', Georgia, serif", fontSize: 14, color: "#100F0C", fontWeight: 400, lineHeight: 1.6 }}>{f}</span>
+                  </div>
+                ))}
+              </div>
+              <p style={{ fontFamily: "'Lora', Georgia, serif", fontSize: 15, lineHeight: 1.8, color: "#100F0C", fontWeight: 400, textAlign: "justify" }}>The Venture Finale gives students a meaningful public speaking milestone, a real venture launch portfolio, and a serious experience they can reference in future interviews, applications, and leadership opportunities.</p>
+            </div>
           </div>
-          <div style={{ clear: "both" }} />
-
-          <p style={{ fontFamily: "'Lora', Georgia, serif", fontSize: 19, lineHeight: 1.7, color: "#100F0C", fontWeight: 700, marginBottom: 48, textAlign: "justify" }}>Teams are evaluated on concept strength, market research, customer insight, marketing strategy, business logic, and composure under questioning. Medici track teams are additionally evaluated by invited community officials.</p>
 
           {/* Awards section */}
-          <div style={{ marginBottom: 0 }}>
-            <p style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: 28, letterSpacing: "0.04em", color: "#100F0C", fontWeight: 700, fontStyle: "italic", textTransform: "uppercase", marginBottom: 28 }}>Formal Recognition</p>
+          <div style={{ marginBottom: 0, maxWidth: 820 }}>
+            <p style={{ fontFamily: "'adobe-garamond-pro', Georgia, serif", fontSize: 32, letterSpacing: "0.04em", color: "#100F0C", fontWeight: 700, fontStyle: "normal", textTransform: "uppercase", marginBottom: 28 }}>Formal Recognition</p>
             {[
               ["Best Venture Concept","Strongest overall venture — idea quality, validation, and execution across the full two weeks."],
               ["Best Pitch","Most compelling, confident, and well-structured presentation delivered on Finale day."],
@@ -7395,9 +7287,9 @@ function SummerDetailPage({ setPage, openInquiry }) {
       <div style={{ background: "#100F0C", padding: isMobile ? "52px 24px" : "80px 80px" }}>
         <div style={{ maxWidth: 1100, margin: "0 auto" }}>
           <div style={{ display: "flex", alignItems: "center", gap: 14, marginBottom: 16 }}>
-            <p style={{ fontFamily: "'Lora', Georgia, serif", fontSize: 15, letterSpacing: "0.45em", color:"#A48D6E", fontWeight: 600, textTransform: "uppercase", margin: 0 }}>Team Formation</p>
+            <p style={{ fontFamily: "'Lora', Georgia, serif", fontSize: 15, letterSpacing: "0.45em", color:"#A48D6E", fontWeight: 600, textTransform: "uppercase", margin: 0 }}>Commercial or Community Venture</p>
           </div>
-          <h2 style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: isMobile ? "2rem" : "3.8rem", fontWeight: 400, fontStyle: "normal", color:"#E4D5C1", letterSpacing: ".0325em", lineHeight: 1.15, textTransform: "uppercase", marginBottom: 20 }}>Teams formed before the program begins</h2>
+          <h2 style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: isMobile ? "2rem" : "3.8rem", fontWeight: 400, fontStyle: "normal", color:"#E4D5C1", letterSpacing: ".0325em", lineHeight: 1.15, textTransform: "uppercase", marginBottom: 20 }}>Team Formation</h2>
           <p style={{ fontFamily: "'Lora', Georgia, serif", fontSize: 16, color:"#E4D5C1", fontWeight: 400, lineHeight: 1.7, marginBottom: 48, maxWidth: 640, textAlign: isMobile ? "justify" : "left" }}>Teams are curated before the program begins — aligned by track and balanced by skill set — commercial or community venture. Students arrive on Day 1 already placed with their venture team, allowing the program to move immediately into leadership dynamics, role definition, collaboration, and execution.</p>
 
           {/* Placeholder photos */}
@@ -7485,7 +7377,7 @@ function SummerDetailPage({ setPage, openInquiry }) {
             <p style={{ fontFamily: "'Lora', Georgia, serif", fontSize: 15, letterSpacing: "0.45em", color:"#A48D6E", fontWeight: 600, textTransform: "uppercase", marginBottom: 18 }}>Included in Tuition</p>
             
             {/* List items */}
-            {["Daily public speaking and executive communication training","Venture development — market research, competitor analysis, business planning","Marketing strategy, branding, and customer psychology","AI tools for business research, analysis, and presentation","Sales, persuasion, and pitch training","Distinguished guest speakers from business, entrepreneurship, and selected industry sectors","Excalibur Venture Finale — live Shark Tank-inspired pitch before invited investors, entrepreneurs, executives, and practitioners","Certificate of Completion and Student Venture Portfolio","Catered daily lunches, snacks, smoothies and refreshments","Priority consideration for the Ten-Month Flagship Overview",""].map((item, i) => (
+            {["Daily public speaking and executive communication training","Venture development — market research, competitor analysis, business planning","Marketing strategy, branding, and customer psychology","AI tools for business research, analysis, and presentation","Sales, persuasion, and pitch training","Distinguished guest speakers from business, entrepreneurship, and selected industry sectors","Excalibur Venture Finale — live Shark Tank-inspired pitch before invited investors, entrepreneurs, executives, and practitioners","Certificate of Completion and Student Venture Portfolio","Catered daily lunches, snacks, smoothies and refreshments","Priority consideration for the Flagship Program",""].map((item, i) => (
               <div key={i} style={{ display: "flex", gap: 12, padding: "12px 0", borderBottom: "0.5px solid rgba(228,213,193,.15)", alignItems: "flex-start" }}>
                 <span style={{ fontFamily: serif, fontSize: 11, color:"#E4D5C1", flexShrink: 0, paddingTop: 2 }}>—</span>
                 <span style={{ fontFamily: "'Lora', Georgia, serif", fontSize: 14, color:"#E4D5C1", fontWeight: 400, lineHeight: 1.6 }}>{item}</span>
@@ -7500,18 +7392,8 @@ function SummerDetailPage({ setPage, openInquiry }) {
         </div>
       </div>
 
-      {/* EXCALIBUR IVY PORTFOLIO */}
-      <div style={{ background: "#E4D5C1", padding: isMobile ? "52px 0 0" : "72px 0 0" }}>
-        <div style={{ maxWidth: 1100, margin: "0 auto", padding: isMobile ? "0 24px" : "0 80px", textAlign: "center", marginBottom: isMobile ? 24 : 32 }}>
-          <p style={{ fontFamily: sans, fontSize: 10, letterSpacing: "0.2em", color: "#010000", fontWeight: 700, textTransform: "uppercase", marginBottom: 10 }}>The Excalibur Graduate</p>
-          <h2 style={{ fontFamily: "'Bodoni Cyrillic', 'Bodoni MT', serif", fontSize: isMobile ? 28 : 42, fontWeight: 400, color: "#010000", lineHeight: 1.0, marginBottom: 8, textTransform: "uppercase", letterSpacing: "0.04em" }}>Excalibur “Ivy” Portfolio</h2>
-          <p style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: 16, color: "#010000", fontStyle: "italic" }}>A record of work, judgment, and growth.</p>
-        </div>
-        <PortfolioIndexWhite isMobile={isMobile} setPage={setPage} images={["https://i.imgur.com/xNrPz7m.jpeg", "https://i.imgur.com/ev0MLKy.jpeg"]} />
-      </div>
-
       {/* HOW TO APPLY */}
-      <div style={{ background: "#34150F", padding: isMobile ? "52px 24px" : "72px 80px", borderTop: "1px solid rgba(228,213,193,.1)" }}>
+      <div style={{ background: "#100F0C", padding: isMobile ? "52px 24px" : "72px 80px", borderTop: "1px solid rgba(228,213,193,.1)" }}>
         <div style={{ maxWidth: 1100, margin: "0 auto", display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: isMobile ? 32 : 48, alignItems: "stretch" }}>
           
           {/* Left: Steps */}
@@ -7520,16 +7402,19 @@ function SummerDetailPage({ setPage, openInquiry }) {
             <h2 style={{ fontFamily: "'adobe-garamond-pro', Georgia, serif", fontSize: isMobile ? "2rem" : "3.8rem", fontWeight: 400, fontStyle: "normal", color:"#E4D5C1", letterSpacing: ".0325em", lineHeight: 1.15, textTransform: "uppercase", marginBottom: 40 }}>How to Apply</h2>
             <div style={{ display: "flex", flexDirection: "column" }}>
               {[
-                {n:"01",title:"Submit Application",desc:"Begin with a short application for admissions review."},
-                {n:"02",title:"Admissions Consultation",desc:"A member of the admissions team will contact the family promptly to answer questions, discuss the student's goals, and walk through program options and availability."},
-                {n:"03",title:"Program Pathways Confirmation",desc:"Upon acceptance, enrollment is confirmed upon receipt of the enrollment agreement and deposit. Each cohort is limited to 20 students to preserve the quality of instruction, mentorship, and direct feedback."},
+                {n:"01",title:"Online Application",desc:"Families begin by completing the online application form. The application collects basic student information, academic background, interests, parent or guardian details, a short statement about why the student would like to join the Venture Launchpad Summer Intensive, and an answer to a simple question: “What is your dream?”"},
+                {n:"02",title:"Admissions Review — 72 Hours",desc:"Once submitted, each application is reviewed by the Excalibur admissions team within 72 hours. The review considers student motivation, maturity, communication potential, leadership interest, and overall fit for the intensive team-based environment."},
+                {n:"03",title:"Admissions Decision",desc:"Accepted students receive a formal letter of admission and a curated welcome package containing all materials required for the intensive. Families are granted access to the Excalibur Parent and Student Portals and are personally guided through onboarding by a dedicated Enrollment Advisor.\n\nThe portals provide comprehensive access to the program schedule, curriculum framework, logistics, faculty and teaching assistant profiles, daily lunch and catering menus, key logistics, required documentation, and important program communications."},
+                {n:"04",title:"Onboarding",desc:"During onboarding, families will confirm dietary preferences, complete enrollment requirements, and receive personalized guidance to ensure a seamless start to Venture Launchpad.\n\nStudents will also receive exclusive Excalibur Academy apparel and a professionally prepared set of program materials designed for the intensive experience."},
               ].map((step) => (
                 <div key={step.n} style={{ padding: "24px 0", borderBottom: "1px solid rgba(228,213,193,.15)", position: "relative" }}>
-                  <div style={{ width: 44, height: 44, border: "1px solid rgba(228,213,193,.25)", display: "flex", alignItems: "center", justifyContent: "center", marginBottom: 16, background: "#34150F" }}>
+                  <div style={{ width: 44, height: 44, border: "1px solid rgba(228,213,193,.25)", display: "flex", alignItems: "center", justifyContent: "center", marginBottom: 16, background: "#100F0C" }}>
                     <span style={{ fontFamily: "'adobe-garamond-pro', Georgia, serif", fontSize: 18, fontWeight: 400, color:"#A48D6E" }}>{step.n}</span>
                   </div>
                   <p style={{ fontFamily: "'adobe-garamond-pro', Georgia, serif", fontSize: 20, fontWeight: 400, color:"#A48D6E", lineHeight: 1.25, marginBottom: 12, textTransform: "uppercase", letterSpacing: "0.08em" }}>{step.title}</p>
-                  <p style={{ fontFamily: "'Lora', Georgia, serif", fontSize: 15, color:"#E4D5C1", fontWeight: 400, lineHeight: 1.7, textAlign: "justify" }}>{step.desc}</p>
+                  {step.desc.split("\n\n").map((para, pi) => (
+                    <p key={pi} style={{ fontFamily: "'Lora', Georgia, serif", fontSize: 15, color:"#E4D5C1", fontWeight: 400, lineHeight: 1.7, textAlign: "justify", marginBottom: pi < step.desc.split("\n\n").length - 1 ? 14 : 0 }}>{para}</p>
+                  ))}
                 </div>
               ))}
             </div>
@@ -7545,25 +7430,24 @@ function SummerDetailPage({ setPage, openInquiry }) {
       </div>
 
       {/* ENROLLMENT */}
-      <div style={{ background: "#100F0C", padding: isMobile ? "52px 24px" : "72px 80px" }}>
+      <div style={{ background: "#E4D5C1", padding: isMobile ? "52px 24px" : "72px 80px" }}>
         <div style={{ maxWidth: 1100, margin: "0 auto" }}>
-          <p style={{ fontFamily: "'Lora', Georgia, serif", fontSize: 15, letterSpacing: "0.45em", color:"#A48D6E", fontWeight: 600, textTransform: "uppercase", marginBottom: 18 }}>Program Pathways · Summer 2026</p>
-          <h2 style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: isMobile ? "2rem" : "3.8rem", fontWeight: 400, fontStyle: "normal", color: "#A48D6E", letterSpacing: ".0325em", lineHeight: 1.15, textTransform: "uppercase", marginBottom: 20 }}>Apply for Summer 2026</h2>
-          <p style={{ fontFamily: "'Lora', Georgia, serif", fontSize: 16, color:"#E4D5C1", fontWeight: 400, lineHeight: 1.7, marginBottom: 48, maxWidth: 640, textAlign: isMobile ? "justify" : "left" }}>Select your program wave and submit your application. A Dedicated Enrollment Coordinator will follow up with next steps.</p>
+          <p style={{ fontFamily: "'Lora', Georgia, serif", fontSize: 15, letterSpacing: "0.45em", color:"#A48D6E", fontWeight: 600, textTransform: "uppercase", marginBottom: 18 }}>ADMISSIONS</p>
+          <h2 style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: isMobile ? "1.75rem" : "3.55rem", fontWeight: 400, fontStyle: "normal", color: "#100F0C", letterSpacing: ".0325em", lineHeight: 1.15, textTransform: "uppercase", marginBottom: 48 }}>Apply for Summer 2026</h2>
           <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 2, marginBottom: 2 }}>
-            {[{label:"WAVE — JULY 27",wave:"SUMMER WAVE",dates:"July 27 – August 8, 2026",days:"Monday – Friday · 9:30 AM – 4:00 PM",tag:"● Program Pathways Open",tagColor:"#A48D6E"}].map((w, i) => (
-              <div key={i} style={{ background: "#E4D5C1", padding: isMobile ? "36px 24px" : "48px 44px", borderTop: `2px solid #A48D6E` }}>
+            {[{label:"WAVE — JULY 27",wave:"SUMMER WAVE",dates:"July 27 – August 8, 2026",days:"Monday – Friday · 9:30 AM – 4:00 PM",tag:"● Enrollment Open",tagColor:"#A48D6E"}].map((w, i) => (
+              <div key={i} style={{ background: "#E4D5C1", padding: isMobile ? "36px 24px" : "48px 44px", border: `2px solid #A48D6E` }}>
                 <p style={{ fontFamily: "'Lora', Georgia, serif", fontSize: 11, letterSpacing: "0.3em", color:"#100F0C", fontWeight: 600, textTransform: "uppercase", marginBottom: 12 }}>{w.label}</p>
                 <h3 style={{ fontFamily: "'adobe-garamond-pro', Georgia, serif", fontSize: 28, fontWeight: 400, fontStyle: "normal", color:"#100F0C", marginBottom: 6, lineHeight: 1, textTransform: "uppercase", letterSpacing: "0.08em" }}>{w.wave}</h3>
                 <p style={{ fontFamily: "'Lora', Georgia, serif", fontSize: 16, color:"#100F0C", fontStyle: "italic", marginBottom: 20 }}>{w.dates}</p>
                 <div style={{ height: "1px", background: "rgba(16,15,12,.15)", marginBottom: 20 }} />
-                {[["Schedule","Mon–Fri · 9:30 AM–4:00 PM · Venture Finale Saturday Aug 8"],["Duration","Two Weeks · 10 Full Days"],["Class Size","Limited to 20 students"],["Tuition","$4,500 per Summer Intensive"],["Includes","Daily lunch · Guest practitioners · Venture Studio · Shark Tank-inspired Venture Finale"]].map(([k,v]) => (
+                {[["Schedule","Mon–Fri · 9:30 AM–4:00 PM · Venture Finale Saturday Aug 8"],["Duration","Two Weeks · 10 Full Days"],["Class Size","Limited to 20 students"],["Tuition","$4,500 per Summer Intensive"],["Includes","Daily catered lunch & snacks · Guest Speakers · Venture Studio & Launchpad · Shark Tank-inspired Venture Finale"]].map(([k,v]) => (
                   <div key={k} style={{ display: "grid", gridTemplateColumns: "100px 1fr", gap: 16, padding: "9px 0", borderBottom: "1px solid rgba(16,15,12,.1)", alignItems: "flex-start" }}>
                     <span style={{ fontFamily: "'Lora', Georgia, serif", fontSize: 15, letterSpacing: "0.08em", color: "#100F0C", textTransform: "uppercase", fontWeight: 600 }}>{k}</span>
                     <span style={{ fontFamily: "'Lora', Georgia, serif", fontSize: 15, color:"#100F0C", fontWeight: 400, lineHeight: 1.6 }}>{v}</span>
                   </div>
                 ))}
-                <p style={{ fontFamily: "'Lora', Georgia, serif", fontSize: 11, color: "#100F0C", letterSpacing: "0.15em", fontWeight: 600, marginTop: 20, marginBottom: 20, textTransform: "uppercase" }}>● Program Pathways Open</p>
+                <p style={{ fontFamily: "'Lora', Georgia, serif", fontSize: 11, color: "#100F0C", letterSpacing: "0.15em", fontWeight: 600, marginTop: 20, marginBottom: 20, textTransform: "uppercase" }}>● Enrollment Open</p>
                 <button onClick={() => openInquiry && openInquiry("summer")} style={{ fontFamily: "'Lora', Georgia, serif", padding: "13px 0", background: "#100F0C", border: "none", color: "#E4D5C1", fontSize: 11, fontWeight: 600, letterSpacing: "0.15em", textTransform: "uppercase", cursor: "pointer", width: "100%" }}>COMPLETE APPLICATION →</button>
               </div>
             ))}
@@ -7587,71 +7471,68 @@ function SummerDetailPage({ setPage, openInquiry }) {
       {/* ── SOIREE ── */}
       <SoireeInviteBlock openInquiry={openInquiry} setPage={setPage} />
 
+      {/* EXCALIBUR IVY PORTFOLIO */}
+      <div style={{ background: "#E4D5C1", padding: isMobile ? "52px 0 0" : "72px 0 0" }}>
+        <div style={{ maxWidth: 1100, margin: "0 auto", padding: isMobile ? "0 24px" : "0 80px", textAlign: "center", marginBottom: isMobile ? 24 : 32 }}>
+          <p style={{ fontFamily: sans, fontSize: 10, letterSpacing: "0.2em", color: "#010000", fontWeight: 700, textTransform: "uppercase", marginBottom: 10 }}>The Excalibur Graduate</p>
+          <h2 style={{ fontFamily: "'Bodoni Cyrillic', 'Bodoni MT', serif", fontSize: isMobile ? 28 : 42, fontWeight: 400, color: "#010000", lineHeight: 1.0, marginBottom: 8, textTransform: "uppercase", letterSpacing: "0.04em" }}>Excalibur “Ivy” Portfolio</h2>
+          <p style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: 21, color: "#010000", fontStyle: "italic" }}>A record of work, leadership, and growth — From summer intensive to flagship full formation after school program</p>
+        </div>
+        <PortfolioIndexWhite isMobile={isMobile} setPage={setPage} images={["https://i.imgur.com/xNrPz7m.jpeg", "https://i.imgur.com/ev0MLKy.jpeg"]} />
+      </div>
+
       {/* FAMILY CONSULTATION FORM */}
-      <style>{`
-        .consultation-form input::placeholder,
-        .consultation-form textarea::placeholder {
-          color: #E4D5C1 !important;
-          opacity: 1;
-        }
-        .consultation-form input::-webkit-input-placeholder {
-          color: #E4D5C1;
-        }
-        .consultation-form input::-moz-placeholder {
-          color: #E4D5C1;
-          opacity: 1;
-        }
-        .consultation-form textarea::-moz-placeholder {
-          color: #E4D5C1;
-          opacity: 1;
-        }
-      `}</style>
-      <div style={{ background: "#100F0C", padding: isMobile ? "52px 24px" : "72px 80px", borderTop: "1px solid rgba(164,141,110,.2)" }}>
-        <div style={{ maxWidth: 1100, margin: "0 auto" }}>
-          <p style={{ fontFamily: "'Lora', Georgia, serif", fontSize: 15, letterSpacing: "0.45em", color:"#A48D6E", fontWeight: 600, textTransform: "uppercase", marginBottom: 18 }}>Private Admissions Consultation</p>
-          <h2 style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: isMobile ? "2.4rem" : "4.2rem", fontWeight: 400, fontStyle: "normal", color:"#E4D5C1", letterSpacing: ".0325em", lineHeight: 1.15, textTransform: "uppercase", marginBottom: 40 }}>Schedule a Family Consultation</h2>
-          <p style={{ fontFamily: "'Lora', Georgia, serif", fontSize: 16, color:"#E4D5C1", fontWeight: 400, lineHeight: 1.7, marginBottom: 48, maxWidth: 640, textAlign: "justify" }}>Please submit your information to schedule a private admissions consultation. A dedicated Program Pathways Coordinator will guide your family through program options, admissions steps, curriculum, tuition, schedule fit, and next steps.</p>
-          <div className="consultation-form" style={{ background: "#100F0C", borderTop: `1px solid #A48D6E`, padding: "36px 32px" }}>
-            <p style={{ fontFamily: "'Lora', Georgia, serif", fontSize: 11, letterSpacing: "0.3em", color: "#A48D6E", textTransform: "uppercase", fontWeight: 600, marginBottom: 12 }}>Parent / Guardian</p>
+      <div style={{ background: "rgba(16, 15, 12, 1)", padding: isMobile ? "52px 24px" : "72px 80px", borderTop: "1px solid rgba(0,0,0,.08)" }}>
+        <div style={{ maxWidth: 740, margin: "0 auto" }}>
+          <p style={{ fontFamily: "'Lato', sans-serif", fontSize: 9, letterSpacing: "0.4em", color: "#A48D6E", fontWeight: 600, textTransform: "uppercase", marginBottom: 16 }}>Private Admissions Consultation</p>
+          <h2 style={{ fontFamily: serif, fontSize: isMobile ? 28 : 40, fontWeight: 600, color: "#A48D6E", lineHeight: 1.05, marginBottom: 8 }}>Schedule a Family Consultation</h2>
+          <p style={{ fontFamily: sans, fontSize: 15, color: "#E4D6C1", fontWeight: 300, lineHeight: 1.8, marginBottom: 36, maxWidth: 580 }}>Please submit your information to schedule a private admissions consultation. A dedicated Program Pathways Coordinator will guide your family through program options, admissions steps, curriculum, tuition, schedule fit, and next steps.</p>
+          <div style={{ background: "rgba(16, 15, 12, 1)", borderTop: `2px solid #A48D6E`, padding: "36px 32px" }}>
+            <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 11, letterSpacing: "0.25em", color: "#A48D6E", fontWeight: 600, textTransform: "uppercase", marginBottom: 12 }}>Parent / Guardian</p>
             <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 10, marginBottom: 10 }}>
-              {[["First Name","text"],["Last Name","text"]].map(([ph,type]) => (
-                <input key={ph} type={type} placeholder={ph} style={{ background: "#100F0C", border: "1px solid rgba(164,141,110,.2)", color: "#E4D5C1", padding: "13px 16px", fontFamily: "'Lora', Georgia, serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
+              {[["First Name", "text"], ["Last Name", "text"]].map(([ph, type]) => (
+                <input key={ph} type={type} placeholder={ph} className="inquiry-input" style={{ background: "#FBF7EE", border: "1px solid rgba(0,0,0,.2)", color: "#010000", padding: "13px 16px", fontFamily: "'Lato', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
               ))}
             </div>
             <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 10, marginBottom: 10 }}>
-              {[["Email Address","email"],["Phone Number","tel"]].map(([ph,type]) => (
-                <input key={ph} type={type} placeholder={ph} style={{ background: "#100F0C", border: "1px solid rgba(164,141,110,.2)", color: "#E4D5C1", padding: "13px 16px", fontFamily: "'Lora', Georgia, serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
+              {[["Email Address", "email"], ["Phone Number", "tel"]].map(([ph, type]) => (
+                <input key={ph} type={type} placeholder={ph} className="inquiry-input" style={{ background: "#FBF7EE", border: "1px solid rgba(0,0,0,.2)", color: "#010000", padding: "13px 16px", fontFamily: "'Lato', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
               ))}
             </div>
             <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr 80px", gap: 10, marginBottom: 24 }}>
-              <input type="text" placeholder="City *" style={{ background: "#100F0C", border: "1px solid rgba(164,141,110,.2)", color: "#E4D5C1", padding: "13px 16px", fontFamily: "'Lora', Georgia, serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
-              <input type="text" placeholder="State" style={{ background: "#100F0C", border: "1px solid rgba(164,141,110,.2)", color: "#E4D5C1", padding: "13px 16px", fontFamily: "'Lora', Georgia, serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
-              <input type="text" placeholder="ZIP *" style={{ background: "#100F0C", border: "1px solid rgba(164,141,110,.2)", color: "#E4D5C1", padding: "13px 16px", fontFamily: "'Lora', Georgia, serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
+              <input type="text" placeholder="City *" className="inquiry-input" style={{ background: "#FBF7EE", border: "1px solid rgba(0,0,0,.2)", color: "#010000", padding: "13px 16px", fontFamily: "'Lato', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} required />
+              <input type="text" placeholder="State" className="inquiry-input" style={{ background: "#FBF7EE", border: "1px solid rgba(0,0,0,.2)", color: "#010000", padding: "13px 16px", fontFamily: "'Lato', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
+              <input type="text" placeholder="ZIP *" className="inquiry-input" style={{ background: "#FBF7EE", border: "1px solid rgba(0,0,0,.2)", color: "#010000", padding: "13px 16px", fontFamily: "'Lato', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} required />
             </div>
-            <p style={{ fontFamily: "'Lora', Georgia, serif", fontSize: 11, letterSpacing: "0.3em", color: "#A48D6E", textTransform: "uppercase", fontWeight: 600, marginBottom: 12 }}>Student</p>
+            <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 11, letterSpacing: "0.25em", borderStyle: "none", color: "#A48D6E", fontWeight: 600, textTransform: "uppercase", marginBottom: 12 }}>Student</p>
             <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 10, marginBottom: 10 }}>
-              {[["First Name","text"],["Last Name","text"]].map(([ph,type]) => (
-                <input key={ph} type={type} placeholder={ph} style={{ background: "#100F0C", border: "1px solid rgba(164,141,110,.2)", color: "#E4D5C1", padding: "13px 16px", fontFamily: "'Lora', Georgia, serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
+              {[["First Name", "text"], ["Last Name", "text"]].map(([ph, type]) => (
+                <input key={ph} type={type} placeholder={ph} className="inquiry-input" style={{ background: "#FBF7EE", border: "1px solid rgba(0,0,0,.2)", color: "#010000", padding: "13px 16px", fontFamily: "'Lato', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
               ))}
             </div>
             <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 10, marginBottom: 10 }}>
-              <input type="text" placeholder="Age" style={{ background: "#100F0C", border: "1px solid rgba(164,141,110,.2)", color: "#E4D5C1", padding: "13px 16px", fontFamily: "'Lora', Georgia, serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
-              <input type="text" placeholder="Current Grade" style={{ background: "#100F0C", border: "1px solid rgba(164,141,110,.2)", color: "#E4D5C1", padding: "13px 16px", fontFamily: "'Lora', Georgia, serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
+              <input type="text" placeholder="Age" className="inquiry-input" style={{ background: "#FBF7EE", border: "1px solid rgba(0,0,0,.2)", color: "#010000", padding: "13px 16px", fontFamily: "'Lato', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
+              <input type="text" placeholder="Current Grade" className="inquiry-input" style={{ background: "#FBF7EE", border: "1px solid rgba(0,0,0,.2)", color: "#010000", padding: "13px 16px", fontFamily: "'Lato', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
             </div>
-            <input type="text" placeholder="Preferred Track (Da Vinci — Commercial or Medici — Community Impact)" style={{ background: "#100F0C", border: "1px solid rgba(164,141,110,.2)", color: "#E4D5C1", padding: "13px 16px", fontFamily: "'Lora', Georgia, serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%", marginBottom: 24 }} />
-            <p style={{ fontFamily: "'Lora', Georgia, serif", fontSize: 11, letterSpacing: "0.3em", color: "#A48D6E", textTransform: "uppercase", fontWeight: 600, marginBottom: 12 }}>Consultation Preferences</p>
+            <select defaultValue="" style={{ background: "#fcf7ee", border: "1px solid rgba(16,15,12,.2)", color: "#100F0C", padding: "13px 16px", fontFamily: "'Lora', Georgia, serif", fontSize: 13, fontWeight: 400, outline: "none", width: "100%", marginBottom: 24, appearance: "none" }}>
+              <option value="" disabled>Program of Interest</option>
+              <option value="flagship">Flagship Program — Full Year, Foundation Semester, or Venture Semester</option>
+              <option value="sixweek">Six-Week Intensive</option>
+              <option value="summer">Summer Intensive</option>
+            </select>
+            <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 11, letterSpacing: "0.25em", color: "#A48D6E", fontWeight: 600, textTransform: "uppercase", marginBottom: 12, marginTop: 0 }}>Consultation Preferences</p>
             <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 10, marginBottom: 10 }}>
-              <select defaultValue="" style={{ background: "#100F0C", border: "1px solid rgba(164,141,110,.2)", color: "#E4D5C1", padding: "13px 16px", fontFamily: "'Lora', Georgia, serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%", appearance: "none" }}>
+              <select className="inquiry-input" defaultValue="" style={{ background: "#FBF7EE", border: "1px solid rgba(0,0,0,.2)", color: "#010000", padding: "13px 16px", fontFamily: "'Lato', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%", appearance: "none" }}>
                 <option value="" disabled>Preferred Contact Method</option>
                 <option value="phone">Phone Call</option>
                 <option value="email">Email</option>
                 <option value="either">Either</option>
               </select>
-              <input type="text" placeholder="Preferred Consultation Date(s)" style={{ background: "#100F0C", border: "1px solid rgba(164,141,110,.2)", color: "#E4D5C1", padding: "13px 16px", fontFamily: "'Lora', Georgia, serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
+              <input type="text" placeholder="Preferred Consultation Date(s)" className="inquiry-input" style={{ background: "#FBF7EE", border: "1px solid rgba(0,0,0,.2)", color: "#010000", padding: "13px 16px", fontFamily: "'Lato', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
             </div>
-            <input type="text" placeholder="Preferred Times (for example, mornings, evenings, or weekends)" style={{ background: "#100F0C", border: "1px solid rgba(164,141,110,.2)", color: "#E4D5C1", padding: "13px 16px", fontFamily: "'Lora', Georgia, serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%", marginBottom: 10 }} />
-            <textarea placeholder="Questions or context you would like us to know (optional)" rows={4} style={{ background: "#100F0C", border: "1px solid rgba(164,141,110,.2)", color: "#E4D5C1", padding: "13px 16px", fontFamily: "'Lora', Georgia, serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%", marginBottom: 28, resize: "vertical" }} />
-            <button onClick={() => openInquiry && openInquiry("summer")} style={{ fontFamily: "'Lora', Georgia, serif", padding: "15px 40px", background: "#A48D6E", border: "1px solid #A48D6E", color: "#100F0C", fontSize: 11, fontWeight: 600, letterSpacing: "0.15em", textTransform: "uppercase", cursor: "pointer", width: "100%" }}>REQUEST A PRIVATE CONSULTATION</button>
+            <input type="text" placeholder="Preferred Times (for example, mornings, evenings, or weekends)" className="inquiry-input" style={{ background: "#FBF7EE", border: "1px solid rgba(0,0,0,.2)", color: "#010000", padding: "13px 16px", fontFamily: "'Lato', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%", marginBottom: 10 }} />
+            <textarea placeholder="Questions or context you would like us to know (optional)" className="inquiry-input" rows={4} style={{ background: "#FBF7EE", border: "1px solid rgba(0,0,0,.2)", color: "#010000", padding: "13px 16px", fontFamily: "'Lato', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%", marginBottom: 28, resize: "vertical" }} />
+            <button onClick={() => openInquiry && openInquiry("summer")} style={{ fontFamily: "'Lato', sans-serif", padding: "15px 40px", background: "#DAC8AA", border: "none", color: "#100F0C", fontSize: 11, fontWeight: 600, letterSpacing: "0.15em", textTransform: "uppercase", cursor: "pointer", width: "100%" }}>REQUEST A PRIVATE CONSULTATION</button>
           </div>
         </div>
       </div>
@@ -7865,282 +7746,187 @@ function EventsPage({ setPage, openInquiry }) {
 function ApplicationPage({ setPage, defaultProgram }) {
   const isMobile = useIsMobile();
   const [prog, setProg] = React.useState(defaultProgram || null);
-  const [wave, setWave] = React.useState(null);
   const [track, setTrack] = React.useState(null);
-  const [submitted, setSubmitted] = React.useState(false);
-  const [sending, setSending] = React.useState(false);
-  const [students, setStudents] = React.useState([{ firstName: "", lastName: "", age: "", grade: "" }]);
-  const [form, setForm] = React.useState({
-    parentFirst: "", parentLast: "", email: "", phone: "",
-    city: "", state: "", zip: "",
-    contactMethod: "", contactTime: "",
-    sendPackage: "", hearAbout: "",
-  });
-  const set = (k, v) => setForm(f => ({ ...f, [k]: v }));
-  const addStudent = () => { if (students.length < 5) setStudents(s => [...s, { firstName: "", lastName: "", age: "", grade: "" }]); };
-  const updateStudent = (i, k, v) => { const s = [...students]; s[i] = { ...s[i], [k]: v }; setStudents(s); };
 
   const programs = [
-    { id: "summer", label: "SUMMER INTENSIVE", title: "Summer Intensive", price: "$4,500 per wave", dates: "July 27 – August 8, 2026 · Finale Saturday Aug 8", desc: "July 27 – August 8. Full days, Monday through Friday, led by senior faculty, accomplished executives, entrepreneurs, and invited speakers and Academy guests, and invited speakers and Academy guests. The wave culminates in a Shark Tank-inspired Venture finale before invited investors, founders, executives, and practitioners, community leaders and families.", page: "summer-detail" },
-    { id: "six-week", label: "SIX-WEEK INTENSIVE", title: "Six-Week Intensive", price: "$3,900 per wave", dates: "Four waves — Fall, Winter, Spring, Summer", desc: "Offered in four waves annually, the Six-Week Intensive condenses core elements of the Excalibur curriculum into a focused, high‑impact experience. Six weeks in duration. One core discipline per week.", page: "intensive" },
-    { id: "flagship", label: "TEN-MONTH FLAGSHIP", title: "Flagship Formation Program", price: "From From $1,900 / month", dates: "September 2026 – May 2027", desc: "The Full Formation is Excalibur's ten-month flagship — a deep, immersive course of study for students ready for complete entrepreneurial, intellectual, and personal formation across all modules, ten industry sectors, and applied applied engagements.", page: "flagship2" },
+    {
+      id: "summer", label: "SUMMER PROGRAM", title: "Summer Intensive",
+      price: "$4,500", period: "per wave", dates: "July 27 – August 8, 2026",
+      desc: "A two-week summer intensive for students ready to test entrepreneurship in a fast, immersive format. Students build a venture, train daily in public speaking and pitch craft, and present at a live Shark Tank-inspired Finale.",
+      meta: [["Schedule", "Monday – Friday · 9:30 AM – 4:00 PM"], ["Class Size", "Limited to 20 students"], ["Finale", "Saturday, August 8, 2026"]],
+      detailPage: "summer-detail", available: true,
+    },
+    {
+      id: "foundation", label: "FLAGSHIP · FOUNDATION SEMESTER", title: "Foundation Semester",
+      price: "From $2,000", period: "per month", dates: "September – December 2026",
+      desc: "A 14-week semester for ambitious students ready to develop public speaking, business judgment, and the discipline of real-world execution. Students complete the Junior Consultant Program, attend monthly guest masterclasses, and present at the Excalibur Gala.",
+      meta: [["Tuition", "$8,500 in full · $9,000 installments"], ["Class Size", "20 students per cohort"], ["Capstone", "Excalibur Gala · Dec 19, 2026"]],
+      detailPage: "foundation-detail", available: true,
+    },
+    {
+      id: "venture", label: "FLAGSHIP · VENTURE SEMESTER", title: "Venture Semester",
+      price: "From $2,000", period: "per month", dates: "January – May 2027",
+      desc: "A 16-week semester focused on venture development, market validation, and applied entrepreneurship — culminating in the Venture Finale. Priority placement is given to Foundation Semester completers.",
+      meta: [["Tuition", "$9,500 in full · $10,000 installments"], ["Class Size", "20 students per cohort"], ["Capstone", "The Venture Finale · May 2027"]],
+      detailPage: "venture-detail", available: true,
+    },
   ];
-  const waves = [
-    { id: "wave1", label: "WAVE — SUMMER", title: "July 27 – August 8, 2026", sub: "Monday through Friday · 9:30 AM – 4:00 PM" },
-  ];
-  const sixWeekWaves = [
-    { id: "fall", label: "WAVE 1 — FALL", title: "Oct 5 – Nov 14, 2026", sub: "6 Weeks · 30 Hours", status: "Enrolling Soon" },
-    { id: "winter", label: "WAVE 2 — WINTER", title: "Jan 5 – Feb 13, 2027", sub: "6 Weeks · 30 Hours", status: "Opening Soon" },
-    { id: "spring", label: "WAVE 3 — SPRING", title: "Apr 7 – May 15, 2027", sub: "6 Weeks · 30 Hours", status: "Opening Soon" },
-    { id: "summer2", label: "WAVE 4 — SUMMER", title: "Jul 6 – Aug 14, 2027", sub: "6 Weeks · 30 Hours", status: "Opening Soon" },
-  ];
-  const sixWeekTracks = [
-    { id: "weekday", label: "GROUP A — WEEKDAY", title: "Monday & Wednesday", sub: "4:00 – 6:30 PM" },
-    { id: "saturday", label: "GROUP B — WEEKEND", title: "Sunday Track", sub: "10:30 AM – 3:45 PM" },
-    { id: "either", label: "NO PREFERENCE", title: "Either Track", sub: "" },
-  ];
-  const flagshipTracks = [
+
+  const tracks = [
     { id: "weekday", label: "WEEKDAY TRACK", title: "Tuesday & Thursday", sub: "4:00 – 6:30 PM" },
-    { id: "saturday", label: "GROUP A — SATURDAY", title: "Every Saturday", sub: "10:30 AM – 3:45 PM" },
-    { id: "either", label: "NO PREFERENCE", title: "Either Track", sub: "" },
+    { id: "saturday", label: "SATURDAY TRACK", title: "Every Saturday", sub: "10:30 AM – 3:30 PM" },
   ];
-  const tracks = prog === "flagship" ? flagshipTracks : sixWeekTracks;
-  const grades = ["9th Grade", "10th Grade", "11th Grade", "12th Grade"];
-  const contactMethods = ["Phone Call", "Email", "Text Message", "WhatsApp"];
-  const contactTimes = ["Morning (9–12)", "Afternoon (12–5)", "Evening (5–8)", "Weekends"];
 
-  const isSummer = prog === "summer";
-  const isSixWeek = prog === "six-week";
-  const needsWave = isSummer || isSixWeek;
-  const needsTrack = prog === "six-week" || prog === "flagship";
-  const readyToFill = prog && (needsWave ? wave : true) && (needsTrack ? track : true);
-  const currentWaves = isSixWeek ? sixWeekWaves : waves;
+  const selectedProgram = programs.find(p => p.id === prog);
+  const needsTrack = prog === "foundation" || prog === "venture";
+  const readyToApply = !!selectedProgram && selectedProgram.available && (needsTrack ? !!track : true);
 
-  const iStyle = { background: "#FBF7EE", border: "1px solid rgba(0,0,0,.2)", color: "#010000", padding: "13px 16px", fontFamily: "'Lato', sans-serif", fontSize: 15, fontWeight: 300, outline: "none", width: "100%" };
-  const focus = e => e.target.style.borderColor = "#d8b78c";
-  const blur  = e => e.target.style.borderColor = "rgba(216,183,140,.2)";
+  const handleProgramSelect = (p) => {
+    if (!p.available) return;
+    setProg(p.id);
+    setTrack(null);
+  };
+
+  const handleStartApplication = () => {
+    // TODO: route to the dedicated Application Portal once it is built.
+    setPage("admissions");
+  };
 
   const StepNum = ({ n, done }) => (
-    <div style={{ width: 30, height: 30, background: done ? "#d8b78c" : "#FBF7EE", border: `1px solid ${done ? "#d8b78c" : "rgba(216,183,140,.25)"}`, display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "'Lato', sans-serif", fontSize: 12, fontWeight: 700, color: done ? "#010000" : "#FBF7EE", flexShrink: 0 }}>{n}</div>
+    <div style={{ width: 30, height: 30, background: done ? "#A48D6E" : "#E4D5C1", border: `1px solid ${done ? "#A48D6E" : "rgba(16,15,12,.25)"}`, display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "'Lora', Georgia, serif", fontSize: 12, fontWeight: 700, color: "#100F0C", flexShrink: 0 }}>{n}</div>
   );
   const SectionHead = ({ n, done, label }) => (
     <div style={{ display: "flex", alignItems: "center", gap: 14, marginBottom: 24 }}>
       <StepNum n={n} done={done} />
-      <h3 style={{ fontFamily: "'Cormorant Garamond',Georgia,serif", fontSize: 24, fontWeight: 600, color:"#d8b78c" }}>{label}</h3>
+      <h3 style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: 24, fontWeight: 600, color: "#100F0C" }}>{label}</h3>
     </div>
   );
-  const Label = ({ children }) => (
-    <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 11, letterSpacing: "0.22em", color:"#FBF7EE", fontWeight: 700, textTransform: "uppercase", marginBottom: 12 }}>{children}</p>
-  );
-  const Chip = ({ label, active, onClick }) => (
-    <button onClick={onClick} style={{ fontFamily: "'Lato', sans-serif", fontSize: 15, padding: "11px 20px", cursor: "pointer", background: active ? "#d8b78c" : "transparent", color: active ? "#010000": "#010000", border: `1px solid ${active ? "#d8b78c" : "rgba(216,183,140,.2)"}`, transition: "all .2s", fontWeight: active ? 700 : 300, whiteSpace: "nowrap" }}>{label}</button>
-  );
-
-  const handleSubmit = async () => {
-    if (!form.email || !form.city) return;
-    setSending(true);
-    const p = programs.find(x => x.id === prog);
-    const w = waves.find(x => x.id === wave);
-    const t = tracks.find(x => x.id === track);
-    await sendEmail({
-      subject: "New Application — " + form.parentFirst + " " + form.parentLast,
-      name: form.parentFirst + " " + form.parentLast,
-      email: form.email,
-      phone: form.phone,
-      city: form.city + (form.state ? ", " + form.state : "") + (form.zip ? " " + form.zip : ""),
-      program: p ? p.title : "",
-      wave: w ? w.title : "",
-      track: t ? t.label + " · " + t.title : "",
-      contact_method: form.contactMethod,
-      contact_time: form.contactTime,
-      send_package: form.sendPackage,
-      heard_about: form.hearAbout,
-      students: students.map(s => s.firstName + " " + s.lastName + " | Grade: " + s.grade + " | Age: " + s.age).join(" / "),
-      message: "Program: " + (p ? p.title : "") + (w ? " · " + w.title : "") + (t ? " · " + t.label : ""),
-    });
-    setSending(false);
-    setSubmitted(true);
-    window.scrollTo(0, 0);
-  };
 
   return (
-    <div style={{ background: "#010000", minHeight: "100vh" }}>
+    <div style={{ background: "#E4D5C1", minHeight: "100vh" }}>
       <Breadcrumb items={[{ label: "Admissions", page: "admissions" }]} setPage={setPage} />
 
       {/* HEADER */}
-      <div style={{ padding: isMobile ? "48px 24px 36px" : "64px 80px 48px", borderBottom: "1px solid rgba(216,183,140,.1)" }}>
-        <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 8, letterSpacing: "0.5em", color: "#d8b78c", fontWeight: 700, textTransform: "uppercase", marginBottom: 16 }}>Excalibur Academy · 2026</p>
-        <h1 style={{ fontFamily: "'Cormorant Garamond',Georgia,serif", fontSize: isMobile ? 28 : 44, fontWeight: 300, color: "#d8b78c", lineHeight: 1.05, marginBottom: 14, letterSpacing: "0.02em" }}>Request Program Information</h1>
-        <div style={{ width: 48, height: "1px", background: "linear-gradient(90deg," + "#d8b78c" + ",transparent)", marginBottom: 16 }} />
-        <p style={{ fontFamily: "'Lato', sans-serif", fontSize: 15, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.85, maxWidth: 660 }}>Please choose your program and preferred schedule, then complete the application for admissions consideration. A dedicated Program Pathways Coordinator will follow up promptly with a personalized program information and admissions package, answer any questions, and guide your family through the next stage of the admissions process.</p>
+      <div style={{ padding: isMobile ? "48px 24px 36px" : "64px 80px 48px", borderBottom: "1px solid rgba(16,15,12,.1)" }}>
+        <p style={{ fontFamily: "'Lora', Georgia, serif", fontSize: 9, letterSpacing: "0.5em", color: "#A48D6E", fontWeight: 700, textTransform: "uppercase", marginBottom: 16 }}>Excalibur Academy · 2026</p>
+        <h1 style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: isMobile ? 28 : 44, fontWeight: 300, color: "#100F0C", lineHeight: 1.05, marginBottom: 14, letterSpacing: "0.02em" }}>Begin Your Application</h1>
+        <div style={{ width: 48, height: "1px", background: "linear-gradient(90deg,#A48D6E,transparent)", marginBottom: 16 }} />
+        <p style={{ fontFamily: "'Lora', Georgia, serif", fontSize: 15, color: "#100F0C", fontWeight: 400, lineHeight: 1.85, maxWidth: 660 }}>Select your program pathway and confirm your schedule below. Once complete, you will be directed to the Excalibur Application Portal to finish your submission.</p>
       </div>
 
-      {submitted ? (
-        <div style={{ padding: isMobile ? "60px 24px" : "80px 80px", textAlign: "center", maxWidth: 600, margin: "0 auto" }}>
-          <div style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: 56, color: "#FBF7EE", marginBottom: 24 }}>✦</div>
-          <h2 style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: isMobile ? 32 : 44, fontWeight: 300, color: "#d8b78c", marginBottom: 14 }}>Thank You</h2>
-          <div style={{ width: 48, height: "1px", background: "linear-gradient(90deg,transparent," + "#d8b78c" + ",transparent)", margin: "0 auto 20px" }} />
-          <p style={{ fontFamily: "'Lato', sans-serif", fontSize: 15, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.9, marginBottom: 36 }}>Your application has been received. A member of our admissions team will follow up personally with next steps. We appreciate your family's interest in Excalibur Academy. We look forward to learning more about your family and student's goals.</p>
-          <button onClick={() => setPage("home")} style={{ fontFamily: "'Lato', sans-serif", padding: "13px 36px", background: "transparent", border: "1px solid rgba(216,183,140,.35)", color: "#d8b78c", fontSize: 11, fontWeight: 600, letterSpacing: "0.18em", textTransform: "uppercase", cursor: "pointer" }}>Return Home →</button>
-        </div>
-      ) : (
-        <div style={{ padding: isMobile ? "36px 24px 80px" : "56px 80px 100px" }}>
+      <div style={{ padding: isMobile ? "36px 24px 80px" : "56px 80px 100px" }}>
 
-          {/* STEP 1  -  PROGRAM */}
-          <div style={{ marginBottom: 40 }}>
-            <SectionHead n="1" done={!!prog} label="Select Your Program Pathway" />
-            <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(3,1fr)", gap: 2, background: "#010000" }}>
-              {programs.map(p => (
-                <div key={p.id} onClick={() => { setProg(p.id); setWave(null); setTrack(null); }} style={{ background: prog === p.id ? "#010000" : "#010000", padding: "28px 24px", cursor: "pointer", borderTop: `2px solid ${prog === p.id ? "#d8b78c" : "transparent"}`, transition: "all .25s" }}>
-                  <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 8, letterSpacing: "0.3em", color:"#FBF7EE", fontWeight: 600, textTransform: "uppercase", marginBottom: 10 }}>{p.label}</p>
-                  <h4 style={{ fontFamily: "'Cormorant Garamond',Georgia,serif", fontSize: 20, fontWeight: 600, color:"#d8b78c", marginBottom: 6, lineHeight: 1.2 }}>{p.title}</h4>
-                  <p style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: 28, color:"#FBF7EE", marginBottom: 6 }}>{p.price}</p>
-                  <p style={{ fontFamily: "'Avenir','Avenir Next','Century Gothic',sans-serif", fontSize: 12, color:"#FBF7EE", fontWeight: 300, marginBottom: 10 }}>{p.dates}</p>
-                  <p style={{ fontFamily: "'Avenir','Avenir Next','Century Gothic',sans-serif", fontSize: 13, color:"#FBF7EE", fontWeight: 300, lineHeight: 1.7, marginBottom: 14 }}>{p.desc}</p>
-                  <button onClick={e => { e.stopPropagation(); setPage(p.page); }} style={{ fontFamily: "'Lato', sans-serif", fontSize: 9, letterSpacing: "0.16em", color:"#FBF7EE", background: "transparent", border: "none", cursor: "pointer", padding: 0, textTransform: "uppercase" }}>Explore Program →</button>
-                  {prog === p.id && <p style={{ fontFamily: "'Lato', sans-serif", fontSize: 10, color:"#FBF7EE", letterSpacing: "0.18em", marginTop: 10 }}>✓ SELECTED</p>}
+        {/* STEP 1 — PROGRAM */}
+        <div style={{ marginBottom: 40 }}>
+          <SectionHead n="1" done={!!prog} label="Select Your Program Pathway" />
+          <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(3,1fr)", gap: 16 }}>
+            {programs.map(p => {
+              const selected = prog === p.id;
+              return (
+                <div
+                  key={p.id}
+                  onClick={() => handleProgramSelect(p)}
+                  style={{
+                    background: selected ? "#34150F" : "#E4D5C1",
+                    padding: "28px 24px",
+                    cursor: p.available ? "pointer" : "default",
+                    border: `1.5px solid ${selected ? "#34150F" : "#100F0C"}`,
+                    opacity: p.available ? 1 : 0.5,
+                    transition: "all .25s",
+                    display: "flex",
+                    flexDirection: "column",
+                    minHeight: isMobile ? "auto" : 360,
+                  }}
+                >
+                  <p style={{ fontFamily: "'Lora', Georgia, serif", fontSize: 8, letterSpacing: "0.3em", color: selected ? "rgba(228,213,193,.6)" : "rgba(16,15,12,.55)", fontWeight: 600, textTransform: "uppercase", marginBottom: 10 }}>{p.label}</p>
+                  <h4 style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: 20, fontWeight: 600, color: selected ? "#E4D5C1" : "#100F0C", marginBottom: 6, lineHeight: 1.2 }}>{p.title}</h4>
+                  <p style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: 26, color: selected ? "#E4D5C1" : "#100F0C", marginBottom: 6 }}>{p.price} <span style={{ fontFamily: "'Lora', Georgia, serif", fontSize: 12 }}>{p.period}</span></p>
+                  <p style={{ fontFamily: "'Lora', Georgia, serif", fontSize: 12, color: selected ? "#E4D5C1" : "#100F0C", fontWeight: 600, marginBottom: 10 }}>{p.dates}</p>
+                  <p style={{ fontFamily: "'Lora', Georgia, serif", fontSize: 12.5, color: selected ? "#E4D5C1" : "#100F0C", fontWeight: 400, lineHeight: 1.65, marginBottom: 14, flex: 1 }}>{p.desc}</p>
+                  {p.available ? (
+                    <button onClick={e => { e.stopPropagation(); setPage(p.detailPage); }} style={{ fontFamily: "'Lora', Georgia, serif", fontSize: 9, letterSpacing: "0.16em", color: selected ? "#E4D5C1" : "#100F0C", background: "transparent", border: "none", cursor: "pointer", padding: 0, textTransform: "uppercase", fontWeight: 600 }}>Explore Program →</button>
+                  ) : (
+                    <p style={{ fontFamily: "'Lora', Georgia, serif", fontSize: 9, letterSpacing: "0.16em", color: selected ? "#E4D5C1" : "#100F0C", textTransform: "uppercase", fontWeight: 700 }}>Coming Soon</p>
+                  )}
+                  {selected && <p style={{ fontFamily: "'Lora', Georgia, serif", fontSize: 10, color: "#A48D6E", letterSpacing: "0.18em", marginTop: 10, fontWeight: 700 }}>✓ SELECTED</p>}
                 </div>
-              ))}
+              );
+            })}
+          </div>
+        </div>
+
+        {/* STEP 2 — SCHEDULE / TRACK */}
+        {selectedProgram && selectedProgram.available && (
+          <div style={{ marginBottom: 40 }}>
+            <SectionHead n="2" done={needsTrack ? !!track : true} label={needsTrack ? "Choose Your Track" : "Confirm Your Schedule"} />
+            {needsTrack ? (
+              <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(2,1fr)", gap: 16 }}>
+                {tracks.map(t => {
+                  const sel = track === t.id;
+                  return (
+                    <div
+                      key={t.id}
+                      onClick={() => setTrack(t.id)}
+                      style={{
+                        background: "#100F0C",
+                        padding: "28px 24px",
+                        cursor: "pointer",
+                        border: `1.5px solid ${sel ? "#A48D6E" : "rgba(164,141,110,.35)"}`,
+                        transition: "all .25s",
+                      }}
+                    >
+                      <p style={{ fontFamily: "'Lora', Georgia, serif", fontSize: 8, letterSpacing: "0.3em", color: "#A48D6E", fontWeight: 600, textTransform: "uppercase", marginBottom: 10 }}>{t.label}</p>
+                      <h4 style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: 22, fontWeight: 600, color: "#E4D5C1", marginBottom: 4 }}>{t.title}</h4>
+                      <p style={{ fontFamily: "'Lora', Georgia, serif", fontSize: 15, color: "#E4D5C1" }}>{t.sub}</p>
+                      {sel && <p style={{ fontFamily: "'Lora', Georgia, serif", fontSize: 10, color: "#A48D6E", letterSpacing: "0.18em", marginTop: 10, fontWeight: 700 }}>✓ SELECTED</p>}
+                    </div>
+                  );
+                })}
+              </div>
+            ) : (
+              <div style={{ background: "#100F0C", padding: "28px 24px", maxWidth: 480, border: "1.5px solid #100F0C" }}>
+                <p style={{ fontFamily: "'Lora', Georgia, serif", fontSize: 8, letterSpacing: "0.3em", color: "#A48D6E", fontWeight: 600, textTransform: "uppercase", marginBottom: 10 }}>Wave</p>
+                <h4 style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: 22, fontWeight: 600, color: "#E4D5C1", marginBottom: 14 }}>{selectedProgram.dates}</h4>
+                {selectedProgram.meta.map(([k, v]) => (
+                  <div key={k} style={{ display: "flex", gap: 12, padding: "6px 0", borderBottom: "1px solid rgba(228,213,193,.15)" }}>
+                    <span style={{ fontFamily: "'Lora', Georgia, serif", fontSize: 8, letterSpacing: "0.15em", color: "#A48D6E", textTransform: "uppercase", minWidth: 64, flexShrink: 0, paddingTop: 2 }}>{k}</span>
+                    <span style={{ fontFamily: "'Lora', Georgia, serif", fontSize: 13, color: "#E4D5C1", fontWeight: 400, lineHeight: 1.5 }}>{v}</span>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* STEP 3 — FINAL CTA */}
+        {readyToApply && (
+          <div>
+            <SectionHead n="3" done={false} label="Ready to Apply" />
+            <div style={{ background: "#100F0C", border: "1.5px solid #100F0C", padding: isMobile ? "36px 28px" : "48px 56px" }}>
+              <p style={{ fontFamily: "'Lora', Georgia, serif", fontSize: 11, letterSpacing: "0.35em", color: "#A48D6E", fontWeight: 600, textTransform: "uppercase", marginBottom: 14 }}>Your Application</p>
+              <h3 style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: isMobile ? 28 : 38, fontWeight: 400, fontStyle: "italic", color: "#E4D5C1", lineHeight: 1.15, marginBottom: 10 }}>{selectedProgram.title}</h3>
+              <p style={{ fontFamily: "'Lora', Georgia, serif", fontSize: 12, letterSpacing: "0.12em", color: "#A48D6E", fontWeight: 600, textTransform: "uppercase", marginBottom: 28 }}>
+                {needsTrack && track ? tracks.find(t => t.id === track).title + " · " : ""}{selectedProgram.dates}
+              </p>
+              <div style={{ width: 44, height: 1, background: "linear-gradient(90deg, #A48D6E, transparent)", marginBottom: 28 }} />
+              <p style={{ fontFamily: "'Lora', Georgia, serif", fontSize: 15, color: "#E4D5C1", fontWeight: 300, lineHeight: 1.85, marginBottom: 28, maxWidth: 560 }}>
+                Click below to begin your application through the Excalibur Application Portal.
+              </p>
+              <p style={{ fontFamily: "'Lora', Georgia, serif", fontSize: 11, letterSpacing: "0.15em", color: "rgba(228,213,193,.55)", fontWeight: 600, textTransform: "uppercase", marginBottom: 32 }}>
+                ◷ Approximate time to complete: 10 – 15 minutes
+              </p>
+              <button
+                onClick={handleStartApplication}
+                style={{ fontFamily: "'Lora', Georgia, serif", padding: "16px 48px", background: "#A48D6E", border: "none", color: "#100F0C", fontSize: 12, fontWeight: 700, letterSpacing: "0.2em", textTransform: "uppercase", cursor: "pointer" }}
+              >Start Application →</button>
             </div>
           </div>
+        )}
 
-          {/* STEP 2  -  WAVE (summer only) */}
-          {prog && needsWave && (
-            <div style={{ marginBottom: 40 }}>
-              <SectionHead n="2" done={!!wave} label={isSixWeek ? "Choose Your Wave" : "Choose Your Wave"} />
-              <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : isSixWeek ? "repeat(2,1fr)" : "1fr 1fr", gap: 2, background: "#010000" }}>
-                {currentWaves.map(w => (
-                  <div key={w.id} onClick={() => setWave(w.id)} style={{ background: wave === w.id ? "#010000" : "#010000", padding: "28px 24px", cursor: "pointer", borderTop: `2px solid ${wave === w.id ? "#d8b78c" : "transparent"}`, transition: "all .25s" }}>
-                    <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 8, letterSpacing: "0.3em", color:"#FBF7EE", fontWeight: 600, textTransform: "uppercase", marginBottom: 10 }}>{w.label}</p>
-                    <h4 style={{ fontFamily: "'Cormorant Garamond',Georgia,serif", fontSize: 22, fontWeight: 600, color:"#d8b78c", marginBottom: 4 }}>{w.title}</h4>
-                    <p style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: 15, color:"#FBF7EE", marginBottom: isSummer ? 14 : 6 }}>{w.sub}</p>
-                    {isSummer && [["Dates", "July 27 – August 8, 2026"], ["Schedule", "Monday – Friday · 9:30 AM – 4:00 PM"], ["Finale", "Saturday August 8, 2026 · Excalibur Venture Finale"], ["Tuition", "$4,500 per wave"], ["Program Pathways", "Limited to 20 students"]].map(([k, v]) => (
-                      <div key={k} style={{ display: "flex", gap: 12, padding: "6px 0", borderBottom: "1px solid rgba(216,183,140,.25)", alignItems: "flex-start" }}>
-                        <span style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 8, letterSpacing: "0.15em", color:"#FBF7EE", textTransform: "uppercase", minWidth: 64, flexShrink: 0, paddingTop: 2 }}>{k}</span>
-                        <span style={{ fontFamily: "'Avenir','Avenir Next','Century Gothic',sans-serif", fontSize: 12, color:"#FBF7EE", fontWeight: 300, lineHeight: 1.5 }}>{v}</span>
-                      </div>
-                    ))}
-                    {isSixWeek && w.status && <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 9, color: w.status === "Enrolling Soon" ? "#d8b78c" : "rgba(216,183,140,.5)", letterSpacing: "0.1em", fontWeight: 600, marginTop: 8 }}>● {w.status}</p>}
-                    {wave === w.id && <p style={{ fontFamily: "'Lato', sans-serif", fontSize: 10, color:"#FBF7EE", letterSpacing: "0.18em", marginTop: 14 }}>✓ SELECTED</p>}
-                  </div>
-                ))}
-              </div>
-            </div>
-          )}
-
-          {/* STEP 2/3  -  TRACK (six-week & flagship) */}
-          {prog && needsTrack && (
-            <div style={{ marginBottom: 40 }}>
-              <SectionHead n={isSixWeek ? "3" : "2"} done={!!track} label="CHOOSE YOUR TRACK" />
-              <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(3,1fr)", gap: 2, background: "#010000" }}>
-                {tracks.map(t => (
-                  <div key={t.id} onClick={() => setTrack(t.id)} style={{ background: track === t.id ? "#010000" : "#010000", padding: "28px 24px", cursor: "pointer", borderTop: `2px solid ${track === t.id ? "#d8b78c" : "transparent"}`, transition: "all .25s" }}>
-                    <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 8, letterSpacing: "0.3em", color:"#FBF7EE", fontWeight: 600, textTransform: "uppercase", marginBottom: 10 }}>{t.label}</p>
-                    <h4 style={{ fontFamily: "'Cormorant Garamond',Georgia,serif", fontSize: 22, fontWeight: 600, color:"#d8b78c", marginBottom: 4 }}>{t.title}</h4>
-                    {t.sub && <p style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: 16, color:"#FBF7EE", marginBottom: 10 }}>{t.sub}</p>}
-                    {track === t.id && <p style={{ fontFamily: "'Lato', sans-serif", fontSize: 10, color:"#FBF7EE", letterSpacing: "0.18em", marginTop: 14 }}>✓ SELECTED</p>}
-                  </div>
-                ))}
-              </div>
-            </div>
-          )}
-
-          {/* STEP 3  -  FORM */}
-          {readyToFill && (
-            <div style={{ marginBottom: 40 }}>
-              <SectionHead n={isSixWeek ? "4" : needsWave || needsTrack ? "3" : "2"} done={false} label="Your Information" />
-              <div style={{ background: "#010000", borderTop: `2px solid #d8b78c`, padding: isMobile ? "28px 22px" : "36px 40px" }}>
-                <p style={{ fontFamily: "'Lato', sans-serif", fontSize: 15, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.75, marginBottom: 32 }}>Share your information and our admissions team will follow up with the appropriate program materials and next steps. Full information package and next steps.</p>
-
-                {/* Selection summary */}
-                <div style={{ background: "#010000", padding: "14px 20px", marginBottom: 28, borderLeft: `2px solid #d8b78c` }}>
-                  <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 9, letterSpacing: "0.2em", color:"#FBF7EE", fontWeight: 600, textTransform: "uppercase", marginBottom: 6 }}>Your Selection</p>
-                  <p style={{ fontFamily: "'Lato', sans-serif", fontSize: 13, color:"#FBF7EE", fontWeight: 300 }}>
-                    {programs.find(x => x.id === prog)?.title}
-                    {wave ? " · " + waves.find(x => x.id === wave)?.title : ""}
-                    {track ? " · " + tracks.find(x => x.id === track)?.title : ""}
-                  </p>
-                </div>
-
-                {/* Parent */}
-                <Label>Parent / Guardian</Label>
-                <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 10, marginBottom: 10 }}>
-                  <input placeholder="First Name *" className="inquiry-input" style={iStyle} value={form.parentFirst} onChange={e => set("parentFirst", e.target.value)} onFocus={focus} onBlur={blur} />
-                  <input placeholder="Last Name" className="inquiry-input" style={iStyle} value={form.parentLast} onChange={e => set("parentLast", e.target.value)} onFocus={focus} onBlur={blur} />
-                </div>
-                <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 10, marginBottom: 24 }}>
-                  <input type="email" placeholder="Email Address *" className="inquiry-input" style={iStyle} value={form.email} onChange={e => set("email", e.target.value)} onFocus={focus} onBlur={blur} />
-                  <input type="tel" placeholder="Phone Number" className="inquiry-input" style={iStyle} value={form.phone} onChange={e => set("phone", e.target.value)} onFocus={focus} onBlur={blur} />
-                </div>
-
-                {/* City */}
-                <Label>Location</Label>
-                <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr 80px", gap: 10, marginBottom: 24 }}>
-                  <input placeholder="City *" className="inquiry-input" style={iStyle} value={form.city} onChange={e => set("city", e.target.value)} onFocus={focus} onBlur={blur} />
-                  <input placeholder="State" className="inquiry-input" style={iStyle} value={form.state} onChange={e => set("state", e.target.value)} onFocus={focus} onBlur={blur} />
-                  <input placeholder="ZIP" className="inquiry-input" style={iStyle} value={form.zip} onChange={e => set("zip", e.target.value)} onFocus={focus} onBlur={blur} />
-                </div>
-
-                {/* Contact */}
-                <Label>Preferred Method of Contact</Label>
-                <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginBottom: 20 }}>
-                  {contactMethods.map(m => <Chip key={m} label={m} active={form.contactMethod === m} onClick={() => set("contactMethod", m)} />)}
-                </div>
-                <Label>Best Time to Reach You</Label>
-                <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginBottom: 28 }}>
-                  {contactTimes.map(t => <Chip key={t} label={t} active={form.contactTime === t} onClick={() => set("contactTime", t)} />)}
-                </div>
-
-                {/* Students */}
-                <Label>Student Information</Label>
-                {students.map((s, i) => (
-                  <div key={i} style={{ background: "#010000", border: "1px solid rgba(216,183,140,.15)", padding: "20px 20px", marginBottom: 10 }}>
-                    <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 9, letterSpacing: "0.22em", color: "#d8b78c", fontWeight: 600, textTransform: "uppercase", marginBottom: 12 }}>Student {i + 1}</p>
-                    <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 10, marginBottom: 10 }}>
-                      <input placeholder="First Name" className="inquiry-input" style={iStyle} value={s.firstName} onChange={e => updateStudent(i, "firstName", e.target.value)} onFocus={focus} onBlur={blur} />
-                      <input placeholder="Last Name" className="inquiry-input" style={iStyle} value={s.lastName} onChange={e => updateStudent(i, "lastName", e.target.value)} onFocus={focus} onBlur={blur} />
-                    </div>
-                    <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "80px 1fr", gap: 10 }}>
-                      <input type="number" min="14" max="19" placeholder="Age" className="inquiry-input" style={iStyle} value={s.age} onChange={e => updateStudent(i, "age", e.target.value)} onFocus={focus} onBlur={blur} />
-                      <div style={{ display: "flex", gap: 6, flexWrap: "wrap", alignItems: "center" }}>
-                        {grades.map(g => <Chip key={g} label={g} active={s.grade === g} onClick={() => updateStudent(i, "grade", g)} />)}
-                      </div>
-                    </div>
-                  </div>
-                ))}
-                {students.length < 5 && (
-                  <button onClick={addStudent} style={{ fontFamily: "'Lato', sans-serif", background: "transparent", border: "1px dashed rgba(216,183,140,.25)", color: "#FBF7EE", padding: "12px", fontSize: 15, fontWeight: 500, letterSpacing: "0.1em", cursor: "pointer", textAlign: "center", width: "100%", marginBottom: 28 }}>+ Add Another Student</button>
-                )}
-
-                {/* Package */}
-                <Label>Admissions Package & Private Event Invitation</Label>
-                <p style={{ fontFamily: "'Lato', sans-serif", fontSize: 15, color: "#FBF7EE", fontWeight: 300, lineHeight: 1.7, marginBottom: 12 }}>Would you like to receive admissions information and a private Family Information Evening invitation by mail?</p>
-                <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginBottom: 24 }}>
-                  {["Yes — send by mail", "Email only"].map(opt => <Chip key={opt} label={opt} active={form.sendPackage === opt} onClick={() => set("sendPackage", opt)} />)}
-                </div>
-
-                {/* Heard about */}
-                <Label>How did you hear about Excalibur?</Label>
-                <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginBottom: 32 }}>
-                  {["Referral", "Social media", "Search", "Event", "Press/media", "Other"].map(h => <Chip key={h} label={h} active={form.hearAbout === h} onClick={() => set("hearAbout", h)} />)}
-                </div>
-
-                <button
-                  onClick={handleSubmit}
-                  disabled={sending || !form.email || !form.city}
-                  style={{ fontFamily: "'Lato', sans-serif", padding: "15px 40px", background: (!form.email || !form.city) ? "rgba(216,183,140,.4)" : "#d8b78c", border: "none", color: "#d8b78c", fontSize: 12, fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", cursor: (!form.email || !form.city) ? "not-allowed" : "pointer", width: "100%", transition: "all .2s" }}
-                >{sending ? "Submitting..." : "REQUEST PROGRAM INFORMATION & ADMISSIONS PACKAGE"}</button>
-              </div>
-            </div>
-          )}
-
-        </div>
-      )}
+      </div>
     </div>
   );
 }
-
-
 function ContactPage({ setPage, openInquiry }) {
   const isMobile = useIsMobile();
   const [form, setForm] = useState({ parentFirst: "", parentLast: "", email: "", phone: "", city: "", state: "", zip: "", studentFirst: "", studentLast: "", age: "", grade: "", program: "", contactMethod: "", dates: "", times: "", notes: "" });
@@ -8196,92 +7982,59 @@ function ContactPage({ setPage, openInquiry }) {
         </div>
       </div>
 
-      {/* ── CONSULTATION FORM ── */}
-      <div style={{ padding: isMobile ? "52px 28px" : "80px 80px" }}>
-        <div style={{ maxWidth: 820, margin: "0 auto" }}>
-          <Fade>
-            <p style={{ fontFamily: lora, fontSize: 11, letterSpacing: "0.45em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 18 }}>Private Admissions Consultation</p>
-            <h2 style={{ fontFamily: cg, fontSize: isMobile ? "clamp(28px,7vw,48px)" : "3.2rem", fontWeight: 400, color: parch, lineHeight: 1.2, letterSpacing: "0.01em", marginBottom: 14 }}>Schedule a Family Consultation</h2>
-            <p style={{ fontFamily: lora, fontSize: 15, color: parch, fontWeight: 400, lineHeight: 1.8, marginBottom: 48, maxWidth: 600, textAlign: "justify" }}>Please submit your information to request a private admissions consultation. An Enrollment Coordinator will guide your family through program options, admissions steps, curriculum, tuition, and next steps. A member of the admissions team will respond personally as soon as possible.</p>
-          </Fade>
-
-          {status === "success" ? (
-            <div style={{ background: "rgba(164,141,110,.08)", padding: "48px 40px", borderTop: `2px solid ${gold}`, textAlign: "center" }}>
-              <p style={{ fontFamily: cg, fontSize: 32, fontWeight: 300, color: gold, marginBottom: 12 }}>Thank you. Your request has been received.</p>
-              <p style={{ fontFamily: lora, fontSize: 14, color: parch, fontWeight: 400, lineHeight: 1.8 }}>Your consultation request has been received. A member of our admissions team will follow up personally with next steps.</p>
+      {/* FAMILY CONSULTATION FORM */}
+      <div style={{ background: "rgba(16, 15, 12, 1)", padding: isMobile ? "52px 24px" : "72px 80px", borderTop: "1px solid rgba(0,0,0,.08)" }}>
+        <div style={{ maxWidth: 740, margin: "0 auto" }}>
+          <p style={{ fontFamily: "'Lato', sans-serif", fontSize: 9, letterSpacing: "0.4em", color: "#A48D6E", fontWeight: 600, textTransform: "uppercase", marginBottom: 16 }}>Private Admissions Consultation</p>
+          <h2 style={{ fontFamily: serif, fontSize: isMobile ? 28 : 40, fontWeight: 600, color: "#A48D6E", lineHeight: 1.05, marginBottom: 8 }}>Schedule a Family Consultation</h2>
+          <p style={{ fontFamily: sans, fontSize: 15, color: "#E4D6C1", fontWeight: 300, lineHeight: 1.8, marginBottom: 36, maxWidth: 580 }}>Please submit your information to schedule a private admissions consultation. A dedicated Program Pathways Coordinator will guide your family through program options, admissions steps, curriculum, tuition, schedule fit, and next steps.</p>
+          <div style={{ background: "rgba(16, 15, 12, 1)", borderTop: `2px solid #A48D6E`, padding: "36px 32px" }}>
+            <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 11, letterSpacing: "0.25em", color: "#A48D6E", fontWeight: 600, textTransform: "uppercase", marginBottom: 12 }}>Parent / Guardian</p>
+            <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 10, marginBottom: 10 }}>
+              {[["First Name", "text"], ["Last Name", "text"]].map(([ph, type]) => (
+                <input key={ph} type={type} placeholder={ph} className="inquiry-input" style={{ background: "#FBF7EE", border: "1px solid rgba(0,0,0,.2)", color: "#010000", padding: "13px 16px", fontFamily: "'Lato', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
+              ))}
             </div>
-          ) : (
-            <div style={{ borderTop: `1px solid rgba(164,141,110,.2)`, paddingTop: 36 }}>
-
-              <p style={{ fontFamily: lora, fontSize: 10, letterSpacing: "0.3em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 14 }}>Parent / Guardian</p>
-              <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 10, marginBottom: 10 }}>
-                <input type="text" placeholder="First Name" value={form.parentFirst} onChange={e => setForm(p => ({ ...p, parentFirst: e.target.value }))} style={inputStyle} />
-                <input type="text" placeholder="Last Name" value={form.parentLast} onChange={e => setForm(p => ({ ...p, parentLast: e.target.value }))} style={inputStyle} />
-              </div>
-              <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 10, marginBottom: 10 }}>
-                <input type="email" placeholder="Email Address" value={form.email} onChange={e => setForm(p => ({ ...p, email: e.target.value }))} style={inputStyle} />
-                <input type="tel" placeholder="Phone Number" value={form.phone} onChange={e => setForm(p => ({ ...p, phone: e.target.value }))} style={inputStyle} />
-              </div>
-              <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr 80px", gap: 10, marginBottom: 28 }}>
-                <input type="text" placeholder="City" value={form.city} onChange={e => setForm(p => ({ ...p, city: e.target.value }))} style={inputStyle} />
-                <input type="text" placeholder="State" value={form.state} onChange={e => setForm(p => ({ ...p, state: e.target.value }))} style={inputStyle} />
-                <input type="text" placeholder="ZIP" value={form.zip} onChange={e => setForm(p => ({ ...p, zip: e.target.value }))} style={inputStyle} />
-              </div>
-
-              <p style={{ fontFamily: lora, fontSize: 10, letterSpacing: "0.3em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 14 }}>Student</p>
-              <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 10, marginBottom: 10 }}>
-                <input type="text" placeholder="First Name" value={form.studentFirst} onChange={e => setForm(p => ({ ...p, studentFirst: e.target.value }))} style={inputStyle} />
-                <input type="text" placeholder="Last Name" value={form.studentLast} onChange={e => setForm(p => ({ ...p, studentLast: e.target.value }))} style={inputStyle} />
-              </div>
-              <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 10, marginBottom: 10 }}>
-                <input type="text" placeholder="Age" value={form.age} onChange={e => setForm(p => ({ ...p, age: e.target.value }))} style={inputStyle} />
-                <input type="text" placeholder="Current Grade" value={form.grade} onChange={e => setForm(p => ({ ...p, grade: e.target.value }))} style={inputStyle} />
-              </div>
-              <select value={form.program} onChange={e => setForm(p => ({ ...p, program: e.target.value }))} style={{ ...inputStyle, marginBottom: 28, appearance: "none" }}>
-                <option value="" disabled>Program of Interest</option>
-                <option value="summer">Summer Intensive</option>
-                <option value="foundation">Flagship — Foundation Semester</option>
-                <option value="venture">Flagship — Venture Semester</option>
-                <option value="full-year">Flagship — Full Academic Year</option>
+            <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 10, marginBottom: 10 }}>
+              {[["Email Address", "email"], ["Phone Number", "tel"]].map(([ph, type]) => (
+                <input key={ph} type={type} placeholder={ph} className="inquiry-input" style={{ background: "#FBF7EE", border: "1px solid rgba(0,0,0,.2)", color: "#010000", padding: "13px 16px", fontFamily: "'Lato', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
+              ))}
+            </div>
+            <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr 80px", gap: 10, marginBottom: 24 }}>
+              <input type="text" placeholder="City *" className="inquiry-input" style={{ background: "#FBF7EE", border: "1px solid rgba(0,0,0,.2)", color: "#010000", padding: "13px 16px", fontFamily: "'Lato', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} required />
+              <input type="text" placeholder="State" className="inquiry-input" style={{ background: "#FBF7EE", border: "1px solid rgba(0,0,0,.2)", color: "#010000", padding: "13px 16px", fontFamily: "'Lato', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
+              <input type="text" placeholder="ZIP *" className="inquiry-input" style={{ background: "#FBF7EE", border: "1px solid rgba(0,0,0,.2)", color: "#010000", padding: "13px 16px", fontFamily: "'Lato', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} required />
+            </div>
+            <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 11, letterSpacing: "0.25em", borderStyle: "none", color: "#A48D6E", fontWeight: 600, textTransform: "uppercase", marginBottom: 12 }}>Student</p>
+            <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 10, marginBottom: 10 }}>
+              {[["First Name", "text"], ["Last Name", "text"]].map(([ph, type]) => (
+                <input key={ph} type={type} placeholder={ph} className="inquiry-input" style={{ background: "#FBF7EE", border: "1px solid rgba(0,0,0,.2)", color: "#010000", padding: "13px 16px", fontFamily: "'Lato', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
+              ))}
+            </div>
+            <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 10, marginBottom: 10 }}>
+              <input type="text" placeholder="Age" className="inquiry-input" style={{ background: "#FBF7EE", border: "1px solid rgba(0,0,0,.2)", color: "#010000", padding: "13px 16px", fontFamily: "'Lato', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
+              <input type="text" placeholder="Current Grade" className="inquiry-input" style={{ background: "#FBF7EE", border: "1px solid rgba(0,0,0,.2)", color: "#010000", padding: "13px 16px", fontFamily: "'Lato', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
+            </div>
+            <select defaultValue="" style={{ background: "#fcf7ee", border: "1px solid rgba(16,15,12,.2)", color: "#100F0C", padding: "13px 16px", fontFamily: "'Lora', Georgia, serif", fontSize: 13, fontWeight: 400, outline: "none", width: "100%", marginBottom: 24, appearance: "none" }}>
+              <option value="" disabled>Program of Interest</option>
+              <option value="flagship">Flagship Program — Full Year, Foundation Semester, or Venture Semester</option>
+              <option value="sixweek">Six-Week Intensive</option>
+              <option value="summer">Summer Intensive</option>
+            </select>
+            <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 11, letterSpacing: "0.25em", color: "#A48D6E", fontWeight: 600, textTransform: "uppercase", marginBottom: 12, marginTop: 0 }}>Consultation Preferences</p>
+            <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 10, marginBottom: 10 }}>
+              <select className="inquiry-input" defaultValue="" style={{ background: "#FBF7EE", border: "1px solid rgba(0,0,0,.2)", color: "#010000", padding: "13px 16px", fontFamily: "'Lato', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%", appearance: "none" }}>
+                <option value="" disabled>Preferred Contact Method</option>
+                <option value="phone">Phone Call</option>
+                <option value="email">Email</option>
+                <option value="either">Either</option>
               </select>
-
-              <p style={{ fontFamily: lora, fontSize: 10, letterSpacing: "0.3em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 14 }}>Consultation Preferences</p>
-              <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 10, marginBottom: 10 }}>
-                <select value={form.contactMethod} onChange={e => setForm(p => ({ ...p, contactMethod: e.target.value }))} style={{ ...inputStyle, appearance: "none" }}>
-                  <option value="" disabled>Preferred Contact Method</option>
-                  <option value="phone">Phone Call</option>
-                  <option value="email">Email</option>
-                  <option value="either">Either</option>
-                </select>
-                <input type="text" placeholder="Preferred Consultation Date(s)" value={form.dates} onChange={e => setForm(p => ({ ...p, dates: e.target.value }))} style={inputStyle} />
-              </div>
-              <input type="text" placeholder="Preferred Times (for example, mornings, evenings, or weekends)" value={form.times} onChange={e => setForm(p => ({ ...p, times: e.target.value }))} style={{ ...inputStyle, marginBottom: 10 }} />
-              <textarea placeholder="Questions or context you would like us to know (optional)" value={form.notes} onChange={e => setForm(p => ({ ...p, notes: e.target.value }))} rows={4} style={{ ...inputStyle, marginBottom: 28, resize: "vertical" }} />
-
-
-              <button
-                onClick={async () => {
-                  const ok = await sendEmail({
-                    subject: "Contact — Family Consultation Request",
-                    from_name: `${form.parentFirst} ${form.parentLast}`,
-                    email: form.email, phone: form.phone,
-                    city: form.city, state: form.state, zip: form.zip,
-                    student_name: `${form.studentFirst} ${form.studentLast}`,
-                    student_age: form.age, student_grade: form.grade,
-                    program_interest: form.program,
-                    contact_method: form.contactMethod,
-                    preferred_dates: form.dates,
-                    preferred_times: form.times,
-                    notes: form.notes,
-                  });
-                  setStatus(ok ? "success" : "error");
-                }}
-                style={{ fontFamily: lora, padding: "15px 0", background: gold, border: "none", color: dark, fontSize: 11, fontWeight: 600, letterSpacing: "0.18em", textTransform: "uppercase", cursor: "pointer", width: "100%" }}
-              >
-                Request a Private Consultation
-              </button>
+              <input type="text" placeholder="Preferred Consultation Date(s)" className="inquiry-input" style={{ background: "#FBF7EE", border: "1px solid rgba(0,0,0,.2)", color: "#010000", padding: "13px 16px", fontFamily: "'Lato', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
             </div>
-          )}
+            <input type="text" placeholder="Preferred Times (for example, mornings, evenings, or weekends)" className="inquiry-input" style={{ background: "#FBF7EE", border: "1px solid rgba(0,0,0,.2)", color: "#010000", padding: "13px 16px", fontFamily: "'Lato', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%", marginBottom: 10 }} />
+            <textarea placeholder="Questions or context you would like us to know (optional)" className="inquiry-input" rows={4} style={{ background: "#FBF7EE", border: "1px solid rgba(0,0,0,.2)", color: "#010000", padding: "13px 16px", fontFamily: "'Lato', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%", marginBottom: 28, resize: "vertical" }} />
+            <button onClick={() => openInquiry && openInquiry("contact")} style={{ fontFamily: "'Lato', sans-serif", padding: "15px 40px", background: "#DAC8AA", border: "none", color: "#100F0C", fontSize: 11, fontWeight: 600, letterSpacing: "0.15em", textTransform: "uppercase", cursor: "pointer", width: "100%" }}>REQUEST A PRIVATE CONSULTATION</button>
+          </div>
         </div>
       </div>
 
@@ -10747,86 +10500,58 @@ function FlagshipDetailPage2({ setPage, openInquiry }) {
         </div>
       </div>
       {/* FAMILY CONSULTATION FORM */}
-      <div style={{ background: "#E4D5C1", padding: isMobile ? "60px 24px" : "80px 80px", borderTop: "1px solid rgba(0,0,0,.08)" }}>
+      <div style={{ background: "rgba(16, 15, 12, 1)", padding: isMobile ? "52px 24px" : "72px 80px", borderTop: "1px solid rgba(0,0,0,.08)" }}>
         <div style={{ maxWidth: 740, margin: "0 auto" }}>
-          <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 9, letterSpacing: "0.4em", color: "#100F0C", fontWeight: 600, textTransform: "uppercase", marginBottom: 16 }}>Private Admissions Consultation</p>
-          <h2 style={{ fontFamily: "'Cormorant Garamond',Georgia,serif", fontSize: isMobile ? 32 : 44, fontWeight: 300, color: "#100F0C", lineHeight: 1.05, marginBottom: 10 }}>Schedule a Family Consultation</h2>
-          <p style={{ fontFamily: "'Avenir','Avenir Next','Century Gothic',sans-serif", fontSize: 14, color: "#100F0C", fontWeight: 300, lineHeight: 1.8, marginBottom: 40, maxWidth: 580 }}>Please submit your information to schedule a private admissions consultation. A dedicated Program Pathways advisor will follow up personally.</p>
-
-          {consultStatus === "success" ? (
-            <div style={{ background: "#100F0C", padding: "40px 32px", textAlign: "center" }}>
-              <p style={{ fontFamily: "'Cormorant Garamond',Georgia,serif", fontSize: 28, fontWeight: 300, color: "#A48D6E", marginBottom: 12 }}>Thank you. Your request has been received.</p>
-              <p style={{ fontFamily: "'Avenir','Avenir Next','Century Gothic',sans-serif", fontSize: 13, color: "#E4D5C1", fontWeight: 300, lineHeight: 1.8 }}>Your consultation request has been received. A member of our admissions team will follow up personally with next steps.</p>
+          <p style={{ fontFamily: "'Lato', sans-serif", fontSize: 9, letterSpacing: "0.4em", color: "#A48D6E", fontWeight: 600, textTransform: "uppercase", marginBottom: 16 }}>Private Admissions Consultation</p>
+          <h2 style={{ fontFamily: serif, fontSize: isMobile ? 28 : 40, fontWeight: 600, color: "#A48D6E", lineHeight: 1.05, marginBottom: 8 }}>Schedule a Family Consultation</h2>
+          <p style={{ fontFamily: sans, fontSize: 15, color: "#E4D6C1", fontWeight: 300, lineHeight: 1.8, marginBottom: 36, maxWidth: 580 }}>Please submit your information to schedule a private admissions consultation. A dedicated Program Pathways Coordinator will guide your family through program options, admissions steps, curriculum, tuition, schedule fit, and next steps.</p>
+          <div style={{ background: "rgba(16, 15, 12, 1)", borderTop: `2px solid #A48D6E`, padding: "36px 32px" }}>
+            <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 11, letterSpacing: "0.25em", color: "#A48D6E", fontWeight: 600, textTransform: "uppercase", marginBottom: 12 }}>Parent / Guardian</p>
+            <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 10, marginBottom: 10 }}>
+              {[["First Name", "text"], ["Last Name", "text"]].map(([ph, type]) => (
+                <input key={ph} type={type} placeholder={ph} className="inquiry-input" style={{ background: "#FBF7EE", border: "1px solid rgba(0,0,0,.2)", color: "#010000", padding: "13px 16px", fontFamily: "'Lato', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
+              ))}
             </div>
-          ) : (
-            <div style={{ borderTop: "2px solid #100F0C", padding: "36px 32px", background: "#E4D5C1" }}>
-              <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 9, letterSpacing: "0.25em", color: "#100F0C", fontWeight: 600, textTransform: "uppercase", marginBottom: 12 }}>Parent / Guardian</p>
-              <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 10, marginBottom: 10 }}>
-                <input type="text" placeholder="First Name" value={consultForm.parentFirst} onChange={e=>setConsultForm(p=>({...p,parentFirst:e.target.value}))} style={{ background: "#E4D5C1", border: "1px solid rgba(16,15,12,.2)", color: "#100F0C", padding: "13px 16px", fontFamily: lora, fontSize: 13, fontWeight: 400, outline: "none" }} />
-                <input type="text" placeholder="Last Name" value={consultForm.parentLast} onChange={e=>setConsultForm(p=>({...p,parentLast:e.target.value}))} style={{ background: "#E4D5C1", border: "1px solid rgba(16,15,12,.2)", color: "#100F0C", padding: "13px 16px", fontFamily: lora, fontSize: 13, fontWeight: 400, outline: "none" }} />
-              </div>
-              <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 10, marginBottom: 10 }}>
-                <input type="email" placeholder="Email Address" value={consultForm.email} onChange={e=>setConsultForm(p=>({...p,email:e.target.value}))} style={{ background: "#E4D5C1", border: "1px solid rgba(16,15,12,.2)", color: "#100F0C", padding: "13px 16px", fontFamily: lora, fontSize: 13, fontWeight: 400, outline: "none" }} />
-                <input type="tel" placeholder="Phone Number" value={consultForm.phone} onChange={e=>setConsultForm(p=>({...p,phone:e.target.value}))} style={{ background: "#E4D5C1", border: "1px solid rgba(16,15,12,.2)", color: "#100F0C", padding: "13px 16px", fontFamily: lora, fontSize: 13, fontWeight: 400, outline: "none" }} />
-              </div>
-              <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr 80px", gap: 10, marginBottom: 24 }}>
-                <input type="text" placeholder="City *" value={consultForm.city} onChange={e=>setConsultForm(p=>({...p,city:e.target.value}))} style={{ background: "#E4D5C1", border: "1px solid rgba(16,15,12,.2)", color: "#100F0C", padding: "13px 16px", fontFamily: lora, fontSize: 13, fontWeight: 400, outline: "none" }} />
-                <input type="text" placeholder="State" value={consultForm.state} onChange={e=>setConsultForm(p=>({...p,state:e.target.value}))} style={{ background: "#E4D5C1", border: "1px solid rgba(16,15,12,.2)", color: "#100F0C", padding: "13px 16px", fontFamily: lora, fontSize: 13, fontWeight: 400, outline: "none" }} />
-                <input type="text" placeholder="ZIP *" value={consultForm.zip} onChange={e=>setConsultForm(p=>({...p,zip:e.target.value}))} style={{ background: "#E4D5C1", border: "1px solid rgba(16,15,12,.2)", color: "#100F0C", padding: "13px 16px", fontFamily: lora, fontSize: 13, fontWeight: 400, outline: "none" }} />
-              </div>
-
-              <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 9, letterSpacing: "0.25em", color: "#100F0C", fontWeight: 600, textTransform: "uppercase", marginBottom: 12 }}>Student</p>
-              <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 10, marginBottom: 10 }}>
-                <input type="text" placeholder="First Name" value={consultForm.studentFirst} onChange={e=>setConsultForm(p=>({...p,studentFirst:e.target.value}))} style={{ background: "#E4D5C1", border: "1px solid rgba(16,15,12,.2)", color: "#100F0C", padding: "13px 16px", fontFamily: lora, fontSize: 13, fontWeight: 400, outline: "none" }} />
-                <input type="text" placeholder="Last Name" value={consultForm.studentLast} onChange={e=>setConsultForm(p=>({...p,studentLast:e.target.value}))} style={{ background: "#E4D5C1", border: "1px solid rgba(16,15,12,.2)", color: "#100F0C", padding: "13px 16px", fontFamily: lora, fontSize: 13, fontWeight: 400, outline: "none" }} />
-              </div>
-              <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 10, marginBottom: 10 }}>
-                <input type="text" placeholder="Age" value={consultForm.age} onChange={e=>setConsultForm(p=>({...p,age:e.target.value}))} style={{ background: "#E4D5C1", border: "1px solid rgba(16,15,12,.2)", color: "#100F0C", padding: "13px 16px", fontFamily: lora, fontSize: 13, fontWeight: 400, outline: "none" }} />
-                <input type="text" placeholder="Current Grade" value={consultForm.grade} onChange={e=>setConsultForm(p=>({...p,grade:e.target.value}))} style={{ background: "#E4D5C1", border: "1px solid rgba(16,15,12,.2)", color: "#100F0C", padding: "13px 16px", fontFamily: lora, fontSize: 13, fontWeight: 400, outline: "none" }} />
-              </div>
-              <select value={consultForm.program} onChange={e=>setConsultForm(p=>({...p,program:e.target.value}))} style={{ background: "#E4D5C1", border: "1px solid rgba(16,15,12,.2)", color: "#100F0C", padding: "13px 16px", fontFamily: lora, fontSize: 13, fontWeight: 400, outline: "none", appearance: "none", marginBottom: 24 }}>
-                <option value="flagship">Flagship Program — Full Year, Foundation Semester, or Venture Semester</option>
-                <option value="sixweek">Six-Week Intensive</option>
-                <option value="summer">Summer Intensive</option>
+            <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 10, marginBottom: 10 }}>
+              {[["Email Address", "email"], ["Phone Number", "tel"]].map(([ph, type]) => (
+                <input key={ph} type={type} placeholder={ph} className="inquiry-input" style={{ background: "#FBF7EE", border: "1px solid rgba(0,0,0,.2)", color: "#010000", padding: "13px 16px", fontFamily: "'Lato', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
+              ))}
+            </div>
+            <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr 80px", gap: 10, marginBottom: 24 }}>
+              <input type="text" placeholder="City *" className="inquiry-input" style={{ background: "#FBF7EE", border: "1px solid rgba(0,0,0,.2)", color: "#010000", padding: "13px 16px", fontFamily: "'Lato', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} required />
+              <input type="text" placeholder="State" className="inquiry-input" style={{ background: "#FBF7EE", border: "1px solid rgba(0,0,0,.2)", color: "#010000", padding: "13px 16px", fontFamily: "'Lato', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
+              <input type="text" placeholder="ZIP *" className="inquiry-input" style={{ background: "#FBF7EE", border: "1px solid rgba(0,0,0,.2)", color: "#010000", padding: "13px 16px", fontFamily: "'Lato', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} required />
+            </div>
+            <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 11, letterSpacing: "0.25em", borderStyle: "none", color: "#A48D6E", fontWeight: 600, textTransform: "uppercase", marginBottom: 12 }}>Student</p>
+            <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 10, marginBottom: 10 }}>
+              {[["First Name", "text"], ["Last Name", "text"]].map(([ph, type]) => (
+                <input key={ph} type={type} placeholder={ph} className="inquiry-input" style={{ background: "#FBF7EE", border: "1px solid rgba(0,0,0,.2)", color: "#010000", padding: "13px 16px", fontFamily: "'Lato', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
+              ))}
+            </div>
+            <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 10, marginBottom: 10 }}>
+              <input type="text" placeholder="Age" className="inquiry-input" style={{ background: "#FBF7EE", border: "1px solid rgba(0,0,0,.2)", color: "#010000", padding: "13px 16px", fontFamily: "'Lato', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
+              <input type="text" placeholder="Current Grade" className="inquiry-input" style={{ background: "#FBF7EE", border: "1px solid rgba(0,0,0,.2)", color: "#010000", padding: "13px 16px", fontFamily: "'Lato', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
+            </div>
+            <select defaultValue="" style={{ background: "#fcf7ee", border: "1px solid rgba(16,15,12,.2)", color: "#100F0C", padding: "13px 16px", fontFamily: "'Lora', Georgia, serif", fontSize: 13, fontWeight: 400, outline: "none", width: "100%", marginBottom: 24, appearance: "none" }}>
+              <option value="" disabled>Program of Interest</option>
+              <option value="flagship">Flagship Program — Full Year, Foundation Semester, or Venture Semester</option>
+              <option value="sixweek">Six-Week Intensive</option>
+              <option value="summer">Summer Intensive</option>
+            </select>
+            <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 11, letterSpacing: "0.25em", color: "#A48D6E", fontWeight: 600, textTransform: "uppercase", marginBottom: 12, marginTop: 0 }}>Consultation Preferences</p>
+            <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 10, marginBottom: 10 }}>
+              <select className="inquiry-input" defaultValue="" style={{ background: "#FBF7EE", border: "1px solid rgba(0,0,0,.2)", color: "#010000", padding: "13px 16px", fontFamily: "'Lato', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%", appearance: "none" }}>
+                <option value="" disabled>Preferred Contact Method</option>
+                <option value="phone">Phone Call</option>
+                <option value="email">Email</option>
+                <option value="either">Either</option>
               </select>
-
-              <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 9, letterSpacing: "0.25em", color: "#100F0C", fontWeight: 600, textTransform: "uppercase", marginBottom: 12 }}>Consultation Preferences</p>
-              <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 10, marginBottom: 10 }}>
-                <select value={consultForm.contactMethod} onChange={e=>setConsultForm(p=>({...p,contactMethod:e.target.value}))} style={{ background: "#E4D5C1", border: "1px solid rgba(16,15,12,.2)", color: "#100F0C", padding: "13px 16px", fontFamily: lora, fontSize: 13, fontWeight: 400, outline: "none", appearance: "none" }}>
-                  <option value="" disabled>Preferred Contact Method</option>
-                  <option value="phone">Phone Call</option>
-                  <option value="email">Email</option>
-                  <option value="either">Either</option>
-                </select>
-                <input type="text" placeholder="Preferred Consultation Date(s)" value={consultForm.dates} onChange={e=>setConsultForm(p=>({...p,dates:e.target.value}))} style={{ background: "#E4D5C1", border: "1px solid rgba(16,15,12,.2)", color: "#100F0C", padding: "13px 16px", fontFamily: lora, fontSize: 13, fontWeight: 400, outline: "none" }} />
-              </div>
-              <input type="text" placeholder="Preferred Times (for example, mornings, evenings, or weekends)" value={consultForm.times} onChange={e=>setConsultForm(p=>({...p,times:e.target.value}))} style={{ background: "#E4D5C1", border: "1px solid rgba(16,15,12,.2)", color: "#100F0C", padding: "13px 16px", fontFamily: lora, fontSize: 13, fontWeight: 400, outline: "none", marginBottom: 10 }} />
-              <textarea placeholder="Questions or context you would like us to know (optional)" value={consultForm.notes} onChange={e=>setConsultForm(p=>({...p,notes:e.target.value}))} rows={4} style={{ background: "#E4D5C1", border: "1px solid rgba(16,15,12,.2)", color: "#100F0C", padding: "13px 16px", fontFamily: lora, fontSize: 13, fontWeight: 400, outline: "none", marginBottom: 28, resize: "vertical" }} />
-
-              <button
-                onClick={async () => {
-                  const ok = await sendEmail({
-                    subject: "Excalibur Admissions - Family Consultation Request",
-                    from_name: consultForm.parentFirst + " " + consultForm.parentLast,
-                    email: consultForm.email,
-                    phone: consultForm.phone,
-                    city: consultForm.city, state: consultForm.state, zip: consultForm.zip,
-                    student_name: consultForm.studentFirst + " " + consultForm.studentLast,
-                    student_age: consultForm.age, student_grade: consultForm.grade,
-                    program_interest: consultForm.program,
-                    contact_method: consultForm.contactMethod,
-                    preferred_dates: consultForm.dates,
-                    preferred_times: consultForm.times,
-                    notes: consultForm.notes,
-                  });
-                  setConsultStatus(ok ? "success" : "error");
-                }}
-                style={{ fontFamily: lora, padding: "15px 40px", background: gold, border: "1px solid #D9C7A9", color: dark, fontSize: 11, fontWeight: 600, letterSpacing: "0.15em", textTransform: "uppercase", cursor: "pointer", width: "100%" }}
-              >
-                REQUEST A PRIVATE CONSULTATION
-              </button>
+              <input type="text" placeholder="Preferred Consultation Date(s)" className="inquiry-input" style={{ background: "#FBF7EE", border: "1px solid rgba(0,0,0,.2)", color: "#010000", padding: "13px 16px", fontFamily: "'Lato', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
             </div>
-          )}
+            <input type="text" placeholder="Preferred Times (for example, mornings, evenings, or weekends)" className="inquiry-input" style={{ background: "#FBF7EE", border: "1px solid rgba(0,0,0,.2)", color: "#010000", padding: "13px 16px", fontFamily: "'Lato', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%", marginBottom: 10 }} />
+            <textarea placeholder="Questions or context you would like us to know (optional)" className="inquiry-input" rows={4} style={{ background: "#FBF7EE", border: "1px solid rgba(0,0,0,.2)", color: "#010000", padding: "13px 16px", fontFamily: "'Lato', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%", marginBottom: 28, resize: "vertical" }} />
+            <button onClick={() => openInquiry && openInquiry("flagship")} style={{ fontFamily: "'Lato', sans-serif", padding: "15px 40px", background: "#DAC8AA", border: "none", color: "#100F0C", fontSize: 11, fontWeight: 600, letterSpacing: "0.15em", textTransform: "uppercase", cursor: "pointer", width: "100%" }}>REQUEST A PRIVATE CONSULTATION</button>
+          </div>
         </div>
       </div>
       </MobileAccordionSection>
