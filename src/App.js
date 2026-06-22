@@ -750,14 +750,13 @@ function Footer({ setPage }) {
           {/* Support email */}
           <div style={{ display: "flex", flexDirection: "column", gap: 5, borderLeft: isMobile ? "none" : "1px solid rgba(188,166,150,.15)", paddingLeft: isMobile ? 0 : 48 }}>
             <span style={{ fontFamily: eyebrow_font, fontSize: 11, color: "#BCA696", letterSpacing: "0.25em", textTransform: "uppercase", fontWeight: 600, marginBottom: 4 }}>GENERAL INQUIRIES</span>
-            <a href="mailto:support@excaliburacademy.org" style={{ fontFamily: serif, fontSize: 15, color: "rgba(228, 214, 193, 1)", textDecoration: "none", letterSpacing: "0.05em", fontStyle: "italic", transition: "color .2s" }} onMouseEnter={e => e.target.style.color = "#E4D5C1"} onMouseLeave={e => e.target.style.color = "#BCA696"}>support@excaliburacademy.org</a>
+            <a href="mailto:support@excaliburacademy.org" style={{ fontFamily: serif, fontSize: 18, color: "rgba(228, 214, 193, 1)", textDecoration: "none", letterSpacing: "0.05em", fontStyle: "italic", transition: "color .2s" }} onMouseEnter={e => e.target.style.color = "#E4D5C1"} onMouseLeave={e => e.target.style.color = "#BCA696"}>support@excaliburacademy.org</a>
           </div>
         </div>
       </div>
       {/* Copyright */}
       <div style={{ maxWidth: 1200, margin: "0 auto", padding: isMobile ? "20px 24px" : "20px 60px", display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 8 }}>
-        <p style={{ fontFamily: sans, fontSize: 9, color: "#BCA696", letterSpacing: "0.08em", textTransform: "uppercase" }}>© 2026 Excalibur Academy LLC · South Orange County, California</p>
-        <p style={{ fontFamily: sans, fontSize: 9, color: "#BCA696", letterSpacing: "0.06em" }}>South Orange County, California</p>
+        <p style={{ fontFamily: sans, fontSize: 9, color: "#BCA696", letterSpacing: "0.08em", textTransform: "uppercase" }}>© 2026 Excalibur Academy LLC · Orange County, California</p>
       </div>
     </footer>
   );
