@@ -1173,11 +1173,11 @@ function SoireeInviteBlock({ openInquiry, setPage = () => {}, autoOpen = false, 
                   {/* Date */}
                   <p style={{ fontFamily: "Cinzel, serif", fontSize: isMobile ? 72 : 96, fontWeight: 300, color: "#FBF7EE", lineHeight: 1, letterSpacing: "-0.03em", marginBottom: 6 }}>June 30</p>
                   <div style={{ display: "flex", alignItems: "center", gap: 10, justifyContent: "center", marginBottom: 8 }}>
-                    <p style={{ fontFamily: "'Cormorant Garamond', 'Didot', Georgia, serif", fontSize: isMobile ? 16 : 21, color: "#d8b78c", fontStyle: "italic", fontWeight: 400, letterSpacing: "0.12em", margin: 0 }}>Tuesday &nbsp;·&nbsp; 6:00 – 8:00 PM</p>
+                    <p style={{ fontFamily: "'Cormorant Garamond', 'Didot', Georgia, serif", fontSize: isMobile ? 16 : 25, color: "#d8b78c", fontStyle: "italic", fontWeight: 400, letterSpacing: "0.12em", margin: 0 }}>Tuesday &nbsp;·&nbsp; 6:00 – 8:00 PM</p>
                   </div>
-                  <p style={{ fontFamily: serif, fontSize: isMobile ? 28 : 40, color: "#FBF7EE", lineHeight: 1.3, fontStyle: "italic", marginBottom: 16, fontWeight: 400 }}>  Family Information Soirée</p>
+                  <p style={{ fontFamily: serif, fontSize: isMobile ? 28 : 42, color: "#FBF7EE", lineHeight: 1.3, fontStyle: "italic", marginBottom: 16, fontWeight: 400 }}>  Family Information Soirée</p>
                   <p style={{ fontFamily: "'Cormorant Garamond', 'Didot', Georgia, serif", fontSize: isMobile ? 18 : 25, color: "#A48D6E", lineHeight: 1.4, marginBottom: 6, fontStyle: "italic", fontWeight: 700, letterSpacing: "0.12em" }}>at</p>
-                  <p style={{ fontFamily: "'Cormorant Garamond', 'Didot', 'Bodoni MT', Georgia, serif", fontSize: isMobile ? 28 : 42, color: "#FBF7EE", lineHeight: 1.1, marginBottom: 6, fontWeight: 300, fontStyle: "italic", letterSpacing: "0.04em" }}>Crown Valley Ballroom Laguna Niguel Community Center</p>
+                  <p style={{ fontFamily: "'Cormorant Garamond', 'Didot', 'Bodoni MT', Georgia, serif", fontSize: isMobile ? 28 : 35, color: "#FBF7EE", lineHeight: 1.1, marginBottom: 6, fontWeight: 300, fontStyle: "italic", letterSpacing: "0.04em" }}>Crown Valley Ballroom Laguna Niguel Community Center</p>
                   <div style={{ display: "flex", alignItems: "center", gap: 12, justifyContent: "center", marginBottom: 36 }}>
                     <div style={{ width: 28, height: "1px", background:"#010000" }} />
                     <p style={{ fontFamily: "'Forum', sans-serif", fontSize: 13, color: "#d8b78c", lineHeight: 1, fontWeight: 600, letterSpacing: "0.35em", textTransform: "uppercase", margin: 0 }}>LAGUNA NIGUEL · California</p>
@@ -1197,9 +1197,9 @@ function SoireeInviteBlock({ openInquiry, setPage = () => {}, autoOpen = false, 
                   {/* Buttons */}
                   <div style={{ display: "flex", gap: 10, flexDirection: isMobile ? "column" : "row", width: "100%", maxWidth: 460, marginBottom: 14 }}>
                     <button onClick={() => setShowForm(true)} style={{ fontFamily: sans, background: "#d8b78c", color:"#010000", padding: "13px 22px", fontSize: 11, fontWeight: 700, letterSpacing: "0.15em", textTransform: "uppercase", border: "none", cursor: "pointer", flex: 1 }}>Request an Invitation</button>
-                    <button onClick={() => setPage("events")} style={{ fontFamily: sans, background: "transparent", color: "#010000", padding: "13px 22px", fontSize: 11, fontWeight: 500, letterSpacing: "0.15em", textTransform: "uppercase", border: "1px solid rgba(216,183,140,.35)", cursor: "pointer", flex: 1 }}>Event Information →</button>
+                    <button onClick={() => setPage("events")} style={{ fontFamily: sans, background: "transparent", color: "#E4D5C1", padding: "13px 22px", fontSize: 11, fontWeight: 500, letterSpacing: "0.15em", textTransform: "uppercase", border: "1px solid rgba(216,183,140,.35)", cursor: "pointer", flex: 1 }}>Event Information →</button>
                   </div>
-                  <p style={{ fontFamily: "'Lora', serif", fontSize: 13, color: "#A48D6E", marginTop: 4, lineHeight: 1.7, maxWidth: 420 }}>Attendance is limited. Confirmed families will receive event details directly from the admissions team.</p>
+                  <p style={{ fontFamily: "'Lora', serif", fontSize: 14, color: "#A48D6E", marginTop: 4, lineHeight: 1.7, maxWidth: 420 }}>Attendance is limited. Confirmed families will receive event details directly from the admissions team.</p>
                 </div>
               </div> {/* close inner grid */}
               </div> {/* close flex column wrapper */}
