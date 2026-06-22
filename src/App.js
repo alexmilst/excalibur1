@@ -1192,7 +1192,7 @@ function SoireeInviteBlock({ openInquiry, setPage = () => {}, autoOpen = false, 
                   <div style={{ border: "1px solid rgba(216,183,140,.25)", padding: isMobile ? "18px 18px" : "24px 36px", textAlign: "center", maxWidth: 540, marginBottom: 32, position: "relative", width: "100%" }}>
                     <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 1, background: "linear-gradient(90deg, transparent, rgba(216,183,140,.4), transparent)" }} />
                     <p style={{ fontFamily: "'Lora', serif", fontSize: 16, letterSpacing: "0.08em", color: "#FBF7EE", fontWeight: 400, fontStyle: "italic", marginBottom: 14 }}>On the evening, prospective students &amp; parents will be asked to share an answer to one question</p>
-                    <p style={{ border: "1px solid rgba(164, 141, 110, 1)", fontFamily: "'Playfair Display', 'Didot', 'Bodoni MT', Georgia, serif", fontSize: isMobile ? 20 : 30, color: "#A48D6E", fontWeight: 400, lineHeight: 1.25, fontStyle: "italic" }}>"What is your dream?"</p>
+                    <p style={{ borderStyle: "none", fontFamily: "'Playfair Display', 'Didot', 'Bodoni MT', Georgia, serif", fontSize: isMobile ? 20 : 30, color: "#A48D6E", fontWeight: 400, lineHeight: 1.25, fontStyle: "italic" }}>"What is your dream?"</p>
                   </div>
                   {/* Buttons */}
                   <div style={{ display: "flex", gap: 10, flexDirection: isMobile ? "column" : "row", width: "100%", maxWidth: 460, marginBottom: 14 }}>
@@ -4619,7 +4619,7 @@ function HomePage({ setPage, openInquiry }) {
           <h2 style={{ fontFamily: serif, fontSize: isMobile ? 28 : 40, fontWeight: 600, color: "#A48D6E", lineHeight: 1.05, marginBottom: 8 }}>Schedule a Family Consultation</h2>
           <p style={{ fontFamily: sans, fontSize: 15, color: "#E4D6C1", fontWeight: 300, lineHeight: 1.8, marginBottom: 36, maxWidth: 580 }}>Please submit your information to schedule a private admissions consultation. A dedicated Program Pathways Coordinator will guide your family through program options, admissions steps, curriculum, tuition, schedule fit, and next steps.</p>
           <div style={{ background: "rgba(16, 15, 12, 1)", borderTop: `2px solid #A48D6E`, padding: "36px 32px" }}>
-            <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 9, letterSpacing: "0.25em", color: "#A48D6E", fontWeight: 600, textTransform: "uppercase", marginBottom: 12 }}>Parent / Guardian</p>
+            <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 11, letterSpacing: "0.25em", color: "#A48D6E", fontWeight: 600, textTransform: "uppercase", marginBottom: 12 }}>Parent / Guardian</p>
             <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 10, marginBottom: 10 }}>
               {[["First Name", "text"], ["Last Name", "text"]].map(([ph, type]) => (
                 <input key={ph} type={type} placeholder={ph} className="inquiry-input" style={{ background: "#FBF7EE", border: "1px solid rgba(0,0,0,.2)", color: "#010000", padding: "13px 16px", fontFamily: "'Lato', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
@@ -4635,7 +4635,7 @@ function HomePage({ setPage, openInquiry }) {
               <input type="text" placeholder="State" className="inquiry-input" style={{ background: "#FBF7EE", border: "1px solid rgba(0,0,0,.2)", color: "#010000", padding: "13px 16px", fontFamily: "'Lato', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
               <input type="text" placeholder="ZIP *" className="inquiry-input" style={{ background: "#FBF7EE", border: "1px solid rgba(0,0,0,.2)", color: "#010000", padding: "13px 16px", fontFamily: "'Lato', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} required />
             </div>
-            <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 9, letterSpacing: "0.25em", border: "1px solid #A48D6E", color: "#A48D6E", fontWeight: 600, textTransform: "uppercase", marginBottom: 12 }}>Student</p>
+            <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 11, letterSpacing: "0.25em", borderStyle: "none", color: "#A48D6E", fontWeight: 600, textTransform: "uppercase", marginBottom: 12 }}>Student</p>
             <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 10, marginBottom: 10 }}>
               {[["First Name", "text"], ["Last Name", "text"]].map(([ph, type]) => (
                 <input key={ph} type={type} placeholder={ph} className="inquiry-input" style={{ background: "#FBF7EE", border: "1px solid rgba(0,0,0,.2)", color: "#010000", padding: "13px 16px", fontFamily: "'Lato', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
@@ -4651,7 +4651,7 @@ function HomePage({ setPage, openInquiry }) {
               <option value="sixweek">Six-Week Intensive</option>
               <option value="summer">Summer Intensive</option>
             </select>
-            <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 9, letterSpacing: "0.25em", color: "#A48D6E", fontWeight: 600, textTransform: "uppercase", marginBottom: 12, marginTop: 0 }}>Consultation Preferences</p>
+            <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 11, letterSpacing: "0.25em", color: "#A48D6E", fontWeight: 600, textTransform: "uppercase", marginBottom: 12, marginTop: 0 }}>Consultation Preferences</p>
             <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 10, marginBottom: 10 }}>
               <select className="inquiry-input" defaultValue="" style={{ background: "#FBF7EE", border: "1px solid rgba(0,0,0,.2)", color: "#010000", padding: "13px 16px", fontFamily: "'Lato', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%", appearance: "none" }}>
                 <option value="" disabled>Preferred Contact Method</option>
