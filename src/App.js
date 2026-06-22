@@ -7281,7 +7281,7 @@ function SummerDetailPage({ setPage, openInquiry }) {
               {/* RIGHT: image that swaps per schedule row */}
               {!isMobile && (
                 <div style={{ background: "#1a1a1a", minHeight: 400, overflow: "hidden" }}>
-                  <img src={activeDay !== null ? scheduleImages[activeDay] : scheduleImages[0]} alt="Schedule item photo" style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "top right", transition: "opacity 0.4s ease" }} />
+                  <img src={activeDay !== null ? scheduleImages[activeDay] : scheduleImages[0]} alt="Schedule item photo" style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center", transition: "opacity 0.4s ease" }} />
                 </div>
               )}
             </div>
