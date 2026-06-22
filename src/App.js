@@ -8291,7 +8291,8 @@ function PortalPage({ setPage }) {
   // ── LOGGED OUT: AUTH SCREEN ──
   if (!session) {
     return (
-      <div style={{ background: dark, minHeight: "100vh" }}>
+      <div className="portal-page" style={{ background: dark, minHeight: "100vh" }}>
+        <style>{`.portal-page input, .portal-page textarea, .portal-page select { color: #100F0C !important; } .portal-page input::placeholder, .portal-page textarea::placeholder { color: rgba(16,15,12,.45) !important; }`}</style>
         <Breadcrumb items={[{ label: "Home", page: "home" }]} setPage={setPage} />
         <div style={{ maxWidth: 460, margin: "0 auto", padding: isMobile ? "48px 24px 80px" : "72px 24px 100px" }}>
           <p style={{ fontFamily: lora, fontSize: 11, letterSpacing: "0.4em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 16, textAlign: "center" }}>Student Portal</p>
@@ -8327,7 +8328,8 @@ function PortalPage({ setPage }) {
   // ── LOGGED IN, NO STUDENT PROFILE YET ──
   if (needsProfile) {
     return (
-      <div style={{ background: dark, minHeight: "100vh" }}>
+      <div className="portal-page" style={{ background: dark, minHeight: "100vh" }}>
+        <style>{`.portal-page input, .portal-page textarea, .portal-page select { color: #100F0C !important; } .portal-page input::placeholder, .portal-page textarea::placeholder { color: rgba(16,15,12,.45) !important; }`}</style>
         <Breadcrumb items={[{ label: "Home", page: "home" }]} setPage={setPage} />
         <div style={{ maxWidth: 460, margin: "0 auto", padding: isMobile ? "48px 24px 80px" : "72px 24px 100px" }}>
           <p style={{ fontFamily: lora, fontSize: 11, letterSpacing: "0.4em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 16, textAlign: "center" }}>One More Step</p>
@@ -8365,7 +8367,8 @@ function PortalPage({ setPage }) {
   const currentStatusIndex = application ? statusSteps.findIndex(s => s.key === application.status) : -1;
 
   return (
-    <div style={{ background: parch, minHeight: "100vh" }}>
+    <div className="portal-page" style={{ background: parch, minHeight: "100vh" }}>
+      <style>{`.portal-page input, .portal-page textarea, .portal-page select { color: #100F0C !important; } .portal-page input::placeholder, .portal-page textarea::placeholder { color: rgba(16,15,12,.45) !important; }`}</style>
       <Breadcrumb items={[{ label: "Home", page: "home" }]} setPage={setPage} />
 
       {/* HEADER */}
@@ -8412,7 +8415,7 @@ function PortalPage({ setPage }) {
           </div>
         )}
 
-        {/* APPLICATION TAB (student only) — single question per screen, verbatim fields */}
+        {/* APPLICATION TAB (student only) — grouped by section, split logo layout */}
         {activeTab === "application" && role === "student" && (() => {
           const getVal = (path) => path.split(".").reduce((o, k) => (o == null ? undefined : o[k]), appForm);
           const setVal = (path, v) => {
@@ -8522,10 +8525,19 @@ function PortalPage({ setPage }) {
             { section: "Submission Agreement", path: "parentSignature", label: "Electronic Signature — Parent / Guardian", type: "text" },
           ];
 
-          const questions = allQuestions.filter(q => !q.conditional || q.conditional(appForm));
-          const total = questions.length;
-          const qIndex = Math.min(appStep - 1, total - 1);
-          const q = questions[qIndex];
+          const filtered = allQuestions.filter(q => !q.conditional || q.conditional(appForm));
+
+          // Group consecutive items by section into one screen each.
+          const groups = [];
+          filtered.forEach(q => {
+            const last = groups[groups.length - 1];
+            if (last && last.section === q.section) last.items.push(q);
+            else groups.push({ section: q.section, items: [q] });
+          });
+
+          const total = groups.length;
+          const secIndex = Math.min(appStep - 1, total - 1);
+          const group = groups[secIndex];
 
           const isAnswered = (q) => {
             if (!q) return true;
@@ -8534,17 +8546,20 @@ function PortalPage({ setPage }) {
             if (q.type === "confirm") return getVal(q.path) === true;
             return !!(getVal(q.path) || "").toString().trim();
           };
+          const groupComplete = group.items.every(isAnswered);
 
           const goNext = () => setAppStep(s => Math.min(total, s + 1));
           const goBack = () => setAppStep(s => Math.max(1, s - 1));
           const jumpTo = (idx) => setAppStep(idx + 1);
+
+          const whiteInput = { ...inputStyle, background: "#FFFFFF" };
 
           const PillGroup = ({ value, onChange, options }) => (
             <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
               {options.map(([v, l]) => {
                 const active = value === v;
                 return (
-                  <button key={v} type="button" onClick={() => onChange(v)} style={{ fontFamily: lora, fontSize: 13, padding: "10px 18px", background: active ? dark : "transparent", color: active ? parch : dark, border: `1px solid ${dark}`, cursor: "pointer" }}>{l}</button>
+                  <button key={v} type="button" onClick={() => onChange(v)} style={{ fontFamily: lora, fontSize: 13, padding: "10px 18px", background: active ? "#000000" : "transparent", color: active ? "#FFFFFF" : "#000000", border: "1px solid #000000", cursor: "pointer" }}>{l}</button>
                 );
               })}
             </div>
@@ -8554,7 +8569,7 @@ function PortalPage({ setPage }) {
               {options.map(opt => {
                 const active = values.includes(opt);
                 return (
-                  <button key={opt} type="button" onClick={() => onToggle(opt)} style={{ fontFamily: lora, fontSize: 13, padding: "10px 18px", background: active ? dark : "transparent", color: active ? parch : dark, border: `1px solid ${dark}`, cursor: "pointer" }}>{opt}</button>
+                  <button key={opt} type="button" onClick={() => onToggle(opt)} style={{ fontFamily: lora, fontSize: 13, padding: "10px 18px", background: active ? "#000000" : "transparent", color: active ? "#FFFFFF" : "#000000", border: "1px solid #000000", cursor: "pointer" }}>{opt}</button>
                 );
               })}
             </div>
@@ -8562,10 +8577,10 @@ function PortalPage({ setPage }) {
 
           const renderInput = (q) => {
             if (q.type === "text") {
-              return <input type={q.inputType || "text"} value={getVal(q.path) || ""} onChange={e => setVal(q.path, e.target.value)} style={inputStyle} />;
+              return <input type={q.inputType || "text"} value={getVal(q.path) || ""} onChange={e => setVal(q.path, e.target.value)} style={whiteInput} />;
             }
             if (q.type === "textarea") {
-              return <textarea rows={5} value={getVal(q.path) || ""} onChange={e => setVal(q.path, e.target.value)} style={{ ...inputStyle, resize: "vertical" }} />;
+              return <textarea rows={4} value={getVal(q.path) || ""} onChange={e => setVal(q.path, e.target.value)} style={{ ...whiteInput, resize: "vertical" }} />;
             }
             if (q.type === "pills") {
               return <PillGroup value={getVal(q.path) || ""} onChange={v => setVal(q.path, v)} options={q.options} />;
@@ -8577,13 +8592,13 @@ function PortalPage({ setPage }) {
               return (
                 <label style={{ display: "flex", alignItems: "flex-start", gap: 10, cursor: "pointer" }}>
                   <input type="checkbox" checked={getVal(q.path) || false} onChange={e => setVal(q.path, e.target.checked)} style={{ marginTop: 3 }} />
-                  <span style={{ ...BODY, color: dark }}>{q.confirmLabel}</span>
+                  <span style={{ fontFamily: lora, fontSize: 15, color: "#000000" }}>{q.confirmLabel}</span>
                 </label>
               );
             }
             if (q.type === "display") return null;
             if (q.type === "autodate") {
-              return <p style={{ ...BODY, color: dark }}>{new Date().toLocaleDateString()}</p>;
+              return <p style={{ fontFamily: lora, fontSize: 15, color: "#000000" }}>{new Date().toLocaleDateString()}</p>;
             }
             if (q.type === "programPills") {
               return (
@@ -8591,7 +8606,7 @@ function PortalPage({ setPage }) {
                   {["summer", "foundation", "venture", "full-year", "unsure"].map(key => {
                     const active = appForm.programs.includes(key);
                     return (
-                      <button key={key} type="button" onClick={() => toggleVal("programs", key)} style={{ fontFamily: lora, fontSize: 13, padding: "10px 18px", textAlign: "left", background: active ? dark : "transparent", color: active ? parch : dark, border: `1px solid ${dark}`, cursor: "pointer" }}>{programLabels[key]}</button>
+                      <button key={key} type="button" onClick={() => toggleVal("programs", key)} style={{ fontFamily: lora, fontSize: 13, padding: "10px 18px", textAlign: "left", background: active ? "#000000" : "transparent", color: active ? "#FFFFFF" : "#000000", border: "1px solid #000000", cursor: "pointer" }}>{programLabels[key]}</button>
                     );
                   })}
                 </div>
@@ -8600,28 +8615,24 @@ function PortalPage({ setPage }) {
             if (q.type === "review") {
               return (
                 <div>
-                  {["Student Information", "Parent / Guardian Information", "School & Academic Background", "Program Selection", "Student Short Answers", "Venture Launchpad Summer Intensive Questions", "Foundation Semester Questions", "Venture Semester Questions", "Summer Intensive Availability", "Academic-Year Availability", "Parent Confirmation"].map(sectionName => {
-                    const sectionQs = questions.filter(qq => qq.section === sectionName && qq.type !== "review" && qq.type !== "display");
-                    if (sectionQs.length === 0) return null;
-                    return (
-                      <div key={sectionName} style={{ marginBottom: 28 }}>
-                        <p style={{ fontFamily: lora, fontSize: 11, letterSpacing: "0.15em", color: gold, fontWeight: 700, textTransform: "uppercase", marginBottom: 12 }}>{sectionName}</p>
-                        {sectionQs.map(qq => {
-                          const idx = questions.indexOf(qq);
-                          let val = getVal(qq.path);
-                          if (Array.isArray(val)) val = val.join(", ");
-                          if (typeof val === "boolean") val = val ? "Confirmed" : "Not confirmed";
-                          if (!val) return null;
-                          return (
-                            <div key={qq.path} onClick={() => jumpTo(idx)} style={{ display: "flex", justifyContent: "space-between", gap: 16, padding: "10px 0", borderBottom: "1px solid rgba(16,15,12,.1)", cursor: "pointer" }}>
-                              <span style={{ ...BODY, color: dark, opacity: 0.85, flex: 1 }}>{qq.label}</span>
-                              <span style={{ fontFamily: lora, fontSize: 13, color: dark, fontWeight: 700, textAlign: "right", maxWidth: "45%" }}>{val} <span style={{ color: gold }}>✎</span></span>
-                            </div>
-                          );
-                        })}
-                      </div>
-                    );
-                  })}
+                  {groups.filter(g => g.section !== "Review").map(g => (
+                    <div key={g.section} style={{ marginBottom: 24 }}>
+                      <p style={{ fontFamily: lora, fontSize: 11, letterSpacing: "0.15em", color: "#000000", fontWeight: 700, textTransform: "uppercase", marginBottom: 12 }}>{g.section}</p>
+                      {g.items.filter(qq => qq.type !== "display").map(qq => {
+                        const idx = groups.indexOf(g);
+                        let val = getVal(qq.path);
+                        if (Array.isArray(val)) val = val.join(", ");
+                        if (typeof val === "boolean") val = val ? "Confirmed" : "Not confirmed";
+                        if (!val) return null;
+                        return (
+                          <div key={qq.path} onClick={() => jumpTo(idx)} style={{ display: "flex", justifyContent: "space-between", gap: 16, padding: "10px 0", borderBottom: "1px solid rgba(0,0,0,.12)", cursor: "pointer" }}>
+                            <span style={{ fontFamily: lora, fontSize: 15, color: "#000000", opacity: 0.8, flex: 1 }}>{qq.label}</span>
+                            <span style={{ fontFamily: lora, fontSize: 13, color: "#000000", fontWeight: 700, textAlign: "right", maxWidth: "45%" }}>{val} ✎</span>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  ))}
                 </div>
               );
             }
@@ -8629,42 +8640,59 @@ function PortalPage({ setPage }) {
           };
 
           return (
-            <div style={{ background: parch, padding: isMobile ? "24px 16px" : "48px 24px", display: "flex", justifyContent: "center" }}>
-              <style>{`@keyframes slideInQ { from { transform: translateX(28px); opacity: 0; } to { transform: translateX(0); opacity: 1; } }`}</style>
-              <div style={{ background: "#FFFFFF", width: isMobile ? "100%" : "50%", maxWidth: 640, minWidth: isMobile ? "auto" : 460, padding: isMobile ? "32px 24px" : "56px 56px", boxSizing: "border-box" }}>
+            <div style={{ display: "flex", flexDirection: isMobile ? "column" : "row", background: parch, minHeight: isMobile ? "auto" : 560 }}>
 
-                <p style={{ fontFamily: lora, fontSize: 11, letterSpacing: "0.15em", color: gold, fontWeight: 700, textTransform: "uppercase", marginBottom: 6 }}>{q.section}</p>
-                <p style={{ fontFamily: lora, fontSize: 11, letterSpacing: "0.1em", color: dark, opacity: 0.5, textTransform: "uppercase", marginBottom: 24 }}>{q.type === "review" ? "Review your answers" : `Question ${qIndex + 1} of ${total}`}</p>
+              {/* LOGO HALF */}
+              <div style={{ flex: 1, background: dark, display: "flex", alignItems: "center", justifyContent: "center", padding: isMobile ? "36px 24px" : "48px" }}>
+                <img src={LOGO_URL} alt="Excalibur Academy" style={{ width: isMobile ? 140 : 220, height: "auto", objectFit: "contain", filter: "drop-shadow(0 0 50px rgba(228,213,193,.12))" }} onError={e => e.target.style.display = "none"} />
+              </div>
 
-                <div style={{ display: "flex", gap: 4, marginBottom: 32 }}>
-                  {questions.map((_, i) => (
-                    <div key={i} style={{ flex: 1, height: 3, background: i <= qIndex ? dark : "rgba(16,15,12,.15)" }} />
-                  ))}
-                </div>
+              {/* QUESTIONNAIRE HALF */}
+              <div style={{ flex: 1, padding: isMobile ? "32px 20px" : "48px", display: "flex", justifyContent: "center" }}>
+                <div style={{ background: "#FFFFFF", width: "100%", maxWidth: 560, padding: isMobile ? "32px 24px" : "44px 48px", boxSizing: "border-box" }}>
+                  <style>{`@keyframes slideInQ { from { transform: translateX(28px); opacity: 0; } to { transform: translateX(0); opacity: 1; } }`}</style>
 
-                <div key={qIndex} style={{ animation: "slideInQ 0.3s ease", minHeight: 200 }}>
-                  {q.type !== "review" && (
-                    <h2 style={{ fontFamily: cg, fontSize: isMobile ? 19 : 22, fontWeight: 400, fontStyle: "italic", color: dark, marginBottom: q.hint ? 8 : 18, lineHeight: 1.3 }}>
-                      {q.label}
+                  <p style={{ fontFamily: lora, fontSize: 11, letterSpacing: "0.1em", color: "#000000", opacity: 0.5, textTransform: "uppercase", marginBottom: 24 }}>Section {secIndex + 1} of {total}</p>
+
+                  <div style={{ display: "flex", gap: 4, marginBottom: 32 }}>
+                    {groups.map((_, i) => (
+                      <div key={i} style={{ flex: 1, height: 3, background: i <= secIndex ? "#000000" : "rgba(0,0,0,.15)" }} />
+                    ))}
+                  </div>
+
+                  <div key={secIndex} style={{ animation: "slideInQ 0.3s ease", minHeight: 200 }}>
+                    <h2 style={{ fontFamily: lora, fontSize: isMobile ? 19 : 22, fontWeight: 700, color: "#000000", marginBottom: 28, lineHeight: 1.3 }}>
+                      {group.section}
                     </h2>
+
+                    {group.items.map(qq => (
+                      <div key={qq.path} style={{ marginBottom: 26 }}>
+                        {qq.type !== "review" && qq.type !== "display" && (
+                          <p style={{ fontFamily: lora, fontSize: 15, fontWeight: 700, color: "#000000", marginBottom: qq.hint ? 6 : 10, lineHeight: 1.4 }}>{qq.label}</p>
+                        )}
+                        {qq.type === "display" && (
+                          <p style={{ fontFamily: lora, fontSize: 15, color: "#000000", lineHeight: 1.7, marginBottom: 4 }}>{qq.label}</p>
+                        )}
+                        {qq.hint && <p style={{ fontFamily: lora, fontSize: 12, color: "#000000", marginBottom: 10, lineHeight: 1.5 }}>{qq.hint}</p>}
+                        {renderInput(qq)}
+                      </div>
+                    ))}
+                  </div>
+
+                  {application && application.status !== "draft" && (
+                    <p style={{ fontFamily: lora, fontSize: 13, color: "#000000", marginTop: 12, textTransform: "uppercase", letterSpacing: "0.1em", fontWeight: 700 }}>Status: {application.status.replace("_", " ")}</p>
                   )}
-                  {q.hint && <p style={{ fontFamily: lora, fontSize: 12, color: dark, marginBottom: 10, lineHeight: 1.5 }}>{q.hint}</p>}
-                  {renderInput(q)}
-                </div>
 
-                {application && application.status !== "draft" && (
-                  <p style={{ fontFamily: lora, fontSize: 13, color: dark, marginTop: 24, textTransform: "uppercase", letterSpacing: "0.1em", fontWeight: 700 }}>Status: {application.status.replace("_", " ")}</p>
-                )}
-
-                <div style={{ display: "flex", justifyContent: "space-between", marginTop: 36, gap: 12, flexWrap: "wrap" }}>
-                  <button onClick={goBack} disabled={qIndex === 0} style={{ fontFamily: lora, padding: "13px 24px", background: "transparent", border: `1px solid ${dark}`, color: dark, fontSize: 11, fontWeight: 600, letterSpacing: "0.12em", textTransform: "uppercase", cursor: qIndex === 0 ? "default" : "pointer", opacity: qIndex === 0 ? 0.4 : 1 }}>← Back</button>
-                  <div style={{ display: "flex", gap: 12 }}>
-                    <button onClick={() => handleSaveApplication(false)} disabled={appSaving} style={{ fontFamily: lora, padding: "13px 22px", background: "transparent", border: `1px solid ${dark}`, color: dark, fontSize: 11, fontWeight: 600, letterSpacing: "0.12em", textTransform: "uppercase", cursor: "pointer" }}>{appSaving ? "Saving..." : "Save Draft"}</button>
-                    {qIndex < total - 1 ? (
-                      <button onClick={goNext} disabled={!isAnswered(q)} style={{ fontFamily: lora, padding: "13px 24px", background: dark, border: "none", color: parch, fontSize: 11, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", cursor: isAnswered(q) ? "pointer" : "default", opacity: isAnswered(q) ? 1 : 0.5 }}>Next →</button>
-                    ) : (
-                      <button onClick={() => handleSaveApplication(true)} disabled={appSaving || !appForm.accuracyConfirmed || !appForm.parentPermissionConfirmed || !appForm.studentSignature || !appForm.parentSignature} style={{ fontFamily: lora, padding: "13px 24px", background: dark, border: "none", color: parch, fontSize: 11, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", cursor: "pointer" }}>{appSaving ? "Submitting..." : "Submit Application →"}</button>
-                    )}
+                  <div style={{ display: "flex", justifyContent: "space-between", marginTop: 28, gap: 12, flexWrap: "wrap" }}>
+                    <button onClick={goBack} disabled={secIndex === 0} style={{ fontFamily: lora, padding: "13px 24px", background: "transparent", border: "1px solid #000000", color: "#000000", fontSize: 11, fontWeight: 600, letterSpacing: "0.12em", textTransform: "uppercase", cursor: secIndex === 0 ? "default" : "pointer", opacity: secIndex === 0 ? 0.4 : 1 }}>← Back</button>
+                    <div style={{ display: "flex", gap: 12 }}>
+                      <button onClick={() => handleSaveApplication(false)} disabled={appSaving} style={{ fontFamily: lora, padding: "13px 22px", background: "transparent", border: "1px solid #000000", color: "#000000", fontSize: 11, fontWeight: 600, letterSpacing: "0.12em", textTransform: "uppercase", cursor: "pointer" }}>{appSaving ? "Saving..." : "Save Draft"}</button>
+                      {secIndex < total - 1 ? (
+                        <button onClick={goNext} disabled={!groupComplete} style={{ fontFamily: lora, padding: "13px 24px", background: "#000000", border: "none", color: parch, fontSize: 11, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", cursor: groupComplete ? "pointer" : "default", opacity: groupComplete ? 1 : 0.5 }}>Next →</button>
+                      ) : (
+                        <button onClick={() => handleSaveApplication(true)} disabled={appSaving || !appForm.accuracyConfirmed || !appForm.parentPermissionConfirmed || !appForm.studentSignature || !appForm.parentSignature} style={{ fontFamily: lora, padding: "13px 24px", background: "#000000", border: "none", color: parch, fontSize: 11, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", cursor: "pointer" }}>{appSaving ? "Submitting..." : "Submit Application →"}</button>
+                      )}
+                    </div>
                   </div>
                 </div>
               </div>
