@@ -40,7 +40,6 @@ async function sendEmail(data) {
 
 // ─────────────────────────────────────────────────────────
 // SUPABASE — APPLICATION PORTAL BACKEND
-// Requires the npm package: npm install @supabase/supabase-js
 // ─────────────────────────────────────────────────────────
 const SUPABASE_URL = "https://rwdjfxwuzyyoglbspeyg.supabase.co";
 const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJ3ZGpmeHd1enl5b2dsYnNwZXlnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODIxMTUyNjUsImV4cCI6MjA5NzY5MTI2NX0.1_WvrwqMkTgWUNcWMHKWrNvXj747BEExdd52YY357bw";
@@ -7960,7 +7959,31 @@ function PortalPage({ setPage }) {
   const [profileForm, setProfileForm] = React.useState({ firstName: "", lastName: "", phone: "", grade: "", age: "" });
 
   const [application, setApplication] = React.useState(null);
-  const [appForm, setAppForm] = React.useState({ program: "", track: "", dreamAnswer: "" });
+  const [appForm, setAppForm] = React.useState({
+    // Section 1: Student Information
+    preferredName: "", gradeEnteringFall: "", currentSchool: "", cityOfResidence: "", studentPhone: "",
+    // Section 2: Parent / Guardian
+    parentFirstName: "", parentLastName: "", parentRelationship: "", parentEmail: "", parentPhone: "",
+    secondaryParentName: "", secondaryParentEmail: "", secondaryParentPhone: "", preferredContactMethod: "",
+    // Section 3: Academic Background
+    gpaRange: "", academicInterests: [], extracurriculars: "", priorProgramsExperience: "", priorProgramsDescription: "",
+    // Section 4: Program Selection
+    programs: [], applyingMultiple: "", firstChoiceProgram: "", heardAbout: "", referralName: "",
+    // Section 5: Shared Short Answers
+    dreamAnswer: "", whyJoin: "", leadershipStory: "", growthArea: "", publicSpeakingComfort: "", teamRole: "",
+    // Section 6: Program-specific (kept nested, mirrors program_responses jsonb)
+    summer: { hasIdea: "", ideaDescription: "", ventureTypes: [], teamComfort: "", outsideCommitment: "", successDefinition: "" },
+    foundation: { excitingAreas: [], leaderVision: "", shapingExperience: "", commitmentReady: "", endGoal: "" },
+    venture: { hasConcept: "", conceptDescription: "", excitingAreas: [], trackInterest: "", problemToSolve: "", commitmentReady: "", endPresentation: "" },
+    // Section 7: Schedule & Availability
+    track: "", summerAttendFull: "", summerConflicts: "", summerAttendFinale: "", academicYearConflicts: "",
+    // Section 8: Parent Confirmation
+    parentStatementAgreed: false, learningStyleNotes: "", dietaryNotes: "",
+    // Section 9: Submission Agreement
+    accuracyConfirmed: false, parentPermissionConfirmed: false, studentSignature: "", parentSignature: "",
+  });
+  const [appStep, setAppStep] = React.useState(1);
+  const TOTAL_APP_STEPS = 9;
   const [appSaving, setAppSaving] = React.useState(false);
 
   const [consultations, setConsultations] = React.useState([]);
@@ -8044,7 +8067,21 @@ function PortalPage({ setPage }) {
       const { data: app } = await sb.from("applications").select("*").eq("student_id", student.id).maybeSingle();
       if (app) {
         setApplication(app);
-        setAppForm({ program: app.program || "", track: app.track || "", dreamAnswer: app.dream_answer || "" });
+        const pr = app.program_responses || {};
+        setAppForm({
+          preferredName: app.preferred_name || "", gradeEnteringFall: app.grade_entering_fall || "", currentSchool: app.current_school || "", cityOfResidence: app.city_of_residence || "", studentPhone: app.student_phone || "",
+          parentFirstName: app.parent_first_name || "", parentLastName: app.parent_last_name || "", parentRelationship: app.parent_relationship || "", parentEmail: app.parent_email || "", parentPhone: app.parent_phone || "",
+          secondaryParentName: app.secondary_parent_name || "", secondaryParentEmail: app.secondary_parent_email || "", secondaryParentPhone: app.secondary_parent_phone || "", preferredContactMethod: app.preferred_contact_method || "",
+          gpaRange: app.gpa_range || "", academicInterests: app.academic_interests || [], extracurriculars: app.extracurriculars || "", priorProgramsExperience: app.prior_programs_experience ? "yes" : "", priorProgramsDescription: app.prior_programs_description || "",
+          programs: app.programs || [], applyingMultiple: app.applying_multiple ? "yes" : "", firstChoiceProgram: app.first_choice_program || "", heardAbout: app.heard_about || "", referralName: app.referral_name || "",
+          dreamAnswer: app.dream_answer || "", whyJoin: app.why_join || "", leadershipStory: app.leadership_story || "", growthArea: app.growth_area || "", publicSpeakingComfort: app.public_speaking_comfort || "", teamRole: app.team_role || "",
+          summer: { hasIdea: "", ideaDescription: "", ventureTypes: [], teamComfort: "", outsideCommitment: "", successDefinition: "", ...(pr.summer || {}) },
+          foundation: { excitingAreas: [], leaderVision: "", shapingExperience: "", commitmentReady: "", endGoal: "", ...(pr.foundation || {}) },
+          venture: { hasConcept: "", conceptDescription: "", excitingAreas: [], trackInterest: "", problemToSolve: "", commitmentReady: "", endPresentation: "", ...(pr.venture || {}) },
+          track: app.track || "", summerAttendFull: app.summer_attend_full || "", summerConflicts: app.summer_conflicts || "", summerAttendFinale: app.summer_attend_finale || "", academicYearConflicts: app.academic_year_conflicts || "",
+          parentStatementAgreed: app.parent_statement_agreed || false, learningStyleNotes: app.learning_style_notes || "", dietaryNotes: app.dietary_notes || "",
+          accuracyConfirmed: app.accuracy_confirmed || false, parentPermissionConfirmed: app.parent_permission_confirmed || false, studentSignature: app.student_signature || "", parentSignature: app.parent_signature || "",
+        });
       }
       const { data: consults } = await sb.from("consultations").select("*").eq("student_id", student.id).order("created_at", { ascending: false });
       setConsultations(consults || []);
@@ -8105,9 +8142,60 @@ function PortalPage({ setPage }) {
     setAppSaving(true);
     const payload = {
       student_id: student.id,
-      program: appForm.program,
-      track: appForm.track,
+      // Section 1
+      preferred_name: appForm.preferredName,
+      grade_entering_fall: appForm.gradeEnteringFall,
+      current_school: appForm.currentSchool,
+      city_of_residence: appForm.cityOfResidence,
+      student_phone: appForm.studentPhone,
+      // Section 2
+      parent_first_name: appForm.parentFirstName,
+      parent_last_name: appForm.parentLastName,
+      parent_relationship: appForm.parentRelationship,
+      parent_email: appForm.parentEmail,
+      parent_phone: appForm.parentPhone,
+      secondary_parent_name: appForm.secondaryParentName,
+      secondary_parent_email: appForm.secondaryParentEmail,
+      secondary_parent_phone: appForm.secondaryParentPhone,
+      preferred_contact_method: appForm.preferredContactMethod,
+      // Section 3
+      gpa_range: appForm.gpaRange,
+      academic_interests: appForm.academicInterests,
+      extracurriculars: appForm.extracurriculars,
+      prior_programs_experience: appForm.priorProgramsExperience === "yes",
+      prior_programs_description: appForm.priorProgramsDescription,
+      // Section 4
+      programs: appForm.programs,
+      program: appForm.programs[0] || "", // primary program, kept for existing status-tab logic
+      applying_multiple: appForm.applyingMultiple === "yes",
+      first_choice_program: appForm.firstChoiceProgram,
+      heard_about: appForm.heardAbout,
+      referral_name: appForm.referralName,
+      // Section 5
       dream_answer: appForm.dreamAnswer,
+      why_join: appForm.whyJoin,
+      leadership_story: appForm.leadershipStory,
+      growth_area: appForm.growthArea,
+      public_speaking_comfort: appForm.publicSpeakingComfort,
+      team_role: appForm.teamRole,
+      // Section 6 — program-specific, stored as jsonb
+      program_responses: { summer: appForm.summer, foundation: appForm.foundation, venture: appForm.venture },
+      // Section 7
+      track: appForm.track,
+      summer_attend_full: appForm.summerAttendFull,
+      summer_conflicts: appForm.summerConflicts,
+      summer_attend_finale: appForm.summerAttendFinale,
+      academic_year_conflicts: appForm.academicYearConflicts,
+      // Section 8
+      parent_statement_agreed: appForm.parentStatementAgreed,
+      learning_style_notes: appForm.learningStyleNotes,
+      dietary_notes: appForm.dietaryNotes,
+      // Section 9
+      accuracy_confirmed: appForm.accuracyConfirmed,
+      parent_permission_confirmed: appForm.parentPermissionConfirmed,
+      student_signature: appForm.studentSignature,
+      parent_signature: appForm.parentSignature,
+      // Meta
       status: submit ? "submitted" : "draft",
       submitted_at: submit ? new Date().toISOString() : null,
       updated_at: new Date().toISOString(),
@@ -8319,40 +8407,250 @@ function PortalPage({ setPage }) {
           </div>
         )}
 
-        {/* APPLICATION TAB (student only) */}
-        {activeTab === "application" && role === "student" && (
-          <div>
-            <h2 style={{ fontFamily: cg, fontSize: 26, fontWeight: 400, fontStyle: "italic", color: dark, marginBottom: 28 }}>Your Application</h2>
-            <p style={{ fontFamily: lora, fontSize: 11, letterSpacing: "0.2em", color: dark, textTransform: "uppercase", marginBottom: 10, fontWeight: 700 }}>Program</p>
-            <select value={appForm.program} onChange={e => setAppForm(f => ({ ...f, program: e.target.value }))} style={{ ...inputStyle, marginBottom: 18, appearance: "none" }}>
-              <option value="">Select a program</option>
-              <option value="summer">Summer Intensive</option>
-              <option value="foundation">Foundation Semester</option>
-              <option value="venture">Venture Semester</option>
-            </select>
-            {(appForm.program === "foundation" || appForm.program === "venture") && (
-              <>
-                <p style={{ fontFamily: lora, fontSize: 11, letterSpacing: "0.2em", color: dark, textTransform: "uppercase", marginBottom: 10, fontWeight: 700 }}>Track</p>
-                <select value={appForm.track} onChange={e => setAppForm(f => ({ ...f, track: e.target.value }))} style={{ ...inputStyle, marginBottom: 18, appearance: "none" }}>
-                  <option value="">Select a track</option>
-                  <option value="weekday">Weekday Track</option>
-                  <option value="saturday">Saturday Track</option>
-                </select>
-              </>
-            )}
-            <p style={{ fontFamily: lora, fontSize: 11, letterSpacing: "0.2em", color: dark, textTransform: "uppercase", marginBottom: 10, fontWeight: 700 }}>What is your dream?</p>
-            <textarea rows={5} value={appForm.dreamAnswer} onChange={e => setAppForm(f => ({ ...f, dreamAnswer: e.target.value }))} style={{ ...inputStyle, marginBottom: 24, resize: "vertical" }} placeholder="Tell us, in your own words..." />
+        {/* APPLICATION TAB (student only) — single question per screen */}
+        {activeTab === "application" && role === "student" && (() => {
+          const getVal = (path) => path.split(".").reduce((o, k) => (o == null ? undefined : o[k]), appForm);
+          const setVal = (path, v) => {
+            const keys = path.split(".");
+            setAppForm(f => {
+              if (keys.length === 1) return { ...f, [keys[0]]: v };
+              const [a, b] = keys;
+              return { ...f, [a]: { ...f[a], [b]: v } };
+            });
+          };
+          const toggleVal = (path, item) => {
+            const cur = getVal(path) || [];
+            setVal(path, cur.includes(item) ? cur.filter(x => x !== item) : [...cur, item]);
+          };
 
-            {application && application.status !== "draft" && (
-              <p style={{ fontFamily: lora, fontSize: 13, color: dark, marginBottom: 16, textTransform: "uppercase", letterSpacing: "0.1em", fontWeight: 700 }}>Status: {application.status.replace("_", " ")}</p>
-            )}
+          const programLabels = { summer: "Venture Launchpad Summer Intensive", foundation: "Foundation Semester", venture: "Venture Semester", "full-year": "Full Academic Year (Foundation + Venture)", unsure: "Not sure yet / would like guidance" };
+          const wantsSummer = appForm.programs.includes("summer") || appForm.programs.includes("full-year");
+          const wantsFoundation = appForm.programs.includes("foundation") || appForm.programs.includes("full-year");
+          const wantsVenture = appForm.programs.includes("venture") || appForm.programs.includes("full-year");
 
-            <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
-              <button onClick={() => handleSaveApplication(false)} disabled={appSaving} style={{ fontFamily: lora, padding: "14px 28px", background: "transparent", border: `1px solid ${dark}`, color: dark, fontSize: 11, fontWeight: 600, letterSpacing: "0.15em", textTransform: "uppercase", cursor: "pointer" }}>{appSaving ? "Saving..." : "Save Draft"}</button>
-              <button onClick={() => handleSaveApplication(true)} disabled={appSaving || !appForm.program} style={{ fontFamily: lora, padding: "14px 28px", background: dark, border: "none", color: parch, fontSize: 11, fontWeight: 700, letterSpacing: "0.15em", textTransform: "uppercase", cursor: "pointer" }}>{appSaving ? "Submitting..." : "Submit Application →"}</button>
+          // ── FULL QUESTION DEFINITION LIST ──
+          const allQuestions = [
+            { section: "Student Information", path: "preferredName", label: "Preferred Name", type: "text", optional: true, placeholder: "What should we call you?" },
+            { section: "Student Information", path: "gradeEnteringFall", label: "Grade Entering Fall 2026", type: "pills", options: [["9th", "9th"], ["10th", "10th"], ["11th", "11th"], ["12th", "12th"], ["gap-other", "Gap Year / Other"]] },
+            { section: "Student Information", path: "currentSchool", label: "Current School", type: "text", placeholder: "School name" },
+            { section: "Student Information", path: "cityOfResidence", label: "City of Residence", type: "text", placeholder: "City" },
+            { section: "Student Information", path: "studentPhone", label: "Student Phone Number", type: "text", inputType: "tel", optional: true, placeholder: "Phone number" },
+
+            { section: "Parent / Guardian", path: "parentFirstName", label: "Parent / Guardian First Name", type: "text", placeholder: "First name" },
+            { section: "Parent / Guardian", path: "parentLastName", label: "Parent / Guardian Last Name", type: "text", placeholder: "Last name" },
+            { section: "Parent / Guardian", path: "parentRelationship", label: "Relationship to Student", type: "pills", options: [["mother", "Mother"], ["father", "Father"], ["guardian", "Guardian"], ["other", "Other"]] },
+            { section: "Parent / Guardian", path: "parentEmail", label: "Parent / Guardian Email", type: "text", inputType: "email", placeholder: "Email address" },
+            { section: "Parent / Guardian", path: "parentPhone", label: "Parent / Guardian Phone Number", type: "text", inputType: "tel", placeholder: "Phone number" },
+            { section: "Parent / Guardian", path: "secondaryParentName", label: "Secondary Parent / Guardian Name", type: "text", optional: true, placeholder: "Full name" },
+            { section: "Parent / Guardian", path: "secondaryParentEmail", label: "Secondary Parent / Guardian Email", type: "text", inputType: "email", optional: true, placeholder: "Email address" },
+            { section: "Parent / Guardian", path: "secondaryParentPhone", label: "Secondary Parent / Guardian Phone Number", type: "text", inputType: "tel", optional: true, placeholder: "Phone number" },
+            { section: "Parent / Guardian", path: "preferredContactMethod", label: "Preferred Method of Contact", type: "pills", options: [["email", "Email"], ["phone", "Phone"], ["text", "Text"]] },
+
+            { section: "Academic Background", path: "gpaRange", label: "Current GPA Range", type: "pills", options: [["4.0+", "4.0+"], ["3.7-3.99", "3.7 – 3.99"], ["3.3-3.69", "3.3 – 3.69"], ["3.0-3.29", "3.0 – 3.29"], ["below-3.0", "Below 3.0"], ["prefer-not", "Prefer not to say"]] },
+            { section: "Academic Background", path: "academicInterests", label: "Academic Interests", type: "checks", options: ["Business", "Entrepreneurship", "Finance", "Law", "Politics / Government", "Technology / AI", "Engineering", "Medicine / Healthcare", "Media / Communications", "Arts / Design", "Social Impact / Nonprofit", "Leadership", "Other"] },
+            { section: "Academic Background", path: "extracurriculars", label: "Extracurricular Activities, Clubs, Sports, or Leadership Roles", type: "textarea", placeholder: "Tell us about your involvement..." },
+            { section: "Academic Background", path: "priorProgramsExperience", label: "Have you previously participated in entrepreneurship, debate, leadership, business, Model UN, speech, finance, coding, or similar programs?", type: "pills", options: [["yes", "Yes"], ["no", "No"]] },
+            { section: "Academic Background", path: "priorProgramsDescription", label: "If yes, please briefly describe.", type: "textarea", optional: true, conditional: f => f.priorProgramsExperience === "yes" },
+
+            { section: "Program Selection", path: "programs", label: "Which Excalibur program are you applying for?", type: "programPills" },
+            { section: "Program Selection", path: "applyingMultiple", label: "Are you applying for more than one program?", type: "pills", options: [["yes", "Yes"], ["no", "No"]] },
+            { section: "Program Selection", path: "firstChoiceProgram", label: "If yes, which program is your first choice?", type: "pills", optional: true, conditional: f => f.applyingMultiple === "yes", options: [["summer", "Venture Launchpad Summer Intensive"], ["foundation", "Foundation Semester"], ["venture", "Venture Semester"], ["full-year", "Full Academic Year"]] },
+            { section: "Program Selection", path: "heardAbout", label: "How did you hear about Excalibur Academy?", type: "pills", options: [["friend-family", "Friend / Family"], ["counselor", "School or College Counselor"], ["teacher", "Teacher"], ["parent-referral", "Parent Referral"], ["social", "Social Media"], ["event", "Event"], ["search", "Online Search"], ["team-member", "Excalibur Team Member"], ["other", "Other"]] },
+            { section: "Program Selection", path: "referralName", label: "If referred by someone, please list their name.", type: "text", optional: true, placeholder: "Referrer's name" },
+
+            { section: "Short Answers", path: "dreamAnswer", label: "What is your dream? Where do you see yourself in 10 years?", type: "textarea" },
+            { section: "Short Answers", path: "whyJoin", label: "Why do you want to join Excalibur Academy?", type: "textarea" },
+            { section: "Short Answers", path: "leadershipStory", label: "Describe a time when you showed leadership, initiative, courage, or responsibility.", type: "textarea" },
+            { section: "Short Answers", path: "growthArea", label: "What is one area where you want to grow during this program?", type: "textarea" },
+            { section: "Short Answers", path: "publicSpeakingComfort", label: "How comfortable are you with public speaking?", type: "pills", options: [["very-comfortable", "Very comfortable"], ["somewhat-comfortable", "Somewhat comfortable"], ["neutral", "Neutral"], ["nervous-willing", "Nervous, but willing to improve"], ["very-nervous", "Very nervous"]] },
+            { section: "Short Answers", path: "teamRole", label: "How do you usually work in a team?", type: "pills", options: [["leads", "I naturally lead"], ["contributes", "I contribute ideas and help organize"], ["executes", "I prefer execution and getting tasks done"], ["creative", "I am creative and help with vision"], ["quiet-dependable", "I am quieter but dependable"], ["learning", "I am still learning how to work well in teams"]] },
+
+            { section: "Venture Launchpad Summer Intensive", path: "summer.hasIdea", label: "Do you have a business idea, product idea, nonprofit idea, app idea, service idea, or project you may want to explore during the intensive?", type: "pills", conditional: () => wantsSummer, options: [["yes", "Yes"], ["no", "No"], ["not-sure", "Not sure yet"]] },
+            { section: "Venture Launchpad Summer Intensive", path: "summer.ideaDescription", label: "If yes, briefly describe it.", type: "textarea", optional: true, conditional: f => wantsSummer && f.summer.hasIdea === "yes" },
+            { section: "Venture Launchpad Summer Intensive", path: "summer.ventureTypes", label: "What type of venture would you be most interested in building?", type: "checks", conditional: () => wantsSummer, options: ["Product", "Service business", "App or technology concept", "Social impact / nonprofit venture", "Local business idea", "Media or content brand", "Fashion / lifestyle / consumer brand", "Finance or investing-related concept", "AI-powered idea", "Not sure yet"] },
+            { section: "Venture Launchpad Summer Intensive", path: "summer.teamComfort", label: "Are you comfortable working in a team to build and present a venture?", type: "pills", conditional: () => wantsSummer, options: [["yes", "Yes"], ["learning", "Yes, but I am still learning"], ["unsure", "Unsure"], ["independent", "I prefer working independently"]] },
+            { section: "Venture Launchpad Summer Intensive", path: "summer.outsideCommitment", label: "Are you willing to participate in founder assignments outside class, such as team meetings, customer interviews, field research, outreach, and pitch practice?", type: "pills", conditional: () => wantsSummer, options: [["yes", "Yes"], ["with-guidance", "Yes, with guidance"], ["unsure", "Unsure"]] },
+            { section: "Venture Launchpad Summer Intensive", path: "summer.successDefinition", label: "What would make this summer intensive successful for you?", type: "textarea", conditional: () => wantsSummer },
+
+            { section: "Foundation Semester", path: "foundation.excitingAreas", label: "Which Foundation areas are most exciting to you?", type: "checks", conditional: () => wantsFoundation, options: ["Public speaking", "Leadership", "Business fundamentals", "Financial literacy", "Negotiation", "AI and technology", "Law and society", "Marketing and persuasion", "College admissions preparation", "The Art of Class", "Guest speakers and professional exposure", "Junior Consultant Program"] },
+            { section: "Foundation Semester", path: "foundation.leaderVision", label: "What kind of leader do you want to become?", type: "textarea", conditional: () => wantsFoundation },
+            { section: "Foundation Semester", path: "foundation.shapingExperience", label: "Describe a class, teacher, book, project, experience, or challenge that shaped the way you think.", type: "textarea", conditional: () => wantsFoundation },
+            { section: "Foundation Semester", path: "foundation.commitmentReady", label: "The Foundation Semester requires participation, discussion, public speaking, teamwork, and consistent attendance. Are you prepared for that commitment?", type: "pills", conditional: () => wantsFoundation, options: [["yes", "Yes"], ["with-support", "Yes, with support"], ["unsure", "Unsure"]] },
+            { section: "Foundation Semester", path: "foundation.endGoal", label: "What do you hope to have accomplished by the end of the Foundation Semester?", type: "textarea", conditional: () => wantsFoundation },
+
+            { section: "Venture Semester", path: "venture.hasConcept", label: "Do you already have a venture, project, startup idea, nonprofit idea, or business concept you want to develop?", type: "pills", conditional: () => wantsVenture, options: [["yes", "Yes"], ["no", "No"], ["not-sure", "Not sure yet"]] },
+            { section: "Venture Semester", path: "venture.conceptDescription", label: "If yes, briefly describe it.", type: "textarea", optional: true, conditional: f => wantsVenture && f.venture.hasConcept === "yes" },
+            { section: "Venture Semester", path: "venture.excitingAreas", label: "Which Venture areas are most exciting to you?", type: "checks", conditional: () => wantsVenture, options: ["Startup building", "Market research", "Branding", "Sales and persuasion", "AI as a business tool", "Financial modeling", "Pitching", "Capital raising", "Founder mentorship", "Startup externship", "Final venture presentation"] },
+            { section: "Venture Semester", path: "venture.trackInterest", label: "Which track are you most interested in?", type: "pills", conditional: () => wantsVenture, options: [["davinci", "Da Vinci Track — commercial venture"], ["medici", "Medici Track — community impact venture"], ["not-sure", "Not sure yet"]] },
+            { section: "Venture Semester", path: "venture.problemToSolve", label: "What problem in the world, your school, your community, or the market do you wish someone would solve?", type: "textarea", conditional: () => wantsVenture },
+            { section: "Venture Semester", path: "venture.commitmentReady", label: "The Venture Semester requires initiative, teamwork, market testing, presentations, and founder assignments outside class. Are you prepared for that level of commitment?", type: "pills", conditional: () => wantsVenture, options: [["yes", "Yes"], ["with-support", "Yes, with support"], ["unsure", "Unsure"]] },
+            { section: "Venture Semester", path: "venture.endPresentation", label: "What would you want to present at the end of the Venture Semester?", type: "textarea", conditional: () => wantsVenture },
+
+            { section: "Summer Intensive Availability", path: "summerAttendFull", label: "Can the student attend the full Venture Launchpad Summer Intensive from July 27 to August 8, 2026?", type: "pills", conditional: () => wantsSummer, options: [["yes", "Yes"], ["no", "No"], ["need-to-discuss", "Need to discuss"]] },
+            { section: "Summer Intensive Availability", path: "summerConflicts", label: "Are there any known schedule conflicts during the intensive?", type: "textarea", optional: true, conditional: () => wantsSummer },
+            { section: "Summer Intensive Availability", path: "summerAttendFinale", label: "Can the student attend the Venture Finale on Saturday, August 8, 2026?", type: "pills", conditional: () => wantsSummer, options: [["yes", "Yes"], ["no", "No"], ["need-to-discuss", "Need to discuss"]] },
+
+            { section: "Academic-Year Availability", path: "track", label: "Preferred Schedule Option", type: "pills", conditional: () => wantsFoundation || wantsVenture, options: [["weekday", "Weekday Track"], ["saturday", "Saturday Track"], ["either", "Either option"], ["need-guidance", "Need guidance"]] },
+            { section: "Academic-Year Availability", path: "academicYearConflicts", label: "Are there any known recurring conflicts during the academic year?", type: "textarea", optional: true, conditional: () => wantsFoundation || wantsVenture },
+
+            { section: "Parent Confirmation", path: "parentStatementAgreed", label: "I understand that Excalibur Academy programs are active, discussion-based, team-based, and presentation-driven. Students are expected to participate respectfully, attend consistently, complete assigned work, and contribute to a serious learning environment.", type: "confirm", confirmLabel: "I confirm." },
+            { section: "Parent Confirmation", path: "learningStyleNotes", label: "Is there anything the admissions team should know about the student's learning style, communication style, confidence level, or support needs?", type: "textarea", optional: true },
+            { section: "Parent Confirmation", path: "dietaryNotes", label: "Does the student have any dietary restrictions or allergies we should be aware of during onboarding?", type: "text", optional: true, hint: "Full dietary and medical information may be collected after admission during onboarding.", placeholder: "Dietary restrictions or allergies" },
+
+            { section: "Review", path: "__review", type: "review" },
+
+            { section: "Submission Agreement", path: "accuracyConfirmed", label: "I confirm that the information submitted in this application is accurate to the best of my knowledge.", type: "confirm", confirmLabel: "I confirm." },
+            { section: "Submission Agreement", path: "parentPermissionConfirmed", label: "I confirm that a parent or guardian is aware of and approves this application.", type: "confirm", confirmLabel: "I confirm." },
+            { section: "Submission Agreement", path: "studentSignature", label: "Electronic Signature — Student", type: "text", placeholder: "Type full name" },
+            { section: "Submission Agreement", path: "parentSignature", label: "Electronic Signature — Parent / Guardian", type: "text", placeholder: "Type full name" },
+          ];
+
+          const questions = allQuestions.filter(q => !q.conditional || q.conditional(appForm));
+          const total = questions.length;
+          const qIndex = Math.min(appStep - 1, total - 1);
+          const q = questions[qIndex];
+
+          const isAnswered = (q) => {
+            if (!q || q.optional) return true;
+            if (q.type === "review") return true;
+            if (q.type === "checks" || q.type === "programPills") return (getVal(q.path) || []).length > 0;
+            if (q.type === "confirm") return getVal(q.path) === true;
+            return !!(getVal(q.path) || "").toString().trim();
+          };
+
+          const goNext = () => setAppStep(s => Math.min(total, s + 1));
+          const goBack = () => setAppStep(s => Math.max(1, s - 1));
+          const jumpTo = (idx) => setAppStep(idx + 1);
+
+          const Hint = ({ children }) => (
+            <p style={{ fontFamily: lora, fontSize: 12, color: dark, marginBottom: 10, lineHeight: 1.5 }}>{children}</p>
+          );
+          const PillGroup = ({ value, onChange, options }) => (
+            <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
+              {options.map(([v, l]) => {
+                const active = value === v;
+                return (
+                  <button key={v} type="button" onClick={() => onChange(v)} style={{ fontFamily: lora, fontSize: 13, padding: "10px 18px", background: active ? dark : "transparent", color: active ? parch : dark, border: `1px solid ${dark}`, cursor: "pointer" }}>{l}</button>
+                );
+              })}
             </div>
-          </div>
-        )}
+          );
+          const CheckGroup = ({ values, onToggle, options }) => (
+            <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
+              {options.map(opt => {
+                const active = values.includes(opt);
+                return (
+                  <button key={opt} type="button" onClick={() => onToggle(opt)} style={{ fontFamily: lora, fontSize: 13, padding: "10px 18px", background: active ? dark : "transparent", color: active ? parch : dark, border: `1px solid ${dark}`, cursor: "pointer" }}>{opt}</button>
+                );
+              })}
+            </div>
+          );
+
+          const renderInput = (q) => {
+            if (q.type === "text") {
+              return <input type={q.inputType || "text"} placeholder={q.placeholder} value={getVal(q.path) || ""} onChange={e => setVal(q.path, e.target.value)} style={inputStyle} />;
+            }
+            if (q.type === "textarea") {
+              return <textarea rows={5} placeholder={q.placeholder} value={getVal(q.path) || ""} onChange={e => setVal(q.path, e.target.value)} style={{ ...inputStyle, resize: "vertical" }} />;
+            }
+            if (q.type === "pills") {
+              return <PillGroup value={getVal(q.path) || ""} onChange={v => setVal(q.path, v)} options={q.options} />;
+            }
+            if (q.type === "checks") {
+              return <CheckGroup values={getVal(q.path) || []} onToggle={v => toggleVal(q.path, v)} options={q.options} />;
+            }
+            if (q.type === "confirm") {
+              return (
+                <label style={{ display: "flex", alignItems: "flex-start", gap: 10, cursor: "pointer" }}>
+                  <input type="checkbox" checked={getVal(q.path) || false} onChange={e => setVal(q.path, e.target.checked)} style={{ marginTop: 3 }} />
+                  <span style={{ ...BODY, color: dark }}>{q.confirmLabel}</span>
+                </label>
+              );
+            }
+            if (q.type === "programPills") {
+              return (
+                <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
+                  {["summer", "foundation", "venture", "full-year", "unsure"].map(key => {
+                    const active = appForm.programs.includes(key);
+                    return (
+                      <button key={key} type="button" onClick={() => toggleVal("programs", key)} style={{ fontFamily: lora, fontSize: 13, padding: "10px 18px", background: active ? dark : "transparent", color: active ? parch : dark, border: `1px solid ${dark}`, cursor: "pointer" }}>{programLabels[key]}</button>
+                    );
+                  })}
+                </div>
+              );
+            }
+            if (q.type === "review") {
+              return (
+                <div>
+                  {["Student Information", "Parent / Guardian", "Academic Background", "Program Selection", "Short Answers", "Venture Launchpad Summer Intensive", "Foundation Semester", "Venture Semester", "Summer Intensive Availability", "Academic-Year Availability", "Parent Confirmation"].map(sectionName => {
+                    const sectionQs = questions.filter(qq => qq.section === sectionName && qq.type !== "review");
+                    if (sectionQs.length === 0) return null;
+                    return (
+                      <div key={sectionName} style={{ marginBottom: 28 }}>
+                        <p style={{ fontFamily: lora, fontSize: 11, letterSpacing: "0.15em", color: gold, fontWeight: 700, textTransform: "uppercase", marginBottom: 12 }}>{sectionName}</p>
+                        {sectionQs.map(qq => {
+                          const idx = questions.indexOf(qq);
+                          let val = getVal(qq.path);
+                          if (Array.isArray(val)) val = val.join(", ");
+                          if (typeof val === "boolean") val = val ? "Confirmed" : "Not confirmed";
+                          if (!val) return null;
+                          return (
+                            <div key={qq.path} onClick={() => jumpTo(idx)} style={{ display: "flex", justifyContent: "space-between", gap: 16, padding: "10px 0", borderBottom: "1px solid rgba(16,15,12,.1)", cursor: "pointer" }}>
+                              <span style={{ ...BODY, color: dark, opacity: 0.85, flex: 1 }}>{qq.label}</span>
+                              <span style={{ fontFamily: lora, fontSize: 13, color: dark, fontWeight: 700, textAlign: "right", maxWidth: "45%" }}>{val} <span style={{ color: gold }}>✎</span></span>
+                            </div>
+                          );
+                        })}
+                      </div>
+                    );
+                  })}
+                </div>
+              );
+            }
+            return null;
+          };
+
+          return (
+            <div>
+              <style>{`@keyframes slideInQ { from { transform: translateX(28px); opacity: 0; } to { transform: translateX(0); opacity: 1; } }`}</style>
+              <p style={{ fontFamily: lora, fontSize: 11, letterSpacing: "0.15em", color: gold, fontWeight: 700, textTransform: "uppercase", marginBottom: 6 }}>{q.section}</p>
+              <p style={{ fontFamily: lora, fontSize: 11, letterSpacing: "0.1em", color: dark, opacity: 0.5, textTransform: "uppercase", marginBottom: 24 }}>{q.type === "review" ? "Review your answers" : `Question ${qIndex + 1} of ${total}`}</p>
+
+              <div style={{ display: "flex", gap: 4, marginBottom: 32 }}>
+                {questions.map((_, i) => (
+                  <div key={i} style={{ flex: 1, height: 3, background: i <= qIndex ? dark : "rgba(16,15,12,.15)" }} />
+                ))}
+              </div>
+
+              <div key={qIndex} style={{ animation: "slideInQ 0.3s ease", minHeight: 200 }}>
+                {q.type !== "review" && (
+                  <h2 style={{ fontFamily: cg, fontSize: isMobile ? 20 : 24, fontWeight: 400, fontStyle: "italic", color: dark, marginBottom: q.hint ? 8 : 18, lineHeight: 1.3 }}>
+                    {q.label}{q.optional && <span style={{ fontFamily: lora, fontSize: 13, opacity: 0.6 }}> (optional)</span>}
+                  </h2>
+                )}
+                {q.hint && <Hint>{q.hint}</Hint>}
+                {q.hint && <div style={{ marginBottom: 10 }} />}
+                {renderInput(q)}
+              </div>
+
+              {application && application.status !== "draft" && (
+                <p style={{ fontFamily: lora, fontSize: 13, color: dark, marginTop: 24, textTransform: "uppercase", letterSpacing: "0.1em", fontWeight: 700 }}>Status: {application.status.replace("_", " ")}</p>
+              )}
+
+              <div style={{ display: "flex", justifyContent: "space-between", marginTop: 36, gap: 12, flexWrap: "wrap" }}>
+                <button onClick={goBack} disabled={qIndex === 0} style={{ fontFamily: lora, padding: "13px 24px", background: "transparent", border: `1px solid ${dark}`, color: dark, fontSize: 11, fontWeight: 600, letterSpacing: "0.12em", textTransform: "uppercase", cursor: qIndex === 0 ? "default" : "pointer", opacity: qIndex === 0 ? 0.4 : 1 }}>← Back</button>
+                <div style={{ display: "flex", gap: 12 }}>
+                  <button onClick={() => handleSaveApplication(false)} disabled={appSaving} style={{ fontFamily: lora, padding: "13px 22px", background: "transparent", border: `1px solid ${dark}`, color: dark, fontSize: 11, fontWeight: 600, letterSpacing: "0.12em", textTransform: "uppercase", cursor: "pointer" }}>{appSaving ? "Saving..." : "Save Draft"}</button>
+                  {qIndex < total - 1 ? (
+                    <button onClick={goNext} disabled={!isAnswered(q)} style={{ fontFamily: lora, padding: "13px 24px", background: dark, border: "none", color: parch, fontSize: 11, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", cursor: isAnswered(q) ? "pointer" : "default", opacity: isAnswered(q) ? 1 : 0.5 }}>Next →</button>
+                  ) : (
+                    <button onClick={() => handleSaveApplication(true)} disabled={appSaving || !appForm.accuracyConfirmed || !appForm.parentPermissionConfirmed || !appForm.studentSignature || !appForm.parentSignature} style={{ fontFamily: lora, padding: "13px 24px", background: dark, border: "none", color: parch, fontSize: 11, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", cursor: "pointer" }}>{appSaving ? "Submitting..." : "Submit Application →"}</button>
+                  )}
+                </div>
+              </div>
+            </div>
+          );
+        })()}
 
         {/* CONSULTATION TAB */}
         {activeTab === "consultation" && (
