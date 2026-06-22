@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
+import { createClient } from "@supabase/supabase-js";
 
 const STRIPE = "https://buy.stripe.com/placeholder";
 const LOGO_URL = "https://i.imgur.com/JJreOgw.jpeg";
@@ -35,6 +36,21 @@ async function sendEmail(data) {
     console.error("Web3Forms error:", e);
     return false;
   }
+}
+
+// ─────────────────────────────────────────────────────────
+// SUPABASE — APPLICATION PORTAL BACKEND
+// Requires the npm package: npm install @supabase/supabase-js
+// ─────────────────────────────────────────────────────────
+const SUPABASE_URL = "https://rwdjfxwuzyyoglbspeyg.supabase.co";
+const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJ3ZGpmeHd1enl5b2dsYnNwZXlnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODIxMTUyNjUsImV4cCI6MjA5NzY5MTI2NX0.1_WvrwqMkTgWUNcWMHKWrNvXj747BEExdd52YY357bw";
+
+let _supabaseClient = null;
+function getSupabase() {
+  if (!_supabaseClient) {
+    _supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+  }
+  return _supabaseClient;
 }
 
 function useIsMobile() {
@@ -438,6 +454,7 @@ function Nav({ page, setPage }) {
     ["Faculty", "faculty", null],
     ["The Arena", "beyond", null],
     ["Admissions", "admissions", null],
+    ["Student Portal", "portal", null],
     ["Contact", "contact", null],
     ["Events", "events", null],
   ];
@@ -7788,8 +7805,7 @@ function ApplicationPage({ setPage, defaultProgram }) {
   };
 
   const handleStartApplication = () => {
-    // TODO: route to the dedicated Application Portal once it is built.
-    setPage("admissions");
+    setPage("portal");
   };
 
   const StepNum = ({ n, done }) => (
@@ -7927,6 +7943,503 @@ function ApplicationPage({ setPage, defaultProgram }) {
     </div>
   );
 }
+function PortalPage({ setPage }) {
+  const isMobile = useIsMobile();
+  const sb = getSupabase();
+
+  const [loading, setLoading] = React.useState(true);
+  const [session, setSession] = React.useState(null);
+  const [authMode, setAuthMode] = React.useState("login"); // login | signup
+  const [authForm, setAuthForm] = React.useState({ email: "", password: "", firstName: "", lastName: "" });
+  const [authError, setAuthError] = React.useState("");
+  const [authBusy, setAuthBusy] = React.useState(false);
+
+  const [role, setRole] = React.useState(null); // 'student' | 'parent' | null
+  const [student, setStudent] = React.useState(null);
+  const [needsProfile, setNeedsProfile] = React.useState(false);
+  const [profileForm, setProfileForm] = React.useState({ firstName: "", lastName: "", phone: "", grade: "", age: "" });
+
+  const [application, setApplication] = React.useState(null);
+  const [appForm, setAppForm] = React.useState({ program: "", track: "", dreamAnswer: "" });
+  const [appSaving, setAppSaving] = React.useState(false);
+
+  const [consultations, setConsultations] = React.useState([]);
+  const [consultForm, setConsultForm] = React.useState({ preferredDates: "", preferredTimes: "", contactMethod: "", notes: "" });
+  const [consultSending, setConsultSending] = React.useState(false);
+
+  const [messages, setMessages] = React.useState([]);
+  const [newMessage, setNewMessage] = React.useState("");
+  const [messageSending, setMessageSending] = React.useState(false);
+
+  const [inviteEmail, setInviteEmail] = React.useState("");
+  const [inviteSending, setInviteSending] = React.useState(false);
+  const [inviteStatusMsg, setInviteStatusMsg] = React.useState("");
+  const [parentLinks, setParentLinks] = React.useState([]);
+
+  const [activeTab, setActiveTab] = React.useState("status");
+
+  const gold = "#A48D6E";
+  const dark = "#100F0C";
+  const parch = "#E4D5C1";
+  const ox = "#34150F";
+  const lora = "'Lora', Georgia, serif";
+  const cg = "'Cormorant Garamond', Georgia, serif";
+  const BODY = { fontFamily: lora, fontSize: 15 };
+
+  const inputStyle = { ...BODY, background: "#FBF7EE", border: "1px solid rgba(0,0,0,.2)", color: dark, padding: "13px 16px", fontWeight: 400, outline: "none", width: "100%" };
+
+  // ── AUTH BOOTSTRAP ──
+  React.useEffect(() => {
+    if (!sb) { setLoading(false); return; }
+    sb.auth.getSession().then(({ data }) => {
+      setSession(data.session || null);
+      setLoading(false);
+    });
+    const { data: sub } = sb.auth.onAuthStateChange((_event, sess) => {
+      setSession(sess);
+    });
+    return () => sub.subscription.unsubscribe();
+  }, [sb]);
+
+  // ── DETERMINE ROLE + LOAD DATA ──
+  React.useEffect(() => {
+    if (!sb || !session) return;
+    (async () => {
+      const uid = session.user.id;
+      const email = session.user.email;
+
+      // Is this user a student?
+      const { data: studentRow } = await sb.from("students").select("*").eq("auth_user_id", uid).maybeSingle();
+      if (studentRow) {
+        setRole("student");
+        setStudent(studentRow);
+        setNeedsProfile(false);
+        return;
+      }
+
+      // Is this user a linked parent (by email, possibly not yet marked accepted)?
+      const { data: parentRow } = await sb.from("parent_links").select("*, students(*)").eq("parent_email", email).maybeSingle();
+      if (parentRow) {
+        if (parentRow.invite_status !== "accepted") {
+          await sb.from("parent_links").update({ auth_user_id: uid, invite_status: "accepted" }).eq("id", parentRow.id);
+        } else if (!parentRow.auth_user_id) {
+          await sb.from("parent_links").update({ auth_user_id: uid }).eq("id", parentRow.id);
+        }
+        setRole("parent");
+        setStudent(parentRow.students);
+        setNeedsProfile(false);
+        return;
+      }
+
+      // New user, no student or parent record yet — needs onboarding
+      setRole("student"); // default new signups to student profile creation
+      setNeedsProfile(true);
+    })();
+  }, [sb, session]);
+
+  // ── LOAD APPLICATION, CONSULTATIONS, MESSAGES, PARENT LINKS once we know the student ──
+  React.useEffect(() => {
+    if (!sb || !student) return;
+    (async () => {
+      const { data: app } = await sb.from("applications").select("*").eq("student_id", student.id).maybeSingle();
+      if (app) {
+        setApplication(app);
+        setAppForm({ program: app.program || "", track: app.track || "", dreamAnswer: app.dream_answer || "" });
+      }
+      const { data: consults } = await sb.from("consultations").select("*").eq("student_id", student.id).order("created_at", { ascending: false });
+      setConsultations(consults || []);
+      const { data: msgs } = await sb.from("messages").select("*").eq("student_id", student.id).order("created_at", { ascending: true });
+      setMessages(msgs || []);
+      if (role === "student") {
+        const { data: links } = await sb.from("parent_links").select("*").eq("student_id", student.id);
+        setParentLinks(links || []);
+      }
+    })();
+  }, [sb, student, role]);
+
+  // ── AUTH ACTIONS ──
+  const handleAuthSubmit = async () => {
+    if (!sb) return;
+    setAuthError("");
+    setAuthBusy(true);
+    if (authMode === "signup") {
+      const { data, error } = await sb.auth.signUp({ email: authForm.email, password: authForm.password });
+      if (error) { setAuthError(error.message); setAuthBusy(false); return; }
+      setProfileForm(p => ({ ...p, firstName: authForm.firstName, lastName: authForm.lastName }));
+    } else {
+      const { error } = await sb.auth.signInWithPassword({ email: authForm.email, password: authForm.password });
+      if (error) { setAuthError(error.message); setAuthBusy(false); return; }
+    }
+    setAuthBusy(false);
+  };
+
+  const handleSignOut = async () => { if (sb) await sb.auth.signOut(); };
+
+  // ── CREATE STUDENT PROFILE (first login after signup) ──
+  const handleCreateProfile = async () => {
+    if (!sb || !session) return;
+    if (!profileForm.firstName || !profileForm.lastName) return;
+    setAuthBusy(true);
+    const { data, error } = await sb.from("students").insert({
+      auth_user_id: session.user.id,
+      first_name: profileForm.firstName,
+      last_name: profileForm.lastName,
+      email: session.user.email,
+      phone: profileForm.phone,
+      grade: profileForm.grade,
+      age: profileForm.age ? parseInt(profileForm.age) : null,
+    }).select().single();
+    setAuthBusy(false);
+    if (!error && data) {
+      setStudent(data);
+      setRole("student");
+      setNeedsProfile(false);
+    } else if (error) {
+      setAuthError(error.message);
+    }
+  };
+
+  // ── APPLICATION ──
+  const handleSaveApplication = async (submit) => {
+    if (!sb || !student) return;
+    setAppSaving(true);
+    const payload = {
+      student_id: student.id,
+      program: appForm.program,
+      track: appForm.track,
+      dream_answer: appForm.dreamAnswer,
+      status: submit ? "submitted" : "draft",
+      submitted_at: submit ? new Date().toISOString() : null,
+      updated_at: new Date().toISOString(),
+    };
+    let result;
+    if (application) {
+      result = await sb.from("applications").update(payload).eq("id", application.id).select().single();
+    } else {
+      result = await sb.from("applications").insert(payload).select().single();
+    }
+    setAppSaving(false);
+    if (!result.error) setApplication(result.data);
+  };
+
+  // ── CONSULTATION ──
+  const handleRequestConsultation = async () => {
+    if (!sb || !student) return;
+    setConsultSending(true);
+    const { data, error } = await sb.from("consultations").insert({
+      student_id: student.id,
+      requested_by_role: role,
+      preferred_dates: consultForm.preferredDates,
+      preferred_times: consultForm.preferredTimes,
+      contact_method: consultForm.contactMethod,
+      notes: consultForm.notes,
+    }).select().single();
+    setConsultSending(false);
+    if (!error) {
+      setConsultations(c => [data, ...c]);
+      setConsultForm({ preferredDates: "", preferredTimes: "", contactMethod: "", notes: "" });
+    }
+  };
+
+  // ── MESSAGES ──
+  const handleSendMessage = async () => {
+    if (!sb || !student || !newMessage.trim()) return;
+    setMessageSending(true);
+    const { data, error } = await sb.from("messages").insert({
+      student_id: student.id,
+      sender_role: role,
+      sender_id: session.user.id,
+      body: newMessage.trim(),
+    }).select().single();
+    setMessageSending(false);
+    if (!error) {
+      setMessages(m => [...m, data]);
+      setNewMessage("");
+    }
+  };
+
+  // ── PARENT INVITE ──
+  const handleInviteParent = async () => {
+    if (!sb || !student || !inviteEmail) return;
+    setInviteSending(true);
+    const { data, error } = await sb.from("parent_links").insert({
+      student_id: student.id,
+      parent_email: inviteEmail,
+      invite_status: "pending",
+    }).select().single();
+    setInviteSending(false);
+    if (!error) {
+      setParentLinks(p => [...p, data]);
+      setInviteStatusMsg(`Invitation sent to ${inviteEmail}. Once they sign up on this portal using that exact email address, they'll automatically gain access to your application.`);
+      setInviteEmail("");
+    } else {
+      setInviteStatusMsg(error.message);
+    }
+  };
+
+  // ════════════════════════════════════════════════════════
+  // RENDER
+  // ════════════════════════════════════════════════════════
+
+  if (!sb) {
+    return (
+      <div style={{ background: dark, minHeight: "100vh", padding: 80, textAlign: "center" }}>
+        <p style={{ ...BODY, color: parch }}>
+          The portal backend isn't connected yet. Add the Supabase package to enable this page.
+        </p>
+      </div>
+    );
+  }
+
+  if (loading) {
+    return <div style={{ background: dark, minHeight: "100vh" }} />;
+  }
+
+  // ── LOGGED OUT: AUTH SCREEN ──
+  if (!session) {
+    return (
+      <div style={{ background: dark, minHeight: "100vh" }}>
+        <Breadcrumb items={[{ label: "Home", page: "home" }]} setPage={setPage} />
+        <div style={{ maxWidth: 460, margin: "0 auto", padding: isMobile ? "48px 24px 80px" : "72px 24px 100px" }}>
+          <p style={{ fontFamily: lora, fontSize: 11, letterSpacing: "0.4em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 16, textAlign: "center" }}>Student Portal</p>
+          <h1 style={{ fontFamily: cg, fontSize: isMobile ? 32 : 40, fontWeight: 400, fontStyle: "italic", color: parch, lineHeight: 1.1, marginBottom: 32, textAlign: "center" }}>{authMode === "login" ? "Welcome Back" : "Create Your Account"}</h1>
+
+          <div style={{ display: "flex", marginBottom: 28, borderBottom: "1px solid rgba(164,141,110,.2)" }}>
+            {["login", "signup"].map(m => (
+              <button key={m} onClick={() => { setAuthMode(m); setAuthError(""); }} style={{ flex: 1, padding: "12px 0", background: "none", border: "none", borderBottom: authMode === m ? `2px solid ${gold}` : "2px solid transparent", color: authMode === m ? gold : parch, fontFamily: lora, fontSize: 12, letterSpacing: "0.15em", textTransform: "uppercase", fontWeight: 600, cursor: "pointer" }}>
+                {m === "login" ? "Log In" : "Sign Up"}
+              </button>
+            ))}
+          </div>
+
+          {authMode === "signup" && (
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10, marginBottom: 10 }}>
+              <input type="text" placeholder="First Name" value={authForm.firstName} onChange={e => setAuthForm(f => ({ ...f, firstName: e.target.value }))} style={inputStyle} />
+              <input type="text" placeholder="Last Name" value={authForm.lastName} onChange={e => setAuthForm(f => ({ ...f, lastName: e.target.value }))} style={inputStyle} />
+            </div>
+          )}
+          <input type="email" placeholder="Email Address" value={authForm.email} onChange={e => setAuthForm(f => ({ ...f, email: e.target.value }))} style={{ ...inputStyle, marginBottom: 10 }} />
+          <input type="password" placeholder="Password" value={authForm.password} onChange={e => setAuthForm(f => ({ ...f, password: e.target.value }))} style={{ ...inputStyle, marginBottom: 18 }} />
+
+          {authError && <p style={{ fontFamily: lora, fontSize: 13, color: "#D98C6E", marginBottom: 14 }}>{authError}</p>}
+
+          <button onClick={handleAuthSubmit} disabled={authBusy} style={{ fontFamily: lora, padding: "15px 0", background: gold, border: "none", color: dark, fontSize: 12, fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", cursor: authBusy ? "default" : "pointer", width: "100%" }}>
+            {authBusy ? "Please wait..." : authMode === "login" ? "Log In" : "Create Account"}
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  // ── LOGGED IN, NO STUDENT PROFILE YET ──
+  if (needsProfile) {
+    return (
+      <div style={{ background: dark, minHeight: "100vh" }}>
+        <Breadcrumb items={[{ label: "Home", page: "home" }]} setPage={setPage} />
+        <div style={{ maxWidth: 460, margin: "0 auto", padding: isMobile ? "48px 24px 80px" : "72px 24px 100px" }}>
+          <p style={{ fontFamily: lora, fontSize: 11, letterSpacing: "0.4em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 16, textAlign: "center" }}>One More Step</p>
+          <h1 style={{ fontFamily: cg, fontSize: isMobile ? 28 : 34, fontWeight: 400, fontStyle: "italic", color: parch, lineHeight: 1.1, marginBottom: 28, textAlign: "center" }}>Complete Your Profile</h1>
+
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10, marginBottom: 10 }}>
+            <input type="text" placeholder="First Name" value={profileForm.firstName} onChange={e => setProfileForm(f => ({ ...f, firstName: e.target.value }))} style={inputStyle} />
+            <input type="text" placeholder="Last Name" value={profileForm.lastName} onChange={e => setProfileForm(f => ({ ...f, lastName: e.target.value }))} style={inputStyle} />
+          </div>
+          <input type="text" placeholder="Phone Number" value={profileForm.phone} onChange={e => setProfileForm(f => ({ ...f, phone: e.target.value }))} style={{ ...inputStyle, marginBottom: 10 }} />
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10, marginBottom: 18 }}>
+            <input type="text" placeholder="Age" value={profileForm.age} onChange={e => setProfileForm(f => ({ ...f, age: e.target.value }))} style={inputStyle} />
+            <input type="text" placeholder="Current Grade" value={profileForm.grade} onChange={e => setProfileForm(f => ({ ...f, grade: e.target.value }))} style={inputStyle} />
+          </div>
+          {authError && <p style={{ fontFamily: lora, fontSize: 13, color: "#D98C6E", marginBottom: 14 }}>{authError}</p>}
+          <button onClick={handleCreateProfile} disabled={authBusy} style={{ fontFamily: lora, padding: "15px 0", background: gold, border: "none", color: dark, fontSize: 12, fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", cursor: "pointer", width: "100%" }}>
+            {authBusy ? "Saving..." : "Continue to Portal →"}
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  // ── MAIN DASHBOARD (light) ──
+  const tabs = role === "student"
+    ? [["status", "Status"], ["application", "Application"], ["consultation", "Consultation"], ["messages", "Messages"], ["family", "Family"]]
+    : [["status", "Status"], ["consultation", "Consultation"], ["messages", "Messages"]];
+
+  const statusSteps = [
+    { key: "draft", label: "Started" },
+    { key: "submitted", label: "Submitted" },
+    { key: "under_review", label: "Under Review" },
+    { key: "accepted", label: "Decision" },
+  ];
+  const currentStatusIndex = application ? statusSteps.findIndex(s => s.key === application.status) : -1;
+
+  return (
+    <div style={{ background: parch, minHeight: "100vh" }}>
+      <Breadcrumb items={[{ label: "Home", page: "home" }]} setPage={setPage} />
+
+      {/* HEADER */}
+      <div style={{ background: dark, padding: isMobile ? "36px 24px" : "48px 80px", display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 16 }}>
+        <div>
+          <p style={{ fontFamily: lora, fontSize: 10, letterSpacing: "0.3em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 6 }}>{role === "student" ? "Student Portal" : "Family Portal"}</p>
+          <h1 style={{ fontFamily: cg, fontSize: isMobile ? 24 : 32, fontWeight: 400, color: parch }}>Welcome, {student ? student.first_name : ""}{role === "parent" ? " (Parent)" : ""}</h1>
+        </div>
+        <button onClick={handleSignOut} style={{ fontFamily: lora, fontSize: 11, letterSpacing: "0.15em", color: parch, background: "transparent", border: `1px solid ${gold}`, padding: "10px 20px", textTransform: "uppercase", cursor: "pointer" }}>Sign Out</button>
+      </div>
+
+      {/* TABS */}
+      <div style={{ display: "flex", gap: 0, borderBottom: `1px solid rgba(16,15,12,.15)`, overflowX: "auto", padding: isMobile ? "0 24px" : "0 80px", background: parch }}>
+        {tabs.map(([key, label]) => (
+          <button key={key} onClick={() => setActiveTab(key)} style={{ padding: "16px 20px", background: "none", border: "none", borderBottom: activeTab === key ? `2px solid ${dark}` : "2px solid transparent", color: dark, fontFamily: lora, fontSize: 12, letterSpacing: "0.1em", textTransform: "uppercase", fontWeight: activeTab === key ? 700 : 600, cursor: "pointer", whiteSpace: "nowrap", opacity: activeTab === key ? 1 : 0.6 }}>{label}</button>
+        ))}
+      </div>
+
+      <div style={{ padding: isMobile ? "36px 24px 80px" : "56px 80px 100px", maxWidth: 820 }}>
+
+        {/* STATUS TAB */}
+        {activeTab === "status" && (
+          <div>
+            <h2 style={{ fontFamily: cg, fontSize: 26, fontWeight: 400, fontStyle: "italic", color: dark, marginBottom: 28 }}>Application Status</h2>
+            {!application ? (
+              <p style={{ ...BODY, color: dark }}>{role === "student" ? "No application started yet. Head to the Application tab to begin." : "The student hasn't started an application yet."}</p>
+            ) : (
+              <div style={{ display: "flex", flexDirection: isMobile ? "column" : "row", gap: 0 }}>
+                {statusSteps.map((s, i) => (
+                  <div key={s.key} style={{ flex: 1, padding: "16px 0", borderTop: !isMobile ? `3px solid ${i <= currentStatusIndex ? dark : "rgba(16,15,12,.15)"}` : "none", borderLeft: isMobile ? `3px solid ${i <= currentStatusIndex ? dark : "rgba(16,15,12,.15)"}` : "none", paddingLeft: isMobile ? 16 : 0, marginBottom: isMobile ? 8 : 0 }}>
+                    <p style={{ fontFamily: lora, fontSize: 11, letterSpacing: "0.15em", textTransform: "uppercase", color: dark, fontWeight: 700, opacity: i <= currentStatusIndex ? 1 : 0.45 }}>{s.label}</p>
+                  </div>
+                ))}
+              </div>
+            )}
+            {application && (
+              <div style={{ marginTop: 32, background: "#FBF7EE", border: "1px solid rgba(16,15,12,.15)", padding: "24px 28px" }}>
+                <p style={{ fontFamily: lora, fontSize: 11, letterSpacing: "0.15em", color: dark, fontWeight: 700, textTransform: "uppercase", marginBottom: 8 }}>Program</p>
+                <p style={{ ...BODY, color: dark, marginBottom: 16 }}>{application.program || "—"}{application.track ? " · " + application.track : ""}</p>
+                <p style={{ fontFamily: lora, fontSize: 11, letterSpacing: "0.15em", color: dark, fontWeight: 700, textTransform: "uppercase", marginBottom: 8 }}>Submitted</p>
+                <p style={{ ...BODY, color: dark }}>{application.submitted_at ? new Date(application.submitted_at).toLocaleDateString() : "Not yet submitted"}</p>
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* APPLICATION TAB (student only) */}
+        {activeTab === "application" && role === "student" && (
+          <div>
+            <h2 style={{ fontFamily: cg, fontSize: 26, fontWeight: 400, fontStyle: "italic", color: dark, marginBottom: 28 }}>Your Application</h2>
+            <p style={{ fontFamily: lora, fontSize: 11, letterSpacing: "0.2em", color: dark, textTransform: "uppercase", marginBottom: 10, fontWeight: 700 }}>Program</p>
+            <select value={appForm.program} onChange={e => setAppForm(f => ({ ...f, program: e.target.value }))} style={{ ...inputStyle, marginBottom: 18, appearance: "none" }}>
+              <option value="">Select a program</option>
+              <option value="summer">Summer Intensive</option>
+              <option value="foundation">Foundation Semester</option>
+              <option value="venture">Venture Semester</option>
+            </select>
+            {(appForm.program === "foundation" || appForm.program === "venture") && (
+              <>
+                <p style={{ fontFamily: lora, fontSize: 11, letterSpacing: "0.2em", color: dark, textTransform: "uppercase", marginBottom: 10, fontWeight: 700 }}>Track</p>
+                <select value={appForm.track} onChange={e => setAppForm(f => ({ ...f, track: e.target.value }))} style={{ ...inputStyle, marginBottom: 18, appearance: "none" }}>
+                  <option value="">Select a track</option>
+                  <option value="weekday">Weekday Track</option>
+                  <option value="saturday">Saturday Track</option>
+                </select>
+              </>
+            )}
+            <p style={{ fontFamily: lora, fontSize: 11, letterSpacing: "0.2em", color: dark, textTransform: "uppercase", marginBottom: 10, fontWeight: 700 }}>What is your dream?</p>
+            <textarea rows={5} value={appForm.dreamAnswer} onChange={e => setAppForm(f => ({ ...f, dreamAnswer: e.target.value }))} style={{ ...inputStyle, marginBottom: 24, resize: "vertical" }} placeholder="Tell us, in your own words..." />
+
+            {application && application.status !== "draft" && (
+              <p style={{ fontFamily: lora, fontSize: 13, color: dark, marginBottom: 16, textTransform: "uppercase", letterSpacing: "0.1em", fontWeight: 700 }}>Status: {application.status.replace("_", " ")}</p>
+            )}
+
+            <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
+              <button onClick={() => handleSaveApplication(false)} disabled={appSaving} style={{ fontFamily: lora, padding: "14px 28px", background: "transparent", border: `1px solid ${dark}`, color: dark, fontSize: 11, fontWeight: 600, letterSpacing: "0.15em", textTransform: "uppercase", cursor: "pointer" }}>{appSaving ? "Saving..." : "Save Draft"}</button>
+              <button onClick={() => handleSaveApplication(true)} disabled={appSaving || !appForm.program} style={{ fontFamily: lora, padding: "14px 28px", background: dark, border: "none", color: parch, fontSize: 11, fontWeight: 700, letterSpacing: "0.15em", textTransform: "uppercase", cursor: "pointer" }}>{appSaving ? "Submitting..." : "Submit Application →"}</button>
+            </div>
+          </div>
+        )}
+
+        {/* CONSULTATION TAB */}
+        {activeTab === "consultation" && (
+          <div>
+            <h2 style={{ fontFamily: cg, fontSize: 26, fontWeight: 400, fontStyle: "italic", color: dark, marginBottom: 28 }}>Schedule a Family Consultation</h2>
+            <p style={{ ...BODY, color: dark, lineHeight: 1.7, marginBottom: 28 }}>Submit your preferred dates and times, and a member of our admissions team will confirm a time with you directly.</p>
+
+            <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 10, marginBottom: 10 }}>
+              <input type="text" placeholder="Preferred Date(s)" value={consultForm.preferredDates} onChange={e => setConsultForm(f => ({ ...f, preferredDates: e.target.value }))} style={inputStyle} />
+              <input type="text" placeholder="Preferred Time(s)" value={consultForm.preferredTimes} onChange={e => setConsultForm(f => ({ ...f, preferredTimes: e.target.value }))} style={inputStyle} />
+            </div>
+            <select value={consultForm.contactMethod} onChange={e => setConsultForm(f => ({ ...f, contactMethod: e.target.value }))} style={{ ...inputStyle, marginBottom: 10, appearance: "none" }}>
+              <option value="">Preferred Contact Method</option>
+              <option value="phone">Phone Call</option>
+              <option value="email">Email</option>
+              <option value="either">Either</option>
+            </select>
+            <textarea rows={3} placeholder="Notes (optional)" value={consultForm.notes} onChange={e => setConsultForm(f => ({ ...f, notes: e.target.value }))} style={{ ...inputStyle, marginBottom: 20, resize: "vertical" }} />
+            <button onClick={handleRequestConsultation} disabled={consultSending} style={{ fontFamily: lora, padding: "14px 32px", background: dark, border: "none", color: parch, fontSize: 11, fontWeight: 700, letterSpacing: "0.15em", textTransform: "uppercase", cursor: "pointer" }}>{consultSending ? "Sending..." : "Request Consultation →"}</button>
+
+            {consultations.length > 0 && (
+              <div style={{ marginTop: 40 }}>
+                <p style={{ fontFamily: lora, fontSize: 11, letterSpacing: "0.2em", color: dark, textTransform: "uppercase", marginBottom: 16, fontWeight: 700 }}>Your Requests</p>
+                {consultations.map(c => (
+                  <div key={c.id} style={{ background: "#FBF7EE", border: "1px solid rgba(16,15,12,.15)", padding: "16px 20px", marginBottom: 10 }}>
+                    <p style={{ ...BODY, color: dark }}>{c.preferred_dates} · {c.preferred_times}</p>
+                    <p style={{ fontFamily: lora, fontSize: 11, color: dark, fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.1em", marginTop: 4 }}>{c.status}</p>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* MESSAGES TAB */}
+        {activeTab === "messages" && (
+          <div>
+            <h2 style={{ fontFamily: cg, fontSize: 26, fontWeight: 400, fontStyle: "italic", color: dark, marginBottom: 28 }}>Contact Admissions</h2>
+            <div style={{ background: "#FBF7EE", border: "1px solid rgba(16,15,12,.15)", padding: "20px", marginBottom: 20, maxHeight: 400, overflowY: "auto", display: "flex", flexDirection: "column", gap: 12 }}>
+              {messages.length === 0 ? (
+                <p style={{ ...BODY, color: dark }}>No messages yet. Send your first message below.</p>
+              ) : messages.map(m => (
+                <div key={m.id} style={{ alignSelf: m.sender_role === "admin" ? "flex-start" : "flex-end", maxWidth: "75%" }}>
+                  <p style={{ fontFamily: lora, fontSize: 9, letterSpacing: "0.1em", color: dark, fontWeight: 700, textTransform: "uppercase", marginBottom: 4 }}>{m.sender_role === "admin" ? "Admissions" : m.sender_role === "parent" ? "Parent" : "You"}</p>
+                  <p style={{ ...BODY, color: dark, background: m.sender_role === "admin" ? "rgba(164,141,110,.25)" : "rgba(16,15,12,.08)", padding: "10px 14px" }}>{m.body}</p>
+                </div>
+              ))}
+            </div>
+            <div style={{ display: "flex", gap: 10 }}>
+              <input type="text" placeholder="Type a message..." value={newMessage} onChange={e => setNewMessage(e.target.value)} onKeyDown={e => { if (e.key === "Enter") handleSendMessage(); }} style={{ ...inputStyle, flex: 1 }} />
+              <button onClick={handleSendMessage} disabled={messageSending} style={{ fontFamily: lora, padding: "13px 24px", background: dark, border: "none", color: parch, fontSize: 11, fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", cursor: "pointer" }}>Send</button>
+            </div>
+          </div>
+        )}
+
+        {/* FAMILY TAB (student only) */}
+        {activeTab === "family" && role === "student" && (
+          <div>
+            <h2 style={{ fontFamily: cg, fontSize: 26, fontWeight: 400, fontStyle: "italic", color: dark, marginBottom: 16 }}>Invite a Parent or Guardian</h2>
+            <p style={{ ...BODY, color: dark, lineHeight: 1.7, marginBottom: 24 }}>
+              Invite a parent or guardian to access this portal. They'll be able to view your application status, schedule consultations, and message admissions — once they sign up using the email address below.
+            </p>
+            <div style={{ display: "flex", gap: 10, marginBottom: 14, flexWrap: "wrap" }}>
+              <input type="email" placeholder="Parent / Guardian Email" value={inviteEmail} onChange={e => setInviteEmail(e.target.value)} style={{ ...inputStyle, flex: 1, minWidth: 220 }} />
+              <button onClick={handleInviteParent} disabled={inviteSending || !inviteEmail} style={{ fontFamily: lora, padding: "13px 24px", background: dark, border: "none", color: parch, fontSize: 11, fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", cursor: "pointer" }}>{inviteSending ? "Sending..." : "Invite"}</button>
+            </div>
+            {inviteStatusMsg && <p style={{ ...BODY, color: dark, marginBottom: 20 }}>{inviteStatusMsg}</p>}
+
+            {parentLinks.length > 0 && (
+              <div>
+                <p style={{ fontFamily: lora, fontSize: 11, letterSpacing: "0.2em", color: dark, textTransform: "uppercase", marginBottom: 14, fontWeight: 700 }}>Linked Parents / Guardians</p>
+                {parentLinks.map(p => (
+                  <div key={p.id} style={{ display: "flex", justifyContent: "space-between", padding: "12px 0", borderBottom: "1px solid rgba(16,15,12,.15)" }}>
+                    <span style={{ ...BODY, color: dark }}>{p.parent_email}</span>
+                    <span style={{ fontFamily: lora, fontSize: 11, color: p.invite_status === "accepted" ? "#3F6B3F" : dark, textTransform: "uppercase", letterSpacing: "0.1em", fontWeight: 700 }}>{p.invite_status}</span>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        )}
+
+      </div>
+    </div>
+  );
+}
+
 function ContactPage({ setPage, openInquiry }) {
   const isMobile = useIsMobile();
   const [form, setForm] = useState({ parentFirst: "", parentLast: "", email: "", phone: "", city: "", state: "", zip: "", studentFirst: "", studentLast: "", age: "", grade: "", program: "", contactMethod: "", dates: "", times: "", notes: "" });
@@ -14452,6 +14965,7 @@ function ExcaliburApp() {
     if (page === "apply") return <ApplyPage setPage={setPage} openInquiry={openInquiry} />;
     if (page === "admissions") return <ApplyPage setPage={setPage} openInquiry={openInquiry} />;
     if (page === "apply-now") return <ApplicationPage setPage={setPage} defaultProgram={inquiryProgram} />;
+    if (page === "portal") return <PortalPage setPage={setPage} />;
     if (page === "flagship-detail") return <FlagshipDetailPage2 setPage={setPage} openInquiry={openInquiry} />;
     if (page === "summer-detail") return <SummerDetailPage setPage={setPage} openInquiry={openInquiry} />;
     if (page.startsWith("module:")) return <ModulePage slug={page.replace("module:", "")} setPage={setPage} />;
