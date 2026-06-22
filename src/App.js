@@ -7002,7 +7002,7 @@ function SummerDetailPage({ setPage, openInquiry }) {
 
           {/* Overview paragraph — italic Cormorant */}
           <p style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: "1.4rem", fontStyle: "italic", fontWeight: 400, color: "#100F0C", lineHeight: 1.7, maxWidth: 680, margin: "0 auto 48px" }}>
-            July 27 – August 8. Full days - Monday through Friday.Led by senior faculty, top CEOs & executives, entrepreneurs, invited guest speakers and industry leaders. The summer wave culminates in a Shark Tank-inspired Excalibur Venture Finale before real investors, community leaders and families.
+            July 27 – August 8. Full days - Monday through Friday. Led by senior faculty, top CEOs & executives, entrepreneurs, invited guest speakers and industry leaders. The summer wave culminates in a Shark Tank-inspired Excalibur Venture Finale before real investors, community leaders and families.
           </p>
 
           {/* Wave info grid */}
@@ -7023,7 +7023,7 @@ function SummerDetailPage({ setPage, openInquiry }) {
                 Class Size: <span style={{ fontWeight: 400, fontSize: 22 }}>Limited to 20 students</span>
               </p>
               <p style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: 25, fontStyle: "italic", fontWeight: 700, color: "#100F0C", lineHeight: 1.8 }}>
-                Ages:<span style={{ fontWeight: 400, fontSize: 20 }}>14–18 years oldHigh school students</span>
+                Ages:&nbsp;<span style={{ fontWeight: 400, fontSize: 20 }}>14–18 years old&nbsp; &nbsp; &nbsp;High school students</span>
               </p>
             </div>
             <div style={{ padding: isMobile ? "16px 0 0" : "0 0 0 28px" }}>
