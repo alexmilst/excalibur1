@@ -7095,7 +7095,7 @@ function SummerDetailPage({ setPage, openInquiry }) {
             {/* Track A - Da Vinci */}
             <div style={{ background: "#E4D5C1", padding: isMobile ? "32px 24px" : "44px 40px" }}>
               <p style={{ fontFamily: "'Lora', Georgia, serif", fontSize: 11, letterSpacing: "0.4em", color: "#100F0C", textTransform: "uppercase", fontWeight: 600, marginBottom: 8 }}>Track A</p>
-              <h3 style={{ fontFamily: serif, fontSize: isMobile ? 36 : 48, fontWeight: 300, fontStyle: "italic", color: "#100F0C", lineHeight: 1, marginBottom: 4 }}>Da Vinci</h3>
+              <h3 style={{ fontFamily: serif, fontSize: isMobile ? 36 : 48, fontWeight: 300, fontStyle: "italic", color: "#100F0C", lineHeight: 1, marginBottom: 16 }}>Da Vinci</h3>
               <p style={{ fontFamily: "'Lora', Georgia, serif", fontSize: 13, letterSpacing: "0.2em", textTransform: "uppercase", color: "#100F0C", fontWeight: 600, marginBottom: 24, paddingBottom: 24, borderBottom: "0.5px solid rgba(16,15,12,.2)" }}>Commercial Market Venture</p>
               <p style={{ fontFamily: "'Lora', Georgia, serif", fontSize: 15, fontWeight: 400, lineHeight: 1.7, color: "#100F0C", marginBottom: 24, textAlign: "justify" }}>Identify a real market opportunity, validate genuine customer demand, and build a scalable venture from the ground up. Teams move from idea to customer discovery to MVP to first traction — working toward customer validation, early traction, pre-orders and a clear presentation of market demand before the Finale.</p>
               <p style={{ fontFamily: "'Lora', Georgia, serif", fontSize: 11, letterSpacing: "0.3em", color: "#100F0C", textTransform: "uppercase", fontWeight: 600, marginBottom: 10 }}>Venture Types</p>
@@ -7110,7 +7110,7 @@ function SummerDetailPage({ setPage, openInquiry }) {
             {/* Track B - Medici */}
             <div style={{ background: "#E4D5C1", padding: isMobile ? "32px 24px" : "44px 40px" }}>
               <p style={{ fontFamily: "'Lora', Georgia, serif", fontSize: 11, letterSpacing: "0.4em", color: "#100F0C", textTransform: "uppercase", fontWeight: 600, marginBottom: 8 }}>Track B</p>
-              <h3 style={{ fontFamily: serif, fontSize: isMobile ? 36 : 48, fontWeight: 300, fontStyle: "italic", color: "#100F0C", lineHeight: 1, marginBottom: 4 }}>Medici</h3>
+              <h3 style={{ fontFamily: serif, fontSize: isMobile ? 36 : 48, fontWeight: 300, fontStyle: "italic", color: "#100F0C", lineHeight: 1, marginBottom: 16 }}>Medici</h3>
               <p style={{ fontFamily: "'Lora', Georgia, serif", fontSize: 13, letterSpacing: "0.2em", textTransform: "uppercase", color: "#100F0C", fontWeight: 600, marginBottom: 24, paddingBottom: 24, borderBottom: "0.5px solid rgba(16,15,12,.2)" }}>Community Impact Venture</p>
               <p style={{ fontFamily: "'Lora', Georgia, serif", fontSize: 15, fontWeight: 400, lineHeight: 1.7, color: "#100F0C", marginBottom: 24, textAlign: "justify" }}>Identify a real problem affecting Orange County and build a venture with a viable business model to address it. Teams conduct field research, engage directly with the community, and pursue first customers, pilot commitments, and letters of support — presenting to investors, executives, and invited community officials on Finale day.</p>
               <p style={{ fontFamily: "'Lora', Georgia, serif", fontSize: 11, letterSpacing: "0.3em", color: "#100F0C", textTransform: "uppercase", fontWeight: 600, marginBottom: 10 }}>Community Problems</p>
