@@ -7294,13 +7294,13 @@ function SummerDetailPage({ setPage, openInquiry }) {
         <div style={{ maxWidth: 1100, margin: "0 auto" }}>
 
           {/* Eyebrow */}
-          <p style={{ fontFamily: "'Lora', Georgia, serif", fontSize: 15, letterSpacing: "0.45em", color: "#100F0C", fontWeight: 600, textTransform: "uppercase", marginBottom: 18 }}>Summer Program Schedule</p>
+          <p style={{ fontFamily: "'Lora', Georgia, serif", fontSize: 15, letterSpacing: "0.45em", color: "#100F0C", fontWeight: 600, textTransform: "uppercase", marginBottom: 18 }}>VENTURE LAUNCHPAD - DAY AT EXCALIBUR</p>
 
           {/* Heading */}
-          <h2 style={{ fontFamily: "'adobe-garamond-pro', Georgia, serif", fontSize: isMobile ? "2.4rem" : "4.2rem", fontWeight: 400, fontStyle: "normal", color: "#100F0C", letterSpacing: ".0325em", lineHeight: 1.15, textTransform: "uppercase", marginBottom: 20 }}>Excalibur Venture<br />&amp; Leadership Launchpad</h2>
+          <h2 style={{ fontFamily: "'adobe-garamond-pro', Georgia, serif", fontSize: isMobile ? "2.4rem" : "4.2rem", fontWeight: 400, fontStyle: "normal", color: "#100F0C", letterSpacing: ".0325em", lineHeight: 1.15, textTransform: "uppercase", marginBottom: 20 }}>SUMMER PROGRAM SCHEDULE</h2>
 
           {/* Subheading */}
-          <p style={{ fontFamily: "'Lora', Georgia, serif", fontSize: 15, color: "#100F0C", fontWeight: 400, lineHeight: 1.7, marginBottom: 48, maxWidth: 640 }}>Monday July 27 – Friday August 7, 2026 · Venture Finale Saturday August 8, 2026</p>
+          <p style={{ fontFamily: "'Lora', Georgia, serif", fontSize: 18, color: "#100F0C", fontWeight: 400, lineHeight: 1.7, marginBottom: 48 }}> </p>
 
           {/* Daily format summary bar */}
           <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr 1fr" : "repeat(4,1fr)", gap: 1, marginBottom: 40, background: "#A48D6E" }}>
