@@ -1187,7 +1187,7 @@ function SoireeInviteBlock({ openInquiry, setPage = () => {}, autoOpen = false, 
                   {/* Body */}
                   <p style={{ fontFamily: "'Lora', serif", fontSize: isMobile ? 13 : 16, color: "#FBF7EE", fontWeight: 300, lineHeight: 2.0, maxWidth: 520, marginBottom: 28 }}>A private family information evening introducing Excalibur Academy, its faculty, programs, curriculum, admissions process, and student experience. The evening includes live jazz, hors d’oeuvres, faculty introductions, program & curriculum presentations, as well as the opportunity to meet the founder, leadership team, and other prospective Excalibur families.</p>
                   {/* By Invitation */}
-                  <p style={{ fontFamily: "'Cinzel', serif", fontSize: 20, color: "#DAC8AA", letterSpacing: "0.15em", lineHeight: 28, marginBottom: 28, textTransform: "uppercase" }}>Limited Attendance · Invitation Requested</p>
+                  <p style={{ fontFamily: "'Cinzel', serif", fontSize: 20, color: "#DAC8AA", letterSpacing: "0.15em", lineHeight: 1.2, marginBottom: 28, textTransform: "uppercase" }}>Limited Attendance · Invitation Requested</p>
                   {/* Dream question */}
                   <div style={{ border: "1px solid rgba(216,183,140,.25)", padding: isMobile ? "18px 18px" : "24px 36px", textAlign: "center", maxWidth: 540, marginBottom: 32, position: "relative", width: "100%" }}>
                     <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 1, background: "linear-gradient(90deg, transparent, rgba(216,183,140,.4), transparent)" }} />
@@ -4527,7 +4527,7 @@ function HomePage({ setPage, openInquiry }) {
         <div style={{ padding: isMobile ? "80px 24px 60px" : "110px 80px 72px", textAlign: "center", borderBottom: "1px solid rgba(217,199,169,.1)" }}>
           <Fade>
             <span style={{ fontFamily: "'Lato', sans-serif", fontSize: 13, letterSpacing: "0.3em", color: "#A48D6E", fontWeight: 500, textTransform: "uppercase" }}>Summer Intensive 2026</span>
-            <h2 style={{ fontFamily: "'Cinzel', serif", fontSize: isMobile ? "clamp(32px,7vw,52px)" : "clamp(40px,5vw,68px)", fontWeight: 400, lineHeight: 52, letterSpacing: "0.12em", textTransform: "uppercase", color: "#D9C7A9", margin: "20px 0 0" }}>
+            <h2 style={{ fontFamily: "'Cinzel', serif", fontSize: isMobile ? "clamp(32px,7vw,52px)" : "clamp(40px,5vw,68px)", fontWeight: 400, lineHeight: 1.2, letterSpacing: "0.12em", textTransform: "uppercase", color: "#D9C7A9", margin: "20px 0 0" }}>
               Summer Venture Launchpad
             </h2>
             <h2 style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: isMobile ? "clamp(32px,7vw,52px)" : "clamp(40px,5vw,68px)", fontWeight: 400, fontStyle: "italic", lineHeight: 0.95, letterSpacing: "0.03em", textTransform: "uppercase", color: "#A48D6E", margin: "12px 0 0" }}>
