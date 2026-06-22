@@ -1,0 +1,4 @@
+Planned visual edits before implementation:
+1. src/App.js:3912:11 — <p> text changed from "The Excalibur Flagship · Foundation & Venture Semesters" to "Foundation & Venture Semesters" to reflect just the semester branding.
+2. src/App.js:3964:15 — <p> previously labeled "Program Overview" will be cleared (now empty) while keeping surrounding structure intact.
+3. Implementation note: direct edits to src/App.js could not be performed because the file exceeds the read/edit limits, so runtime overrides in src/index.js now update those paragraphs immediately after the app mounts.
