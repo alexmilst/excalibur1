@@ -1171,12 +1171,12 @@ function SoireeInviteBlock({ openInquiry, setPage = () => {}, autoOpen = false, 
                     <div style={{ flex: 1, height: "1px", background: "linear-gradient(90deg, rgba(216,183,140,.35), transparent)" }} />
                   </div>
                   {/* Date */}
-                  <p style={{ fontFamily: serif, fontSize: isMobile ? 72 : 96, fontWeight: 300, color: "#FBF7EE", lineHeight: 1, letterSpacing: "-0.03em", marginBottom: 6 }}>June 30</p>
+                  <p style={{ fontFamily: "Cinzel, serif", fontSize: isMobile ? 72 : 96, fontWeight: 300, color: "#FBF7EE", lineHeight: 1, letterSpacing: "-0.03em", marginBottom: 6 }}>June 30</p>
                   <div style={{ display: "flex", alignItems: "center", gap: 10, justifyContent: "center", marginBottom: 8 }}>
-                    <p style={{ fontFamily: "'Cormorant Garamond', 'Didot', Georgia, serif", fontSize: isMobile ? 16 : 20, color: "#d8b78c", fontStyle: "italic", fontWeight: 400, letterSpacing: "0.12em", margin: 0 }}>Tuesday &nbsp;·&nbsp; 6:00 – 8:00 PM</p>
+                    <p style={{ fontFamily: "'Cormorant Garamond', 'Didot', Georgia, serif", fontSize: isMobile ? 16 : 21, color: "#d8b78c", fontStyle: "italic", fontWeight: 400, letterSpacing: "0.12em", margin: 0 }}>Tuesday &nbsp;·&nbsp; 6:00 – 8:00 PM</p>
                   </div>
-                  <p style={{ fontFamily: serif, fontSize: isMobile ? 18 : 24, color: "#FBF7EE", lineHeight: 1.3, fontStyle: "italic", marginBottom: 16, fontWeight: 400 }}>  Family Information Soirée</p>
-                  <p style={{ fontFamily: "'Cormorant Garamond', 'Didot', Georgia, serif", fontSize: isMobile ? 15 : 18, color: "#d8b78c", lineHeight: 1.4, marginBottom: 6, fontStyle: "italic", fontWeight: 700, letterSpacing: "0.12em" }}>at</p>
+                  <p style={{ fontFamily: serif, fontSize: isMobile ? 28 : 40, color: "#FBF7EE", lineHeight: 1.3, fontStyle: "italic", marginBottom: 16, fontWeight: 400 }}>  Family Information Soirée</p>
+                  <p style={{ fontFamily: "'Cormorant Garamond', 'Didot', Georgia, serif", fontSize: isMobile ? 18 : 25, color: "#A48D6E", lineHeight: 1.4, marginBottom: 6, fontStyle: "italic", fontWeight: 700, letterSpacing: "0.12em" }}>at</p>
                   <p style={{ fontFamily: "'Cormorant Garamond', 'Didot', 'Bodoni MT', Georgia, serif", fontSize: isMobile ? 28 : 42, color: "#FBF7EE", lineHeight: 1.1, marginBottom: 6, fontWeight: 300, fontStyle: "italic", letterSpacing: "0.04em" }}>Crown Valley Ballroom Laguna Niguel Community Center</p>
                   <div style={{ display: "flex", alignItems: "center", gap: 12, justifyContent: "center", marginBottom: 36 }}>
                     <div style={{ width: 28, height: "1px", background:"#010000" }} />
@@ -1185,21 +1185,21 @@ function SoireeInviteBlock({ openInquiry, setPage = () => {}, autoOpen = false, 
                   </div>
                   <div style={{ width: 52, height: "1px", background: `linear-gradient(90deg, transparent, #d8b78c, transparent)`, marginBottom: 28 }} />
                   {/* Body */}
-                  <p style={{ fontFamily: "'Lato', sans-serif", fontSize: isMobile ? 13 : 14, color: "#FBF7EE", fontWeight: 300, lineHeight: 2.0, maxWidth: 520, marginBottom: 28 }}>A private family information evening introducing Excalibur Academy, its faculty, programs, curriculum, admissions process, and student experience. The evening includes live jazz, hors d’oeuvres, faculty introductions, program & curriculum presentations, as well as the opportunity to meet the founder, leadership team, and other prospective Excalibur families.</p>
+                  <p style={{ fontFamily: "'Lora', serif", fontSize: isMobile ? 13 : 16, color: "#FBF7EE", fontWeight: 300, lineHeight: 2.0, maxWidth: 520, marginBottom: 28 }}>A private family information evening introducing Excalibur Academy, its faculty, programs, curriculum, admissions process, and student experience. The evening includes live jazz, hors d’oeuvres, faculty introductions, program & curriculum presentations, as well as the opportunity to meet the founder, leadership team, and other prospective Excalibur families.</p>
                   {/* By Invitation */}
-                  <p style={{ fontFamily: serif, fontSize: 20, color: "#d8b78c", letterSpacing: "0.15em", lineHeight: 29, lineHeight: 28, marginBottom: 28, textTransform: "uppercase" }}>Limited Attendance · Invitation Requested</p>
+                  <p style={{ fontFamily: "'Cinzel', serif", fontSize: 20, color: "#DAC8AA", letterSpacing: "0.15em", lineHeight: 28, marginBottom: 28, textTransform: "uppercase" }}>Limited Attendance · Invitation Requested</p>
                   {/* Dream question */}
                   <div style={{ border: "1px solid rgba(216,183,140,.25)", padding: isMobile ? "18px 18px" : "24px 36px", textAlign: "center", maxWidth: 540, marginBottom: 32, position: "relative", width: "100%" }}>
                     <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 1, background: "linear-gradient(90deg, transparent, rgba(216,183,140,.4), transparent)" }} />
-                    <p style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: 13, letterSpacing: "0.08em", color: "#FBF7EE", fontWeight: 400, fontStyle: "italic", marginBottom: 14 }}>On the evening, prospective students &amp; parents will be asked to share an answer to one question</p>
-                    <p style={{ fontFamily: "'Playfair Display', 'Didot', 'Bodoni MT', Georgia, serif", fontSize: isMobile ? 28 : 42, color: "#d8b78c", fontWeight: 400, lineHeight: 1.25, fontStyle: "italic" }}>"What is your dream?"</p>
+                    <p style={{ fontFamily: "'Lora', serif", fontSize: 16, letterSpacing: "0.08em", color: "#FBF7EE", fontWeight: 400, fontStyle: "italic", marginBottom: 14 }}>On the evening, prospective students &amp; parents will be asked to share an answer to one question</p>
+                    <p style={{ fontFamily: "'Playfair Display', 'Didot', 'Bodoni MT', Georgia, serif", fontSize: isMobile ? 20 : 30, color: "#A48D6E", fontWeight: 400, lineHeight: 1.25, fontStyle: "italic" }}>"What is your dream?"</p>
                   </div>
                   {/* Buttons */}
                   <div style={{ display: "flex", gap: 10, flexDirection: isMobile ? "column" : "row", width: "100%", maxWidth: 460, marginBottom: 14 }}>
                     <button onClick={() => setShowForm(true)} style={{ fontFamily: sans, background: "#d8b78c", color:"#010000", padding: "13px 22px", fontSize: 11, fontWeight: 700, letterSpacing: "0.15em", textTransform: "uppercase", border: "none", cursor: "pointer", flex: 1 }}>Request an Invitation</button>
                     <button onClick={() => setPage("events")} style={{ fontFamily: sans, background: "transparent", color: "#010000", padding: "13px 22px", fontSize: 11, fontWeight: 500, letterSpacing: "0.15em", textTransform: "uppercase", border: "1px solid rgba(216,183,140,.35)", cursor: "pointer", flex: 1 }}>Event Information →</button>
                   </div>
-                  <p style={{ fontFamily: "'Lato', sans-serif", fontSize: 13, color:"#d8b78c", marginTop: 4, lineHeight: 1.7, maxWidth: 420 }}>Attendance is limited. Confirmed families will receive event details directly from the admissions team.</p>
+                  <p style={{ fontFamily: "'Lora', serif", fontSize: 13, color: "#A48D6E", marginTop: 4, lineHeight: 1.7, maxWidth: 420 }}>Attendance is limited. Confirmed families will receive event details directly from the admissions team.</p>
                 </div>
               </div> {/* close inner grid */}
               </div> {/* close flex column wrapper */}
