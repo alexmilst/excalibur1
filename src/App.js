@@ -5833,10 +5833,10 @@ function AboutPage({ setPage, openInquiry }) {
       <Fade>
         <div style={{ background: "#100F0C", padding: isMobile ? "56px 24px" : "80px 80px", textAlign: "center" }}>
           <div style={{ maxWidth: 780, margin: "0 auto" }}>
-            <p style={{ fontFamily: "'Bembo Book MT Std', Georgia, serif", fontSize: 15, lineHeight: 1.9, color: "#E4D5C1", fontWeight: 400, marginBottom: 20 , textAlign: "justify" }}>Excalibur students graduate with the confidence to address a room, the judgment to defend an idea, the maturity to take responsibility for the choices they make, and forged to be ready for whatever arena they step into next.</p>
+            <p style={{ fontFamily: "'Cinzel', serif", fontSize: 25, lineHeight: 1.9, color: "#E4D5C1", fontWeight: 400, marginBottom: 20 , textAlign: "center" }}>Excalibur students graduate with the confidence to address a room, the judgment to defend an idea, the maturity to take responsibility for the choices they make, and forged to be ready for whatever arena they step into next.</p>
             <div style={{ height: 1, background: "rgba(188,166,150,.2)", margin: "32px auto", maxWidth: 120 }} />
-            <p style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: isMobile ? 20 : 28, color: "#D9C7A9", fontWeight: 400, fontStyle: "italic", lineHeight: 1.4, marginBottom: 12 , textAlign: "justify" }}>This is not an education designed to avoid difficulty.</p>
-            <p style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: isMobile ? 20 : 28, color: "#D9C7A9", fontWeight: 400, fontStyle: "italic", lineHeight: 1.4, marginBottom: 0 , textAlign: "justify" }}>It is an education designed to form leaders.</p>
+            <p style={{ fontFamily: "'Forum', display", fontSize: isMobile ? 20 : 28, color: "#D9C7A9", fontWeight: 400, fontStyle: "italic", lineHeight: 1.4, marginBottom: 12 , textAlign: "center" }}>This is not an education designed to avoid difficulty.</p>
+            <p style={{ fontFamily: "'Forum', display", fontSize: isMobile ? 20 : 28, color: "#D9C7A9", fontWeight: 400, fontStyle: "italic", lineHeight: 1.4, marginBottom: 0 , textAlign: "center" }}>It is an education designed to form leaders.</p>
           </div>
         </div>
       </Fade>
@@ -5851,7 +5851,7 @@ function AboutPage({ setPage, openInquiry }) {
           }} />
         ))}
         <div style={{ maxWidth: 820, margin: "0 auto" }}>
-          <p style={{ fontFamily: sans, fontSize: 10, letterSpacing: "0.2em", color: "#A48D6E", fontWeight: 700, textTransform: "uppercase", marginBottom: 52 }}>Excalibur Academy</p>
+          <p style={{ fontFamily: sans, fontSize: 15, letterSpacing: "0.2em", color: "#A48D6E", fontWeight: 700, textTransform: "uppercase", marginBottom: 52 }}>Excalibur Academy</p>
           {[
             "Where dreams become goals.",
             "Goals become discipline.",
@@ -5875,7 +5875,7 @@ function AboutPage({ setPage, openInquiry }) {
 
       {/* STATS */}
       <div style={{ display: "grid", gridTemplateColumns: isMobile ? "repeat(2,1fr)" : "repeat(4,1fr)", gap: 2, background: "#100F0C" }}>
-        {[["14–17", "Age range"], ["20", "Students per cohort"], ["5", "Hours per week"], ["South OC", "Located"]].map(([v, l], i) => (
+        {[["14–17", "Age range"], ["20", "Students per cohort"], ["5", "Hours per week"], ["South OC", "LOCATION"]].map(([v, l], i) => (
           <div key={i} style={{ background: "#100F0C", padding: "36px 20px", textAlign: "center", borderTop: `2px solid ${i === 0 ? "#A48D6E" : "rgba(188,166,150,.15)"}` }}>
             <div style={{ fontFamily: "'Forum', serif", fontSize: 44, fontWeight: 400, color: "#A48D6E", lineHeight: 1 }}>{v}</div>
             <div style={{ fontFamily: "'Raleway', sans-serif", color: "#E4D5C1", fontSize: 13, marginTop: 10, letterSpacing: "0.05em", textTransform: "uppercase" }}>{l}</div>
