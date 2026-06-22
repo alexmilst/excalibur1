@@ -740,17 +740,17 @@ function Footer({ setPage }) {
         <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr 1fr", gap: isMobile ? 28 : 0 }}>
           {/* Business info */}
           <div style={{ display: "flex", flexDirection: "column", gap: 5 }}>
-            <span style={{ fontFamily: eyebrow_font, fontSize: 9, color: "#BCA696", letterSpacing: "0.25em", textTransform: "uppercase", fontWeight: 600, marginBottom: 4 }}>Excalibur Academy LLC</span>
-            <span style={{ fontFamily: sans, fontSize: 11, color: "#BCA696", fontWeight: 300, letterSpacing: "0.03em" }}>South Orange County, California</span>
+            <span style={{ fontFamily: eyebrow_font, fontSize: 11, color: "#BCA696", letterSpacing: "0.25em", textTransform: "uppercase", fontWeight: 600, marginBottom: 4 }}>Excalibur Academy LLC</span>
+            <span style={{ fontFamily: sans, fontSize: 17, color: "#BCA696", fontStyle: "italic", fontWeight: 300, letterSpacing: "0.03em" }}>Orange County, California</span>
           </div>
           {/* Applications email */}
           <div style={{ display: "flex", flexDirection: "column", gap: 5, borderLeft: isMobile ? "none" : "1px solid rgba(188,166,150,.15)", paddingLeft: isMobile ? 0 : 48 }}>
-            <span style={{ fontFamily: eyebrow_font, fontSize: 9, color: "#BCA696", letterSpacing: "0.25em", textTransform: "uppercase", fontWeight: 600, marginBottom: 4 }}>ADMISSIONS</span>
+            <span style={{ fontFamily: eyebrow_font, fontSize: 11, color: "#BCA696", letterSpacing: "0.25em", textTransform: "uppercase", fontWeight: 800, marginBottom: 4 }}>ADMISSIONS</span>
           </div>
           {/* Support email */}
           <div style={{ display: "flex", flexDirection: "column", gap: 5, borderLeft: isMobile ? "none" : "1px solid rgba(188,166,150,.15)", paddingLeft: isMobile ? 0 : 48 }}>
-            <span style={{ fontFamily: eyebrow_font, fontSize: 9, color: "#BCA696", letterSpacing: "0.25em", textTransform: "uppercase", fontWeight: 600, marginBottom: 4 }}>GENERAL INQUIRIES</span>
-            <a href="mailto:support@excaliburacademy.org" style={{ fontFamily: serif, fontSize: 13, color: "#BCA696", textDecoration: "none", letterSpacing: "0.05em", fontStyle: "italic", transition: "color .2s" }} onMouseEnter={e => e.target.style.color = "#E4D5C1"} onMouseLeave={e => e.target.style.color = "#BCA696"}>support@excaliburacademy.org</a>
+            <span style={{ fontFamily: eyebrow_font, fontSize: 11, color: "#BCA696", letterSpacing: "0.25em", textTransform: "uppercase", fontWeight: 600, marginBottom: 4 }}>GENERAL INQUIRIES</span>
+            <a href="mailto:support@excaliburacademy.org" style={{ fontFamily: serif, fontSize: 15, color: "rgba(228, 214, 193, 1)", textDecoration: "none", letterSpacing: "0.05em", fontStyle: "italic", transition: "color .2s" }} onMouseEnter={e => e.target.style.color = "#E4D5C1"} onMouseLeave={e => e.target.style.color = "#BCA696"}>support@excaliburacademy.org</a>
           </div>
         </div>
       </div>
