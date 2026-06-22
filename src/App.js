@@ -706,8 +706,8 @@ function PortfolioIndexWhite({ isMobile, setPage, images }) {
           {images && images.length > 0 && (
             <div style={{ background: "#34150F", display: "flex", alignItems: "center", justifyContent: "center", padding: "32px 28px" }}>
               <div style={{ position: "relative", width: "100%", height: 280 }}>
-                <img src={images[0]} alt="" style={{ position: "absolute", top: 0, left: 0, width: "82%", height: "72%", objectFit: "cover", boxShadow: "0 30px 60px rgba(0,0,0,.6)", transform: "rotate(-2deg)" }} />
-                <img src={images[1]} alt="" style={{ position: "absolute", bottom: 0, right: 0, width: "62%", height: "58%", objectFit: "cover", boxShadow: "0 34px 64px rgba(0,0,0,.65)", border: "6px solid #34150F", transform: "rotate(2deg)" }} />
+                <img src={images[0]} alt="" style={{ position: "absolute", top: "-105px", left: 0, width: "82%", height: "200px", objectFit: "cover", boxShadow: "0 30px 60px rgba(0,0,0,.6)", transform: "rotate(-2deg)" }} />
+                <img src={images[1]} alt="" style={{ position: "absolute", top: "59.6px", right: 0, width: "62%", height: "300px", objectFit: "cover", boxShadow: "0 34px 64px rgba(0,0,0,.65)", border: "6px solid #34150F", transform: "rotate(2deg)" }} />
               </div>
             </div>
           )}
