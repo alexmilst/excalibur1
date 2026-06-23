@@ -8155,6 +8155,7 @@ function PortalPage({ setPage }) {
   const [viewingSubmitted, setViewingSubmitted] = React.useState(false);
   const [editRequested, setEditRequested] = React.useState(false);
   const [forceProgramPicker, setForceProgramPicker] = React.useState(false); // lets a student reopen the program-choice screen after already picking one
+  const [programPickerDone, setProgramPickerDone] = React.useState(false); // only true once the student clicks "Next step" on the program picker — selecting a card alone does not advance
 
   const [consultations, setConsultations] = React.useState([]);
   const [consultForm, setConsultForm] = React.useState(EMPTY_CONSULT_FORM);
@@ -8332,6 +8333,7 @@ function PortalPage({ setPage }) {
       const { data: app } = await sb.from("applications").select("*").eq("student_id", student.id).maybeSingle();
       if (app) {
         setApplication(app);
+        if ((app.programs || []).length > 0) setProgramPickerDone(true);
         const pr = app.program_responses || {};
         setAppForm({
           studentFirstName: app.student_first_name || "", studentLastName: app.student_last_name || "", preferredName: app.preferred_name || "", dateOfBirth: app.date_of_birth || "", currentGrade: app.current_grade || "", gradeEnteringFall: app.grade_entering_fall || "", currentSchool: app.current_school || "", cityOfResidence: app.city_of_residence || "", studentEmail: app.student_email || "", studentPhone: app.student_phone || "",
@@ -9016,7 +9018,7 @@ function PortalPage({ setPage }) {
           const wantsVenture = appForm.programs.includes("venture") || appForm.programs.includes("full-year");
 
           // ── PROGRAM PICKER — shown once before the questionnaire begins, or whenever the student re-opens it ──
-          const showProgramPicker = !isSubmitted && (forceProgramPicker || appForm.programs.length === 0);
+          const showProgramPicker = !isSubmitted && (forceProgramPicker || !programPickerDone);
           if (showProgramPicker) {
             const programCards = [
               { key: "summer", icon: "sun", title: "Summer Intensive", subtitle: "Venture Launchpad — July 27 to August 8, 2026" },
@@ -9034,7 +9036,7 @@ function PortalPage({ setPage }) {
                       <div key={i} style={{ width: 28, height: 4, borderRadius: 2, background: i === 0 ? m_ink : "rgba(17,17,17,0.1)" }} />
                     ))}
                   </div>
-                  <button onClick={() => { setForceProgramPicker(false); setActiveTab("overview"); }} style={{ background: "none", border: "none", cursor: "pointer", color: m_ink, opacity: 0.5, padding: 4, display: "flex" }}>
+                  <button onClick={() => setActiveTab("overview")} style={{ background: "none", border: "none", cursor: "pointer", color: m_ink, opacity: 0.5, padding: 4, display: "flex" }}>
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><path d="M6 6l12 12M18 6L6 18" /></svg>
                   </button>
                 </div>
@@ -9063,7 +9065,7 @@ function PortalPage({ setPage }) {
                 </div>
 
                 <button
-                  onClick={() => setForceProgramPicker(false)}
+                  onClick={() => { setProgramPickerDone(true); setForceProgramPicker(false); }}
                   disabled={appForm.programs.length === 0}
                   style={{
                     width: "100%", fontFamily: sans, padding: "16px 0", borderRadius: 999, border: "none",
@@ -9071,7 +9073,7 @@ function PortalPage({ setPage }) {
                     color: m_white, fontSize: 15, fontWeight: 700, cursor: appForm.programs.length === 0 ? "default" : "pointer", marginBottom: 16,
                   }}
                 >Next step</button>
-                <p onClick={() => { setForceProgramPicker(false); setActiveTab("overview"); }} style={{ fontFamily: sans, fontSize: 13, color: m_gray, textAlign: "center", cursor: "pointer" }}>Previous step</p>
+                <p onClick={() => setActiveTab("overview")} style={{ fontFamily: sans, fontSize: 13, color: m_gray, textAlign: "center", cursor: "pointer" }}>Previous step</p>
               </div>
             );
           }
@@ -9379,11 +9381,11 @@ function PortalPage({ setPage }) {
                   )}
 
                   <div style={{ display: "flex", justifyContent: "space-between", marginTop: 28, gap: 12, flexWrap: "wrap" }}>
-                    <button onClick={goBack} disabled={secIndex === 0} style={{ fontFamily: sans, padding: "13px 24px", background: "transparent", border: "1px solid rgba(17,17,17,.15)", color: "#111111", fontSize: 14, fontWeight: 500, cursor: secIndex === 0 ? "default" : "pointer", opacity: secIndex === 0 ? 0.4 : 1, borderRadius: 999 }}>← Back</button>
+                    <button onClick={() => (secIndex === 0 ? setForceProgramPicker(true) : goBack())} style={{ fontFamily: sans, padding: "13px 24px", background: "transparent", border: "1px solid rgba(17,17,17,.15)", color: "#111111", fontSize: 14, fontWeight: 500, cursor: "pointer", borderRadius: 999 }}>← Back</button>
                     <div style={{ display: "flex", gap: 12 }}>
                       <button onClick={() => handleSaveApplication(false)} disabled={appSaving} style={{ fontFamily: sans, padding: "13px 22px", background: "transparent", border: "1px solid rgba(17,17,17,.15)", color: "#111111", fontSize: 14, fontWeight: 500, cursor: "pointer", borderRadius: 999 }}>{appSaving ? "Saving..." : "Save Draft"}</button>
                       {secIndex < total - 1 ? (
-                        <button onClick={goNext} disabled={!groupComplete} style={{ fontFamily: sans, padding: "13px 24px", background: "#111111", border: "none", color: "#FFFFFF", fontSize: 14, fontWeight: 600, cursor: groupComplete ? "pointer" : "default", opacity: groupComplete ? 1 : 0.5, borderRadius: 999 }}>Next →</button>
+                        <button onClick={goNext} style={{ fontFamily: sans, padding: "13px 24px", background: "#111111", border: "none", color: "#FFFFFF", fontSize: 14, fontWeight: 600, cursor: "pointer", borderRadius: 999 }}>Next →</button>
                       ) : (
                         <button onClick={() => handleSaveApplication(true)} disabled={appSaving || !appForm.accuracyConfirmed || !appForm.parentPermissionConfirmed || !appForm.studentSignature || !appForm.parentSignature} style={{ fontFamily: sans, padding: "13px 24px", background: "#111111", border: "none", color: "#FFFFFF", fontSize: 14, fontWeight: 600, cursor: "pointer", borderRadius: 999 }}>{appSaving ? "Submitting..." : "Submit Application →"}</button>
                       )}
@@ -12796,7 +12798,7 @@ function FoundationDetailPage({ setPage, openInquiry }) {
           <div style={{ padding:isMobile?"72px 24px 56px":"120px 80px 96px", display:"flex", flexDirection:"column", justifyContent:"center" }}>
             <div style={{ width:32, height:1, background:"#A48D6E", opacity:.6, marginBottom:32 }}/>
             <p style={{ fontFamily:sans, fontSize:8, letterSpacing:"0.55em", color:"#A48D6E", fontWeight:700, textTransform:"uppercase", marginBottom:28, lineHeight:2 }}>Foundation Semester &nbsp;·&nbsp; Foundation Semester · September - December 2026</p>
-            <h1 style={{ fontFamily:ag, fontSize:isMobile?"clamp(52px,10vw,72px)":"clamp(64px,5.5vw,96px)", fontWeight:300, color:"#E4D5C1", lineHeight:0.94, letterSpacing:"-0.03em", marginBottom:36 }}>Foundation<br/><em style={{ fontStyle:"italic", fontWeight:300 }}>Semester.</em></h1>
+            <h1 style={{ fontFamily:ag, fontSize:isMobile?"clamp(52px,10vw,72px)":"clamp(64px,5.5vw,96px)", fontWeight:300, color:"#E4D5C1", lineHeight:0.94, letterSpacing:"-0.03em", marginBottom:36 }}>Foundation<br/><em style={{ fontStyle:"italic", fontWeight:300 }}>Semester</em></h1>
             <div style={{ width:48, height:1, background:"#A48D6E", opacity:.4, marginBottom:36 }}/>
             <p style={{ fontFamily:sans, fontSize:isMobile?14:16, color:"#E4D5C1", fontWeight:300, lineHeight:2.0, marginBottom:0, maxWidth:480 }}>The complete in-depth guide to the Foundation Semester. Fourteen weeks of business education, applied workshops, startup &amp; leadership simulations, Art of Class, Junior Consultant Program, Excalibur Gilded Age Summit, networking events with executives &amp; field trips.</p>
             <div style={{ marginTop:48, display:"flex", gap:12, flexWrap:"wrap" }}>
@@ -12828,7 +12830,7 @@ function FoundationDetailPage({ setPage, openInquiry }) {
           <div style={{ display:"grid", gridTemplateColumns:isMobile?"1fr":"1fr 1fr", gap:isMobile?32:80, alignItems:"end", paddingBottom:56, borderBottom:"1px solid rgba(16,15,12,.18)", marginBottom:56 }}>
             <div>
               <p style={{ fontFamily:sans, fontSize:8, letterSpacing:"0.5em", color:"#A48D6E", fontWeight:700, textTransform:"uppercase", marginBottom:20 }}>Foundation Semester · September - December 2026</p>
-              <h3 style={{ fontFamily:ag, fontSize:isMobile?44:64, fontWeight:300, color:"#100F0C", lineHeight:1.0, letterSpacing:"-0.03em", margin:0 }}>Foundation<br/><em style={{ color:"#A48D6E" }}>Semester.</em></h3>
+              <h3 style={{ fontFamily:ag, fontSize:isMobile?44:64, fontWeight:300, color:"#100F0C", lineHeight:1.0, letterSpacing:"-0.03em", margin:0 }}>Foundation<br/><em style={{ color:"#A48D6E" }}>Semester</em></h3>
             </div>
             <p style={{ fontFamily:ag, fontSize:isMobile?15:18, color:"#100F0C", fontWeight:300, lineHeight:1.85, margin:0, fontStyle:"italic" }}>Fourteen weeks of core disciplines, business applied workshops. The Art of Class. Junior Consulting Program. Everything a student needs to build business thinking, communication command, and the instincts that define a leader.</p>
           </div>
@@ -13995,7 +13997,7 @@ function FoundationDetailPage({ setPage, openInquiry }) {
           <div style={{ borderBottom:"1px solid rgba(164,141,110,.15)", paddingBottom:isMobile?48:64, marginBottom:isMobile?64:96 }}>
             <p style={{ fontFamily:sans, fontSize:8, letterSpacing:"0.5em", color:"#A48D6E", fontWeight:700, textTransform:"uppercase", marginBottom:20 }}>Admissions &amp; Key Dates</p>
             <div style={{ display:"grid", gridTemplateColumns:isMobile?"1fr":"1fr 1fr", gap:isMobile?24:80, alignItems:"end" }}>
-              <h2 style={{ fontFamily:ag, fontSize:isMobile?36:56, fontWeight:300, color:"#E4D5C1", lineHeight:1, letterSpacing:"-0.03em", margin:0 }}>Selective Admission.<br/><em style={{ color:"#A48D6E" }}>Cohorts of Twenty.</em></h2>
+              <h2 style={{ fontFamily:ag, fontSize:isMobile?36:56, fontWeight:300, color:"#E4D5C1", lineHeight:1, letterSpacing:"-0.03em", margin:0 }}>Selective Admission<br/><em style={{ color:"#A48D6E" }}>Cohorts of Twenty</em></h2>
               <p style={{ fontFamily:lora, fontSize:14, color:"#E4D5C1", fontWeight:300, lineHeight:1.95, margin:0 }}>Excalibur seeks students who are intellectually curious, ambitious, motivated to grow, and eager to challenge themselves. Admission is selective, with each application reviewed individually by the Admissions Committee. Cohorts are intentionally limited to twenty students per group to preserve the quality of discussion, mentorship, and individual attention from faculty.</p>
             </div>
           </div>
@@ -14317,14 +14319,14 @@ function VentureDetailPage({ setPage, openInquiry }) {
   };
 
   const TabBtn = ({ label, active, onClick, onDark }) => (
-    <button onClick={onClick} style={{ fontFamily:lora, fontSize:9, letterSpacing:"0.15em", padding:"10px 22px", background:active?(onDark?"#d4c3a6":"#100F0C"):"transparent", border:`1px solid ${active?(onDark?"#d4c3a6":"#100F0C"):(onDark?"rgba(216,183,140,.3)":"rgba(0,0,0,.25)")}`, color:active?(onDark?"#100F0C":"#d4c3a6"):(onDark?"#FBF7EE":"#100F0C"), cursor:"pointer", textTransform:"uppercase", transition:"all .2s" }}>{label}</button>
+    <button onClick={onClick} style={{ fontFamily:sans, fontWeight:700, fontSize:9, letterSpacing:"0.15em", padding:"10px 22px", background:active?(onDark?"#d4c3a6":"#100F0C"):"transparent", border:`1px solid ${active?(onDark?"#d4c3a6":"#100F0C"):(onDark?"rgba(216,183,140,.3)":"rgba(0,0,0,.25)")}`, color:active?(onDark?"#100F0C":"#d4c3a6"):(onDark?"#FBF7EE":"#100F0C"), cursor:"pointer", textTransform:"uppercase", transition:"all .2s" }}>{label}</button>
   );
 
   const SemHeader = ({ semester, dates, roman }) => (
     <div style={{ background:"#100F0C", padding:isMobile?"80px 24px":"120px 80px", position:"relative", overflow:"hidden" }}>
       {roman && <div style={{ position:"absolute", right:isMobile?"-10px":"60px", top:"50%", transform:"translateY(-50%)", fontFamily:ag, fontSize:isMobile?"220px":"320px", fontWeight:700, color:"#A48D6E", opacity:0.08, lineHeight:1, userSelect:"none", pointerEvents:"none", letterSpacing:"-0.04em", zIndex:0 }}>{roman}</div>}
       <div style={{ maxWidth:1100, margin:"0 auto", position:"relative", zIndex:1 }}>
-        {dates && <p style={{ fontFamily:sans, fontSize:10, color:"#A48D6E", letterSpacing:"0.55em", textTransform:"uppercase", marginBottom:28, fontWeight:400 }}>{dates}</p>}
+        {dates && <p style={{ fontFamily:"'Lato', sans-serif", fontSize:11, color:"#A48D6E", letterSpacing:"0.55em", textTransform:"uppercase", marginBottom:28, fontWeight:600 }}>{dates}</p>}
         <h2 style={{ fontFamily:ag, fontSize:"clamp(52px,7vw,100px)", fontWeight:400, color:"#A48D6E", lineHeight:1.0, marginBottom:28, letterSpacing:"-0.01em", textTransform:"uppercase" }}>{semester}</h2>
         <div style={{ width:40, height:1, background:"#d4c3a6" }}/>
       </div>
@@ -14369,9 +14371,9 @@ function VentureDetailPage({ setPage, openInquiry }) {
     ["1:55","15 min","Short Break","",false],
     ["2:10","40 min","Block 3a — Venture Studio","Team venture work · faculty coaching",true],
     ["2:50","10 min","Break","",false],
-    ["2:55","40 min","Block 3b — Venture Studio","Deliverable session · peer critique",true],
-    ["3:35","10 min","Debrief & Close","Lead Instructor",false],
-    ["3:45","—","Session End","",false],
+    ["2:55","25 min","Block 3b — Venture Studio","Deliverable session · peer critique",true],
+    ["3:20","10 min","Debrief & Close","Lead Instructor",false],
+    ["3:30","—","Session End","",false],
   ];
   const wkVBlocks = [
     ["3:45","15 min","Arrival (both days)","TA check-in · materials",false],
@@ -14438,10 +14440,10 @@ function VentureDetailPage({ setPage, openInquiry }) {
             <p style={{ fontFamily:ag, fontSize:13, color:"#d4c3a6", fontWeight:300 }}>{m.year}</p>
           </div>
         </div>
-        <p style={{ fontFamily:sans, fontSize:10, letterSpacing:"0.2em", color:"#A48D6E", textTransform:"uppercase" }}>{m.label}</p>
+        <p style={{ fontFamily:"'Lato', sans-serif", fontSize:11, letterSpacing:"0.2em", color:"#A48D6E", textTransform:"uppercase" , fontWeight:600 }}>{m.label}</p>
       </div>
       <div style={{ padding:isMobile?"16px 0":"48px 44px" }}>
-        <p style={{ fontFamily:sans, fontSize:9, color:"#A48D6E", letterSpacing:"0.25em", textTransform:"uppercase", marginBottom:20 }}>CURRICULUM</p>
+        <p style={{ fontFamily:"'Lato', sans-serif", fontSize:11, color:"#A48D6E", letterSpacing:"0.25em", textTransform:"uppercase", marginBottom:20 , fontWeight:600 }}>CURRICULUM</p>
         {m.mods.map((x,j) => (
           <div key={j} style={{ display:"flex", gap:12, marginBottom:14, alignItems:"flex-start" }}>
             <span style={{ color:"#d4c3a6", fontSize:7, marginTop:5, flexShrink:0 }}>◆</span>
@@ -14450,7 +14452,7 @@ function VentureDetailPage({ setPage, openInquiry }) {
         ))}
       </div>
       <div style={{ padding:isMobile?"16px 0 28px":"48px 0 48px 44px", borderLeft:isMobile?"none":"1px solid rgba(0,0,0,.07)" }}>
-        <p style={{ fontFamily:sans, fontSize:9, color:"#A48D6E", letterSpacing:"0.25em", textTransform:"uppercase", marginBottom:20 }}>EVENTS & MILESTONES</p>
+        <p style={{ fontFamily:"'Lato', sans-serif", fontSize:11, color:"#A48D6E", letterSpacing:"0.25em", textTransform:"uppercase", marginBottom:20 , fontWeight:600 }}>EVENTS & MILESTONES</p>
         {m.events.map((x,j) => (
           <div key={j} style={{ display:"flex", gap:12, marginBottom:14, alignItems:"flex-start" }}>
             <div style={{ width:18, height:1, background:x.startsWith("★")?"#d4c3a6":"rgba(0,0,0,.12)", marginTop:9, flexShrink:0 }}/>
@@ -14466,31 +14468,31 @@ function VentureDetailPage({ setPage, openInquiry }) {
       <Breadcrumb items={[{label:"View Programs",page:"programs"},{label:"Flagship Overview",page:"flagship2"},{label:"Venture Semester",page:"venture-detail"}]} setPage={setPage} />
       {/* ── HERO ── */}
       <section style={{ background:"#100F0C", padding:0, overflow:"hidden" }}>
-        <div style={{ maxWidth:1400, margin:"0 auto", display:"grid", gridTemplateColumns:isMobile?"1fr":"1fr 1fr", minHeight:isMobile?"auto":620, alignItems:"stretch" }}>
+        <div style={{ maxWidth:1400, margin:"0 auto", display:"grid", gridTemplateColumns:isMobile?"1fr":"1fr 1fr", minHeight:isMobile?"auto":620, alignItems:"start" }}>
 
           {/* LEFT — heading, copy, buttons */}
           <div style={{ padding:isMobile?"72px 24px 56px":"120px 80px 96px", display:"flex", flexDirection:"column", justifyContent:"center" }}>
             <div style={{ width:32, height:1, background:"#A48D6E", opacity:.6, marginBottom:32 }}/>
-            <p style={{ fontFamily:sans, fontSize:8, letterSpacing:"0.55em", color:"#A48D6E", fontWeight:400, textTransform:"uppercase", marginBottom:28, lineHeight:2 }}>Venture Semester &nbsp;·&nbsp; February – May 2027</p>
-            <h1 style={{ fontFamily:ag, fontSize:isMobile?"clamp(56px,11vw,78px)":"clamp(72px,6vw,108px)", fontWeight:400, color:"#E4D5C1", lineHeight:0.94, letterSpacing:"-0.01em", marginBottom:36, textTransform:"uppercase" }}>Venture<br/>Semester.</h1>
+            <p style={{ fontFamily:"'Lato', sans-serif", fontSize:11, letterSpacing:"0.55em", color:"#A48D6E", fontWeight:600, textTransform:"uppercase", marginBottom:28, lineHeight:2 }}>Venture Semester &nbsp;·&nbsp; January – May 2027</p>
+            <h1 style={{ fontFamily:ag, fontSize:isMobile?"clamp(52px,10vw,72px)":"clamp(64px,5.5vw,96px)", fontWeight:400, color:"#E4D5C1", lineHeight:0.94, letterSpacing:"-0.01em", marginBottom:36, textTransform:"uppercase" }}>Venture<br/>Semester</h1>
             <div style={{ width:48, height:1, background:"#A48D6E", opacity:.4, marginBottom:36 }}/>
-            <p style={{ fontFamily:sans, fontSize:isMobile?14:16, color:"#E4D5C1", fontWeight:300, lineHeight:2.0, marginBottom:0, maxWidth:480 }}>The complete in-depth guide to the Venture Semester — every module, the Da Vinci and Medici tracks, Venture Studio sessions, and the road to the Finale before invited investors, founders, executives, and practitioners.</p>
+            <p style={{ fontFamily:lora, fontSize:isMobile?14:16, color:"#E4D5C1", fontWeight:300, lineHeight:2.0, marginBottom:0, maxWidth:480 }}>The complete in-depth guide to the Venture Semester — every module, the Da Vinci and Medici tracks, Venture Studio sessions, and the road to the Finale before invited investors, founders, executives, and practitioners.</p>
             <div style={{ marginTop:48, display:"flex", gap:12, flexWrap:"wrap" }}>
-              <button onClick={()=>setPage("flagship2")} style={{ fontFamily:sans, fontSize:8, letterSpacing:"0.25em", padding:"14px 28px", background:"transparent", border:"1px solid rgba(164,141,110,.45)", color:"#E4D5C1", textTransform:"uppercase", cursor:"pointer", fontWeight:400 }}>← Back to Flagship</button>
-              <button onClick={()=>setPage("apply")} style={{ fontFamily:sans, fontSize:8, letterSpacing:"0.25em", padding:"14px 28px", background:"#E4D5C1", border:"1px solid #E4D5C1", color:"#100F0C", textTransform:"uppercase", cursor:"pointer", fontWeight:400 }}>Apply to Venture →</button>
+              <button onClick={()=>setPage("flagship2")} style={{ fontFamily:sans, fontSize:8, letterSpacing:"0.25em", padding:"14px 28px", background:"transparent", border:"1px solid rgba(164,141,110,.45)", color:"#E4D5C1", textTransform:"uppercase", cursor:"pointer", fontWeight:600 }}>← Back to Flagship</button>
+              <button onClick={()=>setPage("apply")} style={{ fontFamily:sans, fontSize:8, letterSpacing:"0.25em", padding:"14px 28px", background:"#E4D5C1", border:"1px solid #E4D5C1", color:"#100F0C", textTransform:"uppercase", cursor:"pointer", fontWeight:700 }}>Apply to Venture →</button>
             </div>
           </div>
 
           {/* RIGHT — photo */}
           {!isMobile && (
-            <div style={{ position:"relative", overflow:"hidden" }}>
-              <img src="https://i.imgur.com/Fi0BIXb.jpeg" alt="Venture Semester" style={{ width:"100%", height:"100%", objectFit:"cover", objectPosition:"center" }}/>
+            <div style={{ position:"relative", overflow:"hidden", height:560 }}>
+              <img src="https://i.imgur.com/Fi0BIXb.jpeg" alt="Venture Semester" style={{ width:"100%", height:"100%", objectFit:"cover", objectPosition:"center bottom" }}/>
               <div style={{ position:"absolute", inset:0, background:"linear-gradient(to right, #100F0C 0%, transparent 30%)" }}/>
               <div style={{ position:"absolute", inset:0, background:"linear-gradient(to top, #100F0C 0%, transparent 30%)" }}/>
               {/* Date badge */}
               <div style={{ position:"absolute", bottom:40, right:40 }}>
                 <div style={{ border:"1px solid rgba(164,141,110,.6)", padding:"12px 24px", backdropFilter:"blur(4px)", background:"rgba(16,15,12,.45)" }}>
-                  <p style={{ fontFamily:sans, fontSize:8, letterSpacing:"0.4em", color:"#A48D6E", textTransform:"uppercase", margin:0 }}>Feb 2027 – May 2027</p>
+                  <p style={{ fontFamily:"'Lato', sans-serif", fontSize:11, letterSpacing:"0.4em", color:"#A48D6E", textTransform:"uppercase", margin:0 , fontWeight:600 }}>Jan 2027 – May 2027</p>
                 </div>
               </div>
             </div>
@@ -14505,28 +14507,28 @@ function VentureDetailPage({ setPage, openInquiry }) {
           {/* header */}
           <div style={{ display:"grid", gridTemplateColumns:isMobile?"1fr":"1fr 1fr", gap:isMobile?32:80, alignItems:"end", paddingBottom:56, borderBottom:"1px solid rgba(164,141,110,.2)", marginBottom:56 }}>
             <div>
-              <p style={{ fontFamily:sans, fontSize:10, letterSpacing:"0.5em", color:"#A48D6E", fontWeight:400, textTransform:"uppercase", marginBottom:20 }}>February – May 2027</p>
-              <h3 style={{ fontFamily:ag, fontSize:isMobile?44:64, fontWeight:300, color:"#A48D6E", lineHeight:1.0, letterSpacing:"-0.03em", margin:0 }}>Venture<br/><em style={{ color:"#A48D6E" }}>Semester.</em></h3>
+              <p style={{ fontFamily:"'Lato', sans-serif", fontSize:11, letterSpacing:"0.5em", color:"#A48D6E", fontWeight:600, textTransform:"uppercase", marginBottom:20 }}>January – May 2027</p>
+              <h3 style={{ fontFamily:ag, fontSize:isMobile?44:64, fontWeight:300, color:"#A48D6E", lineHeight:1.0, letterSpacing:"-0.03em", margin:0 }}>Venture<br/><em style={{ color:"#A48D6E" }}>Semester</em></h3>
             </div>
-            <p style={{ fontFamily:lora, fontSize:isMobile?15:18, color:"#E4D5C1", fontWeight:300, lineHeight:1.95, margin:0, fontStyle:"italic" }}>A sixteen-week venture-building term where students in teams move from idea to execution. At enrollment, each student chooses a track, then develops their venture through seven applied modules, faculty mentorship, and a final presentation before invited investors, founders, executives, and practitioners at the Shark Tank-inspired Finale.</p>
+            <p style={{ fontFamily:ag, fontSize:isMobile?15:18, color:"#E4D5C1", fontWeight:400, lineHeight:1.95, margin:0, fontStyle:"italic" }}>A sixteen-week venture-building term where students in teams move from idea to execution through applied modules, faculty mentorship,  venture studio and a final presentation before invited investors, founders and community leaders at the Shark Tank-inspired Finale.</p>
           </div>
 
           {/* program details table */}
           <div style={{ marginBottom:56, border:"1px solid rgba(164,141,110,.18)", overflow:"hidden" }}>
             <div style={{ padding:"18px 24px", borderBottom:"1px solid rgba(164,141,110,.15)", background:"#100F0C" }}>
-              <p style={{ fontFamily:sans, fontSize:10, letterSpacing:"0.3em", color:"#A48D6E", textTransform:"uppercase", fontWeight:400, margin:0 }}>Venture Semester — Program Details</p>
+              <p style={{ fontFamily:"'Lato', sans-serif", fontSize:11, letterSpacing:"0.3em", color:"#A48D6E", textTransform:"uppercase", fontWeight:600, margin:0 }}>Venture Semester — Program Details</p>
             </div>
             <div style={{ display:"grid", gridTemplateColumns:isMobile?"1fr":"repeat(3,1fr)" }}>
               {[
-                ["Duration","16 weeks · February – May 2027"],
-                ["Saturday Track","Sat 10:30 AM - 3:45 PM"],
+                ["Duration",<>16 weeks · 105 total hours<br/>January – May 2027</>],
+                ["Saturday Track","Sat 10:30 AM - 3:30 PM"],
                 ["Weekday Track","Tuesday & Thursday · 4:00 – 6:30 PM"],
                 ["Cohort Size","20 students per cohort"],
                 ["Weekly Format","5 hours per week"],
-                ["Tuition","$1,900/month · Full Payment or Installment Plan"],
+                ["Tuition","From $1,900/month · Full Payment or Installment Plan"],
               ].map(([k,v],i)=>(
                 <div key={k} style={{ padding:"20px 24px", background:"#100F0C", borderBottom:`1px solid rgba(164,141,110,.12)`, borderRight:!isMobile&&(i%3!==2)?"1px solid rgba(164,141,110,.12)":"none" }}>
-                  <span style={{ display:"block", fontFamily:sans, fontSize:9, letterSpacing:"0.2em", color:"#A48D6E", textTransform:"uppercase", marginBottom:8, fontWeight:400 }}>{k}</span>
+                  <span style={{ display:"block", fontFamily:"'Lato', sans-serif", fontSize:11, letterSpacing:"0.2em", color:"#A48D6E", textTransform:"uppercase", marginBottom:8, fontWeight:600 }}>{k}</span>
                   <span style={{ display:"block", fontFamily:ag, fontSize:22, color:"#E4D5C1", lineHeight:1.1, letterSpacing:"-0.01em" }}>{v}</span>
                 </div>
               ))}
@@ -14573,7 +14575,7 @@ function VentureDetailPage({ setPage, openInquiry }) {
                   <div style={{ display:"grid", gridTemplateColumns:isMobile?"1fr":"80px 1fr", gap:isMobile?"8px 0":"0 56px", alignItems:"start", marginBottom:isMobile?28:40 }}>
                     <span style={{ fontFamily:ag, fontSize:isMobile?36:52, fontWeight:300, color:"#d4c3a6", lineHeight:1 }}>{item.n}</span>
                     <div>
-                      <p style={{ fontFamily:sans, fontSize:10, letterSpacing:"0.3em", color:"#A48D6E", textTransform:"uppercase", marginBottom:14, fontWeight:400 }}>{item.label}</p>
+                      <p style={{ fontFamily:"'Lato', sans-serif", fontSize:11, letterSpacing:"0.3em", color:"#A48D6E", textTransform:"uppercase", marginBottom:14, fontWeight:600 }}>{item.label}</p>
                       <h4 style={{ fontFamily:ag, fontSize:isMobile?22:28, fontWeight:400, color:"#A48D6E", lineHeight:1.2, letterSpacing:"-0.01em", margin:0, textTransform:"uppercase" }}>{item.title}</h4>
                     </div>
                   </div>
@@ -14590,7 +14592,7 @@ function VentureDetailPage({ setPage, openInquiry }) {
                 <div key={i} style={{ display:"grid", gridTemplateColumns:isMobile?"1fr":"80px 280px 1fr", gap:isMobile?"8px 0":"0 56px", borderTop:"1px solid rgba(164,141,110,.15)", paddingTop:isMobile?36:48, paddingBottom:isMobile?36:48, alignItems:"start" }}>
                   <span style={{ fontFamily:ag, fontSize:isMobile?36:52, fontWeight:300, color:"#d4c3a6", lineHeight:1 }}>{item.n}</span>
                   <div>
-                    <p style={{ fontFamily:sans, fontSize:10, letterSpacing:"0.3em", color:"#A48D6E", textTransform:"uppercase", marginBottom:14, fontWeight:400 }}>{item.label}</p>
+                    <p style={{ fontFamily:"'Lato', sans-serif", fontSize:11, letterSpacing:"0.3em", color:"#A48D6E", textTransform:"uppercase", marginBottom:14, fontWeight:600 }}>{item.label}</p>
                     <h4 style={{ fontFamily:ag, fontSize:isMobile?22:28, fontWeight:400, color:"#A48D6E", lineHeight:1.2, letterSpacing:"-0.01em", margin:0, textTransform:"uppercase" }}>{item.title}</h4>
                   </div>
                   <p style={{ fontFamily:lora, fontSize:isMobile?15:16, color:"#E4D5C1", fontWeight:300, lineHeight:1.95, marginTop:isMobile?12:0 }}>{item.body}</p>
@@ -14598,8 +14600,8 @@ function VentureDetailPage({ setPage, openInquiry }) {
               )
             ))}
             <div style={{ borderTop:"1px solid rgba(164,141,110,.15)", paddingTop:40, display:"flex", gap:16, flexWrap:"wrap" }}>
-              <button onClick={()=>setPage&&setPage("venture-detail")} style={{ fontFamily:sans, fontSize:9, letterSpacing:"0.25em", padding:"15px 32px", background:"#d4c3a6", border:"none", color:"#E4D5C1", textTransform:"uppercase", cursor:"pointer", fontWeight:400 }}>Venture — Full Details →</button>
-              <button onClick={()=>setPage&&setPage("apply")} style={{ fontFamily:sans, fontSize:9, letterSpacing:"0.25em", padding:"15px 28px", background:"#d4c3a6", border:"none", color:"#100F0C", textTransform:"uppercase", cursor:"pointer", fontWeight:400 }}>Apply to Venture →</button>
+              <button onClick={()=>setPage&&setPage("venture-detail")} style={{ fontFamily:sans, fontSize:9, letterSpacing:"0.25em", padding:"15px 32px", background:"#d4c3a6", border:"none", color:"#E4D5C1", textTransform:"uppercase", cursor:"pointer", fontWeight:600 }}>Venture — Full Details →</button>
+              <button onClick={()=>setPage&&setPage("apply")} style={{ fontFamily:sans, fontSize:9, letterSpacing:"0.25em", padding:"15px 28px", background:"#d4c3a6", border:"none", color:"#100F0C", textTransform:"uppercase", cursor:"pointer", fontWeight:500 }}>Apply to Venture →</button>
             </div>
           </div>
         </div>
@@ -14610,12 +14612,12 @@ function VentureDetailPage({ setPage, openInquiry }) {
       {/* ── VENTURE TRACKS — CHOOSE YOUR TRACK ── */}
       <div style={{ background:"#34150F", padding:isMobile?"56px 24px 64px":"80px 80px" }}>
         <div style={{ maxWidth:1100, margin:"0 auto" }}>
-          <p style={{ fontFamily:sans, fontSize:10, letterSpacing:"0.5em", color:"#A48D6E", fontWeight:400, textTransform:"uppercase", marginBottom:20 }}>Venture Semester</p>
-          <h2 style={{ fontFamily:ag, fontSize:isMobile?40:64, fontWeight:300, color:"#E4D5C1", lineHeight:0.95, letterSpacing:"-0.03em", marginBottom:isMobile?32:48 }}>Choose Your<br/><em style={{ color:"#A48D6E" }}>Track.</em></h2>
+          <p style={{ fontFamily:"'Lato', sans-serif", fontSize:11, letterSpacing:"0.5em", color:"#A48D6E", fontWeight:600, textTransform:"uppercase", marginBottom:20 }}>Venture Semester</p>
+          <h2 style={{ fontFamily:ag, fontSize:isMobile?40:64, fontWeight:300, color:"#E4D5C1", lineHeight:0.95, letterSpacing:"-0.03em", marginBottom:isMobile?32:48 }}>Choose Your<br/><em style={{ color:"#A48D6E" }}>Track</em></h2>
           <div style={{ display:"grid", gridTemplateColumns:isMobile?"1fr":"1fr 1fr", gap:1 }}>
             {/* Da Vinci */}
             <div style={{ background:"#d4c3a6", padding:isMobile?"40px 32px":"56px 52px" }}>
-              <p style={{ fontFamily:sans, fontSize:9, letterSpacing:"0.4em", color:"#100F0C", textTransform:"uppercase", marginBottom:16, fontWeight:400 }}>Track A</p>
+              <p style={{ fontFamily:"'Lato', sans-serif", fontSize:11, letterSpacing:"0.4em", color:"#100F0C", textTransform:"uppercase", marginBottom:16, fontWeight:600 }}>Track A</p>
               <div style={{ borderTop:"1px solid #A48D6E", borderBottom:"1px solid #A48D6E", padding:"14px 0", marginBottom:20, width:"100%" }}>
                 <p style={{ fontFamily:ag, fontSize:isMobile?22:28, fontWeight:300, color:"#100F0C", lineHeight:1, letterSpacing:"0.08em", margin:0, textTransform:"uppercase" }}>Commercial Market Venture</p>
               </div>
@@ -14632,17 +14634,17 @@ function VentureDetailPage({ setPage, openInquiry }) {
               <div style={{ borderTop:"1px solid rgba(16,15,12,.15)", paddingTop:20, display:"grid", gridTemplateColumns:"1fr 1fr", gap:16 }}>
                 <div>
                   <p style={{ fontFamily:lora, fontSize:9, letterSpacing:"0.18em", color:"rgba(16,15,12,.5)", textTransform:"uppercase", marginBottom:6, fontWeight:400 }}>Builds toward</p>
-                  <p style={{ fontFamily:sans, fontSize:12, color:"#100F0C", fontWeight:300, lineHeight:1.5 }}>Revenue, validation, market traction</p>
+                  <p style={{ fontFamily:lora, fontSize:12, color:"#100F0C", fontWeight:300, lineHeight:1.5 }}>Revenue, validation, market traction</p>
                 </div>
                 <div>
                   <p style={{ fontFamily:lora, fontSize:9, letterSpacing:"0.18em", color:"rgba(16,15,12,.5)", textTransform:"uppercase", marginBottom:6, fontWeight:400 }}>Finale</p>
-                  <p style={{ fontFamily:sans, fontSize:12, color:"#100F0C", fontWeight:300, lineHeight:1.5 }}>The Da Vinci Finale<br/>May 9, 2027</p>
+                  <p style={{ fontFamily:lora, fontSize:12, color:"#100F0C", fontWeight:300, lineHeight:1.5 }}>The Da Vinci Finale<br/>May 9, 2027</p>
                 </div>
               </div>
             </div>
             {/* Medici */}
             <div style={{ background:"#d4c3a6", padding:isMobile?"40px 32px":"56px 52px" }}>
-              <p style={{ fontFamily:sans, fontSize:9, letterSpacing:"0.4em", color:"#100F0C", textTransform:"uppercase", marginBottom:16, fontWeight:400 }}>Track B</p>
+              <p style={{ fontFamily:"'Lato', sans-serif", fontSize:11, letterSpacing:"0.4em", color:"#100F0C", textTransform:"uppercase", marginBottom:16, fontWeight:600 }}>Track B</p>
               <div style={{ borderTop:"1px solid #A48D6E", borderBottom:"1px solid #A48D6E", padding:"14px 0", marginBottom:20, width:"100%" }}>
                 <p style={{ fontFamily:ag, fontSize:isMobile?22:28, fontWeight:300, color:"#100F0C", lineHeight:1, letterSpacing:"0.08em", margin:0, textTransform:"uppercase" }}>Community Impact Venture</p>
               </div>
@@ -14659,11 +14661,11 @@ function VentureDetailPage({ setPage, openInquiry }) {
               <div style={{ borderTop:"1px solid rgba(0,0,0,.15)", paddingTop:20, display:"grid", gridTemplateColumns:"1fr 1fr", gap:16 }}>
                 <div>
                   <p style={{ fontFamily:lora, fontSize:9, letterSpacing:"0.18em", color:"rgba(0,0,0,.5)", textTransform:"uppercase", marginBottom:6, fontWeight:400 }}>Builds toward</p>
-                  <p style={{ fontFamily:sans, fontSize:12, color:"#100F0C", fontWeight:300, lineHeight:1.5 }}>Community validation, impact traction</p>
+                  <p style={{ fontFamily:lora, fontSize:12, color:"#100F0C", fontWeight:300, lineHeight:1.5 }}>Community validation, impact traction</p>
                 </div>
                 <div>
                   <p style={{ fontFamily:lora, fontSize:9, letterSpacing:"0.18em", color:"rgba(0,0,0,.5)", textTransform:"uppercase", marginBottom:6, fontWeight:400 }}>Finale</p>
-                  <p style={{ fontFamily:sans, fontSize:12, color:"#100F0C", fontWeight:300, lineHeight:1.5 }}>The Medici Finale<br/>May 22, 2027</p>
+                  <p style={{ fontFamily:lora, fontSize:12, color:"#100F0C", fontWeight:300, lineHeight:1.5 }}>The Medici Finale<br/>May 22, 2027</p>
                 </div>
               </div>
             </div>
@@ -14676,7 +14678,7 @@ function VentureDetailPage({ setPage, openInquiry }) {
       {/* ── OUTCOME SUMMARY — VENTURE ── */}
       <div style={{ background:"#E4D5C1", padding:isMobile?"52px 24px":"72px 80px" }}>
         <div style={{ maxWidth:1100, margin:"0 auto" }}>
-          <p style={{ fontFamily:sans, fontSize:10, letterSpacing:"0.5em", color:"#100F0C", fontWeight:400, textTransform:"uppercase", marginBottom:20 }}>By the end of Venture Semester</p>
+          <p style={{ fontFamily:"'Lato', sans-serif", fontSize:11, letterSpacing:"0.5em", color:"#100F0C", fontWeight:600, textTransform:"uppercase", marginBottom:20 }}>By the end of Venture Semester</p>
           <h2 style={{ fontFamily:ag, fontSize:isMobile?36:56, fontWeight:300, color:"#100F0C", lineHeight:1.0, letterSpacing:"-0.03em", marginBottom:48 }}>The student leaves with this</h2>
           <div style={{ display:"grid", gridTemplateColumns:isMobile?"1fr":"repeat(3,1fr)", gap:2 }}>
             {[
@@ -14701,10 +14703,10 @@ function VentureDetailPage({ setPage, openInquiry }) {
       <div style={{ background:"#100F0C", padding:isMobile?"64px 24px":"100px 80px" }}>
         <div style={{ maxWidth:1100, margin:"0 auto" }}>
           <div style={{ marginBottom:isMobile?52:72 }}>
-            <p style={{ fontFamily:sans, fontSize:10, letterSpacing:"0.55em", color:"#A48D6E", fontWeight:400, textTransform:"uppercase", marginBottom:20 }}>A Day at Excalibur</p>
+            <p style={{ fontFamily:"'Lato', sans-serif", fontSize:11, letterSpacing:"0.55em", color:"#A48D6E", fontWeight:600, textTransform:"uppercase", marginBottom:20 }}>A Day at Excalibur</p>
             <div style={{ display:"grid", gridTemplateColumns:isMobile?"1fr":"1fr 1fr", gap:isMobile?16:80, alignItems:"end" }}>
               <h2 style={{ fontFamily:ag, fontSize:"clamp(40px,5.5vw,60px)", fontWeight:300, color:"#A48D6E", lineHeight:1.06, letterSpacing:"-0.02em", margin:0 }}>What a Venture<br/>session looks like</h2>
-              <p style={{ fontFamily:lora, fontSize:isMobile?15:16, color:"#E4D5C1", fontWeight:300, lineHeight:1.9, margin:0 }}>Saturday 10:30 AM – 3:45 PM · Weekday Tuesday & Thursday 4:00 – 6:30 PM. Every session runs the same three block format with same curriculum & faculty.</p>
+              <p style={{ fontFamily:lora, fontSize:isMobile?15:16, color:"#E4D5C1", fontWeight:300, lineHeight:1.9, margin:0 }}>Saturday 10:30 AM – 3:30 PM · Weekday Tuesday & Thursday 4:00 – 6:30 PM. Every session runs the same three block format with same curriculum & faculty.</p>
             </div>
           </div>
           <div style={{ display:"flex", flexDirection:"column" }}>
@@ -14716,7 +14718,7 @@ function VentureDetailPage({ setPage, openInquiry }) {
               <div key={i} style={{ display:"grid", gridTemplateColumns:isMobile?"1fr":"72px 1fr 1fr", gap:isMobile?"8px 0":"0 52px", borderTop:"1px solid rgba(164,141,110,.15)", paddingTop:isMobile?32:44, paddingBottom:isMobile?32:44, alignItems:"start" }}>
                 <span style={{ fontFamily:ag, fontSize:isMobile?34:50, fontWeight:300, color:"#d4c3a6", lineHeight:1, display:"block", paddingTop:isMobile?0:6 }}>{block.n}</span>
                 <div style={{ paddingRight:isMobile?0:40 }}>
-                  <p style={{ fontFamily:sans, fontSize:10, letterSpacing:"0.3em", color:"#A48D6E", textTransform:"uppercase", marginBottom:14, fontWeight:400 }}>{block.time}</p>
+                  <p style={{ fontFamily:"'Lato', sans-serif", fontSize:11, letterSpacing:"0.3em", color:"#A48D6E", textTransform:"uppercase", marginBottom:14, fontWeight:600 }}>{block.time}</p>
                   <h3 style={{ fontFamily:ag, fontSize:isMobile?23:29, fontWeight:500, color:"#A48D6E", lineHeight:1.15, marginBottom:18, letterSpacing:"-0.01em" }}>{block.title}</h3>
                   <p style={{ fontFamily:lora, fontSize:10, letterSpacing:"0.15em", color:"#A48D6E", textTransform:"uppercase", marginBottom:5, fontWeight:400 }}>{block.instructor}</p>
                   <p style={{ fontFamily:lora, fontSize:10, letterSpacing:"0.15em", color:"#A48D6E", textTransform:"uppercase", fontWeight:400 }}>{block.freq}</p>
@@ -14739,8 +14741,8 @@ function VentureDetailPage({ setPage, openInquiry }) {
         <div style={{ background:"#E4D5C1", margin:isMobile?"0 -24px":"0 -80px", padding:isMobile?"40px 24px 40px":"56px 80px 56px", marginBottom:isMobile?40:56 }}>
           <div style={{ maxWidth:1100, margin:"0 auto", display:"grid", gridTemplateColumns:isMobile?"1fr":"1fr 1fr", gap:isMobile?24:80, alignItems:"end" }}>
             <div>
-              <p style={{ fontFamily:sans, fontSize:10, letterSpacing:"0.5em", color:"#100F0C", fontWeight:400, textTransform:"uppercase", opacity:.5, margin:"0 0 16px" }}>Inside the Curriculum</p>
-              <h2 style={{ fontFamily:ag, fontSize:isMobile?"clamp(36px,8vw,52px)":"clamp(44px,4.5vw,68px)", fontWeight:300, color:"#100F0C", lineHeight:0.95, letterSpacing:"-0.03em", margin:0 }}>Venture Semester<br/><em style={{ fontStyle:"italic" }}>Curriculum.</em></h2>
+              <p style={{ fontFamily:"'Lato', sans-serif", fontSize:11, letterSpacing:"0.5em", color:"#100F0C", fontWeight:600, textTransform:"uppercase", opacity:.5, margin:"0 0 16px" }}>Inside the Curriculum</p>
+              <h2 style={{ fontFamily:ag, fontSize:isMobile?"clamp(36px,8vw,52px)":"clamp(44px,4.5vw,68px)", fontWeight:300, color:"#100F0C", lineHeight:0.95, letterSpacing:"-0.03em", margin:0 }}>Venture Semester<br/><em style={{ fontStyle:"italic" }}>Curriculum</em></h2>
             </div>
             <p style={{ fontFamily:lora, fontSize:isMobile?15:16, color:"#100F0C", fontWeight:300, lineHeight:1.85, opacity:.7, margin:0 }}>Students spend sixteen weeks building real ventures through seven venture disciplines, a live Venture Studio, and hands-on execution under the guidance of faculty, founders, investors, and expert practitioners. Select any section below to explore.</p>
           </div>
@@ -14754,8 +14756,8 @@ function VentureDetailPage({ setPage, openInquiry }) {
           <div style={{ maxWidth:1100, margin:"0 auto", display:"grid", gridTemplateColumns:isMobile?"1fr":"1fr 1fr", gap:isMobile?40:80, alignItems:"end" }}>
             <div>
               <div style={{ width:40, height:1, background:"#A48D6E", opacity:.4, marginBottom:28 }}/>
-              <p style={{ fontFamily:sans, fontSize:10, letterSpacing:"0.5em", color:"#A48D6E", fontWeight:400, textTransform:"uppercase", marginBottom:24 }}>Every Session · Opening Block · Venture Semester</p>
-              <h2 style={{ fontFamily:ag, fontSize:isMobile?52:80, fontWeight:300, color:"#A48D6E", lineHeight:0.95, letterSpacing:"-0.035em", margin:0 }}>Investor Pitch<br/><em style={{ color:"#A48D6E" }}>&amp; Executive Presence.</em></h2>
+              <p style={{ fontFamily:"'Lato', sans-serif", fontSize:11, letterSpacing:"0.5em", color:"#A48D6E", fontWeight:600, textTransform:"uppercase", marginBottom:24 }}>Every Session · Opening Block · Venture Semester</p>
+              <h2 style={{ fontFamily:ag, fontSize:isMobile?52:80, fontWeight:300, color:"#A48D6E", lineHeight:0.95, letterSpacing:"-0.035em", margin:0 }}>Investor Pitch<br/><em style={{ color:"#A48D6E" }}>&amp; Executive Presence</em></h2>
             </div>
             <div>
               <p style={{ fontFamily:ag, fontSize:isMobile?17:21, color:"#E4D5C1", fontWeight:300, lineHeight:1.85, fontStyle:"italic", marginBottom:28 }}>In the Venture Semester, public speaking takes on a sharper focus: the ability to pitch a venture clearly, defend it under pressure, and present with executive composure before investors and industry leaders.</p>
@@ -14770,7 +14772,7 @@ function VentureDetailPage({ setPage, openInquiry }) {
 
             {/* Left — description + stats */}
             <div>
-              <p style={{ fontFamily:sans, fontSize:10, letterSpacing:"0.4em", color:"#A48D6E", fontWeight:400, textTransform:"uppercase", marginBottom:24 }}>Pitch. Presence. Persuasion.</p>
+              <p style={{ fontFamily:"'Lato', sans-serif", fontSize:11, letterSpacing:"0.4em", color:"#A48D6E", fontWeight:600, textTransform:"uppercase", marginBottom:24 }}>Pitch. Presence. Persuasion.</p>
               <p style={{ fontFamily:lora, fontSize:isMobile?14:15, color:"#E4D5C1", fontWeight:300, lineHeight:1.95, marginBottom:20 }}>In Venture, communication becomes venture launch. Every session opens with live pitch training focused on investor presentations, panel communication, and high-pressure Q&A. Students learn how to tell their venture story compellingly, handle skeptical questions, and defend their business model with clarity and confidence.</p>
               <p style={{ fontFamily:lora, fontSize:isMobile?14:15, color:"#E4D5C1", fontWeight:300, lineHeight:1.95, marginBottom:20 }}>By the end, students will have mastered venture presentation: problem/solution framing, market positioning, financial narrative, team positioning, and investor objection handling. This is not presentation for its own sake. It is the communication required to launch a real venture and raise capital.</p>
               <div style={{ borderTop:"1px solid rgba(164,141,110,.2)", paddingTop:28, marginTop:32 }}>
@@ -14781,7 +14783,7 @@ function VentureDetailPage({ setPage, openInquiry }) {
                   ].map(([n,l],i) => (
                     <div key={i} style={{ padding:"20px 0", borderBottom:"1px solid rgba(164,141,110,.1)" }}>
                       <p style={{ fontFamily:ag, fontSize:isMobile?28:36, fontWeight:300, color:"#A48D6E", lineHeight:1, letterSpacing:"-0.02em", margin:"0 0 6px" }}>{n}</p>
-                      <p style={{ fontFamily:sans, fontSize:11, color:"#E4D5C1", fontWeight:300, lineHeight:1.5, margin:0 }}>{l}</p>
+                      <p style={{ fontFamily:lora, fontSize:11, color:"#E4D5C1", fontWeight:300, lineHeight:1.5, margin:0 }}>{l}</p>
                     </div>
                   ))}
                 </div>
@@ -14790,7 +14792,7 @@ function VentureDetailPage({ setPage, openInquiry }) {
 
             {/* Right — what students learn */}
             <div>
-              <p style={{ fontFamily:sans, fontSize:10, letterSpacing:"0.4em", color:"#A48D6E", fontWeight:400, textTransform:"uppercase", marginBottom:28 }}>What Students Learn</p>
+              <p style={{ fontFamily:"'Lato', sans-serif", fontSize:11, letterSpacing:"0.4em", color:"#A48D6E", fontWeight:600, textTransform:"uppercase", marginBottom:28 }}>What Students Learn</p>
               <div style={{ display:"flex", flexDirection:"column" }}>
                 {[
                   "Venture pitch architecture — problem, solution, market, model, validation, team, and ask",
@@ -14820,8 +14822,8 @@ function VentureDetailPage({ setPage, openInquiry }) {
         <div style={{ maxWidth:1100, margin:"0 auto" }}>
           <div style={{ display:"grid", gridTemplateColumns:isMobile?"1fr":"1.1fr 0.9fr", gap:isMobile?32:56, alignItems:"center", marginBottom:isMobile?40:56, paddingBottom:isMobile?32:44, borderBottom:"1px solid rgba(164,141,110,.12)" }}>
             <div>
-              <p style={{ fontFamily:sans, fontSize:10, letterSpacing:"0.5em", color:"#A48D6E", fontWeight:400, textTransform:"uppercase", marginBottom:20 }}>Venture Semester · 16 Weeks</p>
-              <h2 style={{ fontFamily:ag, fontSize:isMobile?40:56, fontWeight:300, color:"#E4D5C1", lineHeight:0.95, letterSpacing:"-0.03em", marginBottom:20 }}>Venture<br/><em style={{ color:"#A48D6E" }}>Modules.</em></h2>
+              <p style={{ fontFamily:"'Lato', sans-serif", fontSize:11, letterSpacing:"0.5em", color:"#A48D6E", fontWeight:600, textTransform:"uppercase", marginBottom:20 }}>Venture Semester · 16 Weeks</p>
+              <h2 style={{ fontFamily:ag, fontSize:isMobile?40:56, fontWeight:300, color:"#E4D5C1", lineHeight:0.95, letterSpacing:"-0.03em", marginBottom:20 }}>Venture<br/><em style={{ color:"#A48D6E" }}>Modules</em></h2>
               <p style={{ fontFamily:lora, fontSize:isMobile?15:16, lineHeight:1.9, color:"#E4D5C1", fontWeight:300 }}>Seven modules across 16 weeks — each one applied directly to the student’s own venture. Not abstract frameworks left on a whiteboard. Every concept is immediately tested against the venture they are building. Click any module for the full description.</p>
             </div>
             <div style={{ position:"relative", height:isMobile?300:420, display:"flex", alignItems:"center", justifyContent:"center" }}>
@@ -14844,7 +14846,7 @@ function VentureDetailPage({ setPage, openInquiry }) {
                   </div>
                   {open && (
                     <div style={{ paddingBottom:32, paddingLeft:isMobile?0:52 }}>
-                      <p style={{ fontFamily:sans, fontSize:10, letterSpacing:"0.2em", color:"#A48D6E", textTransform:"uppercase", marginBottom:10 }}>{mod.sub}</p>
+                      <p style={{ fontFamily:"'Lato', sans-serif", fontSize:11, letterSpacing:"0.2em", color:"#A48D6E", textTransform:"uppercase", marginBottom:10 , fontWeight:600 }}>{mod.sub}</p>
                       <p style={{ fontFamily:lora, fontSize:isMobile?15:16, lineHeight:1.9, color:"#E4D5C1", fontWeight:300, marginBottom:20 }}>{mod.body}</p>
                       {mod.learn && mod.learn.length > 0 && (
                         <div style={{ display:"grid", gridTemplateColumns:isMobile?"1fr":"1fr 1fr", gap:"8px 32px", marginBottom:24 }}>
@@ -14856,7 +14858,7 @@ function VentureDetailPage({ setPage, openInquiry }) {
                           ))}
                         </div>
                       )}
-                      <button onClick={() => setPage && setPage("curriculum")} style={{ fontFamily:sans, fontSize:10, letterSpacing:"0.2em", padding:"11px 24px", background:"transparent", border:"1px solid rgba(164,141,110,.35)", color:"#A48D6E", cursor:"pointer", textTransform:"uppercase", transition:"all .2s" }}>View Full Module Description →</button>
+                      <button onClick={() => setPage && setPage("curriculum")} style={{ fontFamily:sans, fontSize:8, letterSpacing:"0.2em", padding:"11px 24px", background:"transparent", border:"1px solid rgba(164,141,110,.35)", color:"#A48D6E", cursor:"pointer", textTransform:"uppercase", transition:"all .2s" }}>View Full Module Description →</button>
                     </div>
                   )}
                 </div>
@@ -14871,8 +14873,8 @@ function VentureDetailPage({ setPage, openInquiry }) {
         <div style={{ maxWidth:1100, margin:"0 auto" }}>
           <div style={{ display:"grid", gridTemplateColumns:isMobile?"1fr":"1.1fr 0.9fr", gap:isMobile?32:56, alignItems:"center", marginBottom:isMobile?48:64 }}>
             <div>
-              <p style={{ fontFamily:sans, fontSize:10, letterSpacing:"0.5em", color:"#A48D6E", fontWeight:400, textTransform:"uppercase", marginBottom:20 }}>Venture Semester · Every Thursday</p>
-              <h2 style={{ fontFamily:ag, fontSize:isMobile?40:56, fontWeight:300, color:"#E4D5C1", lineHeight:0.95, letterSpacing:"-0.03em", marginBottom:20 }}>Venture<br/><em style={{ color:"#A48D6E" }}>Studio.</em></h2>
+              <p style={{ fontFamily:"'Lato', sans-serif", fontSize:11, letterSpacing:"0.5em", color:"#A48D6E", fontWeight:600, textTransform:"uppercase", marginBottom:20 }}>Venture Semester · Every Thursday</p>
+              <h2 style={{ fontFamily:ag, fontSize:isMobile?40:56, fontWeight:300, color:"#E4D5C1", lineHeight:0.95, letterSpacing:"-0.03em", marginBottom:20 }}>Venture<br/><em style={{ color:"#A48D6E" }}>Studio</em></h2>
               <p style={{ fontFamily:lora, fontSize:isMobile?15:16, lineHeight:1.9, color:"#E4D5C1", fontWeight:300 }}>The Venture Studio runs every Thursday across the Venture Semester. It is the execution track — where students move from studying business to building a venture project. Each session produces a concrete deliverable. Faculty are in the room. Students are assessed by the quality of their preparation, reasoning, execution, and presentation.</p>
             </div>
             <div style={{ position:"relative", height:isMobile?300:420, display:"flex", alignItems:"center", justifyContent:"center" }}>
@@ -14927,8 +14929,8 @@ function VentureDetailPage({ setPage, openInquiry }) {
           <div style={{ maxWidth:1100, margin:"0 auto", display:"grid", gridTemplateColumns:isMobile?"1fr":"1fr 1fr", gap:isMobile?40:80, alignItems:"end" }}>
             <div>
               <div style={{ width:40, height:1, background:"#A48D6E", opacity:.4, marginBottom:28 }}/>
-              <p style={{ fontFamily:sans, fontSize:10, letterSpacing:"0.5em", color:"#A48D6E", fontWeight:400, textTransform:"uppercase", marginBottom:24 }}>Every Session · Opening Block · Venture Semester</p>
-              <h2 style={{ fontFamily:ag, fontSize:isMobile?52:80, fontWeight:300, color:"#A48D6E", lineHeight:0.95, letterSpacing:"-0.035em", margin:0 }}>Investor Pitch<br/><em style={{ color:"#A48D6E" }}>&amp; Executive Presence.</em></h2>
+              <p style={{ fontFamily:"'Lato', sans-serif", fontSize:11, letterSpacing:"0.5em", color:"#A48D6E", fontWeight:600, textTransform:"uppercase", marginBottom:24 }}>Every Session · Opening Block · Venture Semester</p>
+              <h2 style={{ fontFamily:ag, fontSize:isMobile?52:80, fontWeight:300, color:"#A48D6E", lineHeight:0.95, letterSpacing:"-0.035em", margin:0 }}>Investor Pitch<br/><em style={{ color:"#A48D6E" }}>&amp; Executive Presence</em></h2>
             </div>
             <div>
               <p style={{ fontFamily:ag, fontSize:isMobile?17:21, color:"#E4D5C1", fontWeight:300, lineHeight:1.85, fontStyle:"italic", marginBottom:28 }}>In the Venture Semester, public speaking takes on a sharper focus: the ability to pitch a venture clearly, defend it under pressure, and present with executive composure before investors and industry leaders.</p>
@@ -14943,7 +14945,7 @@ function VentureDetailPage({ setPage, openInquiry }) {
 
             {/* Left — description + stats */}
             <div>
-              <p style={{ fontFamily:sans, fontSize:10, letterSpacing:"0.4em", color:"#A48D6E", fontWeight:400, textTransform:"uppercase", marginBottom:24 }}>Pitch. Presence. Persuasion.</p>
+              <p style={{ fontFamily:"'Lato', sans-serif", fontSize:11, letterSpacing:"0.4em", color:"#A48D6E", fontWeight:600, textTransform:"uppercase", marginBottom:24 }}>Pitch. Presence. Persuasion.</p>
               <p style={{ fontFamily:lora, fontSize:isMobile?14:15, color:"#E4D5C1", fontWeight:300, lineHeight:1.95, marginBottom:20 }}>In Venture, communication becomes venture launch. Every session opens with live pitch training focused on investor presentations, panel communication, and high-pressure Q&A. Students learn how to tell their venture story compellingly, handle skeptical questions, and defend their business model with clarity and confidence.</p>
               <p style={{ fontFamily:lora, fontSize:isMobile?14:15, color:"#E4D5C1", fontWeight:300, lineHeight:1.95, marginBottom:20 }}>By the end, students will have mastered venture presentation: problem/solution framing, market positioning, financial narrative, team positioning, and investor objection handling. This is not presentation for its own sake. It is the communication required to launch a real venture and raise capital.</p>
               <div style={{ borderTop:"1px solid rgba(164,141,110,.2)", paddingTop:28, marginTop:32 }}>
@@ -14954,7 +14956,7 @@ function VentureDetailPage({ setPage, openInquiry }) {
                   ].map(([n,l],i) => (
                     <div key={i} style={{ padding:"20px 0", borderBottom:"1px solid rgba(164,141,110,.1)" }}>
                       <p style={{ fontFamily:ag, fontSize:isMobile?28:36, fontWeight:300, color:"#A48D6E", lineHeight:1, letterSpacing:"-0.02em", margin:"0 0 6px" }}>{n}</p>
-                      <p style={{ fontFamily:sans, fontSize:11, color:"#E4D5C1", fontWeight:300, lineHeight:1.5, margin:0 }}>{l}</p>
+                      <p style={{ fontFamily:lora, fontSize:11, color:"#E4D5C1", fontWeight:300, lineHeight:1.5, margin:0 }}>{l}</p>
                     </div>
                   ))}
                 </div>
@@ -14963,7 +14965,7 @@ function VentureDetailPage({ setPage, openInquiry }) {
 
             {/* Right — what students learn */}
             <div>
-              <p style={{ fontFamily:sans, fontSize:10, letterSpacing:"0.4em", color:"#A48D6E", fontWeight:400, textTransform:"uppercase", marginBottom:28 }}>What Students Learn</p>
+              <p style={{ fontFamily:"'Lato', sans-serif", fontSize:11, letterSpacing:"0.4em", color:"#A48D6E", fontWeight:600, textTransform:"uppercase", marginBottom:28 }}>What Students Learn</p>
               <div style={{ display:"flex", flexDirection:"column" }}>
                 {[
                   "Venture pitch architecture — problem, solution, market, model, validation, team, and ask",
@@ -15004,15 +15006,15 @@ function VentureDetailPage({ setPage, openInquiry }) {
         <div style={{ position:"absolute", inset:0, background:"radial-gradient(ellipse at center, transparent 25%, #100F0C 78%)" }}/>
         <div style={{ position:"absolute", inset:0, background:"linear-gradient(to bottom, #100F0C 0%, transparent 30%, transparent 70%, #100F0C 100%)" }}/>
         <div style={{ position:"absolute", inset:0, display:"flex", alignItems:"center", justifyContent:"center" }}>
-          <h2 style={{ fontFamily:ag, fontSize:isMobile?"clamp(44px,10vw,72px)":"clamp(64px,7vw,110px)", fontWeight:300, color:"#A48D6E", lineHeight:1, letterSpacing:"-0.04em", textAlign:"center", margin:0 }}>Venture Modules.</h2>
+          <h2 style={{ fontFamily:ag, fontSize:isMobile?"clamp(44px,10vw,72px)":"clamp(64px,7vw,110px)", fontWeight:300, color:"#A48D6E", lineHeight:1, letterSpacing:"-0.04em", textAlign:"center", margin:0 }}>Venture Modules</h2>
         </div>
       </div>
       <div id="v2-modules" style={{ background:"#100F0C", padding:isMobile?"60px 24px":"80px 80px" }}>
         <div style={{ maxWidth:1100, margin:"0 auto" }}>
           <div style={{ display:"grid", gridTemplateColumns:isMobile?"1fr":"1fr 1fr", gap:isMobile?32:80, alignItems:"end", marginBottom:isMobile?40:56, paddingBottom:isMobile?32:44, borderBottom:"1px solid rgba(164,141,110,.12)" }}>
             <div>
-              <p style={{ fontFamily:sans, fontSize:10, letterSpacing:"0.5em", color:"#A48D6E", fontWeight:400, textTransform:"uppercase", marginBottom:20 }}>Venture Semester · 16 Weeks</p>
-              <h2 style={{ fontFamily:ag, fontSize:isMobile?40:64, fontWeight:300, color:"#E4D5C1", lineHeight:0.95, letterSpacing:"-0.03em", margin:0 }}>Venture<br/><em style={{ color:"#A48D6E" }}>Modules.</em></h2>
+              <p style={{ fontFamily:"'Lato', sans-serif", fontSize:11, letterSpacing:"0.5em", color:"#A48D6E", fontWeight:600, textTransform:"uppercase", marginBottom:20 }}>Venture Semester · 16 Weeks</p>
+              <h2 style={{ fontFamily:ag, fontSize:isMobile?40:64, fontWeight:300, color:"#E4D5C1", lineHeight:0.95, letterSpacing:"-0.03em", margin:0 }}>Venture<br/><em style={{ color:"#A48D6E" }}>Modules</em></h2>
             </div>
             <div>
               <p style={{ fontFamily:lora, fontSize:isMobile?15:16, lineHeight:1.9, color:"#E4D5C1", fontWeight:300 }}>Seven modules across 16 weeks — each one applied directly to the student’s own venture. Not abstract frameworks left on a whiteboard. Every concept is immediately tested against the venture they are building. Click any module for the full description.</p>
@@ -15033,7 +15035,7 @@ function VentureDetailPage({ setPage, openInquiry }) {
                   </div>
                   {open && (
                     <div style={{ paddingBottom:32, paddingLeft:isMobile?0:52 }}>
-                      <p style={{ fontFamily:sans, fontSize:10, letterSpacing:"0.2em", color:"#A48D6E", textTransform:"uppercase", marginBottom:10 }}>{mod.sub}</p>
+                      <p style={{ fontFamily:"'Lato', sans-serif", fontSize:11, letterSpacing:"0.2em", color:"#A48D6E", textTransform:"uppercase", marginBottom:10 , fontWeight:600 }}>{mod.sub}</p>
                       <p style={{ fontFamily:lora, fontSize:isMobile?15:16, lineHeight:1.9, color:"#E4D5C1", fontWeight:300, marginBottom:20 }}>{mod.body}</p>
                       {mod.learn && mod.learn.length > 0 && (
                         <div style={{ display:"grid", gridTemplateColumns:isMobile?"1fr":"1fr 1fr", gap:"8px 32px", marginBottom:24 }}>
@@ -15045,7 +15047,7 @@ function VentureDetailPage({ setPage, openInquiry }) {
                           ))}
                         </div>
                       )}
-                      <button onClick={() => setPage && setPage("curriculum")} style={{ fontFamily:sans, fontSize:10, letterSpacing:"0.2em", padding:"11px 24px", background:"transparent", border:"1px solid rgba(164,141,110,.35)", color:"#A48D6E", cursor:"pointer", textTransform:"uppercase", transition:"all .2s" }}>View Full Module Description →</button>
+                      <button onClick={() => setPage && setPage("curriculum")} style={{ fontFamily:sans, fontSize:8, letterSpacing:"0.2em", padding:"11px 24px", background:"transparent", border:"1px solid rgba(164,141,110,.35)", color:"#A48D6E", cursor:"pointer", textTransform:"uppercase", transition:"all .2s" }}>View Full Module Description →</button>
                     </div>
                   )}
                 </div>
@@ -15068,8 +15070,8 @@ function VentureDetailPage({ setPage, openInquiry }) {
         <div style={{ maxWidth:1100, margin:"0 auto" }}>
           <div style={{ display:"grid", gridTemplateColumns:isMobile?"1fr":"1.1fr 0.9fr", gap:isMobile?32:56, alignItems:"center", marginBottom:isMobile?48:64 }}>
             <div>
-              <p style={{ fontFamily:sans, fontSize:10, letterSpacing:"0.5em", color:"#A48D6E", fontWeight:400, textTransform:"uppercase", marginBottom:20 }}>Venture Semester · Every Thursday</p>
-              <h2 style={{ fontFamily:ag, fontSize:isMobile?40:56, fontWeight:300, color:"#E4D5C1", lineHeight:0.95, letterSpacing:"-0.03em", marginBottom:20 }}>Venture<br/><em style={{ color:"#A48D6E" }}>Studio.</em></h2>
+              <p style={{ fontFamily:"'Lato', sans-serif", fontSize:11, letterSpacing:"0.5em", color:"#A48D6E", fontWeight:600, textTransform:"uppercase", marginBottom:20 }}>Venture Semester · Every Thursday</p>
+              <h2 style={{ fontFamily:ag, fontSize:isMobile?40:56, fontWeight:300, color:"#E4D5C1", lineHeight:0.95, letterSpacing:"-0.03em", marginBottom:20 }}>Venture<br/><em style={{ color:"#A48D6E" }}>Studio</em></h2>
               <p style={{ fontFamily:lora, fontSize:isMobile?15:16, lineHeight:1.9, color:"#E4D5C1", fontWeight:300 }}>The Venture Studio runs every Thursday across the Venture Semester. It is the execution track — where students move from studying business to building a venture project. Each session produces a concrete deliverable. Faculty are in the room. Students are assessed by the quality of their preparation, reasoning, execution, and presentation.</p>
             </div>
             <div style={{ position:"relative", height:isMobile?300:420, display:"flex", alignItems:"center", justifyContent:"center" }}>
@@ -15146,7 +15148,7 @@ function VentureDetailPage({ setPage, openInquiry }) {
                   <div>
                     <p style={{ fontFamily:ag, fontSize:isMobile?22:30, fontWeight:600, color:"#100F0C", lineHeight:1.1, letterSpacing:"-0.02em", margin:0 }}>{item.label}</p>
                     <div style={{ display:"flex", alignItems:"center", gap:16, marginTop:6 }}>
-                      <p style={{ fontFamily:sans, fontSize:10, color:"rgba(16,15,12,.5)", letterSpacing:"0.2em", textTransform:"uppercase", margin:0 }}>{item.sub}</p>
+                      <p style={{ fontFamily:"'Lato', sans-serif", fontSize:11, color:"rgba(16,15,12,.5)", letterSpacing:"0.2em", textTransform:"uppercase", margin:0 , fontWeight:600 }}>{item.sub}</p>
                       {activeClassV2!==item.val && <p style={{ fontFamily:lora, fontSize:10, color:"#A48D6E", letterSpacing:"0.18em", textTransform:"uppercase", margin:0, fontWeight:400, borderBottom:"1px solid rgba(164,141,110,.4)", paddingBottom:1 }}>View Details</p>}
                     </div>
                   </div>
@@ -15171,26 +15173,26 @@ function VentureDetailPage({ setPage, openInquiry }) {
         <div style={{ maxWidth:1100, margin:"0 auto" }}>
           <div style={{ display:"grid", gridTemplateColumns:isMobile?"1fr":"1fr 1fr", gap:isMobile?20:80, alignItems:"end", marginBottom:isMobile?40:56 }}>
             <div>
-              <p style={{ fontFamily:sans, fontSize:9, letterSpacing:"0.45em", color:"#100F0C", fontWeight:400, textTransform:"uppercase", marginBottom:16 }}>VENTURE SEMESTER</p>
+              <p style={{ fontFamily:"'Lato', sans-serif", fontSize:11, letterSpacing:"0.45em", color:"#100F0C", fontWeight:600, textTransform:"uppercase", marginBottom:16 }}>VENTURE SEMESTER</p>
               <h2 style={{ fontFamily:ag, fontSize:"clamp(28px,4vw,44px)", fontWeight:600, color:"#100F0C", lineHeight:1.1, margin:0 }}>Session Schedule</h2>
             </div>
             <div>
               <p style={{ fontFamily:lora, fontSize:isMobile?15:16, color:"#100F0C", fontWeight:300, lineHeight:1.85, marginBottom:10 }}>The curriculum is identical across both groups, allowing families to select the schedule that best fits the student's academic and extracurricular commitments.</p>
-              <p style={{ fontFamily:lora, fontSize:10, color:"#100F0C", letterSpacing:"0.18em", textTransform:"uppercase", fontWeight:400 }}>Saturday 10:30 AM – 3:45 PM · Weekday Tuesday & Thursday 4:00 – 6:30 PM</p>
+              <p style={{ fontFamily:lora, fontSize:10, color:"#100F0C", letterSpacing:"0.18em", textTransform:"uppercase", fontWeight:400 }}>Saturday 10:30 AM – 3:30 PM · Weekday Tuesday & Thursday 4:00 – 6:30 PM</p>
             </div>
           </div>
           <div style={{ display:"flex", justifyContent:"space-between", alignItems:"flex-end", marginBottom:24, flexWrap:"wrap", gap:16 }}>
-            <p style={{ fontFamily:ag, fontSize:isMobile?18:24, fontWeight:400, color:"#100F0C", letterSpacing:"-0.01em", margin:0 }}>{activeSchedV==="saturday"?"Group A · Every Saturday · 10:30 AM – 3:45 PM":"Group B · Tuesday & Thursday · 4:00 – 6:30 PM"}</p>
+            <p style={{ fontFamily:ag, fontSize:isMobile?18:24, fontWeight:400, color:"#100F0C", letterSpacing:"-0.01em", margin:0 }}>{activeSchedV==="saturday"?"Group A · Every Saturday · 10:30 AM – 3:30 PM":"Group B · Tuesday & Thursday · 4:00 – 6:30 PM"}</p>
             <div style={{ display:"flex", gap:2 }}>
               {[{id:"weekday",label:"Weekday"},{id:"saturday",label:"Saturday"}].map(t => (
-                <button key={t.id} onClick={() => setActiveSchedV(t.id)} style={{ fontFamily:sans, padding:"10px 24px", background:activeSchedV===t.id?"rgba(16,15,12,.15)":"transparent", border:`1px solid ${activeSchedV===t.id?"#100F0C":"rgba(16,15,12,.2)"}`, color:activeSchedV===t.id?"#100F0C":"#100F0C", fontSize:10, cursor:"pointer", letterSpacing:"0.25em", textTransform:"uppercase", fontWeight:activeSchedV===t.id?600:400, transition:"all .2s" }}>{t.label}</button>
+                <button key={t.id} onClick={() => setActiveSchedV(t.id)} style={{ fontFamily:sans, padding:"10px 24px", background:activeSchedV===t.id?"rgba(16,15,12,.15)":"transparent", border:`1px solid ${activeSchedV===t.id?"#100F0C":"rgba(16,15,12,.2)"}`, color:activeSchedV===t.id?"#100F0C":"#100F0C", fontSize:8, cursor:"pointer", letterSpacing:"0.25em", textTransform:"uppercase", fontWeight:activeSchedV===t.id?600:400, transition:"all .2s" }}>{t.label}</button>
               ))}
             </div>
           </div>
           <div style={{ border:"1px solid rgba(16,15,12,.15)" }}>
             <div style={{ display:"grid", gridTemplateColumns:isMobile?"80px 1fr":"100px 1fr 180px", padding:isMobile?"12px 20px":"14px 36px", background:"#E4D5C1", borderBottom:"1px solid rgba(16,15,12,.15)" }}>
               {["Time","Block","Duration"].slice(0,isMobile?2:3).map((h,i) => (
-                <p key={i} style={{ fontFamily:sans, fontSize:9, letterSpacing:"0.25em", color:"#100F0C", textTransform:"uppercase", fontWeight:400, margin:0 }}>{h}</p>
+                <p key={i} style={{ fontFamily:"'Lato', sans-serif", fontSize:11, letterSpacing:"0.25em", color:"#100F0C", textTransform:"uppercase", fontWeight:600, margin:0 }}>{h}</p>
               ))}
             </div>
             {(activeSchedV==="saturday"?satVBlocks:wkVBlocks).map((block, i) => {
@@ -15200,7 +15202,7 @@ function VentureDetailPage({ setPage, openInquiry }) {
                 <div key={i} style={{ display:"grid", gridTemplateColumns:isMobile?"80px 1fr":"100px 1fr 180px", padding:isMobile?"16px 20px":"22px 36px", borderBottom:i<allBlocks.length-1?"1px solid rgba(16,15,12,.08)":"none", alignItems:"center", background:"#E4D5C1"}}>
                   <p style={{ fontFamily:ag, fontSize:isMobile?20:26, fontWeight:300, color:"#100F0C", lineHeight:1, margin:0, letterSpacing:"-0.02em" }}>{block[0]}</p>
                   <p style={{ fontFamily:ag, fontSize:isMobile?16:20, fontWeight:isBreak?300:500, color:"#100F0C", fontStyle:isBreak?"italic":"normal", lineHeight:1.2, margin:0, letterSpacing:"-0.01em", paddingRight:isMobile?0:32 }}>{block[2]}</p>
-                  {!isMobile && <p style={{ fontFamily:sans, fontSize:10, color:"#100F0C", fontWeight:400, margin:0, letterSpacing:"0.12em", textTransform:"uppercase" }}>{block[1]&&block[1]!=="—"?block[1]:""}</p>}
+                  {!isMobile && <p style={{ fontFamily:"'Lato', sans-serif", fontSize:11, color:"#100F0C", fontWeight:600, margin:0, letterSpacing:"0.12em", textTransform:"uppercase" }}>{block[1]&&block[1]!=="—"?block[1]:""}</p>}
                 </div>
               );
             })}
@@ -15218,11 +15220,11 @@ function VentureDetailPage({ setPage, openInquiry }) {
           <div style={{ position:"absolute", inset:0, background:"linear-gradient(to top,#100F0C 0%,rgba(164,141,110,.55) 45%,rgba(164,141,110,.1) 100%)" }}/>
           <div style={{ position:"absolute", top:isMobile?28:48, left:"50%", transform:"translateX(-50%)" }}>
             <div style={{ display:"inline-block", border:"1px solid rgba(164,141,110,.5)", padding:"7px 24px" }}>
-              <p style={{ fontFamily:sans, fontSize:9, letterSpacing:"0.45em", color:"#A48D6E", fontWeight:400, textTransform:"uppercase", whiteSpace:"nowrap" }}>Venture Capstone · May 2027</p>
+              <p style={{ fontFamily:"'Lato', sans-serif", fontSize:11, letterSpacing:"0.45em", color:"#A48D6E", fontWeight:600, textTransform:"uppercase", whiteSpace:"nowrap" }}>Venture Capstone · May 2027</p>
             </div>
           </div>
           <div style={{ position:"absolute", bottom:isMobile?40:72, left:0, right:0, textAlign:"center", padding:"0 24px" }}>
-            <p style={{ fontFamily:sans, fontSize:9, letterSpacing:"0.5em", color:"#A48D6E", fontWeight:400, textTransform:"uppercase", marginBottom:18 }}>Excalibur Gala</p>
+            <p style={{ fontFamily:"'Lato', sans-serif", fontSize:11, letterSpacing:"0.5em", color:"#A48D6E", fontWeight:600, textTransform:"uppercase", marginBottom:18 }}>Excalibur Gala</p>
             <h2 style={{ fontFamily:ag, fontSize:isMobile?"clamp(36px,8vw,54px)":"clamp(52px,6vw,88px)", fontWeight:600, color:"#A48D6E", lineHeight:1.0, marginBottom:16, letterSpacing:"0.02em" }}>The Venture Finale</h2>
             <p style={{ fontFamily:ag, fontSize:isMobile?15:20, color:"#E4D5C1", fontStyle:"italic", letterSpacing:"0.04em" }}>The Da Vinci Finale · May 9 &nbsp;&nbsp;·&nbsp;&nbsp; The Medici Finale · May 22</p>
           </div>
@@ -15231,7 +15233,7 @@ function VentureDetailPage({ setPage, openInquiry }) {
         {/* Description strip */}
         <div style={{ borderTop:"1px solid rgba(164,141,110,.15)", borderBottom:"1px solid rgba(164,141,110,.15)" }}>
           <div style={{ maxWidth:860, margin:"0 auto", padding:isMobile?"48px 24px":"64px 40px", textAlign:"center" }}>
-            <p style={{ fontFamily:sans, fontSize:isMobile?15:17, lineHeight:2.0, color:"#E4D5C1", fontWeight:300, marginBottom:24 }}>The Venture Semester closes with two Finales — one for each track. Students deliver an eight-minute venture presentation before a panel of invited investors, founders, executives, and practitioners, industry leaders, and community voices, followed by unscripted Q&A. Students are expected to present with preparation, composure, and command. Students present the work developed over sixteen weeks and receive direct questions and evaluation from the panel.</p>
+            <p style={{ fontFamily:lora, fontSize:isMobile?15:17, lineHeight:2.0, color:"#E4D5C1", fontWeight:300, marginBottom:24 }}>The Venture Semester closes with two Finales — one for each track. Students deliver an eight-minute venture presentation before a panel of invited investors, founders, executives, and practitioners, industry leaders, and community voices, followed by unscripted Q&A. Students are expected to present with preparation, composure, and command. Students present the work developed over sixteen weeks and receive direct questions and evaluation from the panel.</p>
             <p style={{ fontFamily:ag, fontSize:isMobile?17:21, color:"#E4D5C1", fontStyle:"italic", lineHeight:1.75 }}>By this point, these are not students presenting a school project. They are founders presenting a venture. The difference is visible to everyone in the room.</p>
           </div>
         </div>
@@ -15264,8 +15266,8 @@ function VentureDetailPage({ setPage, openInquiry }) {
       {/* ════════════════════════════════════════ YEAR-ROUND ════════════════════════════════════════ */}
       <div style={{ background:"#100F0C", padding:isMobile?"80px 24px":"120px 80px" }}>
         <div style={{ maxWidth:1100, margin:"0 auto" }}>
-          <p style={{ fontFamily:sans, fontSize:10, color:"#A48D6E", letterSpacing:"0.55em", textTransform:"uppercase", marginBottom:28, fontWeight:400 }}>Both Semesters</p>
-          <h2 style={{ fontFamily:ag, fontSize:isMobile?"clamp(36px,8vw,56px)":"clamp(48px,5.5vw,76px)", fontWeight:300, color:"#A48D6E", lineHeight:1.05, marginBottom:28, letterSpacing:"-0.03em" }}>Where classroom learning<br/>becomes applied work.</h2>
+          <p style={{ fontFamily:"'Lato', sans-serif", fontSize:11, color:"#A48D6E", letterSpacing:"0.55em", textTransform:"uppercase", marginBottom:28, fontWeight:600 }}>Both Semesters</p>
+          <h2 style={{ fontFamily:ag, fontSize:isMobile?"clamp(36px,8vw,56px)":"clamp(48px,5.5vw,76px)", fontWeight:300, color:"#A48D6E", lineHeight:1.05, marginBottom:28, letterSpacing:"-0.03em" }}>Where classroom learning<br/>becomes applied work</h2>
           <div style={{ width:40, height:1, background:"#d4c3a6" }}/>
         </div>
       </div>
@@ -15278,8 +15280,8 @@ function VentureDetailPage({ setPage, openInquiry }) {
         <div style={{ maxWidth:1100, margin:"0 auto" }}>
           <div style={{ display:"grid", gridTemplateColumns:isMobile?"1fr":"1fr 1fr", gap:isMobile?32:80, alignItems:"end", marginBottom:isMobile?40:56, paddingBottom:isMobile?32:44, borderBottom:"1px solid rgba(164,141,110,.12)" }}>
             <div>
-              <p style={{ fontFamily:sans, fontSize:10, letterSpacing:"0.5em", color:"#A48D6E", fontWeight:400, textTransform:"uppercase", marginBottom:20 }}>Venture Semester · Venture-Matched · Supervised</p>
-              <h2 style={{ fontFamily:ag, fontSize:isMobile?40:64, fontWeight:300, color:"#E4D5C1", lineHeight:0.95, letterSpacing:"-0.03em", margin:0 }}>The Startup<br/><em style={{ color:"#A48D6E" }}>Externship.</em></h2>
+              <p style={{ fontFamily:"'Lato', sans-serif", fontSize:11, letterSpacing:"0.5em", color:"#A48D6E", fontWeight:600, textTransform:"uppercase", marginBottom:20 }}>Venture Semester · Venture-Matched · Supervised</p>
+              <h2 style={{ fontFamily:ag, fontSize:isMobile?40:64, fontWeight:300, color:"#E4D5C1", lineHeight:0.95, letterSpacing:"-0.03em", margin:0 }}>The Startup<br/><em style={{ color:"#A48D6E" }}>Externship</em></h2>
             </div>
           </div>
           <div style={{ display:"grid", gridTemplateColumns:isMobile?"1fr":"1fr 1fr", gap:isMobile?32:80 }}>
@@ -15287,7 +15289,7 @@ function VentureDetailPage({ setPage, openInquiry }) {
               <p style={{ fontFamily:lora, fontSize:isMobile?15:16, lineHeight:1.9, color:"#E4D5C1", fontWeight:300 }}>In the Venture Semester, students move from analyzing businesses to experiencing how ventures are built from the inside. Through a supervised Startup Externship, each student is matched with a founder, startup, or early-stage venture in an industry of interest and contributes to selected meetings, brainstorming sessions, research, analysis, product feedback, pitch preparation, or market discovery. The focus is not passive shadowing, but age-appropriate professional contribution: students see how founders make decisions, solve problems, test ideas, and move from concept to execution while producing a portfolio-ready work product and reflection.</p>
             </div>
             <div>
-              <p style={{ fontFamily:sans, fontSize:10, letterSpacing:"0.4em", color:"#A48D6E", fontWeight:400, textTransform:"uppercase", marginBottom:20 }}>Outcome</p>
+              <p style={{ fontFamily:"'Lato', sans-serif", fontSize:11, letterSpacing:"0.4em", color:"#A48D6E", fontWeight:600, textTransform:"uppercase", marginBottom:20 }}>Outcome</p>
               <p style={{ fontFamily:ag, fontSize:16, color:"#E4D5C1", fontStyle:"italic", lineHeight:1.7 }}>A portfolio-ready work product, a professional reflection, and direct exposure to how early-stage ventures operate — documented for the student portfolio and future applications.</p>
             </div>
           </div>
@@ -15303,12 +15305,12 @@ function VentureDetailPage({ setPage, openInquiry }) {
         <div style={{ maxWidth:1100, margin:"0 auto" }}>
           <div style={{ display:"grid", gridTemplateColumns:isMobile?"1fr":"1.1fr 0.9fr", gap:isMobile?24:56, alignItems:"center", marginBottom:isMobile?40:56, paddingBottom:isMobile?32:44, borderBottom:"1px solid rgba(164,141,110,.12)" }}>
             <div>
-              <p style={{ fontFamily:sans, fontSize:10, letterSpacing:"0.5em", color:"#A48D6E", fontWeight:400, textTransform:"uppercase", marginBottom:20 }}>Venture Semester · 16 Weeks</p>
-              <h2 style={{ fontFamily:ag, fontSize:isMobile?40:56, fontWeight:300, color:"#E4D5C1", lineHeight:0.95, letterSpacing:"-0.03em", marginBottom:20 }}>Engagements<br/><em style={{ color:"#A48D6E" }}>&amp; Events.</em></h2>
+              <p style={{ fontFamily:"'Lato', sans-serif", fontSize:11, letterSpacing:"0.5em", color:"#A48D6E", fontWeight:600, textTransform:"uppercase", marginBottom:20 }}>Venture Semester · 16 Weeks</p>
+              <h2 style={{ fontFamily:ag, fontSize:isMobile?40:56, fontWeight:300, color:"#E4D5C1", lineHeight:0.95, letterSpacing:"-0.03em", marginBottom:20 }}>Engagements<br/><em style={{ color:"#A48D6E" }}>&amp; Events</em></h2>
               <p style={{ fontFamily:lora, fontSize:isMobile?15:16, lineHeight:1.9, color:"#E4D5C1", fontWeight:300, margin:0 }}>The Excalibur calendar is built around execution milestones and applied exposure. Beyond weekly sessions, students present, compete, network, and receive feedback at a professional standard throughout the year.</p>
             </div>
             <div style={{ position:"relative", height:isMobile?280:400, display:"flex", alignItems:"center", justifyContent:"center" }}>
-              <img src={ph[11]} alt="Venture Events" style={{ maxWidth:"100%", maxHeight:"100%", width:"auto", height:"auto", objectFit:"contain", display:"block" }}/>
+              <img src="https://i.imgur.com/OwC7kDw.jpeg" alt="Venture Events" style={{ maxWidth:"100%", maxHeight:"100%", width:"auto", height:"auto", objectFit:"contain", display:"block" }}/>
             </div>
           </div>
 
@@ -15316,7 +15318,7 @@ function VentureDetailPage({ setPage, openInquiry }) {
           <div style={{ marginBottom:2 }}>
             <div style={{ background:"#d4c3a6", display:"grid", gridTemplateColumns:isMobile?"1fr":"2fr 1fr", borderLeft:"4px solid #d4c3a6" }}>
               <div style={{ padding:isMobile?"36px 28px":"48px 56px" }}>
-                <p style={{ fontFamily:sans, fontSize:10, letterSpacing:"0.35em", color:"#100F0C", textTransform:"uppercase", fontWeight:400, marginBottom:10 }}>Da Vinci &amp; Medici Venture Finale</p>
+                <p style={{ fontFamily:"'Lato', sans-serif", fontSize:11, letterSpacing:"0.35em", color:"#100F0C", textTransform:"uppercase", fontWeight:600, marginBottom:10 }}>Da Vinci &amp; Medici Venture Finale</p>
                 <h3 style={{ fontFamily:ag, fontSize:isMobile?28:40, fontWeight:600, color:"#100F0C", lineHeight:1.1, marginBottom:16 }}>Shark Tank Inspired Venture Finale</h3>
                 <p style={{ fontFamily:lora, fontSize:isMobile?15:16, lineHeight:1.9, color:"#100F0C", fontWeight:300, marginBottom:20 }}>The formal close of the Venture Semester — a formal venture presentation before an invited panel modeled on the structure of a high-stakes pitch competition. Each team presents their venture to a panel of invited investors, founders, executives, and practitioners, executives, and founders. The panel of invited investors. Students answer serious questions and defend their decisions with composure. Families and invited guests attend. This is not a school presentation. It is a professional event, and it is treated as one.</p>
                 <div style={{ display:"flex", flexWrap:"wrap", gap:24 }}>
@@ -15331,7 +15333,7 @@ function VentureDetailPage({ setPage, openInquiry }) {
               <div style={{ background:"#100F0C", display:"flex", flexDirection:"column", justifyContent:"center", alignItems:"center", padding:"48px 40px", gap:4 }}>
                 <p style={{ fontFamily:ag, fontSize:isMobile?48:72, fontWeight:300, color:"#A48D6E", lineHeight:1, letterSpacing:"-0.04em" }}>May</p>
                 <p style={{ fontFamily:ag, fontSize:isMobile?48:72, fontWeight:600, color:"#A48D6E", lineHeight:1, letterSpacing:"-0.04em" }}>2027</p>
-                <p style={{ fontFamily:sans, fontSize:10, letterSpacing:"0.3em", color:"#E4D5C1", textTransform:"uppercase", marginTop:16 }}>Venture Capstone</p>
+                <p style={{ fontFamily:"'Lato', sans-serif", fontSize:11, letterSpacing:"0.3em", color:"#E4D5C1", textTransform:"uppercase", marginTop:16 , fontWeight:600 }}>Venture Capstone</p>
               </div>
             </div>
           </div>
@@ -15377,7 +15379,7 @@ function VentureDetailPage({ setPage, openInquiry }) {
           <div style={{ maxWidth:1100, margin:"0 auto", display:"grid", gridTemplateColumns:isMobile?"1fr":"1fr 1fr", gap:isMobile?32:80, alignItems:"end" }}>
             <div>
               <div style={{ width:40, height:1, background:"#d4c3a6", marginBottom:28 }}/>
-              <p style={{ fontFamily:sans, fontSize:10, letterSpacing:"0.5em", color:"#d4c3a6", fontWeight:400, textTransform:"uppercase", marginBottom:24 }}>Venture Semester · April 2027</p>
+              <p style={{ fontFamily:"'Lato', sans-serif", fontSize:11, letterSpacing:"0.5em", color:"#d4c3a6", fontWeight:600, textTransform:"uppercase", marginBottom:24 }}>Venture Semester · April 2027</p>
               <h2 style={{ fontFamily:ag, fontSize:isMobile?52:80, fontWeight:300, color:"#d4c3a6", lineHeight:0.95, letterSpacing:"-0.035em", margin:0 }}>The Excalibur Summit: The Gilded Soirée</h2>
             </div>
             <div>
@@ -15385,8 +15387,8 @@ function VentureDetailPage({ setPage, openInquiry }) {
               <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:1 }}>
                 {[["Summit II","April 2027 · Venture Semester"],["Included","Full-Year Students — included for full-year students"],["Venture-Only","$1,500"],["Format","2.5 Days · Newport Beach Hotel"]].map(([k,v])=>(
                   <div key={k} style={{ borderTop:"1px solid rgba(164,141,110,.1)", paddingTop:14, paddingBottom:14 }}>
-                    <p style={{ fontFamily:sans, fontSize:10, letterSpacing:"0.2em", color:"#d4c3a6", textTransform:"uppercase", marginBottom:5, fontWeight:400 }}>{k}</p>
-                    <p style={{ fontFamily:lora, fontSize:13, color:"#320E0E", fontWeight:400, lineHeight:1.7 }}>{v}</p>
+                    <p style={{ fontFamily:"'Lato', sans-serif", fontSize:11, letterSpacing:"0.2em", color:"#d4c3a6", textTransform:"uppercase", marginBottom:5, fontWeight:600 }}>{k}</p>
+                    <p style={{ fontFamily:lora, fontSize:13, color:"#E4D5C1", fontWeight:400, lineHeight:1.7 }}>{v}</p>
                   </div>
                 ))}
               </div>
@@ -15453,14 +15455,14 @@ function VentureDetailPage({ setPage, openInquiry }) {
                         <img src={evt.img} alt="" style={{ width:"100%", height:"100%", objectFit:"cover", objectPosition:"center", opacity:open?0.8:0.45, transition:"opacity .4s", filter:"sepia(20%)" }}/>
                         <div style={{ position:"absolute", inset:0, background:`linear-gradient(to right,transparent 60%,${open?"rgba(10,7,5,.85)":"rgba(10,7,5,.5)"} 100%)` }}/>
                         <div style={{ position:"absolute", top:16, left:20 }}>
-                          <p style={{ fontFamily:sans, fontSize:9, letterSpacing:"0.4em", color:"#A48D6E", textTransform:"uppercase", fontWeight:400 }}>{evt.day}</p>
+                          <p style={{ fontFamily:"'Lato', sans-serif", fontSize:11, letterSpacing:"0.4em", color:"#A48D6E", textTransform:"uppercase", fontWeight:600 }}>{evt.day}</p>
                         </div>
                       </div>
                       {/* title */}
                       <div style={{ display:"flex", flexDirection:"column", justifyContent:"center", padding:isMobile?"20px 24px":"0" }}>
                         <p style={{ fontFamily:"'Garet', sans-serif", fontSize:10, letterSpacing:"0.35em", color:"#A48D6E", textTransform:"uppercase", marginBottom:10, fontWeight:400 }}>{evt.label}</p>
                         <h3 style={{ fontFamily:ag, fontSize:isMobile?24:32, fontWeight:300, color:"#A48D6E", lineHeight:1.1, letterSpacing:"-0.02em", margin:0 }}>{evt.title}</h3>
-                        <p style={{ fontFamily:sans, fontSize:11, color:"#100F0C", marginTop:10, fontWeight:300 }}>{evt.items.length} events</p>
+                        <p style={{ fontFamily:lora, fontSize:11, color:"#E4D5C1", marginTop:10, fontWeight:300 }}>{evt.items.length} events</p>
                       </div>
                       {/* chevron */}
                       <div style={{ display:"flex", alignItems:"center", justifyContent:"center", paddingRight:isMobile?24:0 }}>
@@ -15494,8 +15496,8 @@ function VentureDetailPage({ setPage, openInquiry }) {
           <div style={{ display:"grid", gridTemplateColumns:isMobile?"1fr":"1fr 1fr", gap:isMobile?40:80, alignItems:"end", marginBottom:isMobile?48:72 }}>
             <div>
               <div style={{ width:40, height:1, background:"#d4c3a6", marginBottom:28 }}/>
-              <p style={{ fontFamily:sans, fontSize:10, letterSpacing:"0.5em", color:"#d4c3a6", fontWeight:400, textTransform:"uppercase", marginBottom:24 }}>Outside the Classroom</p>
-              <h2 style={{ fontFamily:ag, fontSize:isMobile?52:80, fontWeight:300, color:"#d4c3a6", lineHeight:0.95, letterSpacing:"-0.035em", margin:0 }}>Field Trips &<br/><em style={{ color:"#d4c3a6" }}>Expeditions.</em></h2>
+              <p style={{ fontFamily:"'Lato', sans-serif", fontSize:11, letterSpacing:"0.5em", color:"#d4c3a6", fontWeight:600, textTransform:"uppercase", marginBottom:24 }}>Outside the Classroom</p>
+              <h2 style={{ fontFamily:ag, fontSize:isMobile?52:80, fontWeight:300, color:"#d4c3a6", lineHeight:0.95, letterSpacing:"-0.035em", margin:0 }}>Field Trips &<br/><em style={{ color:"#d4c3a6" }}>Expeditions</em></h2>
             </div>
             <div>
               <p style={{ fontFamily:ag, fontSize:isMobile?16:20, color:"#E4D5C1", fontWeight:300, lineHeight:1.85, fontStyle:"italic", marginBottom:12 }}>Students step inside the environments where leadership, capital, innovation, and performance are put into practice — meeting the people and institutions shaping the world beyond the classroom.</p>
@@ -15520,10 +15522,10 @@ function VentureDetailPage({ setPage, openInquiry }) {
                 <div style={{ height:160, overflow:"hidden", position:"relative" }}>
                   <img src={trip.img} alt={trip.title} style={{ width:"100%", height:"100%", objectFit:"cover", filter:"brightness(0.65) grayscale(10%)", transition:"transform .5s ease" }} onMouseEnter={e=>e.target.style.transform="scale(1.06)"} onMouseLeave={e=>e.target.style.transform="scale(1)"}/>
                   <div style={{ position:"absolute", inset:0, background:"linear-gradient(to top,rgba(164,141,110,.55) 0%,transparent 55%)" }}/>
-                  <div style={{ position:"absolute", top:8, right:8, fontFamily:sans, fontSize:9, color:"#E4D5C1", border:"1px solid rgba(164,141,110,.3)", padding:"2px 7px", letterSpacing:"0.1em", background:"rgba(237,230,216,.85)", textTransform:"uppercase", fontWeight:400 }}>{trip.type}</div>
+                  <div style={{ position:"absolute", top:8, right:8, fontFamily:"'Lato', sans-serif", fontSize:11, color:"#E4D5C1", border:"1px solid rgba(164,141,110,.3)", padding:"2px 7px", letterSpacing:"0.1em", background:"rgba(237,230,216,.85)", textTransform:"uppercase", fontWeight:600 }}>{trip.type}</div>
                 </div>
                 <div style={{ padding:"18px 20px 22px" }}>
-                  <p style={{ fontFamily:sans, fontSize:9, color:"#E4D5C1", letterSpacing:"0.2em", textTransform:"uppercase", marginBottom:6, fontWeight:400 }}>{trip.tag}</p>
+                  <p style={{ fontFamily:"'Lato', sans-serif", fontSize:11, color:"#E4D5C1", letterSpacing:"0.2em", textTransform:"uppercase", marginBottom:6, fontWeight:600 }}>{trip.tag}</p>
                   <h4 style={{ fontFamily:ag, fontSize:isMobile?20:24, fontWeight:600, color:"#A48D6E", marginBottom:10, lineHeight:1.2 }}>{trip.title}</h4>
                   <p style={{ fontFamily:lora, fontSize:isMobile?14:15, lineHeight:1.75, color:"#E4D5C1", fontWeight:300 }}>{trip.desc}</p>
                 </div>
@@ -15539,7 +15541,7 @@ function VentureDetailPage({ setPage, openInquiry }) {
         <div style={{ maxWidth:1100, margin:"0 auto" }}>
           <div style={{ display:"grid", gridTemplateColumns:isMobile?"1fr":"1fr 1fr", gap:isMobile?24:80, alignItems:"end", marginBottom:isMobile?40:56, paddingBottom:isMobile?32:44, borderBottom:"1px solid rgba(164,141,110,.12)" }}>
             <div>
-              <p style={{ fontFamily:sans, fontSize:10, letterSpacing:"0.5em", color:"#A48D6E", fontWeight:400, textTransform:"uppercase", marginBottom:20 }}>Excalibur Faculty</p>
+              <p style={{ fontFamily:"'Lato', sans-serif", fontSize:11, letterSpacing:"0.5em", color:"#A48D6E", fontWeight:600, textTransform:"uppercase", marginBottom:20 }}>Excalibur Faculty</p>
               <h2 style={{ fontFamily:ag, fontSize:isMobile?40:64, fontWeight:300, color:"#E4D5C1", lineHeight:0.95, letterSpacing:"-0.03em", margin:0 }}>The Lead Faculty<br/><em style={{ color:"#A48D6E" }}>in the room</em></h2>
             </div>
             <p style={{ fontFamily:lora, fontSize:isMobile?15:16, lineHeight:1.9, color:"#E4D5C1", fontWeight:300, margin:0 }}>Excalibur faculty come from the arenas where leadership is tested: a CEO who built the world’s first autonomous racing series, directed the Formula BMW program, and oversaw a $13B NASDAQ listing, a former Citigroup Managing Director and Georgetown MBA professor with 100+ M&A transactions, 600+ CEO advisory engagements, EVP/CFO leadership at two NYSE-listed companies, TEDx speaker, and a doctoral candidate serving as an Orange County Sheriff’s Department spokesman. They have led companies, advised CEOs, taught MBA students, spoken on stages from West Point to Ivy League institutions, and bring that experience into the Excalibur classroom.</p>
@@ -15558,7 +15560,7 @@ function VentureDetailPage({ setPage, openInquiry }) {
                 </div>
                 <div style={{ padding:isMobile?"16px 12px":"24px 20px" }}>
                   <p style={{ fontFamily:ag, fontSize:isMobile?15:18, fontWeight:600, color:"#E4D5C1", lineHeight:1.2, marginBottom:4 }}>{f.name}</p>
-                  <p style={{ fontFamily:sans, fontSize:9, letterSpacing:"0.18em", color:"#A48D6E", textTransform:"uppercase", marginBottom:8, lineHeight:1.5 }}>{f.tag}</p>
+                  <p style={{ fontFamily:"'Lato', sans-serif", fontSize:11, letterSpacing:"0.18em", color:"#A48D6E", textTransform:"uppercase", marginBottom:8, lineHeight:1.5 , fontWeight:600 }}>{f.tag}</p>
                   <p style={{ fontFamily:lora, fontSize:13, color:"#E4D5C1", fontWeight:300, lineHeight:1.6 }}>{f.role}</p>
                 </div>
               </div>
@@ -15616,7 +15618,7 @@ function VentureDetailPage({ setPage, openInquiry }) {
         <div style={{ maxWidth:1100, margin:"0 auto", padding:isMobile?"36px 24px 64px":"52px 80px 80px", display:"grid", gridTemplateColumns:isMobile?"1fr":"1fr 1fr", gap:isMobile?40:80 }}>
           <div>
             <div style={{ borderTop:`2px solid #d4c3a6`, paddingTop:28, marginBottom:32 }}>
-              <p style={{ fontFamily:sans, fontSize:10, letterSpacing:"0.4em", color:"#100F0C", fontWeight:400, textTransform:"uppercase", marginBottom:6 }}>Foundation Portfolio</p>
+              <p style={{ fontFamily:"'Lato', sans-serif", fontSize:11, letterSpacing:"0.4em", color:"#100F0C", fontWeight:600, textTransform:"uppercase", marginBottom:6 }}>Foundation Portfolio</p>
               <p style={{ fontFamily:ag, fontSize:14, color:"#100F0C", fontStyle:"italic" }}>September – December</p>
             </div>
             {["Financial analysis of a local business partner","Business model deconstruction — Investor Briefing format","Speaking evaluation — recorded, reviewed, faculty-assessed","War Room Championship result and faculty assessment","Junior Consultant report — client-facing, presented in boardroom to real business owner","Startup Externship documentation — company, role, reflection, host reference","Sector Journal — four industry entries","Art of Class formation record — all ten modules completed","Faculty letters of recommendation"].map((item,i) => (
@@ -15628,7 +15630,7 @@ function VentureDetailPage({ setPage, openInquiry }) {
           </div>
           <div>
             <div style={{ borderTop:`2px solid rgba(0,0,0,.4)`, paddingTop:28, marginBottom:32 }}>
-              <p style={{ fontFamily:sans, fontSize:10, letterSpacing:"0.4em", color:"#100F0C", fontWeight:400, textTransform:"uppercase", marginBottom:6 }}>Venture Portfolio</p>
+              <p style={{ fontFamily:"'Lato', sans-serif", fontSize:11, letterSpacing:"0.4em", color:"#100F0C", fontWeight:600, textTransform:"uppercase", marginBottom:6 }}>Venture Portfolio</p>
               <p style={{ fontFamily:ag, fontSize:14, color:"#100F0C", fontStyle:"italic" }}>February – May</p>
             </div>
             {["Da Vinci or Medici pitch deck — investor-ready, eight slides","Financial model — 18-month P&L and cap table","Market research report — AI-built, practitioner-reviewed","Recorded Finale presentation — before invited investors, founders, executives, and practitioners","Junior Consultant report — second engagement, Boardroom Finale","Startup Externship documentation — founder-matched, portfolio-ready work product","Sector Journal — all twelve industry sectors completed","Summit Professional Headshot","Faculty letters of recommendation"].map((item,i) => (
@@ -15648,8 +15650,8 @@ function VentureDetailPage({ setPage, openInquiry }) {
         <div style={{ maxWidth:1100, margin:"0 auto" }}>
           <div style={{ display:"grid", gridTemplateColumns:isMobile?"1fr":"1.1fr 0.9fr", gap:isMobile?32:56, alignItems:"center", marginBottom:isMobile?40:56 }}>
             <div>
-              <p style={{ fontFamily:sans, fontSize:10, letterSpacing:"0.5em", color:"#A48D6E", fontWeight:400, textTransform:"uppercase", marginBottom:20 }}>Venture Semester</p>
-              <h2 style={{ fontFamily:ag, fontSize:isMobile?36:46, fontWeight:300, color:"#E4D5C1", lineHeight:1.0, letterSpacing:"-0.03em", marginBottom:20 }}>What this semester<br/><em style={{ color:"#A48D6E" }}>prepares your student for.</em></h2>
+              <p style={{ fontFamily:"'Lato', sans-serif", fontSize:11, letterSpacing:"0.5em", color:"#A48D6E", fontWeight:600, textTransform:"uppercase", marginBottom:20 }}>Venture Semester</p>
+              <h2 style={{ fontFamily:ag, fontSize:isMobile?36:46, fontWeight:300, color:"#E4D5C1", lineHeight:1.0, letterSpacing:"-0.03em", marginBottom:20 }}>What this semester<br/><em style={{ color:"#A48D6E" }}>prepares your student for</em></h2>
               <p style={{ fontFamily:lora, fontSize:isMobile?15:16, lineHeight:1.9, color:"#E4D5C1", fontWeight:300, margin:0 }}>The Venture Semester is execution. Students apply everything from the Foundation Semester against real stakes: a real venture, a real externship, a real investor panel. What follows is what they are ready for when it ends.</p>
             </div>
             <div style={{ position:"relative", height:isMobile?280:400, display:"flex", alignItems:"center", justifyContent:"center" }}>
@@ -15685,7 +15687,7 @@ function VentureDetailPage({ setPage, openInquiry }) {
           {isMobile ? (
           <div style={{ display:"grid", gridTemplateColumns:"1fr", gap:40, marginBottom:56 }}>
             <div>
-              <p style={{ fontFamily:sans, fontSize:9, letterSpacing:"0.5em", color:"#E4D5C1", fontWeight:400, textTransform:"uppercase", marginBottom:20 }}>Tuition & Program Fees</p>
+              <p style={{ fontFamily:"'Lato', sans-serif", fontSize:11, letterSpacing:"0.5em", color:"#E4D5C1", fontWeight:600, textTransform:"uppercase", marginBottom:20 }}>Tuition & Program Fees</p>
               <h2 style={{ fontFamily:ag, fontSize:34, fontWeight:600, color:"#A48D6E", lineHeight:1.0, marginBottom:20, letterSpacing:"0.02em" }}>Tuition & Program Fees</h2>
               <div style={{ display:"flex", flexDirection:"column", gap:14 }}>
                 <p style={{ fontFamily:lora, fontSize:isMobile?15:16, lineHeight:1.95, color:"#E4D5C1", fontWeight:300, margin:0 }}>The Flagship Overview may be completed as Foundation only, Venture only, or the full academic-year pathway across both semesters.</p>
@@ -15695,7 +15697,7 @@ function VentureDetailPage({ setPage, openInquiry }) {
               </div>
             </div>
             <div style={{ display:"flex", flexDirection:"column", gap:0 }}>
-              <p style={{ fontFamily:sans, fontSize:10, letterSpacing:"0.3em", color:"#A48D6E", textTransform:"uppercase", marginBottom:20, fontWeight:400 }}>Tuition Includes</p>
+              <p style={{ fontFamily:"'Lato', sans-serif", fontSize:11, letterSpacing:"0.3em", color:"#A48D6E", textTransform:"uppercase", marginBottom:20, fontWeight:600 }}>Tuition Includes</p>
               {[
                 ["Scheduled Sessions, Faculty & Curriculum","Full access to scheduled sessions, faculty instruction, curriculum materials, and core program activities."],
                 ["Guest Speakers","Monthly practitioner masterclasses are included at no additional cost."],
@@ -15723,7 +15725,7 @@ function VentureDetailPage({ setPage, openInquiry }) {
           <>
           {/* HEADING — full width, Foundation-style layout */}
           <div style={{ borderBottom:"1px solid rgba(164,141,110,.15)", paddingBottom:56, marginBottom:56 }}>
-            <p style={{ fontFamily:sans, fontSize:9, letterSpacing:"0.5em", color:"#E4D5C1", fontWeight:400, textTransform:"uppercase", marginBottom:20 }}>Tuition & Program Fees</p>
+            <p style={{ fontFamily:"'Lato', sans-serif", fontSize:11, letterSpacing:"0.5em", color:"#E4D5C1", fontWeight:600, textTransform:"uppercase", marginBottom:20 }}>Tuition & Program Fees</p>
             <h2 style={{ fontFamily:ag, fontSize:52, fontWeight:600, color:"#A48D6E", lineHeight:1.0, marginBottom:32, letterSpacing:"0.02em" }}>Tuition & Program Fees</h2>
             <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:80 }}>
               <p style={{ fontFamily:lora, fontSize:isMobile?15:16, lineHeight:1.95, color:"#E4D5C1", fontWeight:300, margin:0 }}>The Flagship Overview may be completed as Foundation only, Venture only, or the full academic-year pathway across both semesters. Students may apply directly to the Foundation Semester, the Venture Semester, or the full academic-year pathway. Completion of the Foundation Semester is not required for admission into the Venture Semester, although it is strongly recommended.</p>
@@ -15735,7 +15737,7 @@ function VentureDetailPage({ setPage, openInquiry }) {
           <div style={{ marginBottom:64, background:"#E4D5C1", padding:0 }}>
             <div style={{ padding:"44px 48px 32px", borderBottom:"1px solid rgba(16,15,12,.12)" }}>
               <div style={{ width:32, height:1, background:"#A48D6E", marginBottom:18 }}/>
-              <p style={{ fontFamily:sans, fontSize:9, letterSpacing:"0.4em", color:"#A48D6E", textTransform:"uppercase", margin:0, fontWeight:400 }}>Tuition Includes</p>
+              <p style={{ fontFamily:"'Lato', sans-serif", fontSize:11, letterSpacing:"0.4em", color:"#A48D6E", textTransform:"uppercase", margin:0, fontWeight:600 }}>Tuition Includes</p>
             </div>
             <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr" }}>
               {[
@@ -15820,20 +15822,20 @@ function VentureDetailPage({ setPage, openInquiry }) {
                   </div>
                 )}
                 <div style={{ padding:isMobile?"32px 28px":"44px 40px" }}>
-                  <p style={{ fontFamily:sans, fontSize:10, letterSpacing:"0.3em", color:plan.rec?"#100F0C":"#d4c3a6", textTransform:"uppercase", marginBottom:6, fontWeight:400 }}>{plan.label}</p>
-                  <p style={{ fontFamily:sans, fontSize:11, color:plan.rec?"#100F0C":"#FBF7EE", marginBottom:20, letterSpacing:"0.04em" }}>{plan.dates}</p>
+                  <p style={{ fontFamily:"'Lato', sans-serif", fontSize:11, letterSpacing:"0.3em", color:plan.rec?"#100F0C":"#d4c3a6", textTransform:"uppercase", marginBottom:6, fontWeight:600 }}>{plan.label}</p>
+                  <p style={{ fontFamily:lora, fontSize:11, color:plan.rec?"#100F0C":"#FBF7EE", marginBottom:20, letterSpacing:"0.04em" }}>{plan.dates}</p>
                   <p style={{ fontFamily:ag, fontSize:isMobile?44:56, fontWeight:600, color:plan.rec?"#100F0C":"#d4c3a6", lineHeight:1, marginBottom:4, letterSpacing:"-0.02em" }}>{plan.price}</p>
                   {plan.bonus ? (
                     <div style={{ background:"#100F0C", padding:"10px 14px", marginBottom:20, marginTop:16 }}>
-                      <p style={{ fontFamily:sans, fontSize:11, color:"#d4c3a6", fontWeight:300 }}>✦ {plan.bonus}</p>
+                      <p style={{ fontFamily:lora, fontSize:11, color:"#d4c3a6", fontWeight:300 }}>✦ {plan.bonus}</p>
                     </div>
                   ) : <div style={{ marginBottom:20 }}/>}
                   <div style={{ borderTop:`1px solid ${plan.rec?"rgba(164,141,110,.15)":"rgba(164,141,110,.15)"}`, borderBottom:`1px solid ${plan.rec?"rgba(164,141,110,.15)":"rgba(164,141,110,.15)"}`, padding:"14px 0", marginBottom:28 }}>
-                    <p style={{ fontFamily:sans, fontSize:9, letterSpacing:"0.25em", color:plan.rec?"#100F0C":"#d4c3a6", textTransform:"uppercase", marginBottom:4 }}>Program Value Context</p>
+                    <p style={{ fontFamily:"'Lato', sans-serif", fontSize:11, letterSpacing:"0.25em", color:plan.rec?"#100F0C":"#d4c3a6", textTransform:"uppercase", marginBottom:4 , fontWeight:600 }}>Program Value Context</p>
                     <p style={{ fontFamily:ag, fontSize:isMobile?32:42, fontWeight:300, color:plan.rec?"#100F0C":"#d4c3a6", lineHeight:1, letterSpacing:"-0.02em", marginBottom:4 }}>{plan.hourly}</p>
-                    <p style={{ fontFamily:sans, fontSize:10, color:plan.rec?"#100F0C":"#FBF7EE", fontWeight:300 }}>{plan.hourlyNote}</p>
+                    <p style={{ fontFamily:lora, fontSize:10, color:plan.rec?"#100F0C":"#FBF7EE", fontWeight:300 }}>{plan.hourlyNote}</p>
                   </div>
-                  <p style={{ fontFamily:sans, fontSize:9, letterSpacing:"0.25em", color:plan.rec?"#100F0C":"#d4c3a6", textTransform:"uppercase", marginBottom:14 }}>Tuition Options</p>
+                  <p style={{ fontFamily:"'Lato', sans-serif", fontSize:11, letterSpacing:"0.25em", color:plan.rec?"#100F0C":"#d4c3a6", textTransform:"uppercase", marginBottom:14 , fontWeight:600 }}>Tuition Options</p>
                   <div style={{ display:"flex", flexDirection:"column", gap:8, marginBottom:28 }}>
                     {plan.plans.map((po,j) => (
                       <div key={j} style={{ padding:"12px 14px", background:plan.rec?"rgba(1,0,0,.08)":"rgba(164,141,110,.1)", borderLeft:`2px solid ${plan.rec?"#100F0C":"#d4c3a6"}` }}>
@@ -15843,7 +15845,7 @@ function VentureDetailPage({ setPage, openInquiry }) {
                       </div>
                     ))}
                   </div>
-                  <button onClick={() => openInquiry&&openInquiry("full-program")} style={{ fontFamily:sans, padding:"15px 20px", background:plan.rec?"#100F0C":"#d4c3a6", border:plan.rec?"1px solid #100F0C":"1px solid #d4c3a6", color:plan.rec?"#d4c3a6":"#100F0C", fontSize:10, fontWeight:400, letterSpacing:"0.2em", textTransform:"uppercase", cursor:"pointer", width:"100%" }}>{plan.cta}</button>
+                  <button onClick={() => openInquiry&&openInquiry("full-program")} style={{ fontFamily:sans, padding:"15px 20px", background:plan.rec?"#100F0C":"#d4c3a6", border:plan.rec?"1px solid #100F0C":"1px solid #d4c3a6", color:plan.rec?"#d4c3a6":"#100F0C", fontSize:10, fontWeight:700, letterSpacing:"0.2em", textTransform:"uppercase", cursor:"pointer", width:"100%" }}>{plan.cta}</button>
                 </div>
               </div>
             ))}
@@ -15876,8 +15878,8 @@ function VentureDetailPage({ setPage, openInquiry }) {
           <div style={{ maxWidth:1100, margin:"0 auto" }}>
             <div style={{ display:"grid", gridTemplateColumns:isMobile?"1fr":"1.1fr 0.9fr", gap:isMobile?32:56, alignItems:"center", marginBottom:isMobile?52:72 }}>
               <div>
-                <p style={{ fontFamily:sans, fontSize:10, letterSpacing:"0.55em", color:"#100F0C", fontWeight:400, textTransform:"uppercase", marginBottom:20 }}>Admissions</p>
-                <h2 style={{ fontFamily:ag, fontSize:"clamp(32px,4vw,46px)", fontWeight:300, color:"#100F0C", lineHeight:1.06, letterSpacing:"-0.02em", marginBottom:20 }}>Applications Reviewed<br/><em style={{ color:"#100F0C" }}>on a rolling basis.</em></h2>
+                <p style={{ fontFamily:"'Lato', sans-serif", fontSize:11, letterSpacing:"0.55em", color:"#100F0C", fontWeight:600, textTransform:"uppercase", marginBottom:20 }}>Admissions</p>
+                <h2 style={{ fontFamily:ag, fontSize:"clamp(32px,4vw,46px)", fontWeight:300, color:"#100F0C", lineHeight:1.06, letterSpacing:"-0.02em", marginBottom:20 }}>Applications Reviewed<br/><em style={{ color:"#100F0C" }}>on a rolling basis</em></h2>
                 <p style={{ fontFamily:lora, fontSize:isMobile?15:16, color:"#100F0C", fontWeight:300, lineHeight:1.95, margin:0 }}>Excalibur reviews each applicant individually — for genuine ambition, intellectual curiosity, and the readiness to contribute seriously to the standard of the program. Cohorts are limited to twenty students per group.</p>
               </div>
               <div style={{ position:"relative", height:isMobile?280:400, display:"flex", alignItems:"center", justifyContent:"center" }}>
@@ -15896,25 +15898,25 @@ function VentureDetailPage({ setPage, openInquiry }) {
                   <div style={{ padding:isMobile?"28px 28px 22px":"36px 36px 28px", borderBottom:"1px solid rgba(16,15,12,.1)" }}>
                     <div style={{ display:"flex", alignItems:"baseline", gap:14, marginBottom:6 }}>
                       <span style={{ fontFamily:ag, fontSize:14, fontWeight:600, color:"#A48D6E", letterSpacing:"0.02em" }}>{d.stage}</span>
-                      <p style={{ fontFamily:sans, fontSize:9, letterSpacing:"0.3em", color:"#100F0C", textTransform:"uppercase", fontWeight:400, margin:0 }}>{d.title}</p>
+                      <p style={{ fontFamily:"'Lato', sans-serif", fontSize:11, letterSpacing:"0.3em", color:"#100F0C", textTransform:"uppercase", fontWeight:600, margin:0 }}>{d.title}</p>
                     </div>
                   </div>
                   <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr" }}>
                     <div style={{ background:"#34150F", padding:isMobile?"24px 20px":"30px 28px", borderRight:"1px solid rgba(16,15,12,.12)" }}>
-                      <p style={{ fontFamily:sans, fontSize:9, letterSpacing:"0.2em", color:"rgba(228,213,193,.65)", textTransform:"uppercase", marginBottom:10, fontWeight:400 }}>Priority</p>
+                      <p style={{ fontFamily:"'Lato', sans-serif", fontSize:11, letterSpacing:"0.2em", color:"rgba(228,213,193,.65)", textTransform:"uppercase", marginBottom:10, fontWeight:600 }}>Priority</p>
                       <p style={{ lineHeight:1.05, marginBottom:8 }}>
                         <span style={{ fontFamily:ag, fontSize:isMobile?26:30, fontWeight:500, color:"#E4D5C1", letterSpacing:"-0.02em" }}>{d.priorityMD}</span>
                         <span style={{ fontFamily:ag, fontSize:isMobile?15:17, fontWeight:300, color:"rgba(228,213,193,.7)", letterSpacing:"-0.01em", marginLeft:6 }}>{d.priorityY}</span>
                       </p>
-                      <p style={{ fontFamily:sans, fontSize:11, color:"rgba(228,213,193,.75)", fontWeight:300, lineHeight:1.5, margin:0 }}>{d.priorityNote}</p>
+                      <p style={{ fontFamily:lora, fontSize:11, color:"rgba(228,213,193,.75)", fontWeight:300, lineHeight:1.5, margin:0 }}>{d.priorityNote}</p>
                     </div>
                     <div style={{ padding:isMobile?"24px 20px":"30px 28px" }}>
-                      <p style={{ fontFamily:sans, fontSize:9, letterSpacing:"0.2em", color:"rgba(16,15,12,.5)", textTransform:"uppercase", marginBottom:10, fontWeight:400 }}>Regular</p>
+                      <p style={{ fontFamily:"'Lato', sans-serif", fontSize:11, letterSpacing:"0.2em", color:"rgba(16,15,12,.5)", textTransform:"uppercase", marginBottom:10, fontWeight:600 }}>Regular</p>
                       <p style={{ lineHeight:1.05, marginBottom:8 }}>
                         <span style={{ fontFamily:ag, fontSize:isMobile?26:30, fontWeight:400, color:"#100F0C", letterSpacing:"-0.02em" }}>{d.regularMD}</span>
                         <span style={{ fontFamily:ag, fontSize:isMobile?15:17, fontWeight:300, color:"rgba(16,15,12,.55)", letterSpacing:"-0.01em", marginLeft:6 }}>{d.regularY}</span>
                       </p>
-                      <p style={{ fontFamily:sans, fontSize:11, color:"rgba(16,15,12,.65)", fontWeight:300, lineHeight:1.5, margin:0 }}>{d.regularNote}</p>
+                      <p style={{ fontFamily:lora, fontSize:11, color:"rgba(16,15,12,.65)", fontWeight:300, lineHeight:1.5, margin:0 }}>{d.regularNote}</p>
                     </div>
                   </div>
                 </div>
@@ -15924,15 +15926,15 @@ function VentureDetailPage({ setPage, openInquiry }) {
             {/* PROGRAM BEGINS — Venture */}
             <div style={{ background:"#d4c3a6", padding:isMobile?"28px 28px":"36px 52px", display:"grid", gridTemplateColumns:isMobile?"1fr":"1fr 1fr 1fr", gap:isMobile?20:2, marginBottom:56 }}>
               <div style={{ display:"flex", flexDirection:"column", justifyContent:"center" }}>
-                <p style={{ fontFamily:sans, fontSize:10, letterSpacing:"0.4em", color:"#100F0C", textTransform:"uppercase", fontWeight:400, margin:0 }}>Program Begins</p>
-                <p style={{ fontFamily:sans, fontSize:9, letterSpacing:"0.2em", color:"rgba(16,15,12,.6)", textTransform:"uppercase", fontWeight:400, margin:"4px 0 0" }}>Venture Semester · 2027</p>
+                <p style={{ fontFamily:"'Lato', sans-serif", fontSize:11, letterSpacing:"0.4em", color:"#100F0C", textTransform:"uppercase", fontWeight:600, margin:0 }}>Program Begins</p>
+                <p style={{ fontFamily:"'Lato', sans-serif", fontSize:11, letterSpacing:"0.2em", color:"rgba(16,15,12,.6)", textTransform:"uppercase", fontWeight:600, margin:"4px 0 0" }}>Venture Semester · 2027</p>
               </div>
               <div style={{ borderLeft:isMobile?"none":"1px solid rgba(16,15,12,.2)", paddingLeft:isMobile?0:40 }}>
-                <p style={{ fontFamily:sans, fontSize:9, letterSpacing:"0.22em", color:"rgba(16,15,12,.55)", textTransform:"uppercase", margin:"0 0 6px", fontWeight:400 }}>Weekday Track</p>
+                <p style={{ fontFamily:"'Lato', sans-serif", fontSize:11, letterSpacing:"0.22em", color:"rgba(16,15,12,.55)", textTransform:"uppercase", margin:"0 0 6px", fontWeight:600 }}>Weekday Track</p>
                 <p style={{ fontFamily:ag, fontSize:isMobile?28:38, fontWeight:400, color:"#100F0C", margin:0, letterSpacing:"-0.025em", lineHeight:1 }}>January 26, 2027</p>
               </div>
               <div style={{ borderLeft:isMobile?"none":"1px solid rgba(16,15,12,.2)", paddingLeft:isMobile?0:40 }}>
-                <p style={{ fontFamily:sans, fontSize:9, letterSpacing:"0.22em", color:"rgba(16,15,12,.55)", textTransform:"uppercase", margin:"0 0 6px", fontWeight:400 }}>Saturday Track</p>
+                <p style={{ fontFamily:"'Lato', sans-serif", fontSize:11, letterSpacing:"0.22em", color:"rgba(16,15,12,.55)", textTransform:"uppercase", margin:"0 0 6px", fontWeight:600 }}>Saturday Track</p>
                 <p style={{ fontFamily:ag, fontSize:isMobile?28:38, fontWeight:400, color:"#100F0C", margin:0, letterSpacing:"-0.025em", lineHeight:1 }}>January 30, 2027</p>
               </div>
             </div>
