@@ -14,6 +14,36 @@ const charcoal = "#010000";
 
 // ── RESPONSIVE HOOK ──
 
+// ── TIME RANGE PICKER — choose one or multiple time ranges ──
+function TimeRangePicker({ value, onChange, inputStyle, isMobile }) {
+  const [internal, setInternal] = useState([{ start: "", end: "" }]);
+  const ranges = value || internal;
+  const setRanges = onChange || setInternal;
+  const baseInput = inputStyle || { background: "#FBF7EE", border: "1px solid rgba(0,0,0,.2)", color: "#010000", padding: "13px 16px", fontFamily: "'Lato', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" };
+  const update = (i, key, val) => {
+    const next = ranges.map((r, idx) => idx === i ? { ...r, [key]: val } : r);
+    setRanges(next);
+  };
+  const addRange = () => setRanges([...ranges, { start: "", end: "" }]);
+  const removeRange = (i) => setRanges(ranges.filter((_, idx) => idx !== i));
+  return (
+    <div style={{ marginBottom: 10 }}>
+      {ranges.map((r, i) => (
+        <div key={i} style={{ display: "grid", gridTemplateColumns: "1fr 1fr 28px", gap: 8, marginBottom: 8, alignItems: "center" }}>
+          <input type="time" value={r.start} onChange={e => update(i, "start", e.target.value)} className="inquiry-input" style={baseInput} />
+          <input type="time" value={r.end} onChange={e => update(i, "end", e.target.value)} className="inquiry-input" style={baseInput} />
+          {ranges.length > 1 ? (
+            <button type="button" onClick={() => removeRange(i)} style={{ background: "transparent", border: "1px solid rgba(0,0,0,.2)", color: "#010000", cursor: "pointer", fontSize: 14, lineHeight: 1, height: 44, width: 28 }}>×</button>
+          ) : <span />}
+        </div>
+      ))}
+      <button type="button" onClick={addRange} style={{ fontFamily: "'Lato', sans-serif", fontSize: 11, letterSpacing: "0.08em", textTransform: "uppercase", background: "transparent", border: "none", color: "#A48D6E", cursor: "pointer", padding: "4px 0", fontWeight: 700 }}>
+        + Add another time range
+      </button>
+    </div>
+  );
+}
+
 
 // ─────────────────────────────────────────────────────────
 // WEB3FORMS SUBMIT
@@ -1624,9 +1654,9 @@ function CurriculumPage({ setPage, openInquiry }) {
                 <option value="email">Email</option>
                 <option value="either">Either</option>
               </select>
-              <input type="text" placeholder="Preferred Consultation Date(s)" className="inquiry-input" style={{ background: "#FBF7EE", border: "1px solid rgba(0,0,0,.2)", color: "#010000", padding: "13px 16px", fontFamily: "'Lato', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
+              <input type="date" placeholder="Preferred Consultation Date" className="inquiry-input" style={{ background: "#FBF7EE", border: "1px solid rgba(0,0,0,.2)", color: "#010000", padding: "13px 16px", fontFamily: "'Lato', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
             </div>
-            <input type="text" placeholder="Preferred Times (for example, mornings, evenings, or weekends)" className="inquiry-input" style={{ background: "#FBF7EE", border: "1px solid rgba(0,0,0,.2)", color: "#010000", padding: "13px 16px", fontFamily: "'Lato', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%", marginBottom: 10 }} />
+            <TimeRangePicker isMobile={isMobile} />
             <textarea placeholder="Questions or context you would like us to know (optional)" className="inquiry-input" rows={4} style={{ background: "#FBF7EE", border: "1px solid rgba(0,0,0,.2)", color: "#010000", padding: "13px 16px", fontFamily: "'Lato', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%", marginBottom: 28, resize: "vertical" }} />
             <button onClick={() => openInquiry && openInquiry("curriculum")} style={{ fontFamily: "'Lato', sans-serif", padding: "15px 40px", background: "#DAC8AA", border: "none", color: "#100F0C", fontSize: 11, fontWeight: 600, letterSpacing: "0.15em", textTransform: "uppercase", cursor: "pointer", width: "100%" }}>REQUEST A PRIVATE CONSULTATION</button>
           </div>
@@ -1938,9 +1968,9 @@ function IntensivePage({ setPage, openInquiry }) {
                 <option value="email">Email</option>
                 <option value="either">Either</option>
               </select>
-              <input type="text" placeholder="Preferred Consultation Date(s)" className="inquiry-input" style={{ background: "#FBF7EE", border: "1px solid rgba(0,0,0,.2)", color: "#010000", padding: "13px 16px", fontFamily: "'Lato', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
+              <input type="date" placeholder="Preferred Consultation Date" className="inquiry-input" style={{ background: "#FBF7EE", border: "1px solid rgba(0,0,0,.2)", color: "#010000", padding: "13px 16px", fontFamily: "'Lato', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
             </div>
-            <input type="text" placeholder="Preferred Times (for example, mornings, evenings, or weekends)" className="inquiry-input" style={{ background: "#FBF7EE", border: "1px solid rgba(0,0,0,.2)", color: "#010000", padding: "13px 16px", fontFamily: "'Lato', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%", marginBottom: 10 }} />
+            <TimeRangePicker isMobile={isMobile} />
             <textarea placeholder="Questions or context you would like us to know (optional)" className="inquiry-input" rows={4} style={{ background: "#FBF7EE", border: "1px solid rgba(0,0,0,.2)", color: "#010000", padding: "13px 16px", fontFamily: "'Lato', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%", marginBottom: 28, resize: "vertical" }} />
             <button onClick={() => openInquiry && openInquiry("intensive")} style={{ fontFamily: "'Lato', sans-serif", padding: "15px 40px", background: "#DAC8AA", border: "none", color: "#100F0C", fontSize: 11, fontWeight: 600, letterSpacing: "0.15em", textTransform: "uppercase", cursor: "pointer", width: "100%" }}>REQUEST A PRIVATE CONSULTATION</button>
           </div>
@@ -3098,9 +3128,9 @@ function ApplyPage({ setPage, openInquiry }) {
                 <option value="email">Email</option>
                 <option value="either">Either</option>
               </select>
-              <input type="text" placeholder="Preferred Consultation Date(s)" className="inquiry-input" style={{ background: "#FBF7EE", border: "1px solid rgba(0,0,0,.2)", color: "#010000", padding: "13px 16px", fontFamily: "'Lato', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
+              <input type="date" placeholder="Preferred Consultation Date" className="inquiry-input" style={{ background: "#FBF7EE", border: "1px solid rgba(0,0,0,.2)", color: "#010000", padding: "13px 16px", fontFamily: "'Lato', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
             </div>
-            <input type="text" placeholder="Preferred Times (for example, mornings, evenings, or weekends)" className="inquiry-input" style={{ background: "#FBF7EE", border: "1px solid rgba(0,0,0,.2)", color: "#010000", padding: "13px 16px", fontFamily: "'Lato', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%", marginBottom: 10 }} />
+            <TimeRangePicker isMobile={isMobile} />
             <textarea placeholder="Questions or context you would like us to know (optional)" className="inquiry-input" rows={4} style={{ background: "#FBF7EE", border: "1px solid rgba(0,0,0,.2)", color: "#010000", padding: "13px 16px", fontFamily: "'Lato', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%", marginBottom: 28, resize: "vertical" }} />
             <button onClick={() => openInquiry && openInquiry("admissions")} style={{ fontFamily: "'Lato', sans-serif", padding: "15px 40px", background: "#DAC8AA", border: "none", color: "#100F0C", fontSize: 11, fontWeight: 600, letterSpacing: "0.15em", textTransform: "uppercase", cursor: "pointer", width: "100%" }}>REQUEST A PRIVATE CONSULTATION</button>
           </div>
@@ -3611,7 +3641,7 @@ function HomePage({ setPage, openInquiry }) {
           <div style={{ maxWidth: 860, margin: "0 auto", textAlign: "center", position: "relative", zIndex: 1 }}>
             {/* Top rule */}
             <div style={{ width: 40, height: 1, background: "#E4D5C1", margin: "0 auto 32px" }} />
-            <p style={{ fontFamily: serif, fontSize: 30, color:"#E4D5C1", fontWeight: 400, fontStyle: "normal", lineHeight: 1.65, letterSpacing: "0.01em", marginBottom: 36 }}>
+            <p style={{ fontFamily: serif, fontSize: isMobile ? 25 : 30, color:"#E4D5C1", fontWeight: 400, fontStyle: "normal", lineHeight: 1.65, letterSpacing: "0.01em", marginBottom: 36 }}>
               &ldquo;By the end of the program, every student will have pitched before live audiences, analyzed real businesses and presented advisory recommendations, launched a micro venture, worked in teams under pressure, and competed in Shark Tank-inspired finals before invited investors, founders, executives, and practitioners.&rdquo;
             </p>
             {/* Bottom rule */}
@@ -3631,7 +3661,7 @@ function HomePage({ setPage, openInquiry }) {
 
             {/* Summer */}
             <div
-              style={{ position:"relative", height:isMobile?320:580, overflow:"hidden", cursor:"pointer" }}
+              style={{ position:"relative", height:580, overflow:"hidden", cursor:"pointer" }}
               onClick={() => setPage("summer-detail")}
               onMouseEnter={e => { e.currentTarget.querySelector("img").style.transform = "scale(1.05)"; e.currentTarget.querySelector(".card-overlay").style.background = "linear-gradient(to top, rgba(0,0,0,0.92) 0%, rgba(0,0,0,0.65) 45%, rgba(0,0,0,0.15) 100%)"; }}
               onMouseLeave={e => { e.currentTarget.querySelector("img").style.transform = "scale(1.0)"; e.currentTarget.querySelector(".card-overlay").style.background = "linear-gradient(to top, rgba(0,0,0,0.97) 0%, rgba(0,0,0,0.75) 45%, rgba(0,0,0,0.2) 100%)"; }}
@@ -3652,7 +3682,7 @@ function HomePage({ setPage, openInquiry }) {
 
             {/* Flagship */}
             <div
-              style={{ position:"relative", height:isMobile?320:580, overflow:"hidden", cursor:"pointer" }}
+              style={{ position:"relative", height:580, overflow:"hidden", cursor:"pointer" }}
               onClick={() => setPage("flagship")}
               onMouseEnter={e => { e.currentTarget.querySelector("img").style.transform = "scale(1.05)"; e.currentTarget.querySelector(".card-overlay").style.background = "linear-gradient(to top, rgba(0,0,0,0.92) 0%, rgba(0,0,0,0.65) 45%, rgba(0,0,0,0.15) 100%)"; }}
               onMouseLeave={e => { e.currentTarget.querySelector("img").style.transform = "scale(1.0)"; e.currentTarget.querySelector(".card-overlay").style.background = "linear-gradient(to top, rgba(0,0,0,0.97) 0%, rgba(0,0,0,0.75) 45%, rgba(0,0,0,0.2) 100%)"; }}
@@ -3673,7 +3703,7 @@ function HomePage({ setPage, openInquiry }) {
 
             {/* Six-Week */}
             <div
-              style={{ position:"relative", height:isMobile?320:580, overflow:"hidden", cursor:"pointer" }}
+              style={{ position:"relative", height:580, overflow:"hidden", cursor:"pointer" }}
               onClick={() => setPage("intensive")}
               onMouseEnter={e => { e.currentTarget.querySelector("img").style.transform = "scale(1.05)"; e.currentTarget.querySelector(".card-overlay").style.background = "linear-gradient(to top, rgba(0,0,0,0.92) 0%, rgba(0,0,0,0.65) 45%, rgba(0,0,0,0.15) 100%)"; }}
               onMouseLeave={e => { e.currentTarget.querySelector("img").style.transform = "scale(1.0)"; e.currentTarget.querySelector(".card-overlay").style.background = "linear-gradient(to top, rgba(0,0,0,0.97) 0%, rgba(0,0,0,0.75) 45%, rgba(0,0,0,0.2) 100%)"; }}
@@ -3703,19 +3733,19 @@ function HomePage({ setPage, openInquiry }) {
       <div style={{ background:"#E4D5C1", borderTop:"1px solid rgba(16,15,12,.1)", display:"grid", gridTemplateColumns:isMobile?"1fr":"1fr 1fr", overflow:"hidden" }}>
         {/* LEFT — content */}
         <div style={{ padding:isMobile?"52px 28px":"80px 80px", display:"flex", flexDirection:"column", justifyContent:"center" }}>
-          <p style={{ fontFamily: sans, fontSize:10, letterSpacing:"0.2em", textTransform:"uppercase", color:"#34150F", fontWeight:700, marginBottom:24 }}>Foundation &amp; Venture Semesters</p>
-          <h2 style={{ fontFamily:"Garamond, serif", fontSize:"60px", fontWeight:400, lineHeight:1.0, letterSpacing:"0.08em", textTransform:"uppercase", color:"#34150F", margin:"0 0 14px" }}>
+          <p style={{ fontFamily: sans, fontSize:10, letterSpacing:"0.2em", textTransform:"uppercase", color:"#000000", fontWeight:700, marginBottom:24 }}>Foundation &amp; Venture Semesters</p>
+          <h2 style={{ fontFamily:"Garamond, serif", fontSize:isMobile?"58px":"60px", fontWeight:400, lineHeight:1.0, letterSpacing:"0.08em", textTransform:"uppercase", color:"#000000", margin:"0 0 14px" }}>
             Flagship Overview
           </h2>
-          <p style={{ fontFamily:"'Cormorant Garamond', Georgia, serif", fontStyle:"italic", fontSize:isMobile?"clamp(33px,7vw,51px)":"clamp(39px,3.5vw,63px)", fontWeight:400, color:"#34150F", margin:"0 0 28px", lineHeight:1.1 }}>
-            Two semesters. After school program. Limited Cohort.
+          <p style={{ fontFamily:"'Cormorant Garamond', Georgia, serif", fontStyle:"italic", fontSize:isMobile?"clamp(33px,7vw,51px)":"clamp(39px,3.5vw,63px)", fontWeight:400, color:"#000000", margin:"0 0 28px", lineHeight:1.1 }}>
+            Two semesters.<br/>After school program.<br/>Limited Cohort.
           </p>
-          <p style={{ fontFamily: "Lora, serif", fontSize:15, lineHeight:1.9, color:"#100F0C", fontWeight:400, letterSpacing:"0.02em", textAlign:"justify", marginBottom:36 }}>An academic-year formation across two semesters — the Foundation and the Venture. Business. Leadership. Public Speaking.</p>
+          <p style={{ fontFamily: "Lora, serif", fontSize:15, lineHeight:1.9, color:"#000000", fontWeight:400, letterSpacing:"0.02em", textAlign:"justify", marginBottom:36 }}>An academic-year formation across two semesters — the Foundation and the Venture. Business. Leadership. Public Speaking.</p>
           <div style={{ display:"flex", flexDirection:"column", gap:16 }}>
             {[["Foundation Semester","Sep 8 – Dec 19, 2026 · 14 weeks"],["Venture Semester","Jan 26 – May 22, 2027 · 16 weeks"],["WEEKEND Track","Saturday 10:30 – 3:30 PM"],["Weekday Track","Tuesday & Thursday · 4:00 - 6:30 PM"]].map(([k,v],i) => (
               <div key={i} style={{ display:"flex", gap:20, paddingBottom:16, borderBottom:"1px solid rgba(16,15,12,.15)", alignItems:"flex-start" }}>
-                <span style={{ fontFamily: sans, fontSize:10, letterSpacing:"0.12em", textTransform:"uppercase", color:"#34150F", fontWeight:700, width:160, minWidth:160, flexShrink:0, paddingTop:2 }}>{k}</span>
-                <span style={{ fontFamily: sans, fontSize:14, color:"#100F0C", fontWeight:400, lineHeight:1.55 }}>{v}</span>
+                <span style={{ fontFamily: sans, fontSize:10, letterSpacing:"0.12em", textTransform:"uppercase", color:"#000000", fontWeight:700, width:160, minWidth:160, flexShrink:0, paddingTop:2 }}>{k}</span>
+                <span style={{ fontFamily: sans, fontSize:14, color:"#000000", fontWeight:400, lineHeight:1.55 }}>{v}</span>
               </div>
             ))}
           </div>
@@ -3737,7 +3767,7 @@ function HomePage({ setPage, openInquiry }) {
         <div style={{ background:"#E4D5C1", padding:isMobile?"52px 28px 44px":"60px 72px 48px", position:"relative", borderBottom:"1px solid rgba(0,0,0,.1)" }}>
           {!isMobile && <div style={{ position:"absolute", inset:24, border:"1px solid rgba(216,183,140,.2)", pointerEvents:"none" }} />}
           
-          <p style={{ fontFamily: sans, fontSize:10, letterSpacing:"0.2em", textTransform:"uppercase", color:"#010000", fontWeight:700, marginBottom:20, position:"relative", zIndex:2 }}>The Excalibur Flagship · Foundation &amp; Venture Semesters</p>
+          <p style={{ fontFamily: sans, fontSize:10, letterSpacing:"0.2em", textTransform:"uppercase", color:"#010000", fontWeight:700, marginBottom:20, position:"relative", zIndex:2 }}>Foundation &amp; Venture Semesters</p>
           <div style={{ display:"grid", gridTemplateColumns:isMobile?"1fr":"1.25fr 0.75fr", gap:isMobile?40:56, alignItems:"end", position:"relative", zIndex:2 }}>
             <div>
               <h2 style={{ fontFamily:"'Bodoni Cyrillic', 'Bodoni MT', serif", fontSize:isMobile?"clamp(44px,10vw,68px)":"clamp(56px,6.5vw,92px)", fontWeight:400, lineHeight:0.92, letterSpacing:"0.04em", textTransform:"uppercase", color:"#010000", margin:"0 0 18px" }}>Two semesters.<br/><em style={{ fontWeight:300, color:"#010000" }}>One complete<br/>formation.</em></h2>
@@ -3891,7 +3921,7 @@ function HomePage({ setPage, openInquiry }) {
 
       {/* ── EVERY SESSION ── */}
       <div style={{ background: "#0F0F0F", padding: isMobile ? "48px 24px 40px" : "64px 80px 48px", textAlign: "center" }}>
-        <p style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.45em", color: "#E4D5C1", fontWeight: 700, textTransform: "uppercase", marginBottom: 14 }}>Every Session</p>
+        <p style={{ fontFamily: sans, fontSize: 12, letterSpacing: "0.2em", color: "#A48D6E", fontWeight: 700, textTransform: "uppercase", marginBottom: 16 }}>Every Session</p>
         <h2 style={{ fontFamily: eyebrow_font, fontSize: isMobile ? 32 : 44, fontWeight: 400, color: "#A48D6E", lineHeight: 1.0, marginBottom: 0, letterSpacing: "0.12em", textTransform: "uppercase" }}>A Session at Excalibur</h2>
       </div>
       <div style={{ background: "#0F0F0F", padding: isMobile ? "0 20px 56px" : "0 80px 72px" }}>
@@ -3912,8 +3942,9 @@ function HomePage({ setPage, openInquiry }) {
                   lineHeight: 1.85,
                   color: i === 1 ? "#000000" : "rgba(16, 15, 12, 1)",
                   fontWeight: 300,
-                  textAlign: "justify",
-                  margin: "0 -20px"
+                  textAlign: "left",
+                  margin: 0,
+                  padding: isMobile ? "0 6px" : 0
                 }}
               >
                 {b.desc}
@@ -3928,9 +3959,9 @@ function HomePage({ setPage, openInquiry }) {
         <div style={{ maxWidth:1100, margin:"0 auto" }}>
           <p style={{ fontFamily:sans, fontSize:10, letterSpacing:"0.45em", color:"#010000", fontWeight:600, textTransform:"uppercase", marginBottom:12 }}>INSIDE THE CLASSROOM</p>
           <div style={{ marginBottom:36 }}><h2 style={{ fontFamily:"Garamond, serif", fontSize:isMobile?38:55, fontWeight:400, color:"#010000", lineHeight:0.95, letterSpacing:"0.06em", textTransform:"uppercase", margin:"0 0 4px" }}>Excalibur</h2><h2 style={{ fontFamily:"'Cormorant Garamond', Georgia, serif", fontSize:isMobile?"clamp(46px,6vw,80px)":"clamp(44px,6vw,80px)", fontWeight:300, color:"#010000", lineHeight:0.95, letterSpacing:"-0.04em", margin:0, fontStyle:"italic" }}>Formation & Curriculum</h2></div>
-          <div style={{ display:"flex", alignItems:"flex-end", gap:0, marginBottom:48, borderBottom:"1px solid rgba(0,0,0,.2)" }}>
+          <div style={{ display:"flex", alignItems:"flex-end", gap:0, marginBottom:48, borderBottom:"1px solid rgba(0,0,0,.2)", overflowX: isMobile ? "auto" : "visible", WebkitOverflowScrolling:"touch", flexWrap:"nowrap" }}>
             {[{lbl:"Core Modules",val:"master"},{lbl:"War Room",val:"warroom"},{lbl:"Art of Class",val:"aoc"},{lbl:"Venture Modules",val:"vmods"},{lbl:"Venture Studio",val:"vstudio"}].map((t,i) => (
-              <button key={t.val} onClick={() => setActiveCurrTab(t.val)} style={{ fontFamily:serif, fontSize:isMobile?20:26, fontWeight:activeCurrTab===t.val?600:500, color:"#010000", background:"none", border:"none", borderBottom:activeCurrTab===t.val?`2px solid #010000`:"2px solid transparent", marginBottom:-1, padding:isMobile?"12px 20px 14px":"14px 32px 16px", cursor:"pointer", transition:"all .2s", letterSpacing:"-0.01em" }}>
+              <button key={t.val} onClick={() => setActiveCurrTab(t.val)} style={{ fontFamily:serif, fontSize:isMobile?20:26, fontWeight:activeCurrTab===t.val?600:500, color:"#010000", background:"none", border:"none", borderBottom:activeCurrTab===t.val?`2px solid #010000`:"2px solid transparent", marginBottom:-1, padding:isMobile?"12px 20px 14px":"14px 32px 16px", cursor:"pointer", transition:"all .2s", letterSpacing:"-0.01em", whiteSpace:"nowrap", flexShrink:0 }}>
                 {t.lbl}
               </button>
             ))}
@@ -3939,40 +3970,6 @@ function HomePage({ setPage, openInquiry }) {
           {activeCurrTab==="master" && (
             <div>
               <p style={{ fontFamily:serif, fontSize:isMobile?24:28, color:"#010000", fontStyle:"italic", lineHeight:1.75, marginBottom:36, maxWidth:680 }}>Rotating disciplines — taught by executive business leaders, CEOs, distinguished keynote speakers, and professors from leading universities.</p>
-              {isMobile ? (
-              <div style={{ borderTop:"1px solid rgba(0,0,0,.2)" }}>
-                {homeFMods.map((m,i) => {
-                  const open = activeModF === i;
-                  return (
-                    <div key={i} style={{ borderBottom:"1px solid rgba(0,0,0,.1)" }}>
-                      <div style={{ display:"grid", gridTemplateColumns:"48px 1fr 32px", gap:"0 16px", padding:"24px 0", alignItems:"center" }}>
-                        <span onClick={() => setActiveModF(open ? null : i)} style={{ fontFamily:serif, fontSize:12, color:open?"#010000":"rgba(0,0,0,.3)", fontWeight:300, cursor:"pointer" }}>{m.n}</span>
-                        <div onClick={() => setActiveModF(open ? null : i)} style={{ cursor:"pointer" }}>
-                          <p style={{ fontFamily:serif, fontSize:18, fontWeight:700, color:"#010000", lineHeight:1.2, letterSpacing:"-0.01em", margin:0 }}>{m.title}</p>
-                          {!open && <p style={{ fontFamily:sans, fontSize:11, color:"#010000", fontWeight:300, marginTop:4, margin:0, letterSpacing:"0.02em" }}>{m.tagline}</p>}
-                        </div>
-                        <span onClick={() => setActiveModF(open ? null : i)} style={{ fontFamily:sans, fontSize:20, fontWeight:900, color:"#010000", transform:open?"rotate(45deg)":"none", transition:"transform .25s", justifySelf:"end", lineHeight:1, cursor:"pointer" }}>+</span>
-                      </div>
-                      {open && (
-                        <div style={{ paddingBottom:28 }}>
-                          <p style={{ fontFamily:eyebrow_font, fontSize:8, color:"#010000", letterSpacing:"0.3em", textTransform:"uppercase", fontWeight:400, marginBottom:12 }}>{m.sub}</p>
-                          <p style={{ fontFamily:serif, fontSize:15, color:"#010000", fontStyle:"italic", marginBottom:16, lineHeight:1.6 }}>{m.tagline}</p>
-                          <p style={{ fontFamily:sans, fontSize:13, lineHeight:1.95, color:"#010000", fontWeight:300, marginBottom:16 }}>{m.body.includes('This semester') ? m.body.split('This semester')[0].trim() : m.body}</p>
-                          <p style={{ fontFamily:eyebrow_font, fontSize:12, color:"#010000", letterSpacing:"0.3em", textTransform:"uppercase", fontWeight:400, marginBottom:12 }}>What students learn</p>
-                          {(m.learn||[]).map((x,j) => (
-                            <div key={j} style={{ display:"flex", gap:12, marginBottom:10, alignItems:"flex-start" }}>
-                              <div style={{ width:16, height:1, background:"#010000", marginTop:9, flexShrink:0 }}/>
-                              <span style={{ fontFamily:sans, fontSize:13, color:"#010000", fontWeight:300, lineHeight:1.7 }}>{x}</span>
-                            </div>
-                          ))}
-                          
-                        </div>
-                      )}
-                    </div>
-                  );
-                })}
-              </div>
-            ) : (
               <div style={{ borderTop:"1px solid rgba(0,0,0,.2)" }}>
                 {homeFMods.map((m,i) => {
                   const open = activeModF === i;
@@ -3985,7 +3982,7 @@ function HomePage({ setPage, openInquiry }) {
                           {!open && <p style={{ fontFamily:sans, fontSize:11, color:"#010000", fontWeight:300, marginTop:4, margin:0, letterSpacing:"0.02em" }}>{m.tagline}</p>}
                         </div>
                         <div style={{ display:"flex", alignItems:"center", justifyContent:"flex-end" }}>
-                          {m.slug && (
+                          {!isMobile && m.slug && (
                             <button onClick={e=>{e.stopPropagation();setActiveModF(open?null:i)}} style={{ fontFamily:sans, fontSize:9, letterSpacing:"0.16em", marginTop:16, padding:"13px 24px", background:"#100F0C", border:`1px solid rgba(188,166,150,.2)`, color:"#D9C7A9", textTransform:"uppercase", cursor:"pointer", fontWeight:700, whiteSpace:"nowrap", transition:"all .2s" }}
                               onMouseEnter={e=>{e.currentTarget.style.background="#320E0E";e.currentTarget.style.color="#A48D6E"}}
                               onMouseLeave={e=>{e.currentTarget.style.background="#100F0C";e.currentTarget.style.color="#D9C7A9"}}>
@@ -4022,7 +4019,6 @@ function HomePage({ setPage, openInquiry }) {
                   );
                 })}
               </div>
-            )}
             </div>
           )}
 
@@ -4219,12 +4215,12 @@ function HomePage({ setPage, openInquiry }) {
         <div style={{ maxWidth: 1100, margin: "0 auto" }}>
           <Fade><div style={{ textAlign: "center", marginBottom: 48 }}>
             <p style={{ fontFamily: sans, fontSize: 12, letterSpacing: "0.2em", color:"#010000", fontWeight: 500, textTransform: "uppercase", marginBottom: 12 }}>EXCALIBUR TEAM</p>
-            <h2 style={{ fontFamily: "\'Bodoni Cyrillic\', serif", fontSize: isMobile ? 26 : 36, fontWeight: 400, color:"#010000", lineHeight: 1.1, letterSpacing: "0.04em", textTransform: "uppercase", marginBottom: 16 }}>FIELD TRIPS & EXPEDITIONS</h2>
+            <h2 style={{ fontFamily: "\'Bodoni Cyrillic\', serif", fontSize: isMobile ? 26 : 36, fontWeight: 400, color:"#010000", lineHeight: 1.1, letterSpacing: "0.04em", textTransform: "uppercase", marginBottom: 16 }}>LEADERSHIP & FACULTY</h2>
             <p style={{ fontFamily: "\'Raleway\', sans-serif", fontSize: 14, color:"#010000", fontWeight: 400, lineHeight: 1.9, maxWidth: 680, margin: "0 auto", textAlign: "justify" }}>Excalibur faculty come from the arenas where leadership is tested: a CEO who built the world's first autonomous racing series, directed the Formula BMW program, and oversaw a $13B NASDAQ listing, a former Citigroup Managing Director and Georgetown MBA professor with 100+ M&A transactions, 600+ CEO advisory engagements, EVP/CFO leadership at two NYSE-listed companies, TEDx speaker, and a doctoral candidate serving as an Orange County Sheriff's Department spokesman. They have led companies, advised CEOs, taught MBA students, spoken on stages from West Point to Ivy League institutions, and bring that experience into the Excalibur classroom.</p>
           </div></Fade>
           <Fade d={.08}>
             <div style={{ background: "#E4D5C1", padding: 2 }}>
-              <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(3, 1fr)", gap: 2, background: "#E4D5C1", alignItems: "stretch" }}>
+              <div style={{ display: "grid", gridTemplateColumns: isMobile ? "repeat(2, 1fr)" : "repeat(3, 1fr)", gap: 2, background: "#E4D5C1", alignItems: "stretch" }}>
                 {coaches.map((co, i) => (
                   <Fade key={i} d={i * .04}>
                     <CoachCard c={co} i={i} setPage={setPage} light={true} />
@@ -4487,9 +4483,9 @@ function HomePage({ setPage, openInquiry }) {
                 <option value="email">Email</option>
                 <option value="either">Either</option>
               </select>
-              <input type="text" placeholder="Preferred Consultation Date(s)" className="inquiry-input" style={{ background: "#FBF7EE", border: "1px solid rgba(0,0,0,.2)", color: "#010000", padding: "13px 16px", fontFamily: "'Lato', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
+              <input type="date" placeholder="Preferred Consultation Date" className="inquiry-input" style={{ background: "#FBF7EE", border: "1px solid rgba(0,0,0,.2)", color: "#010000", padding: "13px 16px", fontFamily: "'Lato', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
             </div>
-            <input type="text" placeholder="Preferred Times (for example, mornings, evenings, or weekends)" className="inquiry-input" style={{ background: "#FBF7EE", border: "1px solid rgba(0,0,0,.2)", color: "#010000", padding: "13px 16px", fontFamily: "'Lato', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%", marginBottom: 10 }} />
+            <TimeRangePicker isMobile={isMobile} />
             <textarea placeholder="Questions or context you would like us to know (optional)" className="inquiry-input" rows={4} style={{ background: "#FBF7EE", border: "1px solid rgba(0,0,0,.2)", color: "#010000", padding: "13px 16px", fontFamily: "'Lato', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%", marginBottom: 28, resize: "vertical" }} />
             <button onClick={() => openInquiry && openInquiry("home")} style={{ fontFamily: "'Lato', sans-serif", padding: "15px 40px", background: "#DAC8AA", border: "none", color: "#100F0C", fontSize: 11, fontWeight: 600, letterSpacing: "0.15em", textTransform: "uppercase", cursor: "pointer", width: "100%" }}>REQUEST A PRIVATE CONSULTATION</button>
           </div>
@@ -5948,7 +5944,7 @@ function StickyMobileCTA({ setPage, openInquiry }) {
   if (!isMobile) return null;
   return (
     <div style={{ position: "fixed", bottom: 0, left: 0, right: 0, zIndex: 999, background: "#E4D5C1", borderTop: "1px solid rgba(16,15,12,.15)" }}>
-      <button onClick={() => openInquiry && openInquiry()} style={{ width: "100%", fontFamily: "'Cormorant Garamond', 'adobe-garamond-pro', 'Garamond', Georgia, serif", background: "#E4D5C1", color:"#100F0C", padding: "14px 0", fontSize: 13, fontWeight: 700, letterSpacing: "0.2em", textTransform: "uppercase", border: "none", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", gap: 8 }}>
+      <button onClick={() => openInquiry && openInquiry()} style={{ width: "100%", fontFamily: "'Cormorant Garamond', 'adobe-garamond-pro', 'Garamond', Georgia, serif", background: "#E4D5C1", color:"#100F0C", padding: "14px 0", fontSize: 15, fontWeight: 700, letterSpacing: "0.2em", textTransform: "uppercase", border: "none", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", gap: 8 }}>
 Apply for Summer 2026 →
       </button>
     </div>
@@ -7544,9 +7540,9 @@ function SummerDetailPage({ setPage, openInquiry }) {
                 <option value="email">Email</option>
                 <option value="either">Either</option>
               </select>
-              <input type="text" placeholder="Preferred Consultation Date(s)" className="inquiry-input" style={{ background: "#FBF7EE", border: "1px solid rgba(0,0,0,.2)", color: "#010000", padding: "13px 16px", fontFamily: "'Lato', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
+              <input type="date" placeholder="Preferred Consultation Date" className="inquiry-input" style={{ background: "#FBF7EE", border: "1px solid rgba(0,0,0,.2)", color: "#010000", padding: "13px 16px", fontFamily: "'Lato', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
             </div>
-            <input type="text" placeholder="Preferred Times (for example, mornings, evenings, or weekends)" className="inquiry-input" style={{ background: "#FBF7EE", border: "1px solid rgba(0,0,0,.2)", color: "#010000", padding: "13px 16px", fontFamily: "'Lato', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%", marginBottom: 10 }} />
+            <TimeRangePicker isMobile={isMobile} />
             <textarea placeholder="Questions or context you would like us to know (optional)" className="inquiry-input" rows={4} style={{ background: "#FBF7EE", border: "1px solid rgba(0,0,0,.2)", color: "#010000", padding: "13px 16px", fontFamily: "'Lato', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%", marginBottom: 28, resize: "vertical" }} />
             <button onClick={() => openInquiry && openInquiry("summer")} style={{ fontFamily: "'Lato', sans-serif", padding: "15px 40px", background: "#DAC8AA", border: "none", color: "#100F0C", fontSize: 11, fontWeight: 600, letterSpacing: "0.15em", textTransform: "uppercase", cursor: "pointer", width: "100%" }}>REQUEST A PRIVATE CONSULTATION</button>
           </div>
@@ -7987,7 +7983,7 @@ function PortalPage({ setPage }) {
   const [appSaving, setAppSaving] = React.useState(false);
 
   const [consultations, setConsultations] = React.useState([]);
-  const [consultForm, setConsultForm] = React.useState({ preferredDates: "", preferredTimes: "", contactMethod: "", notes: "" });
+  const [consultForm, setConsultForm] = React.useState({ preferredDates: "", preferredTimes: [{ start: "", end: "" }], contactMethod: "", notes: "" });
   const [consultSending, setConsultSending] = React.useState(false);
 
   const [messages, setMessages] = React.useState([]);
@@ -8223,7 +8219,7 @@ function PortalPage({ setPage }) {
       student_id: student.id,
       requested_by_role: role,
       preferred_dates: consultForm.preferredDates,
-      preferred_times: consultForm.preferredTimes,
+      preferred_times: (consultForm.preferredTimes || []).filter(r => r.start && r.end).map(r => `${r.start}–${r.end}`).join(", "),
       contact_method: consultForm.contactMethod,
       notes: consultForm.notes,
     }).select().single();
@@ -8387,6 +8383,7 @@ function PortalPage({ setPage }) {
         ))}
       </div>
 
+      <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 380px", maxWidth: 1280, margin: "0 auto" }}>
       <div style={{ padding: isMobile ? "36px 24px 80px" : "56px 80px 100px", maxWidth: 820 }}>
 
         {/* STATUS TAB */}
@@ -8640,16 +8637,7 @@ function PortalPage({ setPage }) {
           };
 
           return (
-            <div style={{ display: "flex", flexDirection: isMobile ? "column" : "row", background: parch, minHeight: isMobile ? "auto" : 560 }}>
-
-              {/* LOGO HALF */}
-              <div style={{ flex: 1, background: dark, display: "flex", alignItems: "center", justifyContent: "center", padding: isMobile ? "36px 24px" : "48px" }}>
-                <img src={LOGO_URL} alt="Excalibur Academy" style={{ width: isMobile ? 140 : 220, height: "auto", objectFit: "contain", filter: "drop-shadow(0 0 50px rgba(228,213,193,.12))" }} onError={e => e.target.style.display = "none"} />
-              </div>
-
-              {/* QUESTIONNAIRE HALF */}
-              <div style={{ flex: 1, padding: isMobile ? "32px 20px" : "48px", display: "flex", justifyContent: "center" }}>
-                <div style={{ background: "#FFFFFF", width: "100%", maxWidth: 560, padding: isMobile ? "32px 24px" : "44px 48px", boxSizing: "border-box" }}>
+            <div style={{ background: "#FFFFFF", width: "100%", padding: isMobile ? "32px 24px" : "44px 48px", boxSizing: "border-box" }}>
                   <style>{`@keyframes slideInQ { from { transform: translateX(28px); opacity: 0; } to { transform: translateX(0); opacity: 1; } }`}</style>
 
                   <p style={{ fontFamily: lora, fontSize: 11, letterSpacing: "0.1em", color: "#000000", opacity: 0.5, textTransform: "uppercase", marginBottom: 24 }}>Section {secIndex + 1} of {total}</p>
@@ -8694,8 +8682,6 @@ function PortalPage({ setPage }) {
                       )}
                     </div>
                   </div>
-                </div>
-              </div>
             </div>
           );
         })()}
@@ -8707,8 +8693,8 @@ function PortalPage({ setPage }) {
             <p style={{ ...BODY, color: dark, lineHeight: 1.7, marginBottom: 28 }}>Submit your preferred dates and times, and a member of our admissions team will confirm a time with you directly.</p>
 
             <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 10, marginBottom: 10 }}>
-              <input type="text" placeholder="Preferred Date(s)" value={consultForm.preferredDates} onChange={e => setConsultForm(f => ({ ...f, preferredDates: e.target.value }))} style={inputStyle} />
-              <input type="text" placeholder="Preferred Time(s)" value={consultForm.preferredTimes} onChange={e => setConsultForm(f => ({ ...f, preferredTimes: e.target.value }))} style={inputStyle} />
+              <input type="date" placeholder="Preferred Date" value={consultForm.preferredDates} onChange={e => setConsultForm(f => ({ ...f, preferredDates: e.target.value }))} style={inputStyle} />
+              <TimeRangePicker isMobile={isMobile} value={consultForm.preferredTimes} onChange={(ranges) => setConsultForm(f => ({ ...f, preferredTimes: ranges }))} inputStyle={inputStyle} />
             </div>
             <select value={consultForm.contactMethod} onChange={e => setConsultForm(f => ({ ...f, contactMethod: e.target.value }))} style={{ ...inputStyle, marginBottom: 10, appearance: "none" }}>
               <option value="">Preferred Contact Method</option>
@@ -8781,6 +8767,13 @@ function PortalPage({ setPage }) {
           </div>
         )}
 
+      </div>
+
+      {!isMobile && (
+        <div style={{ background: dark, display: "flex", alignItems: "flex-start", justifyContent: "center", padding: "56px 40px", position: "sticky", top: 0, alignSelf: "stretch" }}>
+          <img src="https://i.imgur.com/Jxc33Ws.jpeg" alt="Excalibur Academy" style={{ width: "100%", maxWidth: 320, height: "auto", objectFit: "contain", position: "sticky", top: 56 }} onError={e => e.target.style.display = "none"} />
+        </div>
+      )}
       </div>
     </div>
   );
@@ -8888,9 +8881,9 @@ function ContactPage({ setPage, openInquiry }) {
                 <option value="email">Email</option>
                 <option value="either">Either</option>
               </select>
-              <input type="text" placeholder="Preferred Consultation Date(s)" className="inquiry-input" style={{ background: "#FBF7EE", border: "1px solid rgba(0,0,0,.2)", color: "#010000", padding: "13px 16px", fontFamily: "'Lato', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
+              <input type="date" placeholder="Preferred Consultation Date" className="inquiry-input" style={{ background: "#FBF7EE", border: "1px solid rgba(0,0,0,.2)", color: "#010000", padding: "13px 16px", fontFamily: "'Lato', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
             </div>
-            <input type="text" placeholder="Preferred Times (for example, mornings, evenings, or weekends)" className="inquiry-input" style={{ background: "#FBF7EE", border: "1px solid rgba(0,0,0,.2)", color: "#010000", padding: "13px 16px", fontFamily: "'Lato', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%", marginBottom: 10 }} />
+            <TimeRangePicker isMobile={isMobile} />
             <textarea placeholder="Questions or context you would like us to know (optional)" className="inquiry-input" rows={4} style={{ background: "#FBF7EE", border: "1px solid rgba(0,0,0,.2)", color: "#010000", padding: "13px 16px", fontFamily: "'Lato', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%", marginBottom: 28, resize: "vertical" }} />
             <button onClick={() => openInquiry && openInquiry("contact")} style={{ fontFamily: "'Lato', sans-serif", padding: "15px 40px", background: "#DAC8AA", border: "none", color: "#100F0C", fontSize: 11, fontWeight: 600, letterSpacing: "0.15em", textTransform: "uppercase", cursor: "pointer", width: "100%" }}>REQUEST A PRIVATE CONSULTATION</button>
           </div>
@@ -11405,9 +11398,9 @@ function FlagshipDetailPage2({ setPage, openInquiry }) {
                 <option value="email">Email</option>
                 <option value="either">Either</option>
               </select>
-              <input type="text" placeholder="Preferred Consultation Date(s)" className="inquiry-input" style={{ background: "#FBF7EE", border: "1px solid rgba(0,0,0,.2)", color: "#010000", padding: "13px 16px", fontFamily: "'Lato', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
+              <input type="date" placeholder="Preferred Consultation Date" className="inquiry-input" style={{ background: "#FBF7EE", border: "1px solid rgba(0,0,0,.2)", color: "#010000", padding: "13px 16px", fontFamily: "'Lato', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
             </div>
-            <input type="text" placeholder="Preferred Times (for example, mornings, evenings, or weekends)" className="inquiry-input" style={{ background: "#FBF7EE", border: "1px solid rgba(0,0,0,.2)", color: "#010000", padding: "13px 16px", fontFamily: "'Lato', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%", marginBottom: 10 }} />
+            <TimeRangePicker isMobile={isMobile} />
             <textarea placeholder="Questions or context you would like us to know (optional)" className="inquiry-input" rows={4} style={{ background: "#FBF7EE", border: "1px solid rgba(0,0,0,.2)", color: "#010000", padding: "13px 16px", fontFamily: "'Lato', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%", marginBottom: 28, resize: "vertical" }} />
             <button onClick={() => openInquiry && openInquiry("flagship")} style={{ fontFamily: "'Lato', sans-serif", padding: "15px 40px", background: "#DAC8AA", border: "none", color: "#100F0C", fontSize: 11, fontWeight: 600, letterSpacing: "0.15em", textTransform: "uppercase", cursor: "pointer", width: "100%" }}>REQUEST A PRIVATE CONSULTATION</button>
           </div>
