@@ -153,7 +153,7 @@ function PortalCalendar({ events = [], sans, dark = "#15151A", amber = "#E8A33D"
                   </div>
                 )}
                 {d && ev && (
-                  <div style={{ width: 4, height: 4, borderRadius: "50%", background: amber, margin: "2px auto 0" }} />
+                  <div style={{ width: 4, height: 4, borderRadius: "50%", background: ev.color || amber, margin: "2px auto 0" }} />
                 )}
               </div>
             );
@@ -164,6 +164,16 @@ function PortalCalendar({ events = [], sans, dark = "#15151A", amber = "#E8A33D"
         <div style={{ marginTop: 16, paddingTop: 14, borderTop: "1px solid rgba(255,255,255,.08)" }}>
           <p style={{ fontFamily: sans, fontSize: 12, color: "rgba(255,255,255,.5)", marginBottom: 2 }}>{nextEvent.label}</p>
           <p style={{ fontFamily: sans, fontSize: 14, fontWeight: 700, color: "#fff" }}>{nextEvent.date.toLocaleDateString(undefined, { weekday: "long", month: "long", day: "numeric", year: "numeric" })}</p>
+        </div>
+      )}
+      {events.length > 0 && (
+        <div style={{ marginTop: 14, display: "flex", flexWrap: "wrap", gap: 12 }}>
+          {Array.from(new Map(events.map(e => [e.color || amber, e])).entries()).map(([color, e]) => (
+            <div key={color} style={{ display: "flex", alignItems: "center", gap: 6 }}>
+              <span style={{ width: 6, height: 6, borderRadius: "50%", background: color, display: "inline-block" }} />
+              <span style={{ fontFamily: sans, fontSize: 11, color: "rgba(255,255,255,.5)" }}>{(e.label || "").split(" — ")[0] || e.label}</span>
+            </div>
+          ))}
         </div>
       )}
     </div>
@@ -8096,12 +8106,13 @@ function PortalPage({ setPage }) {
     // Section 5: Shared Short Answers
     dreamAnswer: "", whyJoin: "", leadershipStory: "", growthArea: "", publicSpeakingComfort: "", teamRole: "",
     // Section 6: Program-specific (kept nested, mirrors program_responses jsonb)
-    summer: { hasIdea: "", ideaDescription: "", ventureTypes: [], teamComfort: "", outsideCommitment: "", successDefinition: "" },
+    summer: { hasIdea: "", ideaDescription: "", ventureTypes: [], teamComfort: "", outsideCommitment: "", successDefinition: "", trackInterest: "", teamRolePreference: "" },
     foundation: { excitingAreas: [], leaderVision: "", shapingExperience: "", commitmentReady: "", endGoal: "" },
     venture: { hasConcept: "", conceptDescription: "", excitingAreas: [], trackInterest: "", problemToSolve: "", commitmentReady: "", endPresentation: "" },
     // Section 7: Schedule & Availability
     track: "", summerAttendFull: "", summerConflicts: "", summerAttendFinale: "", academicYearConflicts: "",
     // Section 8: Parent Confirmation
+    hasCollegeCounselor: "", coordinateWithCounselor: "",
     parentStatementAgreed: false, learningStyleNotes: "", dietaryNotes: "",
     // Section 9: Submission Agreement
     accuracyConfirmed: false, parentPermissionConfirmed: false, studentSignature: "", parentSignature: "",
@@ -8256,10 +8267,11 @@ function PortalPage({ setPage }) {
           gpaRange: app.gpa_range || "", academicInterests: app.academic_interests || [], extracurriculars: app.extracurriculars || "", priorProgramsExperience: app.prior_programs_experience ? "yes" : "", priorProgramsDescription: app.prior_programs_description || "",
           programs: app.programs || [], applyingMultiple: app.applying_multiple ? "yes" : "", firstChoiceProgram: app.first_choice_program || "", heardAbout: app.heard_about || "", referralName: app.referral_name || "",
           dreamAnswer: app.dream_answer || "", whyJoin: app.why_join || "", leadershipStory: app.leadership_story || "", growthArea: app.growth_area || "", publicSpeakingComfort: app.public_speaking_comfort || "", teamRole: app.team_role || "",
-          summer: { hasIdea: "", ideaDescription: "", ventureTypes: [], teamComfort: "", outsideCommitment: "", successDefinition: "", ...(pr.summer || {}) },
+          summer: { hasIdea: "", ideaDescription: "", ventureTypes: [], teamComfort: "", outsideCommitment: "", successDefinition: "", trackInterest: "", teamRolePreference: "", ...(pr.summer || {}) },
           foundation: { excitingAreas: [], leaderVision: "", shapingExperience: "", commitmentReady: "", endGoal: "", ...(pr.foundation || {}) },
           venture: { hasConcept: "", conceptDescription: "", excitingAreas: [], trackInterest: "", problemToSolve: "", commitmentReady: "", endPresentation: "", ...(pr.venture || {}) },
           track: app.track || "", summerAttendFull: app.summer_attend_full || "", summerConflicts: app.summer_conflicts || "", summerAttendFinale: app.summer_attend_finale || "", academicYearConflicts: app.academic_year_conflicts || "",
+          hasCollegeCounselor: app.has_college_counselor || "", coordinateWithCounselor: app.coordinate_with_counselor || "",
           parentStatementAgreed: app.parent_statement_agreed || false, learningStyleNotes: app.learning_style_notes || "", dietaryNotes: app.dietary_notes || "",
           accuracyConfirmed: app.accuracy_confirmed || false, parentPermissionConfirmed: app.parent_permission_confirmed || false, studentSignature: app.student_signature || "", parentSignature: app.parent_signature || "",
         });
@@ -8372,6 +8384,9 @@ function PortalPage({ setPage }) {
       summer_conflicts: appForm.summerConflicts,
       summer_attend_finale: appForm.summerAttendFinale,
       academic_year_conflicts: appForm.academicYearConflicts,
+      // College Counseling
+      has_college_counselor: appForm.hasCollegeCounselor,
+      coordinate_with_counselor: appForm.coordinateWithCounselor,
       // Section 8
       parent_statement_agreed: appForm.parentStatementAgreed,
       learning_style_notes: appForm.learningStyleNotes,
@@ -8572,18 +8587,23 @@ function PortalPage({ setPage }) {
   const m_gray = "#8A8A86";
   const m_line = "rgba(17,17,17,0.08)";
   const m_dark = "#15151A"; // dark calendar-style panel
-  const m_amber = "#E8A33D"; // single accent, like the dot on the dark calendar reference
+  const m_amber = "#E8A33D"; // Summer Intensive
+  const m_blue = "#5C8DF2";  // Foundation Semester
+  const m_green = "#4FB07A"; // Venture Semester
   const sans = "'Inter', sans-serif";
 
+  const cap = (s) => (s ? s.charAt(0).toUpperCase() + s.slice(1) : s);
+  const programLabelsShort = { summer: "Summer Intensive", foundation: "Foundation Semester", venture: "Venture Semester", "full-year": "Full Academic Year", unsure: "Not Sure Yet" };
+
   const tabs = role === "student"
-    ? [["overview", "Dashboard"], ["application", "Application"], ["consultation", "Schedule Consultation"], ["messages", "Contact Us"], ["family", "Family"], ["settings", "Settings"]]
-    : [["overview", "Dashboard"], ["consultation", "Schedule Consultation"], ["messages", "Contact Us"], ["settings", "Settings"]];
+    ? [["overview", "Dashboard"], ["application", "Application"], ["consultation", "Schedule Consultation"], ["messages", "Contact Us"], ["family", "Family"], ["faculty", "Faculty"], ["settings", "Settings"]]
+    : [["overview", "Dashboard"], ["consultation", "Schedule Consultation"], ["messages", "Contact Us"], ["faculty", "Faculty"], ["settings", "Settings"]];
 
   const statusSteps = [
-    { key: "draft", label: "Started" },
-    { key: "submitted", label: "Submitted" },
-    { key: "under_review", label: "Under Review" },
-    { key: "accepted", label: "Decision" },
+    { key: "draft", label: "Application Started", desc: "You've begun your application. Complete every section and submit when you're ready — you can save your progress at any time." },
+    { key: "submitted", label: "Application Completed", desc: "Your application has been received and is complete. Our admissions committee will begin its review shortly." },
+    { key: "under_review", label: "Under Review", desc: "Our admissions committee is currently reviewing your application alongside your stated program and track preferences." },
+    { key: "accepted", label: "Decision Released", desc: "A decision has been made on your application. Check your email and the Status section below for details." },
   ];
   const currentStatusIndex = application ? statusSteps.findIndex(s => s.key === application.status) : -1;
   const progressPct = application ? Math.round(((currentStatusIndex + 1) / statusSteps.length) * 100) : 0;
@@ -8597,16 +8617,25 @@ function PortalPage({ setPage }) {
     consultation: "phone",
     messages: "message",
     family: "users",
+    faculty: "cap",
     settings: "settings",
   }[key] || "dashboard");
 
+  // ── Key dates, pulled directly from the Summer / Foundation / Venture pages ──
   const calendarEvents = [
-    { date: new Date(2026, 6, 27), label: "Summer Intensive · Wave 1 Begins" },
-    { date: new Date(2026, 8, 8), label: "Foundation Semester Begins" },
-    { date: new Date(2027, 0, 26), label: "Venture Semester Begins" },
+    { date: new Date(2026, 6, 27), label: "Summer Intensive — Program Begins", color: m_amber },
+    { date: new Date(2026, 7, 8), label: "Summer Intensive — Venture Finale", color: m_amber },
+    { date: new Date(2026, 5, 1), label: "Foundation Semester — Applications Open", color: m_blue },
+    { date: new Date(2026, 6, 15), label: "Foundation Semester — Priority Deadline", color: m_blue },
+    { date: new Date(2026, 7, 15), label: "Foundation Semester — Regular Deadline", color: m_blue },
+    { date: new Date(2026, 8, 8), label: "Foundation Semester — Program Begins", color: m_blue },
+    { date: new Date(2026, 11, 19), label: "Foundation Semester — Excalibur Gala", color: m_blue },
+    { date: new Date(2026, 11, 1), label: "Venture Semester — Priority Deadline", color: m_green },
+    { date: new Date(2027, 0, 5), label: "Venture Semester — Regular Deadline", color: m_green },
+    { date: new Date(2027, 0, 26), label: "Venture Semester — Program Begins", color: m_green },
+    { date: new Date(2027, 4, 9), label: "Venture Semester — Da Vinci Finale", color: m_green },
+    { date: new Date(2027, 4, 22), label: "Venture Semester — Medici Finale", color: m_green },
   ];
-
-  const facultySpotlight = (typeof coaches !== "undefined" ? coaches : []).slice(0, 3);
 
   return (
     <div className="portal-page" style={{ background: m_canvas, minHeight: "100vh" }}>
@@ -8621,7 +8650,6 @@ function PortalPage({ setPage }) {
 
           {!isMobile && (
             <div style={{ padding: "28px 28px 24px", borderBottom: `1px solid ${m_line}` }}>
-              <p style={{ fontFamily: sans, fontWeight: 700, fontSize: 12, letterSpacing: "0.1em", color: m_ink, marginBottom: 18 }}>EXCALIBUR ACADEMY PORTAL</p>
               <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
                 <PortalStudentAvatar student={student} photo={profilePhoto} size={44} t_white={m_white} t_black={m_ink} cg={sans} />
                 <div>
@@ -8634,7 +8662,6 @@ function PortalPage({ setPage }) {
 
           {isMobile && (
             <div style={{ padding: "24px 24px 0", width: "100%" }}>
-              <p style={{ fontFamily: sans, fontWeight: 700, fontSize: 11, letterSpacing: "0.1em", color: m_ink, marginBottom: 12 }}>EXCALIBUR ACADEMY PORTAL</p>
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 16 }}>
                 <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
                   <PortalStudentAvatar student={student} photo={profilePhoto} size={40} t_white={m_white} t_black={m_ink} cg={sans} />
@@ -8672,7 +8699,10 @@ function PortalPage({ setPage }) {
         <div style={{ flex: 1, minWidth: 0 }}>
 
           <div style={{ padding: isMobile ? "28px 24px 20px" : "40px 56px 28px", display: "flex", justifyContent: "space-between", alignItems: "baseline", flexWrap: "wrap", gap: 12 }}>
-            <h2 style={{ fontFamily: sans, fontWeight: 900, fontSize: isMobile ? 26 : 36, color: m_ink, letterSpacing: "-0.02em" }}>{greeting}{student ? `, ${student.first_name}` : ""}!</h2>
+            <div>
+              <p style={{ fontFamily: sans, fontWeight: 700, fontSize: 12, letterSpacing: "0.12em", color: m_gray, marginBottom: 6 }}>EXCALIBUR ACADEMY PORTAL</p>
+              <h2 style={{ fontFamily: sans, fontWeight: 900, fontSize: isMobile ? 26 : 36, color: m_ink, letterSpacing: "-0.02em" }}>{greeting}{student ? `, ${student.first_name}` : ""}!</h2>
+            </div>
             <p style={{ fontFamily: sans, fontSize: 14, color: m_gray }}>{todayStr}</p>
           </div>
 
@@ -8684,7 +8714,7 @@ function PortalPage({ setPage }) {
             {/* Snapshot cards */}
             <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr 1fr" : "repeat(4, 1fr)", gap: isMobile ? 12 : 16, marginBottom: 16 }}>
               {[
-                { label: "Program", value: application ? (application.program || "—") : "Not Selected", icon: "cap" },
+                { label: "Program", value: application ? (programLabelsShort[application.program] || cap(application.program) || "—") : "Not Selected", icon: "cap" },
                 { label: "Status", value: application ? statusSteps[Math.max(currentStatusIndex, 0)].label : "Not Started", icon: "clipboard" },
                 { label: "Consultations", value: consultations.length ? `${consultations.length} Requested` : "None Yet", icon: "phone" },
                 { label: "Cohort", value: role === "student" ? "2026–2027" : "Family Access", icon: "building" },
@@ -8700,9 +8730,9 @@ function PortalPage({ setPage }) {
             </div>
 
             <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1.3fr 1fr", gap: 16, marginBottom: 16 }}>
-              {/* Application progress — flat white card, amber accent */}
+              {/* Admissions status — college-style stepper */}
               <div style={{ background: m_white, border: `1px solid ${m_line}`, borderRadius: 18, padding: isMobile ? "28px 24px" : "36px 40px" }}>
-                <p style={{ fontFamily: sans, fontSize: 13, color: m_gray, marginBottom: 18 }}>Application Progress</p>
+                <p style={{ fontFamily: sans, fontSize: 13, color: m_gray, marginBottom: 18 }}>Admissions Status</p>
                 {!application ? (
                   <>
                     <p style={{ fontFamily: sans, fontWeight: 700, fontSize: isMobile ? 20 : 24, color: m_ink, marginBottom: 20, lineHeight: 1.3 }}>{role === "student" ? "Your application hasn't been started yet." : "The student hasn't started an application yet."}</p>
@@ -8710,36 +8740,36 @@ function PortalPage({ setPage }) {
                   </>
                 ) : (
                   <>
-                    <div style={{ display: "flex", alignItems: "baseline", gap: 14, marginBottom: 18 }}>
-                      <span style={{ fontFamily: sans, fontWeight: 900, fontSize: isMobile ? 38 : 52, color: m_ink, lineHeight: 1, letterSpacing: "-0.02em" }}>{progressPct}%</span>
-                      <span style={{ fontFamily: sans, fontSize: 15, color: m_gray }}>Complete · Currently {statusSteps[Math.max(currentStatusIndex, 0)].label}</span>
-                    </div>
-                    <div style={{ display: "flex", gap: 4, marginBottom: 24 }}>
+                    {/* stepper with labels under each node */}
+                    <div style={{ display: "flex", marginBottom: 14 }}>
                       {statusSteps.map((s, i) => (
-                        <div key={s.key} style={{ flex: 1, height: 6, borderRadius: 999, background: i <= currentStatusIndex ? m_amber : "rgba(17,17,17,0.08)" }} />
+                        <div key={s.key} style={{ flex: 1, paddingRight: i < statusSteps.length - 1 ? 8 : 0 }}>
+                          <div style={{ height: 6, borderRadius: 999, background: i <= currentStatusIndex ? m_amber : "rgba(17,17,17,0.08)", marginBottom: 8 }} />
+                          <p style={{ fontFamily: sans, fontSize: isMobile ? 10 : 12, fontWeight: i === currentStatusIndex ? 700 : 500, color: i <= currentStatusIndex ? m_ink : m_gray, lineHeight: 1.3 }}>{s.label}</p>
+                        </div>
                       ))}
                     </div>
+                    <p style={{ fontFamily: sans, fontSize: 15, color: m_ink, lineHeight: 1.7, marginBottom: 22, marginTop: 16 }}>{statusSteps[Math.max(currentStatusIndex, 0)].desc}</p>
                     <div style={{ display: "flex", flexWrap: "wrap", gap: 10 }}>
                       {role === "student" && <button onClick={() => setActiveTab("application")} style={{ fontFamily: sans, padding: "12px 24px", background: m_ink, border: "none", color: m_white, fontSize: 14, fontWeight: 600, cursor: "pointer", borderRadius: 999 }}>{application.status === "draft" ? "Continue Application →" : "View Application →"}</button>}
-                      <button onClick={() => setActiveTab("consultation")} style={{ fontFamily: sans, padding: "12px 24px", background: "transparent", border: `1px solid ${m_line}`, color: m_ink, fontSize: 14, fontWeight: 500, cursor: "pointer", borderRadius: 999 }}>Schedule Consultation →</button>
+                      <button onClick={() => setActiveTab("consultation")} style={{ fontFamily: sans, padding: "12px 24px", background: "transparent", border: `1px solid ${m_line}`, color: m_ink, fontSize: 14, fontWeight: 500, cursor: "pointer", borderRadius: 999 }}>Schedule a Consultation (Optional) →</button>
                     </div>
                   </>
                 )}
               </div>
 
-              {/* Real calendar — direct from the dark calendar reference */}
+              {/* Real calendar — all program dates, color-coded */}
               <PortalCalendar events={calendarEvents} sans={sans} dark={m_dark} amber={m_amber} isMobile={isMobile} />
             </div>
 
-            {/* Next steps */}
+            {/* Next steps — consultation removed, optional only */}
             <div style={{ background: m_white, border: `1px solid ${m_line}`, borderRadius: 18, padding: isMobile ? "8px 18px" : "8px 28px", marginBottom: 16 }}>
               <p style={{ fontFamily: sans, fontSize: 13, color: m_gray, fontWeight: 600, padding: "20px 0 4px" }}>Next Steps</p>
               {[
                 { done: !!application, label: "Start your application", sub: application ? "Completed" : "Not started" },
                 { done: application && application.status !== "draft", label: "Submit your application", sub: application && application.status !== "draft" ? "Submitted" : "In progress", action: () => setActiveTab("application") },
-                { done: consultations.length > 0, label: "Request a family consultation", sub: consultations.length > 0 ? "Requested" : "Not started", action: () => setActiveTab("consultation") },
                 { done: parentLinks && parentLinks.length > 0, label: "Invite a parent or guardian", sub: parentLinks && parentLinks.length > 0 ? "Invited" : "Not started", action: () => setActiveTab("family") },
-              ].filter((_, i) => i !== 3 || role === "student").map((s, i) => (
+              ].filter((_, i) => i !== 2 || role === "student").map((s, i) => (
                 <div key={i} style={{ display: "flex", alignItems: "center", gap: 14, padding: "14px 0", borderTop: i > 0 ? `1px solid ${m_line}` : "none" }}>
                   <span style={{ width: 30, height: 30, borderRadius: "50%", border: `1px solid ${s.done ? m_ink : m_line}`, background: s.done ? m_ink : "transparent", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, fontSize: 12, color: m_white }}>{s.done ? "✓" : ""}</span>
                   <div style={{ flex: 1, minWidth: 0 }}>
@@ -8756,30 +8786,60 @@ function PortalPage({ setPage }) {
             </div>
 
             {/* Quote */}
-            <div style={{ background: m_white, border: `1px solid ${m_line}`, borderRadius: 18, padding: isMobile ? "24px 22px" : "30px 32px", marginBottom: 16 }}>
+            <div style={{ background: m_white, border: `1px solid ${m_line}`, borderRadius: 18, padding: isMobile ? "24px 22px" : "30px 32px" }}>
               <p style={{ fontFamily: sans, fontWeight: 700, fontSize: isMobile ? 16 : 17, color: m_ink, lineHeight: 1.5, marginBottom: 14 }}>"The European Canon of Excellence. The American Spirit of Leadership &amp; Innovation."</p>
               <p style={{ fontFamily: sans, fontSize: 13, letterSpacing: "0.06em", color: m_gray, fontWeight: 600 }}>EXCALIBUR ACADEMY</p>
-            </div>
-
-            {/* Faculty — full-size cards */}
-            <p style={{ fontFamily: sans, fontSize: 13, color: m_gray, marginBottom: 14, fontWeight: 600 }}>Faculty</p>
-            <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(3, 1fr)", gap: 16 }}>
-              {facultySpotlight.map((f, i) => (
-                <div key={i} style={{ background: m_white, border: `1px solid ${m_line}`, borderRadius: 18, overflow: "hidden" }}>
-                  <div style={{ width: "100%", aspectRatio: "4 / 3", overflow: "hidden", background: m_canvas }}>
-                    <img src={f.img} alt={f.name} style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} onError={e => e.target.style.display = "none"} />
-                  </div>
-                  <div style={{ padding: "18px 20px" }}>
-                    <p style={{ fontFamily: sans, fontWeight: 700, fontSize: 15, color: m_ink, marginBottom: 3 }}>{f.name}</p>
-                    <p style={{ fontFamily: sans, fontSize: 13, color: m_gray }}>{f.role}</p>
-                  </div>
-                </div>
-              ))}
             </div>
           </div>
         )}
 
+        {/* FACULTY TAB — bios pulled from the homepage, text only, no photos */}
+        {activeTab === "faculty" && (
+          <PortalCard>
+            <PortalSectionHeading title="Faculty" cg={sans} isMobile={isMobile} />
+            <p style={{ fontFamily: sans, fontSize: 15, color: m_ink, opacity: 0.75, lineHeight: 1.8, marginBottom: 32, maxWidth: 720 }}>
+              Excalibur faculty come from the arenas where leadership is tested: a CEO who built the world's first autonomous racing series, directed the Formula BMW program, and oversaw a $13B NASDAQ listing; a former Citigroup Managing Director and Georgetown MBA professor with 100+ M&amp;A transactions and 600+ CEO advisory engagements; and a doctoral candidate serving as an Orange County Sheriff's Department spokesman. They have led companies, advised CEOs, taught MBA students, and spoken on stages from West Point to Ivy League institutions — bringing that experience directly into the Excalibur classroom.
+            </p>
+            {(typeof coaches !== "undefined" ? coaches : []).map((f, i) => (
+              <div key={i} style={{ padding: "24px 0", borderTop: i > 0 ? `1px solid ${m_line}` : "none" }}>
+                <p style={{ fontFamily: sans, fontWeight: 700, fontSize: 17, color: m_ink, marginBottom: 3 }}>{f.name}</p>
+                <p style={{ fontFamily: sans, fontSize: 13, color: m_gray, marginBottom: 12, letterSpacing: "0.04em", textTransform: "uppercase" }}>{f.role}</p>
+                <p style={{ fontFamily: sans, fontSize: 14, color: m_ink, opacity: 0.75, lineHeight: 1.75, maxWidth: 760 }}>{f.bio || f.shortBio}</p>
+              </div>
+            ))}
+          </PortalCard>
+        )}
+
         {activeTab === "application" && role === "student" && (() => {
+          if (application && application.status !== "draft") {
+            return (
+              <PortalCard>
+                <div style={{ width: 56, height: 56, borderRadius: "50%", background: m_canvas, display: "flex", alignItems: "center", justifyContent: "center", marginBottom: 24, color: m_ink }}>
+                  <PortalIcon name="clipboard" size={26} />
+                </div>
+                <h2 style={{ fontFamily: sans, fontWeight: 800, fontSize: 26, color: m_ink, letterSpacing: "-0.01em", marginBottom: 16 }}>Thank you for your application.</h2>
+                <p style={{ fontFamily: sans, fontSize: 15, color: m_ink, opacity: 0.75, lineHeight: 1.8, marginBottom: 16, maxWidth: 600 }}>
+                  You will be notified within 3 business days by a dedicated Enrollment Coordinator. In the meantime, please contact us at any time with questions, or schedule a consultation through the dashboard — entirely optional, but we're glad to help.
+                </p>
+                <div style={{ display: "flex", flexWrap: "wrap", gap: 10, marginBottom: 28 }}>
+                  <button onClick={() => setActiveTab("messages")} style={{ fontFamily: sans, padding: "12px 24px", background: m_ink, border: "none", color: m_white, fontSize: 14, fontWeight: 600, cursor: "pointer", borderRadius: 999 }}>Contact Us →</button>
+                  <button onClick={() => setActiveTab("consultation")} style={{ fontFamily: sans, padding: "12px 24px", background: "transparent", border: `1px solid ${m_line}`, color: m_ink, fontSize: 14, fontWeight: 500, cursor: "pointer", borderRadius: 999 }}>Schedule a Consultation →</button>
+                </div>
+                <div style={{ borderTop: `1px solid ${m_line}`, paddingTop: 20 }}>
+                  <p style={{ fontFamily: sans, fontSize: 13, color: m_gray, marginBottom: 10, fontWeight: 600 }}>Admissions Status</p>
+                  <div style={{ display: "flex", marginBottom: 10 }}>
+                    {statusSteps.map((s, i) => (
+                      <div key={s.key} style={{ flex: 1, paddingRight: i < statusSteps.length - 1 ? 8 : 0 }}>
+                        <div style={{ height: 6, borderRadius: 999, background: i <= currentStatusIndex ? m_amber : "rgba(17,17,17,0.08)", marginBottom: 8 }} />
+                        <p style={{ fontFamily: sans, fontSize: 12, fontWeight: i === currentStatusIndex ? 700 : 500, color: i <= currentStatusIndex ? m_ink : m_gray }}>{s.label}</p>
+                      </div>
+                    ))}
+                  </div>
+                  <p style={{ fontFamily: sans, fontSize: 14, color: m_ink, opacity: 0.75, lineHeight: 1.7 }}>{statusSteps[Math.max(currentStatusIndex, 0)].desc}</p>
+                </div>
+              </PortalCard>
+            );
+          }
           const getVal = (path) => path.split(".").reduce((o, k) => (o == null ? undefined : o[k]), appForm);
           const setVal = (path, v) => {
             const keys = path.split(".");
@@ -8852,6 +8912,8 @@ function PortalPage({ setPage }) {
             { section: "Venture Launchpad Summer Intensive Questions", path: "summer.teamComfort", label: "Are you comfortable working in a team to build and present a venture?", type: "pills", conditional: () => wantsSummer, options: [["yes", "Yes"], ["learning", "Yes, but I am still learning"], ["unsure", "Unsure"], ["independent", "I prefer working independently"]] },
             { section: "Venture Launchpad Summer Intensive Questions", path: "summer.outsideCommitment", label: "Are you willing to participate in founder assignments outside class, such as team meetings, customer interviews, field research, outreach, and pitch practice?", type: "pills", conditional: () => wantsSummer, options: [["yes", "Yes"], ["with-guidance", "Yes, with guidance"], ["unsure", "Unsure"]] },
             { section: "Venture Launchpad Summer Intensive Questions", path: "summer.successDefinition", label: "What would make this summer intensive successful for you?", type: "textarea", conditional: () => wantsSummer },
+            { section: "Venture Launchpad Summer Intensive Questions", path: "summer.trackInterest", label: "Which track would you prefer?", type: "pills", conditional: () => wantsSummer, options: [["davinci", "Da Vinci Track — commercial venture"], ["medici", "Medici Track — community impact venture"], ["not-sure", "Not sure yet"]] },
+            { section: "Venture Launchpad Summer Intensive Questions", path: "summer.teamRolePreference", label: "What role would you be most interested in for your team?", type: "pills", conditional: () => wantsSummer, options: [["ceo", "CEO — Team lead. Direction and decisions."], ["cmo", "CMO — Marketing, brand, outreach."], ["cfo", "CFO — Financials, pricing, revenue."], ["cpo", "CPO — Product, prototype, delivery."], ["cso", "CSO — Sales, customers, traction."], ["not-sure", "Not sure yet"]] },
 
             { section: "Foundation Semester Questions", path: "foundation.excitingAreas", label: "Which Foundation areas are most exciting to you?", type: "checks", conditional: () => wantsFoundation, options: ["Public speaking", "Leadership", "Business fundamentals", "Financial literacy", "Negotiation", "AI and technology", "Law and society", "Marketing and persuasion", "College admissions preparation", "The Art of Class", "Guest speakers and professional exposure", "Junior Consultant Program"] },
             { section: "Foundation Semester Questions", path: "foundation.leaderVision", label: "What kind of leader do you want to become?", type: "textarea", conditional: () => wantsFoundation },
@@ -8873,6 +8935,9 @@ function PortalPage({ setPage }) {
 
             { section: "Academic-Year Availability", path: "track", label: "Preferred schedule option", type: "pills", conditional: () => wantsFoundation || wantsVenture, options: [["weekday", "Weekday Track"], ["saturday", "Saturday Track"], ["either", "Either option"], ["need-guidance", "Need guidance"]] },
             { section: "Academic-Year Availability", path: "academicYearConflicts", label: "Are there any known recurring conflicts during the academic year?", type: "textarea", conditional: () => wantsFoundation || wantsVenture },
+
+            { section: "College Counseling", path: "hasCollegeCounselor", label: "Does the student currently have a college counselor (independent or school-based)?", type: "pills", options: [["yes", "Yes"], ["no", "No"]] },
+            { section: "College Counseling", path: "coordinateWithCounselor", label: "If yes, would you like us to coordinate the student's Excalibur portfolio with their college counselor after program completion?", type: "pills", conditional: f => f.hasCollegeCounselor === "yes", options: [["yes", "Yes, please coordinate"], ["no", "No, not at this time"], ["maybe", "Maybe — contact me about it"]] },
 
             { section: "Parent Confirmation", path: "__statement", label: "I understand that Excalibur Academy programs are active, discussion-based, team-based, and presentation-driven. Students are expected to participate respectfully, attend consistently, complete assigned work, and contribute to a serious learning environment.", type: "display" },
             { section: "Parent Confirmation", path: "parentStatementAgreed", label: "Parent / Guardian Agreement", type: "confirm", confirmLabel: "I confirm." },
