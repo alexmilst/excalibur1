@@ -71,6 +71,105 @@ function PortalSectionHeading({ title, accent = "#111111", cg, isMobile }) {
     </div>
   );
 }
+// ── PORTAL ICONS — mono line icons, no external dependency ──
+function PortalIcon({ name, size = 16, color = "currentColor", strokeWidth = 1.75 }) {
+  const props = { width: size, height: size, viewBox: "0 0 24 24", fill: "none", stroke: color, strokeWidth, strokeLinecap: "round", strokeLinejoin: "round" };
+  const paths = {
+    dashboard: <><rect x="3" y="3" width="7" height="9" rx="1.5" /><rect x="14" y="3" width="7" height="5" rx="1.5" /><rect x="14" y="12" width="7" height="9" rx="1.5" /><rect x="3" y="16" width="7" height="5" rx="1.5" /></>,
+    application: <><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" /><path d="M14 3v5h5" /><path d="M8 13h8M8 17h8" /></>,
+    phone: <path d="M5 4h3l2 5-2.5 1.5a11 11 0 0 0 5 5L14 13l5 2v3a2 2 0 0 1-2 2C9.5 20 4 14.5 4 6a2 2 0 0 1 1-2z" />,
+    message: <><path d="M21 11.5a8.4 8.4 0 0 1-1.5 4.9L21 21l-4.8-1.4a8.4 8.4 0 1 1 4.8-8.1z" /></>,
+    users: <><circle cx="9" cy="8" r="3.2" /><path d="M3.5 19c0-3 2.5-5 5.5-5s5.5 2 5.5 5" /><circle cx="17" cy="9" r="2.4" /><path d="M14.7 14.3c2.3.2 4.3 1.9 4.3 4.7" /></>,
+    settings: <><circle cx="12" cy="12" r="3" /><path d="M19.4 13.5a7.6 7.6 0 0 0 0-3l1.6-1.2-1.5-2.6-1.9.5a7.6 7.6 0 0 0-2.6-1.5L14.5 3h-3l-.5 2.7a7.6 7.6 0 0 0-2.6 1.5l-1.9-.5-1.5 2.6L6 10.5a7.6 7.6 0 0 0 0 3L4.4 14.7l1.5 2.6 1.9-.5a7.6 7.6 0 0 0 2.6 1.5L11 21h3l.5-2.7a7.6 7.6 0 0 0 2.6-1.5l1.9.5 1.5-2.6z" /></>,
+    cap: <><path d="M2 9l10-5 10 5-10 5z" /><path d="M6 11v5c0 1.5 2.5 3 6 3s6-1.5 6-3v-5" /></>,
+    clipboard: <><rect x="5" y="4" width="14" height="17" rx="2" /><path d="M9 3h6v3H9z" /><path d="M8.5 12.5l2 2 5-5" /></>,
+    building: <><rect x="4" y="3" width="16" height="18" rx="1" /><path d="M9 8h1M14 8h1M9 12h1M14 12h1M9 16h1M14 16h1" /></>,
+    chevronLeft: <path d="M15 5l-7 7 7 7" />,
+    chevronRight: <path d="M9 5l7 7-7 7" />,
+    arrow: <path d="M5 12h14M13 6l6 6-6 6" />,
+  };
+  return <svg {...props}>{paths[name] || null}</svg>;
+}
+
+// ── PORTAL CALENDAR — real month grid, hoisted so month navigation never loses state ──
+function PortalCalendar({ events = [], sans, dark = "#15151A", amber = "#E8A33D", isMobile }) {
+  const today = new Date();
+  const upcoming = events
+    .map(e => ({ ...e, time: e.date.getTime() }))
+    .filter(e => e.time >= new Date(today.getFullYear(), today.getMonth(), today.getDate()).getTime())
+    .sort((a, b) => a.time - b.time);
+  const initial = upcoming.length ? upcoming[0].date : today;
+  const [viewDate, setViewDate] = React.useState(new Date(initial.getFullYear(), initial.getMonth(), 1));
+
+  const year = viewDate.getFullYear();
+  const month = viewDate.getMonth();
+  const monthLabel = viewDate.toLocaleDateString(undefined, { month: "long", year: "numeric" });
+  const firstWeekday = new Date(year, month, 1).getDay();
+  const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+  const cells = [];
+  for (let i = 0; i < firstWeekday; i++) cells.push(null);
+  for (let d = 1; d <= daysInMonth; d++) cells.push(d);
+  while (cells.length % 7 !== 0) cells.push(null);
+  const rows = [];
+  for (let i = 0; i < cells.length; i += 7) rows.push(cells.slice(i, i + 7));
+
+  const eventOn = (d) => events.find(e => e.date.getFullYear() === year && e.date.getMonth() === month && e.date.getDate() === d);
+  const nextEvent = upcoming[0];
+  const weekdayLabels = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
+
+  return (
+    <div style={{ background: dark, borderRadius: 18, padding: isMobile ? "22px 20px" : "26px 28px" }}>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 16 }}>
+        <span onClick={() => setViewDate(new Date(year, month - 1, 1))} style={{ color: "rgba(255,255,255,.4)", cursor: "pointer", display: "flex" }}>
+          <PortalIcon name="chevronLeft" size={16} />
+        </span>
+        <p style={{ fontFamily: sans, fontWeight: 700, fontSize: 14, color: "#fff" }}>{monthLabel}</p>
+        <span onClick={() => setViewDate(new Date(year, month + 1, 1))} style={{ color: "rgba(255,255,255,.4)", cursor: "pointer", display: "flex" }}>
+          <PortalIcon name="chevronRight" size={16} />
+        </span>
+      </div>
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(7, 1fr)", marginBottom: 4 }}>
+        {weekdayLabels.map(d => (
+          <div key={d} style={{ textAlign: "center", fontFamily: sans, fontSize: 10, color: "rgba(255,255,255,.35)", padding: "4px 0" }}>{d}</div>
+        ))}
+      </div>
+      {rows.map((row, ri) => (
+        <div key={ri} style={{ display: "grid", gridTemplateColumns: "repeat(7, 1fr)" }}>
+          {row.map((d, di) => {
+            const ev = d ? eventOn(d) : null;
+            const isToday = d && year === today.getFullYear() && month === today.getMonth() && d === today.getDate();
+            return (
+              <div key={di} style={{ textAlign: "center", padding: "4px 0" }}>
+                {d && (
+                  <div style={{
+                    width: 28, height: 28, lineHeight: "28px", margin: "0 auto", borderRadius: 8,
+                    fontFamily: sans, fontSize: 12, fontWeight: ev ? 700 : 500,
+                    background: ev ? "#fff" : "transparent",
+                    color: ev ? dark : isToday ? amber : "rgba(255,255,255,.85)",
+                    border: isToday && !ev ? "1px solid rgba(232,163,61,.6)" : "none",
+                  }}>
+                    {d}
+                  </div>
+                )}
+                {d && ev && (
+                  <div style={{ width: 4, height: 4, borderRadius: "50%", background: amber, margin: "2px auto 0" }} />
+                )}
+              </div>
+            );
+          })}
+        </div>
+      ))}
+      {nextEvent && (
+        <div style={{ marginTop: 16, paddingTop: 14, borderTop: "1px solid rgba(255,255,255,.08)" }}>
+          <p style={{ fontFamily: sans, fontSize: 12, color: "rgba(255,255,255,.5)", marginBottom: 2 }}>{nextEvent.label}</p>
+          <p style={{ fontFamily: sans, fontSize: 14, fontWeight: 700, color: "#fff" }}>{nextEvent.date.toLocaleDateString(undefined, { weekday: "long", month: "long", day: "numeric", year: "numeric" })}</p>
+        </div>
+      )}
+    </div>
+  );
+}
+
 
 
 
@@ -8477,8 +8576,8 @@ function PortalPage({ setPage }) {
   const sans = "'Inter', sans-serif";
 
   const tabs = role === "student"
-    ? [["overview", "Dashboard"], ["application", "Application"], ["consultation", "Consultation"], ["messages", "Contact Us"], ["family", "Family"], ["settings", "Settings"]]
-    : [["overview", "Dashboard"], ["consultation", "Consultation"], ["messages", "Contact Us"], ["settings", "Settings"]];
+    ? [["overview", "Dashboard"], ["application", "Application"], ["consultation", "Schedule Consultation"], ["messages", "Contact Us"], ["family", "Family"], ["settings", "Settings"]]
+    : [["overview", "Dashboard"], ["consultation", "Schedule Consultation"], ["messages", "Contact Us"], ["settings", "Settings"]];
 
   const statusSteps = [
     { key: "draft", label: "Started" },
@@ -8492,26 +8591,26 @@ function PortalPage({ setPage }) {
   const greeting = greetingHour < 12 ? "Good morning" : greetingHour < 18 ? "Good afternoon" : "Good evening";
   const todayStr = new Date().toLocaleDateString(undefined, { weekday: "long", month: "long", day: "numeric" });
 
-  const navIcon = (key) => ({
-    overview: "◆",
-    application: "✎",
-    consultation: "☎",
-    messages: "✉",
-    family: "⌂",
-    settings: "⚙",
-  }[key] || "•");
+  const navIconName = (key) => ({
+    overview: "dashboard",
+    application: "application",
+    consultation: "phone",
+    messages: "message",
+    family: "users",
+    settings: "settings",
+  }[key] || "dashboard");
 
-  const keyDates = [
-    { program: "Summer Intensive", date: "July 27, 2026", note: "Wave 1 · Two-Week Program Begins" },
-    { program: "Foundation Semester", date: "September 8, 2026", note: "Fall Semester Begins" },
-    { program: "Venture Semester", date: "January 26, 2027", note: "Spring Semester Begins" },
+  const calendarEvents = [
+    { date: new Date(2026, 6, 27), label: "Summer Intensive · Wave 1 Begins" },
+    { date: new Date(2026, 8, 8), label: "Foundation Semester Begins" },
+    { date: new Date(2027, 0, 26), label: "Venture Semester Begins" },
   ];
 
   const facultySpotlight = (typeof coaches !== "undefined" ? coaches : []).slice(0, 3);
 
   return (
     <div className="portal-page" style={{ background: m_canvas, minHeight: "100vh" }}>
-      <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+      <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
       <style>{`.portal-page input, .portal-page textarea, .portal-page select { color: #000000 !important; font-family: 'Inter', sans-serif !important; } .portal-page input::placeholder, .portal-page textarea::placeholder { color: rgba(17,17,17,.4) !important; }`}</style>
       <Breadcrumb items={[{ label: "Home", page: "home" }]} setPage={setPage} />
 
@@ -8521,27 +8620,25 @@ function PortalPage({ setPage }) {
         <div style={{ width: isMobile ? "100%" : 268, flexShrink: 0, background: m_sidebar, display: "flex", flexDirection: isMobile ? "row" : "column", borderRight: isMobile ? "none" : `1px solid ${m_line}`, position: isMobile ? "static" : "sticky", top: 0, alignSelf: "flex-start", height: isMobile ? "auto" : "100vh", overflowY: isMobile ? "visible" : "auto" }}>
 
           {!isMobile && (
-            <div style={{ padding: "32px 28px 24px", borderBottom: `1px solid ${m_line}` }}>
-              <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 22 }}>
+            <div style={{ padding: "28px 28px 24px", borderBottom: `1px solid ${m_line}` }}>
+              <p style={{ fontFamily: sans, fontWeight: 700, fontSize: 12, letterSpacing: "0.1em", color: m_ink, marginBottom: 18 }}>EXCALIBUR ACADEMY PORTAL</p>
+              <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
                 <PortalStudentAvatar student={student} photo={profilePhoto} size={44} t_white={m_white} t_black={m_ink} cg={sans} />
                 <div>
                   <p style={{ fontFamily: sans, fontWeight: 700, fontSize: 16, color: m_ink, lineHeight: 1.2 }}>{student ? student.first_name : ""}{role === "parent" ? " (Parent)" : ""}</p>
                   <p style={{ fontFamily: sans, fontSize: 14, color: m_gray }}>{role === "student" ? "Student" : "Parent"}</p>
                 </div>
               </div>
-              <p style={{ fontFamily: sans, fontWeight: 600, fontSize: 13, color: m_ink, letterSpacing: "0.1em" }}>EXCALIBUR ACADEMY PORTAL</p>
             </div>
           )}
 
           {isMobile && (
             <div style={{ padding: "24px 24px 0", width: "100%" }}>
+              <p style={{ fontFamily: sans, fontWeight: 700, fontSize: 11, letterSpacing: "0.1em", color: m_ink, marginBottom: 12 }}>EXCALIBUR ACADEMY PORTAL</p>
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 16 }}>
                 <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
                   <PortalStudentAvatar student={student} photo={profilePhoto} size={40} t_white={m_white} t_black={m_ink} cg={sans} />
-                  <div>
-                    <p style={{ fontFamily: sans, fontSize: 13, letterSpacing: "0.08em", color: m_gray, fontWeight: 600, marginBottom: 2 }}>EXCALIBUR ACADEMY PORTAL</p>
-                    <h1 style={{ fontFamily: sans, fontWeight: 700, fontSize: 20, color: m_ink }}>{student ? student.first_name : ""}{role === "parent" ? " (Parent)" : ""}</h1>
-                  </div>
+                  <h1 style={{ fontFamily: sans, fontWeight: 700, fontSize: 20, color: m_ink }}>{student ? student.first_name : ""}{role === "parent" ? " (Parent)" : ""}</h1>
                 </div>
                 <button onClick={handleSignOut} style={{ fontFamily: sans, fontSize: 14, color: m_ink, background: m_white, border: `1px solid ${m_line}`, padding: "8px 16px", borderRadius: 999, cursor: "pointer", whiteSpace: "nowrap" }}>Sign Out</button>
               </div>
@@ -8559,7 +8656,7 @@ function PortalPage({ setPage }) {
                 border: "none", borderRadius: 999,
                 padding: isMobile ? "10px 16px" : "12px 18px", cursor: "pointer", whiteSpace: "nowrap", transition: "all .15s", textAlign: "left",
               }}>
-                <span style={{ fontSize: 13, opacity: 0.85 }}>{navIcon(key)}</span>{label}
+                <PortalIcon name={navIconName(key)} size={15} />{label}
               </button>
             ))}
           </div>
@@ -8575,7 +8672,7 @@ function PortalPage({ setPage }) {
         <div style={{ flex: 1, minWidth: 0 }}>
 
           <div style={{ padding: isMobile ? "28px 24px 20px" : "40px 56px 28px", display: "flex", justifyContent: "space-between", alignItems: "baseline", flexWrap: "wrap", gap: 12 }}>
-            <h2 style={{ fontFamily: sans, fontWeight: 800, fontSize: isMobile ? 22 : 28, color: m_ink, letterSpacing: "-0.01em" }}>{greeting}{student ? `, ${student.first_name}` : ""}!</h2>
+            <h2 style={{ fontFamily: sans, fontWeight: 900, fontSize: isMobile ? 26 : 36, color: m_ink, letterSpacing: "-0.02em" }}>{greeting}{student ? `, ${student.first_name}` : ""}!</h2>
             <p style={{ fontFamily: sans, fontSize: 14, color: m_gray }}>{todayStr}</p>
           </div>
 
@@ -8587,123 +8684,101 @@ function PortalPage({ setPage }) {
             {/* Snapshot cards */}
             <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr 1fr" : "repeat(4, 1fr)", gap: isMobile ? 12 : 16, marginBottom: 16 }}>
               {[
-                { label: "Program", value: application ? (application.program || "—") : "Not Selected" },
-                { label: "Status", value: application ? statusSteps[Math.max(currentStatusIndex, 0)].label : "Not Started" },
-                { label: "Consultations", value: consultations.length ? `${consultations.length} Requested` : "None Yet" },
-                { label: "Cohort", value: role === "student" ? "2026–2027" : "Family Access" },
+                { label: "Program", value: application ? (application.program || "—") : "Not Selected", icon: "cap" },
+                { label: "Status", value: application ? statusSteps[Math.max(currentStatusIndex, 0)].label : "Not Started", icon: "clipboard" },
+                { label: "Consultations", value: consultations.length ? `${consultations.length} Requested` : "None Yet", icon: "phone" },
+                { label: "Cohort", value: role === "student" ? "2026–2027" : "Family Access", icon: "building" },
               ].map((s, i) => (
                 <div key={i} style={{ background: m_white, border: `1px solid ${m_line}`, borderRadius: 18, padding: isMobile ? "16px 14px" : "20px 22px" }}>
-                  <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 8 }}>
-                    <span style={{ width: 6, height: 6, borderRadius: "50%", background: m_amber, display: "inline-block" }} />
-                    <p style={{ fontFamily: sans, fontSize: 14, color: m_gray }}>{s.label}</p>
+                  <div style={{ width: 36, height: 36, borderRadius: 12, background: m_canvas, display: "flex", alignItems: "center", justifyContent: "center", marginBottom: 12, color: m_ink }}>
+                    <PortalIcon name={s.icon} size={17} />
                   </div>
+                  <p style={{ fontFamily: sans, fontSize: 13, color: m_gray, marginBottom: 4 }}>{s.label}</p>
                   <p style={{ fontFamily: sans, fontWeight: 700, fontSize: isMobile ? 15 : 18, color: m_ink, lineHeight: 1.2 }}>{s.value}</p>
                 </div>
               ))}
             </div>
 
-            {/* Application progress — flat white card, amber accent */}
-            <div style={{ background: m_white, border: `1px solid ${m_line}`, borderRadius: 18, padding: isMobile ? "28px 24px" : "36px 40px", marginBottom: 16 }}>
-              <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 18 }}>
-                <span style={{ width: 6, height: 6, borderRadius: "50%", background: m_amber, display: "inline-block" }} />
-                <p style={{ fontFamily: sans, fontSize: 14, color: m_gray }}>Application Progress</p>
-              </div>
-              {!application ? (
-                <>
-                  <p style={{ fontFamily: sans, fontWeight: 700, fontSize: isMobile ? 20 : 24, color: m_ink, marginBottom: 20, lineHeight: 1.3 }}>{role === "student" ? "Your application hasn't been started yet." : "The student hasn't started an application yet."}</p>
-                  {role === "student" && <button onClick={() => setActiveTab("application")} style={{ fontFamily: sans, padding: "13px 28px", background: m_ink, border: "none", color: m_white, fontSize: 14, fontWeight: 600, cursor: "pointer", borderRadius: 999 }}>Begin Application →</button>}
-                </>
-              ) : (
-                <>
-                  <div style={{ display: "flex", alignItems: "baseline", gap: 14, marginBottom: 18 }}>
-                    <span style={{ fontFamily: sans, fontWeight: 800, fontSize: isMobile ? 38 : 52, color: m_ink, lineHeight: 1, letterSpacing: "-0.02em" }}>{progressPct}%</span>
-                    <span style={{ fontFamily: sans, fontSize: 15, color: m_gray }}>Complete · Currently {statusSteps[Math.max(currentStatusIndex, 0)].label}</span>
-                  </div>
-                  <div style={{ display: "flex", gap: 4, marginBottom: 24 }}>
-                    {statusSteps.map((s, i) => (
-                      <div key={s.key} style={{ flex: 1, height: 6, borderRadius: 999, background: i <= currentStatusIndex ? m_amber : "rgba(17,17,17,0.08)" }} />
-                    ))}
-                  </div>
-                  <div style={{ display: "flex", flexWrap: "wrap", gap: 10 }}>
-                    {role === "student" && <button onClick={() => setActiveTab("application")} style={{ fontFamily: sans, padding: "12px 24px", background: m_ink, border: "none", color: m_white, fontSize: 14, fontWeight: 600, cursor: "pointer", borderRadius: 999 }}>{application.status === "draft" ? "Continue Application →" : "View Application →"}</button>}
-                    <button onClick={() => setActiveTab("consultation")} style={{ fontFamily: sans, padding: "12px 24px", background: "transparent", border: `1px solid ${m_line}`, color: m_ink, fontSize: 14, fontWeight: 500, cursor: "pointer", borderRadius: 999 }}>Schedule Consultation →</button>
-                  </div>
-                </>
-              )}
-            </div>
-
-            {/* Key dates — dark calendar-style panel, amber dot accents */}
-            <div style={{ background: m_dark, borderRadius: 18, padding: isMobile ? "24px 22px" : "30px 32px", marginBottom: 16 }}>
-              <p style={{ fontFamily: sans, fontSize: 14, color: "rgba(255,255,255,.55)", marginBottom: 16, fontWeight: 500 }}>Key Dates</p>
-              <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(3, 1fr)", gap: isMobile ? 18 : 0 }}>
-                {keyDates.map((d, i) => (
-                  <div key={i} style={{ padding: isMobile ? "0" : "0 20px", borderLeft: !isMobile && i > 0 ? "1px solid rgba(255,255,255,.1)" : "none" }}>
-                    <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 6 }}>
-                      <span style={{ width: 6, height: 6, borderRadius: "50%", background: m_amber, display: "inline-block" }} />
-                      <p style={{ fontFamily: sans, fontSize: 13, color: "rgba(255,255,255,.6)" }}>{d.program}</p>
-                    </div>
-                    <p style={{ fontFamily: sans, fontWeight: 700, fontSize: 19, color: m_white, marginBottom: 4 }}>{d.date}</p>
-                    <p style={{ fontFamily: sans, fontSize: 13, color: "rgba(255,255,255,.45)" }}>{d.note}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Next steps + quote */}
             <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1.3fr 1fr", gap: 16, marginBottom: 16 }}>
-              <div style={{ background: m_white, border: `1px solid ${m_line}`, borderRadius: 18, padding: isMobile ? "24px 22px" : "30px 32px" }}>
-                <p style={{ fontFamily: sans, fontSize: 14, color: m_gray, marginBottom: 16, fontWeight: 600 }}>Next Steps</p>
-                {[
-                  { done: !!application, label: "Start your application" },
-                  { done: application && application.status !== "draft", label: "Submit your application" },
-                  { done: consultations.length > 0, label: "Request a family consultation" },
-                  { done: parentLinks && parentLinks.length > 0, label: "Invite a parent or guardian" },
-                ].filter((_, i) => i !== 3 || role === "student").map((s, i) => (
-                  <div key={i} style={{ display: "flex", alignItems: "center", gap: 12, padding: "10px 0", borderTop: i > 0 ? `1px solid ${m_line}` : "none" }}>
-                    <span style={{ width: 18, height: 18, borderRadius: "50%", border: `1px solid ${s.done ? m_ink : "rgba(17,17,17,.2)"}`, background: s.done ? m_ink : "transparent", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, fontSize: 10, color: m_white }}>{s.done ? "✓" : ""}</span>
-                    <span style={{ fontFamily: sans, fontSize: 14, color: m_ink, opacity: s.done ? 0.45 : 1, textDecoration: s.done ? "line-through" : "none" }}>{s.label}</span>
-                  </div>
-                ))}
+              {/* Application progress — flat white card, amber accent */}
+              <div style={{ background: m_white, border: `1px solid ${m_line}`, borderRadius: 18, padding: isMobile ? "28px 24px" : "36px 40px" }}>
+                <p style={{ fontFamily: sans, fontSize: 13, color: m_gray, marginBottom: 18 }}>Application Progress</p>
+                {!application ? (
+                  <>
+                    <p style={{ fontFamily: sans, fontWeight: 700, fontSize: isMobile ? 20 : 24, color: m_ink, marginBottom: 20, lineHeight: 1.3 }}>{role === "student" ? "Your application hasn't been started yet." : "The student hasn't started an application yet."}</p>
+                    {role === "student" && <button onClick={() => setActiveTab("application")} style={{ fontFamily: sans, padding: "13px 28px", background: m_ink, border: "none", color: m_white, fontSize: 14, fontWeight: 600, cursor: "pointer", borderRadius: 999 }}>Begin Application →</button>}
+                  </>
+                ) : (
+                  <>
+                    <div style={{ display: "flex", alignItems: "baseline", gap: 14, marginBottom: 18 }}>
+                      <span style={{ fontFamily: sans, fontWeight: 900, fontSize: isMobile ? 38 : 52, color: m_ink, lineHeight: 1, letterSpacing: "-0.02em" }}>{progressPct}%</span>
+                      <span style={{ fontFamily: sans, fontSize: 15, color: m_gray }}>Complete · Currently {statusSteps[Math.max(currentStatusIndex, 0)].label}</span>
+                    </div>
+                    <div style={{ display: "flex", gap: 4, marginBottom: 24 }}>
+                      {statusSteps.map((s, i) => (
+                        <div key={s.key} style={{ flex: 1, height: 6, borderRadius: 999, background: i <= currentStatusIndex ? m_amber : "rgba(17,17,17,0.08)" }} />
+                      ))}
+                    </div>
+                    <div style={{ display: "flex", flexWrap: "wrap", gap: 10 }}>
+                      {role === "student" && <button onClick={() => setActiveTab("application")} style={{ fontFamily: sans, padding: "12px 24px", background: m_ink, border: "none", color: m_white, fontSize: 14, fontWeight: 600, cursor: "pointer", borderRadius: 999 }}>{application.status === "draft" ? "Continue Application →" : "View Application →"}</button>}
+                      <button onClick={() => setActiveTab("consultation")} style={{ fontFamily: sans, padding: "12px 24px", background: "transparent", border: `1px solid ${m_line}`, color: m_ink, fontSize: 14, fontWeight: 500, cursor: "pointer", borderRadius: 999 }}>Schedule Consultation →</button>
+                    </div>
+                  </>
+                )}
               </div>
-              <div style={{ background: m_white, border: `1px solid ${m_line}`, borderRadius: 18, padding: isMobile ? "24px 22px" : "30px 28px", display: "flex", flexDirection: "column", justifyContent: "center" }}>
-                <p style={{ fontFamily: sans, fontWeight: 700, fontSize: isMobile ? 16 : 17, color: m_ink, lineHeight: 1.5, marginBottom: 14 }}>"The European Canon of Excellence. The American Spirit of Leadership &amp; Innovation."</p>
-                <p style={{ fontFamily: sans, fontSize: 13, letterSpacing: "0.06em", color: m_gray, fontWeight: 600 }}>EXCALIBUR ACADEMY</p>
-              </div>
+
+              {/* Real calendar — direct from the dark calendar reference */}
+              <PortalCalendar events={calendarEvents} sans={sans} dark={m_dark} amber={m_amber} isMobile={isMobile} />
             </div>
 
-            {/* Faculty spotlight */}
-            <p style={{ fontFamily: sans, fontSize: 14, color: m_ink, marginBottom: 12, fontWeight: 600 }}>Faculty</p>
-            <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(3, 1fr)", gap: 16, marginBottom: 16 }}>
-              {facultySpotlight.map((f, i) => (
-                <div key={i} style={{ background: m_white, border: `1px solid ${m_line}`, borderRadius: 18, overflow: "hidden" }}>
-                  <div style={{ height: 150, overflow: "hidden" }}>
-                    <img src={f.img} alt={f.name} style={{ width: "100%", height: "100%", objectFit: "cover" }} onError={e => e.target.style.display = "none"} />
+            {/* Next steps */}
+            <div style={{ background: m_white, border: `1px solid ${m_line}`, borderRadius: 18, padding: isMobile ? "8px 18px" : "8px 28px", marginBottom: 16 }}>
+              <p style={{ fontFamily: sans, fontSize: 13, color: m_gray, fontWeight: 600, padding: "20px 0 4px" }}>Next Steps</p>
+              {[
+                { done: !!application, label: "Start your application", sub: application ? "Completed" : "Not started" },
+                { done: application && application.status !== "draft", label: "Submit your application", sub: application && application.status !== "draft" ? "Submitted" : "In progress", action: () => setActiveTab("application") },
+                { done: consultations.length > 0, label: "Request a family consultation", sub: consultations.length > 0 ? "Requested" : "Not started", action: () => setActiveTab("consultation") },
+                { done: parentLinks && parentLinks.length > 0, label: "Invite a parent or guardian", sub: parentLinks && parentLinks.length > 0 ? "Invited" : "Not started", action: () => setActiveTab("family") },
+              ].filter((_, i) => i !== 3 || role === "student").map((s, i) => (
+                <div key={i} style={{ display: "flex", alignItems: "center", gap: 14, padding: "14px 0", borderTop: i > 0 ? `1px solid ${m_line}` : "none" }}>
+                  <span style={{ width: 30, height: 30, borderRadius: "50%", border: `1px solid ${s.done ? m_ink : m_line}`, background: s.done ? m_ink : "transparent", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, fontSize: 12, color: m_white }}>{s.done ? "✓" : ""}</span>
+                  <div style={{ flex: 1, minWidth: 0 }}>
+                    <p style={{ fontFamily: sans, fontSize: 15, fontWeight: 700, color: m_ink, opacity: s.done ? 0.5 : 1, textDecoration: s.done ? "line-through" : "none" }}>{s.label}</p>
+                    <p style={{ fontFamily: sans, fontSize: 13, color: m_gray }}>{s.sub}</p>
                   </div>
-                  <div style={{ padding: "18px 20px" }}>
-                    <p style={{ fontFamily: sans, fontWeight: 700, fontSize: 16, color: m_ink, marginBottom: 4 }}>{f.name}</p>
-                    <p style={{ fontFamily: sans, fontSize: 13, color: m_gray, marginBottom: 10 }}>{f.role}</p>
-                    <p style={{ fontFamily: sans, fontSize: 13, color: m_gray, lineHeight: 1.6 }}>{(f.shortBio || "").slice(0, 110)}{f.shortBio && f.shortBio.length > 110 ? "…" : ""}</p>
-                  </div>
+                  {!s.done && s.action && (
+                    <button onClick={s.action} style={{ width: 32, height: 32, borderRadius: "50%", background: m_ink, border: "none", color: m_white, display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer", flexShrink: 0 }}>
+                      <PortalIcon name="arrow" size={14} color="#fff" />
+                    </button>
+                  )}
                 </div>
               ))}
             </div>
 
-            {/* Quick actions */}
-            <p style={{ fontFamily: sans, fontSize: 14, color: m_ink, marginBottom: 12, fontWeight: 600 }}>Quick Actions</p>
-            <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr 1fr" : "repeat(4, 1fr)", gap: 10 }}>
-              {[
-                role === "student" && ["application", "Application"],
-                ["consultation", "Consultation"],
-                ["messages", "Contact Us"],
-                role === "student" && ["family", "Family"],
-              ].filter(Boolean).map(([key, label]) => (
-                <button key={key} onClick={() => setActiveTab(key)} style={{ fontFamily: sans, fontSize: 14, padding: "14px 12px", background: m_white, border: `1px solid ${m_line}`, color: m_ink, cursor: "pointer", fontWeight: 600, borderRadius: 999 }}>{label} →</button>
+            {/* Quote */}
+            <div style={{ background: m_white, border: `1px solid ${m_line}`, borderRadius: 18, padding: isMobile ? "24px 22px" : "30px 32px", marginBottom: 16 }}>
+              <p style={{ fontFamily: sans, fontWeight: 700, fontSize: isMobile ? 16 : 17, color: m_ink, lineHeight: 1.5, marginBottom: 14 }}>"The European Canon of Excellence. The American Spirit of Leadership &amp; Innovation."</p>
+              <p style={{ fontFamily: sans, fontSize: 13, letterSpacing: "0.06em", color: m_gray, fontWeight: 600 }}>EXCALIBUR ACADEMY</p>
+            </div>
+
+            {/* Faculty — full-size cards */}
+            <p style={{ fontFamily: sans, fontSize: 13, color: m_gray, marginBottom: 14, fontWeight: 600 }}>Faculty</p>
+            <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(3, 1fr)", gap: 16 }}>
+              {facultySpotlight.map((f, i) => (
+                <div key={i} style={{ background: m_white, border: `1px solid ${m_line}`, borderRadius: 18, overflow: "hidden" }}>
+                  <div style={{ width: "100%", aspectRatio: "4 / 3", overflow: "hidden", background: m_canvas }}>
+                    <img src={f.img} alt={f.name} style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} onError={e => e.target.style.display = "none"} />
+                  </div>
+                  <div style={{ padding: "18px 20px" }}>
+                    <p style={{ fontFamily: sans, fontWeight: 700, fontSize: 15, color: m_ink, marginBottom: 3 }}>{f.name}</p>
+                    <p style={{ fontFamily: sans, fontSize: 13, color: m_gray }}>{f.role}</p>
+                  </div>
+                </div>
               ))}
             </div>
           </div>
         )}
 
-        {/* APPLICATION TAB (student only) — grouped by section */}
         {activeTab === "application" && role === "student" && (() => {
           const getVal = (path) => path.split(".").reduce((o, k) => (o == null ? undefined : o[k]), appForm);
           const setVal = (path, v) => {
