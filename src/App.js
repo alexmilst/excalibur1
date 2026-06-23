@@ -8623,19 +8623,61 @@ function PortalPage({ setPage }) {
 
   // ── Key dates, pulled directly from the Summer / Foundation / Venture pages ──
   const calendarEvents = [
-    { date: new Date(2026, 6, 27), label: "Summer Intensive — Program Begins", color: m_amber },
-    { date: new Date(2026, 7, 8), label: "Summer Intensive — Venture Finale", color: m_amber },
-    { date: new Date(2026, 5, 1), label: "Foundation Semester — Applications Open", color: m_blue },
-    { date: new Date(2026, 6, 15), label: "Foundation Semester — Priority Deadline", color: m_blue },
-    { date: new Date(2026, 7, 15), label: "Foundation Semester — Regular Deadline", color: m_blue },
-    { date: new Date(2026, 8, 8), label: "Foundation Semester — Program Begins", color: m_blue },
-    { date: new Date(2026, 11, 19), label: "Foundation Semester — Excalibur Gala", color: m_blue },
-    { date: new Date(2026, 11, 1), label: "Venture Semester — Priority Deadline", color: m_green },
-    { date: new Date(2027, 0, 5), label: "Venture Semester — Regular Deadline", color: m_green },
-    { date: new Date(2027, 0, 26), label: "Venture Semester — Program Begins", color: m_green },
-    { date: new Date(2027, 4, 9), label: "Venture Semester — Da Vinci Finale", color: m_green },
-    { date: new Date(2027, 4, 22), label: "Venture Semester — Medici Finale", color: m_green },
+    { date: new Date(2026, 5, 20), label: "Summer Intensive — Applications Open", color: m_amber, program: "Summer Intensive" },
+    { date: new Date(2026, 6, 15), label: "Summer Intensive — Application Deadline", color: m_amber, program: "Summer Intensive" },
+    { date: new Date(2026, 6, 27), label: "Summer Intensive — Program Begins", color: m_amber, program: "Summer Intensive" },
+    { date: new Date(2026, 7, 8), label: "Summer Intensive — Venture Finale", color: m_amber, program: "Summer Intensive" },
+    { date: new Date(2026, 5, 1), label: "Foundation Semester — Applications Open", color: m_blue, program: "Foundation Semester" },
+    { date: new Date(2026, 6, 15), label: "Foundation Semester — Priority Deadline", color: m_blue, program: "Foundation Semester" },
+    { date: new Date(2026, 7, 15), label: "Foundation Semester — Regular Deadline", color: m_blue, program: "Foundation Semester" },
+    { date: new Date(2026, 8, 8), label: "Foundation Semester — Program Begins", color: m_blue, program: "Foundation Semester" },
+    { date: new Date(2026, 11, 19), label: "Foundation Semester — Excalibur Gala", color: m_blue, program: "Foundation Semester" },
+    { date: new Date(2026, 11, 1), label: "Venture Semester — Priority Deadline", color: m_green, program: "Venture Semester" },
+    { date: new Date(2027, 0, 5), label: "Venture Semester — Regular Deadline", color: m_green, program: "Venture Semester" },
+    { date: new Date(2027, 0, 26), label: "Venture Semester — Program Begins", color: m_green, program: "Venture Semester" },
+    { date: new Date(2027, 4, 9), label: "Venture Semester — Da Vinci Finale", color: m_green, program: "Venture Semester" },
+    { date: new Date(2027, 4, 22), label: "Venture Semester — Medici Finale", color: m_green, program: "Venture Semester" },
   ];
+
+  // ── Key Dates block: program heading, then a row of date cards ──
+  function PortalKeyDates({ events, isMobile }) {
+    const today = new Date();
+    const groups = [
+      { name: "Summer Intensive", color: m_amber },
+      { name: "Foundation Semester", color: m_blue },
+      { name: "Venture Semester", color: m_green },
+    ].map(g => ({ ...g, items: events.filter(e => e.program === g.name).sort((a, b) => a.date - b.date) }));
+    const shortLabel = (label) => label.split(" — ").slice(1).join(" — ") || label;
+    return (
+      <div style={{ background: m_white, border: `1px solid ${m_line}`, borderRadius: 18, padding: isMobile ? "26px 22px" : "32px 36px" }}>
+        <p style={{ fontFamily: sans, fontWeight: 700, fontSize: 16, color: m_ink, marginBottom: 28 }}>Key Dates</p>
+        {groups.map((g, gi) => (
+          <div key={gi} style={{ marginBottom: gi < groups.length - 1 ? 28 : 0 }}>
+            <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 14 }}>
+              <span style={{ width: 8, height: 8, borderRadius: "50%", background: g.color, flexShrink: 0 }} />
+              <p style={{ fontFamily: sans, fontSize: 15, fontWeight: 700, color: m_ink }}>{g.name}</p>
+            </div>
+            <div style={{ display: "flex", flexWrap: "wrap", gap: 12 }}>
+              {g.items.map((e, i) => {
+                const past = e.date < today;
+                return (
+                  <div key={i} style={{
+                    flex: isMobile ? "1 1 100%" : "1 1 180px", minWidth: isMobile ? "100%" : 180,
+                    background: past ? m_ink : m_canvas,
+                    borderRadius: 14, padding: "16px 18px",
+                  }}>
+                    <p style={{ fontFamily: sans, fontSize: 11.5, fontWeight: 600, color: past ? "rgba(255,255,255,.6)" : m_gray, marginBottom: 8, lineHeight: 1.3, textTransform: "uppercase", letterSpacing: "0.03em" }}>{shortLabel(e.label)}</p>
+                    <p style={{ fontFamily: sans, fontSize: 19, fontWeight: 800, color: past ? "#FFFFFF" : m_ink, lineHeight: 1.15 }}>{e.date.toLocaleDateString(undefined, { month: "short", day: "numeric" })}</p>
+                    <p style={{ fontFamily: sans, fontSize: 12, color: past ? "rgba(255,255,255,.55)" : m_gray, marginTop: 2 }}>{e.date.getFullYear()}</p>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        ))}
+      </div>
+    );
+  }
 
   return (
     <div className="portal-page" style={{ background: m_canvas, minHeight: "100vh" }}>
@@ -8740,14 +8782,29 @@ function PortalPage({ setPage }) {
                   </>
                 ) : (
                   <>
-                    {/* stepper with labels under each node */}
-                    <div style={{ display: "flex", marginBottom: 14 }}>
-                      {statusSteps.map((s, i) => (
-                        <div key={s.key} style={{ flex: 1, paddingRight: i < statusSteps.length - 1 ? 8 : 0 }}>
-                          <div style={{ height: 6, borderRadius: 999, background: i <= currentStatusIndex ? m_amber : "rgba(17,17,17,0.08)", marginBottom: 8 }} />
-                          <p style={{ fontFamily: sans, fontSize: isMobile ? 10 : 12, fontWeight: i === currentStatusIndex ? 700 : 500, color: i <= currentStatusIndex ? m_ink : m_gray, lineHeight: 1.3 }}>{s.label}</p>
-                        </div>
-                      ))}
+                    {/* admissions status — cards, not a thin stepper line */}
+                    <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr 1fr" : "repeat(4, 1fr)", gap: 12, marginBottom: 14 }}>
+                      {statusSteps.map((s, i) => {
+                        const done = i < currentStatusIndex;
+                        const active = i === currentStatusIndex;
+                        return (
+                          <div key={s.key} style={{
+                            background: active ? m_ink : m_white,
+                            border: `1px solid ${active ? m_ink : m_line}`,
+                            borderRadius: 14, padding: "16px 14px",
+                            opacity: i > currentStatusIndex ? 0.55 : 1,
+                          }}>
+                            <div style={{
+                              width: 28, height: 28, borderRadius: 9, marginBottom: 12,
+                              display: "flex", alignItems: "center", justifyContent: "center",
+                              background: active ? "rgba(255,255,255,.14)" : done ? m_ink : m_canvas,
+                              color: active || done ? "#fff" : m_ink, fontFamily: sans, fontSize: 13, fontWeight: 700,
+                            }}>{done ? "✓" : i + 1}</div>
+                            <p style={{ fontFamily: sans, fontWeight: 700, fontSize: isMobile ? 12.5 : 13.5, color: active ? m_white : m_ink, lineHeight: 1.3, marginBottom: 3 }}>{s.label}</p>
+                            <p style={{ fontFamily: sans, fontSize: 11.5, color: active ? "rgba(255,255,255,.65)" : m_gray }}>{done ? "Completed" : active ? "In progress" : "Not yet"}</p>
+                          </div>
+                        );
+                      })}
                     </div>
                     <p style={{ fontFamily: sans, fontSize: 15, color: m_ink, lineHeight: 1.7, marginBottom: 22, marginTop: 16 }}>{statusSteps[Math.max(currentStatusIndex, 0)].desc}</p>
                     <div style={{ display: "flex", flexWrap: "wrap", gap: 10 }}>
@@ -8760,6 +8817,11 @@ function PortalPage({ setPage }) {
 
               {/* Real calendar — all program dates, color-coded */}
               <PortalCalendar events={calendarEvents} sans={sans} dark={m_dark} amber={m_amber} isMobile={isMobile} />
+            </div>
+
+            {/* Key Dates — every admissions deadline & program start, grouped by program */}
+            <div style={{ marginBottom: 16 }}>
+              <PortalKeyDates events={calendarEvents} isMobile={isMobile} />
             </div>
 
             {/* Next steps — consultation removed, optional only */}
@@ -8786,25 +8848,31 @@ function PortalPage({ setPage }) {
             </div>
 
             {/* Quote */}
-            <div style={{ background: m_white, border: `1px solid ${m_line}`, borderRadius: 18, padding: isMobile ? "24px 22px" : "30px 32px" }}>
-              <p style={{ fontFamily: sans, fontWeight: 700, fontSize: isMobile ? 16 : 17, color: m_ink, lineHeight: 1.5, marginBottom: 14 }}>"The European Canon of Excellence. The American Spirit of Leadership &amp; Innovation."</p>
-              <p style={{ fontFamily: sans, fontSize: 13, letterSpacing: "0.06em", color: m_gray, fontWeight: 600 }}>EXCALIBUR ACADEMY</p>
+            <div style={{ background: m_white, border: `1px solid ${m_line}`, borderRadius: 18, padding: isMobile ? "28px 22px" : "36px 32px", textAlign: "center" }}>
+              <p style={{ fontFamily: cg, fontStyle: "italic", fontWeight: 400, fontSize: isMobile ? 18 : 21, color: m_ink, lineHeight: 1.6, marginBottom: 14 }}>The European Canon of Excellence.<br />The American Spirit of Leadership &amp; Innovation.</p>
+              <p style={{ fontFamily: sans, fontSize: 13, letterSpacing: "0.06em", color: m_ink, fontWeight: 600 }}>EXCALIBUR ACADEMY</p>
             </div>
           </div>
         )}
 
-        {/* FACULTY TAB — bios pulled from the homepage, text only, no photos */}
+        {/* FACULTY TAB — bios pulled from the homepage, with photos */}
         {activeTab === "faculty" && (
           <PortalCard>
-            <PortalSectionHeading title="Faculty" cg={sans} isMobile={isMobile} />
+            <div style={{ marginBottom: 24 }}>
+              <p style={{ fontFamily: sans, fontSize: 12, letterSpacing: "0.2em", color: m_ink, fontWeight: 500, textTransform: "uppercase", marginBottom: 12 }}>EXCALIBUR TEAM</p>
+              <h2 style={{ fontFamily: "'Bodoni Cyrillic', 'Bodoni MT', serif", fontSize: isMobile ? 26 : 36, fontWeight: 400, color: m_ink, lineHeight: 1.1, letterSpacing: "0.04em", textTransform: "uppercase" }}>LEADERSHIP &amp; FACULTY</h2>
+            </div>
             <p style={{ fontFamily: sans, fontSize: 15, color: m_ink, opacity: 0.75, lineHeight: 1.8, marginBottom: 32, maxWidth: 720 }}>
               Excalibur faculty come from the arenas where leadership is tested: a CEO who built the world's first autonomous racing series, directed the Formula BMW program, and oversaw a $13B NASDAQ listing; a former Citigroup Managing Director and Georgetown MBA professor with 100+ M&amp;A transactions and 600+ CEO advisory engagements; and a doctoral candidate serving as an Orange County Sheriff's Department spokesman. They have led companies, advised CEOs, taught MBA students, and spoken on stages from West Point to Ivy League institutions — bringing that experience directly into the Excalibur classroom.
             </p>
             {(typeof coaches !== "undefined" ? coaches : []).map((f, i) => (
-              <div key={i} style={{ padding: "24px 0", borderTop: i > 0 ? `1px solid ${m_line}` : "none" }}>
-                <p style={{ fontFamily: sans, fontWeight: 700, fontSize: 17, color: m_ink, marginBottom: 3 }}>{f.name}</p>
-                <p style={{ fontFamily: sans, fontSize: 13, color: m_gray, marginBottom: 12, letterSpacing: "0.04em", textTransform: "uppercase" }}>{f.role}</p>
-                <p style={{ fontFamily: sans, fontSize: 14, color: m_ink, opacity: 0.75, lineHeight: 1.75, maxWidth: 760 }}>{f.bio || f.shortBio}</p>
+              <div key={i} style={{ display: "flex", gap: 20, alignItems: "flex-start", padding: "24px 0", borderTop: i > 0 ? `1px solid ${m_line}` : "none" }}>
+                {f.img && <img src={f.img} alt={f.name} style={{ width: 72, height: 72, borderRadius: "50%", objectFit: "cover", flexShrink: 0, border: `1px solid ${m_line}` }} />}
+                <div>
+                  <p style={{ fontFamily: sans, fontWeight: 700, fontSize: 17, color: m_ink, marginBottom: 3 }}>{f.name}</p>
+                  <p style={{ fontFamily: sans, fontSize: 13, color: m_gray, marginBottom: 12, letterSpacing: "0.04em", textTransform: "uppercase" }}>{f.role}</p>
+                  <p style={{ fontFamily: sans, fontSize: 14, color: m_ink, opacity: 0.75, lineHeight: 1.75, maxWidth: 760 }}>{f.bio || f.shortBio}</p>
+                </div>
               </div>
             ))}
           </PortalCard>
