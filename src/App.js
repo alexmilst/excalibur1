@@ -7995,11 +7995,11 @@ function PortalPage({ setPage }) {
   const [inviteStatusMsg, setInviteStatusMsg] = React.useState("");
   const [parentLinks, setParentLinks] = React.useState([]);
 
-  const [activeTab, setActiveTab] = React.useState("status");
+  const [activeTab, setActiveTab] = React.useState("overview");
 
-  const gold = "#A48D6E";
-  const dark = "#100F0C";
-  const parch = "#E4D5C1";
+  const gold = "#111111";
+  const dark = "#111111";
+  const parch = "#F4F2ED";
   const ox = "#34150F";
   const lora = "'Lora', Georgia, serif";
   const cg = "'Cormorant Garamond', Georgia, serif";
@@ -8284,64 +8284,94 @@ function PortalPage({ setPage }) {
     return <div style={{ background: dark, minHeight: "100vh" }} />;
   }
 
-  // ── LOGGED OUT: AUTH SCREEN ──
+  // ── LOGGED OUT: AUTH SCREEN — Tesla-minimal, black & off-white ──
   if (!session) {
+    const t_black = "#111111";
+    const t_white = "#FFFFFF";
+    const t_offwhite = "#F4F2ED";
+    const t_gray = "#6B6B68";
+    const t_line = "rgba(17,17,17,0.12)";
+    const authInputStyle = { ...inputStyle, background: t_white, border: `1px solid ${t_line}`, color: t_black, borderRadius: 8 };
     return (
-      <div className="portal-page" style={{ background: dark, minHeight: "100vh" }}>
-        <style>{`.portal-page input, .portal-page textarea, .portal-page select { color: #100F0C !important; } .portal-page input::placeholder, .portal-page textarea::placeholder { color: rgba(16,15,12,.45) !important; }`}</style>
-        <Breadcrumb items={[{ label: "Home", page: "home" }]} setPage={setPage} />
-        <div style={{ maxWidth: 460, margin: "0 auto", padding: isMobile ? "48px 24px 80px" : "72px 24px 100px" }}>
-          <p style={{ fontFamily: lora, fontSize: 11, letterSpacing: "0.4em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 16, textAlign: "center" }}>Student Portal</p>
-          <h1 style={{ fontFamily: cg, fontSize: isMobile ? 32 : 40, fontWeight: 400, fontStyle: "italic", color: parch, lineHeight: 1.1, marginBottom: 32, textAlign: "center" }}>{authMode === "login" ? "Welcome Back" : "Create Your Account"}</h1>
+      <div className="portal-page" style={{ background: t_offwhite, minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", padding: isMobile ? 0 : 24 }}>
+        <style>{`
+          .portal-page input, .portal-page textarea, .portal-page select { color: ${t_black} !important; }
+          .portal-page input::placeholder, .portal-page textarea::placeholder { color: rgba(17,17,17,.4) !important; }
+        `}</style>
+        <div style={{ width: "100%", maxWidth: 1000, background: t_white, border: `1px solid ${t_line}`, borderRadius: isMobile ? 0 : 16, display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", overflow: "hidden", minHeight: isMobile ? "auto" : 600 }}>
 
-          <div style={{ display: "flex", marginBottom: 28, borderBottom: "1px solid rgba(164,141,110,.2)" }}>
-            {["login", "signup"].map(m => (
-              <button key={m} onClick={() => { setAuthMode(m); setAuthError(""); }} style={{ flex: 1, padding: "12px 0", background: "none", border: "none", borderBottom: authMode === m ? `2px solid ${gold}` : "2px solid transparent", color: authMode === m ? gold : parch, fontFamily: lora, fontSize: 12, letterSpacing: "0.15em", textTransform: "uppercase", fontWeight: 600, cursor: "pointer" }}>
-                {m === "login" ? "Log In" : "Sign Up"}
-              </button>
-            ))}
+          {/* LEFT — photo panel, no overlay text */}
+          <div style={{ position: "relative", minHeight: isMobile ? 220 : "auto", overflow: "hidden" }}>
+            <img src="https://i.imgur.com/iJhzPfX.jpeg" alt="Excalibur Academy" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "center" }} onError={e => e.target.style.display = "none"} />
+            <div style={{ position: "absolute", inset: 0, background: "linear-gradient(180deg, rgba(17,17,17,.08) 0%, rgba(17,17,17,.55) 100%)" }} />
+            <div style={{ position: "absolute", top: isMobile ? 20 : 36, left: isMobile ? 20 : 36 }}>
+              <p style={{ fontFamily: cg, fontSize: 15, letterSpacing: "0.18em", color: t_white, textTransform: "uppercase" }}>Excalibur Academy</p>
+            </div>
+            <div style={{ position: "absolute", bottom: isMobile ? 20 : 40, left: isMobile ? 20 : 40, right: 24 }}>
+              <p style={{ fontFamily: lora, fontSize: 14, letterSpacing: "0.14em", color: "rgba(255,255,255,.7)", textTransform: "uppercase" }}>Student &amp; Family Portal</p>
+            </div>
           </div>
 
-          {authMode === "signup" && (
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10, marginBottom: 10 }}>
-              <input type="text" placeholder="First Name" value={authForm.firstName} onChange={e => setAuthForm(f => ({ ...f, firstName: e.target.value }))} style={inputStyle} />
-              <input type="text" placeholder="Last Name" value={authForm.lastName} onChange={e => setAuthForm(f => ({ ...f, lastName: e.target.value }))} style={inputStyle} />
-            </div>
-          )}
-          <input type="email" placeholder="Email Address" value={authForm.email} onChange={e => setAuthForm(f => ({ ...f, email: e.target.value }))} style={{ ...inputStyle, marginBottom: 10 }} />
-          <input type="password" placeholder="Password" value={authForm.password} onChange={e => setAuthForm(f => ({ ...f, password: e.target.value }))} style={{ ...inputStyle, marginBottom: 18 }} />
+          {/* RIGHT — white form panel, black accents */}
+          <div style={{ padding: isMobile ? "40px 28px 48px" : "64px 56px", display: "flex", flexDirection: "column", justifyContent: "center" }}>
+            <p style={{ fontFamily: lora, fontSize: 14, letterSpacing: "0.26em", color: t_gray, fontWeight: 600, textTransform: "uppercase", marginBottom: 14 }}>{authMode === "login" ? "Welcome Back" : "Get Started"}</p>
+            <h1 style={{ fontFamily: cg, fontSize: isMobile ? 26 : 32, fontWeight: 700, color: t_black, lineHeight: 1.15, marginBottom: 8 }}>{authMode === "login" ? "Log in to your portal" : "Create your account"}</h1>
+            <p style={{ fontFamily: lora, fontSize: 15, color: t_gray, lineHeight: 1.7, marginBottom: 32 }}>{authMode === "login" ? "Access your application, consultations, and admissions messages." : "Set up access to track your application, schedule consultations, and message admissions."}</p>
 
-          {authError && <p style={{ fontFamily: lora, fontSize: 13, color: "#D98C6E", marginBottom: 14 }}>{authError}</p>}
+            {authMode === "signup" && (
+              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10, marginBottom: 10 }}>
+                <input type="text" placeholder="First Name" value={authForm.firstName} onChange={e => setAuthForm(f => ({ ...f, firstName: e.target.value }))} style={authInputStyle} />
+                <input type="text" placeholder="Last Name" value={authForm.lastName} onChange={e => setAuthForm(f => ({ ...f, lastName: e.target.value }))} style={authInputStyle} />
+              </div>
+            )}
+            <input type="email" placeholder="Email Address" value={authForm.email} onChange={e => setAuthForm(f => ({ ...f, email: e.target.value }))} style={{ ...authInputStyle, marginBottom: 10 }} />
+            <input type="password" placeholder="Password" value={authForm.password} onChange={e => setAuthForm(f => ({ ...f, password: e.target.value }))} style={{ ...authInputStyle, marginBottom: 22 }} />
 
-          <button onClick={handleAuthSubmit} disabled={authBusy} style={{ fontFamily: lora, padding: "15px 0", background: gold, border: "none", color: dark, fontSize: 12, fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", cursor: authBusy ? "default" : "pointer", width: "100%" }}>
-            {authBusy ? "Please wait..." : authMode === "login" ? "Log In" : "Create Account"}
-          </button>
+            {authError && <p style={{ fontFamily: lora, fontSize: 14, color: "#B23B3B", marginBottom: 16 }}>{authError}</p>}
+
+            <button onClick={handleAuthSubmit} disabled={authBusy} style={{ fontFamily: lora, padding: "16px 0", background: t_black, border: "none", color: t_white, fontSize: 14, fontWeight: 700, letterSpacing: "0.16em", textTransform: "uppercase", cursor: authBusy ? "default" : "pointer", width: "100%", marginBottom: 20, borderRadius: 8 }}>
+              {authBusy ? "Please wait..." : authMode === "login" ? "Log In" : "Create Account"}
+            </button>
+
+            <p style={{ fontFamily: lora, fontSize: 14, color: t_gray, textAlign: "center" }}>
+              {authMode === "login" ? "Don't have an account? " : "Already have an account? "}
+              <span onClick={() => { setAuthMode(authMode === "login" ? "signup" : "login"); setAuthError(""); }} style={{ color: t_black, fontWeight: 600, textDecoration: "underline", cursor: "pointer" }}>
+                {authMode === "login" ? "Sign Up" : "Log In"}
+              </span>
+            </p>
+          </div>
         </div>
       </div>
     );
   }
 
-  // ── LOGGED IN, NO STUDENT PROFILE YET ──
+  // ── LOGGED IN, NO STUDENT PROFILE YET — same minimal system ──
   if (needsProfile) {
+    const t_black = "#111111";
+    const t_white = "#FFFFFF";
+    const t_offwhite = "#F4F2ED";
+    const t_gray = "#6B6B68";
+    const t_line = "rgba(17,17,17,0.12)";
+    const pInputStyle = { ...inputStyle, background: t_white, border: `1px solid ${t_line}`, color: t_black, borderRadius: 8 };
     return (
-      <div className="portal-page" style={{ background: dark, minHeight: "100vh" }}>
-        <style>{`.portal-page input, .portal-page textarea, .portal-page select { color: #100F0C !important; } .portal-page input::placeholder, .portal-page textarea::placeholder { color: rgba(16,15,12,.45) !important; }`}</style>
+      <div className="portal-page" style={{ background: t_offwhite, minHeight: "100vh" }}>
+        <style>{`.portal-page input, .portal-page textarea, .portal-page select { color: ${t_black} !important; } .portal-page input::placeholder, .portal-page textarea::placeholder { color: rgba(17,17,17,.4) !important; }`}</style>
         <Breadcrumb items={[{ label: "Home", page: "home" }]} setPage={setPage} />
         <div style={{ maxWidth: 460, margin: "0 auto", padding: isMobile ? "48px 24px 80px" : "72px 24px 100px" }}>
-          <p style={{ fontFamily: lora, fontSize: 11, letterSpacing: "0.4em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 16, textAlign: "center" }}>One More Step</p>
-          <h1 style={{ fontFamily: cg, fontSize: isMobile ? 28 : 34, fontWeight: 400, fontStyle: "italic", color: parch, lineHeight: 1.1, marginBottom: 28, textAlign: "center" }}>Complete Your Profile</h1>
+          <p style={{ fontFamily: lora, fontSize: 14, letterSpacing: "0.3em", color: t_gray, fontWeight: 600, textTransform: "uppercase", marginBottom: 16, textAlign: "center" }}>One More Step</p>
+          <h1 style={{ fontFamily: cg, fontSize: isMobile ? 26 : 30, fontWeight: 700, color: t_black, lineHeight: 1.1, marginBottom: 28, textAlign: "center" }}>Complete Your Profile</h1>
 
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10, marginBottom: 10 }}>
-            <input type="text" placeholder="First Name" value={profileForm.firstName} onChange={e => setProfileForm(f => ({ ...f, firstName: e.target.value }))} style={inputStyle} />
-            <input type="text" placeholder="Last Name" value={profileForm.lastName} onChange={e => setProfileForm(f => ({ ...f, lastName: e.target.value }))} style={inputStyle} />
+            <input type="text" placeholder="First Name" value={profileForm.firstName} onChange={e => setProfileForm(f => ({ ...f, firstName: e.target.value }))} style={pInputStyle} />
+            <input type="text" placeholder="Last Name" value={profileForm.lastName} onChange={e => setProfileForm(f => ({ ...f, lastName: e.target.value }))} style={pInputStyle} />
           </div>
-          <input type="text" placeholder="Phone Number" value={profileForm.phone} onChange={e => setProfileForm(f => ({ ...f, phone: e.target.value }))} style={{ ...inputStyle, marginBottom: 10 }} />
+          <input type="text" placeholder="Phone Number" value={profileForm.phone} onChange={e => setProfileForm(f => ({ ...f, phone: e.target.value }))} style={{ ...pInputStyle, marginBottom: 10 }} />
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10, marginBottom: 18 }}>
-            <input type="text" placeholder="Age" value={profileForm.age} onChange={e => setProfileForm(f => ({ ...f, age: e.target.value }))} style={inputStyle} />
-            <input type="text" placeholder="Current Grade" value={profileForm.grade} onChange={e => setProfileForm(f => ({ ...f, grade: e.target.value }))} style={inputStyle} />
+            <input type="text" placeholder="Age" value={profileForm.age} onChange={e => setProfileForm(f => ({ ...f, age: e.target.value }))} style={pInputStyle} />
+            <input type="text" placeholder="Current Grade" value={profileForm.grade} onChange={e => setProfileForm(f => ({ ...f, grade: e.target.value }))} style={pInputStyle} />
           </div>
-          {authError && <p style={{ fontFamily: lora, fontSize: 13, color: "#D98C6E", marginBottom: 14 }}>{authError}</p>}
-          <button onClick={handleCreateProfile} disabled={authBusy} style={{ fontFamily: lora, padding: "15px 0", background: gold, border: "none", color: dark, fontSize: 12, fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", cursor: "pointer", width: "100%" }}>
+          {authError && <p style={{ fontFamily: lora, fontSize: 14, color: "#B23B3B", marginBottom: 14 }}>{authError}</p>}
+          <button onClick={handleCreateProfile} disabled={authBusy} style={{ fontFamily: lora, padding: "16px 0", background: t_black, border: "none", color: t_white, fontSize: 14, fontWeight: 700, letterSpacing: "0.16em", textTransform: "uppercase", cursor: "pointer", width: "100%", borderRadius: 8 }}>
             {authBusy ? "Saving..." : "Continue to Portal →"}
           </button>
         </div>
@@ -8349,10 +8379,19 @@ function PortalPage({ setPage }) {
     );
   }
 
-  // ── MAIN DASHBOARD (light) ──
+  // ── MAIN DASHBOARD — Tesla-minimal, black sidebar + off-white canvas ──
+  const t_black = "#111111";
+  const t_white = "#FFFFFF";
+  const t_offwhite = "#F4F2ED";
+  const t_gray = "#6B6B68";
+  const t_line = "rgba(17,17,17,0.1)";
+  const t_lineSoft = "rgba(17,17,17,0.06)";
+  const t_lineDark = "rgba(255,255,255,0.14)";
+  const t_lineDarkSoft = "rgba(255,255,255,0.08)";
+
   const tabs = role === "student"
-    ? [["status", "Status"], ["application", "Application"], ["consultation", "Consultation"], ["messages", "Messages"], ["family", "Family"]]
-    : [["status", "Status"], ["consultation", "Consultation"], ["messages", "Messages"]];
+    ? [["overview", "Overview"], ["application", "Application"], ["consultation", "Consultation"], ["messages", "Messages"], ["family", "Family"]]
+    : [["overview", "Overview"], ["consultation", "Consultation"], ["messages", "Messages"]];
 
   const statusSteps = [
     { key: "draft", label: "Started" },
@@ -8361,35 +8400,198 @@ function PortalPage({ setPage }) {
     { key: "accepted", label: "Decision" },
   ];
   const currentStatusIndex = application ? statusSteps.findIndex(s => s.key === application.status) : -1;
+  const progressPct = application ? Math.round(((currentStatusIndex + 1) / statusSteps.length) * 100) : 0;
+  const greetingHour = new Date().getHours();
+  const greeting = greetingHour < 12 ? "Good morning" : greetingHour < 18 ? "Good afternoon" : "Good evening";
+  const todayStr = new Date().toLocaleDateString(undefined, { weekday: "long", month: "long", day: "numeric" });
+
+  const navIcon = (key) => ({
+    overview: "◆",
+    application: "✎",
+    consultation: "☎",
+    messages: "✉",
+    family: "⌂",
+  }[key] || "•");
+
+  const StudentAvatar = ({ size = 44 }) => {
+    const initial = (student && student.first_name ? student.first_name[0] : "?").toUpperCase();
+    return (
+      <div style={{ width: size, height: size, borderRadius: "50%", background: t_white, color: t_black, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+        <span style={{ fontFamily: cg, fontWeight: 700, fontSize: size * 0.38 }}>{initial}</span>
+      </div>
+    );
+  };
+
+  const Card = ({ children, style: extra = {} }) => (
+    <div style={{ background: t_white, border: `1px solid ${t_line}`, borderRadius: 12, padding: isMobile ? "24px 20px" : "32px 36px", ...extra }}>
+      {children}
+    </div>
+  );
+
+  const SectionHeading = ({ kicker, title }) => (
+    <div style={{ marginBottom: 28 }}>
+      {kicker && <p style={{ fontFamily: lora, fontSize: 14, letterSpacing: "0.2em", color: t_gray, fontWeight: 600, textTransform: "uppercase", marginBottom: 8 }}>{kicker}</p>}
+      <h2 style={{ fontFamily: cg, fontSize: isMobile ? 22 : 26, fontWeight: 700, color: t_black, lineHeight: 1.15 }}>{title}</h2>
+    </div>
+  );
 
   return (
-    <div className="portal-page" style={{ background: parch, minHeight: "100vh" }}>
-      <style>{`.portal-page input, .portal-page textarea, .portal-page select { color: #100F0C !important; } .portal-page input::placeholder, .portal-page textarea::placeholder { color: rgba(16,15,12,.45) !important; }`}</style>
+    <div className="portal-page" style={{ background: t_offwhite, minHeight: "100vh" }}>
+      <style>{`.portal-page input, .portal-page textarea, .portal-page select { color: ${t_black} !important; } .portal-page input::placeholder, .portal-page textarea::placeholder { color: rgba(17,17,17,.4) !important; }`}</style>
       <Breadcrumb items={[{ label: "Home", page: "home" }]} setPage={setPage} />
 
-      {/* HEADER */}
-      <div style={{ background: dark, padding: isMobile ? "36px 24px" : "48px 80px", display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 16 }}>
-        <div>
-          <p style={{ fontFamily: lora, fontSize: 10, letterSpacing: "0.3em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 6 }}>{role === "student" ? "Student Portal" : "Family Portal"}</p>
-          <h1 style={{ fontFamily: cg, fontSize: isMobile ? 24 : 32, fontWeight: 400, color: parch }}>Welcome, {student ? student.first_name : ""}{role === "parent" ? " (Parent)" : ""}</h1>
+      <div style={{ display: "flex", flexDirection: isMobile ? "column" : "row", minHeight: "100vh" }}>
+
+        {/* ── SIDEBAR — black fill, profile photo top ── */}
+        <div style={{ width: isMobile ? "100%" : 268, flexShrink: 0, background: t_black, display: "flex", flexDirection: isMobile ? "row" : "column", borderRight: isMobile ? "none" : `1px solid ${t_lineDarkSoft}`, position: isMobile ? "static" : "sticky", top: 0, alignSelf: "flex-start", height: isMobile ? "auto" : "100vh", overflowY: isMobile ? "visible" : "auto" }}>
+
+          {!isMobile && (
+            <div style={{ padding: "32px 28px 24px", borderBottom: `1px solid ${t_lineDarkSoft}` }}>
+              <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 22 }}>
+                <StudentAvatar size={44} />
+                <div>
+                  <p style={{ fontFamily: cg, fontWeight: 700, fontSize: 16, color: t_white, lineHeight: 1.2 }}>{student ? student.first_name : ""}{role === "parent" ? " (Parent)" : ""}</p>
+                  <p style={{ fontFamily: lora, fontSize: 14, color: "rgba(244,242,237,.5)" }}>{role === "student" ? "Student" : "Parent"}</p>
+                </div>
+              </div>
+              <p style={{ fontFamily: cg, fontWeight: 700, fontSize: 14, color: t_white, letterSpacing: "0.04em" }}>Excalibur</p>
+            </div>
+          )}
+
+          {isMobile && (
+            <div style={{ padding: "24px 24px 0", width: "100%" }}>
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 16 }}>
+                <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+                  <StudentAvatar size={40} />
+                  <div>
+                    <p style={{ fontFamily: lora, fontSize: 14, letterSpacing: "0.2em", color: "rgba(244,242,237,.55)", fontWeight: 600, textTransform: "uppercase", marginBottom: 2 }}>{role === "student" ? "Student Portal" : "Family Portal"}</p>
+                    <h1 style={{ fontFamily: cg, fontWeight: 700, fontSize: 20, color: t_white }}>{student ? student.first_name : ""}{role === "parent" ? " (Parent)" : ""}</h1>
+                  </div>
+                </div>
+                <button onClick={handleSignOut} style={{ fontFamily: lora, fontSize: 14, color: t_white, background: "transparent", border: `1px solid ${t_lineDark}`, padding: "8px 14px", borderRadius: 8, cursor: "pointer", whiteSpace: "nowrap" }}>Sign Out</button>
+              </div>
+            </div>
+          )}
+
+          {/* NAV */}
+          <div style={{ flex: 1, padding: isMobile ? "0 16px 12px" : "16px 14px", display: "flex", flexDirection: isMobile ? "row" : "column", gap: isMobile ? 6 : 2, overflowX: isMobile ? "auto" : "visible", WebkitOverflowScrolling: "touch" }}>
+            {tabs.map(([key, label]) => (
+              <button key={key} onClick={() => setActiveTab(key)} style={{
+                display: "flex", alignItems: "center", gap: 12,
+                fontFamily: lora, fontSize: 14, fontWeight: activeTab === key ? 600 : 400,
+                color: activeTab === key ? t_black : "rgba(244,242,237,.65)",
+                background: activeTab === key ? t_white : "transparent",
+                border: "none", borderRadius: 8,
+                padding: isMobile ? "10px 14px" : "12px 16px", cursor: "pointer", whiteSpace: "nowrap", transition: "all .15s", textAlign: "left",
+              }}>
+                <span style={{ fontSize: 14, opacity: 0.85 }}>{navIcon(key)}</span>{label}
+              </button>
+            ))}
+          </div>
+
+          {!isMobile && (
+            <div style={{ padding: "16px 28px 28px", borderTop: `1px solid ${t_lineDarkSoft}` }}>
+              <button onClick={handleSignOut} style={{ width: "100%", fontFamily: lora, fontSize: 14, color: "rgba(244,242,237,.7)", background: "transparent", border: `1px solid ${t_lineDark}`, padding: "11px 0", borderRadius: 8, cursor: "pointer" }}>Sign Out</button>
+            </div>
+          )}
         </div>
-        <button onClick={handleSignOut} style={{ fontFamily: lora, fontSize: 11, letterSpacing: "0.15em", color: parch, background: "transparent", border: `1px solid ${gold}`, padding: "10px 20px", textTransform: "uppercase", cursor: "pointer" }}>Sign Out</button>
-      </div>
 
-      {/* TABS */}
-      <div style={{ display: "flex", gap: 0, borderBottom: `1px solid rgba(16,15,12,.15)`, overflowX: "auto", padding: isMobile ? "0 24px" : "0 80px", background: parch }}>
-        {tabs.map(([key, label]) => (
-          <button key={key} onClick={() => setActiveTab(key)} style={{ padding: "16px 20px", background: "none", border: "none", borderBottom: activeTab === key ? `2px solid ${dark}` : "2px solid transparent", color: dark, fontFamily: lora, fontSize: 12, letterSpacing: "0.1em", textTransform: "uppercase", fontWeight: activeTab === key ? 700 : 600, cursor: "pointer", whiteSpace: "nowrap", opacity: activeTab === key ? 1 : 0.6 }}>{label}</button>
-        ))}
-      </div>
+        {/* ── MAIN CONTENT ── */}
+        <div style={{ flex: 1, minWidth: 0 }}>
 
-      <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 380px", maxWidth: 1280, margin: "0 auto" }}>
-      <div style={{ padding: isMobile ? "36px 24px 80px" : "56px 80px 100px", maxWidth: 820 }}>
+          <div style={{ padding: isMobile ? "28px 24px 20px" : "40px 56px 28px", display: "flex", justifyContent: "space-between", alignItems: "baseline", flexWrap: "wrap", gap: 12 }}>
+            <h2 style={{ fontFamily: cg, fontSize: isMobile ? 22 : 28, fontWeight: 700, color: t_black }}>{greeting}{student ? `, ${student.first_name}` : ""}.</h2>
+            <p style={{ fontFamily: lora, fontSize: 14, color: t_gray }}>{todayStr}</p>
+          </div>
 
-        {/* STATUS TAB */}
+          <div style={{ padding: isMobile ? "0 24px 80px" : "0 56px 100px", maxWidth: 1180 }}>
+
+        {/* OVERVIEW TAB */}
+        {activeTab === "overview" && (
+          <div>
+            {/* Snapshot cards */}
+            <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr 1fr" : "repeat(4, 1fr)", gap: isMobile ? 12 : 16, marginBottom: isMobile ? 16 : 16 }}>
+              {[
+                { label: "Program", value: application ? (application.program || "—") : "Not Selected" },
+                { label: "Status", value: application ? statusSteps[Math.max(currentStatusIndex, 0)].label : "Not Started" },
+                { label: "Consultations", value: consultations.length ? `${consultations.length} Requested` : "None Yet" },
+                { label: "Cohort", value: role === "student" ? "2026–2027" : "Family Access" },
+              ].map((s, i) => (
+                <div key={i} style={{ background: t_white, border: `1px solid ${t_line}`, borderRadius: 12, padding: isMobile ? "16px 14px" : "20px 22px" }}>
+                  <p style={{ fontFamily: lora, fontSize: 14, color: t_gray, marginBottom: 8 }}>{s.label}</p>
+                  <p style={{ fontFamily: cg, fontWeight: 700, fontSize: isMobile ? 15 : 18, color: t_black, lineHeight: 1.2 }}>{s.value}</p>
+                </div>
+              ))}
+            </div>
+
+            {/* Application progress — solid black panel */}
+            <div style={{ background: t_black, borderRadius: 12, padding: isMobile ? "28px 24px" : "36px 40px", marginBottom: isMobile ? 16 : 16 }}>
+              <p style={{ fontFamily: lora, fontSize: 14, color: "rgba(244,242,237,.55)", marginBottom: 18 }}>Application Progress</p>
+              {!application ? (
+                <>
+                  <p style={{ fontFamily: cg, fontWeight: 700, fontSize: isMobile ? 20 : 24, color: t_white, marginBottom: 20, lineHeight: 1.3 }}>{role === "student" ? "Your application hasn't been started yet." : "The student hasn't started an application yet."}</p>
+                  {role === "student" && <button onClick={() => setActiveTab("application")} style={{ fontFamily: lora, padding: "13px 28px", background: t_white, border: "none", color: t_black, fontSize: 14, fontWeight: 700, letterSpacing: "0.04em", cursor: "pointer", borderRadius: 8 }}>Begin Application →</button>}
+                </>
+              ) : (
+                <>
+                  <div style={{ display: "flex", alignItems: "baseline", gap: 14, marginBottom: 18 }}>
+                    <span style={{ fontFamily: cg, fontWeight: 700, fontSize: isMobile ? 38 : 52, color: t_white, lineHeight: 1 }}>{progressPct}%</span>
+                    <span style={{ fontFamily: lora, fontSize: 15, color: "rgba(244,242,237,.65)" }}>Complete · Currently {statusSteps[Math.max(currentStatusIndex, 0)].label}</span>
+                  </div>
+                  <div style={{ display: "flex", gap: 4, marginBottom: 24 }}>
+                    {statusSteps.map((s, i) => (
+                      <div key={s.key} style={{ flex: 1, height: 4, borderRadius: 2, background: i <= currentStatusIndex ? t_white : "rgba(255,255,255,0.16)" }} />
+                    ))}
+                  </div>
+                  <div style={{ display: "flex", flexWrap: "wrap", gap: 10 }}>
+                    {role === "student" && <button onClick={() => setActiveTab("application")} style={{ fontFamily: lora, padding: "12px 24px", background: t_white, border: "none", color: t_black, fontSize: 14, fontWeight: 700, letterSpacing: "0.02em", cursor: "pointer", borderRadius: 8 }}>{application.status === "draft" ? "Continue Application →" : "View Application →"}</button>}
+                    <button onClick={() => setActiveTab("consultation")} style={{ fontFamily: lora, padding: "12px 24px", background: "transparent", border: "1px solid rgba(255,255,255,.25)", color: t_white, fontSize: 14, fontWeight: 500, cursor: "pointer", borderRadius: 8 }}>Schedule Consultation →</button>
+                  </div>
+                </>
+              )}
+            </div>
+
+            {/* Next steps + quote */}
+            <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1.3fr 1fr", gap: isMobile ? 16 : 16, marginBottom: isMobile ? 16 : 16 }}>
+              <div style={{ background: t_white, border: `1px solid ${t_line}`, borderRadius: 12, padding: isMobile ? "24px 22px" : "30px 32px" }}>
+                <p style={{ fontFamily: lora, fontSize: 14, color: t_gray, marginBottom: 16, fontWeight: 600 }}>Next Steps</p>
+                {[
+                  { done: !!application, label: "Start your application" },
+                  { done: application && application.status !== "draft", label: "Submit your application" },
+                  { done: consultations.length > 0, label: "Request a family consultation" },
+                  { done: parentLinks && parentLinks.length > 0, label: "Invite a parent or guardian" },
+                ].filter((_, i) => i !== 3 || role === "student").map((s, i) => (
+                  <div key={i} style={{ display: "flex", alignItems: "center", gap: 12, padding: "10px 0", borderTop: i > 0 ? `1px solid ${t_lineSoft}` : "none" }}>
+                    <span style={{ width: 18, height: 18, borderRadius: "50%", border: `1px solid ${s.done ? t_black : "rgba(17,17,17,.25)"}`, background: s.done ? t_black : "transparent", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, fontSize: 10, color: t_white }}>{s.done ? "✓" : ""}</span>
+                    <span style={{ fontFamily: lora, fontSize: 14, color: t_black, opacity: s.done ? 0.5 : 1, textDecoration: s.done ? "line-through" : "none" }}>{s.label}</span>
+                  </div>
+                ))}
+              </div>
+              <div style={{ background: t_white, border: `1px solid ${t_line}`, borderRadius: 12, padding: isMobile ? "24px 22px" : "30px 28px", display: "flex", flexDirection: "column", justifyContent: "center" }}>
+                <p style={{ fontFamily: cg, fontWeight: 700, fontSize: isMobile ? 16 : 17, color: t_black, lineHeight: 1.5, marginBottom: 14 }}>"The European Canon of Excellence. The American Spirit of Leadership &amp; Innovation."</p>
+                <p style={{ fontFamily: lora, fontSize: 14, letterSpacing: "0.1em", color: t_gray, fontWeight: 600 }}>Excalibur Academy</p>
+              </div>
+            </div>
+
+            {/* Quick actions */}
+            <p style={{ fontFamily: lora, fontSize: 14, color: t_gray, marginBottom: 12, fontWeight: 600 }}>Quick Actions</p>
+            <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr 1fr" : "repeat(4, 1fr)", gap: 10 }}>
+              {[
+                role === "student" && ["application", "Application"],
+                ["consultation", "Consultation"],
+                ["messages", "Messages"],
+                role === "student" && ["family", "Family"],
+              ].filter(Boolean).map(([key, label]) => (
+                <button key={key} onClick={() => setActiveTab(key)} style={{ fontFamily: lora, fontSize: 14, padding: "14px 12px", background: t_white, border: `1px solid ${t_line}`, color: t_black, cursor: "pointer", fontWeight: 600, borderRadius: 10 }}>{label} →</button>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* STATUS — folded into Overview now, kept for safety / unused key */}
         {activeTab === "status" && (
           <div>
-            <h2 style={{ fontFamily: cg, fontSize: 26, fontWeight: 400, fontStyle: "italic", color: dark, marginBottom: 28 }}>Application Status</h2>
+            <SectionHeading kicker="Admissions" title="Application Status" />
             {!application ? (
               <p style={{ ...BODY, color: dark }}>{role === "student" ? "No application started yet. Head to the Application tab to begin." : "The student hasn't started an application yet."}</p>
             ) : (
@@ -8401,18 +8603,10 @@ function PortalPage({ setPage }) {
                 ))}
               </div>
             )}
-            {application && (
-              <div style={{ marginTop: 32, background: "#FBF7EE", border: "1px solid rgba(16,15,12,.15)", padding: "24px 28px" }}>
-                <p style={{ fontFamily: lora, fontSize: 11, letterSpacing: "0.15em", color: dark, fontWeight: 700, textTransform: "uppercase", marginBottom: 8 }}>Program</p>
-                <p style={{ ...BODY, color: dark, marginBottom: 16 }}>{application.program || "—"}{application.track ? " · " + application.track : ""}</p>
-                <p style={{ fontFamily: lora, fontSize: 11, letterSpacing: "0.15em", color: dark, fontWeight: 700, textTransform: "uppercase", marginBottom: 8 }}>Submitted</p>
-                <p style={{ ...BODY, color: dark }}>{application.submitted_at ? new Date(application.submitted_at).toLocaleDateString() : "Not yet submitted"}</p>
-              </div>
-            )}
           </div>
         )}
 
-        {/* APPLICATION TAB (student only) — grouped by section, split logo layout */}
+        {/* APPLICATION TAB (student only) — grouped by section */}
         {activeTab === "application" && role === "student" && (() => {
           const getVal = (path) => path.split(".").reduce((o, k) => (o == null ? undefined : o[k]), appForm);
           const setVal = (path, v) => {
@@ -8549,14 +8743,14 @@ function PortalPage({ setPage }) {
           const goBack = () => setAppStep(s => Math.max(1, s - 1));
           const jumpTo = (idx) => setAppStep(idx + 1);
 
-          const whiteInput = { ...inputStyle, background: "#FFFFFF" };
+          const whiteInput = { ...inputStyle, background: "#FBF7EE" };
 
           const PillGroup = ({ value, onChange, options }) => (
             <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
               {options.map(([v, l]) => {
                 const active = value === v;
                 return (
-                  <button key={v} type="button" onClick={() => onChange(v)} style={{ fontFamily: lora, fontSize: 13, padding: "10px 18px", background: active ? "#000000" : "transparent", color: active ? "#FFFFFF" : "#000000", border: "1px solid #000000", cursor: "pointer" }}>{l}</button>
+                  <button key={v} type="button" onClick={() => onChange(v)} style={{ fontFamily: lora, fontSize: 13, padding: "10px 18px", background: active ? dark : "transparent", color: active ? parch : dark, border: `1px solid ${dark}`, cursor: "pointer" }}>{l}</button>
                 );
               })}
             </div>
@@ -8566,7 +8760,7 @@ function PortalPage({ setPage }) {
               {options.map(opt => {
                 const active = values.includes(opt);
                 return (
-                  <button key={opt} type="button" onClick={() => onToggle(opt)} style={{ fontFamily: lora, fontSize: 13, padding: "10px 18px", background: active ? "#000000" : "transparent", color: active ? "#FFFFFF" : "#000000", border: "1px solid #000000", cursor: "pointer" }}>{opt}</button>
+                  <button key={opt} type="button" onClick={() => onToggle(opt)} style={{ fontFamily: lora, fontSize: 13, padding: "10px 18px", background: active ? dark : "transparent", color: active ? parch : dark, border: `1px solid ${dark}`, cursor: "pointer" }}>{opt}</button>
                 );
               })}
             </div>
@@ -8589,13 +8783,13 @@ function PortalPage({ setPage }) {
               return (
                 <label style={{ display: "flex", alignItems: "flex-start", gap: 10, cursor: "pointer" }}>
                   <input type="checkbox" checked={getVal(q.path) || false} onChange={e => setVal(q.path, e.target.checked)} style={{ marginTop: 3 }} />
-                  <span style={{ fontFamily: lora, fontSize: 15, color: "#000000" }}>{q.confirmLabel}</span>
+                  <span style={{ fontFamily: lora, fontSize: 15, color: dark }}>{q.confirmLabel}</span>
                 </label>
               );
             }
             if (q.type === "display") return null;
             if (q.type === "autodate") {
-              return <p style={{ fontFamily: lora, fontSize: 15, color: "#000000" }}>{new Date().toLocaleDateString()}</p>;
+              return <p style={{ fontFamily: lora, fontSize: 15, color: dark }}>{new Date().toLocaleDateString()}</p>;
             }
             if (q.type === "programPills") {
               return (
@@ -8603,7 +8797,7 @@ function PortalPage({ setPage }) {
                   {["summer", "foundation", "venture", "full-year", "unsure"].map(key => {
                     const active = appForm.programs.includes(key);
                     return (
-                      <button key={key} type="button" onClick={() => toggleVal("programs", key)} style={{ fontFamily: lora, fontSize: 13, padding: "10px 18px", textAlign: "left", background: active ? "#000000" : "transparent", color: active ? "#FFFFFF" : "#000000", border: "1px solid #000000", cursor: "pointer" }}>{programLabels[key]}</button>
+                      <button key={key} type="button" onClick={() => toggleVal("programs", key)} style={{ fontFamily: lora, fontSize: 13, padding: "10px 18px", textAlign: "left", background: active ? dark : "transparent", color: active ? parch : dark, border: `1px solid ${dark}`, cursor: "pointer" }}>{programLabels[key]}</button>
                     );
                   })}
                 </div>
@@ -8614,7 +8808,7 @@ function PortalPage({ setPage }) {
                 <div>
                   {groups.filter(g => g.section !== "Review").map(g => (
                     <div key={g.section} style={{ marginBottom: 24 }}>
-                      <p style={{ fontFamily: lora, fontSize: 11, letterSpacing: "0.15em", color: "#000000", fontWeight: 700, textTransform: "uppercase", marginBottom: 12 }}>{g.section}</p>
+                      <p style={{ fontFamily: lora, fontSize: 11, letterSpacing: "0.15em", color: dark, fontWeight: 700, textTransform: "uppercase", marginBottom: 12 }}>{g.section}</p>
                       {g.items.filter(qq => qq.type !== "display").map(qq => {
                         const idx = groups.indexOf(g);
                         let val = getVal(qq.path);
@@ -8622,9 +8816,9 @@ function PortalPage({ setPage }) {
                         if (typeof val === "boolean") val = val ? "Confirmed" : "Not confirmed";
                         if (!val) return null;
                         return (
-                          <div key={qq.path} onClick={() => jumpTo(idx)} style={{ display: "flex", justifyContent: "space-between", gap: 16, padding: "10px 0", borderBottom: "1px solid rgba(0,0,0,.12)", cursor: "pointer" }}>
-                            <span style={{ fontFamily: lora, fontSize: 15, color: "#000000", opacity: 0.8, flex: 1 }}>{qq.label}</span>
-                            <span style={{ fontFamily: lora, fontSize: 13, color: "#000000", fontWeight: 700, textAlign: "right", maxWidth: "45%" }}>{val} ✎</span>
+                          <div key={qq.path} onClick={() => jumpTo(idx)} style={{ display: "flex", justifyContent: "space-between", gap: 16, padding: "10px 0", borderBottom: "1px solid rgba(16,15,12,.12)", cursor: "pointer" }}>
+                            <span style={{ fontFamily: lora, fontSize: 15, color: dark, opacity: 0.8, flex: 1 }}>{qq.label}</span>
+                            <span style={{ fontFamily: lora, fontSize: 13, color: dark, fontWeight: 700, textAlign: "right", maxWidth: "45%" }}>{val} ✎</span>
                           </div>
                         );
                       })}
@@ -8637,48 +8831,48 @@ function PortalPage({ setPage }) {
           };
 
           return (
-            <div style={{ background: "#FFFFFF", width: "100%", padding: isMobile ? "32px 24px" : "44px 48px", boxSizing: "border-box" }}>
+            <div style={{ background: "#FFFFFF", border: "1px solid rgba(16,15,12,.1)", borderRadius: 12, width: "100%", padding: isMobile ? "28px 22px" : "40px 48px", boxSizing: "border-box" }}>
                   <style>{`@keyframes slideInQ { from { transform: translateX(28px); opacity: 0; } to { transform: translateX(0); opacity: 1; } }`}</style>
 
-                  <p style={{ fontFamily: lora, fontSize: 11, letterSpacing: "0.1em", color: "#000000", opacity: 0.5, textTransform: "uppercase", marginBottom: 24 }}>Section {secIndex + 1} of {total}</p>
+                  <p style={{ fontFamily: lora, fontSize: 10, letterSpacing: "0.25em", color: gold, fontWeight: 700, textTransform: "uppercase", marginBottom: 24 }}>Section {secIndex + 1} of {total}</p>
 
                   <div style={{ display: "flex", gap: 4, marginBottom: 32 }}>
                     {groups.map((_, i) => (
-                      <div key={i} style={{ flex: 1, height: 3, background: i <= secIndex ? "#000000" : "rgba(0,0,0,.15)" }} />
+                      <div key={i} style={{ flex: 1, height: 3, background: i <= secIndex ? dark : "rgba(16,15,12,.12)" }} />
                     ))}
                   </div>
 
                   <div key={secIndex} style={{ animation: "slideInQ 0.3s ease", minHeight: 200 }}>
-                    <h2 style={{ fontFamily: lora, fontSize: isMobile ? 19 : 22, fontWeight: 700, color: "#000000", marginBottom: 28, lineHeight: 1.3 }}>
+                    <h2 style={{ fontFamily: cg, fontSize: isMobile ? 22 : 26, fontWeight: 400, fontStyle: "italic", color: dark, marginBottom: 28, lineHeight: 1.25 }}>
                       {group.section}
                     </h2>
 
                     {group.items.map(qq => (
                       <div key={qq.path} style={{ marginBottom: 26 }}>
                         {qq.type !== "review" && qq.type !== "display" && (
-                          <p style={{ fontFamily: lora, fontSize: 15, fontWeight: 700, color: "#000000", marginBottom: qq.hint ? 6 : 10, lineHeight: 1.4 }}>{qq.label}</p>
+                          <p style={{ fontFamily: lora, fontSize: 15, fontWeight: 700, color: dark, marginBottom: qq.hint ? 6 : 10, lineHeight: 1.4 }}>{qq.label}</p>
                         )}
                         {qq.type === "display" && (
-                          <p style={{ fontFamily: lora, fontSize: 15, color: "#000000", lineHeight: 1.7, marginBottom: 4 }}>{qq.label}</p>
+                          <p style={{ fontFamily: lora, fontSize: 15, color: dark, lineHeight: 1.7, marginBottom: 4 }}>{qq.label}</p>
                         )}
-                        {qq.hint && <p style={{ fontFamily: lora, fontSize: 12, color: "#000000", marginBottom: 10, lineHeight: 1.5 }}>{qq.hint}</p>}
+                        {qq.hint && <p style={{ fontFamily: lora, fontSize: 12, color: dark, opacity: 0.7, marginBottom: 10, lineHeight: 1.5 }}>{qq.hint}</p>}
                         {renderInput(qq)}
                       </div>
                     ))}
                   </div>
 
                   {application && application.status !== "draft" && (
-                    <p style={{ fontFamily: lora, fontSize: 13, color: "#000000", marginTop: 12, textTransform: "uppercase", letterSpacing: "0.1em", fontWeight: 700 }}>Status: {application.status.replace("_", " ")}</p>
+                    <p style={{ fontFamily: lora, fontSize: 13, color: dark, marginTop: 12, textTransform: "uppercase", letterSpacing: "0.1em", fontWeight: 700 }}>Status: {application.status.replace("_", " ")}</p>
                   )}
 
                   <div style={{ display: "flex", justifyContent: "space-between", marginTop: 28, gap: 12, flexWrap: "wrap" }}>
-                    <button onClick={goBack} disabled={secIndex === 0} style={{ fontFamily: lora, padding: "13px 24px", background: "transparent", border: "1px solid #000000", color: "#000000", fontSize: 11, fontWeight: 600, letterSpacing: "0.12em", textTransform: "uppercase", cursor: secIndex === 0 ? "default" : "pointer", opacity: secIndex === 0 ? 0.4 : 1 }}>← Back</button>
+                    <button onClick={goBack} disabled={secIndex === 0} style={{ fontFamily: lora, padding: "13px 24px", background: "transparent", border: `1px solid ${dark}`, color: dark, fontSize: 11, fontWeight: 600, letterSpacing: "0.12em", textTransform: "uppercase", cursor: secIndex === 0 ? "default" : "pointer", opacity: secIndex === 0 ? 0.4 : 1, borderRadius: 8 }}>← Back</button>
                     <div style={{ display: "flex", gap: 12 }}>
-                      <button onClick={() => handleSaveApplication(false)} disabled={appSaving} style={{ fontFamily: lora, padding: "13px 22px", background: "transparent", border: "1px solid #000000", color: "#000000", fontSize: 11, fontWeight: 600, letterSpacing: "0.12em", textTransform: "uppercase", cursor: "pointer" }}>{appSaving ? "Saving..." : "Save Draft"}</button>
+                      <button onClick={() => handleSaveApplication(false)} disabled={appSaving} style={{ fontFamily: lora, padding: "13px 22px", background: "transparent", border: `1px solid ${dark}`, color: dark, fontSize: 11, fontWeight: 600, letterSpacing: "0.12em", textTransform: "uppercase", cursor: "pointer", borderRadius: 8 }}>{appSaving ? "Saving..." : "Save Draft"}</button>
                       {secIndex < total - 1 ? (
-                        <button onClick={goNext} disabled={!groupComplete} style={{ fontFamily: lora, padding: "13px 24px", background: "#000000", border: "none", color: parch, fontSize: 11, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", cursor: groupComplete ? "pointer" : "default", opacity: groupComplete ? 1 : 0.5 }}>Next →</button>
+                        <button onClick={goNext} disabled={!groupComplete} style={{ fontFamily: lora, padding: "13px 24px", background: gold, border: "none", color: parch, fontSize: 11, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", cursor: groupComplete ? "pointer" : "default", opacity: groupComplete ? 1 : 0.5, borderRadius: 8 }}>Next →</button>
                       ) : (
-                        <button onClick={() => handleSaveApplication(true)} disabled={appSaving || !appForm.accuracyConfirmed || !appForm.parentPermissionConfirmed || !appForm.studentSignature || !appForm.parentSignature} style={{ fontFamily: lora, padding: "13px 24px", background: "#000000", border: "none", color: parch, fontSize: 11, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", cursor: "pointer" }}>{appSaving ? "Submitting..." : "Submit Application →"}</button>
+                        <button onClick={() => handleSaveApplication(true)} disabled={appSaving || !appForm.accuracyConfirmed || !appForm.parentPermissionConfirmed || !appForm.studentSignature || !appForm.parentSignature} style={{ fontFamily: lora, padding: "13px 24px", background: gold, border: "none", color: parch, fontSize: 11, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", cursor: "pointer", borderRadius: 8 }}>{appSaving ? "Submitting..." : "Submit Application →"}</button>
                       )}
                     </div>
                   </div>
@@ -8688,8 +8882,8 @@ function PortalPage({ setPage }) {
 
         {/* CONSULTATION TAB */}
         {activeTab === "consultation" && (
-          <div>
-            <h2 style={{ fontFamily: cg, fontSize: 26, fontWeight: 400, fontStyle: "italic", color: dark, marginBottom: 28 }}>Schedule a Family Consultation</h2>
+          <Card>
+            <SectionHeading kicker="Admissions" title="Schedule a Family Consultation" />
             <p style={{ ...BODY, color: dark, lineHeight: 1.7, marginBottom: 28 }}>Submit your preferred dates and times, and a member of our admissions team will confirm a time with you directly.</p>
 
             <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 10, marginBottom: 10 }}>
@@ -8703,7 +8897,7 @@ function PortalPage({ setPage }) {
               <option value="either">Either</option>
             </select>
             <textarea rows={3} placeholder="Notes (optional)" value={consultForm.notes} onChange={e => setConsultForm(f => ({ ...f, notes: e.target.value }))} style={{ ...inputStyle, marginBottom: 20, resize: "vertical" }} />
-            <button onClick={handleRequestConsultation} disabled={consultSending} style={{ fontFamily: lora, padding: "14px 32px", background: dark, border: "none", color: parch, fontSize: 11, fontWeight: 700, letterSpacing: "0.15em", textTransform: "uppercase", cursor: "pointer" }}>{consultSending ? "Sending..." : "Request Consultation →"}</button>
+            <button onClick={handleRequestConsultation} disabled={consultSending} style={{ fontFamily: lora, padding: "14px 32px", background: gold, border: "none", color: parch, fontSize: 11, fontWeight: 700, letterSpacing: "0.15em", textTransform: "uppercase", cursor: "pointer", borderRadius: 8 }}>{consultSending ? "Sending..." : "Request Consultation →"}</button>
 
             {consultations.length > 0 && (
               <div style={{ marginTop: 40 }}>
@@ -8716,20 +8910,20 @@ function PortalPage({ setPage }) {
                 ))}
               </div>
             )}
-          </div>
+          </Card>
         )}
 
         {/* MESSAGES TAB */}
         {activeTab === "messages" && (
-          <div>
-            <h2 style={{ fontFamily: cg, fontSize: 26, fontWeight: 400, fontStyle: "italic", color: dark, marginBottom: 28 }}>Contact Admissions</h2>
+          <Card>
+            <SectionHeading kicker="Admissions" title="Contact Admissions" />
             <div style={{ background: "#FBF7EE", border: "1px solid rgba(16,15,12,.15)", padding: "20px", marginBottom: 20, maxHeight: 400, overflowY: "auto", display: "flex", flexDirection: "column", gap: 12 }}>
               {messages.length === 0 ? (
                 <p style={{ ...BODY, color: dark }}>No messages yet. Send your first message below.</p>
               ) : messages.map(m => (
                 <div key={m.id} style={{ alignSelf: m.sender_role === "admin" ? "flex-start" : "flex-end", maxWidth: "75%" }}>
                   <p style={{ fontFamily: lora, fontSize: 9, letterSpacing: "0.1em", color: dark, fontWeight: 700, textTransform: "uppercase", marginBottom: 4 }}>{m.sender_role === "admin" ? "Admissions" : m.sender_role === "parent" ? "Parent" : "You"}</p>
-                  <p style={{ ...BODY, color: dark, background: m.sender_role === "admin" ? "rgba(164,141,110,.25)" : "rgba(16,15,12,.08)", padding: "10px 14px" }}>{m.body}</p>
+                  <p style={{ ...BODY, color: dark, background: m.sender_role === "admin" ? "rgba(17,17,17,.08)" : "rgba(17,17,17,.04)", padding: "10px 14px" }}>{m.body}</p>
                 </div>
               ))}
             </div>
@@ -8737,13 +8931,13 @@ function PortalPage({ setPage }) {
               <input type="text" placeholder="Type a message..." value={newMessage} onChange={e => setNewMessage(e.target.value)} onKeyDown={e => { if (e.key === "Enter") handleSendMessage(); }} style={{ ...inputStyle, flex: 1 }} />
               <button onClick={handleSendMessage} disabled={messageSending} style={{ fontFamily: lora, padding: "13px 24px", background: dark, border: "none", color: parch, fontSize: 11, fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", cursor: "pointer" }}>Send</button>
             </div>
-          </div>
+          </Card>
         )}
 
         {/* FAMILY TAB (student only) */}
         {activeTab === "family" && role === "student" && (
-          <div>
-            <h2 style={{ fontFamily: cg, fontSize: 26, fontWeight: 400, fontStyle: "italic", color: dark, marginBottom: 16 }}>Invite a Parent or Guardian</h2>
+          <Card>
+            <SectionHeading kicker="Admissions" title="Invite a Parent or Guardian" />
             <p style={{ ...BODY, color: dark, lineHeight: 1.7, marginBottom: 24 }}>
               Invite a parent or guardian to access this portal. They'll be able to view your application status, schedule consultations, and message admissions — once they sign up using the email address below.
             </p>
@@ -8764,16 +8958,11 @@ function PortalPage({ setPage }) {
                 ))}
               </div>
             )}
-          </div>
+          </Card>
         )}
 
-      </div>
-
-      {!isMobile && (
-        <div style={{ background: dark, display: "flex", alignItems: "flex-start", justifyContent: "center", padding: "56px 40px", position: "sticky", top: 0, alignSelf: "stretch" }}>
-          <img src="https://i.imgur.com/Jxc33Ws.jpeg" alt="Excalibur Academy" style={{ width: "100%", maxWidth: 320, height: "auto", objectFit: "contain", position: "sticky", top: 56 }} onError={e => e.target.style.display = "none"} />
+          </div>
         </div>
-      )}
       </div>
     </div>
   );
