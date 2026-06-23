@@ -107,6 +107,11 @@ function PortalIcon({ name, size = 16, color = "currentColor", strokeWidth = 1.7
     chevronLeft: <path d="M15 5l-7 7 7 7" />,
     chevronRight: <path d="M9 5l7 7-7 7" />,
     arrow: <path d="M5 12h14M13 6l6 6-6 6" />,
+    check: <path d="M20 6L9 17l-5-5" />,
+    sun: <><circle cx="12" cy="12" r="4.5" /><path d="M12 2.5v3M12 18.5v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M2.5 12h3M18.5 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1" /></>,
+    rocket: <><path d="M12 2c2.5 2 4 5.5 4 9 0 2-1 4-1 4H9s-1-2-1-4c0-3.5 1.5-7 4-9z" /><path d="M9 15l-3 3 1 3 3-1M15 15l3 3-1 3-3-1" /><circle cx="12" cy="9" r="1.4" /></>,
+    star: <path d="M12 3l2.6 5.6 6 .6-4.5 4.1 1.3 5.9L12 16.3 6.6 19.2l1.3-5.9L3.4 9.2l6-.6z" />,
+    help: <><circle cx="12" cy="12" r="9" /><path d="M9.5 9.2a2.5 2.5 0 1 1 3.7 2.4c-.9.5-1.2 1-1.2 2" /><path d="M12 17.2v.05" /></>,
   };
   return <svg {...props}>{paths[name] || null}</svg>;
 }
@@ -8149,6 +8154,7 @@ function PortalPage({ setPage }) {
   const [appSaving, setAppSaving] = React.useState(false);
   const [viewingSubmitted, setViewingSubmitted] = React.useState(false);
   const [editRequested, setEditRequested] = React.useState(false);
+  const [forceProgramPicker, setForceProgramPicker] = React.useState(false); // lets a student reopen the program-choice screen after already picking one
 
   const [consultations, setConsultations] = React.useState([]);
   const [consultForm, setConsultForm] = React.useState(EMPTY_CONSULT_FORM);
@@ -9009,6 +9015,67 @@ function PortalPage({ setPage }) {
           const wantsFoundation = appForm.programs.includes("foundation") || appForm.programs.includes("full-year");
           const wantsVenture = appForm.programs.includes("venture") || appForm.programs.includes("full-year");
 
+          // ── PROGRAM PICKER — shown once before the questionnaire begins, or whenever the student re-opens it ──
+          const showProgramPicker = !isSubmitted && (forceProgramPicker || appForm.programs.length === 0);
+          if (showProgramPicker) {
+            const programCards = [
+              { key: "summer", icon: "sun", title: "Summer Intensive", subtitle: "Venture Launchpad — July 27 to August 8, 2026" },
+              { key: "foundation", icon: "cap", title: "Foundation Semester", subtitle: "Fall 2026 — leadership & business fundamentals" },
+              { key: "venture", icon: "rocket", title: "Venture Semester", subtitle: "Spring 2027 — build & pitch your own venture" },
+              { key: "full-year", icon: "star", title: "Full Academic Year", subtitle: "Foundation + Venture — the complete experience" },
+              { key: "unsure", icon: "help", title: "Not Sure Yet", subtitle: "I'd like guidance on which program fits best" },
+            ];
+            const dashCount = 5;
+            return (
+              <div style={{ background: m_white, border: `1px solid ${m_line}`, borderRadius: 18, padding: isMobile ? "28px 22px 32px" : "44px 56px 48px", maxWidth: 560, margin: "0 auto" }}>
+                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 36 }}>
+                  <div style={{ display: "flex", gap: 6 }}>
+                    {Array.from({ length: dashCount }).map((_, i) => (
+                      <div key={i} style={{ width: 28, height: 4, borderRadius: 2, background: i === 0 ? m_ink : "rgba(17,17,17,0.1)" }} />
+                    ))}
+                  </div>
+                  <button onClick={() => { setForceProgramPicker(false); setActiveTab("overview"); }} style={{ background: "none", border: "none", cursor: "pointer", color: m_ink, opacity: 0.5, padding: 4, display: "flex" }}>
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><path d="M6 6l12 12M18 6L6 18" /></svg>
+                  </button>
+                </div>
+
+                <h2 style={{ fontFamily: sans, fontWeight: 800, fontSize: isMobile ? 22 : 25, color: m_ink, textAlign: "center", marginBottom: 32, letterSpacing: "-0.01em" }}>Which program are you applying for?</h2>
+
+                <div style={{ display: "flex", flexDirection: "column", gap: 12, marginBottom: 32 }}>
+                  {programCards.map(c => {
+                    const active = appForm.programs.includes(c.key);
+                    return (
+                      <button key={c.key} type="button" onClick={() => toggleVal("programs", c.key)} style={{
+                        display: "flex", alignItems: "center", gap: 16, textAlign: "left",
+                        padding: isMobile ? "16px 16px" : "18px 20px", borderRadius: 14, border: "none", cursor: "pointer",
+                        background: active ? m_ink : m_canvas, transition: "background .15s",
+                      }}>
+                        <div style={{ flex: 1, minWidth: 0 }}>
+                          <p style={{ fontFamily: sans, fontWeight: 700, fontSize: 16, color: active ? m_white : m_ink, marginBottom: 3 }}>{c.title}</p>
+                          <p style={{ fontFamily: sans, fontSize: 13, color: active ? "rgba(255,255,255,.65)" : m_gray, lineHeight: 1.4 }}>{c.subtitle}</p>
+                        </div>
+                        <div style={{ width: 36, height: 36, borderRadius: 10, flexShrink: 0, display: "flex", alignItems: "center", justifyContent: "center", background: active ? "rgba(255,255,255,.14)" : m_white, color: active ? m_white : m_ink }}>
+                          <PortalIcon name={active ? "check" : c.icon} size={18} />
+                        </div>
+                      </button>
+                    );
+                  })}
+                </div>
+
+                <button
+                  onClick={() => setForceProgramPicker(false)}
+                  disabled={appForm.programs.length === 0}
+                  style={{
+                    width: "100%", fontFamily: sans, padding: "16px 0", borderRadius: 999, border: "none",
+                    background: appForm.programs.length === 0 ? "rgba(17,17,17,0.15)" : m_ink,
+                    color: m_white, fontSize: 15, fontWeight: 700, cursor: appForm.programs.length === 0 ? "default" : "pointer", marginBottom: 16,
+                  }}
+                >Next step</button>
+                <p onClick={() => { setForceProgramPicker(false); setActiveTab("overview"); }} style={{ fontFamily: sans, fontSize: 13, color: m_gray, textAlign: "center", cursor: "pointer" }}>Previous step</p>
+              </div>
+            );
+          }
+
           const allQuestions = [
             { section: "Student Information", path: "studentFirstName", label: "Student's First Name", type: "text" },
             { section: "Student Information", path: "studentLastName", label: "Student's Last Name", type: "text" },
@@ -9038,7 +9105,6 @@ function PortalPage({ setPage }) {
             { section: "School & Academic Background", path: "priorProgramsExperience", label: "Have you previously participated in entrepreneurship, debate, leadership, business, Model UN, speech, finance, coding, or similar programs?", type: "pills", options: [["yes", "Yes"], ["no", "No"]] },
             { section: "School & Academic Background", path: "priorProgramsDescription", label: "If yes, please briefly describe the program, activity, or experience.", type: "textarea", hint: "Please include the name of the program or activity, your role, and what you learned or accomplished.", conditional: f => f.priorProgramsExperience === "yes" },
 
-            { section: "Program Selection", path: "programs", label: "Which Excalibur Academy program are you applying for?", type: "programPills" },
             { section: "Program Selection", path: "applyingMultiple", label: "Are you applying for more than one program?", type: "pills", options: [["yes", "Yes"], ["no", "No"]] },
             { section: "Program Selection", path: "firstChoiceProgram", label: "If yes, which program is your first choice?", type: "pills", conditional: f => f.applyingMultiple === "yes", options: [["summer", "Venture Launchpad Summer Intensive"], ["foundation", "Foundation Semester"], ["venture", "Venture Semester"], ["full-year", "Full Academic Year"], ["unsure", "Not sure yet"]] },
             { section: "Program Selection", path: "heardAbout", label: "How did you hear about Excalibur Academy?", type: "pills", options: [["friend-family", "Friend / Family"], ["counselor", "School or College Counselor"], ["teacher", "Teacher"], ["parent-referral", "Parent Referral"], ["social", "Social Media"], ["event", "Event"], ["search", "Online Search"], ["team-member", "Excalibur Team Member"], ["other", "Other"]] },
@@ -9278,7 +9344,10 @@ function PortalPage({ setPage }) {
             <div style={{ background: "#FFFFFF", border: "1px solid rgba(17,17,17,.08)", borderRadius: 18, width: "100%", padding: isMobile ? "28px 22px" : "40px 48px", boxSizing: "border-box" }}>
                   <style>{`@keyframes slideInQ { from { transform: translateX(28px); opacity: 0; } to { transform: translateX(0); opacity: 1; } }`}</style>
 
-                  <p style={{ fontFamily: sans, fontSize: 13, letterSpacing: "0.1em", color: "#8A8A86", fontWeight: 600, textTransform: "uppercase", marginBottom: 24 }}>Section {secIndex + 1} of {total}</p>
+                  <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 24 }}>
+                    <p style={{ fontFamily: sans, fontSize: 13, letterSpacing: "0.1em", color: "#8A8A86", fontWeight: 600, textTransform: "uppercase" }}>Section {secIndex + 1} of {total}</p>
+                    <p onClick={() => setForceProgramPicker(true)} style={{ fontFamily: sans, fontSize: 12.5, color: "#8A8A86", textDecoration: "underline", cursor: "pointer" }}>Change Program Selection</p>
+                  </div>
 
                   <div style={{ display: "flex", gap: 4, marginBottom: 32 }}>
                     {groups.map((_, i) => (
