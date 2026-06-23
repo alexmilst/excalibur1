@@ -43,6 +43,35 @@ function TimeRangePicker({ value, onChange, inputStyle, isMobile }) {
     </div>
   );
 }
+// ── PORTAL DASHBOARD — hoisted components (module scope, stable identity so typing in inputs never loses focus) ──
+function PortalStudentAvatar({ student, photo, size = 44, t_white = "#FFFFFF", t_black = "#111111", cg }) {
+  const initial = (student && student.first_name ? student.first_name[0] : "?").toUpperCase();
+  if (photo) {
+    return <img src={photo} alt="Profile" style={{ width: size, height: size, borderRadius: "50%", objectFit: "cover", flexShrink: 0 }} />;
+  }
+  return (
+    <div style={{ width: size, height: size, borderRadius: "50%", background: t_white, color: t_black, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+      <span style={{ fontFamily: cg, fontWeight: 700, fontSize: size * 0.38 }}>{initial}</span>
+    </div>
+  );
+}
+
+function PortalGlassCard({ children, style: extra = {} }) {
+  return (
+    <div style={{ background: "rgba(17,17,17,0.82)", backdropFilter: "blur(18px)", WebkitBackdropFilter: "blur(18px)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 12, padding: "32px 36px", ...extra }}>
+      {children}
+    </div>
+  );
+}
+
+function PortalSectionHeading({ title, accent = "#D9C7A9", cg, isMobile }) {
+  return (
+    <div style={{ marginBottom: 24 }}>
+      <h2 style={{ fontFamily: cg, fontWeight: 700, fontSize: isMobile ? 22 : 26, color: accent, lineHeight: 1.15 }}>{title}</h2>
+    </div>
+  );
+}
+
 
 
 // ─────────────────────────────────────────────────────────
@@ -7997,12 +8026,69 @@ function PortalPage({ setPage }) {
 
   const [activeTab, setActiveTab] = React.useState("overview");
 
+  // ── SETTINGS ──
+  const [settingsForm, setSettingsForm] = React.useState({ firstName: "", lastName: "", phone: "", grade: "", age: "" });
+  const [settingsSaving, setSettingsSaving] = React.useState(false);
+  const [settingsSavedMsg, setSettingsSavedMsg] = React.useState("");
+  const [profilePhoto, setProfilePhoto] = React.useState(null);
+  const [pwForm, setPwForm] = React.useState({ newPassword: "", confirmPassword: "" });
+  const [pwSaving, setPwSaving] = React.useState(false);
+  const [pwMsg, setPwMsg] = React.useState("");
+
+  React.useEffect(() => {
+    if (student) {
+      setSettingsForm({ firstName: student.first_name || "", lastName: student.last_name || "", phone: student.phone || "", grade: student.grade || "", age: student.age ? String(student.age) : "" });
+    }
+  }, [student]);
+
+  const handlePhotoUpload = (e) => {
+    const file = e.target.files && e.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = () => setProfilePhoto(reader.result);
+    reader.readAsDataURL(file);
+  };
+
+  const handleSaveSettings = async () => {
+    if (!sb || !student) return;
+    setSettingsSaving(true);
+    setSettingsSavedMsg("");
+    const { data, error } = await sb.from("students").update({
+      first_name: settingsForm.firstName,
+      last_name: settingsForm.lastName,
+      phone: settingsForm.phone,
+      grade: settingsForm.grade,
+      age: settingsForm.age ? parseInt(settingsForm.age) : null,
+    }).eq("id", student.id).select().single();
+    setSettingsSaving(false);
+    if (!error && data) {
+      setStudent(data);
+      setSettingsSavedMsg("Saved.");
+    } else if (error) {
+      setSettingsSavedMsg(error.message);
+    }
+  };
+
+  const handleChangePassword = async () => {
+    if (!sb) return;
+    if (!pwForm.newPassword || pwForm.newPassword !== pwForm.confirmPassword) {
+      setPwMsg("Passwords do not match.");
+      return;
+    }
+    setPwSaving(true);
+    setPwMsg("");
+    const { error } = await sb.auth.updateUser({ password: pwForm.newPassword });
+    setPwSaving(false);
+    if (error) setPwMsg(error.message);
+    else { setPwMsg("Password updated."); setPwForm({ newPassword: "", confirmPassword: "" }); }
+  };
+
   const gold = "#111111";
   const dark = "#111111";
   const parch = "#F4F2ED";
   const ox = "#34150F";
   const lora = "'Lora', Georgia, serif";
-  const cg = "'Cormorant Garamond', Georgia, serif";
+  const cg = "'Cardo', Georgia, serif";
   const BODY = { fontFamily: lora, fontSize: 15 };
 
   const inputStyle = { ...BODY, background: "#FBF7EE", border: "1px solid rgba(0,0,0,.2)", color: dark, padding: "13px 16px", fontWeight: 400, outline: "none", width: "100%" };
@@ -8379,19 +8465,28 @@ function PortalPage({ setPage }) {
     );
   }
 
-  // ── MAIN DASHBOARD — Tesla-minimal, black sidebar + off-white canvas ──
+  // ── MAIN DASHBOARD — Tesla-minimal, black sidebar + glass dark blocks ──
   const t_black = "#111111";
   const t_white = "#FFFFFF";
-  const t_offwhite = "#F4F2ED";
-  const t_gray = "#6B6B68";
-  const t_line = "rgba(17,17,17,0.1)";
-  const t_lineSoft = "rgba(17,17,17,0.06)";
-  const t_lineDark = "rgba(255,255,255,0.14)";
+  const t_canvas = "#D9C7A9"; // same tone as header "APPLY NOW" button
+  const t_accent = "#D9C7A9"; // text/accent color on dark glass blocks — matches APPLY NOW button
+  const t_line = "rgba(17,17,17,0.14)";
+  const t_lineDark = "rgba(255,255,255,0.16)";
   const t_lineDarkSoft = "rgba(255,255,255,0.08)";
 
+  // glass block — dark, used for every card/panel on the dashboard canvas
+  const glassBlock = (extra = {}) => ({
+    background: "rgba(17,17,17,0.82)",
+    backdropFilter: "blur(18px)",
+    WebkitBackdropFilter: "blur(18px)",
+    border: "1px solid rgba(255,255,255,0.1)",
+    borderRadius: 12,
+    ...extra,
+  });
+
   const tabs = role === "student"
-    ? [["overview", "Overview"], ["application", "Application"], ["consultation", "Consultation"], ["messages", "Messages"], ["family", "Family"]]
-    : [["overview", "Overview"], ["consultation", "Consultation"], ["messages", "Messages"]];
+    ? [["overview", "Dashboard"], ["application", "Application"], ["consultation", "Consultation"], ["messages", "Contact Us"], ["family", "Family"], ["settings", "Settings"]]
+    : [["overview", "Dashboard"], ["consultation", "Consultation"], ["messages", "Contact Us"], ["settings", "Settings"]];
 
   const statusSteps = [
     { key: "draft", label: "Started" },
@@ -8411,33 +8506,21 @@ function PortalPage({ setPage }) {
     consultation: "☎",
     messages: "✉",
     family: "⌂",
+    settings: "⚙",
   }[key] || "•");
 
-  const StudentAvatar = ({ size = 44 }) => {
-    const initial = (student && student.first_name ? student.first_name[0] : "?").toUpperCase();
-    return (
-      <div style={{ width: size, height: size, borderRadius: "50%", background: t_white, color: t_black, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
-        <span style={{ fontFamily: cg, fontWeight: 700, fontSize: size * 0.38 }}>{initial}</span>
-      </div>
-    );
-  };
+  const keyDates = [
+    { program: "Summer Intensive", date: "July 27, 2026", note: "Wave 1 · Two-Week Program Begins" },
+    { program: "Foundation Semester", date: "September 8, 2026", note: "Fall Semester Begins" },
+    { program: "Venture Semester", date: "January 26, 2027", note: "Spring Semester Begins" },
+  ];
 
-  const Card = ({ children, style: extra = {} }) => (
-    <div style={{ background: t_white, border: `1px solid ${t_line}`, borderRadius: 12, padding: isMobile ? "24px 20px" : "32px 36px", ...extra }}>
-      {children}
-    </div>
-  );
-
-  const SectionHeading = ({ kicker, title }) => (
-    <div style={{ marginBottom: 28 }}>
-      {kicker && <p style={{ fontFamily: lora, fontSize: 14, letterSpacing: "0.2em", color: t_gray, fontWeight: 600, textTransform: "uppercase", marginBottom: 8 }}>{kicker}</p>}
-      <h2 style={{ fontFamily: cg, fontSize: isMobile ? 22 : 26, fontWeight: 700, color: t_black, lineHeight: 1.15 }}>{title}</h2>
-    </div>
-  );
+  const facultySpotlight = (typeof coaches !== "undefined" ? coaches : []).slice(0, 3);
 
   return (
-    <div className="portal-page" style={{ background: t_offwhite, minHeight: "100vh" }}>
-      <style>{`.portal-page input, .portal-page textarea, .portal-page select { color: ${t_black} !important; } .portal-page input::placeholder, .portal-page textarea::placeholder { color: rgba(17,17,17,.4) !important; }`}</style>
+    <div className="portal-page" style={{ background: t_canvas, minHeight: "100vh" }}>
+      <link href="https://fonts.googleapis.com/css2?family=Cardo:wght@400;700&display=swap" rel="stylesheet" />
+      <style>{`.portal-page input, .portal-page textarea, .portal-page select { color: #000000 !important; } .portal-page input::placeholder, .portal-page textarea::placeholder { color: rgba(17,17,17,.4) !important; }`}</style>
       <Breadcrumb items={[{ label: "Home", page: "home" }]} setPage={setPage} />
 
       <div style={{ display: "flex", flexDirection: isMobile ? "column" : "row", minHeight: "100vh" }}>
@@ -8448,13 +8531,13 @@ function PortalPage({ setPage }) {
           {!isMobile && (
             <div style={{ padding: "32px 28px 24px", borderBottom: `1px solid ${t_lineDarkSoft}` }}>
               <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 22 }}>
-                <StudentAvatar size={44} />
+                <PortalStudentAvatar student={student} photo={profilePhoto} size={44} t_white={t_white} t_black={t_black} cg={cg} />
                 <div>
                   <p style={{ fontFamily: cg, fontWeight: 700, fontSize: 16, color: t_white, lineHeight: 1.2 }}>{student ? student.first_name : ""}{role === "parent" ? " (Parent)" : ""}</p>
                   <p style={{ fontFamily: lora, fontSize: 14, color: "rgba(244,242,237,.5)" }}>{role === "student" ? "Student" : "Parent"}</p>
                 </div>
               </div>
-              <p style={{ fontFamily: cg, fontWeight: 700, fontSize: 14, color: t_white, letterSpacing: "0.04em" }}>Excalibur</p>
+              <p style={{ fontFamily: lora, fontWeight: 600, fontSize: 14, color: t_white, letterSpacing: "0.12em", textTransform: "uppercase" }}>EXCALIBUR ACADEMY PORTAL</p>
             </div>
           )}
 
@@ -8462,9 +8545,9 @@ function PortalPage({ setPage }) {
             <div style={{ padding: "24px 24px 0", width: "100%" }}>
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 16 }}>
                 <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-                  <StudentAvatar size={40} />
+                  <PortalStudentAvatar student={student} photo={profilePhoto} size={40} t_white={t_white} t_black={t_black} cg={cg} />
                   <div>
-                    <p style={{ fontFamily: lora, fontSize: 14, letterSpacing: "0.2em", color: "rgba(244,242,237,.55)", fontWeight: 600, textTransform: "uppercase", marginBottom: 2 }}>{role === "student" ? "Student Portal" : "Family Portal"}</p>
+                    <p style={{ fontFamily: lora, fontSize: 14, letterSpacing: "0.12em", color: "rgba(244,242,237,.55)", fontWeight: 600, textTransform: "uppercase", marginBottom: 2 }}>EXCALIBUR ACADEMY PORTAL</p>
                     <h1 style={{ fontFamily: cg, fontWeight: 700, fontSize: 20, color: t_white }}>{student ? student.first_name : ""}{role === "parent" ? " (Parent)" : ""}</h1>
                   </div>
                 </div>
@@ -8500,8 +8583,8 @@ function PortalPage({ setPage }) {
         <div style={{ flex: 1, minWidth: 0 }}>
 
           <div style={{ padding: isMobile ? "28px 24px 20px" : "40px 56px 28px", display: "flex", justifyContent: "space-between", alignItems: "baseline", flexWrap: "wrap", gap: 12 }}>
-            <h2 style={{ fontFamily: cg, fontSize: isMobile ? 22 : 28, fontWeight: 700, color: t_black }}>{greeting}{student ? `, ${student.first_name}` : ""}.</h2>
-            <p style={{ fontFamily: lora, fontSize: 14, color: t_gray }}>{todayStr}</p>
+            <h2 style={{ fontFamily: cg, fontWeight: 700, fontSize: isMobile ? 22 : 28, color: "#000000" }}>{greeting}{student ? `, ${student.first_name}` : ""}!</h2>
+            <p style={{ fontFamily: lora, fontSize: 14, color: "#000000" }}>{todayStr}</p>
           </div>
 
           <div style={{ padding: isMobile ? "0 24px 80px" : "0 56px 100px", maxWidth: 1180 }}>
@@ -8510,99 +8593,112 @@ function PortalPage({ setPage }) {
         {activeTab === "overview" && (
           <div>
             {/* Snapshot cards */}
-            <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr 1fr" : "repeat(4, 1fr)", gap: isMobile ? 12 : 16, marginBottom: isMobile ? 16 : 16 }}>
+            <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr 1fr" : "repeat(4, 1fr)", gap: isMobile ? 12 : 16, marginBottom: 16 }}>
               {[
                 { label: "Program", value: application ? (application.program || "—") : "Not Selected" },
                 { label: "Status", value: application ? statusSteps[Math.max(currentStatusIndex, 0)].label : "Not Started" },
                 { label: "Consultations", value: consultations.length ? `${consultations.length} Requested` : "None Yet" },
                 { label: "Cohort", value: role === "student" ? "2026–2027" : "Family Access" },
               ].map((s, i) => (
-                <div key={i} style={{ background: t_white, border: `1px solid ${t_line}`, borderRadius: 12, padding: isMobile ? "16px 14px" : "20px 22px" }}>
-                  <p style={{ fontFamily: lora, fontSize: 14, color: t_gray, marginBottom: 8 }}>{s.label}</p>
-                  <p style={{ fontFamily: cg, fontWeight: 700, fontSize: isMobile ? 15 : 18, color: t_black, lineHeight: 1.2 }}>{s.value}</p>
+                <div key={i} style={{ ...glassBlock({ padding: isMobile ? "16px 14px" : "20px 22px" }) }}>
+                  <p style={{ fontFamily: lora, fontSize: 14, color: t_accent, opacity: 0.85, marginBottom: 8 }}>{s.label}</p>
+                  <p style={{ fontFamily: cg, fontWeight: 700, fontSize: isMobile ? 15 : 18, color: t_accent, lineHeight: 1.2 }}>{s.value}</p>
                 </div>
               ))}
             </div>
 
-            {/* Application progress — solid black panel */}
-            <div style={{ background: t_black, borderRadius: 12, padding: isMobile ? "28px 24px" : "36px 40px", marginBottom: isMobile ? 16 : 16 }}>
-              <p style={{ fontFamily: lora, fontSize: 14, color: "rgba(244,242,237,.55)", marginBottom: 18 }}>Application Progress</p>
+            {/* Application progress */}
+            <div style={{ ...glassBlock({ padding: isMobile ? "28px 24px" : "36px 40px", marginBottom: 16 }) }}>
+              <p style={{ fontFamily: lora, fontSize: 14, color: t_accent, opacity: 0.8, marginBottom: 18 }}>Application Progress</p>
               {!application ? (
                 <>
-                  <p style={{ fontFamily: cg, fontWeight: 700, fontSize: isMobile ? 20 : 24, color: t_white, marginBottom: 20, lineHeight: 1.3 }}>{role === "student" ? "Your application hasn't been started yet." : "The student hasn't started an application yet."}</p>
-                  {role === "student" && <button onClick={() => setActiveTab("application")} style={{ fontFamily: lora, padding: "13px 28px", background: t_white, border: "none", color: t_black, fontSize: 14, fontWeight: 700, letterSpacing: "0.04em", cursor: "pointer", borderRadius: 8 }}>Begin Application →</button>}
+                  <p style={{ fontFamily: cg, fontWeight: 700, fontSize: isMobile ? 20 : 24, color: t_accent, marginBottom: 20, lineHeight: 1.3 }}>{role === "student" ? "Your application hasn't been started yet." : "The student hasn't started an application yet."}</p>
+                  {role === "student" && <button onClick={() => setActiveTab("application")} style={{ fontFamily: lora, padding: "13px 28px", background: t_accent, border: "none", color: t_black, fontSize: 14, fontWeight: 700, cursor: "pointer", borderRadius: 8 }}>Begin Application →</button>}
                 </>
               ) : (
                 <>
                   <div style={{ display: "flex", alignItems: "baseline", gap: 14, marginBottom: 18 }}>
-                    <span style={{ fontFamily: cg, fontWeight: 700, fontSize: isMobile ? 38 : 52, color: t_white, lineHeight: 1 }}>{progressPct}%</span>
-                    <span style={{ fontFamily: lora, fontSize: 15, color: "rgba(244,242,237,.65)" }}>Complete · Currently {statusSteps[Math.max(currentStatusIndex, 0)].label}</span>
+                    <span style={{ fontFamily: cg, fontWeight: 700, fontSize: isMobile ? 38 : 52, color: t_accent, lineHeight: 1 }}>{progressPct}%</span>
+                    <span style={{ fontFamily: lora, fontSize: 15, color: t_accent, opacity: 0.8 }}>Complete · Currently {statusSteps[Math.max(currentStatusIndex, 0)].label}</span>
                   </div>
                   <div style={{ display: "flex", gap: 4, marginBottom: 24 }}>
                     {statusSteps.map((s, i) => (
-                      <div key={s.key} style={{ flex: 1, height: 4, borderRadius: 2, background: i <= currentStatusIndex ? t_white : "rgba(255,255,255,0.16)" }} />
+                      <div key={s.key} style={{ flex: 1, height: 4, borderRadius: 2, background: i <= currentStatusIndex ? t_accent : "rgba(255,255,255,0.16)" }} />
                     ))}
                   </div>
                   <div style={{ display: "flex", flexWrap: "wrap", gap: 10 }}>
-                    {role === "student" && <button onClick={() => setActiveTab("application")} style={{ fontFamily: lora, padding: "12px 24px", background: t_white, border: "none", color: t_black, fontSize: 14, fontWeight: 700, letterSpacing: "0.02em", cursor: "pointer", borderRadius: 8 }}>{application.status === "draft" ? "Continue Application →" : "View Application →"}</button>}
-                    <button onClick={() => setActiveTab("consultation")} style={{ fontFamily: lora, padding: "12px 24px", background: "transparent", border: "1px solid rgba(255,255,255,.25)", color: t_white, fontSize: 14, fontWeight: 500, cursor: "pointer", borderRadius: 8 }}>Schedule Consultation →</button>
+                    {role === "student" && <button onClick={() => setActiveTab("application")} style={{ fontFamily: lora, padding: "12px 24px", background: t_accent, border: "none", color: t_black, fontSize: 14, fontWeight: 700, cursor: "pointer", borderRadius: 8 }}>{application.status === "draft" ? "Continue Application →" : "View Application →"}</button>}
+                    <button onClick={() => setActiveTab("consultation")} style={{ fontFamily: lora, padding: "12px 24px", background: "transparent", border: "1px solid rgba(255,255,255,.25)", color: t_accent, fontSize: 14, fontWeight: 500, cursor: "pointer", borderRadius: 8 }}>Schedule Consultation →</button>
                   </div>
                 </>
               )}
             </div>
 
+            {/* Key dates */}
+            <div style={{ ...glassBlock({ padding: isMobile ? "24px 22px" : "30px 32px", marginBottom: 16 }) }}>
+              <p style={{ fontFamily: lora, fontSize: 14, color: t_accent, opacity: 0.85, marginBottom: 16, fontWeight: 600 }}>Key Dates</p>
+              <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(3, 1fr)", gap: isMobile ? 14 : 0 }}>
+                {keyDates.map((d, i) => (
+                  <div key={i} style={{ padding: isMobile ? "0" : "0 20px", borderLeft: !isMobile && i > 0 ? "1px solid rgba(255,255,255,.12)" : "none" }}>
+                    <p style={{ fontFamily: lora, fontSize: 14, color: t_accent, opacity: 0.7, marginBottom: 4 }}>{d.program}</p>
+                    <p style={{ fontFamily: cg, fontWeight: 700, fontSize: 18, color: t_accent, marginBottom: 4 }}>{d.date}</p>
+                    <p style={{ fontFamily: lora, fontSize: 14, color: t_accent, opacity: 0.6 }}>{d.note}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+
             {/* Next steps + quote */}
-            <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1.3fr 1fr", gap: isMobile ? 16 : 16, marginBottom: isMobile ? 16 : 16 }}>
-              <div style={{ background: t_white, border: `1px solid ${t_line}`, borderRadius: 12, padding: isMobile ? "24px 22px" : "30px 32px" }}>
-                <p style={{ fontFamily: lora, fontSize: 14, color: t_gray, marginBottom: 16, fontWeight: 600 }}>Next Steps</p>
+            <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1.3fr 1fr", gap: 16, marginBottom: 16 }}>
+              <div style={{ ...glassBlock({ padding: isMobile ? "24px 22px" : "30px 32px" }) }}>
+                <p style={{ fontFamily: lora, fontSize: 14, color: t_accent, opacity: 0.85, marginBottom: 16, fontWeight: 600 }}>Next Steps</p>
                 {[
                   { done: !!application, label: "Start your application" },
                   { done: application && application.status !== "draft", label: "Submit your application" },
                   { done: consultations.length > 0, label: "Request a family consultation" },
                   { done: parentLinks && parentLinks.length > 0, label: "Invite a parent or guardian" },
                 ].filter((_, i) => i !== 3 || role === "student").map((s, i) => (
-                  <div key={i} style={{ display: "flex", alignItems: "center", gap: 12, padding: "10px 0", borderTop: i > 0 ? `1px solid ${t_lineSoft}` : "none" }}>
-                    <span style={{ width: 18, height: 18, borderRadius: "50%", border: `1px solid ${s.done ? t_black : "rgba(17,17,17,.25)"}`, background: s.done ? t_black : "transparent", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, fontSize: 10, color: t_white }}>{s.done ? "✓" : ""}</span>
-                    <span style={{ fontFamily: lora, fontSize: 14, color: t_black, opacity: s.done ? 0.5 : 1, textDecoration: s.done ? "line-through" : "none" }}>{s.label}</span>
+                  <div key={i} style={{ display: "flex", alignItems: "center", gap: 12, padding: "10px 0", borderTop: i > 0 ? "1px solid rgba(255,255,255,.1)" : "none" }}>
+                    <span style={{ width: 18, height: 18, borderRadius: "50%", border: `1px solid ${s.done ? t_accent : "rgba(255,255,255,.3)"}`, background: s.done ? t_accent : "transparent", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, fontSize: 10, color: t_black }}>{s.done ? "✓" : ""}</span>
+                    <span style={{ fontFamily: lora, fontSize: 14, color: t_accent, opacity: s.done ? 0.55 : 1, textDecoration: s.done ? "line-through" : "none" }}>{s.label}</span>
                   </div>
                 ))}
               </div>
-              <div style={{ background: t_white, border: `1px solid ${t_line}`, borderRadius: 12, padding: isMobile ? "24px 22px" : "30px 28px", display: "flex", flexDirection: "column", justifyContent: "center" }}>
-                <p style={{ fontFamily: cg, fontWeight: 700, fontSize: isMobile ? 16 : 17, color: t_black, lineHeight: 1.5, marginBottom: 14 }}>"The European Canon of Excellence. The American Spirit of Leadership &amp; Innovation."</p>
-                <p style={{ fontFamily: lora, fontSize: 14, letterSpacing: "0.1em", color: t_gray, fontWeight: 600 }}>Excalibur Academy</p>
+              <div style={{ ...glassBlock({ padding: isMobile ? "24px 22px" : "30px 28px", display: "flex", flexDirection: "column", justifyContent: "center" }) }}>
+                <p style={{ fontFamily: cg, fontWeight: 700, fontSize: isMobile ? 16 : 17, color: t_accent, lineHeight: 1.5, marginBottom: 14 }}>"The European Canon of Excellence. The American Spirit of Leadership &amp; Innovation."</p>
+                <p style={{ fontFamily: lora, fontSize: 14, letterSpacing: "0.1em", color: t_accent, opacity: 0.75, fontWeight: 600 }}>Excalibur Academy</p>
               </div>
             </div>
 
+            {/* Faculty spotlight */}
+            <p style={{ fontFamily: lora, fontSize: 14, color: "#000000", marginBottom: 12, fontWeight: 600 }}>Faculty</p>
+            <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(3, 1fr)", gap: 16, marginBottom: 16 }}>
+              {facultySpotlight.map((f, i) => (
+                <div key={i} style={{ ...glassBlock({ padding: 0, overflow: "hidden" }) }}>
+                  <div style={{ height: 150, overflow: "hidden" }}>
+                    <img src={f.img} alt={f.name} style={{ width: "100%", height: "100%", objectFit: "cover" }} onError={e => e.target.style.display = "none"} />
+                  </div>
+                  <div style={{ padding: "18px 20px" }}>
+                    <p style={{ fontFamily: cg, fontWeight: 700, fontSize: 16, color: t_accent, marginBottom: 4 }}>{f.name}</p>
+                    <p style={{ fontFamily: lora, fontSize: 14, color: t_accent, opacity: 0.7, marginBottom: 10 }}>{f.role}</p>
+                    <p style={{ fontFamily: lora, fontSize: 14, color: t_accent, opacity: 0.6, lineHeight: 1.6 }}>{(f.shortBio || "").slice(0, 110)}{f.shortBio && f.shortBio.length > 110 ? "…" : ""}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+
             {/* Quick actions */}
-            <p style={{ fontFamily: lora, fontSize: 14, color: t_gray, marginBottom: 12, fontWeight: 600 }}>Quick Actions</p>
+            <p style={{ fontFamily: lora, fontSize: 14, color: "#000000", marginBottom: 12, fontWeight: 600 }}>Quick Actions</p>
             <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr 1fr" : "repeat(4, 1fr)", gap: 10 }}>
               {[
                 role === "student" && ["application", "Application"],
                 ["consultation", "Consultation"],
-                ["messages", "Messages"],
+                ["messages", "Contact Us"],
                 role === "student" && ["family", "Family"],
               ].filter(Boolean).map(([key, label]) => (
-                <button key={key} onClick={() => setActiveTab(key)} style={{ fontFamily: lora, fontSize: 14, padding: "14px 12px", background: t_white, border: `1px solid ${t_line}`, color: t_black, cursor: "pointer", fontWeight: 600, borderRadius: 10 }}>{label} →</button>
+                <button key={key} onClick={() => setActiveTab(key)} style={{ ...glassBlock({ fontFamily: lora, fontSize: 14, padding: "14px 12px", color: t_accent, cursor: "pointer", fontWeight: 600, borderRadius: 10 }) }}>{label} →</button>
               ))}
             </div>
-          </div>
-        )}
-
-        {/* STATUS — folded into Overview now, kept for safety / unused key */}
-        {activeTab === "status" && (
-          <div>
-            <SectionHeading kicker="Admissions" title="Application Status" />
-            {!application ? (
-              <p style={{ ...BODY, color: dark }}>{role === "student" ? "No application started yet. Head to the Application tab to begin." : "The student hasn't started an application yet."}</p>
-            ) : (
-              <div style={{ display: "flex", flexDirection: isMobile ? "column" : "row", gap: 0 }}>
-                {statusSteps.map((s, i) => (
-                  <div key={s.key} style={{ flex: 1, padding: "16px 0", borderTop: !isMobile ? `3px solid ${i <= currentStatusIndex ? dark : "rgba(16,15,12,.15)"}` : "none", borderLeft: isMobile ? `3px solid ${i <= currentStatusIndex ? dark : "rgba(16,15,12,.15)"}` : "none", paddingLeft: isMobile ? 16 : 0, marginBottom: isMobile ? 8 : 0 }}>
-                    <p style={{ fontFamily: lora, fontSize: 11, letterSpacing: "0.15em", textTransform: "uppercase", color: dark, fontWeight: 700, opacity: i <= currentStatusIndex ? 1 : 0.45 }}>{s.label}</p>
-                  </div>
-                ))}
-              </div>
-            )}
           </div>
         )}
 
@@ -8743,14 +8839,14 @@ function PortalPage({ setPage }) {
           const goBack = () => setAppStep(s => Math.max(1, s - 1));
           const jumpTo = (idx) => setAppStep(idx + 1);
 
-          const whiteInput = { ...inputStyle, background: "#FBF7EE" };
+          const whiteInput = { ...inputStyle, background: "#FFFFFF", color: "#000000" };
 
           const PillGroup = ({ value, onChange, options }) => (
             <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
               {options.map(([v, l]) => {
                 const active = value === v;
                 return (
-                  <button key={v} type="button" onClick={() => onChange(v)} style={{ fontFamily: lora, fontSize: 13, padding: "10px 18px", background: active ? dark : "transparent", color: active ? parch : dark, border: `1px solid ${dark}`, cursor: "pointer" }}>{l}</button>
+                  <button key={v} type="button" onClick={() => onChange(v)} style={{ fontFamily: lora, fontSize: 14, padding: "10px 18px", background: active ? "#D9C7A9" : "transparent", color: active ? "#111111" : "#D9C7A9", border: "1px solid rgba(217,199,169,.5)", cursor: "pointer", borderRadius: 8 }}>{l}</button>
                 );
               })}
             </div>
@@ -8760,7 +8856,7 @@ function PortalPage({ setPage }) {
               {options.map(opt => {
                 const active = values.includes(opt);
                 return (
-                  <button key={opt} type="button" onClick={() => onToggle(opt)} style={{ fontFamily: lora, fontSize: 13, padding: "10px 18px", background: active ? dark : "transparent", color: active ? parch : dark, border: `1px solid ${dark}`, cursor: "pointer" }}>{opt}</button>
+                  <button key={opt} type="button" onClick={() => onToggle(opt)} style={{ fontFamily: lora, fontSize: 14, padding: "10px 18px", background: active ? "#D9C7A9" : "transparent", color: active ? "#111111" : "#D9C7A9", border: "1px solid rgba(217,199,169,.5)", cursor: "pointer", borderRadius: 8 }}>{opt}</button>
                 );
               })}
             </div>
@@ -8783,13 +8879,13 @@ function PortalPage({ setPage }) {
               return (
                 <label style={{ display: "flex", alignItems: "flex-start", gap: 10, cursor: "pointer" }}>
                   <input type="checkbox" checked={getVal(q.path) || false} onChange={e => setVal(q.path, e.target.checked)} style={{ marginTop: 3 }} />
-                  <span style={{ fontFamily: lora, fontSize: 15, color: dark }}>{q.confirmLabel}</span>
+                  <span style={{ fontFamily: lora, fontSize: 15, color: "#D9C7A9" }}>{q.confirmLabel}</span>
                 </label>
               );
             }
             if (q.type === "display") return null;
             if (q.type === "autodate") {
-              return <p style={{ fontFamily: lora, fontSize: 15, color: dark }}>{new Date().toLocaleDateString()}</p>;
+              return <p style={{ fontFamily: lora, fontSize: 15, color: "#D9C7A9" }}>{new Date().toLocaleDateString()}</p>;
             }
             if (q.type === "programPills") {
               return (
@@ -8797,7 +8893,7 @@ function PortalPage({ setPage }) {
                   {["summer", "foundation", "venture", "full-year", "unsure"].map(key => {
                     const active = appForm.programs.includes(key);
                     return (
-                      <button key={key} type="button" onClick={() => toggleVal("programs", key)} style={{ fontFamily: lora, fontSize: 13, padding: "10px 18px", textAlign: "left", background: active ? dark : "transparent", color: active ? parch : dark, border: `1px solid ${dark}`, cursor: "pointer" }}>{programLabels[key]}</button>
+                      <button key={key} type="button" onClick={() => toggleVal("programs", key)} style={{ fontFamily: lora, fontSize: 14, padding: "10px 18px", textAlign: "left", background: active ? "#D9C7A9" : "transparent", color: active ? "#111111" : "#D9C7A9", border: "1px solid rgba(217,199,169,.5)", cursor: "pointer", borderRadius: 8 }}>{programLabels[key]}</button>
                     );
                   })}
                 </div>
@@ -8808,7 +8904,7 @@ function PortalPage({ setPage }) {
                 <div>
                   {groups.filter(g => g.section !== "Review").map(g => (
                     <div key={g.section} style={{ marginBottom: 24 }}>
-                      <p style={{ fontFamily: lora, fontSize: 11, letterSpacing: "0.15em", color: dark, fontWeight: 700, textTransform: "uppercase", marginBottom: 12 }}>{g.section}</p>
+                      <p style={{ fontFamily: lora, fontSize: 14, letterSpacing: "0.1em", color: "#D9C7A9", fontWeight: 700, textTransform: "uppercase", marginBottom: 12 }}>{g.section}</p>
                       {g.items.filter(qq => qq.type !== "display").map(qq => {
                         const idx = groups.indexOf(g);
                         let val = getVal(qq.path);
@@ -8816,9 +8912,9 @@ function PortalPage({ setPage }) {
                         if (typeof val === "boolean") val = val ? "Confirmed" : "Not confirmed";
                         if (!val) return null;
                         return (
-                          <div key={qq.path} onClick={() => jumpTo(idx)} style={{ display: "flex", justifyContent: "space-between", gap: 16, padding: "10px 0", borderBottom: "1px solid rgba(16,15,12,.12)", cursor: "pointer" }}>
-                            <span style={{ fontFamily: lora, fontSize: 15, color: dark, opacity: 0.8, flex: 1 }}>{qq.label}</span>
-                            <span style={{ fontFamily: lora, fontSize: 13, color: dark, fontWeight: 700, textAlign: "right", maxWidth: "45%" }}>{val} ✎</span>
+                          <div key={qq.path} onClick={() => jumpTo(idx)} style={{ display: "flex", justifyContent: "space-between", gap: 16, padding: "10px 0", borderBottom: "1px solid rgba(255,255,255,.12)", cursor: "pointer" }}>
+                            <span style={{ fontFamily: lora, fontSize: 14, color: "#D9C7A9", opacity: 0.8, flex: 1 }}>{qq.label}</span>
+                            <span style={{ fontFamily: lora, fontSize: 14, color: "#D9C7A9", fontWeight: 700, textAlign: "right", maxWidth: "45%" }}>{val} ✎</span>
                           </div>
                         );
                       })}
@@ -8831,48 +8927,48 @@ function PortalPage({ setPage }) {
           };
 
           return (
-            <div style={{ background: "#FFFFFF", border: "1px solid rgba(16,15,12,.1)", borderRadius: 12, width: "100%", padding: isMobile ? "28px 22px" : "40px 48px", boxSizing: "border-box" }}>
+            <div style={{ background: "rgba(17,17,17,0.82)", backdropFilter: "blur(18px)", WebkitBackdropFilter: "blur(18px)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 12, width: "100%", padding: isMobile ? "28px 22px" : "40px 48px", boxSizing: "border-box" }}>
                   <style>{`@keyframes slideInQ { from { transform: translateX(28px); opacity: 0; } to { transform: translateX(0); opacity: 1; } }`}</style>
 
-                  <p style={{ fontFamily: lora, fontSize: 10, letterSpacing: "0.25em", color: gold, fontWeight: 700, textTransform: "uppercase", marginBottom: 24 }}>Section {secIndex + 1} of {total}</p>
+                  <p style={{ fontFamily: lora, fontSize: 14, letterSpacing: "0.18em", color: "#D9C7A9", opacity: 0.8, fontWeight: 700, textTransform: "uppercase", marginBottom: 24 }}>Section {secIndex + 1} of {total}</p>
 
                   <div style={{ display: "flex", gap: 4, marginBottom: 32 }}>
                     {groups.map((_, i) => (
-                      <div key={i} style={{ flex: 1, height: 3, background: i <= secIndex ? dark : "rgba(16,15,12,.12)" }} />
+                      <div key={i} style={{ flex: 1, height: 3, background: i <= secIndex ? "#D9C7A9" : "rgba(255,255,255,.16)" }} />
                     ))}
                   </div>
 
                   <div key={secIndex} style={{ animation: "slideInQ 0.3s ease", minHeight: 200 }}>
-                    <h2 style={{ fontFamily: cg, fontSize: isMobile ? 22 : 26, fontWeight: 400, fontStyle: "italic", color: dark, marginBottom: 28, lineHeight: 1.25 }}>
+                    <h2 style={{ fontFamily: cg, fontSize: isMobile ? 22 : 26, fontWeight: 700, color: "#D9C7A9", marginBottom: 28, lineHeight: 1.25 }}>
                       {group.section}
                     </h2>
 
                     {group.items.map(qq => (
                       <div key={qq.path} style={{ marginBottom: 26 }}>
                         {qq.type !== "review" && qq.type !== "display" && (
-                          <p style={{ fontFamily: lora, fontSize: 15, fontWeight: 700, color: dark, marginBottom: qq.hint ? 6 : 10, lineHeight: 1.4 }}>{qq.label}</p>
+                          <p style={{ fontFamily: lora, fontSize: 15, fontWeight: 700, color: "#D9C7A9", marginBottom: qq.hint ? 6 : 10, lineHeight: 1.4 }}>{qq.label}</p>
                         )}
                         {qq.type === "display" && (
-                          <p style={{ fontFamily: lora, fontSize: 15, color: dark, lineHeight: 1.7, marginBottom: 4 }}>{qq.label}</p>
+                          <p style={{ fontFamily: lora, fontSize: 15, color: "#D9C7A9", lineHeight: 1.7, marginBottom: 4 }}>{qq.label}</p>
                         )}
-                        {qq.hint && <p style={{ fontFamily: lora, fontSize: 12, color: dark, opacity: 0.7, marginBottom: 10, lineHeight: 1.5 }}>{qq.hint}</p>}
+                        {qq.hint && <p style={{ fontFamily: lora, fontSize: 14, color: "#D9C7A9", opacity: 0.65, marginBottom: 10, lineHeight: 1.5 }}>{qq.hint}</p>}
                         {renderInput(qq)}
                       </div>
                     ))}
                   </div>
 
                   {application && application.status !== "draft" && (
-                    <p style={{ fontFamily: lora, fontSize: 13, color: dark, marginTop: 12, textTransform: "uppercase", letterSpacing: "0.1em", fontWeight: 700 }}>Status: {application.status.replace("_", " ")}</p>
+                    <p style={{ fontFamily: lora, fontSize: 14, color: "#D9C7A9", marginTop: 12, textTransform: "uppercase", letterSpacing: "0.1em", fontWeight: 700 }}>Status: {application.status.replace("_", " ")}</p>
                   )}
 
                   <div style={{ display: "flex", justifyContent: "space-between", marginTop: 28, gap: 12, flexWrap: "wrap" }}>
-                    <button onClick={goBack} disabled={secIndex === 0} style={{ fontFamily: lora, padding: "13px 24px", background: "transparent", border: `1px solid ${dark}`, color: dark, fontSize: 11, fontWeight: 600, letterSpacing: "0.12em", textTransform: "uppercase", cursor: secIndex === 0 ? "default" : "pointer", opacity: secIndex === 0 ? 0.4 : 1, borderRadius: 8 }}>← Back</button>
+                    <button onClick={goBack} disabled={secIndex === 0} style={{ fontFamily: lora, padding: "13px 24px", background: "transparent", border: "1px solid rgba(217,199,169,.4)", color: "#D9C7A9", fontSize: 14, fontWeight: 600, letterSpacing: "0.04em", cursor: secIndex === 0 ? "default" : "pointer", opacity: secIndex === 0 ? 0.4 : 1, borderRadius: 8 }}>← Back</button>
                     <div style={{ display: "flex", gap: 12 }}>
-                      <button onClick={() => handleSaveApplication(false)} disabled={appSaving} style={{ fontFamily: lora, padding: "13px 22px", background: "transparent", border: `1px solid ${dark}`, color: dark, fontSize: 11, fontWeight: 600, letterSpacing: "0.12em", textTransform: "uppercase", cursor: "pointer", borderRadius: 8 }}>{appSaving ? "Saving..." : "Save Draft"}</button>
+                      <button onClick={() => handleSaveApplication(false)} disabled={appSaving} style={{ fontFamily: lora, padding: "13px 22px", background: "transparent", border: "1px solid rgba(217,199,169,.4)", color: "#D9C7A9", fontSize: 14, fontWeight: 600, letterSpacing: "0.04em", cursor: "pointer", borderRadius: 8 }}>{appSaving ? "Saving..." : "Save Draft"}</button>
                       {secIndex < total - 1 ? (
-                        <button onClick={goNext} disabled={!groupComplete} style={{ fontFamily: lora, padding: "13px 24px", background: gold, border: "none", color: parch, fontSize: 11, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", cursor: groupComplete ? "pointer" : "default", opacity: groupComplete ? 1 : 0.5, borderRadius: 8 }}>Next →</button>
+                        <button onClick={goNext} disabled={!groupComplete} style={{ fontFamily: lora, padding: "13px 24px", background: "#D9C7A9", border: "none", color: "#111111", fontSize: 14, fontWeight: 700, cursor: groupComplete ? "pointer" : "default", opacity: groupComplete ? 1 : 0.5, borderRadius: 8 }}>Next →</button>
                       ) : (
-                        <button onClick={() => handleSaveApplication(true)} disabled={appSaving || !appForm.accuracyConfirmed || !appForm.parentPermissionConfirmed || !appForm.studentSignature || !appForm.parentSignature} style={{ fontFamily: lora, padding: "13px 24px", background: gold, border: "none", color: parch, fontSize: 11, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", cursor: "pointer", borderRadius: 8 }}>{appSaving ? "Submitting..." : "Submit Application →"}</button>
+                        <button onClick={() => handleSaveApplication(true)} disabled={appSaving || !appForm.accuracyConfirmed || !appForm.parentPermissionConfirmed || !appForm.studentSignature || !appForm.parentSignature} style={{ fontFamily: lora, padding: "13px 24px", background: "#D9C7A9", border: "none", color: "#111111", fontSize: 14, fontWeight: 700, cursor: "pointer", borderRadius: 8 }}>{appSaving ? "Submitting..." : "Submit Application →"}</button>
                       )}
                     </div>
                   </div>
@@ -8882,83 +8978,122 @@ function PortalPage({ setPage }) {
 
         {/* CONSULTATION TAB */}
         {activeTab === "consultation" && (
-          <Card>
-            <SectionHeading kicker="Admissions" title="Schedule a Family Consultation" />
-            <p style={{ ...BODY, color: dark, lineHeight: 1.7, marginBottom: 28 }}>Submit your preferred dates and times, and a member of our admissions team will confirm a time with you directly.</p>
+          <PortalGlassCard>
+            <PortalSectionHeading title="Schedule a Family Consultation" cg={cg} isMobile={isMobile} />
+            <p style={{ fontFamily: lora, fontSize: 15, color: "#D9C7A9", opacity: 0.85, lineHeight: 1.7, marginBottom: 28 }}>Submit your preferred dates and times, and a member of our admissions team will confirm a time with you directly.</p>
 
             <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 10, marginBottom: 10 }}>
-              <input type="date" placeholder="Preferred Date" value={consultForm.preferredDates} onChange={e => setConsultForm(f => ({ ...f, preferredDates: e.target.value }))} style={inputStyle} />
-              <TimeRangePicker isMobile={isMobile} value={consultForm.preferredTimes} onChange={(ranges) => setConsultForm(f => ({ ...f, preferredTimes: ranges }))} inputStyle={inputStyle} />
+              <input type="date" placeholder="Preferred Date" value={consultForm.preferredDates} onChange={e => setConsultForm(f => ({ ...f, preferredDates: e.target.value }))} style={{ ...inputStyle, background: "#FFFFFF", color: "#000000" }} />
+              <TimeRangePicker isMobile={isMobile} value={consultForm.preferredTimes} onChange={(ranges) => setConsultForm(f => ({ ...f, preferredTimes: ranges }))} inputStyle={{ ...inputStyle, background: "#FFFFFF", color: "#000000" }} />
             </div>
-            <select value={consultForm.contactMethod} onChange={e => setConsultForm(f => ({ ...f, contactMethod: e.target.value }))} style={{ ...inputStyle, marginBottom: 10, appearance: "none" }}>
+            <select value={consultForm.contactMethod} onChange={e => setConsultForm(f => ({ ...f, contactMethod: e.target.value }))} style={{ ...inputStyle, background: "#FFFFFF", color: "#000000", marginBottom: 10, appearance: "none" }}>
               <option value="">Preferred Contact Method</option>
               <option value="phone">Phone Call</option>
               <option value="email">Email</option>
               <option value="either">Either</option>
             </select>
-            <textarea rows={3} placeholder="Notes (optional)" value={consultForm.notes} onChange={e => setConsultForm(f => ({ ...f, notes: e.target.value }))} style={{ ...inputStyle, marginBottom: 20, resize: "vertical" }} />
-            <button onClick={handleRequestConsultation} disabled={consultSending} style={{ fontFamily: lora, padding: "14px 32px", background: gold, border: "none", color: parch, fontSize: 11, fontWeight: 700, letterSpacing: "0.15em", textTransform: "uppercase", cursor: "pointer", borderRadius: 8 }}>{consultSending ? "Sending..." : "Request Consultation →"}</button>
+            <textarea rows={3} placeholder="Notes (optional)" value={consultForm.notes} onChange={e => setConsultForm(f => ({ ...f, notes: e.target.value }))} style={{ ...inputStyle, background: "#FFFFFF", color: "#000000", marginBottom: 20, resize: "vertical" }} />
+            <button onClick={handleRequestConsultation} disabled={consultSending} style={{ fontFamily: lora, padding: "14px 32px", background: "#D9C7A9", border: "none", color: "#111111", fontSize: 14, fontWeight: 700, cursor: "pointer", borderRadius: 8 }}>{consultSending ? "Sending..." : "Request Consultation →"}</button>
 
             {consultations.length > 0 && (
               <div style={{ marginTop: 40 }}>
-                <p style={{ fontFamily: lora, fontSize: 11, letterSpacing: "0.2em", color: dark, textTransform: "uppercase", marginBottom: 16, fontWeight: 700 }}>Your Requests</p>
+                <p style={{ fontFamily: lora, fontSize: 14, letterSpacing: "0.1em", color: "#D9C7A9", textTransform: "uppercase", marginBottom: 16, fontWeight: 700 }}>Your Requests</p>
                 {consultations.map(c => (
-                  <div key={c.id} style={{ background: "#FBF7EE", border: "1px solid rgba(16,15,12,.15)", padding: "16px 20px", marginBottom: 10 }}>
-                    <p style={{ ...BODY, color: dark }}>{c.preferred_dates} · {c.preferred_times}</p>
-                    <p style={{ fontFamily: lora, fontSize: 11, color: dark, fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.1em", marginTop: 4 }}>{c.status}</p>
+                  <div key={c.id} style={{ background: "rgba(255,255,255,.06)", border: "1px solid rgba(255,255,255,.12)", borderRadius: 8, padding: "16px 20px", marginBottom: 10 }}>
+                    <p style={{ fontFamily: lora, fontSize: 15, color: "#D9C7A9" }}>{c.preferred_dates} · {c.preferred_times}</p>
+                    <p style={{ fontFamily: lora, fontSize: 14, color: "#D9C7A9", opacity: 0.75, fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.1em", marginTop: 4 }}>{c.status}</p>
                   </div>
                 ))}
               </div>
             )}
-          </Card>
+          </PortalGlassCard>
         )}
 
-        {/* MESSAGES TAB */}
+        {/* CONTACT US TAB (formerly Messages) */}
         {activeTab === "messages" && (
-          <Card>
-            <SectionHeading kicker="Admissions" title="Contact Admissions" />
-            <div style={{ background: "#FBF7EE", border: "1px solid rgba(16,15,12,.15)", padding: "20px", marginBottom: 20, maxHeight: 400, overflowY: "auto", display: "flex", flexDirection: "column", gap: 12 }}>
+          <PortalGlassCard>
+            <PortalSectionHeading title="Contact Us" cg={cg} isMobile={isMobile} />
+            <div style={{ background: "rgba(255,255,255,.05)", border: "1px solid rgba(255,255,255,.12)", borderRadius: 10, padding: "20px", marginBottom: 20, maxHeight: 400, overflowY: "auto", display: "flex", flexDirection: "column", gap: 12 }}>
               {messages.length === 0 ? (
-                <p style={{ ...BODY, color: dark }}>No messages yet. Send your first message below.</p>
+                <p style={{ fontFamily: lora, fontSize: 15, color: "#D9C7A9", opacity: 0.85 }}>No messages yet. Send your first message below.</p>
               ) : messages.map(m => (
                 <div key={m.id} style={{ alignSelf: m.sender_role === "admin" ? "flex-start" : "flex-end", maxWidth: "75%" }}>
-                  <p style={{ fontFamily: lora, fontSize: 9, letterSpacing: "0.1em", color: dark, fontWeight: 700, textTransform: "uppercase", marginBottom: 4 }}>{m.sender_role === "admin" ? "Admissions" : m.sender_role === "parent" ? "Parent" : "You"}</p>
-                  <p style={{ ...BODY, color: dark, background: m.sender_role === "admin" ? "rgba(17,17,17,.08)" : "rgba(17,17,17,.04)", padding: "10px 14px" }}>{m.body}</p>
+                  <p style={{ fontFamily: lora, fontSize: 14, letterSpacing: "0.06em", color: "#D9C7A9", opacity: 0.7, fontWeight: 700, textTransform: "uppercase", marginBottom: 4 }}>{m.sender_role === "admin" ? "Admissions" : m.sender_role === "parent" ? "Parent" : "You"}</p>
+                  <p style={{ fontFamily: lora, fontSize: 15, color: "#D9C7A9", background: m.sender_role === "admin" ? "rgba(217,199,169,.16)" : "rgba(255,255,255,.08)", borderRadius: 8, padding: "10px 14px" }}>{m.body}</p>
                 </div>
               ))}
             </div>
             <div style={{ display: "flex", gap: 10 }}>
-              <input type="text" placeholder="Type a message..." value={newMessage} onChange={e => setNewMessage(e.target.value)} onKeyDown={e => { if (e.key === "Enter") handleSendMessage(); }} style={{ ...inputStyle, flex: 1 }} />
-              <button onClick={handleSendMessage} disabled={messageSending} style={{ fontFamily: lora, padding: "13px 24px", background: dark, border: "none", color: parch, fontSize: 11, fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", cursor: "pointer" }}>Send</button>
+              <input type="text" placeholder="Type a message..." value={newMessage} onChange={e => setNewMessage(e.target.value)} onKeyDown={e => { if (e.key === "Enter") handleSendMessage(); }} style={{ ...inputStyle, background: "#FFFFFF", color: "#000000", flex: 1 }} />
+              <button onClick={handleSendMessage} disabled={messageSending} style={{ fontFamily: lora, padding: "13px 24px", background: "#D9C7A9", border: "none", color: "#111111", fontSize: 14, fontWeight: 700, cursor: "pointer", borderRadius: 8 }}>Send</button>
             </div>
-          </Card>
+          </PortalGlassCard>
         )}
 
         {/* FAMILY TAB (student only) */}
         {activeTab === "family" && role === "student" && (
-          <Card>
-            <SectionHeading kicker="Admissions" title="Invite a Parent or Guardian" />
-            <p style={{ ...BODY, color: dark, lineHeight: 1.7, marginBottom: 24 }}>
+          <PortalGlassCard>
+            <PortalSectionHeading title="Invite a Parent or Guardian" cg={cg} isMobile={isMobile} />
+            <p style={{ fontFamily: lora, fontSize: 15, color: "#D9C7A9", opacity: 0.85, lineHeight: 1.7, marginBottom: 24 }}>
               Invite a parent or guardian to access this portal. They'll be able to view your application status, schedule consultations, and message admissions — once they sign up using the email address below.
             </p>
             <div style={{ display: "flex", gap: 10, marginBottom: 14, flexWrap: "wrap" }}>
-              <input type="email" placeholder="Parent / Guardian Email" value={inviteEmail} onChange={e => setInviteEmail(e.target.value)} style={{ ...inputStyle, flex: 1, minWidth: 220 }} />
-              <button onClick={handleInviteParent} disabled={inviteSending || !inviteEmail} style={{ fontFamily: lora, padding: "13px 24px", background: dark, border: "none", color: parch, fontSize: 11, fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", cursor: "pointer" }}>{inviteSending ? "Sending..." : "Invite"}</button>
+              <input type="email" placeholder="Parent / Guardian Email" value={inviteEmail} onChange={e => setInviteEmail(e.target.value)} style={{ ...inputStyle, background: "#FFFFFF", color: "#000000", flex: 1, minWidth: 220 }} />
+              <button onClick={handleInviteParent} disabled={inviteSending || !inviteEmail} style={{ fontFamily: lora, padding: "13px 24px", background: "#D9C7A9", border: "none", color: "#111111", fontSize: 14, fontWeight: 700, cursor: "pointer", borderRadius: 8 }}>{inviteSending ? "Sending..." : "Invite"}</button>
             </div>
-            {inviteStatusMsg && <p style={{ ...BODY, color: dark, marginBottom: 20 }}>{inviteStatusMsg}</p>}
+            {inviteStatusMsg && <p style={{ fontFamily: lora, fontSize: 15, color: "#D9C7A9", marginBottom: 20 }}>{inviteStatusMsg}</p>}
 
             {parentLinks.length > 0 && (
               <div>
-                <p style={{ fontFamily: lora, fontSize: 11, letterSpacing: "0.2em", color: dark, textTransform: "uppercase", marginBottom: 14, fontWeight: 700 }}>Linked Parents / Guardians</p>
+                <p style={{ fontFamily: lora, fontSize: 14, letterSpacing: "0.15em", color: "#D9C7A9", textTransform: "uppercase", marginBottom: 14, fontWeight: 700 }}>Linked Parents / Guardians</p>
                 {parentLinks.map(p => (
-                  <div key={p.id} style={{ display: "flex", justifyContent: "space-between", padding: "12px 0", borderBottom: "1px solid rgba(16,15,12,.15)" }}>
-                    <span style={{ ...BODY, color: dark }}>{p.parent_email}</span>
-                    <span style={{ fontFamily: lora, fontSize: 11, color: p.invite_status === "accepted" ? "#3F6B3F" : dark, textTransform: "uppercase", letterSpacing: "0.1em", fontWeight: 700 }}>{p.invite_status}</span>
+                  <div key={p.id} style={{ display: "flex", justifyContent: "space-between", padding: "12px 0", borderBottom: "1px solid rgba(255,255,255,.12)" }}>
+                    <span style={{ fontFamily: lora, fontSize: 15, color: "#D9C7A9" }}>{p.parent_email}</span>
+                    <span style={{ fontFamily: lora, fontSize: 14, color: p.invite_status === "accepted" ? "#8FCB8F" : "#D9C7A9", textTransform: "uppercase", letterSpacing: "0.1em", fontWeight: 700 }}>{p.invite_status}</span>
                   </div>
                 ))}
               </div>
             )}
-          </Card>
+          </PortalGlassCard>
+        )}
+
+        {/* SETTINGS TAB */}
+        {activeTab === "settings" && (
+          <PortalGlassCard>
+            <PortalSectionHeading title="Settings" cg={cg} isMobile={isMobile} />
+
+            <p style={{ fontFamily: lora, fontSize: 14, letterSpacing: "0.1em", color: "#D9C7A9", textTransform: "uppercase", fontWeight: 700, marginBottom: 14 }}>Profile Photo</p>
+            <div style={{ display: "flex", alignItems: "center", gap: 16, marginBottom: 28 }}>
+              <PortalStudentAvatar student={student} photo={profilePhoto} size={64} t_white="#FFFFFF" t_black="#111111" cg={cg} />
+              <label style={{ fontFamily: lora, fontSize: 14, padding: "11px 20px", background: "transparent", border: "1px solid rgba(217,199,169,.4)", color: "#D9C7A9", cursor: "pointer", borderRadius: 8 }}>
+                Upload Photo
+                <input type="file" accept="image/*" onChange={handlePhotoUpload} style={{ display: "none" }} />
+              </label>
+            </div>
+
+            <p style={{ fontFamily: lora, fontSize: 14, letterSpacing: "0.1em", color: "#D9C7A9", textTransform: "uppercase", fontWeight: 700, marginBottom: 14 }}>Basic Information</p>
+            <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 10, marginBottom: 10 }}>
+              <input type="text" placeholder="First Name" value={settingsForm.firstName} onChange={e => setSettingsForm(f => ({ ...f, firstName: e.target.value }))} style={{ ...inputStyle, background: "#FFFFFF", color: "#000000" }} />
+              <input type="text" placeholder="Last Name" value={settingsForm.lastName} onChange={e => setSettingsForm(f => ({ ...f, lastName: e.target.value }))} style={{ ...inputStyle, background: "#FFFFFF", color: "#000000" }} />
+            </div>
+            <input type="text" placeholder="Phone Number" value={settingsForm.phone} onChange={e => setSettingsForm(f => ({ ...f, phone: e.target.value }))} style={{ ...inputStyle, background: "#FFFFFF", color: "#000000", marginBottom: 10 }} />
+            <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 10, marginBottom: 18 }}>
+              <input type="text" placeholder="Age" value={settingsForm.age} onChange={e => setSettingsForm(f => ({ ...f, age: e.target.value }))} style={{ ...inputStyle, background: "#FFFFFF", color: "#000000" }} />
+              <input type="text" placeholder="Current Grade" value={settingsForm.grade} onChange={e => setSettingsForm(f => ({ ...f, grade: e.target.value }))} style={{ ...inputStyle, background: "#FFFFFF", color: "#000000" }} />
+            </div>
+            {settingsSavedMsg && <p style={{ fontFamily: lora, fontSize: 14, color: "#D9C7A9", marginBottom: 14 }}>{settingsSavedMsg}</p>}
+            <button onClick={handleSaveSettings} disabled={settingsSaving} style={{ fontFamily: lora, padding: "13px 26px", background: "#D9C7A9", border: "none", color: "#111111", fontSize: 14, fontWeight: 700, cursor: "pointer", borderRadius: 8, marginBottom: 36 }}>{settingsSaving ? "Saving..." : "Save Changes"}</button>
+
+            <div style={{ height: 1, background: "rgba(255,255,255,.12)", marginBottom: 28 }} />
+
+            <p style={{ fontFamily: lora, fontSize: 14, letterSpacing: "0.1em", color: "#D9C7A9", textTransform: "uppercase", fontWeight: 700, marginBottom: 14 }}>Change Password</p>
+            <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 10, marginBottom: 14 }}>
+              <input type="password" placeholder="New Password" value={pwForm.newPassword} onChange={e => setPwForm(f => ({ ...f, newPassword: e.target.value }))} style={{ ...inputStyle, background: "#FFFFFF", color: "#000000" }} />
+              <input type="password" placeholder="Confirm Password" value={pwForm.confirmPassword} onChange={e => setPwForm(f => ({ ...f, confirmPassword: e.target.value }))} style={{ ...inputStyle, background: "#FFFFFF", color: "#000000" }} />
+            </div>
+            {pwMsg && <p style={{ fontFamily: lora, fontSize: 14, color: "#D9C7A9", marginBottom: 14 }}>{pwMsg}</p>}
+            <button onClick={handleChangePassword} disabled={pwSaving} style={{ fontFamily: lora, padding: "13px 26px", background: "transparent", border: "1px solid rgba(217,199,169,.4)", color: "#D9C7A9", fontSize: 14, fontWeight: 600, cursor: "pointer", borderRadius: 8 }}>{pwSaving ? "Updating..." : "Update Password"}</button>
+          </PortalGlassCard>
         )}
 
           </div>
