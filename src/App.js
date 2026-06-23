@@ -56,6 +56,26 @@ function PortalStudentAvatar({ student, photo, size = 44, t_white = "#FFFFFF", t
   );
 }
 
+
+// ── CALENDLY EMBED — loads the widget script once, then renders the inline scheduler ──
+// TODO: replace with Alexander's real Calendly scheduling-page URL.
+const CALENDLY_URL = "https://calendly.com/excalibur-academy/consultation";
+function CalendlyEmbed({ prefill = {} }) {
+  React.useEffect(() => {
+    if (document.querySelector('script[src="https://assets.calendly.com/assets/external/widget.js"]')) return;
+    const script = document.createElement("script");
+    script.src = "https://assets.calendly.com/assets/external/widget.js";
+    script.async = true;
+    document.body.appendChild(script);
+  }, []);
+  const params = new URLSearchParams();
+  if (prefill.name) params.set("name", prefill.name);
+  if (prefill.email) params.set("email", prefill.email);
+  const qs = params.toString();
+  const url = qs ? `${CALENDLY_URL}?${qs}` : CALENDLY_URL;
+  return <div className="calendly-inline-widget" data-url={url} style={{ minWidth: 280, height: 720 }} />;
+}
+
 function PortalCard({ children, style: extra = {} }) {
   return (
     <div style={{ background: "#FFFFFF", border: "1px solid rgba(17,17,17,0.08)", borderRadius: 18, padding: "32px 36px", ...extra }}>
@@ -8087,13 +8107,9 @@ function PortalPage({ setPage }) {
   const [authError, setAuthError] = React.useState("");
   const [authBusy, setAuthBusy] = React.useState(false);
 
-  const [role, setRole] = React.useState(null); // 'student' | 'parent' | null
-  const [student, setStudent] = React.useState(null);
-  const [needsProfile, setNeedsProfile] = React.useState(false);
-  const [profileForm, setProfileForm] = React.useState({ firstName: "", lastName: "", phone: "", grade: "", age: "" });
-
-  const [application, setApplication] = React.useState(null);
-  const [appForm, setAppForm] = React.useState({
+  // ── Empty-state shapes, reused both for initial useState() and for the full reset on sign-out / new session ──
+  const EMPTY_PROFILE_FORM = { firstName: "", lastName: "", phone: "", grade: "", age: "" };
+  const EMPTY_APP_FORM = {
     // Section 1: Student Information
     studentFirstName: "", studentLastName: "", preferredName: "", dateOfBirth: "", currentGrade: "", gradeEnteringFall: "", currentSchool: "", cityOfResidence: "", studentEmail: "", studentPhone: "",
     // Section 2: Parent / Guardian
@@ -8116,13 +8132,26 @@ function PortalPage({ setPage }) {
     parentStatementAgreed: false, learningStyleNotes: "", dietaryNotes: "",
     // Section 9: Submission Agreement
     accuracyConfirmed: false, parentPermissionConfirmed: false, studentSignature: "", parentSignature: "",
-  });
+  };
+  const EMPTY_SETTINGS_FORM = { firstName: "", lastName: "", phone: "", grade: "", age: "" };
+  const EMPTY_CONSULT_FORM = { preferredDates: "", preferredTimes: [{ start: "", end: "" }], contactMethod: "", notes: "" };
+
+  const [role, setRole] = React.useState(null); // 'student' | 'parent' | null
+  const [student, setStudent] = React.useState(null);
+  const [needsProfile, setNeedsProfile] = React.useState(false);
+  const [roleResolved, setRoleResolved] = React.useState(false); // true once we've checked the current session against students/parent_links
+  const [profileForm, setProfileForm] = React.useState(EMPTY_PROFILE_FORM);
+
+  const [application, setApplication] = React.useState(null);
+  const [appForm, setAppForm] = React.useState(EMPTY_APP_FORM);
   const [appStep, setAppStep] = React.useState(1);
   const TOTAL_APP_STEPS = 9;
   const [appSaving, setAppSaving] = React.useState(false);
+  const [viewingSubmitted, setViewingSubmitted] = React.useState(false);
+  const [editRequested, setEditRequested] = React.useState(false);
 
   const [consultations, setConsultations] = React.useState([]);
-  const [consultForm, setConsultForm] = React.useState({ preferredDates: "", preferredTimes: [{ start: "", end: "" }], contactMethod: "", notes: "" });
+  const [consultForm, setConsultForm] = React.useState(EMPTY_CONSULT_FORM);
   const [consultSending, setConsultSending] = React.useState(false);
 
   const [messages, setMessages] = React.useState([]);
@@ -8136,8 +8165,32 @@ function PortalPage({ setPage }) {
 
   const [activeTab, setActiveTab] = React.useState("overview");
 
+  // ── Clears every piece of session-scoped state — called on sign-out and at the start of every new session resolution,
+  //    so a brand-new login can never render with a previous account's data still sitting in memory. ──
+  const resetPortalState = React.useCallback(() => {
+    setRole(null);
+    setStudent(null);
+    setNeedsProfile(false);
+    setProfileForm(EMPTY_PROFILE_FORM);
+    setApplication(null);
+    setAppForm(EMPTY_APP_FORM);
+    setAppStep(1);
+    setViewingSubmitted(false);
+    setEditRequested(false);
+    setConsultations([]);
+    setConsultForm(EMPTY_CONSULT_FORM);
+    setMessages([]);
+    setNewMessage("");
+    setParentLinks([]);
+    setInviteEmail("");
+    setInviteStatusMsg("");
+    setActiveTab("overview");
+    setSettingsForm(EMPTY_SETTINGS_FORM);
+    setProfilePhoto(null);
+  }, []);
+
   // ── SETTINGS ──
-  const [settingsForm, setSettingsForm] = React.useState({ firstName: "", lastName: "", phone: "", grade: "", age: "" });
+  const [settingsForm, setSettingsForm] = React.useState(EMPTY_SETTINGS_FORM);
   const [settingsSaving, setSettingsSaving] = React.useState(false);
   const [settingsSavedMsg, setSettingsSavedMsg] = React.useState("");
   const [profilePhoto, setProfilePhoto] = React.useState(null);
@@ -8217,23 +8270,34 @@ function PortalPage({ setPage }) {
   }, [sb]);
 
   // ── DETERMINE ROLE + LOAD DATA ──
+  // Tracks which session this effect run belongs to, so a slow/late-resolving lookup from a
+  // previous (now signed-out) session can never overwrite state for the session that replaced it.
+  const roleCheckSessionRef = React.useRef(null);
   React.useEffect(() => {
     if (!sb || !session) return;
-    (async () => {
-      const uid = session.user.id;
-      const email = session.user.email;
+    const uid = session.user.id;
+    const email = session.user.email;
+    roleCheckSessionRef.current = uid;
 
+    // Clear any previous account's state immediately — before the new lookups even resolve —
+    // so the old dashboard can never flash on screen for a different uid.
+    resetPortalState();
+
+    (async () => {
       // Is this user a student?
       const { data: studentRow } = await sb.from("students").select("*").eq("auth_user_id", uid).maybeSingle();
+      if (roleCheckSessionRef.current !== uid) return; // a newer session has already taken over
       if (studentRow) {
         setRole("student");
         setStudent(studentRow);
         setNeedsProfile(false);
+        setRoleResolved(true);
         return;
       }
 
       // Is this user a linked parent (by email, possibly not yet marked accepted)?
       const { data: parentRow } = await sb.from("parent_links").select("*, students(*)").eq("parent_email", email).maybeSingle();
+      if (roleCheckSessionRef.current !== uid) return;
       if (parentRow) {
         if (parentRow.invite_status !== "accepted") {
           await sb.from("parent_links").update({ auth_user_id: uid, invite_status: "accepted" }).eq("id", parentRow.id);
@@ -8243,12 +8307,15 @@ function PortalPage({ setPage }) {
         setRole("parent");
         setStudent(parentRow.students);
         setNeedsProfile(false);
+        setRoleResolved(true);
         return;
       }
 
       // New user, no student or parent record yet — needs onboarding
+      if (roleCheckSessionRef.current !== uid) return;
       setRole("student"); // default new signups to student profile creation
       setNeedsProfile(true);
+      setRoleResolved(true);
     })();
   }, [sb, session]);
 
@@ -8303,7 +8370,11 @@ function PortalPage({ setPage }) {
     setAuthBusy(false);
   };
 
-  const handleSignOut = async () => { if (sb) await sb.auth.signOut(); };
+  const handleSignOut = async () => {
+    if (sb) await sb.auth.signOut();
+    setRoleResolved(false);
+    resetPortalState();
+  };
 
   // ── CREATE STUDENT PROFILE (first login after signup) ──
   const handleCreateProfile = async () => {
@@ -8410,6 +8481,32 @@ function PortalPage({ setPage }) {
     setAppSaving(false);
     if (!result.error) setApplication(result.data);
   };
+
+  // ── REQUEST EDIT ACCESS ON A SUBMITTED APPLICATION ──
+  const handleRequestEditAccess = async () => {
+    if (!sb || !student) return;
+    await sb.from("messages").insert({
+      student_id: student.id,
+      sender_role: role,
+      sender_id: session.user.id,
+      body: "Requesting permission to edit my submitted application. Please reopen it for editing or let me know what needs to change.",
+    });
+    setEditRequested(true);
+  };
+
+  // ── AUTO-PROMOTE SUBMITTED APPLICATIONS TO "UNDER REVIEW" 30 MINUTES AFTER SUBMISSION ──
+  React.useEffect(() => {
+    if (!sb || !application || application.status !== "submitted" || !application.submitted_at) return;
+    const THIRTY_MIN_MS = 30 * 60 * 1000;
+    const elapsed = Date.now() - new Date(application.submitted_at).getTime();
+    const promote = async () => {
+      const { data, error } = await sb.from("applications").update({ status: "under_review" }).eq("id", application.id).select().single();
+      if (!error && data) setApplication(data);
+    };
+    if (elapsed >= THIRTY_MIN_MS) { promote(); return; }
+    const timer = setTimeout(promote, THIRTY_MIN_MS - elapsed);
+    return () => clearTimeout(timer);
+  }, [sb, application]);
 
   // ── CONSULTATION ──
   const handleRequestConsultation = async () => {
@@ -8543,6 +8640,13 @@ function PortalPage({ setPage }) {
         </div>
       </div>
     );
+  }
+
+  // ── LOGGED IN, STILL RESOLVING WHICH ACCOUNT THIS SESSION BELONGS TO ──
+  // Prevents any previous account's dashboard from flashing on screen while the new session's
+  // student/parent lookup is in flight (e.g. right after switching accounts).
+  if (!roleResolved) {
+    return <div style={{ background: "#100F0C", minHeight: "100vh" }} />;
   }
 
   // ── LOGGED IN, NO STUDENT PROFILE YET — same minimal system ──
@@ -8809,7 +8913,7 @@ function PortalPage({ setPage }) {
                     <p style={{ fontFamily: sans, fontSize: 15, color: m_ink, lineHeight: 1.7, marginBottom: 22, marginTop: 16 }}>{statusSteps[Math.max(currentStatusIndex, 0)].desc}</p>
                     <div style={{ display: "flex", flexWrap: "wrap", gap: 10 }}>
                       {role === "student" && <button onClick={() => setActiveTab("application")} style={{ fontFamily: sans, padding: "12px 24px", background: m_ink, border: "none", color: m_white, fontSize: 14, fontWeight: 600, cursor: "pointer", borderRadius: 999 }}>{application.status === "draft" ? "Continue Application →" : "View Application →"}</button>}
-                      <button onClick={() => setActiveTab("consultation")} style={{ fontFamily: sans, padding: "12px 24px", background: "transparent", border: `1px solid ${m_line}`, color: m_ink, fontSize: 14, fontWeight: 500, cursor: "pointer", borderRadius: 999 }}>Schedule a Consultation (Optional) →</button>
+                      <button onClick={() => setActiveTab("consultation")} style={{ fontFamily: sans, padding: "12px 24px", background: "transparent", border: `1px solid ${m_line}`, color: m_ink, fontSize: 14, fontWeight: 500, cursor: "pointer", borderRadius: 999 }}>Schedule a Consultation →</button>
                     </div>
                   </>
                 )}
@@ -8879,35 +8983,7 @@ function PortalPage({ setPage }) {
         )}
 
         {activeTab === "application" && role === "student" && (() => {
-          if (application && application.status !== "draft") {
-            return (
-              <PortalCard>
-                <div style={{ width: 56, height: 56, borderRadius: "50%", background: m_canvas, display: "flex", alignItems: "center", justifyContent: "center", marginBottom: 24, color: m_ink }}>
-                  <PortalIcon name="clipboard" size={26} />
-                </div>
-                <h2 style={{ fontFamily: sans, fontWeight: 800, fontSize: 26, color: m_ink, letterSpacing: "-0.01em", marginBottom: 16 }}>Thank you for your application.</h2>
-                <p style={{ fontFamily: sans, fontSize: 15, color: m_ink, opacity: 0.75, lineHeight: 1.8, marginBottom: 16, maxWidth: 600 }}>
-                  You will be notified within 3 business days by a dedicated Enrollment Coordinator. In the meantime, please contact us at any time with questions, or schedule a consultation through the dashboard — entirely optional, but we're glad to help.
-                </p>
-                <div style={{ display: "flex", flexWrap: "wrap", gap: 10, marginBottom: 28 }}>
-                  <button onClick={() => setActiveTab("messages")} style={{ fontFamily: sans, padding: "12px 24px", background: m_ink, border: "none", color: m_white, fontSize: 14, fontWeight: 600, cursor: "pointer", borderRadius: 999 }}>Contact Us →</button>
-                  <button onClick={() => setActiveTab("consultation")} style={{ fontFamily: sans, padding: "12px 24px", background: "transparent", border: `1px solid ${m_line}`, color: m_ink, fontSize: 14, fontWeight: 500, cursor: "pointer", borderRadius: 999 }}>Schedule a Consultation →</button>
-                </div>
-                <div style={{ borderTop: `1px solid ${m_line}`, paddingTop: 20 }}>
-                  <p style={{ fontFamily: sans, fontSize: 13, color: m_gray, marginBottom: 10, fontWeight: 600 }}>Admissions Status</p>
-                  <div style={{ display: "flex", marginBottom: 10 }}>
-                    {statusSteps.map((s, i) => (
-                      <div key={s.key} style={{ flex: 1, paddingRight: i < statusSteps.length - 1 ? 8 : 0 }}>
-                        <div style={{ height: 6, borderRadius: 999, background: i <= currentStatusIndex ? m_amber : "rgba(17,17,17,0.08)", marginBottom: 8 }} />
-                        <p style={{ fontFamily: sans, fontSize: 12, fontWeight: i === currentStatusIndex ? 700 : 500, color: i <= currentStatusIndex ? m_ink : m_gray }}>{s.label}</p>
-                      </div>
-                    ))}
-                  </div>
-                  <p style={{ fontFamily: sans, fontSize: 14, color: m_ink, opacity: 0.75, lineHeight: 1.7 }}>{statusSteps[Math.max(currentStatusIndex, 0)].desc}</p>
-                </div>
-              </PortalCard>
-            );
-          }
+          const isSubmitted = application && application.status !== "draft";
           const getVal = (path) => path.split(".").reduce((o, k) => (o == null ? undefined : o[k]), appForm);
           const setVal = (path, v) => {
             const keys = path.split(".");
@@ -9031,6 +9107,68 @@ function PortalPage({ setPage }) {
             if (last && last.section === q.section) last.items.push(q);
             else groups.push({ section: q.section, items: [q] });
           });
+
+          if (isSubmitted) {
+            return (
+              <PortalCard>
+                <div style={{ width: 56, height: 56, borderRadius: "50%", background: m_canvas, display: "flex", alignItems: "center", justifyContent: "center", marginBottom: 24, color: m_ink }}>
+                  <PortalIcon name="clipboard" size={26} />
+                </div>
+                <h2 style={{ fontFamily: sans, fontWeight: 800, fontSize: 26, color: m_ink, letterSpacing: "-0.01em", marginBottom: 16 }}>Thank you for your application.</h2>
+                <p style={{ fontFamily: sans, fontSize: 15, color: m_ink, opacity: 0.75, lineHeight: 1.8, marginBottom: 16, maxWidth: 600 }}>
+                  You will be notified within 3 business days by a dedicated Enrollment Coordinator. In the meantime, please contact us at any time with questions, or schedule a consultation through the dashboard.
+                </p>
+                <div style={{ display: "flex", flexWrap: "wrap", gap: 10, marginBottom: 28 }}>
+                  <button onClick={() => setViewingSubmitted(v => !v)} style={{ fontFamily: sans, padding: "12px 24px", background: m_ink, border: "none", color: m_white, fontSize: 14, fontWeight: 600, cursor: "pointer", borderRadius: 999 }}>{viewingSubmitted ? "Hide Application ↑" : "View My Application →"}</button>
+                  <button onClick={() => setActiveTab("messages")} style={{ fontFamily: sans, padding: "12px 24px", background: "transparent", border: `1px solid ${m_line}`, color: m_ink, fontSize: 14, fontWeight: 500, cursor: "pointer", borderRadius: 999 }}>Contact Us →</button>
+                  <button onClick={() => setActiveTab("consultation")} style={{ fontFamily: sans, padding: "12px 24px", background: "transparent", border: `1px solid ${m_line}`, color: m_ink, fontSize: 14, fontWeight: 500, cursor: "pointer", borderRadius: 999 }}>Schedule a Consultation →</button>
+                </div>
+                <div style={{ borderTop: `1px solid ${m_line}`, paddingTop: 20, marginBottom: viewingSubmitted ? 28 : 0 }}>
+                  <p style={{ fontFamily: sans, fontSize: 13, color: m_gray, marginBottom: 10, fontWeight: 600 }}>Admissions Status</p>
+                  <div style={{ display: "flex", marginBottom: 10 }}>
+                    {statusSteps.map((s, i) => (
+                      <div key={s.key} style={{ flex: 1, paddingRight: i < statusSteps.length - 1 ? 8 : 0 }}>
+                        <div style={{ height: 6, borderRadius: 999, background: i <= currentStatusIndex ? m_amber : "rgba(17,17,17,0.08)", marginBottom: 8 }} />
+                        <p style={{ fontFamily: sans, fontSize: 12, fontWeight: i === currentStatusIndex ? 700 : 500, color: i <= currentStatusIndex ? m_ink : m_gray }}>{s.label}</p>
+                      </div>
+                    ))}
+                  </div>
+                  <p style={{ fontFamily: sans, fontSize: 14, color: m_ink, opacity: 0.75, lineHeight: 1.7 }}>{statusSteps[Math.max(currentStatusIndex, 0)].desc}</p>
+                </div>
+
+                {viewingSubmitted && (
+                  <div style={{ borderTop: `1px solid ${m_line}`, paddingTop: 24 }}>
+                    <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 8, flexWrap: "wrap", gap: 10 }}>
+                      <p style={{ fontFamily: sans, fontSize: 17, fontWeight: 800, color: m_ink }}>Your Submitted Application</p>
+                      {editRequested ? (
+                        <span style={{ fontFamily: sans, fontSize: 13, color: m_gray, fontWeight: 600 }}>Edit request sent ✓</span>
+                      ) : (
+                        <button onClick={handleRequestEditAccess} style={{ fontFamily: sans, padding: "9px 18px", background: "transparent", border: `1px solid ${m_line}`, color: m_ink, fontSize: 13, fontWeight: 600, cursor: "pointer", borderRadius: 999 }}>Request to Edit →</button>
+                      )}
+                    </div>
+                    <p style={{ fontFamily: sans, fontSize: 13, color: m_gray, lineHeight: 1.6, marginBottom: 20 }}>This is a read-only view of what you submitted. To make changes, request edit access and our admissions team will reopen it for you.</p>
+                    {groups.filter(g => g.section !== "Review").map(g => (
+                      <div key={g.section} style={{ marginBottom: 22 }}>
+                        <p style={{ fontFamily: sans, fontSize: 12, letterSpacing: "0.08em", color: m_gray, fontWeight: 700, textTransform: "uppercase", marginBottom: 10 }}>{g.section}</p>
+                        {g.items.filter(qq => qq.type !== "display" && qq.type !== "autodate").map(qq => {
+                          let val = getVal(qq.path);
+                          if (Array.isArray(val)) val = val.join(", ");
+                          if (typeof val === "boolean") val = val ? "Confirmed" : "Not confirmed";
+                          if (!val) return null;
+                          return (
+                            <div key={qq.path} style={{ display: "flex", justifyContent: "space-between", gap: 16, padding: "10px 0", borderBottom: `1px solid ${m_line}` }}>
+                              <span style={{ fontFamily: sans, fontSize: 14, color: m_ink, opacity: 0.7, flex: 1 }}>{qq.label}</span>
+                              <span style={{ fontFamily: sans, fontSize: 14, color: m_ink, fontWeight: 700, textAlign: "right", maxWidth: "45%" }}>{val}</span>
+                            </div>
+                          );
+                        })}
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </PortalCard>
+            );
+          }
 
           const total = groups.length;
           const secIndex = Math.min(appStep - 1, total - 1);
@@ -9186,36 +9324,17 @@ function PortalPage({ setPage }) {
           );
         })()}
 
-        {/* CONSULTATION TAB */}
+        {/* CONSULTATION TAB — Calendly */}
         {activeTab === "consultation" && (
           <PortalCard>
             <PortalSectionHeading title="Schedule a Family Consultation" cg={sans} isMobile={isMobile} />
-            <p style={{ fontFamily: sans, fontSize: 15, color: "#111111", opacity: 0.7, lineHeight: 1.7, marginBottom: 28 }}>Submit your preferred dates and times, and a member of our admissions team will confirm a time with you directly.</p>
-
-            <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 10, marginBottom: 10 }}>
-              <input type="date" placeholder="Preferred Date" value={consultForm.preferredDates} onChange={e => setConsultForm(f => ({ ...f, preferredDates: e.target.value }))} style={{ ...inputStyle, background: "#FFFFFF", color: "#000000", borderRadius: 10 }} />
-              <TimeRangePicker isMobile={isMobile} value={consultForm.preferredTimes} onChange={(ranges) => setConsultForm(f => ({ ...f, preferredTimes: ranges }))} inputStyle={{ ...inputStyle, background: "#FFFFFF", color: "#000000", borderRadius: 10 }} />
-            </div>
-            <select value={consultForm.contactMethod} onChange={e => setConsultForm(f => ({ ...f, contactMethod: e.target.value }))} style={{ ...inputStyle, background: "#FFFFFF", color: "#000000", marginBottom: 10, appearance: "none", borderRadius: 10 }}>
-              <option value="">Preferred Contact Method</option>
-              <option value="phone">Phone Call</option>
-              <option value="email">Email</option>
-              <option value="either">Either</option>
-            </select>
-            <textarea rows={3} placeholder="Notes (optional)" value={consultForm.notes} onChange={e => setConsultForm(f => ({ ...f, notes: e.target.value }))} style={{ ...inputStyle, background: "#FFFFFF", color: "#000000", marginBottom: 20, resize: "vertical", borderRadius: 10 }} />
-            <button onClick={handleRequestConsultation} disabled={consultSending} style={{ fontFamily: sans, padding: "14px 32px", background: "#111111", border: "none", color: "#FFFFFF", fontSize: 14, fontWeight: 600, cursor: "pointer", borderRadius: 999 }}>{consultSending ? "Sending..." : "Request Consultation →"}</button>
-
-            {consultations.length > 0 && (
-              <div style={{ marginTop: 40 }}>
-                <p style={{ fontFamily: sans, fontSize: 13, letterSpacing: "0.08em", color: "#8A8A86", textTransform: "uppercase", marginBottom: 16, fontWeight: 700 }}>Your Requests</p>
-                {consultations.map(c => (
-                  <div key={c.id} style={{ background: "#F2F1EF", border: "1px solid rgba(17,17,17,.08)", borderRadius: 14, padding: "16px 20px", marginBottom: 10 }}>
-                    <p style={{ fontFamily: sans, fontSize: 15, color: "#111111" }}>{c.preferred_dates} · {c.preferred_times}</p>
-                    <p style={{ fontFamily: sans, fontSize: 13, color: "#8A8A86", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.1em", marginTop: 4 }}>{c.status}</p>
-                  </div>
-                ))}
-              </div>
-            )}
+            <p style={{ fontFamily: sans, fontSize: 15, color: "#111111", opacity: 0.7, lineHeight: 1.7, marginBottom: 28 }}>Pick a time that works for you below, and a member of our admissions team will confirm the consultation directly.</p>
+            <CalendlyEmbed
+              prefill={{
+                name: [appForm.studentFirstName, appForm.studentLastName].filter(Boolean).join(" ") || (student ? `${student.first_name || ""} ${student.last_name || ""}`.trim() : ""),
+                email: appForm.parentEmail || appForm.studentEmail || "",
+              }}
+            />
           </PortalCard>
         )}
 
