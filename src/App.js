@@ -9146,7 +9146,7 @@ function PortalPage({ setPage }) {
             ];
             const dashCount = 5;
             return (
-              <div style={{ background: m_white, border: `1px solid ${m_line}`, borderRadius: 18, padding: isMobile ? "28px 22px 32px" : "44px 56px 48px", maxWidth: 560, margin: "0 auto" }}>
+              <div style={{ background: m_white, border: `1px solid ${m_line}`, borderRadius: 18, width: "100%", padding: isMobile ? "28px 22px 32px" : "44px 56px 48px", boxSizing: "border-box" }}>
                 <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 36 }}>
                   <div style={{ display: "flex", gap: 6 }}>
                     {Array.from({ length: dashCount }).map((_, i) => (
@@ -9160,21 +9160,21 @@ function PortalPage({ setPage }) {
 
                 <h2 style={{ fontFamily: sans, fontWeight: 800, fontSize: isMobile ? 22 : 25, color: m_ink, textAlign: "center", marginBottom: 32, letterSpacing: "-0.01em" }}>Which program are you applying for?</h2>
 
-                <div style={{ display: "flex", flexDirection: "column", gap: 12, marginBottom: 32 }}>
+                <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 16, marginBottom: 32 }}>
                   {programCards.map(c => {
                     const active = appForm.programs.includes(c.key);
                     return (
                       <button key={c.key} type="button" onClick={() => toggleVal("programs", c.key)} style={{
-                        display: "flex", alignItems: "center", gap: 16, textAlign: "left",
-                        padding: isMobile ? "16px 16px" : "18px 20px", borderRadius: 14, border: "none", cursor: "pointer",
+                        display: "flex", alignItems: "center", gap: 18, textAlign: "left",
+                        padding: isMobile ? "20px 20px" : "26px 26px", borderRadius: 16, border: "none", cursor: "pointer",
                         background: active ? m_ink : m_canvas, transition: "background .15s",
                       }}>
                         <div style={{ flex: 1, minWidth: 0 }}>
-                          <p style={{ fontFamily: sans, fontWeight: 700, fontSize: 16, color: active ? m_white : m_ink, marginBottom: 3 }}>{c.title}</p>
-                          <p style={{ fontFamily: sans, fontSize: 13, color: active ? "rgba(255,255,255,.65)" : m_gray, lineHeight: 1.4 }}>{c.subtitle}</p>
+                          <p style={{ fontFamily: sans, fontWeight: 700, fontSize: 18, color: active ? m_white : m_ink, marginBottom: 5 }}>{c.title}</p>
+                          <p style={{ fontFamily: sans, fontSize: 14, color: active ? "rgba(255,255,255,.65)" : m_gray, lineHeight: 1.45 }}>{c.subtitle}</p>
                         </div>
-                        <div style={{ width: 36, height: 36, borderRadius: 10, flexShrink: 0, display: "flex", alignItems: "center", justifyContent: "center", background: active ? "rgba(255,255,255,.14)" : m_white, color: active ? m_white : m_ink }}>
-                          <PortalIcon name={active ? "check" : c.icon} size={18} />
+                        <div style={{ width: 42, height: 42, borderRadius: 12, flexShrink: 0, display: "flex", alignItems: "center", justifyContent: "center", background: active ? "rgba(255,255,255,.14)" : m_white, color: active ? m_white : m_ink }}>
+                          <PortalIcon name={active ? "check" : c.icon} size={20} />
                         </div>
                       </button>
                     );
