@@ -8287,6 +8287,17 @@ function PortalPage({ setPage }) {
   const [inviteStatusMsg, setInviteStatusMsg] = React.useState("");
   const [parentLinks, setParentLinks] = React.useState([]);
 
+  // ── ADMIN STATE ──
+  const [adminTab, setAdminTab] = React.useState("overview");
+  const [adminStudents, setAdminStudents] = React.useState([]);
+  const [adminApplications, setAdminApplications] = React.useState([]);
+  const [adminConsultations, setAdminConsultations] = React.useState([]);
+  const [adminParentLinks, setAdminParentLinks] = React.useState([]);
+  const [adminLoading, setAdminLoading] = React.useState(false);
+  const [adminSelectedApp, setAdminSelectedApp] = React.useState(null);
+  const [adminStatusSaving, setAdminStatusSaving] = React.useState(false);
+  const [adminSearch, setAdminSearch] = React.useState("");
+
   const [activeTab, setActiveTab] = React.useState("overview");
 
   // ── Clears every piece of session-scoped state — called on sign-out and at the start of every new session resolution,
@@ -8311,6 +8322,12 @@ function PortalPage({ setPage }) {
     setActiveTab("overview");
     setSettingsForm(EMPTY_SETTINGS_FORM);
     setProfilePhoto(null);
+    setAdminTab("overview");
+    setAdminStudents([]);
+    setAdminApplications([]);
+    setAdminConsultations([]);
+    setAdminParentLinks([]);
+    setAdminSelectedApp(null);
   }, []);
 
   // ── SETTINGS ──
@@ -8435,6 +8452,19 @@ function PortalPage({ setPage }) {
         return;
       }
 
+      // Is this user an admin?
+      const { data: adminRow } = await sb.from("admins").select("*").eq("email", email).maybeSingle();
+      if (roleCheckSessionRef.current !== uid) return;
+      if (adminRow) {
+        if (!adminRow.auth_user_id) {
+          await sb.from("admins").update({ auth_user_id: uid }).eq("id", adminRow.id);
+        }
+        setRole("admin");
+        setNeedsProfile(false);
+        setRoleResolved(true);
+        return;
+      }
+
       // New user, no student or parent record yet — needs onboarding
       if (roleCheckSessionRef.current !== uid) return;
       setRole("student"); // default new signups to student profile creation
@@ -8478,6 +8508,34 @@ function PortalPage({ setPage }) {
       }
     })();
   }, [sb, student, role]);
+
+  // ── LOAD EVERYTHING, ADMIN VIEW ──
+  React.useEffect(() => {
+    if (!sb || role !== "admin") return;
+    (async () => {
+      setAdminLoading(true);
+      const { data: allStudents } = await sb.from("students").select("*").order("created_at", { ascending: false });
+      setAdminStudents(allStudents || []);
+      const { data: allApps } = await sb.from("applications").select("*, students(*)").order("created_at", { ascending: false });
+      setAdminApplications(allApps || []);
+      const { data: allConsults } = await sb.from("consultations").select("*, students(*)").order("created_at", { ascending: false });
+      setAdminConsultations(allConsults || []);
+      const { data: allLinks } = await sb.from("parent_links").select("*");
+      setAdminParentLinks(allLinks || []);
+      setAdminLoading(false);
+    })();
+  }, [sb, role]);
+
+  const handleAdminStatusChange = async (appId, newStatus) => {
+    if (!sb) return;
+    setAdminStatusSaving(true);
+    const { error } = await sb.from("applications").update({ status: newStatus }).eq("id", appId);
+    if (!error) {
+      setAdminApplications(prev => prev.map(a => a.id === appId ? { ...a, status: newStatus } : a));
+      if (adminSelectedApp && adminSelectedApp.id === appId) setAdminSelectedApp(prev => ({ ...prev, status: newStatus }));
+    }
+    setAdminStatusSaving(false);
+  };
 
   // ── AUTH ACTIONS ──
   const handleAuthSubmit = async () => {
@@ -8803,6 +8861,256 @@ function PortalPage({ setPage }) {
           <button onClick={handleCreateProfile} disabled={authBusy} style={{ fontFamily: lora, padding: "16px 0", background: t_black, border: "none", color: t_white, fontSize: 14, fontWeight: 700, letterSpacing: "0.16em", textTransform: "uppercase", cursor: "pointer", width: "100%", borderRadius: 8 }}>
             {authBusy ? "Saving..." : "Continue to Portal →"}
           </button>
+        </div>
+      </div>
+    );
+  }
+
+  // ── ADMIN DASHBOARD ──
+  if (role === "admin") {
+    const a_ink = "#111111";
+    const a_white = "#FFFFFF";
+    const a_canvas = "#F2F1EF";
+    const a_gray = "#8A8A86";
+    const a_line = "rgba(17,17,17,0.08)";
+    const a_amber = "#E8A33D";
+    const a_green = "#4FB07A";
+    const a_red = "#C75C4A";
+    const a_sans = "'Inter', sans-serif";
+
+    const statusColor = (s) => ({
+      draft: a_gray, submitted: a_amber, under_review: "#5C8DF2",
+      accepted: a_green, waitlisted: a_amber, declined: a_red,
+    }[s] || a_gray);
+
+    const q = adminSearch.trim().toLowerCase();
+    const filteredStudents = adminStudents.filter(s =>
+      !q || `${s.first_name} ${s.last_name} ${s.email}`.toLowerCase().includes(q)
+    );
+    const filteredApps = adminApplications.filter(a => {
+      if (!q) return true;
+      const name = a.students ? `${a.students.first_name} ${a.students.last_name}` : `${a.student_first_name || ""} ${a.student_last_name || ""}`;
+      return `${name} ${a.student_email || ""}`.toLowerCase().includes(q);
+    });
+
+    const totalRegistered = adminStudents.length;
+    const totalStarted = adminApplications.length;
+    const totalSubmitted = adminApplications.filter(a => a.status !== "draft").length;
+    const totalAccepted = adminApplications.filter(a => a.status === "accepted").length;
+
+    const adminTabs = [["overview", "Overview"], ["registrations", "Registrations"], ["applications", "Applications"], ["consultations", "Consultations"]];
+
+    const StatCard = ({ label, value, color }) => (
+      <div style={{ background: a_white, border: `1px solid ${a_line}`, borderRadius: 16, padding: "24px 26px" }}>
+        <p style={{ fontFamily: a_sans, fontSize: 12, letterSpacing: "0.08em", color: a_gray, textTransform: "uppercase", fontWeight: 600, marginBottom: 10 }}>{label}</p>
+        <p style={{ fontFamily: a_sans, fontSize: 34, fontWeight: 800, color: color || a_ink }}>{value}</p>
+      </div>
+    );
+
+    const StatusPill = ({ status }) => (
+      <span style={{ fontFamily: a_sans, fontSize: 11, fontWeight: 700, letterSpacing: "0.05em", textTransform: "uppercase", padding: "4px 12px", borderRadius: 999, color: a_white, background: statusColor(status) }}>{(status || "draft").replace("_", " ")}</span>
+    );
+
+    return (
+      <div className="portal-page" style={{ background: a_canvas, minHeight: "100vh" }}>
+        <style>{`.portal-page input, .portal-page textarea, .portal-page select { color: #111111 !important; } .portal-page input::placeholder { color: rgba(17,17,17,.4) !important; }`}</style>
+        <Breadcrumb items={[{ label: "Home", page: "home" }]} setPage={setPage} />
+
+        {/* HEADER */}
+        <div style={{ background: a_ink, padding: isMobile ? "32px 24px" : "40px 56px", display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 16 }}>
+          <div>
+            <p style={{ fontFamily: a_sans, fontSize: 11, letterSpacing: "0.2em", color: a_amber, fontWeight: 700, textTransform: "uppercase", marginBottom: 6 }}>Admin</p>
+            <h1 style={{ fontFamily: cg, fontSize: isMobile ? 24 : 30, fontWeight: 400, color: a_white }}>Excalibur Admissions Dashboard</h1>
+          </div>
+          <button onClick={handleSignOut} style={{ fontFamily: a_sans, fontSize: 12, letterSpacing: "0.08em", color: a_white, background: "transparent", border: `1px solid rgba(255,255,255,.3)`, padding: "10px 20px", borderRadius: 999, cursor: "pointer" }}>Sign Out</button>
+        </div>
+
+        {/* TABS */}
+        <div style={{ display: "flex", gap: 0, borderBottom: `1px solid ${a_line}`, overflowX: "auto", padding: isMobile ? "0 24px" : "0 56px", background: a_white }}>
+          {adminTabs.map(([key, label]) => (
+            <button key={key} onClick={() => { setAdminTab(key); setAdminSelectedApp(null); }} style={{ padding: "16px 20px", background: "none", border: "none", borderBottom: adminTab === key ? `2px solid ${a_ink}` : "2px solid transparent", color: a_ink, fontFamily: a_sans, fontSize: 13, letterSpacing: "0.04em", fontWeight: adminTab === key ? 700 : 500, cursor: "pointer", whiteSpace: "nowrap", opacity: adminTab === key ? 1 : 0.55 }}>{label}</button>
+          ))}
+        </div>
+
+        <div style={{ padding: isMobile ? "28px 20px 80px" : "40px 56px 100px", maxWidth: 1200, margin: "0 auto" }}>
+
+          {adminLoading && <p style={{ fontFamily: a_sans, fontSize: 14, color: a_gray }}>Loading…</p>}
+
+          {/* OVERVIEW */}
+          {adminTab === "overview" && !adminLoading && (
+            <div>
+              <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr 1fr" : "repeat(4,1fr)", gap: 16, marginBottom: 40 }}>
+                <StatCard label="Registered Students" value={totalRegistered} />
+                <StatCard label="Applications Started" value={totalStarted} color={a_amber} />
+                <StatCard label="Applications Submitted" value={totalSubmitted} color="#5C8DF2" />
+                <StatCard label="Accepted" value={totalAccepted} color={a_green} />
+              </div>
+
+              <p style={{ fontFamily: a_sans, fontSize: 16, fontWeight: 700, color: a_ink, marginBottom: 16 }}>Most Recent Registrations</p>
+              <div style={{ background: a_white, border: `1px solid ${a_line}`, borderRadius: 16, overflow: "hidden", marginBottom: 40 }}>
+                {adminStudents.slice(0, 6).map((s, i) => (
+                  <div key={s.id} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "16px 22px", borderBottom: i < 5 ? `1px solid ${a_line}` : "none" }}>
+                    <div>
+                      <p style={{ fontFamily: a_sans, fontSize: 14, fontWeight: 700, color: a_ink }}>{s.first_name} {s.last_name}</p>
+                      <p style={{ fontFamily: a_sans, fontSize: 13, color: a_gray }}>{s.email}</p>
+                    </div>
+                    <p style={{ fontFamily: a_sans, fontSize: 12, color: a_gray }}>{s.created_at ? new Date(s.created_at).toLocaleDateString() : ""}</p>
+                  </div>
+                ))}
+                {adminStudents.length === 0 && <p style={{ fontFamily: a_sans, fontSize: 14, color: a_gray, padding: 22 }}>No registrations yet.</p>}
+              </div>
+
+              <p style={{ fontFamily: a_sans, fontSize: 16, fontWeight: 700, color: a_ink, marginBottom: 16 }}>Most Recent Applications</p>
+              <div style={{ background: a_white, border: `1px solid ${a_line}`, borderRadius: 16, overflow: "hidden" }}>
+                {adminApplications.slice(0, 6).map((a, i) => (
+                  <div key={a.id} onClick={() => { setAdminTab("applications"); setAdminSelectedApp(a); }} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "16px 22px", borderBottom: i < 5 ? `1px solid ${a_line}` : "none", cursor: "pointer" }}>
+                    <div>
+                      <p style={{ fontFamily: a_sans, fontSize: 14, fontWeight: 700, color: a_ink }}>{a.students ? `${a.students.first_name} ${a.students.last_name}` : `${a.student_first_name || ""} ${a.student_last_name || ""}`}</p>
+                      <p style={{ fontFamily: a_sans, fontSize: 13, color: a_gray }}>{(a.programs || []).join(", ") || a.program || "—"}</p>
+                    </div>
+                    <StatusPill status={a.status} />
+                  </div>
+                ))}
+                {adminApplications.length === 0 && <p style={{ fontFamily: a_sans, fontSize: 14, color: a_gray, padding: 22 }}>No applications yet.</p>}
+              </div>
+            </div>
+          )}
+
+          {/* REGISTRATIONS */}
+          {adminTab === "registrations" && !adminLoading && (
+            <div>
+              <input type="text" placeholder="Search by name or email…" value={adminSearch} onChange={e => setAdminSearch(e.target.value)} style={{ fontFamily: a_sans, fontSize: 14, padding: "12px 16px", borderRadius: 10, border: `1px solid ${a_line}`, background: a_white, width: isMobile ? "100%" : 360, marginBottom: 24, outline: "none" }} />
+              <div style={{ background: a_white, border: `1px solid ${a_line}`, borderRadius: 16, overflow: "hidden" }}>
+                <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1.4fr 1.6fr 0.8fr 0.8fr 1fr", padding: "14px 22px", borderBottom: `1px solid ${a_line}`, background: a_canvas }}>
+                  {["Name", "Email", "Grade", "Registered", "Parent Linked"].map((h, i) => (!isMobile || i === 0) && (
+                    <p key={h} style={{ fontFamily: a_sans, fontSize: 11, letterSpacing: "0.08em", color: a_gray, textTransform: "uppercase", fontWeight: 700 }}>{h}</p>
+                  ))}
+                </div>
+                {filteredStudents.map((s, i) => {
+                  const linked = adminParentLinks.some(l => l.student_id === s.id && l.invite_status === "accepted");
+                  return (
+                    <div key={s.id} style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1.4fr 1.6fr 0.8fr 0.8fr 1fr", padding: "16px 22px", borderBottom: i < filteredStudents.length - 1 ? `1px solid ${a_line}` : "none", alignItems: "center" }}>
+                      <p style={{ fontFamily: a_sans, fontSize: 14, fontWeight: 700, color: a_ink }}>{s.first_name} {s.last_name}</p>
+                      {!isMobile && <p style={{ fontFamily: a_sans, fontSize: 13, color: a_gray }}>{s.email}</p>}
+                      {!isMobile && <p style={{ fontFamily: a_sans, fontSize: 13, color: a_gray }}>{s.grade || "—"}</p>}
+                      {!isMobile && <p style={{ fontFamily: a_sans, fontSize: 13, color: a_gray }}>{s.created_at ? new Date(s.created_at).toLocaleDateString() : "—"}</p>}
+                      {!isMobile && <p style={{ fontFamily: a_sans, fontSize: 13, color: linked ? a_green : a_gray, fontWeight: linked ? 700 : 400 }}>{linked ? "Yes" : "No"}</p>}
+                    </div>
+                  );
+                })}
+                {filteredStudents.length === 0 && <p style={{ fontFamily: a_sans, fontSize: 14, color: a_gray, padding: 22 }}>No matching students.</p>}
+              </div>
+            </div>
+          )}
+
+          {/* APPLICATIONS */}
+          {adminTab === "applications" && !adminLoading && !adminSelectedApp && (
+            <div>
+              <input type="text" placeholder="Search by name or email…" value={adminSearch} onChange={e => setAdminSearch(e.target.value)} style={{ fontFamily: a_sans, fontSize: 14, padding: "12px 16px", borderRadius: 10, border: `1px solid ${a_line}`, background: a_white, width: isMobile ? "100%" : 360, marginBottom: 24, outline: "none" }} />
+              <div style={{ background: a_white, border: `1px solid ${a_line}`, borderRadius: 16, overflow: "hidden" }}>
+                {filteredApps.map((a, i) => (
+                  <div key={a.id} onClick={() => setAdminSelectedApp(a)} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "18px 22px", borderBottom: i < filteredApps.length - 1 ? `1px solid ${a_line}` : "none", cursor: "pointer" }}>
+                    <div>
+                      <p style={{ fontFamily: a_sans, fontSize: 15, fontWeight: 700, color: a_ink, marginBottom: 3 }}>{a.students ? `${a.students.first_name} ${a.students.last_name}` : `${a.student_first_name || ""} ${a.student_last_name || ""}`}</p>
+                      <p style={{ fontFamily: a_sans, fontSize: 13, color: a_gray }}>{(a.programs || []).join(", ") || a.program || "—"} · {a.submitted_at ? `Submitted ${new Date(a.submitted_at).toLocaleDateString()}` : "Not submitted"}</p>
+                    </div>
+                    <StatusPill status={a.status} />
+                  </div>
+                ))}
+                {filteredApps.length === 0 && <p style={{ fontFamily: a_sans, fontSize: 14, color: a_gray, padding: 22 }}>No matching applications.</p>}
+              </div>
+            </div>
+          )}
+
+          {/* APPLICATION DETAIL */}
+          {adminTab === "applications" && adminSelectedApp && (() => {
+            const a = adminSelectedApp;
+            const s = a.students || {};
+            const Field = ({ label, value }) => (
+              <div style={{ marginBottom: 18 }}>
+                <p style={{ fontFamily: a_sans, fontSize: 11, letterSpacing: "0.08em", color: a_gray, textTransform: "uppercase", fontWeight: 700, marginBottom: 4 }}>{label}</p>
+                <p style={{ fontFamily: a_sans, fontSize: 15, color: a_ink, lineHeight: 1.5 }}>{value || "—"}</p>
+              </div>
+            );
+            return (
+              <div>
+                <p onClick={() => setAdminSelectedApp(null)} style={{ fontFamily: a_sans, fontSize: 13, color: a_gray, cursor: "pointer", marginBottom: 20, textDecoration: "underline" }}>← Back to all applications</p>
+                <div style={{ background: a_white, border: `1px solid ${a_line}`, borderRadius: 16, padding: isMobile ? "24px 22px" : "36px 40px" }}>
+                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", flexWrap: "wrap", gap: 16, marginBottom: 28 }}>
+                    <div>
+                      <h2 style={{ fontFamily: cg, fontSize: 26, fontWeight: 400, color: a_ink, marginBottom: 6 }}>{a.student_first_name || s.first_name} {a.student_last_name || s.last_name}</h2>
+                      <p style={{ fontFamily: a_sans, fontSize: 13, color: a_gray }}>{a.student_email || s.email}</p>
+                    </div>
+                    <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+                      <StatusPill status={a.status} />
+                      <select disabled={adminStatusSaving} value={a.status || "draft"} onChange={e => handleAdminStatusChange(a.id, e.target.value)} style={{ fontFamily: a_sans, fontSize: 13, padding: "8px 12px", borderRadius: 8, border: `1px solid ${a_line}` }}>
+                        {["draft","submitted","under_review","accepted","waitlisted","declined"].map(st => <option key={st} value={st}>{st.replace("_"," ")}</option>)}
+                      </select>
+                    </div>
+                  </div>
+
+                  <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: "0 32px" }}>
+                    <Field label="Programs" value={(a.programs || []).join(", ") || a.program} />
+                    <Field label="First Choice" value={a.first_choice_program} />
+                    <Field label="Date of Birth" value={a.date_of_birth} />
+                    <Field label="Current Grade" value={a.current_grade} />
+                    <Field label="Current School" value={a.current_school} />
+                    <Field label="City of Residence" value={a.city_of_residence} />
+                    <Field label="Student Phone" value={a.student_phone} />
+                    <Field label="GPA Range" value={a.gpa_range} />
+                  </div>
+
+                  <div style={{ height: 1, background: a_line, margin: "8px 0 24px" }} />
+                  <p style={{ fontFamily: a_sans, fontSize: 13, letterSpacing: "0.08em", color: a_gray, textTransform: "uppercase", fontWeight: 700, marginBottom: 16 }}>Parent / Guardian</p>
+                  <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: "0 32px" }}>
+                    <Field label="Name" value={`${a.parent_first_name || ""} ${a.parent_last_name || ""}`.trim()} />
+                    <Field label="Relationship" value={a.parent_relationship} />
+                    <Field label="Email" value={a.parent_email} />
+                    <Field label="Phone" value={a.parent_phone} />
+                  </div>
+
+                  <div style={{ height: 1, background: a_line, margin: "8px 0 24px" }} />
+                  <p style={{ fontFamily: a_sans, fontSize: 13, letterSpacing: "0.08em", color: a_gray, textTransform: "uppercase", fontWeight: 700, marginBottom: 16 }}>Background &amp; Interests</p>
+                  <Field label="Academic / Professional Interests" value={(a.academic_interests || []).join(", ")} />
+                  <Field label="Extracurriculars" value={a.extracurriculars} />
+                  <Field label="Prior Programs Experience" value={a.prior_programs_description} />
+                  <Field label="Heard About Excalibur Via" value={a.heard_about} />
+
+                  <div style={{ height: 1, background: a_line, margin: "8px 0 24px" }} />
+                  <p style={{ fontFamily: a_sans, fontSize: 13, letterSpacing: "0.08em", color: a_gray, textTransform: "uppercase", fontWeight: 700, marginBottom: 16 }}>Short Answers</p>
+                  <Field label="Why Join Excalibur" value={a.why_join} />
+                  <Field label="Leadership Story" value={a.leadership_story} />
+                  <Field label="Growth Area" value={a.growth_area} />
+                  <Field label="Dream Answer" value={a.dream_answer} />
+
+                  <div style={{ height: 1, background: a_line, margin: "8px 0 24px" }} />
+                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 12 }}>
+                    <p style={{ fontFamily: a_sans, fontSize: 13, color: a_gray }}>Created {a.created_at ? new Date(a.created_at).toLocaleDateString() : "—"} · Submitted {a.submitted_at ? new Date(a.submitted_at).toLocaleDateString() : "Not yet"}</p>
+                  </div>
+                </div>
+              </div>
+            );
+          })()}
+
+          {/* CONSULTATIONS */}
+          {adminTab === "consultations" && !adminLoading && (
+            <div style={{ background: a_white, border: `1px solid ${a_line}`, borderRadius: 16, overflow: "hidden" }}>
+              {adminConsultations.map((c, i) => (
+                <div key={c.id} style={{ padding: "18px 22px", borderBottom: i < adminConsultations.length - 1 ? `1px solid ${a_line}` : "none" }}>
+                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", flexWrap: "wrap", gap: 10 }}>
+                    <div>
+                      <p style={{ fontFamily: a_sans, fontSize: 14, fontWeight: 700, color: a_ink }}>{c.students ? `${c.students.first_name} ${c.students.last_name}` : "—"}</p>
+                      <p style={{ fontFamily: a_sans, fontSize: 13, color: a_gray, marginTop: 3 }}>Requested by {c.requested_by_role || "—"} · {c.created_at ? new Date(c.created_at).toLocaleDateString() : ""}</p>
+                    </div>
+                    <span style={{ fontFamily: a_sans, fontSize: 11, fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.05em", padding: "4px 12px", borderRadius: 999, color: a_white, background: c.status === "completed" ? a_green : c.status === "scheduled" ? "#5C8DF2" : a_gray }}>{c.status}</span>
+                  </div>
+                  {c.notes && <p style={{ fontFamily: a_sans, fontSize: 13, color: a_ink, marginTop: 10, lineHeight: 1.5 }}>{c.notes}</p>}
+                </div>
+              ))}
+              {adminConsultations.length === 0 && <p style={{ fontFamily: a_sans, fontSize: 14, color: a_gray, padding: 22 }}>No consultation requests yet.</p>}
+            </div>
+          )}
+
         </div>
       </div>
     );
