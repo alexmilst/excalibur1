@@ -1708,22 +1708,24 @@ function CurriculumPage({ setPage, openInquiry }) {
       </div>
 
       {/* ── EXCALIBUR IVY PORTFOLIO ── */}
-      <section style={{ background: "#010000", padding: 0 }}>
+            <section style={{ background: "#E4D5C1", padding: 0 }}>
+
+        {/* Photos  -  heading on solid dark block so it is always visible */}
         {!isMobile ? (
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 0, height: 420 }}>
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 0, height: 560 }}>
             <div style={{ overflow: "hidden", position: "relative" }}>
-              <img src="https://i.imgur.com/f87iq9i.jpeg" alt="" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+              <img src="https://i.imgur.com/f87iq9i.jpeg" alt="" style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center center" }} />
               <div style={{ position: "absolute", inset: 0, background: "rgba(0,0,0,.35)" }} />
               <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, background: "#E4D5C1", padding: "28px 36px" }}>
-                <p style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.45em", color: "#010000", fontWeight: 600, textTransform: "uppercase", marginBottom: 10 }}>The Excalibur Graduate</p>
-                <h2 style={{ fontFamily: serif, fontSize: "clamp(28px,3vw,42px)", fontWeight: 600, color:"#d8b78c", lineHeight: 1.0, marginBottom: 8 }}>Excalibur "Ivy" Portfolio</h2>
-                <p style={{ fontFamily: serif, fontSize: 16, color: "#010000", fontStyle: "italic" }}>A record of work, judgment, and growth.</p>
+                <p style={{ fontFamily: "Lato, sans-serif", fontSize: 10, letterSpacing: "2px", color: "#010000", fontWeight: 700, textTransform: "uppercase", marginBottom: 10 }}>The Excalibur Graduate</p>
+                <h2 style={{ fontFamily: "Times, serif", fontSize: "clamp(28px,3vw,42px)", fontWeight: 600, color: "#010000", lineHeight: 1.0, marginBottom: 8 }}>Excalibur “Ivy” Portfolio</h2>
+                <p style={{ fontFamily: "Cormorant Garamond, serif", fontSize: 20, color: "#E4D5C1", fontStyle: "italic" }}>A record of work, judgment, and growth</p>
               </div>
             </div>
             <div style={{ overflow: "hidden", position: "relative" }}>
               <img src="https://i.imgur.com/gvG5P1q.png" alt="" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
               <div style={{ position: "absolute", inset: 0, background: "rgba(0,0,0,.3)" }} />
-              <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, background: "#010000", padding: "28px 36px" }}>
+              <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, background: "#E4D5C1", padding: "28px 36px" }}>
                 <p style={{ fontFamily: "Lato, sans-serif", fontSize: 10, letterSpacing: "2px", color: "#010000", fontWeight: 700, textTransform: "uppercase", marginBottom: 8 }}>College Application Context</p>
                 <p style={{ fontFamily: "Cormorant Garamond, serif", fontSize: 25, color: "#010000", fontStyle: "italic" }}>Why Excalibur Students Stand Apart</p>
               </div>
@@ -1733,22 +1735,51 @@ function CurriculumPage({ setPage, openInquiry }) {
           <div style={{ height: 280, overflow: "hidden", position: "relative" }}>
             <img src="https://i.imgur.com/f87iq9i.jpeg" alt="" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
             <div style={{ position: "absolute", inset: 0, background: "rgba(0,0,0,.5)" }} />
-            <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, background: "#010000", padding: "20px 24px" }}>
-              <h2 style={{ fontFamily: serif, fontSize: 26, fontWeight: 600, color:"#d8b78c", lineHeight: 1.05, marginBottom: 6 }}>Excalibur "Ivy" Portfolio</h2>
-              <p style={{ fontFamily: serif, fontSize: 14, color:"#010000", fontStyle: "italic" }}>A record of work, judgment, and growth.</p>
+            <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, background: "#E4D5C1", padding: "20px 24px" }}>
+              <p style={{ fontFamily: "Lato, sans-serif", fontSize: 10, letterSpacing: "2px", color: "#010000", fontWeight: 700, textTransform: "uppercase", marginBottom: 10 }}>The Excalibur Graduate</p>
+              <h2 style={{ fontFamily: "Times, serif", fontSize: 26, fontWeight: 600, color: "#010000", lineHeight: 1.05, marginBottom: 6 }}>Excalibur “Ivy” Portfolio</h2>
+              <p style={{ fontFamily: "Cormorant Garamond, serif", fontSize: 20, color: "#E4D5C1", fontStyle: "italic" }}>A record of work, judgment, and growth</p>
             </div>
           </div>
         )}
-        <div style={{ maxWidth: 1100, margin: "0 auto", padding: isMobile ? "36px 24px 0" : "52px 80px 0", display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: isMobile ? 20 : 80 }}>
+
+        {/* Intro + eight components */}
+        <div style={{ maxWidth: 1100, margin: "0 auto", padding: isMobile ? "36px 24px 0" : "52px 80px 0", display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: isMobile ? 20 : 80, alignItems: "start" }}>
           <div>
-            <p style={{ fontFamily: sans, fontSize: isMobile ? 14 : 15, lineHeight: 1.85, color: "#FBF7EE", fontWeight: 300 }}>Every Excalibur student graduates with a portfolio of documented, verifiable work — one that no other program in the country offers with this level of excellence, breadth, faculty distinction, and diversity of experience.. This portfolio reflects sustained performance, leadership under pressure, and accountability for outcomes.</p>
+            <p style={{ fontFamily: "Lora, serif", fontSize: isMobile ? 14 : 15, lineHeight: 1.85, color: "#010000", fontWeight: 300 }}>Every Excalibur student graduates with a portfolio of documented, verifiable work — one that no other program in the country offers with this level of excellence, breadth, faculty distinction, and diversity of experience.. This portfolio reflects sustained performance, leadership under pressure, and accountability for outcomes.</p>
           </div>
           <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", gap: 16 }}>
-            <div style={{ width: 24, height: 1, background: "#010000" }} />
-            <p style={{ fontFamily: serif, fontSize: isMobile ? 14 : 18, color: "#FBF7EE", fontWeight: 400, lineHeight: 1.75, fontStyle: "italic" }}>Documented components · Professionally assembled · Designed to support university applications, interviews, and future opportunities.</p>
+            <div style={{ width: 24, height: 1, background: "#d8b78c" }} />
+            <p style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: isMobile ? 14 : 18, color: "#010000", fontWeight: 400, lineHeight: 1.75, fontStyle: "italic" }}>Documented components · Professionally assembled · Designed to support university applications, interviews, and future opportunities.</p>
           </div>
         </div>
+
+        {/* Interactive 8-component index, with layered photo stack as third column */}
         <PortfolioIndexWhite isMobile={isMobile} setPage={setPage} images={["https://i.imgur.com/xNrPz7m.jpeg", "https://i.imgur.com/ev0MLKy.jpeg"]} />
+
+        {/* College admissions  -  merged below */}
+        <div style={{ background: "#E4D5C1", padding: isMobile ? "48px 24px" : "64px 80px" }}>
+          <div style={{ maxWidth: 1100, margin: "0 auto", display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: isMobile ? 36 : 80 }}>
+            <div>
+              <p style={{ fontFamily: sans, fontSize: 10, letterSpacing: "0.2em", color: "#010000", fontWeight: 700, textTransform: "uppercase", marginBottom: 14 }}>A Portfolio of Documented Work</p>
+              <h2 style={{ fontFamily: "'Bodoni Cyrillic', 'Bodoni MT', serif", fontSize: isMobile ? 26 : 36, fontWeight: 400, color: "#010000", lineHeight: 1.05, marginBottom: 12, textTransform: "uppercase", letterSpacing: "0.04em" }}>College Application</h2>
+              <p style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: 22, color: "#010000", fontStyle: "italic", marginBottom: 22, lineHeight: 1.3, fontWeight: 400 }}>Why Excalibur Students Stand Apart</p>
+              <div style={{ width: 36, height: 1, background: "linear-gradient(90deg, rgba(0,0,0,.35), transparent)", marginBottom: 22 }} />
+              <p style={{ fontFamily: "Lora, serif", fontSize: 14, lineHeight: 1.9, color: "#010000", fontWeight: 300, marginBottom: 16 }}>An Excalibur graduate approaches college admission with proof of applied applied leadership, serious work experience and personal growth. A consulting report. An externship record. A micro-business launch. Competition results. A graduation portfolio. Faculty recommendations written by top executives and professionals who watched them operate, lead, and execute.</p>
+              <p style={{ fontFamily: "Lora, serif", fontSize: 14, lineHeight: 1.9, color: "#010000", fontWeight: 300 }}>Students work with Excalibur’s college advisor on application strategy, personal narrative, portfolio presentation, recommendation preparation, interview readiness, and how their Excalibur experience can strengthen their college applications and future academic goals.</p>
+            </div>
+            <div style={{ display: "flex", flexDirection: "column", justifyContent: "center" }}>
+              <p style={{ fontFamily: "Times, serif", fontWeight: 700, fontSize: 10, letterSpacing: "0.2em", color: "#010000", textTransform: "uppercase", marginBottom: 24 }}>What This Means in Practice</p>
+              {["Portfolio reviewed and built by admissions counselors specifically for university applications", "Faculty feedback and recommendation support grounded in direct observation of student's work", "Verified competition results and externship documentation", "Interview preparation built around real, specific experience", "A narrative unavailable to most students due to lack of comparable experience"].map((f, i) => (
+                <div key={i} style={{ display: "flex", gap: 14, marginBottom: 16, alignItems: "flex-start" }}>
+                  <div style={{ width: 16, height: 1.5, background: "rgba(0,0,0,.3)", marginTop: 9, flexShrink: 0 }} />
+                  <span style={{ fontFamily: sans, fontSize: 13, color: "#010000", fontWeight: 300, lineHeight: 1.7 }}>{f}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
       </section>
 
       {/* ── BEYOND THE CLASSROOM CTA ── */}
@@ -3137,14 +3168,79 @@ function ApplyPage({ setPage, openInquiry }) {
       </div>
 
       {/* EXCALIBUR IVY PORTFOLIO */}
-      <div style={{ background: "#E4D5C1", padding: isMobile ? "52px 0 0" : "72px 0 0" }}>
-        <div style={{ maxWidth: 1100, margin: "0 auto", padding: isMobile ? "0 24px" : "0 80px", textAlign: "center", marginBottom: isMobile ? 24 : 32 }}>
-          <p style={{ fontFamily: sans, fontSize: 10, letterSpacing: "0.2em", color: "#010000", fontWeight: 700, textTransform: "uppercase", marginBottom: 10 }}>The Excalibur Graduate</p>
-          <h2 style={{ fontFamily: "'Bodoni Cyrillic', 'Bodoni MT', serif", fontSize: isMobile ? 28 : 42, fontWeight: 400, color: "#010000", lineHeight: 1.0, marginBottom: 8, textTransform: "uppercase", letterSpacing: "0.04em" }}>Excalibur “Ivy” Portfolio</h2>
-          <p style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: 16, color: "#010000", fontStyle: "italic" }}>A record of work, judgment, and growth.</p>
+            <section style={{ background: "#E4D5C1", padding: 0 }}>
+
+        {/* Photos  -  heading on solid dark block so it is always visible */}
+        {!isMobile ? (
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 0, height: 560 }}>
+            <div style={{ overflow: "hidden", position: "relative" }}>
+              <img src="https://i.imgur.com/f87iq9i.jpeg" alt="" style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center center" }} />
+              <div style={{ position: "absolute", inset: 0, background: "rgba(0,0,0,.35)" }} />
+              <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, background: "#E4D5C1", padding: "28px 36px" }}>
+                <p style={{ fontFamily: "Lato, sans-serif", fontSize: 10, letterSpacing: "2px", color: "#010000", fontWeight: 700, textTransform: "uppercase", marginBottom: 10 }}>The Excalibur Graduate</p>
+                <h2 style={{ fontFamily: "Times, serif", fontSize: "clamp(28px,3vw,42px)", fontWeight: 600, color: "#010000", lineHeight: 1.0, marginBottom: 8 }}>Excalibur “Ivy” Portfolio</h2>
+                <p style={{ fontFamily: "Cormorant Garamond, serif", fontSize: 20, color: "#E4D5C1", fontStyle: "italic" }}>A record of work, judgment, and growth</p>
+              </div>
+            </div>
+            <div style={{ overflow: "hidden", position: "relative" }}>
+              <img src="https://i.imgur.com/gvG5P1q.png" alt="" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+              <div style={{ position: "absolute", inset: 0, background: "rgba(0,0,0,.3)" }} />
+              <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, background: "#E4D5C1", padding: "28px 36px" }}>
+                <p style={{ fontFamily: "Lato, sans-serif", fontSize: 10, letterSpacing: "2px", color: "#010000", fontWeight: 700, textTransform: "uppercase", marginBottom: 8 }}>College Application Context</p>
+                <p style={{ fontFamily: "Cormorant Garamond, serif", fontSize: 25, color: "#010000", fontStyle: "italic" }}>Why Excalibur Students Stand Apart</p>
+              </div>
+            </div>
+          </div>
+        ) : (
+          <div style={{ height: 280, overflow: "hidden", position: "relative" }}>
+            <img src="https://i.imgur.com/f87iq9i.jpeg" alt="" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+            <div style={{ position: "absolute", inset: 0, background: "rgba(0,0,0,.5)" }} />
+            <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, background: "#E4D5C1", padding: "20px 24px" }}>
+              <p style={{ fontFamily: "Lato, sans-serif", fontSize: 10, letterSpacing: "2px", color: "#010000", fontWeight: 700, textTransform: "uppercase", marginBottom: 10 }}>The Excalibur Graduate</p>
+              <h2 style={{ fontFamily: "Times, serif", fontSize: 26, fontWeight: 600, color: "#010000", lineHeight: 1.05, marginBottom: 6 }}>Excalibur “Ivy” Portfolio</h2>
+              <p style={{ fontFamily: "Cormorant Garamond, serif", fontSize: 20, color: "#E4D5C1", fontStyle: "italic" }}>A record of work, judgment, and growth</p>
+            </div>
+          </div>
+        )}
+
+        {/* Intro + eight components */}
+        <div style={{ maxWidth: 1100, margin: "0 auto", padding: isMobile ? "36px 24px 0" : "52px 80px 0", display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: isMobile ? 20 : 80, alignItems: "start" }}>
+          <div>
+            <p style={{ fontFamily: "Lora, serif", fontSize: isMobile ? 14 : 15, lineHeight: 1.85, color: "#010000", fontWeight: 300 }}>Every Excalibur student graduates with a portfolio of documented, verifiable work — one that no other program in the country offers with this level of excellence, breadth, faculty distinction, and diversity of experience.. This portfolio reflects sustained performance, leadership under pressure, and accountability for outcomes.</p>
+          </div>
+          <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", gap: 16 }}>
+            <div style={{ width: 24, height: 1, background: "#d8b78c" }} />
+            <p style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: isMobile ? 14 : 18, color: "#010000", fontWeight: 400, lineHeight: 1.75, fontStyle: "italic" }}>Documented components · Professionally assembled · Designed to support university applications, interviews, and future opportunities.</p>
+          </div>
         </div>
+
+        {/* Interactive 8-component index, with layered photo stack as third column */}
         <PortfolioIndexWhite isMobile={isMobile} setPage={setPage} images={["https://i.imgur.com/xNrPz7m.jpeg", "https://i.imgur.com/ev0MLKy.jpeg"]} />
-      </div>
+
+        {/* College admissions  -  merged below */}
+        <div style={{ background: "#E4D5C1", padding: isMobile ? "48px 24px" : "64px 80px" }}>
+          <div style={{ maxWidth: 1100, margin: "0 auto", display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: isMobile ? 36 : 80 }}>
+            <div>
+              <p style={{ fontFamily: sans, fontSize: 10, letterSpacing: "0.2em", color: "#010000", fontWeight: 700, textTransform: "uppercase", marginBottom: 14 }}>A Portfolio of Documented Work</p>
+              <h2 style={{ fontFamily: "'Bodoni Cyrillic', 'Bodoni MT', serif", fontSize: isMobile ? 26 : 36, fontWeight: 400, color: "#010000", lineHeight: 1.05, marginBottom: 12, textTransform: "uppercase", letterSpacing: "0.04em" }}>College Application</h2>
+              <p style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: 22, color: "#010000", fontStyle: "italic", marginBottom: 22, lineHeight: 1.3, fontWeight: 400 }}>Why Excalibur Students Stand Apart</p>
+              <div style={{ width: 36, height: 1, background: "linear-gradient(90deg, rgba(0,0,0,.35), transparent)", marginBottom: 22 }} />
+              <p style={{ fontFamily: "Lora, serif", fontSize: 14, lineHeight: 1.9, color: "#010000", fontWeight: 300, marginBottom: 16 }}>An Excalibur graduate approaches college admission with proof of applied applied leadership, serious work experience and personal growth. A consulting report. An externship record. A micro-business launch. Competition results. A graduation portfolio. Faculty recommendations written by top executives and professionals who watched them operate, lead, and execute.</p>
+              <p style={{ fontFamily: "Lora, serif", fontSize: 14, lineHeight: 1.9, color: "#010000", fontWeight: 300 }}>Students work with Excalibur’s college advisor on application strategy, personal narrative, portfolio presentation, recommendation preparation, interview readiness, and how their Excalibur experience can strengthen their college applications and future academic goals.</p>
+            </div>
+            <div style={{ display: "flex", flexDirection: "column", justifyContent: "center" }}>
+              <p style={{ fontFamily: "Times, serif", fontWeight: 700, fontSize: 10, letterSpacing: "0.2em", color: "#010000", textTransform: "uppercase", marginBottom: 24 }}>What This Means in Practice</p>
+              {["Portfolio reviewed and built by admissions counselors specifically for university applications", "Faculty feedback and recommendation support grounded in direct observation of student's work", "Verified competition results and externship documentation", "Interview preparation built around real, specific experience", "A narrative unavailable to most students due to lack of comparable experience"].map((f, i) => (
+                <div key={i} style={{ display: "flex", gap: 14, marginBottom: 16, alignItems: "flex-start" }}>
+                  <div style={{ width: 16, height: 1.5, background: "rgba(0,0,0,.3)", marginTop: 9, flexShrink: 0 }} />
+                  <span style={{ fontFamily: sans, fontSize: 13, color: "#010000", fontWeight: 300, lineHeight: 1.7 }}>{f}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+      </section>
 
       {/* ══════════════════════════════════════════════════════
           ADMISSIONS BEGINS WITH A CONVERSATION
@@ -7238,20 +7334,20 @@ function SummerDetailPage({ setPage, openInquiry }) {
                       >
                         {/* Time column */}
                         <div style={{ padding: "14px 16px 14px 18px", borderRight: "1px solid rgba(16,15,12,.15)", display: "flex", alignItems: "center" }}>
-                          <span style={{ fontFamily: "'Lora', Georgia, serif", fontSize: 11, fontWeight: 600, color: selected ? "#E4D5C1" : "#100F0C", letterSpacing: "0.06em", lineHeight: 1.2, whiteSpace: "nowrap", textTransform: "uppercase" }}>{block.time}</span>
+                          <span style={{ fontFamily: "'Lora', Georgia, serif", fontSize: 13, fontWeight: 600, color: selected ? "#E4D5C1" : "#100F0C", letterSpacing: "0.06em", lineHeight: 1.2, whiteSpace: "nowrap", textTransform: "uppercase" }}>{block.time}</span>
                         </div>
                         {/* Block name column */}
                         <div style={{ padding: "14px 18px 14px 16px", display: "flex", flexDirection: "column", justifyContent: "center" }}>
                           <p style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: 18, fontWeight: 700, fontStyle: "italic", color: selected ? "#E4D5C1" : "#100F0C", lineHeight: 1.25, margin: 0 }}>{block.block}</p>
-                          <p style={{ fontFamily: "'Lora', Georgia, serif", fontSize: 9, letterSpacing: "0.12em", color: selected ? "rgba(228,213,193,.55)" : "rgba(16,15,12,.55)", fontWeight: 400, marginTop: 3, textTransform: "uppercase" }}>{block.dur}</p>
+                          <p style={{ fontFamily: "'Lora', Georgia, serif", fontSize: 13, letterSpacing: "0.12em", color: selected ? "#A48D6E" : "rgba(16,15,12,.55)", fontWeight: 400, marginTop: 3, textTransform: "uppercase" }}>{block.dur}</p>
                         </div>
                       </div>
                       {/* Mobile expand */}
                       {isMobile && selected && block.desc && (
                         <div style={{ background:"#34150F", padding: "24px 22px", borderBottom: "1px solid rgba(16,15,12,.15)" }}>
-                          <p style={{ fontFamily: "'Lora', Georgia, serif", fontSize: 9, letterSpacing: "0.3em", color: "#a48d6e", fontWeight: 700, textTransform: "uppercase", marginBottom: 8 }}>{block.time} · {block.dur}</p>
+                          <p style={{ fontFamily: "'Lora', Georgia, serif", fontSize: 13, letterSpacing: "0.3em", color: "#a48d6e", fontWeight: 700, textTransform: "uppercase", marginBottom: 8 }}>{block.time} · {block.dur}</p>
                           <p style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: 20, fontWeight: 700, fontStyle: "italic", color:"#a48d6e", lineHeight: 1.2, marginBottom: 10 }}>{block.block}</p>
-                          {block.role && <p style={{ fontFamily: "'Lora', Georgia, serif", fontSize: 11, letterSpacing: "0.12em", color:"#a48d6e", fontWeight: 600, textTransform: "uppercase", marginBottom: 12 }}>{block.role}</p>}
+                          {block.role && <p style={{ fontFamily: "'Lora', Georgia, serif", fontSize: 13, letterSpacing: "0.12em", color:"#a48d6e", fontWeight: 600, textTransform: "uppercase", marginBottom: 12 }}>{block.role}</p>}
                           <p style={{ fontFamily: "'Lora', Georgia, serif", fontSize: 15, lineHeight: 1.65, color:"#a48d6e", fontWeight: 400 }}>{block.desc}</p>
                         </div>
                       )}
@@ -7265,10 +7361,10 @@ function SummerDetailPage({ setPage, openInquiry }) {
                 <div style={{ background: "#E4D5C1", minHeight: 400, position: "relative", padding: isMobile ? 0 : "36px 36px" }}>
                   {activeDay !== null && dailySchedule[activeDay] && dailySchedule[activeDay].desc ? (
                     <div>
-                      <p style={{ fontFamily: "'Lora', Georgia, serif", fontSize: 9, letterSpacing: "0.35em", color: "#100F0C", fontWeight: 700, textTransform: "uppercase", marginBottom: 10 }}>{dailySchedule[activeDay].time} · {dailySchedule[activeDay].dur}</p>
+                      <p style={{ fontFamily: "'Lora', Georgia, serif", fontSize: 13, letterSpacing: "0.35em", color: "#100F0C", fontWeight: 700, textTransform: "uppercase", marginBottom: 10 }}>{dailySchedule[activeDay].time} · {dailySchedule[activeDay].dur}</p>
                       <p style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: 24, fontWeight: 700, fontStyle: "italic", color: "#100F0C", lineHeight: 1.15, marginBottom: 10 }}>{dailySchedule[activeDay].block}</p>
                       {dailySchedule[activeDay].role && (
-                        <p style={{ fontFamily: "'Lora', Georgia, serif", fontSize: 11, letterSpacing: "0.14em", textTransform: "uppercase", color:"#100F0C", fontWeight: 600, marginBottom: 18, paddingBottom: 18, borderBottom: "1px solid rgba(16,15,12,.15)" }}>{dailySchedule[activeDay].role}</p>
+                        <p style={{ fontFamily: "'Lora', Georgia, serif", fontSize: 13, letterSpacing: "0.14em", textTransform: "uppercase", color:"#100F0C", fontWeight: 600, marginBottom: 18, paddingBottom: 18, borderBottom: "1px solid rgba(16,15,12,.15)" }}>{dailySchedule[activeDay].role}</p>
                       )}
                       <p style={{ fontFamily: "'Lora', Georgia, serif", fontSize: 15, lineHeight: 1.7, color:"#100F0C", fontWeight: 400 }}>{dailySchedule[activeDay].desc}</p>
                     </div>
@@ -7321,7 +7417,7 @@ function SummerDetailPage({ setPage, openInquiry }) {
               ["The Boardroom", "Daily critique, pitch drills, pressure testing, advisor feedback, Q&A preparation, and team accountability."],
             ].map(([l, v]) => (
               <div key={l} style={{ background: "#100F0C", padding: "22px 22px" }}>
-                <p style={{ fontFamily: "'Lora', Georgia, serif", fontSize: 11, letterSpacing: "0.2em", color: "#A48D6E", textTransform: "uppercase", fontWeight: 600, marginBottom: 10 }}>{l}</p>
+                <p style={{ fontFamily: "'Lora', Georgia, serif", fontSize: 13, letterSpacing: "0.2em", color: "#A48D6E", textTransform: "uppercase", fontWeight: 600, marginBottom: 10 }}>{l}</p>
                 <p style={{ fontFamily: "'Lora', Georgia, serif", fontSize: 13, fontWeight: 300, lineHeight: 1.6, color: "#E4D5C1" }}>{v}</p>
               </div>
             ))}
@@ -7352,7 +7448,7 @@ function SummerDetailPage({ setPage, openInquiry }) {
           <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr 1fr" : "repeat(4,1fr)", gap: 1, marginBottom: 40, background: "#A48D6E" }}>
             {[["Public Speaking","90 min · Daily"],["Specialist Workshop","60 min · Daily"],["Venture Workshop","2.5 hrs · Daily"],["Guest Speakers","Every other day"]].map(([l,v]) => (
               <div key={l} style={{ background: "#100F0C", padding: "22px 24px" }}>
-                <p style={{ fontFamily: "'Lora', Georgia, serif", fontSize: 11, letterSpacing: "0.3em", color: "#A48D6E", textTransform: "uppercase", fontWeight: 600, marginBottom: 8 }}>{l}</p>
+                <p style={{ fontFamily: "'Lora', Georgia, serif", fontSize: 13, letterSpacing: "0.3em", color: "#A48D6E", textTransform: "uppercase", fontWeight: 600, marginBottom: 8 }}>{l}</p>
                 <p style={{ fontFamily: serif, fontSize: 16, fontWeight: 300, fontStyle: "italic", color:"#E4D5C1" }}>{v}</p>
               </div>
             ))}
@@ -7368,7 +7464,7 @@ function SummerDetailPage({ setPage, openInquiry }) {
                 </div>
                 <div style={{ padding: "20px 28px", display: "flex", flexDirection: "column", justifyContent: "center" }}>
                   <p style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: 24, fontWeight: 400, color:"#E4D5C1", marginBottom: 4, lineHeight: 1.2 }}>{label}</p>
-                  <p style={{ fontFamily: "'Lora', Georgia, serif", fontSize: 11, letterSpacing: "0.3em", color: "#A48D6E", textTransform: "uppercase", fontWeight: 600 }}>{dates}</p>
+                  <p style={{ fontFamily: "'Lora', Georgia, serif", fontSize: 13, letterSpacing: "0.3em", color: "#A48D6E", textTransform: "uppercase", fontWeight: 600 }}>{dates}</p>
                 </div>
               </div>
               {/* Day rows */}
@@ -7376,18 +7472,18 @@ function SummerDetailPage({ setPage, openInquiry }) {
                 {days.slice(daysSlice[0], daysSlice[1]).map((d, i) => (
                   <div key={i} style={{ background: "#100F0C", padding: isMobile ? "16px 18px" : "18px 28px", borderLeft: `3px solid ${d.speaker ? "#A48D6E" : "rgba(164,141,110,.2)"}`, display: "grid", gridTemplateColumns: isMobile ? "1fr" : "110px 1fr auto", gap: isMobile ? 6 : 24, alignItems: "center" }}>
                     <div>
-                      <p style={{ fontFamily: "'Lora', Georgia, serif", fontSize: 11, letterSpacing: "0.25em", color:"#A48D6E", fontWeight: 700, textTransform: "uppercase", marginBottom: 3 }}>{d.n}</p>
+                      <p style={{ fontFamily: "'Lora', Georgia, serif", fontSize: 13, letterSpacing: "0.25em", color:"#A48D6E", fontWeight: 700, textTransform: "uppercase", marginBottom: 3 }}>{d.n}</p>
                       <p style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: 14, fontWeight: 400, color: "#E4D5C1" }}>{d.date}</p>
                     </div>
                     <div>
                       <p style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: isMobile ? 18 : 22, fontWeight: 400, color:"#A48D6E", lineHeight: 1.2, marginBottom: 3 }}>{d.title}</p>
                       <p style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: 15, fontStyle: "italic", fontWeight: 400, color: "#E4D5C1", marginBottom: d.work ? 6 : 0 }}>"{d.theme}"</p>
                       {d.work && (
-                        <p style={{ fontFamily: "'Lora', Georgia, serif", fontSize: 11, letterSpacing: "0.04em", color: "rgba(228,213,193,.65)", fontWeight: 400, lineHeight: 1.6 }}>{d.work}</p>
+                        <p style={{ fontFamily: "'Lora', Georgia, serif", fontSize: 13, letterSpacing: "0.04em", color: "#A48D6E", fontWeight: 400, lineHeight: 1.6 }}>{d.work}</p>
                       )}
                     </div>
                     {d.speaker && !isMobile && (
-                      <span style={{ fontFamily: "'Lora', Georgia, serif", fontSize: 9, letterSpacing: "0.15em", color: "#E4D5C1", border: "1px solid rgba(164,141,110,.4)", padding: "4px 10px", textTransform: "uppercase", whiteSpace: "nowrap", background:"#100F0C", fontWeight: 600 }}>Guest Speaker</span>
+                      <span style={{ fontFamily: "'Lora', Georgia, serif", fontSize: 13, letterSpacing: "0.15em", color: "#E4D5C1", border: "1px solid rgba(164,141,110,.4)", padding: "4px 10px", textTransform: "uppercase", whiteSpace: "nowrap", background:"#100F0C", fontWeight: 600 }}>Guest Speaker</span>
                     )}
                   </div>
                 ))}
@@ -7396,13 +7492,13 @@ function SummerDetailPage({ setPage, openInquiry }) {
               {/* Weekend Field Sprint — appears only after Week I */}
               {week === "I" && (
                 <div style={{ padding: isMobile ? "32px 0 0" : "44px 0 0", marginTop: 16, borderTop: "1px solid rgba(16,15,12,.15)" }}>
-                  <p style={{ fontFamily: "'Lora', Georgia, serif", fontSize: 11, letterSpacing: "0.3em", color: "#100F0C", textTransform: "uppercase", fontWeight: 600, marginBottom: 10 }}>Weekend Field Sprint · August 1 – August 2</p>
+                  <p style={{ fontFamily: "'Lora', Georgia, serif", fontSize: 13, letterSpacing: "0.3em", color: "#100F0C", textTransform: "uppercase", fontWeight: 600, marginBottom: 10 }}>Weekend Field Sprint · August 1 – August 2</p>
                   <p style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: isMobile ? 22 : 26, fontWeight: 400, fontStyle: "italic", color: "#100F0C", lineHeight: 1.3, marginBottom: 16 }}>Founders do not build only in classrooms.</p>
                   <p style={{ fontFamily: "'Lora', Georgia, serif", fontSize: 14, color: "#100F0C", fontWeight: 400, lineHeight: 1.8, marginBottom: 16, textAlign: "justify" }}>Between Week I and Week II, students enter the Weekend Field Sprint: a structured period of team-based venture work, market testing, networking, and real-world discovery. Teams continue working outside the classroom — meeting in person or virtually, dividing responsibilities, preparing outreach, speaking with potential customers, testing their offer, gathering feedback, and refining their MVP or launch materials.</p>
                   <p style={{ fontFamily: "'Lora', Georgia, serif", fontSize: 14, color: "#100F0C", fontWeight: 400, lineHeight: 1.8, marginBottom: 22, textAlign: "justify" }}>Where parent-approved, students may also attend relevant community events in teams with TAs or parents, visit local businesses, observe customer environments, conduct informal market research, and speak with potential users, partners, mentors, and early supporters connected to their venture topic. Each team returns on Monday with real market feedback, traction data, and a clearer understanding of what the market actually wants.</p>
                   <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
                     {["Team strategy meeting","Customer interviews","Local field research","Networking conversations","Outreach to potential users or partners","Landing page or waitlist testing","Pre-order or pilot interest outreach","MVP refinement","Pitch practice"].map(t => (
-                      <span key={t} style={{ fontFamily: "'Lora', Georgia, serif", fontSize: 11, fontWeight: 400, color: "#100F0C", background: "rgba(164,141,110,.25)", padding: "4px 12px", borderRadius: 20 }}>{t}</span>
+                      <span key={t} style={{ fontFamily: "'Lora', Georgia, serif", fontSize: 13, fontWeight: 400, color: "#100F0C", background: "rgba(164,141,110,.25)", padding: "4px 12px", borderRadius: 20 }}>{t}</span>
                     ))}
                   </div>
                 </div>
@@ -7451,22 +7547,29 @@ function SummerDetailPage({ setPage, openInquiry }) {
           </div>
 
           {/* Awards section */}
-          <div style={{ marginBottom: 0, maxWidth: 820 }}>
-            <p style={{ fontFamily: "'adobe-garamond-pro', Georgia, serif", fontSize: 32, letterSpacing: "0.04em", color: "#100F0C", fontWeight: 700, fontStyle: "normal", textTransform: "uppercase", marginBottom: 28 }}>Formal Recognition</p>
-            {[
-              ["Best Venture Concept","Strongest overall venture — idea quality, validation, and execution across the full two weeks."],
-              ["Best Pitch","Most compelling, confident, and well-structured presentation delivered on Finale day."],
-              ["Most Innovative","Most original approach to a problem — commercial or community."],
-              ["Best Leadership","Team that demonstrated the strongest leadership, accountability, and execution discipline."],
-              ["Highest Market Validation","Most documented evidence of real demand — signups, pre-orders, customer conversations, revenue, or pilot commitments."],
-              ["Audience Choice","Voted by families, guests, and community members in attendance at the Finale."],
-              ["★ Community Impact Award","Medici Track — Recognizes the strongest Vanguard project for community insight, validation, execution, and measurable potential impact."],
-            ].map(([name, desc]) => (
-              <div key={name} style={{ paddingBottom: 24, marginBottom: 24, borderBottom: "1px solid rgba(16,15,12,.12)" }}>
-                <p style={{ fontFamily: "'adobe-garamond-pro', Georgia, serif", fontSize: 16, fontWeight: 700, fontStyle: "normal", textTransform: "uppercase", letterSpacing: "0.08em", color: "#100F0C", marginBottom: 6 }}>{name}</p>
-                <p style={{ fontFamily: "'Lora', Georgia, serif", fontSize: 15, color:"#100F0C", fontWeight: 400, lineHeight: 1.65 }}>{desc}</p>
+          <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1.1fr 0.9fr", gap: isMobile ? 32 : 56, alignItems: "start" }}>
+            <div style={{ maxWidth: 820 }}>
+              <p style={{ fontFamily: "'adobe-garamond-pro', Georgia, serif", fontSize: 32, letterSpacing: "0.04em", color: "#100F0C", fontWeight: 700, fontStyle: "normal", textTransform: "uppercase", marginBottom: 28 }}>Formal Recognition</p>
+              {[
+                ["Best Venture Concept","Strongest overall venture — idea quality, validation, and execution across the full two weeks."],
+                ["Best Pitch","Most compelling, confident, and well-structured presentation delivered on Finale day."],
+                ["Most Innovative","Most original approach to a problem — commercial or community."],
+                ["Best Leadership","Team that demonstrated the strongest leadership, accountability, and execution discipline."],
+                ["Highest Market Validation","Most documented evidence of real demand — signups, pre-orders, customer conversations, revenue, or pilot commitments."],
+                ["Audience Choice","Voted by families, guests, and community members in attendance at the Finale."],
+                ["★ Community Impact Award","Medici Track — Recognizes the strongest Vanguard project for community insight, validation, execution, and measurable potential impact."],
+              ].map(([name, desc]) => (
+                <div key={name} style={{ paddingBottom: 24, marginBottom: 24, borderBottom: "1px solid rgba(16,15,12,.12)" }}>
+                  <p style={{ fontFamily: "'adobe-garamond-pro', Georgia, serif", fontSize: 16, fontWeight: 700, fontStyle: "normal", textTransform: "uppercase", letterSpacing: "0.08em", color: "#100F0C", marginBottom: 6 }}>{name}</p>
+                  <p style={{ fontFamily: "'Lora', Georgia, serif", fontSize: 15, color:"#100F0C", fontWeight: 400, lineHeight: 1.65 }}>{desc}</p>
+                </div>
+              ))}
+            </div>
+            {!isMobile && (
+              <div style={{ position: "relative", height: 600, overflow: "hidden" }}>
+                <img src="https://i.imgur.com/qOFmvss.jpeg" alt="Venture Finale Awards" style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center" }} />
               </div>
-            ))}
+            )}
           </div>
 
         </div>
@@ -11603,24 +11706,26 @@ function FlagshipDetailPage2({ setPage, openInquiry }) {
 
       {/* ── PORTFOLIO ── */}
       <MobileAccordionSection title="Excalibur Ivy Portfolio" sub="The Excalibur Graduate" isMobile={isMobile} defaultOpen={false}>
-      <section style={{ background: "#100F0C", padding: 0 }}>
+            <section style={{ background: "#E4D5C1", padding: 0 }}>
+
+        {/* Photos  -  heading on solid dark block so it is always visible */}
         {!isMobile ? (
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 0, height: 420 }}>
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 0, height: 560 }}>
             <div style={{ overflow: "hidden", position: "relative" }}>
-              <img src="https://i.imgur.com/f87iq9i.jpeg" alt="" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+              <img src="https://i.imgur.com/f87iq9i.jpeg" alt="" style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center center" }} />
               <div style={{ position: "absolute", inset: 0, background: "rgba(0,0,0,.35)" }} />
-              <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, background: "#100F0C", padding: "28px 36px" }}>
-                <p style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.45em", color:"#E4D5C1", fontWeight: 600, textTransform: "uppercase", marginBottom: 10 }}>The Excalibur Graduate</p>
-                <h2 style={{ fontFamily: ag, fontSize: "clamp(28px,3vw,42px)", fontWeight: 600, color:"#A48D6E", lineHeight: 1.0, marginBottom: 8 }}>Excalibur "Ivy" Portfolio</h2>
-                <p style={{ fontFamily: ag, fontSize: 16, color:"#E4D5C1", fontStyle: "italic" }}>A record of work, judgment, and growth.</p>
+              <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, background: "#E4D5C1", padding: "28px 36px" }}>
+                <p style={{ fontFamily: "Lato, sans-serif", fontSize: 10, letterSpacing: "2px", color: "#010000", fontWeight: 700, textTransform: "uppercase", marginBottom: 10 }}>The Excalibur Graduate</p>
+                <h2 style={{ fontFamily: "Times, serif", fontSize: "clamp(28px,3vw,42px)", fontWeight: 600, color: "#010000", lineHeight: 1.0, marginBottom: 8 }}>Excalibur “Ivy” Portfolio</h2>
+                <p style={{ fontFamily: "Cormorant Garamond, serif", fontSize: 20, color: "#E4D5C1", fontStyle: "italic" }}>A record of work, judgment, and growth</p>
               </div>
             </div>
             <div style={{ overflow: "hidden", position: "relative" }}>
               <img src="https://i.imgur.com/gvG5P1q.png" alt="" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
               <div style={{ position: "absolute", inset: 0, background: "rgba(0,0,0,.3)" }} />
-              <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, background: "#100F0C", padding: "28px 36px" }}>
-                <p style={{ fontFamily: eyebrow_font, fontSize: 9, letterSpacing: "0.35em", color:"#E4D5C1", fontWeight: 600, textTransform: "uppercase", marginBottom: 8 }}>College Application Context</p>
-                <p style={{ fontFamily: ag, fontSize: 16, color:"#E4D5C1", fontStyle: "italic" }}>Why Excalibur Students Stand Apart</p>
+              <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, background: "#E4D5C1", padding: "28px 36px" }}>
+                <p style={{ fontFamily: "Lato, sans-serif", fontSize: 10, letterSpacing: "2px", color: "#010000", fontWeight: 700, textTransform: "uppercase", marginBottom: 8 }}>College Application Context</p>
+                <p style={{ fontFamily: "Cormorant Garamond, serif", fontSize: 25, color: "#010000", fontStyle: "italic" }}>Why Excalibur Students Stand Apart</p>
               </div>
             </div>
           </div>
@@ -11628,23 +11733,51 @@ function FlagshipDetailPage2({ setPage, openInquiry }) {
           <div style={{ height: 280, overflow: "hidden", position: "relative" }}>
             <img src="https://i.imgur.com/f87iq9i.jpeg" alt="" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
             <div style={{ position: "absolute", inset: 0, background: "rgba(0,0,0,.5)" }} />
-            <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, background: "#100F0C", padding: "20px 24px" }}>
-              <h2 style={{ fontFamily: ag, fontSize: 26, fontWeight: 600, color:"#A48D6E", lineHeight: 1.05, marginBottom: 6 }}>Excalibur "Ivy" Portfolio</h2>
-              <p style={{ fontFamily: ag, fontSize: 14, color:"#E4D5C1", fontStyle: "italic" }}>A record of work, judgment, and growth.</p>
+            <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, background: "#E4D5C1", padding: "20px 24px" }}>
+              <p style={{ fontFamily: "Lato, sans-serif", fontSize: 10, letterSpacing: "2px", color: "#010000", fontWeight: 700, textTransform: "uppercase", marginBottom: 10 }}>The Excalibur Graduate</p>
+              <h2 style={{ fontFamily: "Times, serif", fontSize: 26, fontWeight: 600, color: "#010000", lineHeight: 1.05, marginBottom: 6 }}>Excalibur “Ivy” Portfolio</h2>
+              <p style={{ fontFamily: "Cormorant Garamond, serif", fontSize: 20, color: "#E4D5C1", fontStyle: "italic" }}>A record of work, judgment, and growth</p>
             </div>
           </div>
         )}
-        <div style={{ maxWidth: 1100, margin: "0 auto", padding: isMobile ? "36px 24px 0" : "52px 80px 0", display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: isMobile ? 20 : 80 }}>
+
+        {/* Intro + eight components */}
+        <div style={{ maxWidth: 1100, margin: "0 auto", padding: isMobile ? "36px 24px 0" : "52px 80px 0", display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: isMobile ? 20 : 80, alignItems: "start" }}>
           <div>
-            <div style={{ width: 36, height: 1, background: "linear-gradient(90deg, #000, transparent)", marginBottom: 16 }} />
-            <p style={{ fontFamily: lora, fontSize: isMobile ? 14 : 15, lineHeight: 1.85, color:"#E4D5C1", fontWeight: 300 }}>Every Excalibur student graduates with a portfolio of documented, verifiable work — one that no other program in the country offers with this level of excellence, breadth, faculty distinction, and diversity of experience.. This portfolio reflects sustained performance, leadership under pressure, and accountability for outcomes.</p>
+            <p style={{ fontFamily: "Lora, serif", fontSize: isMobile ? 14 : 15, lineHeight: 1.85, color: "#010000", fontWeight: 300 }}>Every Excalibur student graduates with a portfolio of documented, verifiable work — one that no other program in the country offers with this level of excellence, breadth, faculty distinction, and diversity of experience.. This portfolio reflects sustained performance, leadership under pressure, and accountability for outcomes.</p>
           </div>
           <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", gap: 16 }}>
-            <div style={{ width: 24, height: 1, background: "#100F0C" }} />
-            <p style={{ fontFamily: ag, fontSize: isMobile ? 14 : 18, color: "#E4D5C1", fontWeight: 400, lineHeight: 1.75, fontStyle: "italic" }}>Documented components · Professionally assembled · Designed to support university applications, interviews, and future opportunities.</p>
+            <div style={{ width: 24, height: 1, background: "#d8b78c" }} />
+            <p style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: isMobile ? 14 : 18, color: "#010000", fontWeight: 400, lineHeight: 1.75, fontStyle: "italic" }}>Documented components · Professionally assembled · Designed to support university applications, interviews, and future opportunities.</p>
           </div>
         </div>
+
+        {/* Interactive 8-component index, with layered photo stack as third column */}
         <PortfolioIndexWhite isMobile={isMobile} setPage={setPage} images={["https://i.imgur.com/xNrPz7m.jpeg", "https://i.imgur.com/ev0MLKy.jpeg"]} />
+
+        {/* College admissions  -  merged below */}
+        <div style={{ background: "#E4D5C1", padding: isMobile ? "48px 24px" : "64px 80px" }}>
+          <div style={{ maxWidth: 1100, margin: "0 auto", display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: isMobile ? 36 : 80 }}>
+            <div>
+              <p style={{ fontFamily: sans, fontSize: 10, letterSpacing: "0.2em", color: "#010000", fontWeight: 700, textTransform: "uppercase", marginBottom: 14 }}>A Portfolio of Documented Work</p>
+              <h2 style={{ fontFamily: "'Bodoni Cyrillic', 'Bodoni MT', serif", fontSize: isMobile ? 26 : 36, fontWeight: 400, color: "#010000", lineHeight: 1.05, marginBottom: 12, textTransform: "uppercase", letterSpacing: "0.04em" }}>College Application</h2>
+              <p style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: 22, color: "#010000", fontStyle: "italic", marginBottom: 22, lineHeight: 1.3, fontWeight: 400 }}>Why Excalibur Students Stand Apart</p>
+              <div style={{ width: 36, height: 1, background: "linear-gradient(90deg, rgba(0,0,0,.35), transparent)", marginBottom: 22 }} />
+              <p style={{ fontFamily: "Lora, serif", fontSize: 14, lineHeight: 1.9, color: "#010000", fontWeight: 300, marginBottom: 16 }}>An Excalibur graduate approaches college admission with proof of applied applied leadership, serious work experience and personal growth. A consulting report. An externship record. A micro-business launch. Competition results. A graduation portfolio. Faculty recommendations written by top executives and professionals who watched them operate, lead, and execute.</p>
+              <p style={{ fontFamily: "Lora, serif", fontSize: 14, lineHeight: 1.9, color: "#010000", fontWeight: 300 }}>Students work with Excalibur’s college advisor on application strategy, personal narrative, portfolio presentation, recommendation preparation, interview readiness, and how their Excalibur experience can strengthen their college applications and future academic goals.</p>
+            </div>
+            <div style={{ display: "flex", flexDirection: "column", justifyContent: "center" }}>
+              <p style={{ fontFamily: "Times, serif", fontWeight: 700, fontSize: 10, letterSpacing: "0.2em", color: "#010000", textTransform: "uppercase", marginBottom: 24 }}>What This Means in Practice</p>
+              {["Portfolio reviewed and built by admissions counselors specifically for university applications", "Faculty feedback and recommendation support grounded in direct observation of student's work", "Verified competition results and externship documentation", "Interview preparation built around real, specific experience", "A narrative unavailable to most students due to lack of comparable experience"].map((f, i) => (
+                <div key={i} style={{ display: "flex", gap: 14, marginBottom: 16, alignItems: "flex-start" }}>
+                  <div style={{ width: 16, height: 1.5, background: "rgba(0,0,0,.3)", marginTop: 9, flexShrink: 0 }} />
+                  <span style={{ fontFamily: sans, fontSize: 13, color: "#010000", fontWeight: 300, lineHeight: 1.7 }}>{f}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
       </section>
       </MobileAccordionSection>
 
@@ -13755,75 +13888,79 @@ function FoundationDetailPage({ setPage, openInquiry }) {
 
       </section>
       <MobileAccordionSection title="Excalibur Ivy Portfolio" isMobile={isMobile} defaultOpen={false}>
-      {/* ── PORTFOLIO ── */}
-      <section id="f2-portfolio" style={{ background:"#34150F", padding:0 }}>
+            <section style={{ background: "#E4D5C1", padding: 0 }}>
+
+        {/* Photos  -  heading on solid dark block so it is always visible */}
         {!isMobile ? (
-          <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:0, height:420 }}>
-            <div style={{ overflow:"hidden", position:"relative" }}>
-              <img src="https://i.imgur.com/f87iq9i.jpeg" alt="" style={{ width:"100%", height:"100%", objectFit:"cover" }}/>
-              <div style={{ position:"absolute", inset:0, background:"rgba(0,0,0,.35)" }}/>
-              <div style={{ position:"absolute", bottom:0, left:0, right:0, background:"#34150F", padding:"28px 36px" }}>
-                <p style={{ fontFamily:"Lato, sans-serif", fontSize:10, letterSpacing:"2px", color:"#010000", fontWeight:700, textTransform:"uppercase", marginBottom:10 }}>The Excalibur Graduate</p>
-                <h2 style={{ fontFamily:ag, fontSize:"clamp(28px,3vw,42px)", fontWeight:600, color:"#A48D6E", lineHeight:1.0, marginBottom:8 }}>Excalibur “Ivy” Portfolio</h2>
-                <p style={{ fontFamily:ag, fontSize:20, color:"#E4D5C1", fontStyle:"italic" }}>A record of work, judgment, and growth</p>
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 0, height: 560 }}>
+            <div style={{ overflow: "hidden", position: "relative" }}>
+              <img src="https://i.imgur.com/f87iq9i.jpeg" alt="" style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center center" }} />
+              <div style={{ position: "absolute", inset: 0, background: "rgba(0,0,0,.35)" }} />
+              <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, background: "#E4D5C1", padding: "28px 36px" }}>
+                <p style={{ fontFamily: "Lato, sans-serif", fontSize: 10, letterSpacing: "2px", color: "#010000", fontWeight: 700, textTransform: "uppercase", marginBottom: 10 }}>The Excalibur Graduate</p>
+                <h2 style={{ fontFamily: "Times, serif", fontSize: "clamp(28px,3vw,42px)", fontWeight: 600, color: "#010000", lineHeight: 1.0, marginBottom: 8 }}>Excalibur “Ivy” Portfolio</h2>
+                <p style={{ fontFamily: "Cormorant Garamond, serif", fontSize: 20, color: "#E4D5C1", fontStyle: "italic" }}>A record of work, judgment, and growth</p>
               </div>
             </div>
-            <div style={{ overflow:"hidden", position:"relative" }}>
-              <img src="https://i.imgur.com/gvG5P1q.png" alt="" style={{ width:"100%", height:"100%", objectFit:"cover" }}/>
-              <div style={{ position:"absolute", inset:0, background:"rgba(0,0,0,.3)" }}/>
-              <div style={{ position:"absolute", bottom:0, left:0, right:0, background:"rgba(0,0,0,.85)", padding:"28px 36px" }}>
-                <p style={{ fontFamily:"Lato, sans-serif", fontSize:10, letterSpacing:"2px", color:"#010000", fontWeight:700, textTransform:"uppercase", marginBottom:8 }}>College Application Context</p>
-                <p style={{ fontFamily:"Cormorant Garamond, serif", fontSize:25, color:"#E4D5C1", fontStyle:"italic" }}>Why Excalibur Students Stand Apart</p>
+            <div style={{ overflow: "hidden", position: "relative" }}>
+              <img src="https://i.imgur.com/gvG5P1q.png" alt="" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+              <div style={{ position: "absolute", inset: 0, background: "rgba(0,0,0,.3)" }} />
+              <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, background: "#E4D5C1", padding: "28px 36px" }}>
+                <p style={{ fontFamily: "Lato, sans-serif", fontSize: 10, letterSpacing: "2px", color: "#010000", fontWeight: 700, textTransform: "uppercase", marginBottom: 8 }}>College Application Context</p>
+                <p style={{ fontFamily: "Cormorant Garamond, serif", fontSize: 25, color: "#010000", fontStyle: "italic" }}>Why Excalibur Students Stand Apart</p>
               </div>
             </div>
           </div>
         ) : (
-          <div style={{ height:280, overflow:"hidden", position:"relative" }}>
-            <img src="https://i.imgur.com/f87iq9i.jpeg" alt="" style={{ width:"100%", height:"100%", objectFit:"cover" }}/>
-            <div style={{ position:"absolute", inset:0, background:"rgba(0,0,0,.5)" }}/>
-            <div style={{ position:"absolute", bottom:0, left:0, right:0, background:"#34150F", padding:"20px 24px" }}>
-              <h2 style={{ fontFamily:"Garamond, serif", fontSize:26, fontWeight:600, color:"#A48D6E", lineHeight:1.05, marginBottom:6 }}>Excalibur “Ivy” Portfolio</h2>
-              <p style={{ fontFamily:"Cormorant Garamond, serif", fontSize:20, color:"#E4D5C1", fontStyle:"italic" }}>A record of work, judgment, and growth</p>
+          <div style={{ height: 280, overflow: "hidden", position: "relative" }}>
+            <img src="https://i.imgur.com/f87iq9i.jpeg" alt="" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+            <div style={{ position: "absolute", inset: 0, background: "rgba(0,0,0,.5)" }} />
+            <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, background: "#E4D5C1", padding: "20px 24px" }}>
+              <p style={{ fontFamily: "Lato, sans-serif", fontSize: 10, letterSpacing: "2px", color: "#010000", fontWeight: 700, textTransform: "uppercase", marginBottom: 10 }}>The Excalibur Graduate</p>
+              <h2 style={{ fontFamily: "Times, serif", fontSize: 26, fontWeight: 600, color: "#010000", lineHeight: 1.05, marginBottom: 6 }}>Excalibur “Ivy” Portfolio</h2>
+              <p style={{ fontFamily: "Cormorant Garamond, serif", fontSize: 20, color: "#E4D5C1", fontStyle: "italic" }}>A record of work, judgment, and growth</p>
             </div>
           </div>
         )}
-        <div style={{ maxWidth:1100, margin:"0 auto", padding:isMobile?"36px 24px 0":"52px 80px 0", display:"grid", gridTemplateColumns:isMobile?"1fr":"1fr 1fr", gap:isMobile?20:80 }}>
-          <div>
-            <p style={{ fontFamily:lora, fontSize:isMobile?14:15, lineHeight:1.85, color:"#E4D5C1", fontWeight:300 }}>Every Excalibur student graduates with a bound portfolio of documented, verifiable work — one that no other program in Orange County produces. This portfolio reflects sustained performance, leadership under pressure, and accountability for outcomes across both semesters.</p>
-          </div>
-          <div style={{ display:"flex", flexDirection:"column", justifyContent:"center", gap:16 }}>
-            <div style={{ width:24, height:1, background:"#34150F" }}/>
-            <p style={{ fontFamily:ag, fontSize:isMobile?14:18, color:"#E4D5C1", fontWeight:400, lineHeight:1.75, fontStyle:"italic" }}>Documented · Verified · Professionally assembled · Ready for university submission.</p>
-          </div>
-        </div>
-        <div style={{ maxWidth:1100, margin:"0 auto", padding:isMobile?"36px 24px 64px":"52px 80px 80px", display:"grid", gridTemplateColumns:isMobile?"1fr":"1fr 1fr", gap:isMobile?40:80 }}>
-          <div>
-            <div style={{ borderTop:`2px solid #d4c3a6`, paddingTop:28, marginBottom:32 }}>
-              <p style={{ fontFamily:sans, fontSize:8, letterSpacing:"0.4em", color:"#A48D6E", fontWeight:600, textTransform:"uppercase", marginBottom:6 }}>Foundation Portfolio</p>
-              <p style={{ fontFamily:ag, fontSize:14, color:"#E4D5C1", fontStyle:"italic" }}>September – December</p>
-            </div>
-            {["Financial analysis of a local business partner","Business model deconstruction — Investor Briefing format","Speaking evaluation — recorded, reviewed, faculty-assessed","War Room Championship result and faculty assessment","Junior Consultant report — client-facing, presented in boardroom to real business owner","Startup Externship documentation — company, role, reflection, host reference","Sector Journal — four industry entries","Art of Class formation record — all ten modules completed","Faculty letters of recommendation"].map((item,i) => (
-              <div key={i} style={{ display:"flex", gap:14, padding:"12px 0", borderBottom:"1px solid rgba(0,0,0,.07)", alignItems:"flex-start" }}>
-                <div style={{ width:16, height:1, background:"#A48D6E", marginTop:9, flexShrink:0 }}/>
-                <span style={{ fontFamily:lora, fontSize:13, color:"#E4D5C1", fontWeight:300, lineHeight:1.65 }}>{item}</span>
-              </div>
-            ))}
-          </div>
-          <div>
-            <div style={{ borderTop:`2px solid rgba(164,141,110,.4)`, paddingTop:28, marginBottom:32 }}>
-              <p style={{ fontFamily:sans, fontSize:8, letterSpacing:"0.4em", color:"#A48D6E", fontWeight:600, textTransform:"uppercase", marginBottom:6 }}>Venture Portfolio</p>
-              <p style={{ fontFamily:ag, fontSize:14, color:"#E4D5C1", fontStyle:"italic" }}>January – May</p>
-            </div>
-            {["Da Vinci or Medici pitch deck — investor-ready, eight slides","Financial model — 18-month P&L and cap table","Market research report — AI-built, practitioner-reviewed","Recorded Finale presentation — before invited investors, founders, executives, and practitioners","Junior Consultant report — second engagement, Boardroom Finale","Startup Externship documentation — founder-matched, portfolio-ready work product","Sector Journal — all twelve industry sectors completed","Summit Professional Headshot","Faculty letters of recommendation"].map((item,i) => (
-              <div key={i} style={{ display:"flex", gap:14, padding:"12px 0", borderBottom:"1px solid rgba(0,0,0,.07)", alignItems:"flex-start" }}>
-                <div style={{ width:16, height:1, background:"#A48D6E", marginTop:9, flexShrink:0 }}/>
-                <span style={{ fontFamily:lora, fontSize:13, color:"#E4D5C1", fontWeight:300, lineHeight:1.65 }}>{item}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
 
+        {/* Intro + eight components */}
+        <div style={{ maxWidth: 1100, margin: "0 auto", padding: isMobile ? "36px 24px 0" : "52px 80px 0", display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: isMobile ? 20 : 80, alignItems: "start" }}>
+          <div>
+            <p style={{ fontFamily: "Lora, serif", fontSize: isMobile ? 14 : 15, lineHeight: 1.85, color: "#010000", fontWeight: 300 }}>Every Excalibur student graduates with a portfolio of documented, verifiable work — one that no other program in the country offers with this level of excellence, breadth, faculty distinction, and diversity of experience.. This portfolio reflects sustained performance, leadership under pressure, and accountability for outcomes.</p>
+          </div>
+          <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", gap: 16 }}>
+            <div style={{ width: 24, height: 1, background: "#d8b78c" }} />
+            <p style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: isMobile ? 14 : 18, color: "#010000", fontWeight: 400, lineHeight: 1.75, fontStyle: "italic" }}>Documented components · Professionally assembled · Designed to support university applications, interviews, and future opportunities.</p>
+          </div>
+        </div>
+
+        {/* Interactive 8-component index, with layered photo stack as third column */}
+        <PortfolioIndexWhite isMobile={isMobile} setPage={setPage} images={["https://i.imgur.com/xNrPz7m.jpeg", "https://i.imgur.com/ev0MLKy.jpeg"]} />
+
+        {/* College admissions  -  merged below */}
+        <div style={{ background: "#E4D5C1", padding: isMobile ? "48px 24px" : "64px 80px" }}>
+          <div style={{ maxWidth: 1100, margin: "0 auto", display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: isMobile ? 36 : 80 }}>
+            <div>
+              <p style={{ fontFamily: sans, fontSize: 10, letterSpacing: "0.2em", color: "#010000", fontWeight: 700, textTransform: "uppercase", marginBottom: 14 }}>A Portfolio of Documented Work</p>
+              <h2 style={{ fontFamily: "'Bodoni Cyrillic', 'Bodoni MT', serif", fontSize: isMobile ? 26 : 36, fontWeight: 400, color: "#010000", lineHeight: 1.05, marginBottom: 12, textTransform: "uppercase", letterSpacing: "0.04em" }}>College Application</h2>
+              <p style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: 22, color: "#010000", fontStyle: "italic", marginBottom: 22, lineHeight: 1.3, fontWeight: 400 }}>Why Excalibur Students Stand Apart</p>
+              <div style={{ width: 36, height: 1, background: "linear-gradient(90deg, rgba(0,0,0,.35), transparent)", marginBottom: 22 }} />
+              <p style={{ fontFamily: "Lora, serif", fontSize: 14, lineHeight: 1.9, color: "#010000", fontWeight: 300, marginBottom: 16 }}>An Excalibur graduate approaches college admission with proof of applied applied leadership, serious work experience and personal growth. A consulting report. An externship record. A micro-business launch. Competition results. A graduation portfolio. Faculty recommendations written by top executives and professionals who watched them operate, lead, and execute.</p>
+              <p style={{ fontFamily: "Lora, serif", fontSize: 14, lineHeight: 1.9, color: "#010000", fontWeight: 300 }}>Students work with Excalibur’s college advisor on application strategy, personal narrative, portfolio presentation, recommendation preparation, interview readiness, and how their Excalibur experience can strengthen their college applications and future academic goals.</p>
+            </div>
+            <div style={{ display: "flex", flexDirection: "column", justifyContent: "center" }}>
+              <p style={{ fontFamily: "Times, serif", fontWeight: 700, fontSize: 10, letterSpacing: "0.2em", color: "#010000", textTransform: "uppercase", marginBottom: 24 }}>What This Means in Practice</p>
+              {["Portfolio reviewed and built by admissions counselors specifically for university applications", "Faculty feedback and recommendation support grounded in direct observation of student's work", "Verified competition results and externship documentation", "Interview preparation built around real, specific experience", "A narrative unavailable to most students due to lack of comparable experience"].map((f, i) => (
+                <div key={i} style={{ display: "flex", gap: 14, marginBottom: 16, alignItems: "flex-start" }}>
+                  <div style={{ width: 16, height: 1.5, background: "rgba(0,0,0,.3)", marginTop: 9, flexShrink: 0 }} />
+                  <span style={{ fontFamily: sans, fontSize: 13, color: "#010000", fontWeight: 300, lineHeight: 1.7 }}>{f}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+      </section>
       </MobileAccordionSection>
 
       {/* ── TUITION ── */}
@@ -13841,41 +13978,6 @@ function FoundationDetailPage({ setPage, openInquiry }) {
             </div>
           </div>
 
-          {/* TUITION INCLUDES — premium editorial grid */}
-          <div style={{ marginBottom:isMobile?48:64, background:"#E4D5C1", padding:0 }}>
-            <div style={{ padding:isMobile?"32px 24px 24px":"44px 48px 32px", borderBottom:"1px solid rgba(16,15,12,.12)" }}>
-              <div style={{ width:32, height:1, background:"#A48D6E", marginBottom:18 }}/>
-              <p style={{ fontFamily:sans, fontSize:9, letterSpacing:"0.4em", color:"#A48D6E", textTransform:"uppercase", margin:0, fontWeight:700 }}>Tuition Includes</p>
-            </div>
-            <div style={{ display:"grid", gridTemplateColumns:isMobile?"1fr":"1fr 1fr" }}>
-              {[
-                ["Scheduled Sessions, Faculty & Curriculum","Full access to scheduled sessions, faculty instruction, curriculum materials, and core program activities."],
-                ["Guest Speakers","Monthly practitioner masterclasses are included at no additional cost."],
-                ["Capstones & Presentations","Core Academy showcases, formal presentations, capstone events, and included semester gatherings are included in tuition."],
-                ["Externship & Junior Consulting Placement","Externship and Junior Consulting Program opportunities are sourced through the Excalibur network where available and included as part of the program experience."],
-                ["Graduation Portfolio","Each student receives a professionally bound graduation portfolio documenting their work, projects, and selected achievements and faculty feedback."],
-                ["Lunch Catering & Short Breaks","Included meals, snacks, and refreshments are provided during program sessions, workshops, competitions, and special events."],
-                ["College Admissions & Future Pathways Sessions","Monthly college counseling sessions with leading college admissions counselors and partner organizations help students prepare for applications, essays, interviews, and long-term academic planning."],
-                ["Academy Materials & Student Kit","Students receive exclusive Excalibur-branded merchandise and accessories throughout the program."],
-                ["Alumni & Excalibur Network Access","Students join the Excalibur alumni community upon graduation, gaining ongoing access to networking opportunities, events, mentorship, and connections with future alumni and the broader Excalibur community."],
-                ["Student & Parent Portals","Dedicated online portals provide students and parents with access to schedules, resources, progress updates, announcements, and program materials."],
-                ["Personal Program Pathways Coordinator","Each family is assigned a dedicated enrollment coordinator to provide personalized support before and throughout the program experience."],
-                ["Professional Photography & Media","Students receive access to professional event photography and selected media assets from selected program milestones and showcases."],
-                ["Mentorship & Networking Opportunities","Students benefit from ongoing mentorship opportunities and mentorship opportunities and selected introductions to entrepreneurs, industry professionals, and community leaders through the Excalibur network."],
-                ["Certificates & Recognition","Graduates receive certificates of completion and selected recognition for major selected achievements and faculty feedback for major program selected achievements and faculty feedback and milestones."],
-              ].map(([k,v],i) => (
-                <div key={i} style={{ padding:isMobile?"22px 24px":"28px 48px", borderBottom:"1px solid rgba(16,15,12,.08)", borderRight:!isMobile&&i%2===0?"1px solid rgba(16,15,12,.08)":"none", background:i%2===0?"transparent":"rgba(164,141,110,.06)" }}>
-                  <div style={{ display:"flex", gap:16, alignItems:"flex-start" }}>
-                    <p style={{ fontFamily:ag, fontSize:13, color:"#A48D6E", fontWeight:600, margin:0, paddingTop:1, minWidth:22 }}>{String(i+1).padStart(2,"0")}</p>
-                    <div>
-                      <p style={{ fontFamily:ag, fontSize:15, color:"#100F0C", textTransform:"none", fontWeight:600, marginBottom:6, letterSpacing:"0.01em" }}>{k}</p>
-                      <p style={{ fontFamily:lora, fontSize:13, color:"#100F0C", fontWeight:300, lineHeight:1.75, margin:0, opacity:.85 }}>{v}</p>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
 
 
           {/* TWO SEMESTER CARDS */}
@@ -13994,14 +14096,79 @@ function FoundationDetailPage({ setPage, openInquiry }) {
       </MobileAccordionSection>
 
       {/* EXCALIBUR IVY PORTFOLIO */}
-      <div style={{ background: "#E4D5C1", padding: isMobile ? "52px 0 0" : "72px 0 0" }}>
-        <div style={{ maxWidth: 1100, margin: "0 auto", padding: isMobile ? "0 24px" : "0 80px", textAlign: "center", marginBottom: isMobile ? 24 : 32 }}>
-          <p style={{ fontFamily: sans, fontSize: 10, letterSpacing: "0.2em", color: "#010000", fontWeight: 700, textTransform: "uppercase", marginBottom: 10 }}>The Excalibur Graduate</p>
-          <h2 style={{ fontFamily: "'Bodoni Cyrillic', 'Bodoni MT', serif", fontSize: isMobile ? 28 : 42, fontWeight: 400, color: "#010000", lineHeight: 1.0, marginBottom: 8, textTransform: "uppercase", letterSpacing: "0.04em" }}>Excalibur “Ivy” Portfolio</h2>
-          <p style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: 16, color: "#010000", fontStyle: "italic" }}>A record of work, judgment, and growth.</p>
+            <section style={{ background: "#E4D5C1", padding: 0 }}>
+
+        {/* Photos  -  heading on solid dark block so it is always visible */}
+        {!isMobile ? (
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 0, height: 560 }}>
+            <div style={{ overflow: "hidden", position: "relative" }}>
+              <img src="https://i.imgur.com/f87iq9i.jpeg" alt="" style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center center" }} />
+              <div style={{ position: "absolute", inset: 0, background: "rgba(0,0,0,.35)" }} />
+              <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, background: "#E4D5C1", padding: "28px 36px" }}>
+                <p style={{ fontFamily: "Lato, sans-serif", fontSize: 10, letterSpacing: "2px", color: "#010000", fontWeight: 700, textTransform: "uppercase", marginBottom: 10 }}>The Excalibur Graduate</p>
+                <h2 style={{ fontFamily: "Times, serif", fontSize: "clamp(28px,3vw,42px)", fontWeight: 600, color: "#010000", lineHeight: 1.0, marginBottom: 8 }}>Excalibur “Ivy” Portfolio</h2>
+                <p style={{ fontFamily: "Cormorant Garamond, serif", fontSize: 20, color: "#E4D5C1", fontStyle: "italic" }}>A record of work, judgment, and growth</p>
+              </div>
+            </div>
+            <div style={{ overflow: "hidden", position: "relative" }}>
+              <img src="https://i.imgur.com/gvG5P1q.png" alt="" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+              <div style={{ position: "absolute", inset: 0, background: "rgba(0,0,0,.3)" }} />
+              <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, background: "#E4D5C1", padding: "28px 36px" }}>
+                <p style={{ fontFamily: "Lato, sans-serif", fontSize: 10, letterSpacing: "2px", color: "#010000", fontWeight: 700, textTransform: "uppercase", marginBottom: 8 }}>College Application Context</p>
+                <p style={{ fontFamily: "Cormorant Garamond, serif", fontSize: 25, color: "#010000", fontStyle: "italic" }}>Why Excalibur Students Stand Apart</p>
+              </div>
+            </div>
+          </div>
+        ) : (
+          <div style={{ height: 280, overflow: "hidden", position: "relative" }}>
+            <img src="https://i.imgur.com/f87iq9i.jpeg" alt="" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+            <div style={{ position: "absolute", inset: 0, background: "rgba(0,0,0,.5)" }} />
+            <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, background: "#E4D5C1", padding: "20px 24px" }}>
+              <p style={{ fontFamily: "Lato, sans-serif", fontSize: 10, letterSpacing: "2px", color: "#010000", fontWeight: 700, textTransform: "uppercase", marginBottom: 10 }}>The Excalibur Graduate</p>
+              <h2 style={{ fontFamily: "Times, serif", fontSize: 26, fontWeight: 600, color: "#010000", lineHeight: 1.05, marginBottom: 6 }}>Excalibur “Ivy” Portfolio</h2>
+              <p style={{ fontFamily: "Cormorant Garamond, serif", fontSize: 20, color: "#E4D5C1", fontStyle: "italic" }}>A record of work, judgment, and growth</p>
+            </div>
+          </div>
+        )}
+
+        {/* Intro + eight components */}
+        <div style={{ maxWidth: 1100, margin: "0 auto", padding: isMobile ? "36px 24px 0" : "52px 80px 0", display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: isMobile ? 20 : 80, alignItems: "start" }}>
+          <div>
+            <p style={{ fontFamily: "Lora, serif", fontSize: isMobile ? 14 : 15, lineHeight: 1.85, color: "#010000", fontWeight: 300 }}>Every Excalibur student graduates with a portfolio of documented, verifiable work — one that no other program in the country offers with this level of excellence, breadth, faculty distinction, and diversity of experience.. This portfolio reflects sustained performance, leadership under pressure, and accountability for outcomes.</p>
+          </div>
+          <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", gap: 16 }}>
+            <div style={{ width: 24, height: 1, background: "#d8b78c" }} />
+            <p style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: isMobile ? 14 : 18, color: "#010000", fontWeight: 400, lineHeight: 1.75, fontStyle: "italic" }}>Documented components · Professionally assembled · Designed to support university applications, interviews, and future opportunities.</p>
+          </div>
         </div>
+
+        {/* Interactive 8-component index, with layered photo stack as third column */}
         <PortfolioIndexWhite isMobile={isMobile} setPage={setPage} images={["https://i.imgur.com/xNrPz7m.jpeg", "https://i.imgur.com/ev0MLKy.jpeg"]} />
-      </div>
+
+        {/* College admissions  -  merged below */}
+        <div style={{ background: "#E4D5C1", padding: isMobile ? "48px 24px" : "64px 80px" }}>
+          <div style={{ maxWidth: 1100, margin: "0 auto", display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: isMobile ? 36 : 80 }}>
+            <div>
+              <p style={{ fontFamily: sans, fontSize: 10, letterSpacing: "0.2em", color: "#010000", fontWeight: 700, textTransform: "uppercase", marginBottom: 14 }}>A Portfolio of Documented Work</p>
+              <h2 style={{ fontFamily: "'Bodoni Cyrillic', 'Bodoni MT', serif", fontSize: isMobile ? 26 : 36, fontWeight: 400, color: "#010000", lineHeight: 1.05, marginBottom: 12, textTransform: "uppercase", letterSpacing: "0.04em" }}>College Application</h2>
+              <p style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: 22, color: "#010000", fontStyle: "italic", marginBottom: 22, lineHeight: 1.3, fontWeight: 400 }}>Why Excalibur Students Stand Apart</p>
+              <div style={{ width: 36, height: 1, background: "linear-gradient(90deg, rgba(0,0,0,.35), transparent)", marginBottom: 22 }} />
+              <p style={{ fontFamily: "Lora, serif", fontSize: 14, lineHeight: 1.9, color: "#010000", fontWeight: 300, marginBottom: 16 }}>An Excalibur graduate approaches college admission with proof of applied applied leadership, serious work experience and personal growth. A consulting report. An externship record. A micro-business launch. Competition results. A graduation portfolio. Faculty recommendations written by top executives and professionals who watched them operate, lead, and execute.</p>
+              <p style={{ fontFamily: "Lora, serif", fontSize: 14, lineHeight: 1.9, color: "#010000", fontWeight: 300 }}>Students work with Excalibur’s college advisor on application strategy, personal narrative, portfolio presentation, recommendation preparation, interview readiness, and how their Excalibur experience can strengthen their college applications and future academic goals.</p>
+            </div>
+            <div style={{ display: "flex", flexDirection: "column", justifyContent: "center" }}>
+              <p style={{ fontFamily: "Times, serif", fontWeight: 700, fontSize: 10, letterSpacing: "0.2em", color: "#010000", textTransform: "uppercase", marginBottom: 24 }}>What This Means in Practice</p>
+              {["Portfolio reviewed and built by admissions counselors specifically for university applications", "Faculty feedback and recommendation support grounded in direct observation of student's work", "Verified competition results and externship documentation", "Interview preparation built around real, specific experience", "A narrative unavailable to most students due to lack of comparable experience"].map((f, i) => (
+                <div key={i} style={{ display: "flex", gap: 14, marginBottom: 16, alignItems: "flex-start" }}>
+                  <div style={{ width: 16, height: 1.5, background: "rgba(0,0,0,.3)", marginTop: 9, flexShrink: 0 }} />
+                  <span style={{ fontFamily: sans, fontSize: 13, color: "#010000", fontWeight: 300, lineHeight: 1.7 }}>{f}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+      </section>
 
       <MobileAccordionSection title="Admissions" isMobile={isMobile} defaultOpen={false}>
       <div id="f2-admissions" style={{ background:"#100F0C", padding:isMobile?"72px 24px":"112px 80px" }}>
@@ -15591,75 +15758,79 @@ function VentureDetailPage({ setPage, openInquiry }) {
 
       </MobileAccordionSection>
       <MobileAccordionSection title="Excalibur Ivy Portfolio" sub="Real Business Consulting & Beyond" isMobile={isMobile} defaultOpen={false}>
-      {/* ── PORTFOLIO ── */}
-      <section id="f2-portfolio" style={{ background:"#E4D5C1", padding:0 }}>
+            <section style={{ background: "#E4D5C1", padding: 0 }}>
+
+        {/* Photos  -  heading on solid dark block so it is always visible */}
         {!isMobile ? (
-          <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:0, height:420 }}>
-            <div style={{ overflow:"hidden", position:"relative" }}>
-              <img src="https://i.imgur.com/f87iq9i.jpeg" alt="" style={{ width:"100%", height:"100%", objectFit:"cover" }}/>
-              <div style={{ position:"absolute", inset:0, background:"rgba(0,0,0,.35)" }}/>
-              <div style={{ position:"absolute", bottom:0, left:0, right:0, background:"#100F0C", padding:"28px 36px" }}>
-                <p style={{ fontFamily:"Lato, sans-serif", fontSize:10, letterSpacing:"2px", color:"#010000", fontWeight:700, textTransform:"uppercase", marginBottom:10 }}>The Excalibur Graduate</p>
-                <h2 style={{ fontFamily:"Garamond, serif", fontSize:"clamp(28px,3vw,42px)", fontWeight:600, color:"#A48D6E", lineHeight:1.0, marginBottom:8 }}>Excalibur “Ivy” Portfolio</h2>
-                <p style={{ fontFamily:"Cormorant Garamond, serif", fontSize:20, color:"#E4D5C1", fontStyle:"italic" }}>A record of work, judgment, and growth</p>
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 0, height: 560 }}>
+            <div style={{ overflow: "hidden", position: "relative" }}>
+              <img src="https://i.imgur.com/f87iq9i.jpeg" alt="" style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center center" }} />
+              <div style={{ position: "absolute", inset: 0, background: "rgba(0,0,0,.35)" }} />
+              <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, background: "#E4D5C1", padding: "28px 36px" }}>
+                <p style={{ fontFamily: "Lato, sans-serif", fontSize: 10, letterSpacing: "2px", color: "#010000", fontWeight: 700, textTransform: "uppercase", marginBottom: 10 }}>The Excalibur Graduate</p>
+                <h2 style={{ fontFamily: "Times, serif", fontSize: "clamp(28px,3vw,42px)", fontWeight: 600, color: "#010000", lineHeight: 1.0, marginBottom: 8 }}>Excalibur “Ivy” Portfolio</h2>
+                <p style={{ fontFamily: "Cormorant Garamond, serif", fontSize: 20, color: "#E4D5C1", fontStyle: "italic" }}>A record of work, judgment, and growth</p>
               </div>
             </div>
-            <div style={{ overflow:"hidden", position:"relative" }}>
-              <img src="https://i.imgur.com/gvG5P1q.png" alt="" style={{ width:"100%", height:"100%", objectFit:"cover" }}/>
-              <div style={{ position:"absolute", inset:0, background:"rgba(0,0,0,.3)" }}/>
-              <div style={{ position:"absolute", bottom:0, left:0, right:0, background:"rgba(0,0,0,.85)", padding:"28px 36px" }}>
-                <p style={{ fontFamily:"Lato, sans-serif", fontSize:10, letterSpacing:"2px", color:"#010000", fontWeight:700, textTransform:"uppercase", marginBottom:8 }}>College Application Context</p>
-                <p style={{ fontFamily:"Cormorant Garamond, serif", fontSize:25, color:"#E4D5C1", fontStyle:"italic" }}>Why Excalibur Students Stand Apart</p>
+            <div style={{ overflow: "hidden", position: "relative" }}>
+              <img src="https://i.imgur.com/gvG5P1q.png" alt="" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+              <div style={{ position: "absolute", inset: 0, background: "rgba(0,0,0,.3)" }} />
+              <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, background: "#E4D5C1", padding: "28px 36px" }}>
+                <p style={{ fontFamily: "Lato, sans-serif", fontSize: 10, letterSpacing: "2px", color: "#010000", fontWeight: 700, textTransform: "uppercase", marginBottom: 8 }}>College Application Context</p>
+                <p style={{ fontFamily: "Cormorant Garamond, serif", fontSize: 25, color: "#010000", fontStyle: "italic" }}>Why Excalibur Students Stand Apart</p>
               </div>
             </div>
           </div>
         ) : (
-          <div style={{ height:280, overflow:"hidden", position:"relative" }}>
-            <img src="https://i.imgur.com/f87iq9i.jpeg" alt="" style={{ width:"100%", height:"100%", objectFit:"cover" }}/>
-            <div style={{ position:"absolute", inset:0, background:"rgba(0,0,0,.5)" }}/>
-            <div style={{ position:"absolute", bottom:0, left:0, right:0, background:"#100F0C", padding:"20px 24px" }}>
-              <h2 style={{ fontFamily:"Garamond, serif", fontSize:26, fontWeight:600, color:"#A48D6E", lineHeight:1.05, marginBottom:6 }}>Excalibur “Ivy” Portfolio</h2>
-              <p style={{ fontFamily:"Cormorant Garamond, serif", fontSize:20, color:"#E4D5C1", fontStyle:"italic" }}>A record of work, judgment, and growth</p>
+          <div style={{ height: 280, overflow: "hidden", position: "relative" }}>
+            <img src="https://i.imgur.com/f87iq9i.jpeg" alt="" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+            <div style={{ position: "absolute", inset: 0, background: "rgba(0,0,0,.5)" }} />
+            <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, background: "#E4D5C1", padding: "20px 24px" }}>
+              <p style={{ fontFamily: "Lato, sans-serif", fontSize: 10, letterSpacing: "2px", color: "#010000", fontWeight: 700, textTransform: "uppercase", marginBottom: 10 }}>The Excalibur Graduate</p>
+              <h2 style={{ fontFamily: "Times, serif", fontSize: 26, fontWeight: 600, color: "#010000", lineHeight: 1.05, marginBottom: 6 }}>Excalibur “Ivy” Portfolio</h2>
+              <p style={{ fontFamily: "Cormorant Garamond, serif", fontSize: 20, color: "#E4D5C1", fontStyle: "italic" }}>A record of work, judgment, and growth</p>
             </div>
           </div>
         )}
-        <div style={{ maxWidth:1100, margin:"0 auto", padding:isMobile?"36px 24px 0":"52px 80px 0", display:"grid", gridTemplateColumns:isMobile?"1fr":"1fr 1fr", gap:isMobile?20:80 }}>
-          <div>
-            <p style={{ fontFamily:lora, fontSize:isMobile?14:15, lineHeight:1.85, color:"#100F0C", fontWeight:300 }}>Every Excalibur student graduates with a bound portfolio of documented, verifiable work — one that no other program in Orange County produces. This portfolio reflects sustained performance, leadership under pressure, and accountability for outcomes across both semesters.</p>
-          </div>
-          <div style={{ display:"flex", flexDirection:"column", justifyContent:"center", gap:16 }}>
-            <div style={{ width:24, height:1, background:"#A48D6E" }}/>
-            <p style={{ fontFamily:ag, fontSize:isMobile?14:18, color:"#100F0C", fontWeight:400, lineHeight:1.75, fontStyle:"italic" }}>Documented · Verified · Professionally assembled · Ready for university submission.</p>
-          </div>
-        </div>
-        <div style={{ maxWidth:1100, margin:"0 auto", padding:isMobile?"36px 24px 64px":"52px 80px 80px", display:"grid", gridTemplateColumns:isMobile?"1fr":"1fr 1fr", gap:isMobile?40:80 }}>
-          <div>
-            <div style={{ borderTop:`2px solid #d4c3a6`, paddingTop:28, marginBottom:32 }}>
-              <p style={{ fontFamily:"'Lato', sans-serif", fontSize:11, letterSpacing:"0.4em", color:"#100F0C", fontWeight:600, textTransform:"uppercase", marginBottom:6 }}>Foundation Portfolio</p>
-              <p style={{ fontFamily:ag, fontSize:14, color:"#100F0C", fontStyle:"italic" }}>September – December</p>
-            </div>
-            {["Financial analysis of a local business partner","Business model deconstruction — Investor Briefing format","Speaking evaluation — recorded, reviewed, faculty-assessed","War Room Championship result and faculty assessment","Junior Consultant report — client-facing, presented in boardroom to real business owner","Startup Externship documentation — company, role, reflection, host reference","Sector Journal — four industry entries","Art of Class formation record — all ten modules completed","Faculty letters of recommendation"].map((item,i) => (
-              <div key={i} style={{ display:"flex", gap:14, padding:"12px 0", borderBottom:"1px solid rgba(0,0,0,.07)", alignItems:"flex-start" }}>
-                <div style={{ width:16, height:1, background:"#d4c3a6", marginTop:9, flexShrink:0 }}/>
-                <span style={{ fontFamily:lora, fontSize:13, color:"#100F0C", fontWeight:300, lineHeight:1.65 }}>{item}</span>
-              </div>
-            ))}
-          </div>
-          <div>
-            <div style={{ borderTop:`2px solid rgba(0,0,0,.4)`, paddingTop:28, marginBottom:32 }}>
-              <p style={{ fontFamily:"'Lato', sans-serif", fontSize:11, letterSpacing:"0.4em", color:"#100F0C", fontWeight:600, textTransform:"uppercase", marginBottom:6 }}>Venture Portfolio</p>
-              <p style={{ fontFamily:ag, fontSize:14, color:"#100F0C", fontStyle:"italic" }}>January – May</p>
-            </div>
-            {["Da Vinci or Medici pitch deck — investor-ready, eight slides","Financial model — 18-month P&L and cap table","Market research report — AI-built, practitioner-reviewed","Recorded Finale presentation — before invited investors, founders, executives, and practitioners","Junior Consultant report — second engagement, Boardroom Finale","Startup Externship documentation — founder-matched, portfolio-ready work product","Sector Journal — all twelve industry sectors completed","Summit Professional Headshot","Faculty letters of recommendation"].map((item,i) => (
-              <div key={i} style={{ display:"flex", gap:14, padding:"12px 0", borderBottom:"1px solid rgba(0,0,0,.07)", alignItems:"flex-start" }}>
-                <div style={{ width:16, height:1, background:"#d4c3a6", marginTop:9, flexShrink:0 }}/>
-                <span style={{ fontFamily:lora, fontSize:13, color:"#100F0C", fontWeight:300, lineHeight:1.65 }}>{item}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
 
+        {/* Intro + eight components */}
+        <div style={{ maxWidth: 1100, margin: "0 auto", padding: isMobile ? "36px 24px 0" : "52px 80px 0", display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: isMobile ? 20 : 80, alignItems: "start" }}>
+          <div>
+            <p style={{ fontFamily: "Lora, serif", fontSize: isMobile ? 14 : 15, lineHeight: 1.85, color: "#010000", fontWeight: 300 }}>Every Excalibur student graduates with a portfolio of documented, verifiable work — one that no other program in the country offers with this level of excellence, breadth, faculty distinction, and diversity of experience.. This portfolio reflects sustained performance, leadership under pressure, and accountability for outcomes.</p>
+          </div>
+          <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", gap: 16 }}>
+            <div style={{ width: 24, height: 1, background: "#d8b78c" }} />
+            <p style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: isMobile ? 14 : 18, color: "#010000", fontWeight: 400, lineHeight: 1.75, fontStyle: "italic" }}>Documented components · Professionally assembled · Designed to support university applications, interviews, and future opportunities.</p>
+          </div>
+        </div>
+
+        {/* Interactive 8-component index, with layered photo stack as third column */}
+        <PortfolioIndexWhite isMobile={isMobile} setPage={setPage} images={["https://i.imgur.com/xNrPz7m.jpeg", "https://i.imgur.com/ev0MLKy.jpeg"]} />
+
+        {/* College admissions  -  merged below */}
+        <div style={{ background: "#E4D5C1", padding: isMobile ? "48px 24px" : "64px 80px" }}>
+          <div style={{ maxWidth: 1100, margin: "0 auto", display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: isMobile ? 36 : 80 }}>
+            <div>
+              <p style={{ fontFamily: sans, fontSize: 10, letterSpacing: "0.2em", color: "#010000", fontWeight: 700, textTransform: "uppercase", marginBottom: 14 }}>A Portfolio of Documented Work</p>
+              <h2 style={{ fontFamily: "'Bodoni Cyrillic', 'Bodoni MT', serif", fontSize: isMobile ? 26 : 36, fontWeight: 400, color: "#010000", lineHeight: 1.05, marginBottom: 12, textTransform: "uppercase", letterSpacing: "0.04em" }}>College Application</h2>
+              <p style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: 22, color: "#010000", fontStyle: "italic", marginBottom: 22, lineHeight: 1.3, fontWeight: 400 }}>Why Excalibur Students Stand Apart</p>
+              <div style={{ width: 36, height: 1, background: "linear-gradient(90deg, rgba(0,0,0,.35), transparent)", marginBottom: 22 }} />
+              <p style={{ fontFamily: "Lora, serif", fontSize: 14, lineHeight: 1.9, color: "#010000", fontWeight: 300, marginBottom: 16 }}>An Excalibur graduate approaches college admission with proof of applied applied leadership, serious work experience and personal growth. A consulting report. An externship record. A micro-business launch. Competition results. A graduation portfolio. Faculty recommendations written by top executives and professionals who watched them operate, lead, and execute.</p>
+              <p style={{ fontFamily: "Lora, serif", fontSize: 14, lineHeight: 1.9, color: "#010000", fontWeight: 300 }}>Students work with Excalibur’s college advisor on application strategy, personal narrative, portfolio presentation, recommendation preparation, interview readiness, and how their Excalibur experience can strengthen their college applications and future academic goals.</p>
+            </div>
+            <div style={{ display: "flex", flexDirection: "column", justifyContent: "center" }}>
+              <p style={{ fontFamily: "Times, serif", fontWeight: 700, fontSize: 10, letterSpacing: "0.2em", color: "#010000", textTransform: "uppercase", marginBottom: 24 }}>What This Means in Practice</p>
+              {["Portfolio reviewed and built by admissions counselors specifically for university applications", "Faculty feedback and recommendation support grounded in direct observation of student's work", "Verified competition results and externship documentation", "Interview preparation built around real, specific experience", "A narrative unavailable to most students due to lack of comparable experience"].map((f, i) => (
+                <div key={i} style={{ display: "flex", gap: 14, marginBottom: 16, alignItems: "flex-start" }}>
+                  <div style={{ width: 16, height: 1.5, background: "rgba(0,0,0,.3)", marginTop: 9, flexShrink: 0 }} />
+                  <span style={{ fontFamily: sans, fontSize: 13, color: "#010000", fontWeight: 300, lineHeight: 1.7 }}>{f}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+      </section>
       </MobileAccordionSection>
       <MobileAccordionSection title="What this semester prepares your student for" isMobile={isMobile} defaultOpen={false}>
       {/* ── WHAT THIS PREPARES YOU FOR ── */}
@@ -15705,7 +15876,7 @@ function VentureDetailPage({ setPage, openInquiry }) {
           <div style={{ display:"grid", gridTemplateColumns:"1fr", gap:40, marginBottom:56 }}>
             <div>
               <p style={{ fontFamily:"'Lato', sans-serif", fontSize:11, letterSpacing:"0.5em", color:"#E4D5C1", fontWeight:600, textTransform:"uppercase", marginBottom:20 }}>Tuition & Program Fees</p>
-              <h2 style={{ fontFamily:ag, fontSize:34, fontWeight:600, color:"#A48D6E", lineHeight:1.0, marginBottom:20, letterSpacing:"0.02em" }}>Tuition & Program Fees</h2>
+              <h2 style={{ fontFamily:ag, fontSize:34, fontWeight:300, color:"#A48D6E", lineHeight:1.0, marginBottom:20, letterSpacing:"0.02em" }}>Tuition & Program Fees</h2>
               <div style={{ display:"flex", flexDirection:"column", gap:14 }}>
                 <p style={{ fontFamily:lora, fontSize:isMobile?15:16, lineHeight:1.95, color:"#E4D5C1", fontWeight:300, margin:0 }}>The Flagship Overview may be completed as Foundation only, Venture only, or the full academic-year pathway across both semesters.</p>
                 <p style={{ fontFamily:lora, fontSize:isMobile?15:16, lineHeight:1.95, color:"#E4D5C1", fontWeight:300, margin:0 }}>Students may apply directly to the Foundation Semester, the Venture Semester, or the full academic-year pathway. Completion of the Foundation Semester is not required for admission into the Venture Semester, although it is strongly recommended.</p>
@@ -15713,78 +15884,19 @@ function VentureDetailPage({ setPage, openInquiry }) {
                 <p style={{ fontFamily:lora, fontSize:isMobile?15:16, lineHeight:1.95, color:"#E4D5C1", fontWeight:300, margin:0 }}>Tuition includes access to the full semester curriculum, faculty instruction, guest speakers, student events, portfolio development, meals or refreshments according to session format, and all core program activities. Families may select from available payment structures; the educational experience, cohort placement, faculty access, and program participation remain identical regardless of payment plan.</p>
               </div>
             </div>
-            <div style={{ display:"flex", flexDirection:"column", gap:0 }}>
-              <p style={{ fontFamily:"'Lato', sans-serif", fontSize:11, letterSpacing:"0.3em", color:"#A48D6E", textTransform:"uppercase", marginBottom:20, fontWeight:600 }}>Tuition Includes</p>
-              {[
-                ["Scheduled Sessions, Faculty & Curriculum","Full access to scheduled sessions, faculty instruction, curriculum materials, and core program activities."],
-                ["Guest Speakers","Monthly practitioner masterclasses are included at no additional cost."],
-                ["Capstones & Presentations","Core Academy showcases, formal presentations, capstone events, and included semester gatherings are included in tuition."],
-                ["Externship & Junior Consulting Placement","Externship and Junior Consulting Program opportunities are sourced through the Excalibur network where available and included as part of the program experience."],
-                ["Graduation Portfolio","Each student receives a professionally bound graduation portfolio documenting their work, projects, and selected achievements and faculty feedback."],
-                ["Lunch Catering & Short Breaks","Included meals, snacks, and refreshments are provided during program sessions, workshops, competitions, and special events."],
-                ["College Admissions & Future Pathways Sessions","Monthly college counseling sessions with leading college admissions counselors and partner organizations help students prepare for applications, essays, interviews, and long-term academic planning."],
-                ["Academy Materials & Student Kit","Students receive exclusive Excalibur-branded merchandise and accessories throughout the program."],
-                ["Alumni & Excalibur Network Access","Students join the Excalibur alumni community upon graduation, gaining ongoing access to networking opportunities, events, mentorship, and connections with future alumni and the broader Excalibur community."],
-                ["Student & Parent Portals","Dedicated online portals provide students and parents with access to schedules, resources, progress updates, announcements, and program materials."],
-                ["Personal Program Pathways Coordinator","Each family is assigned a dedicated enrollment coordinator to provide personalized support before and throughout the program experience."],
-                ["Professional Photography & Media","Students receive access to professional event photography and selected media assets from selected program milestones and showcases."],
-                ["Mentorship & Networking Opportunities","Students benefit from ongoing mentorship opportunities and mentorship opportunities and selected introductions to entrepreneurs, industry professionals, and community leaders through the Excalibur network."],
-                ["Certificates & Recognition","Graduates receive certificates of completion and selected recognition for major selected achievements and faculty feedback for major program selected achievements and faculty feedback and milestones."],
-              ].map(([k,v],i) => (
-                <div key={i} style={{ display:"grid", gridTemplateColumns:"1fr", gap:4, padding:"14px 0", borderBottom:"1px solid rgba(164,141,110,.08)" }}>
-                  <span style={{ fontFamily:lora, fontSize:10, letterSpacing:"0.15em", color:"#A48D6E", textTransform:"uppercase", fontWeight:400 }}>{k}</span>
-                  <span style={{ fontFamily:lora, fontSize:isMobile?14:14, color:"#E4D5C1", fontWeight:300, lineHeight:1.7 }}>{v}</span>
-                </div>
-              ))}
-            </div>
           </div>
           ) : (
           <>
           {/* HEADING — full width, Foundation-style layout */}
           <div style={{ borderBottom:"1px solid rgba(164,141,110,.15)", paddingBottom:56, marginBottom:56 }}>
             <p style={{ fontFamily:"'Lato', sans-serif", fontSize:11, letterSpacing:"0.5em", color:"#E4D5C1", fontWeight:600, textTransform:"uppercase", marginBottom:20 }}>Tuition & Program Fees</p>
-            <h2 style={{ fontFamily:ag, fontSize:52, fontWeight:600, color:"#A48D6E", lineHeight:1.0, marginBottom:32, letterSpacing:"0.02em" }}>Tuition & Program Fees</h2>
+            <h2 style={{ fontFamily:ag, fontSize:52, fontWeight:300, color:"#A48D6E", lineHeight:1.0, marginBottom:32, letterSpacing:"0.02em" }}>Tuition & Program Fees</h2>
             <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:80 }}>
               <p style={{ fontFamily:lora, fontSize:isMobile?15:16, lineHeight:1.95, color:"#E4D5C1", fontWeight:300, margin:0 }}>The Flagship Overview may be completed as Foundation only, Venture only, or the full academic-year pathway across both semesters. Students may apply directly to the Foundation Semester, the Venture Semester, or the full academic-year pathway. Completion of the Foundation Semester is not required for admission into the Venture Semester, although it is strongly recommended.</p>
               <p style={{ fontFamily:lora, fontSize:isMobile?15:16, lineHeight:1.95, color:"#E4D5C1", fontWeight:300, margin:0 }}>Foundation Semester students receive priority placement into the Venture Semester. New students applying directly to the Venture Semester are reviewed by the Admissions Committee to ensure appropriate readiness and cohort fit. Tuition includes access to the full semester curriculum, faculty instruction, guest speakers, student events, portfolio development, meals or refreshments according to session format, and all core program activities. Families may select from available payment structures; the educational experience, cohort placement, faculty access, and program participation remain identical regardless of payment plan.</p>
             </div>
           </div>
 
-          {/* TUITION INCLUDES — premium editorial grid, Foundation-style layout */}
-          <div style={{ marginBottom:64, background:"#E4D5C1", padding:0 }}>
-            <div style={{ padding:"44px 48px 32px", borderBottom:"1px solid rgba(16,15,12,.12)" }}>
-              <div style={{ width:32, height:1, background:"#A48D6E", marginBottom:18 }}/>
-              <p style={{ fontFamily:"'Lato', sans-serif", fontSize:11, letterSpacing:"0.4em", color:"#A48D6E", textTransform:"uppercase", margin:0, fontWeight:600 }}>Tuition Includes</p>
-            </div>
-            <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr" }}>
-              {[
-                ["Scheduled Sessions, Faculty & Curriculum","Full access to scheduled sessions, faculty instruction, curriculum materials, and core program activities."],
-                ["Guest Speakers","Monthly practitioner masterclasses are included at no additional cost."],
-                ["Capstones & Presentations","Core Academy showcases, formal presentations, capstone events, and included semester gatherings are included in tuition."],
-                ["Externship & Junior Consulting Placement","Externship and Junior Consulting Program opportunities are sourced through the Excalibur network where available and included as part of the program experience."],
-                ["Graduation Portfolio","Each student receives a professionally bound graduation portfolio documenting their work, projects, and selected achievements and faculty feedback."],
-                ["Lunch Catering & Short Breaks","Included meals, snacks, and refreshments are provided during program sessions, workshops, competitions, and special events."],
-                ["College Admissions & Future Pathways Sessions","Monthly college counseling sessions with leading college admissions counselors and partner organizations help students prepare for applications, essays, interviews, and long-term academic planning."],
-                ["Academy Materials & Student Kit","Students receive exclusive Excalibur-branded merchandise and accessories throughout the program."],
-                ["Alumni & Excalibur Network Access","Students join the Excalibur alumni community upon graduation, gaining ongoing access to networking opportunities, events, mentorship, and connections with future alumni and the broader Excalibur community."],
-                ["Student & Parent Portals","Dedicated online portals provide students and parents with access to schedules, resources, progress updates, announcements, and program materials."],
-                ["Personal Program Pathways Coordinator","Each family is assigned a dedicated enrollment coordinator to provide personalized support before and throughout the program experience."],
-                ["Professional Photography & Media","Students receive access to professional event photography and selected media assets from selected program milestones and showcases."],
-                ["Mentorship & Networking Opportunities","Students benefit from ongoing mentorship opportunities and mentorship opportunities and selected introductions to entrepreneurs, industry professionals, and community leaders through the Excalibur network."],
-                ["Certificates & Recognition","Graduates receive certificates of completion and selected recognition for major selected achievements and faculty feedback for major program selected achievements and faculty feedback and milestones."],
-              ].map(([k,v],i) => (
-                <div key={i} style={{ padding:"28px 48px", borderBottom:"1px solid rgba(16,15,12,.08)", borderRight:i%2===0?"1px solid rgba(16,15,12,.08)":"none", background:i%2===0?"transparent":"rgba(164,141,110,.06)" }}>
-                  <div style={{ display:"flex", gap:16, alignItems:"flex-start" }}>
-                    <p style={{ fontFamily:ag, fontSize:13, color:"#A48D6E", fontWeight:600, margin:0, paddingTop:1, minWidth:22 }}>{String(i+1).padStart(2,"0")}</p>
-                    <div>
-                      <p style={{ fontFamily:ag, fontSize:15, color:"#100F0C", textTransform:"none", fontWeight:600, marginBottom:6, letterSpacing:"0.01em" }}>{k}</p>
-                      <p style={{ fontFamily:lora, fontSize:isMobile?15:16, color:"#100F0C", fontWeight:300, lineHeight:1.75, margin:0, opacity:.85 }}>{v}</p>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
           </>
           )}
 
@@ -15869,7 +15981,6 @@ function VentureDetailPage({ setPage, openInquiry }) {
           </div>
 
           <div style={{ background:"rgba(164,141,110,.06)", border:"1px solid rgba(164,141,110,.12)", padding:isMobile?"20px 24px":"24px 40px" }}>
-            <p style={{ fontFamily:lora, fontSize:isMobile?15:16, color:"#E4D5C1", fontWeight:300, lineHeight:1.8 }}>✦ <span style={{ color:"#d4c3a6" }}>Foundation Semester includes:</span> All sessions · Public Speaking · Core Business Modules · War Room · Art of Class · Junior Consultant Program · Monthly Guest Masterclass · Pitch Nights · College Counseling · Bound Portfolio · Faculty Evaluation Letters. <span style={{ color:"#d4c3a6", marginLeft:12 }}>Venture Semester adds:</span> Startup Externship · Venture Studio · Venture Modules · Da Vinci or Medici Finale. &nbsp; Field trips are optional and priced separately.</p>
           </div>
         </div>
       </div>
@@ -15877,14 +15988,79 @@ function VentureDetailPage({ setPage, openInquiry }) {
       </MobileAccordionSection>
 
       {/* EXCALIBUR IVY PORTFOLIO */}
-      <div style={{ background: "#E4D5C1", padding: isMobile ? "52px 0 0" : "72px 0 0" }}>
-        <div style={{ maxWidth: 1100, margin: "0 auto", padding: isMobile ? "0 24px" : "0 80px", textAlign: "center", marginBottom: isMobile ? 24 : 32 }}>
-          <p style={{ fontFamily: sans, fontSize: 10, letterSpacing: "0.2em", color: "#010000", fontWeight: 700, textTransform: "uppercase", marginBottom: 10 }}>The Excalibur Graduate</p>
-          <h2 style={{ fontFamily: "'Bodoni Cyrillic', 'Bodoni MT', serif", fontSize: isMobile ? 28 : 42, fontWeight: 400, color: "#010000", lineHeight: 1.0, marginBottom: 8, textTransform: "uppercase", letterSpacing: "0.04em" }}>Excalibur “Ivy” Portfolio</h2>
-          <p style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: 16, color: "#010000", fontStyle: "italic" }}>A record of work, judgment, and growth.</p>
+            <section style={{ background: "#E4D5C1", padding: 0 }}>
+
+        {/* Photos  -  heading on solid dark block so it is always visible */}
+        {!isMobile ? (
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 0, height: 560 }}>
+            <div style={{ overflow: "hidden", position: "relative" }}>
+              <img src="https://i.imgur.com/f87iq9i.jpeg" alt="" style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center center" }} />
+              <div style={{ position: "absolute", inset: 0, background: "rgba(0,0,0,.35)" }} />
+              <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, background: "#E4D5C1", padding: "28px 36px" }}>
+                <p style={{ fontFamily: "Lato, sans-serif", fontSize: 10, letterSpacing: "2px", color: "#010000", fontWeight: 700, textTransform: "uppercase", marginBottom: 10 }}>The Excalibur Graduate</p>
+                <h2 style={{ fontFamily: "Times, serif", fontSize: "clamp(28px,3vw,42px)", fontWeight: 600, color: "#010000", lineHeight: 1.0, marginBottom: 8 }}>Excalibur “Ivy” Portfolio</h2>
+                <p style={{ fontFamily: "Cormorant Garamond, serif", fontSize: 20, color: "#E4D5C1", fontStyle: "italic" }}>A record of work, judgment, and growth</p>
+              </div>
+            </div>
+            <div style={{ overflow: "hidden", position: "relative" }}>
+              <img src="https://i.imgur.com/gvG5P1q.png" alt="" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+              <div style={{ position: "absolute", inset: 0, background: "rgba(0,0,0,.3)" }} />
+              <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, background: "#E4D5C1", padding: "28px 36px" }}>
+                <p style={{ fontFamily: "Lato, sans-serif", fontSize: 10, letterSpacing: "2px", color: "#010000", fontWeight: 700, textTransform: "uppercase", marginBottom: 8 }}>College Application Context</p>
+                <p style={{ fontFamily: "Cormorant Garamond, serif", fontSize: 25, color: "#010000", fontStyle: "italic" }}>Why Excalibur Students Stand Apart</p>
+              </div>
+            </div>
+          </div>
+        ) : (
+          <div style={{ height: 280, overflow: "hidden", position: "relative" }}>
+            <img src="https://i.imgur.com/f87iq9i.jpeg" alt="" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+            <div style={{ position: "absolute", inset: 0, background: "rgba(0,0,0,.5)" }} />
+            <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, background: "#E4D5C1", padding: "20px 24px" }}>
+              <p style={{ fontFamily: "Lato, sans-serif", fontSize: 10, letterSpacing: "2px", color: "#010000", fontWeight: 700, textTransform: "uppercase", marginBottom: 10 }}>The Excalibur Graduate</p>
+              <h2 style={{ fontFamily: "Times, serif", fontSize: 26, fontWeight: 600, color: "#010000", lineHeight: 1.05, marginBottom: 6 }}>Excalibur “Ivy” Portfolio</h2>
+              <p style={{ fontFamily: "Cormorant Garamond, serif", fontSize: 20, color: "#E4D5C1", fontStyle: "italic" }}>A record of work, judgment, and growth</p>
+            </div>
+          </div>
+        )}
+
+        {/* Intro + eight components */}
+        <div style={{ maxWidth: 1100, margin: "0 auto", padding: isMobile ? "36px 24px 0" : "52px 80px 0", display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: isMobile ? 20 : 80, alignItems: "start" }}>
+          <div>
+            <p style={{ fontFamily: "Lora, serif", fontSize: isMobile ? 14 : 15, lineHeight: 1.85, color: "#010000", fontWeight: 300 }}>Every Excalibur student graduates with a portfolio of documented, verifiable work — one that no other program in the country offers with this level of excellence, breadth, faculty distinction, and diversity of experience.. This portfolio reflects sustained performance, leadership under pressure, and accountability for outcomes.</p>
+          </div>
+          <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", gap: 16 }}>
+            <div style={{ width: 24, height: 1, background: "#d8b78c" }} />
+            <p style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: isMobile ? 14 : 18, color: "#010000", fontWeight: 400, lineHeight: 1.75, fontStyle: "italic" }}>Documented components · Professionally assembled · Designed to support university applications, interviews, and future opportunities.</p>
+          </div>
         </div>
+
+        {/* Interactive 8-component index, with layered photo stack as third column */}
         <PortfolioIndexWhite isMobile={isMobile} setPage={setPage} images={["https://i.imgur.com/xNrPz7m.jpeg", "https://i.imgur.com/ev0MLKy.jpeg"]} />
-      </div>
+
+        {/* College admissions  -  merged below */}
+        <div style={{ background: "#E4D5C1", padding: isMobile ? "48px 24px" : "64px 80px" }}>
+          <div style={{ maxWidth: 1100, margin: "0 auto", display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: isMobile ? 36 : 80 }}>
+            <div>
+              <p style={{ fontFamily: sans, fontSize: 10, letterSpacing: "0.2em", color: "#010000", fontWeight: 700, textTransform: "uppercase", marginBottom: 14 }}>A Portfolio of Documented Work</p>
+              <h2 style={{ fontFamily: "'Bodoni Cyrillic', 'Bodoni MT', serif", fontSize: isMobile ? 26 : 36, fontWeight: 400, color: "#010000", lineHeight: 1.05, marginBottom: 12, textTransform: "uppercase", letterSpacing: "0.04em" }}>College Application</h2>
+              <p style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: 22, color: "#010000", fontStyle: "italic", marginBottom: 22, lineHeight: 1.3, fontWeight: 400 }}>Why Excalibur Students Stand Apart</p>
+              <div style={{ width: 36, height: 1, background: "linear-gradient(90deg, rgba(0,0,0,.35), transparent)", marginBottom: 22 }} />
+              <p style={{ fontFamily: "Lora, serif", fontSize: 14, lineHeight: 1.9, color: "#010000", fontWeight: 300, marginBottom: 16 }}>An Excalibur graduate approaches college admission with proof of applied applied leadership, serious work experience and personal growth. A consulting report. An externship record. A micro-business launch. Competition results. A graduation portfolio. Faculty recommendations written by top executives and professionals who watched them operate, lead, and execute.</p>
+              <p style={{ fontFamily: "Lora, serif", fontSize: 14, lineHeight: 1.9, color: "#010000", fontWeight: 300 }}>Students work with Excalibur’s college advisor on application strategy, personal narrative, portfolio presentation, recommendation preparation, interview readiness, and how their Excalibur experience can strengthen their college applications and future academic goals.</p>
+            </div>
+            <div style={{ display: "flex", flexDirection: "column", justifyContent: "center" }}>
+              <p style={{ fontFamily: "Times, serif", fontWeight: 700, fontSize: 10, letterSpacing: "0.2em", color: "#010000", textTransform: "uppercase", marginBottom: 24 }}>What This Means in Practice</p>
+              {["Portfolio reviewed and built by admissions counselors specifically for university applications", "Faculty feedback and recommendation support grounded in direct observation of student's work", "Verified competition results and externship documentation", "Interview preparation built around real, specific experience", "A narrative unavailable to most students due to lack of comparable experience"].map((f, i) => (
+                <div key={i} style={{ display: "flex", gap: 14, marginBottom: 16, alignItems: "flex-start" }}>
+                  <div style={{ width: 16, height: 1.5, background: "rgba(0,0,0,.3)", marginTop: 9, flexShrink: 0 }} />
+                  <span style={{ fontFamily: sans, fontSize: 13, color: "#010000", fontWeight: 300, lineHeight: 1.7 }}>{f}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+      </section>
 
       <MobileAccordionSection title="Admissions" isMobile={isMobile} defaultOpen={false}>
       {/* ── ADMISSIONS ── */}
