@@ -678,7 +678,7 @@ function Nav({ page, setPage }) {
           {/* RIGHT  -  APPLY NOW + MENU */}
           <div style={{ display: "flex", alignItems: "center", gap: 12, justifyContent: "flex-end" }}>
             {!isMobile && (
-              <button onClick={() => go("apply")}
+              <button onClick={() => go("portal")}
                 onMouseEnter={e => { e.currentTarget.style.textDecoration = "underline"; }}
                 onMouseLeave={e => { e.currentTarget.style.textDecoration = "none"; }}
                 style={{ fontFamily: sans, background: "#D9C7A9", color: "#100F0C", padding: "0 16px", height: 32, fontSize: 9, fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", border: "1px solid #D9C7A9", cursor: "pointer", transition: "all .25s", whiteSpace: "nowrap" }}>
