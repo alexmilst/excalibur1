@@ -8840,7 +8840,7 @@ function PortalPage({ setPage }) {
 
           {/* LEFT — photo panel, no overlay text */}
           <div style={{ position: "relative", minHeight: isMobile ? 220 : "auto", overflow: "hidden" }}>
-            <img src="https://i.imgur.com/iJhzPfX.jpeg" alt="Excalibur Academy" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "center" }} onError={e => e.target.style.display = "none"} />
+            <img src="https://i.imgur.com/aFoFz2M.jpeg" alt="Excalibur Academy" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "center" }} onError={e => e.target.style.display = "none"} />
             <div style={{ position: "absolute", inset: 0, background: "linear-gradient(180deg, rgba(17,17,17,.08) 0%, rgba(17,17,17,.55) 100%)" }} />
             <div style={{ position: "absolute", top: isMobile ? 20 : 36, left: isMobile ? 20 : 36 }}>
               <p style={{ fontFamily: cg, fontSize: 15, letterSpacing: "0.18em", color: t_white, textTransform: "uppercase" }}>Excalibur Academy</p>
@@ -8854,7 +8854,7 @@ function PortalPage({ setPage }) {
           <div style={{ padding: isMobile ? "40px 28px 48px" : "64px 56px", display: "flex", flexDirection: "column", justifyContent: "center" }}>
             <p style={{ fontFamily: lora, fontSize: 14, letterSpacing: "0.26em", color: t_gray, fontWeight: 600, textTransform: "uppercase", marginBottom: 14 }}>{authMode === "login" ? "Welcome Back" : "Get Started"}</p>
             <h1 style={{ fontFamily: cg, fontSize: isMobile ? 26 : 32, fontWeight: 700, color: t_black, lineHeight: 1.15, marginBottom: 8 }}>{authMode === "login" ? "Log in to your portal" : "Create your account"}</h1>
-            <p style={{ fontFamily: lora, fontSize: 15, color: t_gray, lineHeight: 1.7, marginBottom: 32 }}>{authMode === "login" ? "Access your application, consultations, and admissions messages." : "Set up access to track your application, schedule consultations, and message admissions."}</p>
+            <p style={{ fontFamily: lora, fontSize: 15, color: t_gray, lineHeight: 1.7, marginBottom: 32 }}>{authMode === "login" ? "Access your application, consultations, and admissions messages. Access your application, track your status, schedule a consultation, review important deadlines, and stay connected with your dedicated Enrollment Coordinator." : "Access your application, enrollment status, consultations, upcoming deadlines, program materials, and documentation. Each applicant is assigned a dedicated Enrollment Coordinator to support them throughout the process."}</p>
 
             {authMode === "signup" && (
               <>
