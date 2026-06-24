@@ -8551,6 +8551,11 @@ function PortalPage({ setPage }) {
           phone: authForm.phone,
         }).select().single();
         if (insertError) { setAuthError(insertError.message); setAuthBusy(false); return; }
+        // Invalidate the role-resolution effect's in-flight lookup for this session, so its
+        // slower (and now stale) "no student/parent/admin found" result can't overwrite the
+        // student record we just created — this was racing against the effect and losing.
+        roleCheckSessionRef.current = null;
+        setAccountNotFound(false);
         setStudent(studentRow);
         setRole("student");
         setRoleResolved(true);
