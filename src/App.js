@@ -3820,14 +3820,14 @@ function HomePage({ setPage, openInquiry }) {
           <Fade><div style={{ textAlign: "center", marginBottom: 52 }}><p style={{ fontFamily: sans, fontSize: 12, letterSpacing: "0.2em", color:"#E4D5C1", fontWeight: 700, textTransform:"uppercase", marginBottom:16 }}>Three Paths Into Excalibur</p><h2 style={{ fontFamily: "Garamond, serif", fontSize:isMobile?"clamp(32px,5vw,48px)":"clamp(36px,4vw,56px)", fontWeight:400, color:"#A48D6E", lineHeight:1.06, letterSpacing:"0.08em", textTransform:"uppercase", marginBottom:16 }}>Choose Your Entry Point</h2><p style={{ fontFamily: lora, fontSize: 16, color:"#E4D5C1", fontWeight: 400, lineHeight: 1.9, letterSpacing:"0.02em", textAlign:"center", maxWidth:620, margin:"0 auto" }}>From two-week summer intensives to a full semester after-school Flagship program — weekday and weekend tracks, designed around student's schedule. Three paths into Excalibur.</p></div></Fade>
 
           {/* ── THREE HERO CATEGORY CARDS ── */}
-          <div style={{ display:"grid", gridTemplateColumns:isMobile?"1fr":"1fr 1fr 1fr", gap:2, marginBottom:2 }}>
+          <div style={{ display:"grid", gridTemplateColumns:isMobile?"1fr":"1fr 1fr 1fr", gap:isMobile?28:36, marginBottom:2, background:"#100F0C", padding:isMobile?"28px 4px":"40px" }}>
 
             {/* Summer */}
             <div
-              style={{ position:"relative", height:580, overflow:"hidden", cursor:"pointer" }}
+              style={{ position:"relative", height:580, overflow:"hidden", cursor:"pointer", background:"#100F0C", border:"1px solid #A48D6E", borderRadius:3, boxShadow:"0 30px 60px -18px rgba(0,0,0,0.85), 0 0 0 1px rgba(164,141,110,0.3), 0 16px 32px rgba(164,141,110,0.12)", transform:"translateY(-10px)", transition:"transform 0.4s ease, box-shadow 0.4s ease, border-color 0.4s ease" }}
               onClick={() => setPage("summer-detail")}
-              onMouseEnter={e => { e.currentTarget.querySelector("img").style.transform = "scale(1.05)"; e.currentTarget.querySelector(".card-overlay").style.background = "linear-gradient(to top, rgba(0,0,0,0.92) 0%, rgba(0,0,0,0.65) 45%, rgba(0,0,0,0.15) 100%)"; }}
-              onMouseLeave={e => { e.currentTarget.querySelector("img").style.transform = "scale(1.0)"; e.currentTarget.querySelector(".card-overlay").style.background = "linear-gradient(to top, rgba(0,0,0,0.97) 0%, rgba(0,0,0,0.75) 45%, rgba(0,0,0,0.2) 100%)"; }}
+              onMouseEnter={e => { e.currentTarget.querySelector("img").style.transform = "scale(1.05)"; e.currentTarget.querySelector(".card-overlay").style.background = "linear-gradient(to top, rgba(0,0,0,0.92) 0%, rgba(0,0,0,0.65) 45%, rgba(0,0,0,0.15) 100%)"; e.currentTarget.style.transform = "translateY(-18px)"; e.currentTarget.style.boxShadow = "0 45px 90px -20px rgba(0,0,0,0.92), 0 0 0 1px rgba(164,141,110,0.55), 0 22px 44px rgba(164,141,110,0.22)"; e.currentTarget.style.borderColor = "#D9C7A9"; }}
+              onMouseLeave={e => { e.currentTarget.querySelector("img").style.transform = "scale(1.0)"; e.currentTarget.querySelector(".card-overlay").style.background = "linear-gradient(to top, rgba(0,0,0,0.97) 0%, rgba(0,0,0,0.75) 45%, rgba(0,0,0,0.2) 100%)"; e.currentTarget.style.transform = "translateY(-10px)"; e.currentTarget.style.boxShadow = "0 30px 60px -18px rgba(0,0,0,0.85), 0 0 0 1px rgba(164,141,110,0.3), 0 16px 32px rgba(164,141,110,0.12)"; e.currentTarget.style.borderColor = "#A48D6E"; }}
             >
               <img src="https://i.imgur.com/9SFko3s.jpeg" alt="Summer Intensive" style={{ position:"absolute", inset:0, width:"100%", height:"100%", objectFit:"cover", objectPosition:"center", transition:"transform 0.7s ease" }} />
               <div className="card-overlay" style={{ position:"absolute", inset:0, background:"linear-gradient(to top, rgba(0,0,0,0.97) 0%, rgba(0,0,0,0.75) 45%, rgba(0,0,0,0.2) 100%)", transition:"background 0.4s ease" }} />
@@ -3845,10 +3845,10 @@ function HomePage({ setPage, openInquiry }) {
 
             {/* Flagship */}
             <div
-              style={{ position:"relative", height:580, overflow:"hidden", cursor:"pointer" }}
+              style={{ position:"relative", height:580, overflow:"hidden", cursor:"pointer", background:"#100F0C", border:"1px solid #A48D6E", borderRadius:3, boxShadow:"0 30px 60px -18px rgba(0,0,0,0.85), 0 0 0 1px rgba(164,141,110,0.3), 0 16px 32px rgba(164,141,110,0.12)", transform:"translateY(-10px)", transition:"transform 0.4s ease, box-shadow 0.4s ease, border-color 0.4s ease" }}
               onClick={() => setPage("flagship")}
-              onMouseEnter={e => { e.currentTarget.querySelector("img").style.transform = "scale(1.05)"; e.currentTarget.querySelector(".card-overlay").style.background = "linear-gradient(to top, rgba(0,0,0,0.92) 0%, rgba(0,0,0,0.65) 45%, rgba(0,0,0,0.15) 100%)"; }}
-              onMouseLeave={e => { e.currentTarget.querySelector("img").style.transform = "scale(1.0)"; e.currentTarget.querySelector(".card-overlay").style.background = "linear-gradient(to top, rgba(0,0,0,0.97) 0%, rgba(0,0,0,0.75) 45%, rgba(0,0,0,0.2) 100%)"; }}
+              onMouseEnter={e => { e.currentTarget.querySelector("img").style.transform = "scale(1.05)"; e.currentTarget.querySelector(".card-overlay").style.background = "linear-gradient(to top, rgba(0,0,0,0.92) 0%, rgba(0,0,0,0.65) 45%, rgba(0,0,0,0.15) 100%)"; e.currentTarget.style.transform = "translateY(-18px)"; e.currentTarget.style.boxShadow = "0 45px 90px -20px rgba(0,0,0,0.92), 0 0 0 1px rgba(164,141,110,0.55), 0 22px 44px rgba(164,141,110,0.22)"; e.currentTarget.style.borderColor = "#D9C7A9"; }}
+              onMouseLeave={e => { e.currentTarget.querySelector("img").style.transform = "scale(1.0)"; e.currentTarget.querySelector(".card-overlay").style.background = "linear-gradient(to top, rgba(0,0,0,0.97) 0%, rgba(0,0,0,0.75) 45%, rgba(0,0,0,0.2) 100%)"; e.currentTarget.style.transform = "translateY(-10px)"; e.currentTarget.style.boxShadow = "0 30px 60px -18px rgba(0,0,0,0.85), 0 0 0 1px rgba(164,141,110,0.3), 0 16px 32px rgba(164,141,110,0.12)"; e.currentTarget.style.borderColor = "#A48D6E"; }}
             >
               <img src="https://i.imgur.com/wBie2YG.jpeg" alt="Flagship Overview" style={{ position:"absolute", inset:0, width:"100%", height:"100%", objectFit:"cover", objectPosition:"center", transition:"transform 0.7s ease" }} />
               <div className="card-overlay" style={{ position:"absolute", inset:0, background:"linear-gradient(to top, rgba(0,0,0,0.97) 0%, rgba(0,0,0,0.75) 45%, rgba(0,0,0,0.2) 100%)", transition:"background 0.4s ease" }} />
@@ -3866,10 +3866,10 @@ function HomePage({ setPage, openInquiry }) {
 
             {/* Six-Week */}
             <div
-              style={{ position:"relative", height:580, overflow:"hidden", cursor:"pointer" }}
+              style={{ position:"relative", height:580, overflow:"hidden", cursor:"pointer", background:"#100F0C", border:"1px solid #A48D6E", borderRadius:3, boxShadow:"0 30px 60px -18px rgba(0,0,0,0.85), 0 0 0 1px rgba(164,141,110,0.3), 0 16px 32px rgba(164,141,110,0.12)", transform:"translateY(-10px)", transition:"transform 0.4s ease, box-shadow 0.4s ease, border-color 0.4s ease" }}
               onClick={() => setPage("intensive")}
-              onMouseEnter={e => { e.currentTarget.querySelector("img").style.transform = "scale(1.05)"; e.currentTarget.querySelector(".card-overlay").style.background = "linear-gradient(to top, rgba(0,0,0,0.92) 0%, rgba(0,0,0,0.65) 45%, rgba(0,0,0,0.15) 100%)"; }}
-              onMouseLeave={e => { e.currentTarget.querySelector("img").style.transform = "scale(1.0)"; e.currentTarget.querySelector(".card-overlay").style.background = "linear-gradient(to top, rgba(0,0,0,0.97) 0%, rgba(0,0,0,0.75) 45%, rgba(0,0,0,0.2) 100%)"; }}
+              onMouseEnter={e => { e.currentTarget.querySelector("img").style.transform = "scale(1.05)"; e.currentTarget.querySelector(".card-overlay").style.background = "linear-gradient(to top, rgba(0,0,0,0.92) 0%, rgba(0,0,0,0.65) 45%, rgba(0,0,0,0.15) 100%)"; e.currentTarget.style.transform = "translateY(-18px)"; e.currentTarget.style.boxShadow = "0 45px 90px -20px rgba(0,0,0,0.92), 0 0 0 1px rgba(164,141,110,0.55), 0 22px 44px rgba(164,141,110,0.22)"; e.currentTarget.style.borderColor = "#D9C7A9"; }}
+              onMouseLeave={e => { e.currentTarget.querySelector("img").style.transform = "scale(1.0)"; e.currentTarget.querySelector(".card-overlay").style.background = "linear-gradient(to top, rgba(0,0,0,0.97) 0%, rgba(0,0,0,0.75) 45%, rgba(0,0,0,0.2) 100%)"; e.currentTarget.style.transform = "translateY(-10px)"; e.currentTarget.style.boxShadow = "0 30px 60px -18px rgba(0,0,0,0.85), 0 0 0 1px rgba(164,141,110,0.3), 0 16px 32px rgba(164,141,110,0.12)"; e.currentTarget.style.borderColor = "#A48D6E"; }}
             >
               <img src="https://i.imgur.com/ikVekYZ.jpeg" alt="Six-Week Intensive" style={{ position:"absolute", inset:0, width:"100%", height:"100%", objectFit:"cover", objectPosition:"center", transition:"transform 0.7s ease" }} />
               <div className="card-overlay" style={{ position:"absolute", inset:0, background:"linear-gradient(to top, rgba(0,0,0,0.97) 0%, rgba(0,0,0,0.75) 45%, rgba(0,0,0,0.2) 100%)", transition:"background 0.4s ease" }} />
@@ -15406,10 +15406,9 @@ function VentureDetailPage({ setPage, openInquiry }) {
               img:"https://i.imgur.com/SIMHlMl.jpeg",
               colour:"#100F0C",
               items:[
-                {name:"Check-In & Welcome Reception",desc:"Students arrive, check in, receive seating assignments, and are introduced to the expectations of the weekend. The standard is set from the moment students arrive."},
-                {name:"The Seminar",desc:""},
-                {name:"The Executive Dinner",desc:"A formal multi-course dinner with senior guests. Students are expected to ask thoughtful questions, contribute intelligently, and engage with people who have built, led, invested, or served at a serious level."},
-                {name:"The Legacy Letter",desc:"After dinner, each student writes a letter to themselves — to be opened in ten years. Sealed for later reflection, this becomes one of the most personal moments of the weekend."},
+                {name:"Check-In & Welcome Reception",desc:"Students arrive, check in, meet faculty, families, invited guests, and fellow students, and are introduced to the tone and structure of the Summit. The evening begins with a formal welcome reception designed to help students settle in, begin conversations, and engage with confidence and professionalism."},
+                {name:"The Executive Dinner",desc:"A formal multi-course dinner with invited executives, founders, practitioners, industry leaders, and community figures. Students rotate between guest tables in small groups, giving them the opportunity to practice real networking, ask thoughtful questions, discuss ideas, and build connections in a serious but welcoming setting. The dinner is designed not only for conversation, but for students to learn how to enter a room, contribute thoughtfully and engage with invited guests and practitioners around business, leadership, community, and ambition."},
+                {name:"The Legacy Letter",desc:"At the close of the evening, each student writes a private reflection letter to their future self, sealed through the Academy and given to families. The exercise gives students a quiet moment to reflect on ambition, character, responsibility, and the standard they want to hold themselves to."},
               ]
             },
             {
@@ -15420,9 +15419,6 @@ function VentureDetailPage({ setPage, openInquiry }) {
               colour:"#100F0C",
               items:[
                 {name:"Executive Breakfast",desc:"A morning breakfast with senior guests, designed around conversation, etiquette, and presence. Students rotate through small tables with executives, founders, practitioners, industry leaders, and community figures, practicing how to listen, ask thoughtful questions, contribute with confidence, and build relationships in a professional setting."},
-                {name:"Professional Headshot",desc:"Every student receives a professional headshot taken by an on-site photographer. The image is included in the Excalibur Portfolio. Students receive guidance on appropriate professional presentation in advance."},
-                {name:"The Negotiation Room",desc:"A live deal negotiation structured by the Lead Faculty. Students represent opposing sides, argue terms, make concessions, defend their positions, and work toward a final agreement before an investor and faculty-led panel."},
-                {name:"On-Camera Media Interview",desc:"Every student is interviewed on camera by a faculty member playing a journalist or industry analyst. The footage is reviewed with faculty feedback so students can understand how composure, clarity, and presence change on camera."},
                 {name:"The Founder Briefing",desc:"Students face the room for eight minutes of rapid questioning of their venture concept or business idea. The exercise tests composure, precision, listening, and the ability to think clearly while being challenged in public."},
                 {name:"Oxford Debate",desc:"Teams are assigned positions they may or may not personally hold. Students compete in a formal Oxford-style debate with structured arguments, rebuttals, and a final floor vote. The exercise teaches persuasion, discipline, and the ability to argue with clarity under formal rules."},
                 {name:"The Networking Reception",desc:"An evening reception with invited guests, faculty, executives, investors, industry leaders, and community guests. Students practice moving through a room, starting conversations, introducing themselves, discussing ideas, and building connections in a formal but welcoming setting."},
