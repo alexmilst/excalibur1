@@ -1807,8 +1807,6 @@ function CurriculumPage({ setPage, openInquiry }) {
       </div>
 
 
-      {/* ── SOIREE ── */}
-      <SoireeInviteBlock openInquiry={openInquiry} setPage={setPage} />
 
       {/* FAMILY CONSULTATION FORM */}
       <div style={{ background: "rgba(16, 15, 12, 1)", padding: isMobile ? "52px 24px" : "72px 80px", borderTop: "1px solid rgba(0,0,0,.08)" }}>
@@ -4695,8 +4693,6 @@ function HomePage({ setPage, openInquiry }) {
         </div>
       </section>
 
-      {/* ── SOIREE ── */}
-      <SoireeInviteBlock openInquiry={openInquiry} setPage={setPage} />
 
       {/* FAMILY CONSULTATION FORM */}
       <div style={{ background: "rgba(16, 15, 12, 1)", padding: isMobile ? "52px 24px" : "72px 80px", borderTop: "1px solid rgba(0,0,0,.08)" }}>
@@ -7754,8 +7750,6 @@ function SummerDetailPage({ setPage, openInquiry }) {
         </div>
       </div>
 
-      {/* ── SOIREE ── */}
-      <SoireeInviteBlock openInquiry={openInquiry} setPage={setPage} />
 
       {/* EXCALIBUR IVY PORTFOLIO */}
       <div style={{ background: "#E4D5C1", padding: isMobile ? "52px 0 0" : "72px 0 0" }}>
@@ -7932,93 +7926,14 @@ function EventsPage({ setPage, openInquiry }) {
         </div>
       </div>
 
-      {/* ── FEATURED EVENT ── */}
-      <div style={{ background: "#010000", padding: isMobile ? "60px 24px" : "80px 80px", borderBottom: "1px solid rgba(216,183,140,.12)" }}>
-        <div style={{ maxWidth: 1100, margin: "0 auto" }}>
-          <Fade>
-            <p style={{ fontFamily: "'Forum', sans-serif", fontSize: 8, letterSpacing: "0.55em", color:"#FBF7EE", fontWeight: 700, textTransform: "uppercase", marginBottom: 48 }}>Featured Event · By Invitation Only</p>
-          </Fade>
-
-          {/* Event block  -  editorial two-column on black */}
-          <div style={{ borderTop: `2px solid #d8b78c`, paddingTop: 48 }}>
-            <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: isMobile ? 48 : 80, alignItems: "start" }}>
-
-              {/* Left  -  date, details */}
-              <div>
-                <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 32 }}>
-                  <div style={{ width: 8, height: 8, borderRadius: "50%", background: "#d8b78c", flexShrink: 0 }} />
-                  <span style={{ fontFamily: "'Forum', sans-serif", fontSize: 9, letterSpacing: "0.22em", color: "#d8b78c", fontWeight: 700, textTransform: "uppercase" }}>Registration Open</span>
-                </div>
-                <p style={{ fontFamily: "'Forum', sans-serif", fontSize: 8, letterSpacing: "0.45em", color:"#FBF7EE", fontWeight: 600, textTransform: "uppercase", marginBottom: 16 }}>Private Event · By Invitation Only</p>
-                {/* Date  -  monumental */}
-                <div style={{ fontFamily: serif, fontSize: isMobile ? 80 : 112, fontWeight: 300, color:"#FBF7EE", lineHeight: 1, letterSpacing: "-0.03em", marginBottom: 8 }}>June 30</div>
-                <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 16 }}>
-                  <div style={{ width: 14, height: "1px", background: `linear-gradient(90deg, transparent, #d8b78c)` }} />
-                  <p style={{ fontFamily: "'Cormorant Garamond', 'Didot', Georgia, serif", fontSize: isMobile ? 15 : 18, color:"#FBF7EE", fontStyle: "italic", fontWeight: 600, letterSpacing: "0.1em", margin: 0 }}>Tuesday &nbsp;·&nbsp; 2026 &nbsp;·&nbsp; 6:00 – 8:00 PM</p>
-                </div>
-                <p style={{ fontFamily: "'Cormorant Garamond', 'Didot', 'Bodoni MT', Georgia, serif", fontSize: isMobile ? 24 : 36, color:"#FBF7EE", lineHeight: 1.1, marginBottom: 6, fontWeight: 300, fontStyle: "italic", letterSpacing: "0.04em" }}>23 Corporate Plaza Drive, Newport Beach</p>
-                <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 40 }}>
-                  <div style={{ width: 22, height: "1px", background:"#010000" }} />
-                  <p style={{ fontFamily: "'Forum', sans-serif", fontSize: 9, color:"#FBF7EE", letterSpacing: "0.32em", textTransform: "uppercase", fontWeight: 600, margin: 0 }}>Newport Beach · California</p>
-                  <div style={{ width: 22, height: "1px", background:"#010000" }} />
-                </div>
-                {/* Details table */}
-                {[
-                  ["Location", "23 Corporate Plaza Drive, Newport Beach, CA"],
-                  ["Format", "Private Family Information Evening"],
-                  ["Time", "6:00 – 8:00 PM"],
-                  ["Dress Code", "Black Tie"],
-                  ["Access", "Limited Attendance · Invitation Requested"],
-                ].map(([label, value], i) => (
-                  <div key={i} style={{ display: "grid", gridTemplateColumns: "110px 1fr", gap: 16, padding: "12px 0", borderBottom: "1px solid rgba(216,183,140,.1)" }}>
-                    <span style={{ fontFamily: "'Forum', sans-serif", fontSize: 9, letterSpacing: "0.18em", color:"#FBF7EE", fontWeight: 600, textTransform: "uppercase" }}>{label}</span>
-                    <span style={{ fontFamily: sans, fontSize: 13, color:"#FBF7EE", fontWeight: 300 }}>{value}</span>
-                  </div>
-                ))}
-                <div style={{ marginTop: 36 }}>
-
-                </div>
-              </div>
-
-              {/* Right  -  description */}
-              <div>
-                <h2 style={{ fontFamily: serif, fontSize: isMobile ? 24 : 36, fontWeight: 300, color:"#d8b78c", lineHeight: 1.2, marginBottom: 28 }}>A private introduction to Excalibur Academy: its leadership, faculty, programs, standards, and student experience.</h2>
-                <p style={{ fontFamily: sans, fontSize: 14, color:"#FBF7EE", fontWeight: 300, lineHeight: 1.9, marginBottom: 16 }}>Families will meet the Academy's lead faculty and founding team, receive an overview of the Summer Intensive and Academic-Year programs, and learn more about Excalibur's curriculum, structure, expectations, admissions process, and student experience.</p>
-                <p style={{ fontFamily: sans, fontSize: 14, color:"#FBF7EE", fontWeight: 300, lineHeight: 1.9, marginBottom: 16 }}>More than an information session, the evening is designed to give families and prospective students a first impression of the Academy's standards, atmosphere, and expectations.</p>
-                <p style={{ fontFamily: sans, fontSize: 14, color:"#FBF7EE", fontWeight: 300, lineHeight: 1.9, marginBottom: 28 }}>Prospective students attending the evening will be asked one question: <span style={{ fontFamily: serif, fontStyle: "italic", color:"#FBF7EE" }}>"What is your dream?"</span></p>
-                <div style={{ borderTop: "1px solid rgba(216,183,140,.12)", paddingTop: 24 }}>
-                  <p style={{ fontFamily: serif, fontSize: 16, color:"#FBF7EE", letterSpacing: "0.1em", marginBottom: 12, fontStyle: "italic" }}>Limited Attendance · Invitation Requested</p>
-                  <p style={{ fontFamily: sans, fontSize: 12, color:"#FBF7EE", fontWeight: 300, lineHeight: 1.8 }}>Due to high demand and intentionally limited cohort sizes of no more than 20 students, invitations are extended personally by the Excalibur team. Families who wish to attend the evening are invited to complete the invitation request form below.</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+      {/* ── NO CURRENT EVENTS ── */}
+      <div style={{ background: "#010000", padding: isMobile ? "80px 24px" : "120px 80px", textAlign: "center" }}>
+        <p style={{ fontFamily: "'Forum', sans-serif", fontSize: 8, letterSpacing: "0.55em", color:"#FBF7EE", fontWeight: 700, textTransform: "uppercase", marginBottom: 20 }}>Stay Tuned</p>
+        <h2 style={{ fontFamily: serif, fontSize: isMobile ? 26 : 38, fontWeight: 600, color:"#d8b78c", lineHeight: 1.2, marginBottom: 16 }}>No upcoming events at this time.</h2>
+        <p style={{ fontFamily: sans, fontSize: 14, color:"#FBF7EE", fontWeight: 300, lineHeight: 1.8, maxWidth: 560, margin: "0 auto" }}>Check back soon for upcoming private events, family information evenings, and admissions gatherings.</p>
       </div>
 
-      {/* ── WHAT TO EXPECT ── */}
-      <div style={{ background: "#010000", padding: isMobile ? "52px 24px" : "72px 80px", borderBottom: "1px solid rgba(216,183,140,.08)" }}>
-        <div style={{ maxWidth: 1100, margin: "0 auto" }}>
-          <Fade>
-            <p style={{ fontFamily: "'Forum', sans-serif", fontSize: 8, letterSpacing: "0.55em", color:"#FBF7EE", fontWeight: 700, textTransform: "uppercase", marginBottom: 16 }}>What to Expect</p>
-            <h2 style={{ fontFamily: serif, fontSize: isMobile ? 26 : 38, fontWeight: 600, color:"#d8b78c", lineHeight: 1.05, marginBottom: 8 }}>What to Expect</h2>
-          </Fade>
-          <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(4,1fr)", gap: 0 }}>
-            {[
-              { n: "01", title: "Welcome Reception", desc: "Guests are welcomed into a private reception with refreshments and an opportunity to meet the Excalibur team, faculty, and other families in a warm, relaxed, and private setting." },
-              { n: "02", title: "Program Overview", desc: "An overview of Excalibur's programs, structure, curriculum, faculty model, and student experience, structure, curriculum, faculty model, and student experience — led by the Academy's founding team." },
-              { n: "03", title: "Faculty Introductions", desc: "A personal introduction to Excalibur's lead faculty and visiting practitioners. An opportunity to ask questions directly and understand who will be in the room." },
-              { n: "04", title: "Student Moment", desc: "Prospective students will be asked to reflect on one question: \u201cWhat is your dream?\u201d \u2014 the first step in understanding what kind of student is right for Excalibur." },
-            ].map((item, i) => (
-              <div key={i} style={{ padding: isMobile ? "28px 0" : "0 32px", borderLeft: !isMobile && i > 0 ? "1px solid rgba(216,183,140,.1)" : "none", borderTop: isMobile && i > 0 ? "1px solid rgba(216,183,140,.1)" : "none" }}>
-                <span style={{ fontFamily: serif, fontSize: 28, fontWeight: 600, color:"#FBF7EE", display: "block", marginBottom: 16 }}>{item.n}</span>
-                <h4 style={{ fontFamily: serif, fontSize: 18, fontWeight: 600, color:"#d8b78c", lineHeight: 1.2, marginBottom: 12 }}>{item.title}</h4>
-                <p style={{ fontFamily: sans, fontSize: 12, color:"#FBF7EE", fontWeight: 300, lineHeight: 1.85 }}>{item.desc}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
+
 
 
 
