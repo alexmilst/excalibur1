@@ -8602,7 +8602,11 @@ function PortalPage({ setPage }) {
       const { data, error } = await sb.auth.signUp({ email: authForm.email, password: authForm.password });
       if (error) { setAuthError(error.message); setAuthBusy(false); return; }
       const uid = data && data.user && data.user.id;
-      if (uid && authForm.roleChoice === "student") {
+      // If this email is in the admins allowlist, never create a student record for it —
+      // regardless of which option was picked in the role dropdown. The admin check in the
+      // role-resolution effect will take it from here once signup finishes.
+      const { data: adminMatch } = await sb.from("admins").select("id").eq("email", authForm.email).maybeSingle();
+      if (uid && authForm.roleChoice === "student" && !adminMatch) {
         const { data: studentRow, error: insertError } = await sb.from("students").insert({
           auth_user_id: uid,
           first_name: authForm.firstName,
