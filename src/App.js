@@ -8417,10 +8417,23 @@ function PortalPage({ setPage }) {
   // Tracks which session this effect run belongs to, so a slow/late-resolving lookup from a
   // previous (now signed-out) session can never overwrite state for the session that replaced it.
   const roleCheckSessionRef = React.useRef(null);
+  // Tracks the uid we've already successfully resolved a role for. Supabase fires
+  // onAuthStateChange (and therefore re-runs this effect) on events like a tab regaining focus
+  // or a token silently refreshing — same account, brand-new session object. Without this guard,
+  // every one of those would wipe role/student back to null for a moment before re-resolving,
+  // which is exactly the "flashes the student dashboard" glitch.
+  const lastResolvedUidRef = React.useRef(null);
   React.useEffect(() => {
     if (!sb || !session) return;
     const uid = session.user.id;
     const email = session.user.email;
+
+    // Same account we already resolved — just a token refresh or tab-focus event. Nothing to do.
+    if (uid === lastResolvedUidRef.current && roleResolved) {
+      roleCheckSessionRef.current = uid;
+      return;
+    }
+
     roleCheckSessionRef.current = uid;
 
     // Clear any previous account's state immediately — before the new lookups even resolve —
@@ -8436,6 +8449,7 @@ function PortalPage({ setPage }) {
         setStudent(studentRow);
         setAccountNotFound(false);
         setRoleResolved(true);
+        lastResolvedUidRef.current = uid;
         return;
       }
 
@@ -8452,6 +8466,7 @@ function PortalPage({ setPage }) {
         setStudent(parentRow.students);
         setAccountNotFound(false);
         setRoleResolved(true);
+        lastResolvedUidRef.current = uid;
         return;
       }
 
@@ -8466,6 +8481,7 @@ function PortalPage({ setPage }) {
         setAdminProfile(adminRow);
         setAccountNotFound(false);
         setRoleResolved(true);
+        lastResolvedUidRef.current = uid;
         return;
       }
 
@@ -8599,6 +8615,7 @@ function PortalPage({ setPage }) {
         // slower (and now stale) "no student/parent/admin found" result can't overwrite the
         // student record we just created — this was racing against the effect and losing.
         roleCheckSessionRef.current = null;
+        lastResolvedUidRef.current = uid;
         setAccountNotFound(false);
         setStudent(studentRow);
         setRole("student");
@@ -8616,6 +8633,7 @@ function PortalPage({ setPage }) {
   const handleSignOut = async () => {
     if (sb) await sb.auth.signOut();
     setRoleResolved(false);
+    lastResolvedUidRef.current = null;
     resetPortalState();
   };
 
