@@ -9230,18 +9230,22 @@ function PortalPage({ setPage }) {
                         <StatCard label="Accepted" value={totalAccepted} color={m_green} />
                       </div>
 
-                      <p style={{ fontFamily: sans, fontSize: 16, fontWeight: 700, color: m_ink, marginBottom: 16 }}>Most Recent Registrations</p>
+                      <p style={{ fontFamily: sans, fontSize: 16, fontWeight: 700, color: m_ink, marginBottom: 16 }}>Your Assigned Students</p>
                       <div style={{ background: m_white, border: `1px solid ${m_line}`, borderRadius: 16, overflow: "hidden", marginBottom: 40 }}>
-                        {adminStudents.slice(0, 6).map((s, i) => (
-                          <div key={s.id} onClick={() => openFullProfile(s, "overview")} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "16px 22px", borderBottom: i < 5 ? `1px solid ${m_line}` : "none", cursor: "pointer" }}>
-                            <div>
-                              <p style={{ fontFamily: sans, fontSize: 14, fontWeight: 700, color: m_ink }}>{s.first_name} {s.last_name}</p>
-                              <p style={{ fontFamily: sans, fontSize: 13, color: m_gray }}>{s.email}</p>
+                        {myStudents.map((s, i) => {
+                          const app = applicationForStudent(s.id);
+                          return (
+                            <div key={s.id} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "16px 22px", borderBottom: i < myStudents.length - 1 ? `1px solid ${m_line}` : "none", gap: 16, flexWrap: "wrap" }}>
+                              <div style={{ minWidth: 0, flex: 1 }}>
+                                <p style={{ fontFamily: sans, fontSize: 14, fontWeight: 700, color: m_ink }}>{s.first_name} {s.last_name}</p>
+                                <p style={{ fontFamily: sans, fontSize: 13, color: m_gray }}>{s.email} · {s.phone || "No phone on file"}</p>
+                              </div>
+                              {app ? <StatusPill status={app.status} /> : <span style={{ fontFamily: sans, fontSize: 12, color: m_gray, whiteSpace: "nowrap" }}>Just Registered</span>}
+                              <button onClick={() => openFullProfile(s, "overview")} style={{ fontFamily: sans, fontSize: 12, fontWeight: 600, padding: "8px 16px", borderRadius: 999, background: m_ink, color: m_white, border: "none", cursor: "pointer", whiteSpace: "nowrap" }}>View Full Profile</button>
                             </div>
-                            <p style={{ fontFamily: sans, fontSize: 12, color: m_gray }}>{s.created_at ? new Date(s.created_at).toLocaleDateString() : ""}</p>
-                          </div>
-                        ))}
-                        {adminStudents.length === 0 && <p style={{ fontFamily: sans, fontSize: 14, color: m_gray, padding: 22 }}>No registrations yet.</p>}
+                          );
+                        })}
+                        {myStudents.length === 0 && <p style={{ fontFamily: sans, fontSize: 14, color: m_gray, padding: 22 }}>No students assigned to you yet.</p>}
                       </div>
 
                       <p style={{ fontFamily: sans, fontSize: 16, fontWeight: 700, color: m_ink, marginBottom: 16 }}>Most Recent Applications</p>
