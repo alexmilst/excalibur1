@@ -8422,7 +8422,7 @@ function PortalPage({ setPage }) {
       if (studentRow) {
         setRole("student");
         setStudent(studentRow);
-        setNeedsProfile(false);
+        setAccountNotFound(false);
         setRoleResolved(true);
         return;
       }
@@ -8438,7 +8438,7 @@ function PortalPage({ setPage }) {
         }
         setRole("parent");
         setStudent(parentRow.students);
-        setNeedsProfile(false);
+        setAccountNotFound(false);
         setRoleResolved(true);
         return;
       }
@@ -8451,7 +8451,7 @@ function PortalPage({ setPage }) {
           await sb.from("admins").update({ auth_user_id: uid }).eq("id", adminRow.id);
         }
         setRole("admin");
-        setNeedsProfile(false);
+        setAccountNotFound(false);
         setRoleResolved(true);
         return;
       }
