@@ -57,6 +57,10 @@ function PortalStudentAvatar({ student, photo, size = 44, t_white = "#FFFFFF", t
 }
 
 
+// ── FAVICON — Excalibur Academy crest ──
+// TODO: replace with the hosted URL of the crest image (e.g. uploaded to Imgur, same as other site images).
+const FAVICON_URL = "https://i.imgur.com/BZ2MYx9.jpeg";
+
 // ── CALENDLY EMBED — loads the widget script once, then renders the inline scheduler ──
 // TODO: replace with Alexander's real Calendly scheduling-page URL.
 const CALENDLY_URL = "https://calendly.com/excalibur-academy/consultation";
@@ -15987,6 +15991,21 @@ function ExcaliburApp() {
     meta.content = "width=device-width, initial-scale=1.0, maximum-scale=5.0";
     // Prevent horizontal overflow
     document.body.style.overflowX = "hidden";
+  }, []);
+
+  // Inject the Excalibur crest favicon into document head
+  useEffect(() => {
+    const href = FAVICON_URL;
+    document.querySelectorAll('link[rel="icon"], link[rel="shortcut icon"], link[rel="apple-touch-icon"]').forEach(el => el.remove());
+    const link = document.createElement("link");
+    link.rel = "icon";
+    link.type = "image/png";
+    link.href = href;
+    document.head.appendChild(link);
+    const appleLink = document.createElement("link");
+    appleLink.rel = "apple-touch-icon";
+    appleLink.href = href;
+    document.head.appendChild(appleLink);
   }, []);
 
   const setPage = useCallback((p) => {
