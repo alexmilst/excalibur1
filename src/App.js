@@ -3524,7 +3524,7 @@ function HomePage({ setPage, openInquiry }) {
       {/* FOUNDING BANNER */}
       <div style={{ background: "#34150F", padding: isMobile ? "10px 16px" : "10px 40px", textAlign: "center" }}>
         <p style={{ fontFamily: "'Lato', sans-serif", fontSize: isMobile ? 11 : 11, letterSpacing: isMobile ? "0.04em" : "0.22em", color:"#BCA696", fontWeight: 700, textTransform: "uppercase", lineHeight: 1.5, padding: isMobile ? "0 8px" : 0 }}>
-          {isMobile ? <>Summer Intensive · Wave 1 — Full · Wave 2 — Now Enrolling · <span style={{ cursor: "pointer", textDecoration: "underline" }} onClick={() => setPage("apply")}>Apply to Excalibur →</span></> : <>Summer Intensive &nbsp;·&nbsp; Wave 1 — Full &nbsp;·&nbsp; Wave 2 — Now Enrolling &nbsp;·&nbsp; July 27 – Aug 8 &nbsp;·&nbsp; Limited Cohort &nbsp;·&nbsp; <span style={{ cursor: "pointer", textDecoration: "underline", textUnderlineOffset: 3 }} onClick={() => setPage("apply")}>Apply to Excalibur</span> &nbsp; ✦</>}
+          {isMobile ? <>Summer Intensive · Wave 1 — Full · Wave 2 — Now Enrolling · July 27 – Aug 8 · <span style={{ cursor: "pointer", textDecoration: "underline" }} onClick={() => setPage("apply")}>Apply to Excalibur →</span></> : <>Summer Intensive &nbsp;·&nbsp; Wave 1 — Closed &nbsp;·&nbsp; Wave 2 — Now Enrolling &nbsp;·&nbsp; July 27 – Aug 8 &nbsp;·&nbsp; Limited Cohort &nbsp;·&nbsp; <span style={{ cursor: "pointer", textDecoration: "underline", textUnderlineOffset: 3 }} onClick={() => setPage("apply")}>Apply to Excalibur</span> &nbsp; ✦</>}
         </p>
       </div>
 
@@ -3931,11 +3931,9 @@ function HomePage({ setPage, openInquiry }) {
             <div
               style={{ position:"relative", height:580, overflow:"hidden", cursor:"pointer", background:"#100F0C", border:"1px solid #A48D6E", borderRadius:3, boxShadow:"0 30px 60px -18px rgba(0,0,0,0.85), 0 0 0 1px rgba(164,141,110,0.3), 0 16px 32px rgba(164,141,110,0.12)", transform:"translateY(-10px)", transition:"transform 0.4s ease, box-shadow 0.4s ease, border-color 0.4s ease" }}
               onClick={() => setPage("summer-detail")}
-              onMouseEnter={e => { e.currentTarget.querySelector("img").style.transform = "scale(1.05)"; e.currentTarget.querySelector(".card-overlay").style.background = "linear-gradient(to top, rgba(0,0,0,0.92) 0%, rgba(0,0,0,0.65) 45%, rgba(0,0,0,0.15) 100%)"; e.currentTarget.style.transform = "translateY(-18px)"; e.currentTarget.style.boxShadow = "0 45px 90px -20px rgba(0,0,0,0.92), 0 0 0 1px rgba(164,141,110,0.55), 0 22px 44px rgba(164,141,110,0.22)"; e.currentTarget.style.borderColor = "#D9C7A9"; }}
-              onMouseLeave={e => { e.currentTarget.querySelector("img").style.transform = "scale(1.0)"; e.currentTarget.querySelector(".card-overlay").style.background = "linear-gradient(to top, rgba(0,0,0,0.97) 0%, rgba(0,0,0,0.75) 45%, rgba(0,0,0,0.2) 100%)"; e.currentTarget.style.transform = "translateY(-10px)"; e.currentTarget.style.boxShadow = "0 30px 60px -18px rgba(0,0,0,0.85), 0 0 0 1px rgba(164,141,110,0.3), 0 16px 32px rgba(164,141,110,0.12)"; e.currentTarget.style.borderColor = "#A48D6E"; }}
+              onMouseEnter={e => { e.currentTarget.style.transform = "translateY(-18px)"; e.currentTarget.style.boxShadow = "0 45px 90px -20px rgba(0,0,0,0.92), 0 0 0 1px rgba(164,141,110,0.55), 0 22px 44px rgba(164,141,110,0.22)"; e.currentTarget.style.borderColor = "#D9C7A9"; }}
+              onMouseLeave={e => { e.currentTarget.style.transform = "translateY(-10px)"; e.currentTarget.style.boxShadow = "0 30px 60px -18px rgba(0,0,0,0.85), 0 0 0 1px rgba(164,141,110,0.3), 0 16px 32px rgba(164,141,110,0.12)"; e.currentTarget.style.borderColor = "#A48D6E"; }}
             >
-              <img src="https://i.imgur.com/9SFko3s.jpeg" alt="Summer Intensive" style={{ position:"absolute", inset:0, width:"100%", height:"100%", objectFit:"cover", objectPosition:"center", transition:"transform 0.7s ease" }} />
-              <div className="card-overlay" style={{ position:"absolute", inset:0, background:"linear-gradient(to top, rgba(0,0,0,0.97) 0%, rgba(0,0,0,0.75) 45%, rgba(0,0,0,0.2) 100%)", transition:"background 0.4s ease" }} />
               <div style={{ position:"absolute", inset:0, padding:isMobile?"28px":"40px", display:"flex", flexDirection:"column", justifyContent:"flex-end" }}>
                 <h3 style={{ fontFamily:"'Cinzel', serif", fontSize:35, fontWeight:400, color:"#E4D5C1", lineHeight:1, letterSpacing:"0.08em", textTransform:"uppercase", marginBottom:12 }}>Summer Intensive</h3>
                 <p style={{ fontFamily:serif, fontSize:18, color:"#E4D5C1", fontStyle:"italic", fontWeight:400, lineHeight:1.5, marginBottom:8 }}>Two Weeks. Full Days. Real Ventures.</p>
@@ -3948,19 +3946,17 @@ function HomePage({ setPage, openInquiry }) {
               </div>
             </div>
 
-            {/* Flagship */}
+            {/* Foundation Semester */}
             <div
               style={{ position:"relative", height:580, overflow:"hidden", cursor:"pointer", background:"#100F0C", border:"1px solid #A48D6E", borderRadius:3, boxShadow:"0 30px 60px -18px rgba(0,0,0,0.85), 0 0 0 1px rgba(164,141,110,0.3), 0 16px 32px rgba(164,141,110,0.12)", transform:"translateY(-10px)", transition:"transform 0.4s ease, box-shadow 0.4s ease, border-color 0.4s ease" }}
-              onClick={() => setPage("flagship")}
-              onMouseEnter={e => { e.currentTarget.querySelector("img").style.transform = "scale(1.05)"; e.currentTarget.querySelector(".card-overlay").style.background = "linear-gradient(to top, rgba(0,0,0,0.92) 0%, rgba(0,0,0,0.65) 45%, rgba(0,0,0,0.15) 100%)"; e.currentTarget.style.transform = "translateY(-18px)"; e.currentTarget.style.boxShadow = "0 45px 90px -20px rgba(0,0,0,0.92), 0 0 0 1px rgba(164,141,110,0.55), 0 22px 44px rgba(164,141,110,0.22)"; e.currentTarget.style.borderColor = "#D9C7A9"; }}
-              onMouseLeave={e => { e.currentTarget.querySelector("img").style.transform = "scale(1.0)"; e.currentTarget.querySelector(".card-overlay").style.background = "linear-gradient(to top, rgba(0,0,0,0.97) 0%, rgba(0,0,0,0.75) 45%, rgba(0,0,0,0.2) 100%)"; e.currentTarget.style.transform = "translateY(-10px)"; e.currentTarget.style.boxShadow = "0 30px 60px -18px rgba(0,0,0,0.85), 0 0 0 1px rgba(164,141,110,0.3), 0 16px 32px rgba(164,141,110,0.12)"; e.currentTarget.style.borderColor = "#A48D6E"; }}
+              onClick={() => setPage("foundation-detail")}
+              onMouseEnter={e => { e.currentTarget.style.transform = "translateY(-18px)"; e.currentTarget.style.boxShadow = "0 45px 90px -20px rgba(0,0,0,0.92), 0 0 0 1px rgba(164,141,110,0.55), 0 22px 44px rgba(164,141,110,0.22)"; e.currentTarget.style.borderColor = "#D9C7A9"; }}
+              onMouseLeave={e => { e.currentTarget.style.transform = "translateY(-10px)"; e.currentTarget.style.boxShadow = "0 30px 60px -18px rgba(0,0,0,0.85), 0 0 0 1px rgba(164,141,110,0.3), 0 16px 32px rgba(164,141,110,0.12)"; e.currentTarget.style.borderColor = "#A48D6E"; }}
             >
-              <img src="https://i.imgur.com/wBie2YG.jpeg" alt="Flagship Overview" style={{ position:"absolute", inset:0, width:"100%", height:"100%", objectFit:"cover", objectPosition:"center", transition:"transform 0.7s ease" }} />
-              <div className="card-overlay" style={{ position:"absolute", inset:0, background:"linear-gradient(to top, rgba(0,0,0,0.97) 0%, rgba(0,0,0,0.75) 45%, rgba(0,0,0,0.2) 100%)", transition:"background 0.4s ease" }} />
               <div style={{ position:"absolute", inset:0, padding:isMobile?"28px":"40px", display:"flex", flexDirection:"column", justifyContent:"flex-end" }}>
-                <h3 style={{ fontFamily:"'Cinzel', serif", fontSize:35, fontWeight:400, color:"#E4D5C1", lineHeight:1, letterSpacing:"0.08em", textTransform:"uppercase", marginBottom:12 }}>The Flagship</h3>
-                <p style={{ fontFamily:serif, fontSize:18, color:"#E4D5C1", fontStyle:"italic", fontWeight:400, lineHeight:1.5, marginBottom:8 }}>Premier After-School Program. Two Semesters. Weekday & Weekend Cohorts.</p>
-                <p style={{ fontFamily:lora, fontSize:13, color:"#A48D6E", fontWeight:400, letterSpacing:"0.04em", marginBottom:24 }}>Foundation &amp; Venture Semesters · Two tracks</p>
+                <h3 style={{ fontFamily:"'Cinzel', serif", fontSize:35, fontWeight:400, color:"#E4D5C1", lineHeight:1, letterSpacing:"0.08em", textTransform:"uppercase", marginBottom:12 }}>Foundation Semester</h3>
+                <p style={{ fontFamily:serif, fontSize:18, color:"#E4D5C1", fontStyle:"italic", fontWeight:400, lineHeight:1.5, marginBottom:8 }}>After-School Program. Weekday & Weekend Cohorts.</p>
+                <p style={{ fontFamily:lora, fontSize:13, color:"#A48D6E", fontWeight:400, letterSpacing:"0.04em", marginBottom:24 }}>Fall 2026 · September – December</p>
                 <button style={{ fontFamily:sans, fontSize:9, fontWeight:700, letterSpacing:"0.2em", textTransform:"uppercase", background:"transparent", border:"1px solid rgba(228,213,193,0.4)", color:"#E4D5C1", padding:"10px 20px", cursor:"pointer", alignSelf:"flex-start", transition:"all 0.2s" }}
                   onMouseEnter={e=>{e.currentTarget.style.background="#E4D5C1";e.currentTarget.style.color="#0F0F0F";}}
                   onMouseLeave={e=>{e.currentTarget.style.background="transparent";e.currentTarget.style.color="#E4D5C1";}}>
@@ -3969,19 +3965,17 @@ function HomePage({ setPage, openInquiry }) {
               </div>
             </div>
 
-            {/* Six-Week */}
+            {/* Venture Semester */}
             <div
               style={{ position:"relative", height:580, overflow:"hidden", cursor:"pointer", background:"#100F0C", border:"1px solid #A48D6E", borderRadius:3, boxShadow:"0 30px 60px -18px rgba(0,0,0,0.85), 0 0 0 1px rgba(164,141,110,0.3), 0 16px 32px rgba(164,141,110,0.12)", transform:"translateY(-10px)", transition:"transform 0.4s ease, box-shadow 0.4s ease, border-color 0.4s ease" }}
-              onClick={() => setPage("intensive")}
-              onMouseEnter={e => { e.currentTarget.querySelector("img").style.transform = "scale(1.05)"; e.currentTarget.querySelector(".card-overlay").style.background = "linear-gradient(to top, rgba(0,0,0,0.92) 0%, rgba(0,0,0,0.65) 45%, rgba(0,0,0,0.15) 100%)"; e.currentTarget.style.transform = "translateY(-18px)"; e.currentTarget.style.boxShadow = "0 45px 90px -20px rgba(0,0,0,0.92), 0 0 0 1px rgba(164,141,110,0.55), 0 22px 44px rgba(164,141,110,0.22)"; e.currentTarget.style.borderColor = "#D9C7A9"; }}
-              onMouseLeave={e => { e.currentTarget.querySelector("img").style.transform = "scale(1.0)"; e.currentTarget.querySelector(".card-overlay").style.background = "linear-gradient(to top, rgba(0,0,0,0.97) 0%, rgba(0,0,0,0.75) 45%, rgba(0,0,0,0.2) 100%)"; e.currentTarget.style.transform = "translateY(-10px)"; e.currentTarget.style.boxShadow = "0 30px 60px -18px rgba(0,0,0,0.85), 0 0 0 1px rgba(164,141,110,0.3), 0 16px 32px rgba(164,141,110,0.12)"; e.currentTarget.style.borderColor = "#A48D6E"; }}
+              onClick={() => setPage("venture-detail")}
+              onMouseEnter={e => { e.currentTarget.style.transform = "translateY(-18px)"; e.currentTarget.style.boxShadow = "0 45px 90px -20px rgba(0,0,0,0.92), 0 0 0 1px rgba(164,141,110,0.55), 0 22px 44px rgba(164,141,110,0.22)"; e.currentTarget.style.borderColor = "#D9C7A9"; }}
+              onMouseLeave={e => { e.currentTarget.style.transform = "translateY(-10px)"; e.currentTarget.style.boxShadow = "0 30px 60px -18px rgba(0,0,0,0.85), 0 0 0 1px rgba(164,141,110,0.3), 0 16px 32px rgba(164,141,110,0.12)"; e.currentTarget.style.borderColor = "#A48D6E"; }}
             >
-              <img src="https://i.imgur.com/ikVekYZ.jpeg" alt="Six-Week Intensive" style={{ position:"absolute", inset:0, width:"100%", height:"100%", objectFit:"cover", objectPosition:"center", transition:"transform 0.7s ease" }} />
-              <div className="card-overlay" style={{ position:"absolute", inset:0, background:"linear-gradient(to top, rgba(0,0,0,0.97) 0%, rgba(0,0,0,0.75) 45%, rgba(0,0,0,0.2) 100%)", transition:"background 0.4s ease" }} />
               <div style={{ position:"absolute", inset:0, padding:isMobile?"28px":"40px", display:"flex", flexDirection:"column", justifyContent:"flex-end" }}>
-                <h3 style={{ fontFamily:"'Cinzel', serif", fontSize:35, fontWeight:400, color:"#E4D5C1", lineHeight:1, letterSpacing:"0.08em", textTransform:"uppercase", marginBottom:12 }}>The Ignition</h3>
-                <p style={{ fontFamily:serif, fontSize:18, color:"#E4D5C1", fontStyle:"italic", fontWeight:400, lineHeight:1.5, marginBottom:8 }}>Four waves per year. Six weeks of ignition.</p>
-                <p style={{ fontFamily:lora, fontSize:13, color:"#A48D6E", fontWeight:400, letterSpacing:"0.04em", marginBottom:24 }}>Oct 2026 · Jan · Apr · Jul 2027</p>
+                <h3 style={{ fontFamily:"'Cinzel', serif", fontSize:35, fontWeight:400, color:"#E4D5C1", lineHeight:1, letterSpacing:"0.08em", textTransform:"uppercase", marginBottom:12 }}>Venture Semester</h3>
+                <p style={{ fontFamily:serif, fontSize:18, color:"#E4D5C1", fontStyle:"italic", fontWeight:400, lineHeight:1.5, marginBottom:8 }}>Build & Pitch a Real Venture.</p>
+                <p style={{ fontFamily:lora, fontSize:13, color:"#A48D6E", fontWeight:400, letterSpacing:"0.04em", marginBottom:24 }}>Spring 2027 · January – May</p>
                 <button style={{ fontFamily:sans, fontSize:9, fontWeight:700, letterSpacing:"0.2em", textTransform:"uppercase", background:"transparent", border:"1px solid rgba(228,213,193,0.4)", color:"#E4D5C1", padding:"10px 20px", cursor:"pointer", alignSelf:"flex-start", transition:"all 0.2s" }}
                   onMouseEnter={e=>{e.currentTarget.style.background="#E4D5C1";e.currentTarget.style.color="#0F0F0F";}}
                   onMouseLeave={e=>{e.currentTarget.style.background="transparent";e.currentTarget.style.color="#E4D5C1";}}>
@@ -4041,8 +4035,8 @@ function HomePage({ setPage, openInquiry }) {
               <h2 style={{ fontFamily:"'Bodoni Cyrillic', 'Bodoni MT', serif", fontSize:isMobile?"clamp(44px,10vw,68px)":"clamp(56px,6.5vw,92px)", fontWeight:400, lineHeight:0.92, letterSpacing:"0.04em", textTransform:"uppercase", color:"#010000", margin:"0 0 18px" }}>Two semesters.<br/><em style={{ fontWeight:300, color:"#010000" }}>One complete<br/>formation.</em></h2>
               <p style={{ fontFamily: sans, fontSize:isMobile?16:18, lineHeight:1.9, color:"#010000", fontWeight:400, letterSpacing:"0.02em", textAlign:"justify", margin:"0 0 30px", maxWidth:700 }}>An after-school program of applied business, leadership, The Art of Class, and applied experience for high school students in Orange County.</p>
               <div style={{ display:"flex", gap:14, flexWrap:"wrap", marginBottom:34 }}>
-                <button onClick={() => setPage("apply")} style={{ fontFamily: sans, fontSize:10, letterSpacing:"0.16em", padding:"13px 28px", background:"#A48D6E", border:"1px solid #A48D6E", color:"#100F0C", textTransform:"uppercase", cursor:"pointer", fontWeight:700, whiteSpace:"nowrap", transition:"all .2s" }}>Apply — Flagship</button>
-                <button onClick={() => setPage("flagship2")} style={{ fontFamily: sans, padding:"13px 24px", fontSize:10, letterSpacing:"0.13em", textTransform:"uppercase", background:"transparent", color:"#010000", border:"1px solid rgba(0,0,0,.25)", cursor:"pointer", fontWeight:550 }}>View the Year</button>
+                <button onClick={() => setPage("foundation-detail")} style={{ fontFamily: sans, fontSize:10, letterSpacing:"0.16em", padding:"13px 28px", background:"#100F0C", border:"1px solid #100F0C", color:"#E4D5C1", textTransform:"uppercase", cursor:"pointer", fontWeight:700, whiteSpace:"nowrap", transition:"all .2s" }}>Apply — Foundation</button>
+                <button onClick={() => setPage("venture-detail")} style={{ fontFamily: sans, padding:"13px 24px", fontSize:10, letterSpacing:"0.13em", textTransform:"uppercase", background:"#100F0C", color:"#E4D5C1", border:"1px solid #100F0C", cursor:"pointer", fontWeight:700 }}>Apply — Venture</button>
               </div>
               <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:16, maxWidth:700 }}>
                 {[["Sep 8 – Dec 19","Foundation Semester"],["Jan 26 – May 22","Venture Semester"],["20 Students","Per Cohort"],["5 Hours","Per Week"]].map(([n,t],i) => (
@@ -4082,7 +4076,7 @@ function HomePage({ setPage, openInquiry }) {
               {["The Flagship is the Academy's principal program — a semester-based formation for select ambitious high school students. Students may enroll in one semester or both. Each semester is designed to stand on its own; students may apply directly to Foundation, Venture, or the full academic-year pathway.","The Foundation Semester runs September through December. Core Business disciplines, a weekly War Room, and The Art of Class — Excalibur's most distinctive offering. It closes with The Excalibur Gala in December.","The Venture Semester runs January through May. Students choose one venture track at enrollment — Da Vinci (commercial market) or Medici (community-impact venture) — and build across sixteen weeks, pitching to invited investors, founders, executives, and practitioners at their Finale.","Both semesters run in two parallel tracks: Saturday and Weekday (Tuesday & Thursday). Both formats follow the same curriculum, and academic standard."].map((p,i) => (
                 <p key={i} style={{ fontFamily: "'Lora', Georgia, serif", fontSize:15, lineHeight:1.7, color:"#E4D5C1", fontWeight:400, textAlign:"justify", margin:0 }}>{p}</p>
               ))}
-              <button onClick={() => setPage("apply")} style={{ fontFamily: "'Lora', Georgia, serif", fontSize:11, letterSpacing:"0.15em", padding:"13px 24px", background:"#A48D6E", border:"none", color:"#100F0C", textTransform:"uppercase", cursor:"pointer", fontWeight:600, whiteSpace:"nowrap", transition:"all .2s", marginTop:14, alignSelf:"flex-start" }}>Apply — Flagship →</button>
+              <button onClick={() => setPage("flagship2")} style={{ fontFamily: "'Lora', Georgia, serif", fontSize:11, letterSpacing:"0.15em", padding:"13px 24px", background:"#A48D6E", border:"none", color:"#100F0C", textTransform:"uppercase", cursor:"pointer", fontWeight:600, whiteSpace:"nowrap", transition:"all .2s", marginTop:14, alignSelf:"flex-start" }}>View Flagship Program →</button>
             </div>
           </div>
           <div style={{ background:"#E4D5C1", display:"grid", gridTemplateRows:isMobile?"300px auto":"480px auto" }}>
@@ -4179,7 +4173,7 @@ function HomePage({ setPage, openInquiry }) {
                   onClick={() => setPage("venture-detail")}
                   style={{ fontFamily:sans, fontSize:10, letterSpacing:"0.16em", textTransform:"uppercase", color:"#E4D5C1", fontWeight:700, background:"#320E0E", border:"none", cursor:"pointer", padding:"12px 28px", marginTop:22, display:"inline-block" }}
                 >
-                  Learn More
+                  Explore Venture Semester
                 </button>
               </div>
             </div>
@@ -8225,12 +8219,11 @@ function PortalPage({ setPage }) {
   const [loading, setLoading] = React.useState(true);
   const [session, setSession] = React.useState(null);
   const [authMode, setAuthMode] = React.useState("login"); // login | signup
-  const [authForm, setAuthForm] = React.useState({ email: "", password: "", firstName: "", lastName: "" });
+  const [authForm, setAuthForm] = React.useState({ email: "", password: "", confirmPassword: "", firstName: "", lastName: "", phone: "", roleChoice: "student" });
   const [authError, setAuthError] = React.useState("");
   const [authBusy, setAuthBusy] = React.useState(false);
 
   // ── Empty-state shapes, reused both for initial useState() and for the full reset on sign-out / new session ──
-  const EMPTY_PROFILE_FORM = { firstName: "", lastName: "", phone: "", grade: "", age: "" };
   const EMPTY_APP_FORM = {
     // Section 1: Student Information
     studentFirstName: "", studentLastName: "", preferredName: "", dateOfBirth: "", currentGrade: "", gradeEnteringFall: "", currentSchool: "", cityOfResidence: "", studentEmail: "", studentPhone: "",
@@ -8258,11 +8251,10 @@ function PortalPage({ setPage }) {
   const EMPTY_SETTINGS_FORM = { firstName: "", lastName: "", phone: "", grade: "", age: "" };
   const EMPTY_CONSULT_FORM = { preferredDates: "", preferredTimes: [{ start: "", end: "" }], contactMethod: "", notes: "" };
 
-  const [role, setRole] = React.useState(null); // 'student' | 'parent' | null
+  const [role, setRole] = React.useState(null); // 'student' | 'parent' | 'admin' | null
   const [student, setStudent] = React.useState(null);
-  const [needsProfile, setNeedsProfile] = React.useState(false);
+  const [accountNotFound, setAccountNotFound] = React.useState(false); // true if no student/parent/admin record matched this login
   const [roleResolved, setRoleResolved] = React.useState(false); // true once we've checked the current session against students/parent_links
-  const [profileForm, setProfileForm] = React.useState(EMPTY_PROFILE_FORM);
 
   const [application, setApplication] = React.useState(null);
   const [appForm, setAppForm] = React.useState(EMPTY_APP_FORM);
@@ -8305,8 +8297,7 @@ function PortalPage({ setPage }) {
   const resetPortalState = React.useCallback(() => {
     setRole(null);
     setStudent(null);
-    setNeedsProfile(false);
-    setProfileForm(EMPTY_PROFILE_FORM);
+    setAccountNotFound(false);
     setApplication(null);
     setAppForm(EMPTY_APP_FORM);
     setAppStep(1);
@@ -8465,10 +8456,12 @@ function PortalPage({ setPage }) {
         return;
       }
 
-      // New user, no student or parent record yet — needs onboarding
+      // No student, parent, or admin record matched this login.
+      // (Signup now creates the student row immediately, so this should only happen
+      // for a parent who signed up without yet being invited by their student.)
       if (roleCheckSessionRef.current !== uid) return;
-      setRole("student"); // default new signups to student profile creation
-      setNeedsProfile(true);
+      setRole(null);
+      setAccountNotFound(true);
       setRoleResolved(true);
     })();
   }, [sb, session]);
@@ -8541,46 +8534,40 @@ function PortalPage({ setPage }) {
   const handleAuthSubmit = async () => {
     if (!sb) return;
     setAuthError("");
-    setAuthBusy(true);
     if (authMode === "signup") {
+      if (!authForm.firstName.trim() || !authForm.lastName.trim()) { setAuthError("Please enter your first and last name."); return; }
+      if (!authForm.phone.trim()) { setAuthError("Please enter a phone number."); return; }
+      if (!authForm.password || authForm.password !== authForm.confirmPassword) { setAuthError("Passwords do not match."); return; }
+      setAuthBusy(true);
       const { data, error } = await sb.auth.signUp({ email: authForm.email, password: authForm.password });
       if (error) { setAuthError(error.message); setAuthBusy(false); return; }
-      setProfileForm(p => ({ ...p, firstName: authForm.firstName, lastName: authForm.lastName }));
+      const uid = data && data.user && data.user.id;
+      if (uid && authForm.roleChoice === "student") {
+        const { data: studentRow, error: insertError } = await sb.from("students").insert({
+          auth_user_id: uid,
+          first_name: authForm.firstName,
+          last_name: authForm.lastName,
+          email: authForm.email,
+          phone: authForm.phone,
+        }).select().single();
+        if (insertError) { setAuthError(insertError.message); setAuthBusy(false); return; }
+        setStudent(studentRow);
+        setRole("student");
+        setRoleResolved(true);
+      }
+      setAuthBusy(false);
     } else {
+      setAuthBusy(true);
       const { error } = await sb.auth.signInWithPassword({ email: authForm.email, password: authForm.password });
       if (error) { setAuthError(error.message); setAuthBusy(false); return; }
+      setAuthBusy(false);
     }
-    setAuthBusy(false);
   };
 
   const handleSignOut = async () => {
     if (sb) await sb.auth.signOut();
     setRoleResolved(false);
     resetPortalState();
-  };
-
-  // ── CREATE STUDENT PROFILE (first login after signup) ──
-  const handleCreateProfile = async () => {
-    if (!sb || !session) return;
-    if (!profileForm.firstName || !profileForm.lastName) return;
-    setAuthBusy(true);
-    const { data, error } = await sb.from("students").insert({
-      auth_user_id: session.user.id,
-      first_name: profileForm.firstName,
-      last_name: profileForm.lastName,
-      email: session.user.email,
-      phone: profileForm.phone,
-      grade: profileForm.grade,
-      age: profileForm.age ? parseInt(profileForm.age) : null,
-    }).select().single();
-    setAuthBusy(false);
-    if (!error && data) {
-      setStudent(data);
-      setRole("student");
-      setNeedsProfile(false);
-    } else if (error) {
-      setAuthError(error.message);
-    }
   };
 
   // ── APPLICATION ──
@@ -8799,13 +8786,25 @@ function PortalPage({ setPage }) {
             <p style={{ fontFamily: lora, fontSize: 15, color: t_gray, lineHeight: 1.7, marginBottom: 32 }}>{authMode === "login" ? "Access your application, consultations, and admissions messages." : "Set up access to track your application, schedule consultations, and message admissions."}</p>
 
             {authMode === "signup" && (
-              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10, marginBottom: 10 }}>
-                <input type="text" placeholder="First Name" value={authForm.firstName} onChange={e => setAuthForm(f => ({ ...f, firstName: e.target.value }))} style={authInputStyle} />
-                <input type="text" placeholder="Last Name" value={authForm.lastName} onChange={e => setAuthForm(f => ({ ...f, lastName: e.target.value }))} style={authInputStyle} />
-              </div>
+              <>
+                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10, marginBottom: 10 }}>
+                  <input type="text" placeholder="First Name" value={authForm.firstName} onChange={e => setAuthForm(f => ({ ...f, firstName: e.target.value }))} style={authInputStyle} />
+                  <input type="text" placeholder="Last Name" value={authForm.lastName} onChange={e => setAuthForm(f => ({ ...f, lastName: e.target.value }))} style={authInputStyle} />
+                </div>
+                <select value={authForm.roleChoice} onChange={e => setAuthForm(f => ({ ...f, roleChoice: e.target.value }))} style={{ ...authInputStyle, marginBottom: 10, width: "100%" }}>
+                  <option value="student">I am a Student</option>
+                  <option value="parent">I am a Parent / Guardian</option>
+                </select>
+              </>
             )}
             <input type="email" placeholder="Email Address" value={authForm.email} onChange={e => setAuthForm(f => ({ ...f, email: e.target.value }))} style={{ ...authInputStyle, marginBottom: 10 }} />
-            <input type="password" placeholder="Password" value={authForm.password} onChange={e => setAuthForm(f => ({ ...f, password: e.target.value }))} style={{ ...authInputStyle, marginBottom: 22 }} />
+            {authMode === "signup" && (
+              <input type="tel" placeholder="Phone Number" value={authForm.phone} onChange={e => setAuthForm(f => ({ ...f, phone: e.target.value }))} style={{ ...authInputStyle, marginBottom: 10 }} />
+            )}
+            <input type="password" placeholder="Password" value={authForm.password} onChange={e => setAuthForm(f => ({ ...f, password: e.target.value }))} style={{ ...authInputStyle, marginBottom: authMode === "signup" ? 10 : 22 }} />
+            {authMode === "signup" && (
+              <input type="password" placeholder="Confirm Password" value={authForm.confirmPassword} onChange={e => setAuthForm(f => ({ ...f, confirmPassword: e.target.value }))} style={{ ...authInputStyle, marginBottom: 22 }} />
+            )}
 
             {authError && <p style={{ fontFamily: lora, fontSize: 14, color: "#B23B3B", marginBottom: 16 }}>{authError}</p>}
 
@@ -8832,35 +8831,22 @@ function PortalPage({ setPage }) {
     return <div style={{ background: "#100F0C", minHeight: "100vh" }} />;
   }
 
-  // ── LOGGED IN, NO STUDENT PROFILE YET — same minimal system ──
-  if (needsProfile) {
+  // ── LOGGED IN, BUT NO STUDENT/PARENT/ADMIN RECORD MATCHED ──
+  // Signup creates the student row immediately now, so this mainly covers a parent
+  // who signed up before their student sent a portal invite.
+  if (accountNotFound) {
     const t_black = "#111111";
     const t_white = "#FFFFFF";
     const t_offwhite = "#F4F2ED";
     const t_gray = "#6B6B68";
-    const t_line = "rgba(17,17,17,0.12)";
-    const pInputStyle = { ...inputStyle, background: t_white, border: `1px solid ${t_line}`, color: t_black, borderRadius: 8 };
     return (
       <div className="portal-page" style={{ background: t_offwhite, minHeight: "100vh" }}>
-        <style>{`.portal-page input, .portal-page textarea, .portal-page select { color: ${t_black} !important; } .portal-page input::placeholder, .portal-page textarea::placeholder { color: rgba(17,17,17,.4) !important; }`}</style>
         <Breadcrumb items={[{ label: "Home", page: "home" }]} setPage={setPage} />
-        <div style={{ maxWidth: 460, margin: "0 auto", padding: isMobile ? "48px 24px 80px" : "72px 24px 100px" }}>
-          <p style={{ fontFamily: lora, fontSize: 14, letterSpacing: "0.3em", color: t_gray, fontWeight: 600, textTransform: "uppercase", marginBottom: 16, textAlign: "center" }}>One More Step</p>
-          <h1 style={{ fontFamily: cg, fontSize: isMobile ? 26 : 30, fontWeight: 700, color: t_black, lineHeight: 1.1, marginBottom: 28, textAlign: "center" }}>Complete Your Profile</h1>
-
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10, marginBottom: 10 }}>
-            <input type="text" placeholder="First Name" value={profileForm.firstName} onChange={e => setProfileForm(f => ({ ...f, firstName: e.target.value }))} style={pInputStyle} />
-            <input type="text" placeholder="Last Name" value={profileForm.lastName} onChange={e => setProfileForm(f => ({ ...f, lastName: e.target.value }))} style={pInputStyle} />
-          </div>
-          <input type="text" placeholder="Phone Number" value={profileForm.phone} onChange={e => setProfileForm(f => ({ ...f, phone: e.target.value }))} style={{ ...pInputStyle, marginBottom: 10 }} />
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10, marginBottom: 18 }}>
-            <input type="text" placeholder="Age" value={profileForm.age} onChange={e => setProfileForm(f => ({ ...f, age: e.target.value }))} style={pInputStyle} />
-            <input type="text" placeholder="Current Grade" value={profileForm.grade} onChange={e => setProfileForm(f => ({ ...f, grade: e.target.value }))} style={pInputStyle} />
-          </div>
-          {authError && <p style={{ fontFamily: lora, fontSize: 14, color: "#B23B3B", marginBottom: 14 }}>{authError}</p>}
-          <button onClick={handleCreateProfile} disabled={authBusy} style={{ fontFamily: lora, padding: "16px 0", background: t_black, border: "none", color: t_white, fontSize: 14, fontWeight: 700, letterSpacing: "0.16em", textTransform: "uppercase", cursor: "pointer", width: "100%", borderRadius: 8 }}>
-            {authBusy ? "Saving..." : "Continue to Portal →"}
-          </button>
+        <div style={{ maxWidth: 460, margin: "0 auto", padding: isMobile ? "48px 24px 80px" : "72px 24px 100px", textAlign: "center" }}>
+          <p style={{ fontFamily: lora, fontSize: 14, letterSpacing: "0.3em", color: t_gray, fontWeight: 600, textTransform: "uppercase", marginBottom: 16 }}>No Linked Account Found</p>
+          <h1 style={{ fontFamily: cg, fontSize: isMobile ? 26 : 30, fontWeight: 700, color: t_black, lineHeight: 1.1, marginBottom: 20 }}>We couldn't find a portal account for this email.</h1>
+          <p style={{ fontFamily: lora, fontSize: 15, color: t_gray, lineHeight: 1.7, marginBottom: 32 }}>If you're a parent or guardian, ask your student to send you a portal invite from their Family tab. If you believe this is an error, please contact admissions.</p>
+          <button onClick={handleSignOut} style={{ fontFamily: lora, padding: "16px 32px", background: t_black, border: "none", color: t_white, fontSize: 14, fontWeight: 700, letterSpacing: "0.16em", textTransform: "uppercase", cursor: "pointer", borderRadius: 8 }}>Sign Out</button>
         </div>
       </div>
     );
