@@ -8152,7 +8152,7 @@ function PortalPage({ setPage }) {
     // Section 5: Shared Short Answers
     dreamAnswer: "", whyJoin: "", leadershipStory: "", growthArea: "", publicSpeakingComfort: "", teamRole: "",
     // Section 6: Program-specific (kept nested, mirrors program_responses jsonb)
-    summer: { wave: "", wantsScholarship: "", hasIdea: "", ideaDescription: "", ventureTypes: [], teamComfort: "", outsideCommitment: "", successDefinition: "", trackInterest: "", teamRolePreference: "" },
+    summer: { wave: "", wantsScholarship: "", scholarshipReason: "", hasIdea: "", ideaDescription: "", ventureTypes: [], teamComfort: "", outsideCommitment: "", successDefinition: "", trackInterest: "", teamRolePreference: "" },
     foundation: { excitingAreas: [], leaderVision: "", shapingExperience: "", commitmentReady: "", endGoal: "" },
     venture: { hasConcept: "", conceptDescription: "", excitingAreas: [], trackInterest: "", problemToSolve: "", commitmentReady: "", endPresentation: "" },
     // Section 7: Schedule & Availability
@@ -8433,7 +8433,7 @@ function PortalPage({ setPage }) {
           gpaRange: app.gpa_range || "", academicInterests: app.academic_interests || [], extracurriculars: app.extracurriculars || "", priorProgramsExperience: app.prior_programs_experience ? "yes" : "", priorProgramsDescription: app.prior_programs_description || "",
           programs: app.programs || [], applyingMultiple: app.applying_multiple ? "yes" : "", firstChoiceProgram: app.first_choice_program || "", heardAbout: app.heard_about || "", referralName: app.referral_name || "",
           dreamAnswer: app.dream_answer || "", whyJoin: app.why_join || "", leadershipStory: app.leadership_story || "", growthArea: app.growth_area || "", publicSpeakingComfort: app.public_speaking_comfort || "", teamRole: app.team_role || "",
-          summer: { wave: "", wantsScholarship: "", hasIdea: "", ideaDescription: "", ventureTypes: [], teamComfort: "", outsideCommitment: "", successDefinition: "", trackInterest: "", teamRolePreference: "", ...(pr.summer || {}) },
+          summer: { wave: "", wantsScholarship: "", scholarshipReason: "", hasIdea: "", ideaDescription: "", ventureTypes: [], teamComfort: "", outsideCommitment: "", successDefinition: "", trackInterest: "", teamRolePreference: "", ...(pr.summer || {}) },
           foundation: { excitingAreas: [], leaderVision: "", shapingExperience: "", commitmentReady: "", endGoal: "", ...(pr.foundation || {}) },
           venture: { hasConcept: "", conceptDescription: "", excitingAreas: [], trackInterest: "", problemToSolve: "", commitmentReady: "", endPresentation: "", ...(pr.venture || {}) },
           track: app.track || "", summerAttendFull: app.summer_attend_full || "", summerConflicts: app.summer_conflicts || "", summerAttendFinale: app.summer_attend_finale || "", academicYearConflicts: app.academic_year_conflicts || "",
@@ -9033,6 +9033,7 @@ function PortalPage({ setPage }) {
                   <Field label="Programs" value={(app.programs || []).join(", ") || app.program} />
                   <Field label="Scholarship Interest" value={app.program_responses?.summer?.wantsScholarship === "yes" ? "Yes — requested consideration" : app.program_responses?.summer?.wantsScholarship === "no" ? "No" : "—"} />
                   <Field label="Summer Wave" value={app.program_responses?.summer?.wave === "wave2" ? "Wave 2" : "—"} />
+                  <Field label="Scholarship Reason" value={app.program_responses?.summer?.scholarshipReason} />
                   <Field label="First Choice" value={app.first_choice_program} />
                   <Field label="Date of Birth" value={app.date_of_birth} />
                   <Field label="Current Grade" value={app.current_grade} />
@@ -9757,17 +9758,9 @@ function PortalPage({ setPage }) {
                   <div style={{ background: m_canvas, borderRadius: 16, padding: isMobile ? "22px 20px" : "26px 28px", marginBottom: 32 }}>
                     <p style={{ fontFamily: sans, fontWeight: 700, fontSize: 15, color: m_ink, marginBottom: 6 }}>Summer Intensive Wave</p>
                     <p style={{ fontFamily: sans, fontSize: 13, color: m_gray, lineHeight: 1.6, marginBottom: 16 }}>Wave 1 is closed. Wave 2 is now enrolling for July 27 – August 8, 2026.</p>
-                    <div style={{ display: "flex", gap: 10, flexWrap: "wrap", marginBottom: 28 }}>
-                      <button type="button" disabled style={{ fontFamily: sans, fontSize: 14, fontWeight: 600, padding: "12px 20px", borderRadius: 999, border: "1px solid rgba(17,17,17,.12)", background: "rgba(17,17,17,.05)", color: m_gray, cursor: "not-allowed" }}>Wave 1 — Closed</button>
-                      <button type="button" onClick={() => setVal("summer.wave", "wave2")} style={{ fontFamily: sans, fontSize: 14, fontWeight: 700, padding: "12px 20px", borderRadius: 999, border: "none", background: appForm.summer.wave === "wave2" ? m_ink : m_white, color: appForm.summer.wave === "wave2" ? m_white : m_ink, boxShadow: appForm.summer.wave === "wave2" ? "none" : "0 0 0 1px rgba(17,17,17,.15) inset", cursor: "pointer" }}>Wave 2 — Now Enrolling</button>
-                    </div>
-
-                    <p style={{ fontFamily: sans, fontWeight: 700, fontSize: 15, color: m_ink, marginBottom: 6 }}>Scholarship Consideration</p>
-                    <p style={{ fontFamily: sans, fontSize: 13, color: m_gray, lineHeight: 1.6, marginBottom: 16 }}>Would you like to be considered for one of the limited Summer Scholarship seats? A limited number of seats are available for the Venture Launchpad wave. Selected students receive a $1,500 merit-based scholarship award, bringing summer tuition from $4,500 to $3,000. Awards are reviewed on a rolling basis based on student fit, commitment, and remaining availability.</p>
                     <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
-                      {[["yes", "Yes, I would like to be considered."], ["no", "No, I do not need scholarship consideration."]].map(([v, l]) => (
-                        <button key={v} type="button" onClick={() => setVal("summer.wantsScholarship", v)} style={{ fontFamily: sans, fontSize: 14, fontWeight: appForm.summer.wantsScholarship === v ? 700 : 500, padding: "12px 20px", borderRadius: 999, border: "none", background: appForm.summer.wantsScholarship === v ? m_ink : m_white, color: appForm.summer.wantsScholarship === v ? m_white : m_ink, boxShadow: appForm.summer.wantsScholarship === v ? "none" : "0 0 0 1px rgba(17,17,17,.15) inset", cursor: "pointer" }}>{l}</button>
-                      ))}
+                      <button type="button" disabled style={{ fontFamily: sans, fontSize: 14, fontWeight: 600, padding: "0 20px", height: 46, display: "inline-flex", alignItems: "center", whiteSpace: "nowrap", borderRadius: 999, border: "1px solid rgba(17,17,17,.12)", background: "rgba(17,17,17,.05)", color: m_gray, cursor: "not-allowed" }}>Wave 1 — Closed</button>
+                      <button type="button" onClick={() => setVal("summer.wave", "wave2")} style={{ fontFamily: sans, fontSize: 14, fontWeight: 700, padding: "0 20px", height: 46, display: "inline-flex", alignItems: "center", whiteSpace: "nowrap", borderRadius: 999, border: "none", background: appForm.summer.wave === "wave2" ? m_ink : m_white, color: appForm.summer.wave === "wave2" ? m_white : m_ink, boxShadow: appForm.summer.wave === "wave2" ? "none" : "0 0 0 1px rgba(17,17,17,.15) inset", cursor: "pointer" }}>Wave 2 — Now Enrolling (Jul 27 – Aug 8)</button>
                     </div>
                   </div>
                 )}
@@ -9815,10 +9808,13 @@ function PortalPage({ setPage }) {
             { section: "School & Academic Background", path: "priorProgramsExperience", label: "Have you previously participated in entrepreneurship, debate, leadership, business, Model UN, speech, finance, coding, or similar programs?", type: "pills", options: [["yes", "Yes"], ["no", "No"]] },
             { section: "School & Academic Background", path: "priorProgramsDescription", label: "If yes, please briefly describe the program, activity, or experience.", type: "textarea", hint: "Please include the name of the program or activity, your role, and what you learned or accomplished.", conditional: f => f.priorProgramsExperience === "yes" },
 
-            { section: "Program Selection", path: "applyingMultiple", label: "Are you applying for more than one program?", type: "pills", options: [["yes", "Yes"], ["no", "No"]] },
-            { section: "Program Selection", path: "firstChoiceProgram", label: "If yes, which program is your first choice?", type: "pills", conditional: f => f.applyingMultiple === "yes", options: [["summer", "Venture Launchpad Summer Intensive"], ["foundation", "Foundation Semester"], ["venture", "Venture Semester"], ["full-year", "Full Academic Year"], ["unsure", "Not sure yet"]] },
-            { section: "Program Selection", path: "heardAbout", label: "How did you hear about Excalibur Academy?", type: "pills", hint: "Please let us know if you were referred by an Enrollment Coordinator, team member, current family, student, community partner, or Excalibur affiliate.", options: [["coordinator-team", "Referred by an Enrollment Coordinator or team member"], ["family-student", "Referred by a current family or student"], ["affiliate-partner", "Referred by an Excalibur affiliate or community partner"], ["social", "Social media"], ["school-counselor", "School / counselor"], ["event", "Event or presentation"], ["search", "Online search"], ["other", "Other"]] },
-            { section: "Program Selection", path: "referralName", label: "If someone referred you to Excalibur Academy, please list their name below.", type: "text", optional: true },
+            { section: "Program Selection & Scholarship", path: "summer.wave", label: "Summer Intensive Wave", hint: "Wave 1 is closed. Wave 2 is now enrolling for July 27 – August 8, 2026.", type: "waveSelect", conditional: () => wantsSummer },
+            { section: "Program Selection & Scholarship", path: "summer.wantsScholarship", label: "Would you like to be considered for one of the limited Summer Scholarship seats?", type: "pills", hint: "A limited number of Summer Scholarship seats are available for the Venture Launchpad wave. Selected students receive a $1,500 merit-based scholarship award, bringing summer tuition from $4,500 to $3,000. Awards are reviewed on a rolling basis based on student fit, commitment, and remaining availability.", conditional: () => wantsSummer, options: [["yes", "Yes, I would like to be considered."], ["no", "No, I do not need scholarship consideration."]] },
+            { section: "Program Selection & Scholarship", path: "summer.scholarshipReason", label: "Why would you like to be considered for a Summer Scholarship seat?", type: "textarea", hint: "Please briefly share why you believe you would be a strong fit for the Summer Venture Launchpad, and why this opportunity matters to you.", conditional: f => wantsSummer && f.summer.wantsScholarship === "yes" },
+            { section: "Program Selection & Scholarship", path: "applyingMultiple", label: "Are you applying for more than one program?", type: "pills", options: [["yes", "Yes"], ["no", "No"]] },
+            { section: "Program Selection & Scholarship", path: "firstChoiceProgram", label: "If yes, which program is your first choice?", type: "pills", conditional: f => f.applyingMultiple === "yes", options: [["summer", "Venture Launchpad Summer Intensive"], ["foundation", "Foundation Semester"], ["venture", "Venture Semester"], ["full-year", "Full Academic Year"], ["unsure", "Not sure yet"]] },
+            { section: "Program Selection & Scholarship", path: "heardAbout", label: "How did you hear about Excalibur Academy?", type: "pills", hint: "Please let us know if you were referred by an Enrollment Coordinator, team member, current family, student, community partner, or Excalibur affiliate.", options: [["coordinator-team", "Referred by an Enrollment Coordinator or team member"], ["family-student", "Referred by a current family or student"], ["affiliate-partner", "Referred by an Excalibur affiliate or community partner"], ["social", "Social media"], ["school-counselor", "School / counselor"], ["event", "Event or presentation"], ["search", "Online search"], ["other", "Other"]] },
+            { section: "Program Selection & Scholarship", path: "referralName", label: "If someone referred you to Excalibur Academy, please list their name below.", type: "text", optional: true },
 
             { section: "Student Short Answers", path: "dreamAnswer", label: "Do you have a Dream? How would you describe it, and where do you hope to see yourself in 10 years?", type: "textarea", hint: "This does not need to be a fully developed career plan. We are interested in your ambitions, imagination, values, and sense of direction." },
             { section: "Student Short Answers", path: "whyJoin", label: "Why do you want to join Excalibur Academy?", type: "textarea", hint: "Please explain what attracted you to the program and what you hope to gain from the experience." },
@@ -9970,7 +9966,7 @@ function PortalPage({ setPage }) {
               {options.map(([v, l]) => {
                 const active = value === v;
                 return (
-                  <button key={v} type="button" onClick={() => onChange(v)} style={{ fontFamily: sans, fontSize: 14, padding: "10px 18px", background: active ? "#111111" : "transparent", color: active ? "#FFFFFF" : "#111111", border: "1px solid rgba(17,17,17,.18)", cursor: "pointer", borderRadius: 999 }}>{l}</button>
+                  <button key={v} type="button" onClick={() => onChange(v)} style={{ fontFamily: sans, fontSize: 14, padding: "0 18px", minHeight: 46, display: "inline-flex", alignItems: "center", justifyContent: "center", textAlign: "center", lineHeight: 1.3, background: active ? "#111111" : "transparent", color: active ? "#FFFFFF" : "#111111", border: "1px solid rgba(17,17,17,.18)", cursor: "pointer", borderRadius: 999 }}>{l}</button>
                 );
               })}
             </div>
@@ -9980,7 +9976,7 @@ function PortalPage({ setPage }) {
               {options.map(opt => {
                 const active = values.includes(opt);
                 return (
-                  <button key={opt} type="button" onClick={() => onToggle(opt)} style={{ fontFamily: sans, fontSize: 14, padding: "10px 18px", background: active ? "#111111" : "transparent", color: active ? "#FFFFFF" : "#111111", border: "1px solid rgba(17,17,17,.18)", cursor: "pointer", borderRadius: 999 }}>{opt}</button>
+                  <button key={opt} type="button" onClick={() => onToggle(opt)} style={{ fontFamily: sans, fontSize: 14, padding: "0 18px", minHeight: 46, display: "inline-flex", alignItems: "center", justifyContent: "center", textAlign: "center", lineHeight: 1.3, background: active ? "#111111" : "transparent", color: active ? "#FFFFFF" : "#111111", border: "1px solid rgba(17,17,17,.18)", cursor: "pointer", borderRadius: 999 }}>{opt}</button>
                 );
               })}
             </div>
@@ -9995,6 +9991,14 @@ function PortalPage({ setPage }) {
             }
             if (q.type === "pills") {
               return <PillGroup value={getVal(q.path) || ""} onChange={v => setVal(q.path, v)} options={q.options} />;
+            }
+            if (q.type === "waveSelect") {
+              return (
+                <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
+                  <button type="button" disabled style={{ fontFamily: sans, fontSize: 14, fontWeight: 600, padding: "0 20px", height: 46, display: "inline-flex", alignItems: "center", whiteSpace: "nowrap", borderRadius: 999, border: "1px solid rgba(17,17,17,.12)", background: "rgba(17,17,17,.05)", color: "#8A8A86", cursor: "not-allowed" }}>Wave 1 — Closed</button>
+                  <button type="button" onClick={() => setVal(q.path, "wave2")} style={{ fontFamily: sans, fontSize: 14, fontWeight: 700, padding: "0 20px", height: 46, display: "inline-flex", alignItems: "center", whiteSpace: "nowrap", borderRadius: 999, border: "none", background: getVal(q.path) === "wave2" ? "#111111" : "#FFFFFF", color: getVal(q.path) === "wave2" ? "#FFFFFF" : "#111111", boxShadow: getVal(q.path) === "wave2" ? "none" : "0 0 0 1px rgba(17,17,17,.15) inset", cursor: "pointer" }}>Wave 2 — Now Enrolling (Jul 27 – Aug 8)</button>
+                </div>
+              );
             }
             if (q.type === "checks") {
               return <CheckGroup values={getVal(q.path) || []} onToggle={v => toggleVal(q.path, v)} options={q.options} />;
