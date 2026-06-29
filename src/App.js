@@ -2795,7 +2795,7 @@ function ApplyPage({ setPage, openInquiry }) {
                 For Students Ready to Turn Dreams into Reality
               </h1>
               <p style={{ fontFamily: lora, fontSize: isMobile ? 15 : 17, color: "#100F0C", fontWeight: 400, lineHeight: 1.8, maxWidth: 540, marginBottom: 36 }}>
-                Excalibur Academy admits a limited number of students into each cohort to preserve the quality of instruction, discussion, mentorship, and feedback. The admissions process is personal, selective, and intentionally straightforward.
+                Excalibur Academy admits a limited number of students into each cohort to preserve the quality of instruction, discussion, mentorship, and feedback.
               </p>
               <button onClick={() => openInquiry && openInquiry()} style={{ fontFamily: lora, padding: "16px 40px", background: "#100F0C", border: "none", color: parch, fontSize: isMobile ? 12 : 13, fontWeight: 700, letterSpacing: "0.16em", textTransform: "uppercase", cursor: "pointer", alignSelf: "flex-start" }}>Apply Now →</button>
             </Fade>
@@ -2815,25 +2815,28 @@ function ApplyPage({ setPage, openInquiry }) {
         <div style={{ maxWidth: 1100, margin: "0 auto", padding: isMobile ? "0 24px" : "0 80px" }}>
           <Fade>
             <p style={{ fontFamily: lora, fontSize: isMobile ? 11 : 12, letterSpacing: "0.4em", color: "#8B6914", fontWeight: 700, textTransform: "uppercase", marginBottom: 18, textAlign: "center" }}>Programs Accepting Applications</p>
-            <h2 style={{ fontFamily: cg, fontSize: isMobile ? "clamp(30px,7vw,42px)" : "3.6rem", fontWeight: 600, color: "#100F0C", lineHeight: 1.15, textTransform: "uppercase", letterSpacing: "0.04em", marginBottom: isMobile ? 48 : 76, textAlign: "center" }}>Select Your Program Pathway</h2>
+            <h2 style={{ fontFamily: cg, fontSize: isMobile ? "clamp(30px,7vw,42px)" : "3.6rem", fontWeight: 600, color: "#100F0C", lineHeight: 1.15, textTransform: "uppercase", letterSpacing: "0.04em", marginBottom: 20, textAlign: "center" }}>Select Your Program Pathway</h2>
+            <p style={{ fontFamily: lora, fontSize: isMobile ? 14 : 15, color: "#3F6B3F", fontWeight: 700, textAlign: "center", marginBottom: isMobile ? 48 : 76 }}>Enrollments now open for Summer and Foundation Semester.</p>
           </Fade>
         </div>
 
         {[
           {
-            img: "https://i.imgur.com/9SFko3s.jpeg",
+            img: "https://i.imgur.com/obiNhvF.jpeg",
             status: "ACCEPTING APPLICATIONS NOW", statusColor: "#3F6B3F",
             eyebrow: "Summer Intensive",
             label: "Summer Intensive",
-            dates: "July 27 – August 8, 2026", price: "$4,500", period: "per wave",
+            dates: "July 27, 2026 – August 8, 2026", price: "From $4,500", period: "per wave",
             desc: "A two-week summer intensive for students ready to test entrepreneurship in a fast, immersive format. Students build a venture, train daily in public speaking and pitch craft, and present at a live Shark Tank-inspired Finale.\n\nDesigned as both a standalone experience and an introduction to the Excalibur Flagship.",
             meta: [
-              ["Dates", "Jul 27 – Aug 8, 2026 · Mon–Fri"],
+              ["Dates", "Jul 27, 2026 – Aug 8, 2026 · Mon–Fri"],
               ["Schedule", "9:30 AM – 4:00 PM"],
               ["Class Size", "Limited to 20 students"],
               ["Ages", "14–17 · High school students"],
               ["Location", "South Orange County, CA"],
               ["Finale", "Venture Finale — Aug 8, 2026"],
+              ["Priority Deadline", "[Add Priority Application Deadline]"],
+              ["Regular Deadline", "[Add Regular Application Deadline]"],
             ],
             includes: [
               "Daily public speaking and executive communication training",
@@ -2850,19 +2853,21 @@ function ApplyPage({ setPage, openInquiry }) {
             applyLabel: "Apply to Excalibur", applyKey: "summer", detailPage: "summer-detail",
           },
           {
-            img: "https://i.imgur.com/wBie2YG.jpeg",
+            img: "https://i.imgur.com/fdFvln7.jpeg",
             status: "ACCEPTING APPLICATIONS NOW", statusColor: "#3F6B3F",
             eyebrow: "Flagship · Foundation Semester",
             label: "Foundation Semester",
-            dates: "September – December 2026", price: "$1,900", period: "per month",
+            dates: "September 2026 – December 2026", price: "From $1,900", period: "per month",
             desc: "A 14-week semester for ambitious students ready to develop public speaking, business judgment, and the discipline of real-world execution.\n\nStudents complete the Junior Consultant Program, attend monthly guest masterclasses, and present at the Excalibur Gala.\n\nLimited enrollment per cohort. 20 students.",
             meta: [
               ["Tuition", "$8,500 total · pay in full or installments"],
-              ["Hourly", "$90/hr · 95 total hours"],
+              ["Hourly Equivalent", "$90/hr · 95 total hours"],
               ["Schedule", "Tue & Thu 4–6:30 PM or Sat 10:30 AM–3:30 PM"],
               ["Class Size", "20 students per cohort"],
               ["Ages", "14–17 · High school students"],
               ["Capstone", "Excalibur Gala · Dec 19, 2026"],
+              ["Priority Deadline", "[Add Priority Application Deadline]"],
+              ["Regular Deadline", "[Add Regular Application Deadline]"],
             ],
             includes: [
               "All sessions · Public Speaking · Core Business Modules",
@@ -2885,11 +2890,11 @@ function ApplyPage({ setPage, openInquiry }) {
             status: "ACCEPTING APPLICATIONS NOW", statusColor: "#3F6B3F",
             eyebrow: "Flagship · Venture Semester",
             label: "Venture Semester",
-            dates: "January – May 2027", price: "$1,900", period: "per month",
+            dates: "January 2027 – May 2027", price: "From $1,900", period: "per month",
             desc: "A 16-week semester focused on venture development, market validation, and applied entrepreneurship — culminating in the Venture Finale.\n\nStudents move from concept to a working venture, defended before real investors and faculty.\n\nPriority placement is given to Foundation Semester completers.",
             meta: [
               ["Tuition", "$9,500 in full · $10,000 installments"],
-              ["Hourly", "$90/hr · 105 total hours"],
+              ["Hourly Equivalent", "$90/hr · 105 total hours"],
               ["Schedule", "Tue & Thu 4–6:30 PM or Sat 10:30 AM–3:30 PM"],
               ["Class Size", "20 students per cohort"],
               ["Ages", "14–17 · High school students"],
@@ -2991,13 +2996,13 @@ function ApplyPage({ setPage, openInquiry }) {
                 <div>
                   <h3 style={{ fontFamily: cg, fontSize: isMobile ? 36 : 52, fontWeight: 600, fontStyle: "italic", color: "#E4D5C1", lineHeight: 1.0, marginBottom: 14 }}>Full Academic Year</h3>
                   <p style={{ fontFamily: lora, fontSize: isMobile ? 12 : 13, letterSpacing: "0.1em", color: "#E4D5C1", textTransform: "uppercase", fontWeight: 400, opacity: 0.65, marginBottom: 28 }}>September 2026 – May 2027 · 30 Weeks</p>
-                  <p style={{ fontFamily: lora, fontSize: isMobile ? 14 : 15.5, color: "#E4D5C1", fontWeight: 400, lineHeight: 1.85, marginBottom: 14, opacity: 0.92 }}>Foundation and Venture Semesters together, at a reduced founding rate.</p>
+                  <p style={{ fontFamily: lora, fontSize: isMobile ? 14 : 15.5, color: "#E4D5C1", fontWeight: 400, lineHeight: 1.85, marginBottom: 14, opacity: 0.92 }}>Foundation and Venture Semesters together, at a reduced rate.</p>
                   <p style={{ fontFamily: lora, fontSize: isMobile ? 14 : 15.5, color: "#E4D5C1", fontWeight: 400, lineHeight: 1.85, marginBottom: 14, opacity: 0.92 }}>Students move through the complete arc — Foundation formation into Venture execution — with continuity of cohort, faculty, and standard across the full year.</p>
                   <p style={{ fontFamily: lora, fontSize: isMobile ? 14 : 15.5, color: "#E4D5C1", fontWeight: 400, lineHeight: 1.85, opacity: 0.92, marginBottom: 32 }}>The recommended pathway for families seeking the complete Excalibur experience.</p>
 
                   <div style={{ display: "flex", alignItems: "baseline", gap: 8, marginBottom: 24 }}>
-                    <span style={{ fontFamily: cg, fontSize: isMobile ? 36 : 44, fontWeight: 300, color: "#E4D5C1", letterSpacing: "-0.02em" }}>$1,490</span>
-                    <span style={{ fontFamily: lora, fontSize: isMobile ? 12 : 13, color: "rgba(228,213,193,.7)" }}>per month · founding rate</span>
+                    <span style={{ fontFamily: cg, fontSize: isMobile ? 36 : 44, fontWeight: 300, color: "#E4D5C1", letterSpacing: "-0.02em" }}>From $1,490</span>
+                    <span style={{ fontFamily: lora, fontSize: isMobile ? 12 : 13, color: "rgba(228,213,193,.7)" }}>per month</span>
                   </div>
                   <button onClick={() => openInquiry && openInquiry("full-year")} style={{ fontFamily: lora, padding: "16px 36px", background: "#A48D6E", border: "none", color: "#100F0C", fontSize: isMobile ? 11 : 12, fontWeight: 700, letterSpacing: "0.16em", textTransform: "uppercase", cursor: "pointer", width: isMobile ? "100%" : "auto" }}>Apply — Full Year →</button>
                 </div>
@@ -3005,7 +3010,7 @@ function ApplyPage({ setPage, openInquiry }) {
                   {[
                     ["Tuition", "$16,000 in full (save $2,000)"],
                     ["Installments", "$17,000 plan · $17,750 monthly"],
-                    ["Hourly", "$80/hr · 200 total hours"],
+                    ["Hourly Equivalent", "$80/hr · 200 total hours"],
                     ["Includes", "Both semesters · Both Summits · Both capstones"],
                   ].map(([k, v], mi) => (
                     <div key={k} style={{ display: "grid", gridTemplateColumns: "110px 1fr", gap: 16, padding: "14px 0", borderTop: mi === 0 ? "none" : "1px solid rgba(164,141,110,.2)" }}>
@@ -3021,85 +3026,42 @@ function ApplyPage({ setPage, openInquiry }) {
       </div>
 
 
-      {/* ══════════════════════════════════════════════════════
-          WHO EXCALIBUR IS FOR
-      ══════════════════════════════════════════════════════ */}
-      <div style={{ background: ox, padding: isMobile ? "52px 28px" : "88px 80px", borderTop: `1px solid rgba(164,141,110,.15)` }}>
-        <div style={{ maxWidth: 1100, margin: "0 auto", display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: isMobile ? 40 : 80 }}>
-          <Fade>
-            <p style={{ fontFamily: lora, fontSize: 11, letterSpacing: "0.45em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 18 }}>Admissions</p>
-            <h2 style={{ fontFamily: cg, fontSize: isMobile ? "clamp(26px,6vw,40px)" : "3.2rem", fontWeight: 400, color: parch, lineHeight: 1.1, textTransform: "uppercase", letterSpacing: "0.0325em", marginBottom: 20 }}>Who This Program Is For</h2>
-            <p style={{ fontFamily: lora, fontSize: 14, color: parch, fontWeight: 400, lineHeight: 1.75, marginBottom: 20 }}>Excalibur is not for every student. It is for the student who is ready for serious challenge, honest feedback, and responsibility. The student who is already curious about business, leadership, wealth, and how the world works.</p>
-            <p style={{ fontFamily: lora, fontSize: 14, color: parch, fontWeight: 400, lineHeight: 1.75, marginBottom: 20 }}>At Excalibur, the people in the room shape the experience. Students are expected to show up prepared, participate seriously, treat others with respect, and contribute to a culture of ambition, curiosity, and excellence.</p>
-            <p style={{ fontFamily: cg, fontSize: isMobile ? 16 : 19, color: parch, fontStyle: "italic", lineHeight: 1.7, fontWeight: 400 }}>We are looking for dreamers with discipline, builders with courage, and students prepared to think seriously, work hard, receive feedback, and take responsibility for their growth.</p>
-          </Fade>
-          <Fade d={0.06}>
-            <p style={{ fontFamily: lora, fontSize: 11, letterSpacing: "0.45em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 18 }}>What Happens After Acceptance</p>
-            <h3 style={{ fontFamily: cg, fontSize: isMobile ? 24 : 30, fontWeight: 400, color: parch, lineHeight: 1.1, marginBottom: 20 }}>A Clear Path Before the First Day</h3>
-            {[
-              "Welcome packet & program schedule",
-              "Faculty and instructor overview",
-              "Family Information Session invitation",
-              "Student & Parent portal access",
-              "Dietary preference and allergy form",
-              "Lunch selection system",
-              "Shuttle request options, if available",
-              "Event calendar",
-              "Student expectations",
-              "Communication channels with the Excalibur team",
-            ].map((item, i) => (
-              <div key={i} style={{ display: "flex", gap: 12, padding: "10px 0", borderBottom: `0.5px solid rgba(164,141,110,.15)`, alignItems: "center" }}>
-                <span style={{ fontFamily: cg, fontSize: 11, color: gold, flexShrink: 0 }}>—</span>
-                <span style={{ fontFamily: lora, fontSize: isMobile ? 13 : 15, color: parch, fontWeight: 400, lineHeight: 1.5 }}>{item}</span>
-              </div>
-            ))}
-            <p style={{ fontFamily: cg, fontSize: 15, color: parch, fontStyle: "italic", marginTop: 20, lineHeight: 1.7 }}>The goal is to make the process organized, polished, and personal from the beginning.</p>
-          </Fade>
-        </div>
-      </div>
 
       {/* ══════════════════════════════════════════════════════
-          HOW TO APPLY — INTERACTIVE VERTICAL STEPS
+          ADMISSIONS PROCESS — FLAGSHIP
       ══════════════════════════════════════════════════════ */}
-      <div style={{ background: parch, padding: isMobile ? "52px 28px" : "88px 80px" }}>
+      <div style={{ background: dark, padding: isMobile ? "52px 28px" : "88px 80px" }}>
         <div style={{ maxWidth: 1100, margin: "0 auto" }}>
           <Fade>
-            <p style={{ fontFamily: lora, fontSize: 11, letterSpacing: "0.45em", color: dark, fontWeight: 600, textTransform: "uppercase", marginBottom: 18 }}>How to Apply</p>
-            <h2 style={{ fontFamily: cg, fontSize: isMobile ? "clamp(28px,7vw,42px)" : "3.2rem", fontWeight: 400, color: dark, lineHeight: 1.1, marginBottom: 52, letterSpacing: "0.01em" }}>Four steps. Admissions process.</h2>
-          </Fade>
-          <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: isMobile ? 0 : 80, alignItems: "start" }}>
-            <div>
-              {flagshipSteps.map((step, i) => {
-                const isActive = activeStep === i;
-                return (
-                  <div key={i} onClick={() => setActiveStep(isActive ? null : i)} style={{ cursor: "pointer", borderTop: `1px solid rgba(16,15,12,.12)`, padding: "24px 0", transition: "all .2s" }}>
-                    <div style={{ display: "flex", alignItems: "center", gap: 20 }}>
-                      <div style={{ width: 48, height: 48, border: `1.5px solid ${isActive ? dark : "rgba(16,15,12,.2)"}`, borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, background: isActive ? dark : "transparent", transition: "all .25s" }}>
-                        <span style={{ fontFamily: cg, fontSize: 16, fontWeight: isActive ? 600 : 300, color: isActive ? parch : "#555", transition: "all .25s" }}>{step.n}</span>
-                      </div>
-                      <p style={{ fontFamily: cg, fontSize: isMobile ? 18 : 22, fontWeight: isActive ? 600 : 400, color: isActive ? dark : "#555", lineHeight: 1.2, flex: 1, transition: "all .25s" }}>{step.title}</p>
-                      <span style={{ fontFamily: lora, fontSize: 18, color: isActive ? dark : "#bbb", transition: "all .25s", transform: isActive ? "rotate(45deg)" : "none", display: "inline-block", flexShrink: 0 }}>+</span>
-                    </div>
-                    {isMobile && isActive && (
-                      <div style={{ paddingLeft: 68, paddingTop: 16, paddingBottom: 8 }}>
-                        <p style={{ fontFamily: lora, fontSize: 13, color: "#333", fontWeight: 400, lineHeight: 1.85 }}>{step.body}</p>
-                      </div>
-                    )}
-                  </div>
-                );
-              })}
-              <div style={{ borderTop: `1px solid rgba(16,15,12,.12)` }} />
+            <p style={{ fontFamily: lora, fontSize: 11, letterSpacing: "0.45em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 18 }}>The Admissions Process</p>
+            <h2 style={{ fontFamily: cg, fontSize: isMobile ? "clamp(28px,7vw,48px)" : "3.8rem", fontWeight: 400, color: parch, lineHeight: 1.1, textTransform: "uppercase", letterSpacing: "0.0325em", marginBottom: 36 }}>Application Process</h2>
+            <div style={{ borderLeft: `3px solid ${gold}`, paddingLeft: isMobile ? 20 : 40, marginBottom: 48 }}>
+              <p style={{ fontFamily: cg, fontSize: isMobile ? 16 : 20, fontWeight: 300, color: parch, lineHeight: 1.75, fontStyle: "italic", margin: 0 }}>Each applicant is reviewed individually by the Admissions Committee for intellectual curiosity, character, ambition, and readiness to thrive in a high-standards environment. Priority applicants receive first consideration for admission, cohort placement, and schedule preference. Regular Review follows Priority decisions and is considered only as space remains available. Families seeking first consideration for cohort placement and schedule preference are encouraged to apply during the Priority Application Round.</p>
             </div>
-            {!isMobile && (
-              <div style={{ position: "sticky", top: 80 }}>
-                <div style={{ background: dark, padding: "48px 44px", minHeight: 320 }}>
-                  <p style={{ fontFamily: lora, fontSize: 9, letterSpacing: "0.4em", color: gold, fontWeight: 700, textTransform: "uppercase", marginBottom: 16 }}>Step {flagshipSteps[activeStep||0] && flagshipSteps[activeStep||0].n}</p>
-                  <h3 style={{ fontFamily: cg, fontSize: 26, fontWeight: 400, color: parch, lineHeight: 1.15, marginBottom: 24 }}>{flagshipSteps[activeStep||0] && flagshipSteps[activeStep||0].title}</h3>
-                  <div style={{ width: 32, height: 1, background: gold, marginBottom: 24 }} />
-                  <p style={{ fontFamily: lora, fontSize: isMobile ? 14 : 16, color: parch, fontWeight: 400, lineHeight: 1.9 }}>{flagshipSteps[activeStep||0] && flagshipSteps[activeStep||0].body}</p>
-                </div>
+          </Fade>
+
+          {flagshipSteps.map((step, i) => (
+            <div key={i} style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "72px 1fr 1fr", gap: isMobile ? "8px 0" : "0 52px", borderTop: `1px solid rgba(164,141,110,.12)`, paddingTop: isMobile ? 28 : 36, paddingBottom: isMobile ? 28 : 36, alignItems: "start" }}>
+              <span style={{ fontFamily: cg, fontSize: isMobile ? 28 : 44, fontWeight: 300, color: "rgba(164,141,110,.3)", lineHeight: 1 }}>{step.n}</span>
+              <div style={{ marginTop: isMobile ? 8 : 0, paddingRight: isMobile ? 0 : 40 }}>
+                <h3 style={{ fontFamily: cg, fontSize: isMobile ? 20 : 26, fontWeight: 400, color: parch, lineHeight: 1.15, marginBottom: step.title === "Admissions Interview" ? 12 : 0 }}>{step.title}</h3>
+                {step.title === "Admissions Interview" && (
+                  <span style={{ display: "inline-block", fontFamily: lora, fontSize: 9, letterSpacing: "0.12em", color: dark, background: gold, padding: "5px 12px", textTransform: "uppercase", fontWeight: 700 }}>Foundation &amp; Venture Semester Only</span>
+                )}
               </div>
-            )}
+              <p style={{ fontFamily: lora, fontSize: isMobile ? 14 : 16, color: parch, fontWeight: 400, lineHeight: 1.95, marginTop: isMobile ? 10 : 0 }}>
+                {step.n === "01" ? (
+                  <>Complete the <span onClick={() => setPage("portal")} style={{ textDecoration: "underline", cursor: "pointer", color: gold, fontWeight: 600 }}>online application here</span>. Every applicant is reviewed individually, with consideration given to intellectual curiosity, character, ambition, and readiness for a high-standards environment.</>
+                ) : step.body}
+              </p>
+            </div>
+          ))}
+
+          <div style={{ borderTop: `1px solid rgba(164,141,110,.12)`, paddingTop: 32, display: "flex", gap: 12, flexWrap: "wrap" }}>
+            <button onClick={() => openInquiry && openInquiry("foundation")} style={{ fontFamily: lora, fontSize: 10, letterSpacing: "0.2em", padding: "15px 36px", background: gold, border: "none", color: dark, textTransform: "uppercase", cursor: "pointer", fontWeight: 600 }}>Apply to Foundation →</button>
+            <button onClick={() => openInquiry && openInquiry("venture")} style={{ fontFamily: lora, fontSize: 10, letterSpacing: "0.2em", padding: "15px 32px", background: "transparent", border: `1px solid rgba(164,141,110,.35)`, color: gold, textTransform: "uppercase", cursor: "pointer", fontWeight: 600 }}>Apply to Venture →</button>
+            <button onClick={() => openInquiry && openInquiry("full-year")} style={{ fontFamily: lora, fontSize: 10, letterSpacing: "0.2em", padding: "15px 32px", background: "transparent", border: `1px solid rgba(164,141,110,.35)`, color: gold, textTransform: "uppercase", cursor: "pointer", fontWeight: 600 }}>Apply — Full Year →</button>
+            <button onClick={() => openInquiry && openInquiry("summer")} style={{ fontFamily: lora, fontSize: 10, letterSpacing: "0.2em", padding: "15px 32px", background: "transparent", border: `1px solid rgba(164,141,110,.35)`, color: gold, textTransform: "uppercase", cursor: "pointer", fontWeight: 600 }}>Apply to Summer Intensive →</button>
           </div>
         </div>
       </div>
@@ -3255,82 +3217,7 @@ function ApplyPage({ setPage, openInquiry }) {
         </div>
       </div>
 
-      {/* ══════════════════════════════════════════════════════
-          ADMISSIONS PROCESS — FLAGSHIP
-      ══════════════════════════════════════════════════════ */}
-      <div style={{ background: dark, padding: isMobile ? "52px 28px" : "88px 80px" }}>
-        <div style={{ maxWidth: 1100, margin: "0 auto" }}>
-          <Fade>
-            <p style={{ fontFamily: lora, fontSize: 11, letterSpacing: "0.45em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 18 }}>The Admissions Process</p>
-            <h2 style={{ fontFamily: cg, fontSize: isMobile ? "clamp(28px,7vw,48px)" : "3.8rem", fontWeight: 400, color: parch, lineHeight: 1.1, textTransform: "uppercase", letterSpacing: "0.0325em", marginBottom: 36 }}>Application Process</h2>
-            <div style={{ borderLeft: `3px solid ${gold}`, paddingLeft: isMobile ? 20 : 40, marginBottom: 48 }}>
-              <p style={{ fontFamily: cg, fontSize: isMobile ? 16 : 20, fontWeight: 300, color: parch, lineHeight: 1.75, fontStyle: "italic", margin: 0 }}>Each applicant is reviewed individually by the Admissions Committee for intellectual curiosity, character, ambition, and readiness to thrive in a high-standards environment. Priority applicants receive first consideration for admission, cohort placement, and schedule preference. Regular Review follows Priority decisions and is considered only as space remains available. Families seeking first consideration for cohort placement and schedule preference are encouraged to apply during the Priority Application Round.</p>
-            </div>
-          </Fade>
 
-          {flagshipSteps.map((step, i) => (
-            <div key={i} style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "72px 1fr 1fr", gap: isMobile ? "8px 0" : "0 52px", borderTop: `1px solid rgba(164,141,110,.12)`, paddingTop: isMobile ? 28 : 36, paddingBottom: isMobile ? 28 : 36, alignItems: "start" }}>
-              <span style={{ fontFamily: cg, fontSize: isMobile ? 28 : 44, fontWeight: 300, color: "rgba(164,141,110,.3)", lineHeight: 1 }}>{step.n}</span>
-              <div style={{ marginTop: isMobile ? 8 : 0, paddingRight: isMobile ? 0 : 40 }}>
-                <h3 style={{ fontFamily: cg, fontSize: isMobile ? 20 : 26, fontWeight: 400, color: parch, lineHeight: 1.15, marginBottom: step.title === "Admissions Interview" ? 12 : 0 }}>{step.title}</h3>
-                {step.title === "Admissions Interview" && (
-                  <span style={{ display: "inline-block", fontFamily: lora, fontSize: 9, letterSpacing: "0.12em", color: dark, background: gold, padding: "5px 12px", textTransform: "uppercase", fontWeight: 700 }}>Foundation &amp; Venture Semester Only</span>
-                )}
-              </div>
-              <p style={{ fontFamily: lora, fontSize: isMobile ? 14 : 16, color: parch, fontWeight: 400, lineHeight: 1.95, marginTop: isMobile ? 10 : 0 }}>{step.body}</p>
-            </div>
-          ))}
-
-          <div style={{ borderTop: `1px solid rgba(164,141,110,.12)`, paddingTop: 32, display: "flex", gap: 12, flexWrap: "wrap" }}>
-            <button onClick={() => openInquiry && openInquiry("foundation")} style={{ fontFamily: lora, fontSize: 10, letterSpacing: "0.2em", padding: "15px 36px", background: gold, border: "none", color: dark, textTransform: "uppercase", cursor: "pointer", fontWeight: 600 }}>Apply to Foundation →</button>
-            <button onClick={() => openInquiry && openInquiry("venture")} style={{ fontFamily: lora, fontSize: 10, letterSpacing: "0.2em", padding: "15px 32px", background: "transparent", border: `1px solid rgba(164,141,110,.35)`, color: gold, textTransform: "uppercase", cursor: "pointer", fontWeight: 600 }}>Apply to Venture →</button>
-            <button onClick={() => openInquiry && openInquiry("full-year")} style={{ fontFamily: lora, fontSize: 10, letterSpacing: "0.2em", padding: "15px 32px", background: "transparent", border: `1px solid rgba(164,141,110,.35)`, color: gold, textTransform: "uppercase", cursor: "pointer", fontWeight: 600 }}>Apply — Full Year →</button>
-            <button onClick={() => openInquiry && openInquiry("summer")} style={{ fontFamily: lora, fontSize: 10, letterSpacing: "0.2em", padding: "15px 32px", background: "transparent", border: `1px solid rgba(164,141,110,.35)`, color: gold, textTransform: "uppercase", cursor: "pointer", fontWeight: 600 }}>Apply to Summer Intensive →</button>
-          </div>
-        </div>
-      </div>
-
-      {/* ══════════════════════════════════════════════════════
-          ADMISSIONS PROCESS — SUMMER
-      ══════════════════════════════════════════════════════ */}
-      <div style={{ background: parch, padding: isMobile ? "52px 28px" : "88px 80px" }}>
-        <div style={{ maxWidth: 1100, margin: "0 auto" }}>
-          <Fade>
-            <p style={{ fontFamily: lora, fontSize: 11, letterSpacing: "0.45em", color: dark, fontWeight: 600, textTransform: "uppercase", marginBottom: 18 }}>The Admissions Process</p>
-            <h2 style={{ fontFamily: cg, fontSize: isMobile ? "clamp(28px,7vw,48px)" : "3.8rem", fontWeight: 400, color: dark, lineHeight: 1.1, textTransform: "uppercase", letterSpacing: "0.0325em", marginBottom: 48 }}>Summer Intensive</h2>
-          </Fade>
-
-          <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(3,1fr)", gap: 16, marginBottom: 40 }}>
-            {summerSteps.slice(0, 3).map((step, i) => (
-              <div key={i} style={{ background: dark, padding: isMobile ? "28px 24px" : "36px 32px" }}>
-                <div style={{ width: 44, height: 44, border: `1px solid rgba(164,141,110,.35)`, display: "flex", alignItems: "center", justifyContent: "center", marginBottom: 20, background: dark }}>
-                  <span style={{ fontFamily: cg, fontSize: 18, fontWeight: 300, color: parch }}>{step.n}</span>
-                </div>
-                <p style={{ fontFamily: cg, fontSize: isMobile ? 18 : 20, fontWeight: 400, color: parch, lineHeight: 1.25, marginBottom: 12 }}>{step.title}</p>
-                <p style={{ fontFamily: lora, fontSize: 13, color: parch, fontWeight: 400, lineHeight: 1.8 }}>{step.body}</p>
-              </div>
-            ))}
-          </div>
-
-          {/* Step 04 */}
-          <div style={{ borderTop: `1px solid rgba(164,141,110,.2)`, paddingTop: 36, display: "grid", gridTemplateColumns: isMobile ? "1fr" : "56px 1fr", gap: isMobile ? 20 : 36, alignItems: "start" }}>
-            <div style={{ width: 44, height: 44, border: `1px solid rgba(16,15,12,.2)`, display: "flex", alignItems: "center", justifyContent: "center", background: dark, flexShrink: 0 }}>
-              <span style={{ fontFamily: cg, fontSize: 18, fontWeight: 300, color: parch }}>04</span>
-            </div>
-            <div>
-              <p style={{ fontFamily: cg, fontSize: isMobile ? 18 : 22, fontWeight: 400, color: dark, lineHeight: 1.25, marginBottom: 16 }}>Family Onboarding & Orientation</p>
-              <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: isMobile ? 14 : 52 }}>
-                <p style={{ fontFamily: lora, fontSize: 13, color: dark, fontWeight: 400, lineHeight: 1.9 }}>Accepted families receive formal onboarding materials including the welcome packet, program overview, schedule details, and student and family portal access for schedules, communications, and administrative updates.</p>
-                <p style={{ fontFamily: lora, fontSize: 13, color: dark, fontWeight: 400, lineHeight: 1.9 }}>Prior to the start of the program, families are invited to a Family Orientation Session to meet lead faculty, the operations team, and fellow families — and to understand the Academy environment, expectations, schedule, and logistics before the first day.</p>
-              </div>
-            </div>
-          </div>
-
-          <div style={{ marginTop: 36 }}>
-            <button onClick={() => openInquiry && openInquiry("summer")} style={{ fontFamily: lora, fontSize: 10, letterSpacing: "0.2em", padding: "15px 40px", background: dark, border: "none", color: parch, textTransform: "uppercase", cursor: "pointer", fontWeight: 600 }}>Apply for Summer 2026 →</button>
-          </div>
-        </div>
-      </div>
 
       {/* ══════════════════════════════════════════════════════
           TEN-MONTH / FLAGSHIP INTERVIEW NOTE
