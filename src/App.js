@@ -646,9 +646,7 @@ function Nav({ page, setPage }) {
     ]],
     ["The Excalibur Summit", "summit", null],
     ["Excalibur Édition", "edition", null],
-    ["Curriculum", "curriculum", null],
     ["Faculty", "faculty", null],
-    ["The Arena", "beyond", null],
     ["Admissions", "admissions", null],
     ["Student Portal", "portal", null],
     ["Contact", "contact", null],
@@ -946,7 +944,7 @@ function PortfolioIndexWhite({ isMobile, setPage, images }) {
 // ── FOOTER ──
 function Footer({ setPage }) {
   const isMobile = useIsMobile();
-  const allLinks = [["HOME","home"],["THE ACADEMY","about"],["OUR PROGRAMS","programs"],["CURRICULUM","curriculum"],["FACULTY","faculty"],["THE ARENA","beyond"],["ADMISSIONS","apply"],["CONTACT","contact"],["EVENTS","events"]];
+  const allLinks = [["HOME","home"],["THE ACADEMY","about"],["OUR PROGRAMS","programs"],["FACULTY","faculty"],["THE ARENA","beyond"],["ADMISSIONS","apply"],["CONTACT","contact"],["EVENTS","events"]];
   return (
     <footer style={{ background: "#34150F", borderTop: "1px solid rgba(188,166,150,.12)" }}>
       {/* Brand + Nav */}
@@ -1311,7 +1309,7 @@ function ModulePage({ slug, setPage }) {
           <Sub center>Every discipline connects. The full Flagship experience is where the formation becomes complete.</Sub>
           <div style={{ display: "flex", gap: 12, justifyContent: "center", marginTop: 32, flexWrap: "wrap" }}>
             <button onClick={() => setPage("full-program")} style={{ fontFamily: sans, background: "#d8b78c", color:"#010000", padding: "12px 32px", fontSize: 12, fontWeight: 700, letterSpacing: 2, border: "none", cursor: "pointer" }}>VIEW FLAGSHIP PROGRAM</button>
-            <button onClick={() => setPage("curriculum")} style={{ fontFamily: sans, border: `1px solid rgba(216,183,140,.3)`, color:"#010000", padding: "12px 28px", fontSize: 12, fontWeight: 500, letterSpacing: 1.5, background: "transparent", cursor: "pointer" }}>ALL MODULES</button>
+            <button onClick={() => setPage("programs")} style={{ fontFamily: sans, border: `1px solid rgba(216,183,140,.3)`, color:"#010000", padding: "12px 28px", fontSize: 12, fontWeight: 500, letterSpacing: 1.5, background: "transparent", cursor: "pointer" }}>ALL MODULES</button>
           </div>
         </Fade>
       </div>
@@ -6400,7 +6398,7 @@ function FlagshipModulesBlock({ isMobile, setPage, modules }) {
         )}
         <div style={{ marginTop: 2, background: "#010000", border: "1px solid #111", borderTop: "none", padding: "17px 32px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
           <span style={{ fontFamily: sans, fontSize: 12, color: "#FBF7EE", fontWeight: 300 }}>All core disciplines and applied engagements are included in the Flagship Program. Optional Field trips are offered throughout the year for Flagship students only; availability and costs vary by trip and are not included in tuition.</span>
-          <button onClick={() => setPage("curriculum")} style={{ fontFamily: sans, fontSize: 10, color: "#FBF7EE", letterSpacing: 2, background: "transparent", border: "none", cursor: "pointer", fontWeight: 600, flexShrink: 0 }}>VIEW FULL CURRICULUM</button>
+          <button onClick={() => setPage("programs")} style={{ fontFamily: sans, fontSize: 10, color: "#FBF7EE", letterSpacing: 2, background: "transparent", border: "none", cursor: "pointer", fontWeight: 600, flexShrink: 0 }}>VIEW FULL CURRICULUM</button>
         </div>
       </div>
     </section>
@@ -12950,7 +12948,7 @@ function ExcaliburEditionPage({ setPage, openInquiry }) {
               ))}
             </div>
             <div style={{ width:"100%" }}>
-              <img src="https://i.imgur.com/ZcPPjth.jpeg" alt="Excalibur Édition" style={{ display:"block", width:"100%", height:"auto" }}/>
+              <img src="https://i.imgur.com/amTcixk.jpeg" alt="Excalibur Édition" style={{ display:"block", width:"100%", height:"auto" }}/>
             </div>
           </div>
         </div>
@@ -13799,7 +13797,7 @@ function FoundationDetailPage({ setPage, openInquiry }) {
                           ))}
                         </div>
                       )}
-                      <button onClick={() => setPage && setPage("curriculum")} style={{ fontFamily:sans, fontSize:8, letterSpacing:"0.2em", padding:"11px 24px", background:"transparent", border:"1px solid rgba(16,15,12,.35)", color:"#A48D6E", cursor:"pointer", textTransform:"uppercase", transition:"all .2s" }}>View Full Module Description →</button>
+                      <button onClick={() => setPage && setPage("programs")} style={{ fontFamily:sans, fontSize:8, letterSpacing:"0.2em", padding:"11px 24px", background:"transparent", border:"1px solid rgba(16,15,12,.35)", color:"#A48D6E", cursor:"pointer", textTransform:"uppercase", transition:"all .2s" }}>View Full Module Description →</button>
                     </div>
                   )}
                 </div>
@@ -15455,7 +15453,7 @@ function VentureDetailPage({ setPage, openInquiry }) {
                           ))}
                         </div>
                       )}
-                      <button onClick={() => setPage && setPage("curriculum")} style={{ fontFamily:sans, fontSize:8, letterSpacing:"0.2em", padding:"11px 24px", background:"transparent", border:"1px solid rgba(164,141,110,.35)", color:"#A48D6E", cursor:"pointer", textTransform:"uppercase", transition:"all .2s" }}>View Full Module Description →</button>
+                      <button onClick={() => setPage && setPage("programs")} style={{ fontFamily:sans, fontSize:8, letterSpacing:"0.2em", padding:"11px 24px", background:"transparent", border:"1px solid rgba(164,141,110,.35)", color:"#A48D6E", cursor:"pointer", textTransform:"uppercase", transition:"all .2s" }}>View Full Module Description →</button>
                     </div>
                   )}
                 </div>
@@ -15644,7 +15642,7 @@ function VentureDetailPage({ setPage, openInquiry }) {
                           ))}
                         </div>
                       )}
-                      <button onClick={() => setPage && setPage("curriculum")} style={{ fontFamily:sans, fontSize:8, letterSpacing:"0.2em", padding:"11px 24px", background:"transparent", border:"1px solid rgba(164,141,110,.35)", color:"#A48D6E", cursor:"pointer", textTransform:"uppercase", transition:"all .2s" }}>View Full Module Description →</button>
+                      <button onClick={() => setPage && setPage("programs")} style={{ fontFamily:sans, fontSize:8, letterSpacing:"0.2em", padding:"11px 24px", background:"transparent", border:"1px solid rgba(164,141,110,.35)", color:"#A48D6E", cursor:"pointer", textTransform:"uppercase", transition:"all .2s" }}>View Full Module Description →</button>
                     </div>
                   )}
                 </div>
@@ -16648,7 +16646,6 @@ function ExcaliburApp() {
   const renderPage = () => {
     if (page === "home") return <HomePage setPage={setPage} openInquiry={openInquiry} />;
     if (page === "programs") return <ProgramsPage setPage={setPage} openInquiry={openInquiry} />;
-    if (page === "curriculum") return <CurriculumPage setPage={setPage} openInquiry={openInquiry} />;
     if (page === "full-program") return <ClosedProgramPage setPage={setPage} openInquiry={openInquiry} />;
     if (page === "flagship2") return <FlagshipDetailPage2 setPage={setPage} openInquiry={openInquiry} />;
     if (page === "foundation-detail") return <FoundationDetailPage setPage={setPage} openInquiry={openInquiry} />;
