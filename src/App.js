@@ -534,9 +534,10 @@ const coaches = [
 ];
 
 const handson = [
-  { title: "The Junior Consultant Program", tag: "FOUNDATION SEMESTER · TEAMS · LOCAL BUSINESS CONSULTING", desc: "In the Foundation Semester, students step into the role of a junior consulting team and work with a local business partner on a specific business problem. Each team is assigned a focused challenge — such as developing new customer acquisition strategies, strengthening social media presence, increasing weekday foot traffic, improving customer experience, or clarifying competitive position. Students conduct business analysis and strategic problem-solving before preparing a formal consulting report with practical recommendations for a boardroom presentation, where students present their findings to the business owner or leadership contact.", outcome: "A client-facing consulting report, a formal boardroom presentation, and a documented example of applied business judgment — included in the graduation portfolio." },
-  { title: "The Startup Externship", tag: "VENTURE SEMESTER · VENTURE-MATCHED · SUPERVISED", desc: "In the Venture Semester, students move from analyzing businesses to experiencing how ventures are built from the inside. Through a supervised Startup Externship, each student is matched with a founder, startup, or early-stage venture in an industry of interest and contributes to selected meetings, brainstorming sessions, research, analysis, product feedback, pitch preparation, or market discovery. The focus is not passive shadowing, but age-appropriate professional contribution: students see how founders make decisions, solve problems, test ideas, and move from concept to execution while producing a portfolio-ready work product and reflection.", outcome: "A portfolio-ready work product, a professional reflection, and direct exposure to how early-stage ventures operate — documented for the student portfolio and future applications." },
-  { title: "Micro-Business Launch", tag: "TEAMS · FROM IDEA TO REVENUE · MENTORED", desc: "In the Flagship's final program phase, Student teams choose one of two venture tracks: a Commercial Market Venture (Da Vinci) — building a product, service, or business designed to reach paying customers — or a Community Impact Venture (Medici) — developing an initiative or venture that addresses a real local community problem while applying the same commercial rigor. Teams develop an MVP, test demand, pursue pre-orders, and work toward first revenue or measurable impact. The experience culminates in a Shark Tank–inspired Venture Finale, where students present before invited investors, founders, executives, and practitioners, faculty and invited panelists, community leaders, families, and invited guests. The goal is not to simulate entrepreneurship, but to experience the discipline of building something real — with real customers, real stakes, and lasting lessons that no classroom exercise can replicate.", outcome: "A micro-business brought from idea to launch — with mentor support, market pressure, real customers, and the lasting understanding that hard work, passion and discipline can turn a dream into reality." },
+  { title: "The Junior Consultant Program", tag: "FOUNDATION SEMESTER · TEAMS · LOCAL BUSINESS CONSULTING", desc: "In the Foundation Semester, students step into the role of a junior consulting team and work with a local business partner on a specific business problem. Each team is assigned a focused challenge — such as developing new customer acquisition strategies, strengthening social media presence, increasing weekday foot traffic, improving customer experience, or clarifying competitive position. Students conduct business analysis and strategic problem-solving before preparing a formal consulting report with practical recommendations for a boardroom presentation, where students present their findings to the business owner or leadership contact.", outcome: "A client-facing consulting report, a formal Boardroom presentation, professional feedback from the participating business, and a documented example of applied business judgment that no classroom exercise can replicate." },
+  { title: "The Startup Externship", tag: "VENTURE SEMESTER · VENTURE-MATCHED · SUPERVISED", desc: "Each student is placed inside a real company in their chosen industry for four to six weeks. Students observe, contribute, and build genuine professional references — all sourced from the Academy's faculty and business network. In the Venture Semester, placements are matched to the student's venture industry wherever possible.", outcome: "Professional feedbacks from a real company, externship documentation for the portfolio, and direct industry exposure that changes how students understand the professional world they are building toward." },
+  { title: "Real Venture Launch", tag: "DA VINCI OR MEDICI · 16 WEEKS · SHARK TANK-INSPIRED FINALE · VENTURE SEMESTER", desc: "The Venture Studio runs every Thursday during the Venture Semester. Teams build their chosen venture — Da Vinci or Medici — with direct faculty coaching in the room. Every session produces a concrete deliverable, moving each venture from idea to validation, execution, and early traction. Faculty hold every team to a professional standard. Students are expected to meet a serious standard of preparation, decision-making, and execution — only the quality of the work, the clarity of the decisions, and the discipline of execution.", outcome: "A real micro-venture launch and a bound Venture Portfolio, documenting the student's journey from business concept to market validation and early traction - suitable for university applications, interviews, and future conversations." },
+  { title: "Networking & Conference Events", tag: "NETWORKING & CONFERENCE EVENTS · BOTH SEMESTERS", desc: "Throughout the year, Excalibur students attend curated networking events, industry conferences, and professional gatherings alongside faculty and invited guests. These events are designed to extend the Academy's reach beyond the classroom — placing students in curated professional environments with faculty guidance and invited guests.", outcome: "Direct exposure to professional networks, real industry environments, and the social intelligence required to conduct themselves with composure, begin conversations thoughtfully, and build relationships in professional settings." },
 ];
 
 const distinctions = [
@@ -637,10 +638,8 @@ function Nav({ page, setPage }) {
     ["The Academy", "about", null],
     ["View Programs", "programs", [
       { label: "Summer Intensive", page: "summer-detail", sub: "July 27 – August 8 · Two Weeks" },
-      { label: "Flagship", page: "flagship2", sub: "Foundation & Venture · 2026–2027", children: [
-        { label: "Foundation Semester", page: "foundation-detail", sub: "Sep 2026 – Dec 2026" },
-        { label: "Venture Semester", page: "venture-detail", sub: "Jan – May 2027" },
-      ] },
+      { label: "Foundation Semester", page: "foundation-detail", sub: "Sep 2026 – Dec 2026" },
+      { label: "Venture Semester", page: "venture-detail", sub: "Jan – May 2027" },
       { label: "Six-Week Intensive", page: "intensive", sub: "Four Waves Per Year" },
       { label: "View All Programs", page: "programs", sub: "Compare Program Pathways" },
     ]],
@@ -3234,6 +3233,18 @@ function HomePage({ setPage, openInquiry }) {
   const [activeMod, setActiveMod] = useState(0);
   const [activeCurrTab, setActiveCurrTab] = useState("master");
 
+  // Live countdown to the Summer Intensive start date — recalculated on mount and every minute,
+  // so it actually counts down instead of showing a frozen number.
+  const calcSummerDays = () => {
+    const diff = new Date("2026-07-27T00:00:00") - new Date();
+    return diff <= 0 ? 0 : Math.ceil(diff / 86400000);
+  };
+  const [summerDaysLeft, setSummerDaysLeft] = useState(calcSummerDays);
+  useEffect(() => {
+    const i = setInterval(() => setSummerDaysLeft(calcSummerDays()), 60000);
+    return () => clearInterval(i);
+  }, []);
+
   const [activeModF, setActiveModF] = useState(null);
   const [activeAOC, setActiveAOC] = useState(null);
 
@@ -4476,7 +4487,7 @@ function HomePage({ setPage, openInquiry }) {
               <p style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: 15, letterSpacing: "0.3em", color: "#A48D6E", fontWeight: 500, textTransform: "uppercase", textAlign: "center", marginBottom: 32 }}>Summer Intensive Begins IN</p>
               <div style={{ textAlign: "center" }}>
                 <div style={{ display: "flex", alignItems: "baseline", justifyContent: "center", gap: 16 }}>
-                  <div style={{ fontFamily: "'Cinzel', serif", fontSize: "clamp(100px,18vw,180px)", fontWeight: 400, color: "#D9C7A9", lineHeight: 1, letterSpacing: "0.02em" }}>44</div>
+                  <div style={{ fontFamily: "'Cinzel', serif", fontSize: "clamp(100px,18vw,180px)", fontWeight: 400, color: "#D9C7A9", lineHeight: 1, letterSpacing: "0.02em" }}>{summerDaysLeft}</div>
                   <div style={{ fontFamily: "'Cinzel', serif", fontSize: 25, letterSpacing: "0.25em", color: "#A48D6E", textTransform: "uppercase", fontWeight: 400, paddingBottom: 16 }}>Days</div>
                 </div>
                 <div style={{ fontFamily: "'Lato', sans-serif", fontSize: 10, letterSpacing: "0.55em", color: "#A48D6E", textTransform: "uppercase", marginTop: 8 }}></div>
@@ -11726,11 +11737,11 @@ function FlagshipDetailPage2({ setPage, openInquiry }) {
             <div style={{ display:"grid", gridTemplateColumns:isMobile?"1fr":"1fr 1fr", gap:isMobile?40:80, alignItems:"end" }}>
               <div>
                 <div style={{ width:40, height:1, background:"#A48D6E", marginBottom:28 }}/>
-                <p style={{ fontFamily:"'Garet', sans-serif", fontSize:8, letterSpacing:"0.5em", color:"#A48D6E", fontWeight:700, textTransform:"uppercase", marginBottom:24 }}>Where Theory Meets Reality</p>
-                <h2 style={{ fontFamily:ag, fontSize:isMobile?48:76, fontWeight:300, color:"#E4D5C1", lineHeight:0.95, letterSpacing:"-0.035em", margin:0 }}>Where the classroom<br/>ends, <em style={{ color:"#A48D6E" }}>becomes applied work.</em></h2>
+                <p style={{ fontFamily:"'Garet', sans-serif", fontSize:8, letterSpacing:"0.5em", color:"#A48D6E", fontWeight:700, textTransform:"uppercase", marginBottom:24 }}>Real-World Engagement</p>
+                <h2 style={{ fontFamily:ag, fontSize:isMobile?48:76, fontWeight:300, color:"#E4D5C1", lineHeight:0.95, letterSpacing:"-0.035em", margin:0, textTransform:"uppercase" }}>Where Theory<br/>Meets <em style={{ color:"#A48D6E" }}>Reality</em></h2>
               </div>
               <div>
-                <p style={{ fontFamily:ag, fontSize:isMobile?16:20, color:"#E4D5C1", fontWeight:300, lineHeight:1.85, fontStyle:"italic", marginBottom:0 }}>Three applied engagements run across both semesters. Not simulations. Not case studies. Real businesses, real companies, invited investors, founders, executives, and practitioners — and real consequences for the quality of the student's work.</p>
+                <p style={{ fontFamily:ag, fontSize:isMobile?16:20, color:"#E4D5C1", fontWeight:300, lineHeight:1.85, fontStyle:"italic", marginBottom:0 }}>The curriculum builds the foundation. These engagements give Excalibur its distinctive weight: applied work, public performance, professional feedback, lasting friendships, shared memories, and skills carried for life.</p>
               </div>
             </div>
           </div>
@@ -11749,24 +11760,23 @@ function FlagshipDetailPage2({ setPage, openInquiry }) {
                 desc:"Throughout the year, Excalibur students attend curated networking events, industry conferences, and professional gatherings alongside faculty and invited guests. These events are designed to extend the Academy's reach beyond the classroom — placing students in curated professional environments with faculty guidance and invited guests.",
                 outcome:"Direct exposure to professional networks, real industry environments, and the social intelligence required to conduct themselves with composure, begin conversations thoughtfully, and build relationships in professional settings.", img:"https://i.imgur.com/V6jNVu8.jpeg" },
             ].map((p,i) => (
-              <div key={i} style={{ display:"grid", gridTemplateColumns:isMobile?"1fr":(i%2===0?"3fr 2fr":"2fr 3fr"), background:"#34150F", borderTop:"2px solid #A48D6E" }}>
-                {i%2!==0&&!isMobile&&(
-                  <div style={{ background:"#100F0C", padding:"52px 48px", display:"flex", flexDirection:"column", justifyContent:"center" }}>
-                    <p style={{ fontFamily:"'Garet', sans-serif", fontSize:9, letterSpacing:"0.35em", color:"#A48D6E", fontWeight:700, textTransform:"uppercase", marginBottom:12 }}>OUTCOME</p>
-                    <p style={{ fontFamily:ag, fontSize:17, lineHeight:1.65, color:"#E4D5C1", fontStyle:"italic" }}>{p.outcome}</p>
+              <div key={i} style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : i % 2 === 0 ? "3fr 2fr" : "2fr 3fr", background: "#34150F", minHeight: isMobile ? "auto" : 200 }}>
+                {i % 2 !== 0 && !isMobile && (
+                  <div style={{ background: "#E4D5C1", padding: "52px 48px", display: "flex", flexDirection: "column", justifyContent: "center", borderTop: "2px solid rgba(0,0,0,.12)" }}>
+                    <p style={{ fontFamily: sans, fontSize: 10, letterSpacing: "0.2em", color:"#010000", fontWeight: 700, textTransform: "uppercase", marginBottom: 14 }}>The Outcome</p>
+                    <p style={{ fontFamily: serif, fontSize: 20, lineHeight: 1.65, color:"#010000", fontStyle: "italic" }}>{p.outcome}</p>
                   </div>
                 )}
-                <div style={{ padding:isMobile?"40px 24px":"52px 56px", position:"relative" }}>
-                  <div style={{ position:"absolute", top:20, right:20, fontFamily:ag, fontSize:"clamp(28px,4vw,48px)", fontWeight:600, color:"#A48D6E", lineHeight:1 }}>{p.n}</div>
-                  <p style={{ fontFamily:"'Garet', sans-serif", fontSize:9, letterSpacing:"0.35em", color:"#A48D6E", fontWeight:700, textTransform:"uppercase", marginBottom:14 }}>{p.tag}</p>
-                  <h3 style={{ fontFamily:ag, fontSize:"clamp(22px,2.5vw,32px)", fontWeight:600, color:"#E4D5C1", lineHeight:1.2, marginBottom:12 }}>{p.title}</h3>
-                  <div style={{ width:36, height:1, background:`linear-gradient(90deg,#A48D6E,transparent)`, marginBottom:20 }}/>
-                  <p style={{ fontFamily:lora, fontSize:15, lineHeight:1.7, color:"#E4D5C1", fontWeight:400 }}>{p.desc}</p>
+                <div style={{ background: "#34150F", padding: isMobile ? "40px 24px" : "52px 56px", borderTop: `2px solid #d8b78c`, position: "relative" }}>
+                  <p style={{ fontFamily: sans, fontSize: 10, letterSpacing: "0.2em", color: "#A48D6E", fontWeight: 700, textTransform: "uppercase", marginBottom: 10 }}>{p.tag}</p>
+                  <h3 style={{ fontFamily: eyebrow_font, fontSize: isMobile ? 26 : 34, fontWeight: 400, color: "#E4D5C1", lineHeight: 1.1, letterSpacing: "0.08em", textTransform: "uppercase", marginBottom: 16, marginTop: 8 }}>{p.title}</h3>
+                  <div style={{ width: 36, height: 1, background: "#A48D6E", marginBottom: 18 }} />
+                  <p style={{ fontFamily: "'Raleway', sans-serif", fontSize: 16, lineHeight: 1.9, color: "#E4D5C1", fontWeight: 400 }}>{p.desc}</p>
                 </div>
-                {(i%2===0||isMobile)&&(
-                  <div style={{ background:"#100F0C", padding:isMobile?"28px 24px":"52px 48px", display:"flex", flexDirection:"column", justifyContent:"center" }}>
-                    <p style={{ fontFamily:"'Garet', sans-serif", fontSize:9, letterSpacing:"0.35em", color:"#A48D6E", fontWeight:700, textTransform:"uppercase", marginBottom:12 }}>OUTCOME</p>
-                    <p style={{ fontFamily:ag, fontSize:isMobile?15:17, lineHeight:1.65, color:"#E4D5C1", fontStyle:"italic" }}>{p.outcome}</p>
+                {(i % 2 === 0 || isMobile) && (
+                  <div style={{ background: "#E4D5C1", padding: isMobile ? "28px 24px" : "52px 48px", display: "flex", flexDirection: "column", justifyContent: "center", borderTop: "2px solid rgba(0,0,0,.12)" }}>
+                    <p style={{ fontFamily: sans, fontSize: 10, letterSpacing: "0.2em", color:"#010000", fontWeight: 700, textTransform: "uppercase", marginBottom: 14 }}>The Outcome</p>
+                    <p style={{ fontFamily: serif, fontSize: isMobile ? 18 : 22, lineHeight: 1.65, color:"#010000", fontStyle: "italic", fontWeight: 400 }}>{p.outcome}</p>
                   </div>
                 )}
               </div>
