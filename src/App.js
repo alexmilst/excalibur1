@@ -8152,7 +8152,7 @@ function PortalPage({ setPage }) {
     // Section 5: Shared Short Answers
     dreamAnswer: "", whyJoin: "", leadershipStory: "", growthArea: "", publicSpeakingComfort: "", teamRole: "",
     // Section 6: Program-specific (kept nested, mirrors program_responses jsonb)
-    summer: { hasIdea: "", ideaDescription: "", ventureTypes: [], teamComfort: "", outsideCommitment: "", successDefinition: "", trackInterest: "", teamRolePreference: "" },
+    summer: { wantsScholarship: "", hasIdea: "", ideaDescription: "", ventureTypes: [], teamComfort: "", outsideCommitment: "", successDefinition: "", trackInterest: "", teamRolePreference: "" },
     foundation: { excitingAreas: [], leaderVision: "", shapingExperience: "", commitmentReady: "", endGoal: "" },
     venture: { hasConcept: "", conceptDescription: "", excitingAreas: [], trackInterest: "", problemToSolve: "", commitmentReady: "", endPresentation: "" },
     // Section 7: Schedule & Availability
@@ -8207,6 +8207,7 @@ function PortalPage({ setPage }) {
   const [adminSelectedApp, setAdminSelectedApp] = React.useState(null);
   const [adminSelectedThreadStudent, setAdminSelectedThreadStudent] = React.useState(null);
   const [adminFullProfileStudent, setAdminFullProfileStudent] = React.useState(null);
+  const [adminResetStatus, setAdminResetStatus] = React.useState({}); // { [email]: "sending" | "sent" | "error" }
   const [adminProfileReturnTab, setAdminProfileReturnTab] = React.useState("registrations");
   const [adminReplyText, setAdminReplyText] = React.useState("");
   const [adminReplySending, setAdminReplySending] = React.useState(false);
@@ -8249,6 +8250,7 @@ function PortalPage({ setPage }) {
     setAdminSelectedThreadStudent(null);
     setAdminFullProfileStudent(null);
     setAdminReplyText("");
+    setAdminResetStatus({});
   }, []);
 
   // ── SETTINGS ──
@@ -8429,7 +8431,7 @@ function PortalPage({ setPage }) {
           gpaRange: app.gpa_range || "", academicInterests: app.academic_interests || [], extracurriculars: app.extracurriculars || "", priorProgramsExperience: app.prior_programs_experience ? "yes" : "", priorProgramsDescription: app.prior_programs_description || "",
           programs: app.programs || [], applyingMultiple: app.applying_multiple ? "yes" : "", firstChoiceProgram: app.first_choice_program || "", heardAbout: app.heard_about || "", referralName: app.referral_name || "",
           dreamAnswer: app.dream_answer || "", whyJoin: app.why_join || "", leadershipStory: app.leadership_story || "", growthArea: app.growth_area || "", publicSpeakingComfort: app.public_speaking_comfort || "", teamRole: app.team_role || "",
-          summer: { hasIdea: "", ideaDescription: "", ventureTypes: [], teamComfort: "", outsideCommitment: "", successDefinition: "", trackInterest: "", teamRolePreference: "", ...(pr.summer || {}) },
+          summer: { wantsScholarship: "", hasIdea: "", ideaDescription: "", ventureTypes: [], teamComfort: "", outsideCommitment: "", successDefinition: "", trackInterest: "", teamRolePreference: "", ...(pr.summer || {}) },
           foundation: { excitingAreas: [], leaderVision: "", shapingExperience: "", commitmentReady: "", endGoal: "", ...(pr.foundation || {}) },
           venture: { hasConcept: "", conceptDescription: "", excitingAreas: [], trackInterest: "", problemToSolve: "", commitmentReady: "", endPresentation: "", ...(pr.venture || {}) },
           track: app.track || "", summerAttendFull: app.summer_attend_full || "", summerConflicts: app.summer_conflicts || "", summerAttendFinale: app.summer_attend_finale || "", academicYearConflicts: app.academic_year_conflicts || "",
@@ -8506,6 +8508,16 @@ function PortalPage({ setPage }) {
     } else {
       window.alert(error.message);
     }
+  };
+
+  // ── Send a secure password-reset email. We never have access to anyone's actual
+  // password — Supabase only stores a one-way hash — so this is the legitimate way
+  // to help someone regain access: they get an email with a link to set a new one. ──
+  const handleSendPasswordReset = async (email) => {
+    if (!sb || !email) return;
+    setAdminResetStatus(prev => ({ ...prev, [email]: "sending" }));
+    const { error } = await sb.auth.resetPasswordForEmail(email);
+    setAdminResetStatus(prev => ({ ...prev, [email]: error ? "error" : "sent" }));
   };
 
   const handleAdminSendReply = async (studentId) => {
@@ -8891,8 +8903,8 @@ function PortalPage({ setPage }) {
       accepted: m_green, waitlisted: m_amber, declined: m_red,
     }[s] || m_gray);
 
-    const adminTabs = [["overview", "Dashboard"], ["registrations", "Accounts"], ["applications", "Applications"], ["yourstudents", "Your Students"], ["messages", "Messages"], ["consultations", "Consultations"]];
-    const adminNavIcon = (key) => ({ overview: "dashboard", registrations: "users", applications: "application", yourstudents: "cap", messages: "message", consultations: "phone" }[key] || "dashboard");
+    const adminTabs = [["overview", "Dashboard"], ["registrations", "Accounts"], ["applications", "Applications"], ["yourstudents", "Your Students"], ["allusers", "All Users"], ["messages", "Messages"], ["consultations", "Consultations"]];
+    const adminNavIcon = (key) => ({ overview: "dashboard", registrations: "users", applications: "application", yourstudents: "cap", allusers: "settings", messages: "message", consultations: "phone" }[key] || "dashboard");
 
     const q = adminSearch.trim().toLowerCase();
     const studentHasApplication = (studentId) => adminApplications.some(a => a.student_id === studentId);
@@ -9017,6 +9029,7 @@ function PortalPage({ setPage }) {
 
                 <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: "0 32px" }}>
                   <Field label="Programs" value={(app.programs || []).join(", ") || app.program} />
+                  <Field label="Scholarship Interest" value={app.program_responses?.summer?.wantsScholarship === "yes" ? "Yes — requested consideration" : app.program_responses?.summer?.wantsScholarship === "no" ? "No" : "—"} />
                   <Field label="First Choice" value={app.first_choice_program} />
                   <Field label="Date of Birth" value={app.date_of_birth} />
                   <Field label="Current Grade" value={app.current_grade} />
@@ -9249,6 +9262,42 @@ function PortalPage({ setPage }) {
                       </div>
                     </div>
                   )}
+
+                  {/* ALL USERS — every student, parent, and admin account, with secure password-reset */}
+                  {adminTab === "allusers" && !adminLoading && (() => {
+                    const allUsers = [
+                      ...adminStudents.map(s => ({ kind: "Student", name: `${s.first_name} ${s.last_name}`, email: s.email, registered: s.created_at })),
+                      ...adminParentLinks.map(p => ({ kind: "Parent", name: (p.parent_first_name || p.parent_last_name) ? `${p.parent_first_name || ""} ${p.parent_last_name || ""}`.trim() : "(Invite Pending)", email: p.parent_email, registered: p.created_at })),
+                      ...adminList.map(a => ({ kind: "Admin", name: a.full_name || a.email, email: a.email, registered: a.created_at })),
+                    ].filter(u => !q || `${u.name} ${u.email}`.toLowerCase().includes(q));
+                    const kindColor = (k) => k === "Admin" ? m_blue : k === "Parent" ? m_amber : m_green;
+                    return (
+                      <div>
+                        <input type="text" placeholder="Search by name or email…" value={adminSearch} onChange={e => setAdminSearch(e.target.value)} style={{ fontFamily: sans, fontSize: 14, padding: "12px 16px", borderRadius: 10, border: `1px solid ${m_line}`, background: m_white, width: isMobile ? "100%" : 360, marginBottom: 12, outline: "none" }} />
+                        <p style={{ fontFamily: sans, fontSize: 13, color: m_gray, marginBottom: 20, lineHeight: 1.6 }}>For privacy and security, passwords are never visible to anyone — including admins — since Supabase only stores a one-way hash, not the actual password. To help someone regain access, send them a secure reset link instead.</p>
+                        <div style={{ background: m_white, border: `1px solid ${m_line}`, borderRadius: 16, overflow: "hidden" }}>
+                          {allUsers.map((u, i) => {
+                            const status = adminResetStatus[u.email];
+                            return (
+                              <div key={`${u.kind}-${u.email}-${i}`} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "16px 22px", borderBottom: i < allUsers.length - 1 ? `1px solid ${m_line}` : "none", gap: 16, flexWrap: "wrap" }}>
+                                <div style={{ minWidth: 0, flex: 1 }}>
+                                  <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 3 }}>
+                                    <p style={{ fontFamily: sans, fontSize: 14, fontWeight: 700, color: m_ink }}>{u.name}</p>
+                                    <span style={{ fontFamily: sans, fontSize: 10, fontWeight: 700, letterSpacing: "0.05em", textTransform: "uppercase", padding: "2px 8px", borderRadius: 999, color: m_white, background: kindColor(u.kind) }}>{u.kind}</span>
+                                  </div>
+                                  <p style={{ fontFamily: sans, fontSize: 13, color: m_gray }}>{u.email} {u.registered ? `· Registered ${new Date(u.registered).toLocaleDateString()}` : ""}</p>
+                                </div>
+                                <button disabled={status === "sending"} onClick={() => handleSendPasswordReset(u.email)} style={{ fontFamily: sans, fontSize: 12, fontWeight: 600, padding: "8px 16px", borderRadius: 999, background: status === "sent" ? m_green : m_ink, color: m_white, border: "none", cursor: "pointer", whiteSpace: "nowrap" }}>
+                                  {status === "sending" ? "Sending…" : status === "sent" ? "Email Sent ✓" : status === "error" ? "Try Again" : "Send Password Reset"}
+                                </button>
+                              </div>
+                            );
+                          })}
+                          {allUsers.length === 0 && <p style={{ fontFamily: sans, fontSize: 14, color: m_gray, padding: 22 }}>No matching users.</p>}
+                        </div>
+                      </div>
+                    );
+                  })()}
 
                   {/* MESSAGES */}
                   {adminTab === "messages" && !adminLoading && !adminSelectedThreadStudent && (
@@ -9744,10 +9793,11 @@ function PortalPage({ setPage }) {
             { section: "School & Academic Background", path: "priorProgramsExperience", label: "Have you previously participated in entrepreneurship, debate, leadership, business, Model UN, speech, finance, coding, or similar programs?", type: "pills", options: [["yes", "Yes"], ["no", "No"]] },
             { section: "School & Academic Background", path: "priorProgramsDescription", label: "If yes, please briefly describe the program, activity, or experience.", type: "textarea", hint: "Please include the name of the program or activity, your role, and what you learned or accomplished.", conditional: f => f.priorProgramsExperience === "yes" },
 
+            { section: "Program Selection", path: "summer.wantsScholarship", label: "Would you like to be considered for one of the limited Summer Scholarship seats?", type: "pills", hint: "A limited number of Summer Scholarship seats are available for the Venture Launchpad wave. Selected students receive a $1,500 merit-based scholarship award, bringing summer tuition from $4,500 to $3,000. Awards are reviewed on a rolling basis based on student fit, commitment, and remaining availability.", conditional: () => wantsSummer, options: [["yes", "Yes, I would like to be considered."], ["no", "No, I do not need scholarship consideration."]] },
             { section: "Program Selection", path: "applyingMultiple", label: "Are you applying for more than one program?", type: "pills", options: [["yes", "Yes"], ["no", "No"]] },
             { section: "Program Selection", path: "firstChoiceProgram", label: "If yes, which program is your first choice?", type: "pills", conditional: f => f.applyingMultiple === "yes", options: [["summer", "Venture Launchpad Summer Intensive"], ["foundation", "Foundation Semester"], ["venture", "Venture Semester"], ["full-year", "Full Academic Year"], ["unsure", "Not sure yet"]] },
-            { section: "Program Selection", path: "heardAbout", label: "How did you hear about Excalibur Academy?", type: "pills", options: [["friend-family", "Friend / Family"], ["counselor", "School or College Counselor"], ["teacher", "Teacher"], ["parent-referral", "Parent Referral"], ["social", "Social Media"], ["event", "Event"], ["search", "Online Search"], ["team-member", "Excalibur Team Member"], ["other", "Other"]] },
-            { section: "Program Selection", path: "referralName", label: "If someone referred you to Excalibur Academy, please list their name.", type: "text", optional: true },
+            { section: "Program Selection", path: "heardAbout", label: "How did you hear about Excalibur Academy?", type: "pills", hint: "Please let us know if you were referred by an Enrollment Coordinator, team member, current family, student, community partner, or Excalibur affiliate.", options: [["coordinator-team", "Referred by an Enrollment Coordinator or team member"], ["family-student", "Referred by a current family or student"], ["affiliate-partner", "Referred by an Excalibur affiliate or community partner"], ["social", "Social media"], ["school-counselor", "School / counselor"], ["event", "Event or presentation"], ["search", "Online search"], ["other", "Other"]] },
+            { section: "Program Selection", path: "referralName", label: "If someone referred you to Excalibur Academy, please list their name below.", type: "text", optional: true },
 
             { section: "Student Short Answers", path: "dreamAnswer", label: "Do you have a Dream? How would you describe it, and where do you hope to see yourself in 10 years?", type: "textarea", hint: "This does not need to be a fully developed career plan. We are interested in your ambitions, imagination, values, and sense of direction." },
             { section: "Student Short Answers", path: "whyJoin", label: "Why do you want to join Excalibur Academy?", type: "textarea", hint: "Please explain what attracted you to the program and what you hope to gain from the experience." },
