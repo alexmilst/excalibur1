@@ -3736,7 +3736,7 @@ function HomePage({ setPage, openInquiry }) {
 
       {/* THREE PROGRAMS */}
       <section style={{ padding: isMobile ? "60px 16px" : "80px 40px", background: "#100F0C", borderTop: "1px solid rgba(188,166,150,.1)" }}>
-        <div style={{ maxWidth: 1100, margin: "0 auto" }}>
+        <div style={{ maxWidth: 1340, margin: "0 auto" }}>
           <Fade><div style={{ textAlign: "center", marginBottom: 52 }}><p style={{ fontFamily: sans, fontSize: 12, letterSpacing: "0.2em", color:"#E4D5C1", fontWeight: 700, textTransform:"uppercase", marginBottom:16 }}>Three Paths Into Excalibur</p><h2 style={{ fontFamily: "Garamond, serif", fontSize:isMobile?"clamp(32px,5vw,48px)":"clamp(36px,4vw,56px)", fontWeight:400, color:"#A48D6E", lineHeight:1.06, letterSpacing:"0.08em", textTransform:"uppercase", marginBottom:16 }}>Choose Your Entry Point</h2><p style={{ fontFamily: lora, fontSize: 16, color:"#E4D5C1", fontWeight: 400, lineHeight: 1.9, letterSpacing:"0.02em", textAlign:"center", maxWidth:620, margin:"0 auto" }}>From two-week summer intensives to a full semester after-school Flagship program — weekday and weekend tracks, designed around student's schedule. Three paths into Excalibur.</p></div></Fade>
 
           {/* ── THREE HERO CATEGORY CARDS ── */}
@@ -3749,7 +3749,7 @@ function HomePage({ setPage, openInquiry }) {
               onMouseEnter={e => { e.currentTarget.style.transform = "translateY(-18px)"; e.currentTarget.style.boxShadow = "0 45px 90px -20px rgba(0,0,0,0.92), 0 0 0 1px rgba(164,141,110,0.55), 0 22px 44px rgba(164,141,110,0.22)"; e.currentTarget.style.borderColor = "#D9C7A9"; }}
               onMouseLeave={e => { e.currentTarget.style.transform = "translateY(-10px)"; e.currentTarget.style.boxShadow = "0 30px 60px -18px rgba(0,0,0,0.85), 0 0 0 1px rgba(164,141,110,0.3), 0 16px 32px rgba(164,141,110,0.12)"; e.currentTarget.style.borderColor = "#A48D6E"; }}
             >
-              <div style={{ position:"absolute", inset:0, padding:isMobile?"28px":"40px", display:"flex", flexDirection:"column", justifyContent:"flex-end" }}>
+              <div style={{ position:"absolute", inset:0, padding:isMobile?"34px":"52px", display:"flex", flexDirection:"column", justifyContent:"flex-end" }}>
                 <h3 style={{ fontFamily:"'Cinzel', serif", fontSize:35, fontWeight:400, color:"#E4D5C1", lineHeight:1, letterSpacing:"0.08em", textTransform:"uppercase", marginBottom:12 }}>Summer Intensive</h3>
                 <p style={{ fontFamily:serif, fontSize:18, color:"#E4D5C1", fontStyle:"italic", fontWeight:400, lineHeight:1.5, marginBottom:8 }}>Two Weeks. Full Days. Real Ventures.</p>
                 <p style={{ fontFamily:lora, fontSize:13, color:"#A48D6E", fontWeight:400, letterSpacing:"0.04em", marginBottom:24 }}>July 27 – August 8, 2026</p>
@@ -3768,7 +3768,7 @@ function HomePage({ setPage, openInquiry }) {
               onMouseEnter={e => { e.currentTarget.style.transform = "translateY(-18px)"; e.currentTarget.style.boxShadow = "0 45px 90px -20px rgba(0,0,0,0.92), 0 0 0 1px rgba(164,141,110,0.55), 0 22px 44px rgba(164,141,110,0.22)"; e.currentTarget.style.borderColor = "#D9C7A9"; }}
               onMouseLeave={e => { e.currentTarget.style.transform = "translateY(-10px)"; e.currentTarget.style.boxShadow = "0 30px 60px -18px rgba(0,0,0,0.85), 0 0 0 1px rgba(164,141,110,0.3), 0 16px 32px rgba(164,141,110,0.12)"; e.currentTarget.style.borderColor = "#A48D6E"; }}
             >
-              <div style={{ position:"absolute", inset:0, padding:isMobile?"28px":"40px", display:"flex", flexDirection:"column", justifyContent:"flex-end" }}>
+              <div style={{ position:"absolute", inset:0, padding:isMobile?"34px":"52px", display:"flex", flexDirection:"column", justifyContent:"flex-end" }}>
                 <h3 style={{ fontFamily:"'Cinzel', serif", fontSize:35, fontWeight:400, color:"#E4D5C1", lineHeight:1, letterSpacing:"0.08em", textTransform:"uppercase", marginBottom:12 }}>Foundation Semester</h3>
                 <p style={{ fontFamily:serif, fontSize:18, color:"#E4D5C1", fontStyle:"italic", fontWeight:400, lineHeight:1.5, marginBottom:8 }}>After-School Program. Weekday & Weekend Cohorts.</p>
                 <p style={{ fontFamily:lora, fontSize:13, color:"#A48D6E", fontWeight:400, letterSpacing:"0.04em", marginBottom:24 }}>Fall 2026 · September – December</p>
@@ -3787,7 +3787,7 @@ function HomePage({ setPage, openInquiry }) {
               onMouseEnter={e => { e.currentTarget.style.transform = "translateY(-18px)"; e.currentTarget.style.boxShadow = "0 45px 90px -20px rgba(0,0,0,0.92), 0 0 0 1px rgba(164,141,110,0.55), 0 22px 44px rgba(164,141,110,0.22)"; e.currentTarget.style.borderColor = "#D9C7A9"; }}
               onMouseLeave={e => { e.currentTarget.style.transform = "translateY(-10px)"; e.currentTarget.style.boxShadow = "0 30px 60px -18px rgba(0,0,0,0.85), 0 0 0 1px rgba(164,141,110,0.3), 0 16px 32px rgba(164,141,110,0.12)"; e.currentTarget.style.borderColor = "#A48D6E"; }}
             >
-              <div style={{ position:"absolute", inset:0, padding:isMobile?"28px":"40px", display:"flex", flexDirection:"column", justifyContent:"flex-end" }}>
+              <div style={{ position:"absolute", inset:0, padding:isMobile?"34px":"52px", display:"flex", flexDirection:"column", justifyContent:"flex-end" }}>
                 <h3 style={{ fontFamily:"'Cinzel', serif", fontSize:35, fontWeight:400, color:"#E4D5C1", lineHeight:1, letterSpacing:"0.08em", textTransform:"uppercase", marginBottom:12 }}>Venture Semester</h3>
                 <p style={{ fontFamily:serif, fontSize:18, color:"#E4D5C1", fontStyle:"italic", fontWeight:400, lineHeight:1.5, marginBottom:8 }}>Build & Pitch a Real Venture.</p>
                 <p style={{ fontFamily:lora, fontSize:13, color:"#A48D6E", fontWeight:400, letterSpacing:"0.04em", marginBottom:24 }}>Spring 2027 · January – May</p>
@@ -3895,7 +3895,7 @@ function HomePage({ setPage, openInquiry }) {
             </div>
           </div>
           <div style={{ background:"#E4D5C1", display:"grid", gridTemplateRows:isMobile?"300px auto":"480px auto" }}>
-            <div style={{ position:"relative", backgroundImage:"linear-gradient(to top,rgba(0,0,0,.32),rgba(0,0,0,.06)),url('https://i.imgur.com/81P6A7H.jpeg')", backgroundSize:"cover", backgroundPosition:"top center", borderBottom:"1px solid rgba(0,0,0,.1)" }}>
+            <div style={{ position:"relative", backgroundImage:"linear-gradient(to top,rgba(0,0,0,.32),rgba(0,0,0,.06)),url('https://i.imgur.com/NtRFTOk.jpeg')", backgroundSize:"cover", backgroundPosition:"top center", borderBottom:"1px solid rgba(0,0,0,.1)" }}>
             </div>
             <div style={{ padding:isMobile?"32px 24px":"46px 42px 48px", background:"#E4D5C1" }}>
               <div style={{ border:"1px solid rgba(0,0,0,.15)", marginBottom:36 }}>
@@ -7772,14 +7772,14 @@ function ApplicationPage({ setPage, defaultProgram }) {
     },
     {
       id: "foundation", label: "FLAGSHIP · FOUNDATION SEMESTER", title: "Foundation Semester",
-      price: "From $2,000", period: "per month", dates: "September – December 2026",
+      price: "From $1,700", period: "per month", dates: "September – December 2026",
       desc: "A 14-week semester for ambitious students ready to develop public speaking, business judgment, and the discipline of real-world execution. Students complete the Junior Consultant Program, attend monthly guest masterclasses, and present at the Excalibur Gala.",
       meta: [["Tuition", "$8,500 in full · $9,000 installments"], ["Class Size", "20 students per cohort"], ["Capstone", "Excalibur Gala · Dec 19, 2026"]],
       detailPage: "foundation-detail", available: true,
     },
     {
       id: "venture", label: "FLAGSHIP · VENTURE SEMESTER", title: "Venture Semester",
-      price: "From $2,000", period: "per month", dates: "January – May 2027",
+      price: "From $1,700", period: "per month", dates: "January – May 2027",
       desc: "A 16-week semester focused on venture development, market validation, and applied entrepreneurship — culminating in the Venture Finale. Priority placement is given to Foundation Semester completers.",
       meta: [["Tuition", "$9,500 in full · $10,000 installments"], ["Class Size", "20 students per cohort"], ["Capstone", "The Venture Finale · May 2027"]],
       detailPage: "venture-detail", available: true,
