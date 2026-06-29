@@ -2823,9 +2823,9 @@ function ApplyPage({ setPage, openInquiry }) {
         {[
           {
             img: "https://i.imgur.com/obiNhvF.jpeg",
-            status: "ACCEPTING APPLICATIONS NOW", statusColor: "#3F6B3F",
             eyebrow: "Summer Intensive",
             label: "Summer Intensive",
+            status: "Enrollment Open", statusColor: "#3F6B3F",
             dates: "July 27, 2026 – August 8, 2026", price: "From $4,500", period: "per wave",
             desc: "A two-week summer intensive for students ready to test entrepreneurship in a fast, immersive format. Students build a venture, train daily in public speaking and pitch craft, and present at a live Shark Tank-inspired Finale.\n\nDesigned as both a standalone experience and an introduction to the Excalibur Flagship.",
             meta: [
@@ -2853,9 +2853,9 @@ function ApplyPage({ setPage, openInquiry }) {
           },
           {
             img: "https://i.imgur.com/fdFvln7.jpeg",
-            status: "ACCEPTING APPLICATIONS NOW", statusColor: "#3F6B3F",
             eyebrow: "Flagship · Foundation Semester",
             label: "Foundation Semester",
+            status: "Enrollment Open", statusColor: "#3F6B3F",
             dates: "September 2026 – December 2026", price: "From $1,900", period: "per month",
             desc: "A 14-week semester for ambitious students ready to develop public speaking, business judgment, and the discipline of real-world execution.\n\nStudents complete the Junior Consultant Program, attend monthly guest masterclasses, and present at the Excalibur Gala.\n\nLimited enrollment per cohort. 20 students.",
             meta: [
@@ -2886,7 +2886,6 @@ function ApplyPage({ setPage, openInquiry }) {
           },
           {
             img: "https://i.pinimg.com/736x/d4/b5/21/d4b521c3041cf4239e806b6c3661d794.jpg",
-            status: "ACCEPTING APPLICATIONS NOW", statusColor: "#3F6B3F",
             eyebrow: "Flagship · Venture Semester",
             label: "Venture Semester",
             dates: "January 2027 – May 2027", price: "From $1,900", period: "per month",
@@ -2923,10 +2922,6 @@ function ApplyPage({ setPage, openInquiry }) {
                     <img src={prog.img} alt={prog.label} style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover" }} />
                     <div style={{ position: "absolute", inset: 0, background: "linear-gradient(180deg, rgba(16,15,12,0) 55%, rgba(16,15,12,.55) 100%)" }} />
                     <div style={{ position: "absolute", bottom: isMobile ? 24 : 40, left: isMobile ? 24 : 48, right: 24 }}>
-                      <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 10 }}>
-                        <div style={{ width: 7, height: 7, borderRadius: "50%", background: prog.statusColor, flexShrink: 0 }} />
-                        <span style={{ fontFamily: lora, fontSize: isMobile ? 9 : 10, letterSpacing: "0.2em", color: "#E4D5C1", fontWeight: 700, textTransform: "uppercase" }}>{prog.status}</span>
-                      </div>
                       <h3 style={{ fontFamily: cg, fontSize: isMobile ? 42 : 64, fontWeight: 600, fontStyle: "italic", color: "#E4D5C1", lineHeight: 1.0, margin: 0, marginBottom: 10 }}>{prog.label}</h3>
                       <p style={{ fontFamily: lora, fontSize: isMobile ? 13 : 15, letterSpacing: "0.04em", color: "#E4D5C1", fontWeight: 400, opacity: 0.85, margin: 0 }}>{prog.dates}</p>
                     </div>
@@ -2934,6 +2929,12 @@ function ApplyPage({ setPage, openInquiry }) {
 
                   {/* CONTENT PANEL */}
                   <div style={{ order: isMobile ? 0 : (reversed ? 1 : 2), background: "#100F0C", padding: isMobile ? "40px 24px" : "64px 56px", display: "flex", flexDirection: "column", justifyContent: "center" }}>
+                    {prog.status && (
+                      <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 18 }}>
+                        <div style={{ width: 7, height: 7, borderRadius: "50%", background: prog.statusColor, flexShrink: 0 }} />
+                        <span style={{ fontFamily: lora, fontSize: 10, letterSpacing: "0.2em", color: "#E4D5C1", fontWeight: 700, textTransform: "uppercase" }}>{prog.status}</span>
+                      </div>
+                    )}
                     <p style={{ fontFamily: lora, fontSize: isMobile ? 16 : 19, letterSpacing: "0.08em", color: "#A48D6E", textTransform: "uppercase", fontWeight: 700, marginBottom: 10 }}>{prog.eyebrow}</p>
                     <p style={{ fontFamily: lora, fontSize: isMobile ? 16 : 19, letterSpacing: "0.04em", color: "#E4D5C1", textTransform: "none", fontWeight: 500, opacity: 0.85, marginBottom: 28 }}>{prog.dates}</p>
 
@@ -3132,9 +3133,6 @@ function ApplyPage({ setPage, openInquiry }) {
             <p style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: isMobile ? 14 : 18, color: "#010000", fontWeight: 400, lineHeight: 1.75, fontStyle: "italic" }}>Documented components · Professionally assembled · Designed to support university applications, interviews, and future opportunities.</p>
           </div>
         </div>
-
-        {/* Interactive 8-component index, with layered photo stack as third column */}
-        <PortfolioIndexWhite isMobile={isMobile} setPage={setPage} images={["https://i.imgur.com/xNrPz7m.jpeg", "https://i.imgur.com/ev0MLKy.jpeg"]} />
 
         {/* College admissions  -  merged below */}
         <div style={{ background: "#E4D5C1", padding: isMobile ? "48px 24px" : "64px 80px" }}>
