@@ -2742,8 +2742,8 @@ function ApplyPage({ setPage, openInquiry }) {
       body: "Following the interview, the Admissions Committee releases an admissions decision. Accepted students receive a formal offer of admission and enrollment information.",
     },
     {
-      n: "04", title: "Program Pathways & Onboarding",
-      body: "Program Pathways is confirmed upon receipt of the enrollment agreement and required deposit or required deposit or initial tuition payment. Families receive access to the student and parent portals, onboarding materials, student information forms, including dietary preferences where relevant, orientation date invitations, key dates, and program information prior to the start of the semester.",
+      n: "04", title: "Enrollment Confirmation & Orientation",
+      body: "Program Enrollment is confirmed upon receipt of the enrollment agreement and required deposit. Families receive access to the student and parent portals, onboarding materials, student information forms, including dietary preferences where relevant, orientation date invitations, key dates, and program information prior to the start of the program.",
     },
   ];
 
@@ -2835,8 +2835,7 @@ function ApplyPage({ setPage, openInquiry }) {
               ["Ages", "14–17 · High school students"],
               ["Location", "South Orange County, CA"],
               ["Finale", "Venture Finale — Aug 8, 2026"],
-              ["Priority Deadline", "[Add Priority Application Deadline]"],
-              ["Regular Deadline", "[Add Regular Application Deadline]"],
+              ["Application Deadline", "July 15, 2026"],
             ],
             includes: [
               "Daily public speaking and executive communication training",
@@ -2866,8 +2865,8 @@ function ApplyPage({ setPage, openInquiry }) {
               ["Class Size", "20 students per cohort"],
               ["Ages", "14–17 · High school students"],
               ["Capstone", "Excalibur Gala · Dec 19, 2026"],
-              ["Priority Deadline", "[Add Priority Application Deadline]"],
-              ["Regular Deadline", "[Add Regular Application Deadline]"],
+              ["Priority Deadline", "July 15, 2026"],
+              ["Regular Deadline", "August 15, 2026"],
             ],
             includes: [
               "All sessions · Public Speaking · Core Business Modules",
@@ -2984,45 +2983,6 @@ function ApplyPage({ setPage, openInquiry }) {
           );
         })}
 
-        {/* FULL YEAR — RECOMMENDED PATHWAY, FULL-BLEED OXBLOOD BANNER */}
-        <Fade d={0.1}>
-          <div style={{ background: ox, padding: isMobile ? "44px 24px" : "72px 80px" }}>
-            <div style={{ maxWidth: 1100, margin: "0 auto" }}>
-              <div style={{ display: "inline-block", border: "1px solid #A48D6E", padding: "6px 18px", marginBottom: 28 }}>
-                <p style={{ fontFamily: lora, fontSize: isMobile ? 9 : 10, letterSpacing: "0.2em", color: "#A48D6E", fontWeight: 700, textTransform: "uppercase", margin: 0 }}>Recommended Pathway · Full Academic Year</p>
-              </div>
-
-              <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1.1fr 1fr", gap: isMobile ? 32 : 64 }}>
-                <div>
-                  <h3 style={{ fontFamily: cg, fontSize: isMobile ? 36 : 52, fontWeight: 600, fontStyle: "italic", color: "#E4D5C1", lineHeight: 1.0, marginBottom: 14 }}>Full Academic Year</h3>
-                  <p style={{ fontFamily: lora, fontSize: isMobile ? 12 : 13, letterSpacing: "0.1em", color: "#E4D5C1", textTransform: "uppercase", fontWeight: 400, opacity: 0.65, marginBottom: 28 }}>September 2026 – May 2027 · 30 Weeks</p>
-                  <p style={{ fontFamily: lora, fontSize: isMobile ? 14 : 15.5, color: "#E4D5C1", fontWeight: 400, lineHeight: 1.85, marginBottom: 14, opacity: 0.92 }}>Foundation and Venture Semesters together, at a reduced rate.</p>
-                  <p style={{ fontFamily: lora, fontSize: isMobile ? 14 : 15.5, color: "#E4D5C1", fontWeight: 400, lineHeight: 1.85, marginBottom: 14, opacity: 0.92 }}>Students move through the complete arc — Foundation formation into Venture execution — with continuity of cohort, faculty, and standard across the full year.</p>
-                  <p style={{ fontFamily: lora, fontSize: isMobile ? 14 : 15.5, color: "#E4D5C1", fontWeight: 400, lineHeight: 1.85, opacity: 0.92, marginBottom: 32 }}>The recommended pathway for families seeking the complete Excalibur experience.</p>
-
-                  <div style={{ display: "flex", alignItems: "baseline", gap: 8, marginBottom: 24 }}>
-                    <span style={{ fontFamily: cg, fontSize: isMobile ? 36 : 44, fontWeight: 300, color: "#E4D5C1", letterSpacing: "-0.02em" }}>From $1,490</span>
-                    <span style={{ fontFamily: lora, fontSize: isMobile ? 12 : 13, color: "rgba(228,213,193,.7)" }}>per month</span>
-                  </div>
-                  <button onClick={() => openInquiry && openInquiry("full-year")} style={{ fontFamily: lora, padding: "16px 36px", background: "#A48D6E", border: "none", color: "#100F0C", fontSize: isMobile ? 11 : 12, fontWeight: 700, letterSpacing: "0.16em", textTransform: "uppercase", cursor: "pointer", width: isMobile ? "100%" : "auto" }}>Apply — Full Year →</button>
-                </div>
-                <div>
-                  {[
-                    ["Tuition", "$16,000 in full (save $2,000)"],
-                    ["Installments", "$17,000 plan · $17,750 monthly"],
-                    ["Hourly Equivalent", "$80/hr · 200 total hours"],
-                    ["Includes", "Both semesters · Both Summits · Both capstones"],
-                  ].map(([k, v], mi) => (
-                    <div key={k} style={{ display: "grid", gridTemplateColumns: "110px 1fr", gap: 16, padding: "14px 0", borderTop: mi === 0 ? "none" : "1px solid rgba(164,141,110,.2)" }}>
-                      <span style={{ fontFamily: lora, fontSize: 10, letterSpacing: "0.1em", color: "#A48D6E", textTransform: "uppercase", fontWeight: 600 }}>{k}</span>
-                      <span style={{ fontFamily: lora, fontSize: 14, color: "#E4D5C1", fontWeight: 400, lineHeight: 1.5, opacity: 0.9 }}>{v}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </div>
-        </Fade>
       </div>
 
 
@@ -3092,7 +3052,6 @@ function ApplyPage({ setPage, openInquiry }) {
                   <span style={{ fontFamily: lora, fontSize: isMobile ? 13 : 15, color: dark, fontWeight: 400, lineHeight: 1.5 }}>{item}</span>
                 </div>
               ))}
-              <p style={{ fontFamily: cg, fontSize: 15, color: "#8B6914", fontStyle: "italic", marginTop: 24, lineHeight: 1.7 }}>The goal is to make the process polished, organized, and personal from the beginning.</p>
             </Fade>
           </div>
 
@@ -3214,23 +3173,6 @@ function ApplyPage({ setPage, openInquiry }) {
           <button onClick={() => openInquiry && openInquiry("venture")} style={{ fontFamily: lora, padding: "14px 32px", background: "transparent", border: `1px solid rgba(164,141,110,.35)`, color: gold, fontSize: 11, fontWeight: 600, letterSpacing: "0.15em", textTransform: "uppercase", cursor: "pointer" }}>Apply to Venture →</button>
           <button onClick={() => openInquiry && openInquiry("summer")} style={{ fontFamily: lora, padding: "14px 32px", background: "transparent", border: `1px solid rgba(164,141,110,.35)`, color: gold, fontSize: 11, fontWeight: 600, letterSpacing: "0.15em", textTransform: "uppercase", cursor: "pointer" }}>Apply for Summer →</button>
           <button onClick={() => openInquiry && openInquiry()} style={{ fontFamily: lora, padding: "14px 32px", background: "transparent", border: `1px solid rgba(164,141,110,.2)`, color: parch, fontSize: 11, fontWeight: 400, letterSpacing: "0.15em", textTransform: "uppercase", cursor: "pointer" }}>Request Admissions Information →</button>
-        </div>
-      </div>
-
-
-
-      {/* ══════════════════════════════════════════════════════
-          TEN-MONTH / FLAGSHIP INTERVIEW NOTE
-      ══════════════════════════════════════════════════════ */}
-      <div style={{ background: parch, padding: isMobile ? "52px 28px" : "80px 80px", borderTop: `1px solid rgba(16,15,12,.08)` }}>
-        <div style={{ maxWidth: 860, margin: "0 auto" }}>
-          <div style={{ paddingLeft: isMobile ? 20 : 44, borderLeft: `3px solid ${dark}` }}>
-            <p style={{ fontFamily: lora, fontSize: 11, letterSpacing: "0.45em", color: "#8B6914", fontWeight: 600, textTransform: "uppercase", marginBottom: 18 }}>Flagship Overview · Admissions Interview</p>
-            <h3 style={{ fontFamily: cg, fontSize: isMobile ? 22 : 32, fontWeight: 400, color: dark, lineHeight: 1.2, marginBottom: 24 }}>Admission to the Flagship Overview includes a brief admissions interview with the Excalibur Admissions Committee.</h3>
-            <p style={{ fontFamily: lora, fontSize: isMobile ? 14 : 16, color: dark, fontWeight: 400, lineHeight: 1.9, marginBottom: 16 }}>Interviews are approximately 15–20 minutes and are held on alternating Saturdays. Students meet with members of the Academy leadership team, which may include the Academy Dean, Dean of Admissions, lead faculty, and admissions committee members.</p>
-            <p style={{ fontFamily: lora, fontSize: isMobile ? 14 : 16, color: dark, fontWeight: 400, lineHeight: 1.9, marginBottom: 16 }}>The interview is not designed to test perfection. Excalibur is not looking for the flawless résumé, the highest grades alone, or the most rehearsed answers. The Academy looks for students with curiosity, drive, resilience, critical thinking, and the readiness to step into the real world — intellectually, socially, and practically.</p>
-            <p style={{ fontFamily: cg, fontSize: 16, color: "#8B6914", fontStyle: "italic", lineHeight: 1.7 }}>We are looking for dreamers with discipline, builders with courage, and students prepared to think seriously, work hard, receive feedback, and take responsibility for their growth.</p>
-          </div>
         </div>
       </div>
 
@@ -12687,7 +12629,7 @@ function FlagshipDetailPage2({ setPage, openInquiry }) {
               { n:"01", title:"Submit the Application",        body:"Complete the online application. Every applicant is reviewed individually, with consideration given to intellectual curiosity, character, ambition, and readiness for a high-standards environment." },
               { n:"02", title:"Admissions Conversation", body:"Selected applicants are invited to a conversation with the Academy Dean and senior members of the faculty team. Students should expect thoughtful discussion, questions that require reflection, and opportunities to demonstrate how they think rather than simply what they know." },
               { n:"03", title:"Committee Review & Decision",    body:"Following the interview, the Admissions Committee releases an admissions decision. Accepted students receive a formal offer of admission and enrollment information." },
-              { n:"04", title:"Program Pathways & Onboarding",       body:"Program Pathways is confirmed upon receipt of the enrollment agreement and required deposit or required deposit or initial tuition payment. Families receive access to the student and parent portals, onboarding materials, student information forms, including dietary preferences where relevant, orientation date invitations, key dates, and program information prior to the start of the semester." },
+              { n:"04", title:"Enrollment Confirmation & Orientation",       body:"Program Enrollment is confirmed upon receipt of the enrollment agreement and required deposit. Families receive access to the student and parent portals, onboarding materials, student information forms, including dietary preferences where relevant, orientation date invitations, key dates, and program information prior to the start of the program." },
             ].map((step,i) => (
               <div key={i} style={{ display:"grid", gridTemplateColumns:isMobile?"1fr":"72px 1fr 1fr", gap:isMobile?"8px 0":"0 52px", borderTop:"1px solid rgba(216,183,140,.1)", paddingTop:isMobile?28:36, paddingBottom:isMobile?28:36, alignItems:"start" }}>
                 <span style={{ fontFamily:ag, fontSize:isMobile?28:44, fontWeight:300, color:"rgba(216,183,140,.25)", lineHeight:1 }}>{step.n}</span>
@@ -14773,7 +14715,7 @@ function FoundationDetailPage({ setPage, openInquiry }) {
               { n:"01", title:"Submit the Application",        body:"Complete the online application. Every applicant is reviewed individually, with consideration given to intellectual curiosity, character, ambition, and readiness for a high-standards environment." },
               { n:"02", title:"Admissions Interview", body:"Selected applicants are invited to a conversation with the Academy Dean and senior members of the faculty team. Students should expect thoughtful discussion, questions that require reflection, and opportunities to demonstrate how they think rather than simply what they know." },
               { n:"03", title:"Committee Review & Decision",    body:"Following the interview, the Admissions Committee releases an admissions decision. Accepted students receive a formal offer of admission and enrollment information." },
-              { n:"04", title:"Program Pathways & Onboarding",       body:"Program Pathways is confirmed upon receipt of the enrollment agreement and required deposit or required deposit or initial tuition payment. Families receive access to the student and parent portals, onboarding materials, student information forms, including dietary preferences where relevant, orientation date invitations, key dates, and program information prior to the start of the semester." },
+              { n:"04", title:"Enrollment Confirmation & Orientation",       body:"Program Enrollment is confirmed upon receipt of the enrollment agreement and required deposit. Families receive access to the student and parent portals, onboarding materials, student information forms, including dietary preferences where relevant, orientation date invitations, key dates, and program information prior to the start of the program." },
             ].map((step,i) => (
               <div key={i} style={{ display:"grid", gridTemplateColumns:isMobile?"1fr":"72px 1fr 1fr", gap:isMobile?"8px 0":"0 52px", borderTop:"1px solid rgba(164,141,110,.1)", paddingTop:isMobile?28:36, paddingBottom:isMobile?28:36, alignItems:"start" }}>
                 <span style={{ fontFamily:ag, fontSize:isMobile?28:44, fontWeight:300, color:"rgba(164,141,110,.25)", lineHeight:1 }}>{step.n}</span>
