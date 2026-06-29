@@ -652,7 +652,6 @@ function Nav({ page, setPage }) {
     ["Admissions", "admissions", null],
     ["Student Portal", "portal", null],
     ["Contact", "contact", null],
-    ["Events", "events", null],
   ];
   const go = (p) => { setPage(p); setMenuOpen(false); setProgramsOpen(false); setHoveredNav(null); };
 
@@ -768,10 +767,6 @@ function Nav({ page, setPage }) {
               )}
             </div>
           ))}
-          {/* Apply to Excalibur in menu */}
-          <button onClick={() => go("apply")} style={{ marginTop: 40, alignSelf: "flex-start", fontFamily: sans, background: "#D9C7A9", color:"#100F0C", padding: "14px 40px", fontSize: 11, fontWeight: 700, letterSpacing: "0.2em", textTransform: "uppercase", border: "none", cursor: "pointer" }}>
-            APPLY FOR ADMISSION →
-          </button>
         </div>
 
         {/* RIGHT  -  photo panel (desktop only) */}
@@ -1754,9 +1749,6 @@ function CurriculumPage({ setPage, openInquiry }) {
           </div>
         </div>
 
-        {/* Interactive 8-component index, with layered photo stack as third column */}
-        <PortfolioIndexWhite isMobile={isMobile} setPage={setPage} images={["https://i.imgur.com/xNrPz7m.jpeg", "https://i.imgur.com/ev0MLKy.jpeg"]} />
-
         {/* College admissions  -  merged below */}
         <div style={{ background: "#E4D5C1", padding: isMobile ? "48px 24px" : "64px 80px" }}>
           <div style={{ maxWidth: 1100, margin: "0 auto", display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: isMobile ? 36 : 80 }}>
@@ -1769,8 +1761,8 @@ function CurriculumPage({ setPage, openInquiry }) {
               <p style={{ fontFamily: "Lora, serif", fontSize: 14, lineHeight: 1.9, color: "#010000", fontWeight: 300 }}>Students work with Excalibur’s college advisor on application strategy, personal narrative, portfolio presentation, recommendation preparation, interview readiness, and how their Excalibur experience can strengthen their college applications and future academic goals.</p>
             </div>
             <div style={{ display: "flex", flexDirection: "column", justifyContent: "center" }}>
-              <p style={{ fontFamily: "Times, serif", fontWeight: 700, fontSize: 10, letterSpacing: "0.2em", color: "#010000", textTransform: "uppercase", marginBottom: 24 }}>What This Means in Practice</p>
-              {["Portfolio reviewed and built by admissions counselors specifically for university applications", "Faculty feedback and recommendation support grounded in direct observation of student's work", "Verified competition results and externship documentation", "Interview preparation built around real, specific experience", "A narrative unavailable to most students due to lack of comparable experience"].map((f, i) => (
+              <p style={{ fontFamily: "Times, serif", fontWeight: 700, fontSize: 10, letterSpacing: "0.2em", color: "#010000", textTransform: "uppercase", marginBottom: 24 }}>What This Means</p>
+              {["Portfolio reviewed and built by top admissions counselors specifically for university applications and beyond", "Faculty feedback and recommendation support grounded in direct observation of student's work", "Verified competition results, venture development and externship documentation", "Interview preparation built around real, specific experience", "A narrative unavailable to most students due to lack of comparable experience"].map((f, i) => (
                 <div key={i} style={{ display: "flex", gap: 14, marginBottom: 16, alignItems: "flex-start" }}>
                   <div style={{ width: 16, height: 1.5, background: "rgba(0,0,0,.3)", marginTop: 9, flexShrink: 0 }} />
                   <span style={{ fontFamily: sans, fontSize: 13, color: "#010000", fontWeight: 300, lineHeight: 1.7 }}>{f}</span>
@@ -2856,7 +2848,7 @@ function ApplyPage({ setPage, openInquiry }) {
             eyebrow: "Flagship · Foundation Semester",
             label: "Foundation Semester",
             status: "Enrollment Open", statusColor: "#3F6B3F",
-            dates: "September 2026 – December 2026", price: "From $1,900", period: "per month",
+            dates: "September 2026 – December 2026", price: "From $1,700", period: "per month",
             desc: "A 14-week semester for ambitious students ready to develop public speaking, business judgment, and the discipline of real-world execution.\n\nStudents complete the Junior Consultant Program, attend monthly guest masterclasses, and present at the Excalibur Gala.\n\nLimited enrollment per cohort. 20 students.",
             meta: [
               ["Tuition", "$8,500 total · pay in full or installments"],
@@ -2888,7 +2880,7 @@ function ApplyPage({ setPage, openInquiry }) {
             img: "https://i.pinimg.com/736x/d4/b5/21/d4b521c3041cf4239e806b6c3661d794.jpg",
             eyebrow: "Flagship · Venture Semester",
             label: "Venture Semester",
-            dates: "January 2027 – May 2027", price: "From $1,900", period: "per month",
+            dates: "January 2027 – May 2027", price: "From $1,700", period: "per month",
             desc: "A 16-week semester focused on venture development, market validation, and applied entrepreneurship — culminating in the Venture Finale.\n\nStudents move from concept to a working venture, defended before real investors and faculty.\n\nPriority placement is given to Foundation Semester completers.",
             meta: [
               ["Tuition", "$9,500 in full · $10,000 installments"],
@@ -3146,8 +3138,8 @@ function ApplyPage({ setPage, openInquiry }) {
               <p style={{ fontFamily: "Lora, serif", fontSize: 14, lineHeight: 1.9, color: "#010000", fontWeight: 300 }}>Students work with Excalibur’s college advisor on application strategy, personal narrative, portfolio presentation, recommendation preparation, interview readiness, and how their Excalibur experience can strengthen their college applications and future academic goals.</p>
             </div>
             <div style={{ display: "flex", flexDirection: "column", justifyContent: "center" }}>
-              <p style={{ fontFamily: "Times, serif", fontWeight: 700, fontSize: 10, letterSpacing: "0.2em", color: "#010000", textTransform: "uppercase", marginBottom: 24 }}>What This Means in Practice</p>
-              {["Portfolio reviewed and built by admissions counselors specifically for university applications", "Faculty feedback and recommendation support grounded in direct observation of student's work", "Verified competition results and externship documentation", "Interview preparation built around real, specific experience", "A narrative unavailable to most students due to lack of comparable experience"].map((f, i) => (
+              <p style={{ fontFamily: "Times, serif", fontWeight: 700, fontSize: 10, letterSpacing: "0.2em", color: "#010000", textTransform: "uppercase", marginBottom: 24 }}>What This Means</p>
+              {["Portfolio reviewed and built by top admissions counselors specifically for university applications and beyond", "Faculty feedback and recommendation support grounded in direct observation of student's work", "Verified competition results, venture development and externship documentation", "Interview preparation built around real, specific experience", "A narrative unavailable to most students due to lack of comparable experience"].map((f, i) => (
                 <div key={i} style={{ display: "flex", gap: 14, marginBottom: 16, alignItems: "flex-start" }}>
                   <div style={{ width: 16, height: 1.5, background: "rgba(0,0,0,.3)", marginTop: 9, flexShrink: 0 }} />
                   <span style={{ fontFamily: sans, fontSize: 13, color: "#010000", fontWeight: 300, lineHeight: 1.7 }}>{f}</span>
@@ -4403,9 +4395,6 @@ function HomePage({ setPage, openInquiry }) {
           </div>
         </div>
 
-        {/* Interactive 8-component index, with layered photo stack as third column */}
-        <PortfolioIndexWhite isMobile={isMobile} setPage={setPage} images={["https://i.imgur.com/xNrPz7m.jpeg", "https://i.imgur.com/ev0MLKy.jpeg"]} />
-
         {/* College admissions  -  merged below */}
         <div style={{ background: "#E4D5C1", padding: isMobile ? "48px 24px" : "64px 80px" }}>
           <div style={{ maxWidth: 1100, margin: "0 auto", display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: isMobile ? 36 : 80 }}>
@@ -4418,8 +4407,8 @@ function HomePage({ setPage, openInquiry }) {
               <p style={{ fontFamily: "Lora, serif", fontSize: 14, lineHeight: 1.9, color: "#010000", fontWeight: 300 }}>Students work with Excalibur’s college advisor on application strategy, personal narrative, portfolio presentation, recommendation preparation, interview readiness, and how their Excalibur experience can strengthen their college applications and future academic goals.</p>
             </div>
             <div style={{ display: "flex", flexDirection: "column", justifyContent: "center" }}>
-              <p style={{ fontFamily: "Times, serif", fontWeight: 700, fontSize: 10, letterSpacing: "0.2em", color: "#010000", textTransform: "uppercase", marginBottom: 24 }}>What This Means in Practice</p>
-              {["Portfolio reviewed and built by admissions counselors specifically for university applications", "Faculty feedback and recommendation support grounded in direct observation of student's work", "Verified competition results and externship documentation", "Interview preparation built around real, specific experience", "A narrative unavailable to most students due to lack of comparable experience"].map((f, i) => (
+              <p style={{ fontFamily: "Times, serif", fontWeight: 700, fontSize: 10, letterSpacing: "0.2em", color: "#010000", textTransform: "uppercase", marginBottom: 24 }}>What This Means</p>
+              {["Portfolio reviewed and built by top admissions counselors specifically for university applications and beyond", "Faculty feedback and recommendation support grounded in direct observation of student's work", "Verified competition results, venture development and externship documentation", "Interview preparation built around real, specific experience", "A narrative unavailable to most students due to lack of comparable experience"].map((f, i) => (
                 <div key={i} style={{ display: "flex", gap: 14, marginBottom: 16, alignItems: "flex-start" }}>
                   <div style={{ width: 16, height: 1.5, background: "rgba(0,0,0,.3)", marginTop: 9, flexShrink: 0 }} />
                   <span style={{ fontFamily: sans, fontSize: 13, color: "#010000", fontWeight: 300, lineHeight: 1.7 }}>{f}</span>
@@ -7585,7 +7574,6 @@ function SummerDetailPage({ setPage, openInquiry }) {
           <h2 style={{ fontFamily: "'Bodoni Cyrillic', 'Bodoni MT', serif", fontSize: isMobile ? 28 : 42, fontWeight: 400, color: "#010000", lineHeight: 1.0, marginBottom: 8, textTransform: "uppercase", letterSpacing: "0.04em" }}>Excalibur “Ivy” Portfolio</h2>
           <p style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: 21, color: "#010000", fontStyle: "italic" }}>A record of work, leadership, and growth — From summer intensive to flagship full formation after school program</p>
         </div>
-        <PortfolioIndexWhite isMobile={isMobile} setPage={setPage} images={["https://i.imgur.com/xNrPz7m.jpeg", "https://i.imgur.com/ev0MLKy.jpeg"]} />
       </div>
 
       {/* FAMILY CONSULTATION FORM */}
@@ -12174,9 +12162,6 @@ function FlagshipDetailPage2({ setPage, openInquiry }) {
           </div>
         </div>
 
-        {/* Interactive 8-component index, with layered photo stack as third column */}
-        <PortfolioIndexWhite isMobile={isMobile} setPage={setPage} images={["https://i.imgur.com/xNrPz7m.jpeg", "https://i.imgur.com/ev0MLKy.jpeg"]} />
-
         {/* College admissions  -  merged below */}
         <div style={{ background: "#E4D5C1", padding: isMobile ? "48px 24px" : "64px 80px" }}>
           <div style={{ maxWidth: 1100, margin: "0 auto", display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: isMobile ? 36 : 80 }}>
@@ -12189,8 +12174,8 @@ function FlagshipDetailPage2({ setPage, openInquiry }) {
               <p style={{ fontFamily: "Lora, serif", fontSize: 14, lineHeight: 1.9, color: "#010000", fontWeight: 300 }}>Students work with Excalibur’s college advisor on application strategy, personal narrative, portfolio presentation, recommendation preparation, interview readiness, and how their Excalibur experience can strengthen their college applications and future academic goals.</p>
             </div>
             <div style={{ display: "flex", flexDirection: "column", justifyContent: "center" }}>
-              <p style={{ fontFamily: "Times, serif", fontWeight: 700, fontSize: 10, letterSpacing: "0.2em", color: "#010000", textTransform: "uppercase", marginBottom: 24 }}>What This Means in Practice</p>
-              {["Portfolio reviewed and built by admissions counselors specifically for university applications", "Faculty feedback and recommendation support grounded in direct observation of student's work", "Verified competition results and externship documentation", "Interview preparation built around real, specific experience", "A narrative unavailable to most students due to lack of comparable experience"].map((f, i) => (
+              <p style={{ fontFamily: "Times, serif", fontWeight: 700, fontSize: 10, letterSpacing: "0.2em", color: "#010000", textTransform: "uppercase", marginBottom: 24 }}>What This Means</p>
+              {["Portfolio reviewed and built by top admissions counselors specifically for university applications and beyond", "Faculty feedback and recommendation support grounded in direct observation of student's work", "Verified competition results, venture development and externship documentation", "Interview preparation built around real, specific experience", "A narrative unavailable to most students due to lack of comparable experience"].map((f, i) => (
                 <div key={i} style={{ display: "flex", gap: 14, marginBottom: 16, alignItems: "flex-start" }}>
                   <div style={{ width: 16, height: 1.5, background: "rgba(0,0,0,.3)", marginTop: 9, flexShrink: 0 }} />
                   <span style={{ fontFamily: sans, fontSize: 13, color: "#010000", fontWeight: 300, lineHeight: 1.7 }}>{f}</span>
@@ -14356,9 +14341,6 @@ function FoundationDetailPage({ setPage, openInquiry }) {
           </div>
         </div>
 
-        {/* Interactive 8-component index, with layered photo stack as third column */}
-        <PortfolioIndexWhite isMobile={isMobile} setPage={setPage} images={["https://i.imgur.com/xNrPz7m.jpeg", "https://i.imgur.com/ev0MLKy.jpeg"]} />
-
         {/* College admissions  -  merged below */}
         <div style={{ background: "#E4D5C1", padding: isMobile ? "48px 24px" : "64px 80px" }}>
           <div style={{ maxWidth: 1100, margin: "0 auto", display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: isMobile ? 36 : 80 }}>
@@ -14371,8 +14353,8 @@ function FoundationDetailPage({ setPage, openInquiry }) {
               <p style={{ fontFamily: "Lora, serif", fontSize: 14, lineHeight: 1.9, color: "#010000", fontWeight: 300 }}>Students work with Excalibur’s college advisor on application strategy, personal narrative, portfolio presentation, recommendation preparation, interview readiness, and how their Excalibur experience can strengthen their college applications and future academic goals.</p>
             </div>
             <div style={{ display: "flex", flexDirection: "column", justifyContent: "center" }}>
-              <p style={{ fontFamily: "Times, serif", fontWeight: 700, fontSize: 10, letterSpacing: "0.2em", color: "#010000", textTransform: "uppercase", marginBottom: 24 }}>What This Means in Practice</p>
-              {["Portfolio reviewed and built by admissions counselors specifically for university applications", "Faculty feedback and recommendation support grounded in direct observation of student's work", "Verified competition results and externship documentation", "Interview preparation built around real, specific experience", "A narrative unavailable to most students due to lack of comparable experience"].map((f, i) => (
+              <p style={{ fontFamily: "Times, serif", fontWeight: 700, fontSize: 10, letterSpacing: "0.2em", color: "#010000", textTransform: "uppercase", marginBottom: 24 }}>What This Means</p>
+              {["Portfolio reviewed and built by top admissions counselors specifically for university applications and beyond", "Faculty feedback and recommendation support grounded in direct observation of student's work", "Verified competition results, venture development and externship documentation", "Interview preparation built around real, specific experience", "A narrative unavailable to most students due to lack of comparable experience"].map((f, i) => (
                 <div key={i} style={{ display: "flex", gap: 14, marginBottom: 16, alignItems: "flex-start" }}>
                   <div style={{ width: 16, height: 1.5, background: "rgba(0,0,0,.3)", marginTop: 9, flexShrink: 0 }} />
                   <span style={{ fontFamily: sans, fontSize: 13, color: "#010000", fontWeight: 300, lineHeight: 1.7 }}>{f}</span>
@@ -14564,9 +14546,6 @@ function FoundationDetailPage({ setPage, openInquiry }) {
           </div>
         </div>
 
-        {/* Interactive 8-component index, with layered photo stack as third column */}
-        <PortfolioIndexWhite isMobile={isMobile} setPage={setPage} images={["https://i.imgur.com/xNrPz7m.jpeg", "https://i.imgur.com/ev0MLKy.jpeg"]} />
-
         {/* College admissions  -  merged below */}
         <div style={{ background: "#E4D5C1", padding: isMobile ? "48px 24px" : "64px 80px" }}>
           <div style={{ maxWidth: 1100, margin: "0 auto", display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: isMobile ? 36 : 80 }}>
@@ -14579,8 +14558,8 @@ function FoundationDetailPage({ setPage, openInquiry }) {
               <p style={{ fontFamily: "Lora, serif", fontSize: 14, lineHeight: 1.9, color: "#010000", fontWeight: 300 }}>Students work with Excalibur’s college advisor on application strategy, personal narrative, portfolio presentation, recommendation preparation, interview readiness, and how their Excalibur experience can strengthen their college applications and future academic goals.</p>
             </div>
             <div style={{ display: "flex", flexDirection: "column", justifyContent: "center" }}>
-              <p style={{ fontFamily: "Times, serif", fontWeight: 700, fontSize: 10, letterSpacing: "0.2em", color: "#010000", textTransform: "uppercase", marginBottom: 24 }}>What This Means in Practice</p>
-              {["Portfolio reviewed and built by admissions counselors specifically for university applications", "Faculty feedback and recommendation support grounded in direct observation of student's work", "Verified competition results and externship documentation", "Interview preparation built around real, specific experience", "A narrative unavailable to most students due to lack of comparable experience"].map((f, i) => (
+              <p style={{ fontFamily: "Times, serif", fontWeight: 700, fontSize: 10, letterSpacing: "0.2em", color: "#010000", textTransform: "uppercase", marginBottom: 24 }}>What This Means</p>
+              {["Portfolio reviewed and built by top admissions counselors specifically for university applications and beyond", "Faculty feedback and recommendation support grounded in direct observation of student's work", "Verified competition results, venture development and externship documentation", "Interview preparation built around real, specific experience", "A narrative unavailable to most students due to lack of comparable experience"].map((f, i) => (
                 <div key={i} style={{ display: "flex", gap: 14, marginBottom: 16, alignItems: "flex-start" }}>
                   <div style={{ width: 16, height: 1.5, background: "rgba(0,0,0,.3)", marginTop: 9, flexShrink: 0 }} />
                   <span style={{ fontFamily: sans, fontSize: 13, color: "#010000", fontWeight: 300, lineHeight: 1.7 }}>{f}</span>
@@ -14705,26 +14684,41 @@ function FoundationDetailPage({ setPage, openInquiry }) {
           </div>
 
           {/* ─────────────────────────────────────────
-              THE ADMISSIONS PROCESS
+              THE ADMISSIONS PROCESS — copied exactly from the Admissions page
           ───────────────────────────────────────── */}
           <div>
-            <p style={{ fontFamily:sans, fontSize:8, letterSpacing:"0.45em", color:"#A48D6E", fontWeight:600, textTransform:"uppercase", marginBottom:isMobile?32:48 }}>The Admissions Process</p>
+            <p style={{ fontFamily: sans, fontSize: 11, letterSpacing: "0.45em", color: "#A48D6E", fontWeight: 600, textTransform: "uppercase", marginBottom: 18 }}>The Admissions Process</p>
+            <h2 style={{ fontFamily: cg, fontSize: isMobile ? "clamp(28px,7vw,48px)" : "3.8rem", fontWeight: 400, color: "#E4D5C1", lineHeight: 1.1, textTransform: "uppercase", letterSpacing: "0.0325em", marginBottom: 36 }}>Application Process</h2>
+            <div style={{ borderLeft: "3px solid #A48D6E", paddingLeft: isMobile ? 20 : 40, marginBottom: 48 }}>
+              <p style={{ fontFamily: cg, fontSize: isMobile ? 16 : 20, fontWeight: 300, color: "#E4D5C1", lineHeight: 1.75, fontStyle: "italic", margin: 0 }}>Each applicant is reviewed individually by the Admissions Committee for intellectual curiosity, character, ambition, and readiness to thrive in a high-standards environment. Priority applicants receive first consideration for admission, cohort placement, and schedule preference. Regular Review follows Priority decisions and is considered only as space remains available. Families seeking first consideration for cohort placement and schedule preference are encouraged to apply during the Priority Application Round.</p>
+            </div>
+
             {[
-              { n:"01", title:"Submit the Application",        body:"Complete the online application. Every applicant is reviewed individually, with consideration given to intellectual curiosity, character, ambition, and readiness for a high-standards environment." },
-              { n:"02", title:"Admissions Interview", body:"Selected applicants are invited to a conversation with the Academy Dean and senior members of the faculty team. Students should expect thoughtful discussion, questions that require reflection, and opportunities to demonstrate how they think rather than simply what they know." },
-              { n:"03", title:"Committee Review & Decision",    body:"Following the interview, the Admissions Committee releases an admissions decision. Accepted students receive a formal offer of admission and enrollment information." },
-              { n:"04", title:"Enrollment Confirmation & Orientation",       body:"Program Enrollment is confirmed upon receipt of the enrollment agreement and required deposit. Families receive access to the student and parent portals, onboarding materials, student information forms, including dietary preferences where relevant, orientation date invitations, key dates, and program information prior to the start of the program." },
-            ].map((step,i) => (
-              <div key={i} style={{ display:"grid", gridTemplateColumns:isMobile?"1fr":"72px 1fr 1fr", gap:isMobile?"8px 0":"0 52px", borderTop:"1px solid rgba(164,141,110,.1)", paddingTop:isMobile?28:36, paddingBottom:isMobile?28:36, alignItems:"start" }}>
-                <span style={{ fontFamily:ag, fontSize:isMobile?28:44, fontWeight:300, color:"rgba(164,141,110,.25)", lineHeight:1 }}>{step.n}</span>
-                <h3 style={{ fontFamily:ag, fontSize:isMobile?20:26, fontWeight:500, color:"#E4D5C1", lineHeight:1.15, letterSpacing:"-0.01em", paddingRight:isMobile?0:40, marginTop:isMobile?8:0 }}>{step.title}</h3>
-                <p style={{ fontFamily:lora, fontSize:13, color:"#E4D5C1", fontWeight:300, lineHeight:1.95, marginTop:isMobile?10:0 }}>{step.body}</p>
+              { n: "01", title: "Submit the Application", body: "Complete the online application. Every applicant is reviewed individually, with consideration given to intellectual curiosity, character, ambition, and readiness for a high-standards environment." },
+              { n: "02", title: "Admissions Interview", body: "Selected applicants are invited to a conversation with the Academy Dean and senior members of the faculty team. Students should expect thoughtful discussion, questions that require reflection, and opportunities to demonstrate how they think rather than simply what they know." },
+              { n: "03", title: "Committee Review & Decision", body: "Following the interview, the Admissions Committee releases an admissions decision. Accepted students receive a formal offer of admission and enrollment information." },
+              { n: "04", title: "Enrollment Confirmation & Orientation", body: "Program Enrollment is confirmed upon receipt of the enrollment agreement and required deposit. Families receive access to the student and parent portals, onboarding materials, student information forms, including dietary preferences where relevant, orientation date invitations, key dates, and program information prior to the start of the program." },
+            ].map((step, i) => (
+              <div key={i} style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "72px 1fr 1fr", gap: isMobile ? "8px 0" : "0 52px", borderTop: "1px solid rgba(164,141,110,.12)", paddingTop: isMobile ? 28 : 36, paddingBottom: isMobile ? 28 : 36, alignItems: "start" }}>
+                <span style={{ fontFamily: cg, fontSize: isMobile ? 28 : 44, fontWeight: 300, color: "rgba(164,141,110,.3)", lineHeight: 1 }}>{step.n}</span>
+                <div style={{ marginTop: isMobile ? 8 : 0, paddingRight: isMobile ? 0 : 40 }}>
+                  <h3 style={{ fontFamily: cg, fontSize: isMobile ? 20 : 26, fontWeight: 400, color: "#E4D5C1", lineHeight: 1.15, marginBottom: step.title === "Admissions Interview" ? 12 : 0 }}>{step.title}</h3>
+                  {step.title === "Admissions Interview" && (
+                    <span style={{ display: "inline-block", fontFamily: sans, fontSize: 9, letterSpacing: "0.12em", color: "#100F0C", background: "#A48D6E", padding: "5px 12px", textTransform: "uppercase", fontWeight: 700 }}>Foundation &amp; Venture Semester Only</span>
+                  )}
+                </div>
+                <p style={{ fontFamily: lora, fontSize: isMobile ? 14 : 16, color: "#E4D5C1", fontWeight: 400, lineHeight: 1.95, marginTop: isMobile ? 10 : 0 }}>
+                  {step.n === "01" ? (
+                    <>Complete the <span onClick={() => setPage && setPage("portal")} style={{ textDecoration: "underline", cursor: "pointer", color: "#A48D6E", fontWeight: 600 }}>online application here</span>. Every applicant is reviewed individually, with consideration given to intellectual curiosity, character, ambition, and readiness for a high-standards environment.</>
+                  ) : step.body}
+                </p>
               </div>
             ))}
-            <div style={{ borderTop:"1px solid rgba(164,141,110,.1)", paddingTop:32, display:"flex", gap:12, flexWrap:"wrap" }}>
-              <button onClick={()=>setPage&&setPage("apply")} style={{ fontFamily:sans, fontSize:9, letterSpacing:"0.25em", padding:"16px 40px", background:"#A48D6E", border:"none", color:"#100F0C", textTransform:"uppercase", cursor:"pointer", fontWeight:600 }}>Apply to Foundation →</button>
-              <button onClick={()=>setPage&&setPage("apply")} style={{ fontFamily:sans, fontSize:9, letterSpacing:"0.25em", padding:"16px 32px", background:"transparent", border:"1px solid rgba(164,141,110,.35)", color:"#A48D6E", textTransform:"uppercase", cursor:"pointer", fontWeight:400 }}>Apply to Venture →</button>
-              <button onClick={()=>setPage&&setPage("apply")} style={{ fontFamily:sans, fontSize:9, letterSpacing:"0.25em", padding:"16px 32px", background:"transparent", border:"1px solid rgba(164,141,110,.35)", color:"#A48D6E", textTransform:"uppercase", cursor:"pointer", fontWeight:400 }}>Apply — Full Year →</button>
+
+            <div style={{ borderTop: "1px solid rgba(164,141,110,.12)", paddingTop: 32, display: "flex", gap: 12, flexWrap: "wrap" }}>
+              <button onClick={() => openInquiry && openInquiry("foundation")} style={{ fontFamily: lora, fontSize: 10, letterSpacing: "0.2em", padding: "15px 36px", background: "#A48D6E", border: "none", color: "#100F0C", textTransform: "uppercase", cursor: "pointer", fontWeight: 600 }}>Apply to Foundation →</button>
+              <button onClick={() => openInquiry && openInquiry("venture")} style={{ fontFamily: lora, fontSize: 10, letterSpacing: "0.2em", padding: "15px 32px", background: "transparent", border: "1px solid rgba(164,141,110,.35)", color: "#A48D6E", textTransform: "uppercase", cursor: "pointer", fontWeight: 600 }}>Apply to Venture →</button>
+              <button onClick={() => openInquiry && openInquiry("full-year")} style={{ fontFamily: lora, fontSize: 10, letterSpacing: "0.2em", padding: "15px 32px", background: "transparent", border: "1px solid rgba(164,141,110,.35)", color: "#A48D6E", textTransform: "uppercase", cursor: "pointer", fontWeight: 600 }}>Apply — Full Year →</button>
             </div>
           </div>
 
@@ -16226,9 +16220,6 @@ function VentureDetailPage({ setPage, openInquiry }) {
           </div>
         </div>
 
-        {/* Interactive 8-component index, with layered photo stack as third column */}
-        <PortfolioIndexWhite isMobile={isMobile} setPage={setPage} images={["https://i.imgur.com/xNrPz7m.jpeg", "https://i.imgur.com/ev0MLKy.jpeg"]} />
-
         {/* College admissions  -  merged below */}
         <div style={{ background: "#E4D5C1", padding: isMobile ? "48px 24px" : "64px 80px" }}>
           <div style={{ maxWidth: 1100, margin: "0 auto", display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: isMobile ? 36 : 80 }}>
@@ -16241,8 +16232,8 @@ function VentureDetailPage({ setPage, openInquiry }) {
               <p style={{ fontFamily: "Lora, serif", fontSize: 14, lineHeight: 1.9, color: "#010000", fontWeight: 300 }}>Students work with Excalibur’s college advisor on application strategy, personal narrative, portfolio presentation, recommendation preparation, interview readiness, and how their Excalibur experience can strengthen their college applications and future academic goals.</p>
             </div>
             <div style={{ display: "flex", flexDirection: "column", justifyContent: "center" }}>
-              <p style={{ fontFamily: "Times, serif", fontWeight: 700, fontSize: 10, letterSpacing: "0.2em", color: "#010000", textTransform: "uppercase", marginBottom: 24 }}>What This Means in Practice</p>
-              {["Portfolio reviewed and built by admissions counselors specifically for university applications", "Faculty feedback and recommendation support grounded in direct observation of student's work", "Verified competition results and externship documentation", "Interview preparation built around real, specific experience", "A narrative unavailable to most students due to lack of comparable experience"].map((f, i) => (
+              <p style={{ fontFamily: "Times, serif", fontWeight: 700, fontSize: 10, letterSpacing: "0.2em", color: "#010000", textTransform: "uppercase", marginBottom: 24 }}>What This Means</p>
+              {["Portfolio reviewed and built by top admissions counselors specifically for university applications and beyond", "Faculty feedback and recommendation support grounded in direct observation of student's work", "Verified competition results, venture development and externship documentation", "Interview preparation built around real, specific experience", "A narrative unavailable to most students due to lack of comparable experience"].map((f, i) => (
                 <div key={i} style={{ display: "flex", gap: 14, marginBottom: 16, alignItems: "flex-start" }}>
                   <div style={{ width: 16, height: 1.5, background: "rgba(0,0,0,.3)", marginTop: 9, flexShrink: 0 }} />
                   <span style={{ fontFamily: sans, fontSize: 13, color: "#010000", fontWeight: 300, lineHeight: 1.7 }}>{f}</span>
@@ -16456,9 +16447,6 @@ function VentureDetailPage({ setPage, openInquiry }) {
           </div>
         </div>
 
-        {/* Interactive 8-component index, with layered photo stack as third column */}
-        <PortfolioIndexWhite isMobile={isMobile} setPage={setPage} images={["https://i.imgur.com/xNrPz7m.jpeg", "https://i.imgur.com/ev0MLKy.jpeg"]} />
-
         {/* College admissions  -  merged below */}
         <div style={{ background: "#E4D5C1", padding: isMobile ? "48px 24px" : "64px 80px" }}>
           <div style={{ maxWidth: 1100, margin: "0 auto", display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: isMobile ? 36 : 80 }}>
@@ -16471,8 +16459,8 @@ function VentureDetailPage({ setPage, openInquiry }) {
               <p style={{ fontFamily: "Lora, serif", fontSize: 14, lineHeight: 1.9, color: "#010000", fontWeight: 300 }}>Students work with Excalibur’s college advisor on application strategy, personal narrative, portfolio presentation, recommendation preparation, interview readiness, and how their Excalibur experience can strengthen their college applications and future academic goals.</p>
             </div>
             <div style={{ display: "flex", flexDirection: "column", justifyContent: "center" }}>
-              <p style={{ fontFamily: "Times, serif", fontWeight: 700, fontSize: 10, letterSpacing: "0.2em", color: "#010000", textTransform: "uppercase", marginBottom: 24 }}>What This Means in Practice</p>
-              {["Portfolio reviewed and built by admissions counselors specifically for university applications", "Faculty feedback and recommendation support grounded in direct observation of student's work", "Verified competition results and externship documentation", "Interview preparation built around real, specific experience", "A narrative unavailable to most students due to lack of comparable experience"].map((f, i) => (
+              <p style={{ fontFamily: "Times, serif", fontWeight: 700, fontSize: 10, letterSpacing: "0.2em", color: "#010000", textTransform: "uppercase", marginBottom: 24 }}>What This Means</p>
+              {["Portfolio reviewed and built by top admissions counselors specifically for university applications and beyond", "Faculty feedback and recommendation support grounded in direct observation of student's work", "Verified competition results, venture development and externship documentation", "Interview preparation built around real, specific experience", "A narrative unavailable to most students due to lack of comparable experience"].map((f, i) => (
                 <div key={i} style={{ display: "flex", gap: 14, marginBottom: 16, alignItems: "flex-start" }}>
                   <div style={{ width: 16, height: 1.5, background: "rgba(0,0,0,.3)", marginTop: 9, flexShrink: 0 }} />
                   <span style={{ fontFamily: sans, fontSize: 13, color: "#010000", fontWeight: 300, lineHeight: 1.7 }}>{f}</span>
@@ -16554,27 +16542,46 @@ function VentureDetailPage({ setPage, openInquiry }) {
               </div>
             </div>
 
-            {/* THREE-STEP PROCESS */}
-            <div style={{ display:"flex", flexDirection:"column" }}>
+            {/* ─────────────────────────────────────────
+                THE ADMISSIONS PROCESS — copied exactly from the Admissions page
+            ───────────────────────────────────────── */}
+            <div>
+              <p style={{ fontFamily: "'Lato', sans-serif", fontSize: 11, letterSpacing: "0.45em", color: "#8B6914", fontWeight: 600, textTransform: "uppercase", marginBottom: 18 }}>The Admissions Process</p>
+              <h2 style={{ fontFamily: cg, fontSize: isMobile ? "clamp(28px,7vw,48px)" : "3.8rem", fontWeight: 400, color: "#100F0C", lineHeight: 1.1, textTransform: "uppercase", letterSpacing: "0.0325em", marginBottom: 36 }}>Application Process</h2>
+              <div style={{ borderLeft: "3px solid #8B6914", paddingLeft: isMobile ? 20 : 40, marginBottom: 48 }}>
+                <p style={{ fontFamily: cg, fontSize: isMobile ? 16 : 20, fontWeight: 300, color: "#100F0C", lineHeight: 1.75, fontStyle: "italic", margin: 0 }}>Each applicant is reviewed individually by the Admissions Committee for intellectual curiosity, character, ambition, and readiness to thrive in a high-standards environment. Priority applicants receive first consideration for admission, cohort placement, and schedule preference. Regular Review follows Priority decisions and is considered only as space remains available. Families seeking first consideration for cohort placement and schedule preference are encouraged to apply during the Priority Application Round.</p>
+              </div>
+
               {[
-                { n:"01", title:"Submit the Application", body:"Complete the online application at excaliburacademy.org. Each applicant is considered individually. The Academy is selective — cohorts are limited to twenty students per group." },
-                { n:"02", title:"Admissions Interview", body:"Shortlisted applicants are invited to a personal interview with the Academy Dean and a senior faculty member. Conversational but not casual. Students should expect to think, defend a position, and demonstrate genuine curiosity. Held twice monthly." },
-                { n:"03", title:"Enrollment Confirmation", body:"Upon acceptance, enrollment is confirmed upon receipt of the enrollment agreement and deposit and first payment. Portal access within 48 hours. Welcome packet and onboarding materials issued immediately." },
-              ].map((step,i)=>(
-                <div key={i} style={{ display:"grid", gridTemplateColumns:isMobile?"1fr":"72px 1fr 1fr", gap:isMobile?"8px 0":"0 52px", borderTop:"1px solid rgba(0,0,0,.1)", paddingTop:isMobile?28:36, paddingBottom:isMobile?28:36, alignItems:"start" }}>
-                  <span style={{ fontFamily:ag, fontSize:isMobile?28:44, fontWeight:300, color:"#100F0C", lineHeight:1 }}>{step.n}</span>
-                  <h3 style={{ fontFamily:ag, fontSize:isMobile?20:26, fontWeight:500, color:"#100F0C", lineHeight:1.15, letterSpacing:"-0.01em", paddingRight:isMobile?0:40, marginTop:isMobile?8:0 }}>{step.title}</h3>
-                  <p style={{ fontFamily:lora, fontSize:isMobile?15:16, color:"#100F0C", fontWeight:300, lineHeight:1.95, marginTop:isMobile?10:0 }}>{step.body}</p>
+                { n: "01", title: "Submit the Application", body: "Complete the online application. Every applicant is reviewed individually, with consideration given to intellectual curiosity, character, ambition, and readiness for a high-standards environment." },
+                { n: "02", title: "Admissions Interview", body: "Selected applicants are invited to a conversation with the Academy Dean and senior members of the faculty team. Students should expect thoughtful discussion, questions that require reflection, and opportunities to demonstrate how they think rather than simply what they know." },
+                { n: "03", title: "Committee Review & Decision", body: "Following the interview, the Admissions Committee releases an admissions decision. Accepted students receive a formal offer of admission and enrollment information." },
+                { n: "04", title: "Enrollment Confirmation & Orientation", body: "Program Enrollment is confirmed upon receipt of the enrollment agreement and required deposit. Families receive access to the student and parent portals, onboarding materials, student information forms, including dietary preferences where relevant, orientation date invitations, key dates, and program information prior to the start of the program." },
+              ].map((step, i) => (
+                <div key={i} style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "72px 1fr 1fr", gap: isMobile ? "8px 0" : "0 52px", borderTop: "1px solid rgba(16,15,12,.12)", paddingTop: isMobile ? 28 : 36, paddingBottom: isMobile ? 28 : 36, alignItems: "start" }}>
+                  <span style={{ fontFamily: cg, fontSize: isMobile ? 28 : 44, fontWeight: 300, color: "rgba(16,15,12,.3)", lineHeight: 1 }}>{step.n}</span>
+                  <div style={{ marginTop: isMobile ? 8 : 0, paddingRight: isMobile ? 0 : 40 }}>
+                    <h3 style={{ fontFamily: cg, fontSize: isMobile ? 20 : 26, fontWeight: 400, color: "#100F0C", lineHeight: 1.15, marginBottom: step.title === "Admissions Interview" ? 12 : 0 }}>{step.title}</h3>
+                    {step.title === "Admissions Interview" && (
+                      <span style={{ display: "inline-block", fontFamily: "'Lato', sans-serif", fontSize: 9, letterSpacing: "0.12em", color: "#100F0C", background: "#A48D6E", padding: "5px 12px", textTransform: "uppercase", fontWeight: 700 }}>Foundation &amp; Venture Semester Only</span>
+                    )}
+                  </div>
+                  <p style={{ fontFamily: lora, fontSize: isMobile ? 14 : 16, color: "#100F0C", fontWeight: 400, lineHeight: 1.95, marginTop: isMobile ? 10 : 0 }}>
+                    {step.n === "01" ? (
+                      <>Complete the <span onClick={() => setPage && setPage("portal")} style={{ textDecoration: "underline", cursor: "pointer", color: "#8B6914", fontWeight: 600 }}>online application here</span>. Every applicant is reviewed individually, with consideration given to intellectual curiosity, character, ambition, and readiness for a high-standards environment.</>
+                    ) : step.body}
+                  </p>
                 </div>
               ))}
-              <div style={{ borderTop:"1px solid rgba(0,0,0,.1)", paddingTop:32, display:"flex", gap:12, flexWrap:"wrap" }}>
-                <button onClick={()=>setPage&&setPage("apply")} style={{ fontFamily:sans, fontSize:9, letterSpacing:"0.25em", padding:"16px 36px", background:"#d4c3a6", border:"none", color:"#100F0C", textTransform:"uppercase", cursor:"pointer", fontWeight:400 }}>Apply to Foundation →</button>
-                <button onClick={()=>setPage&&setPage("apply")} style={{ fontFamily:sans, fontSize:9, letterSpacing:"0.25em", padding:"16px 32px", background:"transparent", border:"1px solid rgba(0,0,0,.35)", color:"#100F0C", textTransform:"uppercase", cursor:"pointer", fontWeight:400 }}>Apply to Venture →</button>
+
+              <div style={{ borderTop: "1px solid rgba(16,15,12,.12)", paddingTop: 32, display: "flex", gap: 12, flexWrap: "wrap" }}>
+                <button onClick={() => openInquiry && openInquiry("foundation")} style={{ fontFamily: lora, fontSize: 10, letterSpacing: "0.2em", padding: "15px 36px", background: "#A48D6E", border: "none", color: "#100F0C", textTransform: "uppercase", cursor: "pointer", fontWeight: 600 }}>Apply to Foundation →</button>
+                <button onClick={() => openInquiry && openInquiry("venture")} style={{ fontFamily: lora, fontSize: 10, letterSpacing: "0.2em", padding: "15px 32px", background: "transparent", border: "1px solid rgba(16,15,12,.35)", color: "#100F0C", textTransform: "uppercase", cursor: "pointer", fontWeight: 600 }}>Apply to Venture →</button>
+                <button onClick={() => openInquiry && openInquiry("full-year")} style={{ fontFamily: lora, fontSize: 10, letterSpacing: "0.2em", padding: "15px 32px", background: "transparent", border: "1px solid rgba(16,15,12,.35)", color: "#100F0C", textTransform: "uppercase", cursor: "pointer", fontWeight: 600 }}>Apply — Full Year →</button>
               </div>
             </div>
           </div>
         </div>
-
 
       </div>
       </MobileAccordionSection>
