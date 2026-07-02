@@ -14060,9 +14060,9 @@ function FoundationDetailPage({ setPage, openInquiry }) {
           <div style={{ display:"grid", gridTemplateColumns:isMobile?"1fr 1fr":"repeat(4,1fr)", gap:2 }}>
             {[
               { name:"Bill Morris", role:"Financial Literacy · Business Modules · Leadership · Investor Prep", img:"https://i.imgur.com/GDkTAdw.jpeg", tag:"Academy Dean · Former Wall Street Executive" },
-              { name:"Chip Pankow", role:"The War Room · Every Session · Applied Simulation", img:"https://i.imgur.com/Ckny7HG.png", tag:"War Room Lead · CEO · Entrepreneur" },
+              { name:"Chip Pankow", role:"Program Director · The War Room · Applied Simulations", img:"https://i.imgur.com/Ckny7HG.png", tag:"CEO · Entrepreneur · Former Formula BMW Director" },
               { name:"Keree James", role:"Art of Class · Rhetoric · Executive Communication", img:"https://i.imgur.com/2yfLFUS.jpeg", tag:"Head of Rhetoric · Dale Carnegie Top 10 Trainer" },
-              { name:"Christopher Sanders", role:"Public Speaking & Rhetoric · Every Session · Foundation Semester", img:"https://i.imgur.com/EELzLmn.jpeg", tag:"Senior Public Speaking Instructor" },
+              { name:"Christopher Sanders", role:"Public Speaking & Rhetoric · Applied Workshops · Foundation Semester", img:"https://i.imgur.com/EELzLmn.jpeg", tag:"Senior Public Speaking Instructor" },
             ].map((f,i) => (
               <div key={i} style={{ background:"#34150F" }}>
                 <div style={{ position:"relative", paddingTop:"120%", overflow:"hidden", background:"#0a0a0a" }}>
@@ -16155,7 +16155,7 @@ function VentureDetailPage({ setPage, openInquiry }) {
           <div style={{ display:"grid", gridTemplateColumns:isMobile?"1fr 1fr":"repeat(4,1fr)", gap:2 }}>
             {[
               { name:"Bill Morris", role:"Financial Literacy · Business Modules · Leadership · Investor Prep", img:"https://i.imgur.com/GDkTAdw.jpeg", tag:"Academy Dean · Former Wall Street Executive" },
-              { name:"Chip Pankow", role:"The War Room · Every Session · Applied Simulation", img:"https://i.imgur.com/Ckny7HG.png", tag:"War Room Lead · CEO · Entrepreneur" },
+              { name:"Chip Pankow", role:"Program Director · The War Room · Applied Simulations", img:"https://i.imgur.com/Ckny7HG.png", tag:"CEO · Entrepreneur · Former Formula BMW Director" },
               { name:"Keree James", role:"Art of Class · Rhetoric · Executive Communication", img:"https://i.imgur.com/2yfLFUS.jpeg", tag:"Head of Rhetoric · Dale Carnegie Top 10 Trainer" },
               { name:"Christopher Sanders", role:"Public Speaking & Rhetoric · Every Session · Venture Semester", img:"https://i.imgur.com/EELzLmn.jpeg", tag:"Senior Public Speaking Instructor" },
             ].map((f,i) => (
