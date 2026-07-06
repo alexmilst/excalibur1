@@ -7284,6 +7284,9 @@ function PortalPage({ setPage }) {
   const [checkoutError, setCheckoutError] = React.useState("");
   const [checkoutBusy, setCheckoutBusy] = React.useState(false);
   const [showEnrollmentDetails, setShowEnrollmentDetails] = React.useState(false);
+  const [rescheduleOpen, setRescheduleOpen] = React.useState(false);
+  const [rescheduleTarget, setRescheduleTarget] = React.useState("");
+  const [rescheduleRequested, setRescheduleRequested] = React.useState(false);
 
   // ── Payment status banner — reads the ?payment= param Stripe redirects back with ──
   const [paymentBanner, setPaymentBanner] = React.useState(null); // 'success' | 'cancelled' | null
@@ -7897,6 +7900,19 @@ function PortalPage({ setPage }) {
       body: "Requesting permission to edit my submitted application. Please reopen it for editing or let me know what needs to change.",
     });
     setEditRequested(true);
+  };
+
+  // ── REQUEST TO RESCHEDULE A PAID SUMMER SESSION ──
+  const handleRequestReschedule = async () => {
+    if (!sb || !student || !rescheduleTarget) return;
+    const currentSessions = (application?.program_responses?.summer?.selectedSessions || []).join(", ") || "—";
+    await sb.from("messages").insert({
+      student_id: student.id,
+      sender_role: role,
+      sender_id: session.user.id,
+      body: `Reschedule request: I am currently enrolled in "${currentSessions}" and would like to move to "${rescheduleTarget}" instead. Please confirm availability and any next steps.`,
+    });
+    setRescheduleRequested(true);
   };
 
   // ── AUTO-PROMOTE SUBMITTED APPLICATIONS TO "UNDER REVIEW" 30 MINUTES AFTER SUBMISSION ──
@@ -8639,6 +8655,27 @@ function PortalPage({ setPage }) {
         <p style={{ fontFamily: sans, fontSize: 13, color: m_gray, marginBottom: 4 }}><strong style={{ color: m_ink }}>Time:</strong> 10:00 AM – 5:00 PM</p>
         <p style={{ fontFamily: sans, fontSize: 13, color: m_gray }}><strong style={{ color: m_ink }}>Location:</strong> Newport Beach, CA</p>
       </div>
+      <div style={{ marginTop: 16, paddingTop: 16, borderTop: `1px solid ${m_line}` }}>
+        {rescheduleRequested ? (
+          <p style={{ fontFamily: sans, fontSize: 13, color: m_gray, fontWeight: 600 }}>Reschedule request sent ✓ — your Enrollment Coordinator will follow up shortly.</p>
+        ) : rescheduleOpen ? (
+          <>
+            <p style={{ fontFamily: sans, fontSize: 13, fontWeight: 700, color: m_ink, marginBottom: 8 }}>Which session would you like instead?</p>
+            <select value={rescheduleTarget} onChange={e => setRescheduleTarget(e.target.value)} style={{ fontFamily: sans, fontSize: 13, padding: "10px 12px", borderRadius: 8, border: `1px solid ${m_line}`, width: "100%", marginBottom: 10, background: m_white, color: m_ink }}>
+              <option value="">Select a session...</option>
+              {Object.keys(SUMMER_SESSION_PRICES).filter(s => !summerSessionsSelected.includes(s)).map(s => (
+                <option key={s} value={s}>{s}</option>
+              ))}
+            </select>
+            <div style={{ display: "flex", gap: 8 }}>
+              <button onClick={handleRequestReschedule} disabled={!rescheduleTarget} style={{ fontFamily: sans, padding: "9px 18px", background: m_ink, border: "none", color: m_white, fontSize: 13, fontWeight: 600, cursor: rescheduleTarget ? "pointer" : "default", borderRadius: 999, opacity: rescheduleTarget ? 1 : 0.5 }}>Send Request</button>
+              <button onClick={() => setRescheduleOpen(false)} style={{ fontFamily: sans, padding: "9px 18px", background: "transparent", border: `1px solid ${m_line}`, color: m_ink, fontSize: 13, fontWeight: 500, cursor: "pointer", borderRadius: 999 }}>Cancel</button>
+            </div>
+          </>
+        ) : (
+          <button onClick={() => setRescheduleOpen(true)} style={{ fontFamily: sans, padding: "9px 18px", background: "transparent", border: `1px solid ${m_line}`, color: m_ink, fontSize: 13, fontWeight: 600, cursor: "pointer", borderRadius: 999 }}>Request to Reschedule →</button>
+        )}
+      </div>
     </div>
   );
   const greetingHour = new Date().getHours();
@@ -9165,8 +9202,11 @@ function PortalPage({ setPage }) {
                       <PortalIcon name="check" size={26} />
                     </div>
                     <h2 style={{ fontFamily: sans, fontWeight: 800, fontSize: 26, color: m_ink, letterSpacing: "-0.01em", marginBottom: 16 }}>Thank you for your payment!</h2>
-                    <p style={{ fontFamily: sans, fontSize: 15, color: m_ink, opacity: 0.75, lineHeight: 1.8, marginBottom: 28, maxWidth: 600 }}>
+                    <p style={{ fontFamily: sans, fontSize: 15, color: m_ink, opacity: 0.75, lineHeight: 1.8, marginBottom: 12, maxWidth: 600 }}>
                       Your application is received and your spot is reserved. A confirmation email has been sent to {appForm.studentEmail || appForm.parentEmail || "the email on your application"}. We look forward to seeing you this summer!
+                    </p>
+                    <p style={{ fontFamily: sans, fontSize: 14, color: m_ink, opacity: 0.6, lineHeight: 1.8, marginBottom: 28, maxWidth: 600 }}>
+                      Need to switch to a different Lab? Open "Enrollment Confirmed" in your Admissions Status below and use Request to Reschedule.
                     </p>
                   </>
                 ) : (
@@ -9382,13 +9422,18 @@ function PortalPage({ setPage }) {
 
                   <div style={{ display: "flex", justifyContent: "space-between", marginTop: 28, gap: 12, flexWrap: "wrap" }}>
                     <button onClick={() => (secIndex === 0 ? setForceProgramPicker(true) : goBack())} style={{ fontFamily: sans, padding: "13px 24px", background: "transparent", border: "1px solid rgba(17,17,17,.15)", color: "#111111", fontSize: 14, fontWeight: 500, cursor: "pointer", borderRadius: 999 }}>← Back</button>
-                    <div style={{ display: "flex", gap: 12 }}>
-                      <button onClick={() => handleSaveApplication(false)} disabled={appSaving} style={{ fontFamily: sans, padding: "13px 22px", background: "transparent", border: "1px solid rgba(17,17,17,.15)", color: "#111111", fontSize: 14, fontWeight: 500, cursor: "pointer", borderRadius: 999 }}>{appSaving ? "Saving..." : "Save Draft"}</button>
-                      {secIndex < total - 1 ? (
-                        <button onClick={goNext} style={{ fontFamily: sans, padding: "13px 24px", background: "#111111", border: "none", color: "#FFFFFF", fontSize: 14, fontWeight: 600, cursor: "pointer", borderRadius: 999 }}>Next →</button>
-                      ) : (
-                        <button onClick={() => handleSaveApplication(true)} disabled={appSaving || !appForm.accuracyConfirmed || !appForm.parentPermissionConfirmed || !appForm.studentSignature || !appForm.parentSignature} style={{ fontFamily: sans, padding: "13px 24px", background: "#111111", border: "none", color: "#FFFFFF", fontSize: 14, fontWeight: 600, cursor: "pointer", borderRadius: 999 }}>{appSaving ? "Submitting..." : ((appForm.summer.selectedSessions || []).length > 0 ? "Submit Application & Pay Online →" : "Submit Application →")}</button>
+                    <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-end", gap: 8 }}>
+                      {!groupComplete && secIndex < total - 1 && (
+                        <p style={{ fontFamily: sans, fontSize: 12, color: "#8A4A1E" }}>Please answer all required questions above to continue.</p>
                       )}
+                      <div style={{ display: "flex", gap: 12 }}>
+                        <button onClick={() => handleSaveApplication(false)} disabled={appSaving} style={{ fontFamily: sans, padding: "13px 22px", background: "transparent", border: "1px solid rgba(17,17,17,.15)", color: "#111111", fontSize: 14, fontWeight: 500, cursor: "pointer", borderRadius: 999 }}>{appSaving ? "Saving..." : "Save Draft"}</button>
+                        {secIndex < total - 1 ? (
+                          <button onClick={goNext} disabled={!groupComplete} style={{ fontFamily: sans, padding: "13px 24px", background: groupComplete ? "#111111" : "rgba(17,17,17,0.15)", border: "none", color: "#FFFFFF", fontSize: 14, fontWeight: 600, cursor: groupComplete ? "pointer" : "default", borderRadius: 999 }}>Next →</button>
+                        ) : (
+                          <button onClick={() => handleSaveApplication(true)} disabled={appSaving || !appForm.accuracyConfirmed || !appForm.parentPermissionConfirmed || !appForm.studentSignature || !appForm.parentSignature} style={{ fontFamily: sans, padding: "13px 24px", background: "#111111", border: "none", color: "#FFFFFF", fontSize: 14, fontWeight: 600, cursor: "pointer", borderRadius: 999 }}>{appSaving ? "Submitting..." : ((appForm.summer.selectedSessions || []).length > 0 ? "Submit Application & Pay Online →" : "Submit Application →")}</button>
+                        )}
+                      </div>
                     </div>
                   </div>
             </div>
