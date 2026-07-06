@@ -6964,6 +6964,17 @@ function SummerDetailPage({ setPage, openInquiry }) {
   const [activeLabIdx, setActiveLabIdx] = useState(null);
   const [scheduleTab, setScheduleTab] = useState("single");
   const isWeekend = (lab) => lab.format === "Weekend Intensive";
+  const parseLabDate = (dateStr) => {
+    const months = { January:0, February:1, March:2, April:3, May:4, June:5, July:6, August:7, September:8, October:9, November:10, December:11 };
+    const [monthName, dayPart] = dateStr.split(" ");
+    const day = parseInt(dayPart.split(/[–-]/)[0], 10);
+    return new Date(2026, months[monthName], day);
+  };
+  const applyByDate = (dateStr, daysBefore) => {
+    const d = parseLabDate(dateStr);
+    d.setDate(d.getDate() - daysBefore);
+    return d.toLocaleDateString(undefined, { month: "short", day: "numeric" });
+  };
 
   return (
     <div style={{ background: dark, minHeight: "100vh" }}>
@@ -7141,12 +7152,13 @@ function SummerDetailPage({ setPage, openInquiry }) {
                         <>
                           <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(2,1fr)", gap: 12, maxWidth: 380, marginBottom: 28 }}>
                             {[
-                              { tier: "Early Bird", price: lab.earlyBird },
-                              { tier: "Regular", price: lab.regular },
+                              { tier: "Early Bird", price: lab.earlyBird, applyBy: applyByDate(lab.date, 7) },
+                              { tier: "Regular", price: lab.regular, applyBy: applyByDate(lab.date, 3) },
                             ].map((p, pi) => (
                               <div key={pi} style={{ background: dark, border: `1px solid rgba(164,141,110,.25)`, padding: "14px 18px" }}>
                                 <p style={{ fontFamily: sans, fontSize: 9, letterSpacing: "0.15em", color: "rgba(228,213,193,.5)", textTransform: "uppercase", marginBottom: 6 }}>{p.tier}</p>
                                 <p style={{ fontFamily: cg, fontSize: 24, color: parch, fontWeight: 400 }}>{p.price}</p>
+                                <p style={{ fontFamily: sans, fontSize: 10, color: "rgba(228,213,193,.5)", marginTop: 4 }}>Apply by {p.applyBy}</p>
                               </div>
                             ))}
                           </div>
@@ -8295,6 +8307,9 @@ function PortalPage({ setPage }) {
                 <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: "0 32px" }}>
                   <Field label="Programs" value={(app.programs || []).join(", ") || app.program} />
                   <Field label="Selected Summer Sessions" value={(app.program_responses?.summer?.selectedSessions || []).join(", ") || "—"} />
+                  <Field label="Payment Status" value={app.payment_status === "paid" ? "Paid ✓" : app.payment_status === "unpaid" ? "Unpaid" : "—"} />
+                  <Field label="Amount Paid" value={app.amount_paid_cents != null ? `$${(app.amount_paid_cents / 100).toFixed(2)}` : "—"} />
+                  <Field label="Paid At" value={app.paid_at ? new Date(app.paid_at).toLocaleString() : "—"} />
                   <Field label="First Choice" value={app.first_choice_program} />
                   <Field label="Date of Birth" value={app.date_of_birth} />
                   <Field label="Current Grade" value={app.current_grade} />
@@ -8754,6 +8769,14 @@ function PortalPage({ setPage }) {
     { date: daysBefore(lab.date, 3), label: `Summer Masterseries — ${lab.label} (Regular Deadline)`, color: m_amber, program: "Summer Masterseries" },
     { date: lab.date, label: `Summer Masterseries — ${lab.label}`, color: m_amber, program: "Summer Masterseries" },
   ]);
+  // One consolidated card per active lab (both deadlines together) for the Key Dates widget —
+  // separate from the flood of individual events used by the full calendar view above.
+  const summerLabKeyDates = SUMMER_LAB_SCHEDULE.map(lab => ({
+    label: lab.label,
+    labDate: lab.date,
+    earlyBirdDate: daysBefore(lab.date, 7),
+    regularDate: daysBefore(lab.date, 3),
+  }));
 
   const calendarEvents = [
     ...summerLabEvents,
@@ -8770,19 +8793,51 @@ function PortalPage({ setPage }) {
   ];
 
   // ── Key Dates block: program heading, then a row of date cards ──
-  function PortalKeyDates({ events, isMobile }) {
+  function PortalKeyDates({ events, summerLabs, isMobile }) {
     const today = new Date();
-    const groups = [
-      { name: "Summer Masterseries", color: m_amber },
+    const otherGroups = [
       { name: "Foundation Semester", color: m_blue },
       { name: "Venture Semester", color: m_green },
     ].map(g => ({ ...g, items: events.filter(e => e.program === g.name).sort((a, b) => a.date - b.date) }));
     const shortLabel = (label) => label.split(" — ").slice(1).join(" — ") || label;
+    const fmt = (d) => d.toLocaleDateString(undefined, { month: "short", day: "numeric" });
     return (
       <div style={{ background: m_white, border: `1px solid ${m_line}`, borderRadius: 18, padding: isMobile ? "26px 22px" : "32px 36px" }}>
         <p style={{ fontFamily: sans, fontWeight: 700, fontSize: 16, color: m_ink, marginBottom: 28 }}>Key Dates</p>
-        {groups.map((g, gi) => (
-          <div key={gi} style={{ marginBottom: gi < groups.length - 1 ? 28 : 0 }}>
+
+        {/* Summer Masterseries — one consolidated card per lab still open, both deadlines together */}
+        <div style={{ marginBottom: 28 }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 14 }}>
+            <span style={{ width: 8, height: 8, borderRadius: "50%", background: m_amber, flexShrink: 0 }} />
+            <p style={{ fontFamily: sans, fontSize: 15, fontWeight: 700, color: m_ink }}>Summer Masterseries</p>
+          </div>
+          <div style={{ display: "flex", flexWrap: "wrap", gap: 12 }}>
+            {summerLabs.map((lab, i) => {
+              const past = lab.labDate < today;
+              return (
+                <div key={i} style={{
+                  flex: isMobile ? "1 1 100%" : "1 1 220px", minWidth: isMobile ? "100%" : 220,
+                  background: past ? m_ink : m_canvas,
+                  borderRadius: 14, padding: "16px 18px",
+                }}>
+                  <p style={{ fontFamily: sans, fontSize: 13, fontWeight: 700, color: past ? "#FFFFFF" : m_ink, marginBottom: 3, lineHeight: 1.3 }}>{lab.label}</p>
+                  <p style={{ fontFamily: sans, fontSize: 11, color: past ? "rgba(255,255,255,.55)" : m_gray, marginBottom: 12 }}>{fmt(lab.labDate)}, {lab.labDate.getFullYear()}</p>
+                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", paddingTop: 8, borderTop: `1px solid ${past ? "rgba(255,255,255,.15)" : "rgba(0,0,0,.08)"}` }}>
+                    <span style={{ fontFamily: sans, fontSize: 10.5, color: past ? "rgba(255,255,255,.6)" : m_gray, textTransform: "uppercase", letterSpacing: "0.03em" }}>Early Bird</span>
+                    <span style={{ fontFamily: sans, fontSize: 11.5, fontWeight: 700, color: past ? "#FFFFFF" : m_ink }}>{fmt(lab.earlyBirdDate)}</span>
+                  </div>
+                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", paddingTop: 6 }}>
+                    <span style={{ fontFamily: sans, fontSize: 10.5, color: past ? "rgba(255,255,255,.6)" : m_gray, textTransform: "uppercase", letterSpacing: "0.03em" }}>Regular</span>
+                    <span style={{ fontFamily: sans, fontSize: 11.5, fontWeight: 700, color: past ? "#FFFFFF" : m_ink }}>{fmt(lab.regularDate)}</span>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+
+        {otherGroups.map((g, gi) => (
+          <div key={gi} style={{ marginBottom: gi < otherGroups.length - 1 ? 28 : 0 }}>
             <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 14 }}>
               <span style={{ width: 8, height: 8, borderRadius: "50%", background: g.color, flexShrink: 0 }} />
               <p style={{ fontFamily: sans, fontSize: 15, fontWeight: 700, color: m_ink }}>{g.name}</p>
@@ -8963,7 +9018,7 @@ function PortalPage({ setPage }) {
 
             {/* Key Dates — every admissions deadline & program start, grouped by program */}
             <div style={{ marginBottom: 16 }}>
-              <PortalKeyDates events={calendarEvents} isMobile={isMobile} />
+              <PortalKeyDates events={calendarEvents} summerLabs={summerLabKeyDates} isMobile={isMobile} />
             </div>
 
             {/* Next steps — consultation removed, optional only */}
