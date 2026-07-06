@@ -2812,7 +2812,7 @@ function ApplyPage({ setPage, openInquiry }) {
             eyebrow: "Summer Masterseries",
             label: "Summer Masterseries",
             status: "Enrollment Open", statusColor: "#3F6B3F",
-            dates: "July 21 – August 20, 2026", price: "From $450", period: "per lab",
+            dates: "July 21 – August 20, 2026", price: "From $350", period: "per lab",
             desc: "A two-week summer intensive for students ready to test entrepreneurship in a fast, immersive format. Students build a venture, train daily in public speaking and pitch craft, and present at a live Shark Tank-inspired Finale.\n\nDesigned as both a standalone experience and an introduction to the Excalibur Flagship.",
             meta: [
               ["Dates", "Jul 27, 2026 – Aug 8, 2026 · Mon–Fri"],
@@ -3232,18 +3232,18 @@ function HomePage({ setPage, openInquiry }) {
 
   // Quick Reference data — mirrors the labs array on the Summer Masterclass Labs detail page.
   const summerLabs = [
-    { date: "July 14", label: "Public Speaking & Executive Presence I", topic: "Public Speaking & Executive Presence I", earlyBird: "$450", regular: "$490", format: "Single Day", full: true },
-    { date: "July 15", label: "The Real Estate Deal Lab", topic: "The Real Estate Deal Lab", earlyBird: "$450", regular: "$490", format: "Single Day", full: true },
-    { date: "July 16", label: "Luxury Cars, Collectibles, NASCAR & Formula 1", topic: "Luxury Cars, Collectibles, NASCAR & Formula 1", earlyBird: "$450", regular: "$490", format: "Single Day", full: true },
+    { date: "July 14", label: "Public Speaking & Executive Presence I", topic: "Public Speaking & Executive Presence I", earlyBird: "$350", regular: "$450", format: "Single Day", full: true },
+    { date: "July 15", label: "The Real Estate Deal Lab", topic: "The Real Estate Deal Lab", earlyBird: "$350", regular: "$450", format: "Single Day", full: true },
+    { date: "July 16", label: "Luxury Cars, Collectibles, NASCAR & Formula 1", topic: "Luxury Cars, Collectibles, NASCAR & Formula 1", earlyBird: "$350", regular: "$450", format: "Single Day", full: true },
     { date: "July 18–19", label: "Two-Day Venture Launchpad Intensive", topic: "Two-Day Venture Launchpad Intensive", earlyBird: "$790", regular: "$890", format: "Weekend Intensive", full: true },
-    { date: "July 21", label: "Public Speaking & Executive Presence I", topic: "Public Speaking & Executive Presence I", earlyBird: "$450", regular: "$490", format: "Single Day" },
-    { date: "July 28", label: "AI, Business & the Future of Work", topic: "AI, Business & the Future of Work", earlyBird: "$450", regular: "$490", format: "Single Day" },
+    { date: "July 21", label: "Public Speaking & Executive Presence I", topic: "Public Speaking & Executive Presence I", earlyBird: "$350", regular: "$450", format: "Single Day" },
+    { date: "July 28", label: "AI, Business & the Future of Work", topic: "AI, Business & the Future of Work", earlyBird: "$350", regular: "$450", format: "Single Day" },
     { date: "Aug 1–2", label: "Two-Day Venture Launchpad Intensive", topic: "Two-Day Venture Launchpad Intensive", earlyBird: "$790", regular: "$890", format: "Weekend Intensive" },
-    { date: "Aug 4", label: "Sports, NASCAR, Formula 1 & Business", topic: "Sports, NASCAR, Formula 1 & Business", earlyBird: "$450", regular: "$490", format: "Single Day" },
-    { date: "Aug 6", label: "Personal Finance & Financial Literacy for Teens", topic: "Personal Finance & Financial Literacy for Teens", earlyBird: "$450", regular: "$490", format: "Single Day" },
-    { date: "Aug 11", label: "Leadership, Negotiation & Power Dynamics", topic: "Leadership, Negotiation & Power Dynamics", earlyBird: "$450", regular: "$490", format: "Single Day" },
-    { date: "Aug 13", label: "Wall Street, Stocks & Investor Thinking", topic: "Wall Street, Stocks & Investor Thinking", earlyBird: "$450", regular: "$490", format: "Single Day" },
-    { date: "Aug 20", label: "College, Career & Personal Strategy", topic: "College, Career & Personal Strategy", earlyBird: "$450", regular: "$490", format: "Single Day" },
+    { date: "Aug 4", label: "Sports, NASCAR, Formula 1 & Business", topic: "Sports, NASCAR, Formula 1 & Business", earlyBird: "$350", regular: "$450", format: "Single Day" },
+    { date: "Aug 6", label: "Personal Finance & Financial Literacy for Teens", topic: "Personal Finance & Financial Literacy for Teens", earlyBird: "$350", regular: "$450", format: "Single Day" },
+    { date: "Aug 11", label: "Leadership, Negotiation & Power Dynamics", topic: "Leadership, Negotiation & Power Dynamics", earlyBird: "$350", regular: "$450", format: "Single Day" },
+    { date: "Aug 13", label: "Wall Street, Stocks & Investor Thinking", topic: "Wall Street, Stocks & Investor Thinking", earlyBird: "$350", regular: "$450", format: "Single Day" },
+    { date: "Aug 20", label: "College, Career & Personal Strategy", topic: "College, Career & Personal Strategy", earlyBird: "$350", regular: "$450", format: "Single Day" },
   ];
   const isSummerWeekend = (lab) => lab.format === "Weekend Intensive";
 
@@ -3548,7 +3548,7 @@ function HomePage({ setPage, openInquiry }) {
                   <div style={{ background: "rgba(228,214,193,1)", border: "1px solid rgba(164,141,110,1)", padding: "16px 18px" }}>
                     <p style={{ fontFamily: lora, fontSize: 11, letterSpacing: "0.3em", color:"rgba(16,15,12,1)", fontWeight: 600, textTransform: "uppercase", marginBottom: 5 }}>Full Day</p>
                     <p style={{ fontFamily: "'Cinzel', serif", fontSize: 18, fontWeight: 300, color:"rgba(16,15,12,1)", marginBottom: 3 , textTransform: "uppercase" }}>Masterclass Lab</p>
-                    <p style={{ fontFamily: sans, fontSize: 11, color:"rgba(16,15,12,1)", letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 8 }}>From $450</p>
+                    <p style={{ fontFamily: sans, fontSize: 11, color:"rgba(16,15,12,1)", letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 8 }}>From $350</p>
                     <p style={{ fontFamily: lora, fontSize: 13, color:"rgba(16,15,12,1)", fontWeight: 300, lineHeight: 1.7, textAlign: "justify" }}>One discipline, one day, one tangible outcome — AI, public speaking, finance, leadership, and more.</p>
                   </div>
                   <div style={{ background: "#e4d7c2", border: "1.5px solid rgba(216,183,140,.3)", padding: "16px 18px" }}>
@@ -3601,7 +3601,7 @@ function HomePage({ setPage, openInquiry }) {
                 </div>
                 {/* Tuition */}
                 <div style={{ padding: "16px 22px", borderTop: `1px solid rgba(216,183,140,.1)` }}>
-                  <p style={{ fontFamily: "'Cinzel', serif", fontSize: 41, fontWeight: 300, color: "#E4D5C1", lineHeight: 1, marginBottom: 6, textTransform: "uppercase" }}>$450<span style={{ fontSize: 14 }}> / lab</span></p>
+                  <p style={{ fontFamily: "'Cinzel', serif", fontSize: 41, fontWeight: 300, color: "#E4D5C1", lineHeight: 1, marginBottom: 6, textTransform: "uppercase" }}>$350<span style={{ fontSize: 14 }}> / lab</span></p>
                   <p style={{ fontFamily: "Lora, serif", fontSize: 12, color: "#A48D6E", fontWeight: 400, letterSpacing: "0.08em" }}>Venture Launchpad weekends from $790</p>
                 </div>
                 {/* CTA buttons */}
@@ -6860,7 +6860,7 @@ function SummerDetailPage({ setPage, openInquiry }) {
       tag: "VOICE · POSTURE · FIRST IMPRESSIONS · STORYTELLING · CONFIDENCE UNDER PRESSURE",
       desc: "Most students are told to \"be confident,\" but almost no one teaches them how confidence actually looks, sounds, and feels in a room. This lab gives students the fundamentals of presence: how to enter a room, introduce themselves, make eye contact, stand with composure, speak clearly, hold attention, and tell a story people remember. Students work on posture, voice, tone, pacing, body language, first impressions, speech structure, storytelling, persuasion, and recovery from awkward moments. They practice live, receive direct feedback, and learn how to become more polished without becoming fake.",
       takeaway: "Students become more confident, clear, and memorable — building real presentation skill, social maturity, and the kind of communication presence that helps in interviews, classrooms, leadership roles, and future professional settings.",
-      earlyBird: "$450", regular: "$490", format: "Single Day", full: true,
+      earlyBird: "$350", regular: "$450", format: "Single Day", full: true,
     },
     {
       date: "July 15", label: "The Real Estate Deal Lab",
@@ -6868,7 +6868,7 @@ function SummerDetailPage({ setPage, openInquiry }) {
       tag: "REAL ESTATE · DEAL ANALYSIS · INVESTMENT STRATEGY",
       desc: "Real estate is one of the clearest ways to teach valuation, financing, risk, cash flow, negotiation, and investment discipline. This lab gives students a practical introduction to how investors evaluate a property before they buy. Students learn how to analyze a listing, estimate renovation costs, understand financing, compare a flip versus rental model, evaluate neighborhood factors, calculate basic returns, and identify hidden risks. The goal is not fantasy wealth-building. The goal is disciplined deal judgment. In the applied portion, students analyze a real local property and present a recommendation: flip it, rent it, renegotiate, or walk away.",
       takeaway: "Students learn how real estate investors think before making a decision — developing practical financial reasoning, analytical discipline, risk awareness, and real-world investment literacy.",
-      earlyBird: "$450", regular: "$490", format: "Single Day", full: true,
+      earlyBird: "$350", regular: "$450", format: "Single Day", full: true,
     },
     {
       date: "July 16", label: "Luxury Cars, Collectibles, NASCAR & Formula 1",
@@ -6876,7 +6876,7 @@ function SummerDetailPage({ setPage, openInquiry }) {
       tag: "LUXURY & COLLECTOR MARKETS · MOTORSPORT BUSINESS · VALUATION",
       desc: "Cars and racing offer a powerful way to teach business, markets, branding, valuation, and investment thinking. This lab uses luxury cars, collector vehicles, NASCAR, and Formula 1 to show students how passion-driven markets actually work. Students explore how racing teams make money, how sponsorships and media rights operate, how luxury brands create scarcity, how collectible assets are valued, and what makes some vehicles appreciate while others lose value. In the applied challenge, students analyze a real luxury collectible or retro vehicle listing and build an investment case: buy, hold, flip, negotiate, or walk away.",
       takeaway: "Students learn the business behind cars, racing, brands, and collectibles — practicing valuation, market analysis, risk assessment, and persuasive investment reasoning.",
-      earlyBird: "$450", regular: "$490", format: "Single Day", full: true,
+      earlyBird: "$350", regular: "$450", format: "Single Day", full: true,
     },
     {
       date: "July 18–19", label: "Two-Day Venture Launchpad Intensive",
@@ -6892,7 +6892,7 @@ function SummerDetailPage({ setPage, openInquiry }) {
       tag: "VOICE · POSTURE · FIRST IMPRESSIONS · STORYTELLING · CONFIDENCE UNDER PRESSURE",
       desc: "Most students are told to \"be confident,\" but almost no one teaches them how confidence actually looks, sounds, and feels in a room. This lab gives students the fundamentals of presence: how to enter a room, introduce themselves, make eye contact, stand with composure, speak clearly, hold attention, and tell a story people remember. Students work on posture, voice, tone, pacing, body language, first impressions, speech structure, storytelling, persuasion, and recovery from awkward moments. They practice live, receive direct feedback, and learn how to become more polished without becoming fake.",
       takeaway: "Students become more confident, clear, and memorable — building real presentation skill, social maturity, and the kind of communication presence that helps in interviews, classrooms, leadership roles, and future professional settings.",
-      earlyBird: "$450", regular: "$490", format: "Single Day",
+      earlyBird: "$350", regular: "$450", format: "Single Day",
     },
     {
       date: "July 28", label: "AI, Business & the Future of Work",
@@ -6900,7 +6900,7 @@ function SummerDetailPage({ setPage, openInquiry }) {
       tag: "AI TOOLS · SMARTER STUDYING · AI SCAMS · FUTURE CAREERS · BUILDING WITH AI",
       desc: "AI is already reshaping how people work, study, build companies, create media, practice law, diagnose illness, run campaigns, and make decisions. This lab gives students a practical, serious introduction to the tools and judgment they will need in an AI-driven world. Students explore ChatGPT, Claude, Gemini, Copilot, image and video AI, prompt strategy, verification methods, hallucinations, bias, deepfakes, scams, and real business use cases. The focus is not \"using AI to cheat,\" but learning how to think with AI, question its output, and use it as a force multiplier. In the applied build, each student creates something useful: a personal AI productivity system, an AI-powered career roadmap, a scam detector, an advisory board of AI personas, a community solution, or a product concept.",
       takeaway: "Students learn how to use AI as leverage, not as a shortcut — developing digital judgment, future-of-work awareness, responsible AI fluency, and the ability to separate real opportunity from hype.",
-      earlyBird: "$450", regular: "$490", format: "Single Day",
+      earlyBird: "$350", regular: "$450", format: "Single Day",
     },
     {
       date: "Aug 1–2", label: "Two-Day Venture Launchpad Intensive",
@@ -6916,7 +6916,7 @@ function SummerDetailPage({ setPage, openInquiry }) {
       tag: "FORMULA 1, NASCAR · NFL, NBA, NHL · MEDIA RIGHTS & SPONSORSHIPS",
       desc: "Sports and motorsport are not just entertainment. They are billion-dollar businesses built on media rights, sponsorships, ticketing, licensing, franchises, data, merchandise, fan loyalty, and global attention. This lab shows students the business machine behind the leagues, teams, drivers, and brands they follow: how professional leagues like the NFL, NBA, and NHL generate revenue, how esports and gaming are monetized, and why Formula 1 and NASCAR have become global business phenomena through sponsorships, media rights, and brand valuation. Students also explore the luxury and collector vehicle market — how scarcity is engineered, how collectible assets are valued, and what makes certain vehicles appreciate while others lose value. In the applied challenge, students design a mock sports or racing franchise, or analyze a real luxury vehicle listing, and build a business or investment case.",
       takeaway: "Students learn the economics behind competition and collectibility — developing business model thinking, branding awareness, valuation logic, and a deeper understanding of how sport, motorsport, and luxury markets become enterprise.",
-      earlyBird: "$450", regular: "$490", format: "Single Day",
+      earlyBird: "$350", regular: "$450", format: "Single Day",
     },
     {
       date: "Aug 6", label: "Personal Finance & Financial Literacy for Teens",
@@ -6924,7 +6924,7 @@ function SummerDetailPage({ setPage, openInquiry }) {
       tag: "FIRST PAYCHECK · BUDGETING · CREDIT · CAR PAYMENTS · INVESTING · AVOIDING DEBT",
       desc: "This lab teaches the financial lessons many adults wish they had learned before life became expensive. Students learn how money works in the real world: income, taxes, budgeting, credit, debt, saving, investing, rent, insurance, salary negotiation, and the true cost of bad financial decisions. Students learn how to read a paycheck, understand a credit score, compare debt costs, calculate compound interest, think about investing fundamentals, and recognize financial traps. The goal is to build real life judgment and financial literacy early.",
       takeaway: "Students learn how to make smarter financial decisions before the stakes are high — developing practical money confidence, responsibility, risk awareness, and early financial independence.",
-      earlyBird: "$450", regular: "$490", format: "Single Day",
+      earlyBird: "$350", regular: "$450", format: "Single Day",
     },
     {
       date: "Aug 11", label: "Leadership, Negotiation & Power Dynamics",
@@ -6932,7 +6932,7 @@ function SummerDetailPage({ setPage, openInquiry }) {
       tag: "LEADERSHIP PSYCHOLOGY · NEGOTIATION MECHANICS · INFLUENCE · LIVE SIMULATION",
       desc: "Leadership is not a title. It is the ability to influence people, set standards, make decisions, read a room, negotiate fairly, and take responsibility when pressure rises. This lab introduces students to the real mechanics of influence and leadership. Students study persuasion, negotiation, body language, rhetoric, incentives, group dynamics, decision-making, power, trust, and credibility. They learn how to project confidence, influence others, and command authority while earning respect. The day includes a live negotiation simulation and a team leadership challenge.",
       takeaway: "Students learn how leaders move people toward action — developing maturity, negotiation awareness, persuasive communication, team judgment, and stronger leadership presence.",
-      earlyBird: "$450", regular: "$490", format: "Single Day",
+      earlyBird: "$350", regular: "$450", format: "Single Day",
     },
     {
       date: "Aug 13", label: "Wall Street, Stocks & Investor Thinking",
@@ -6940,7 +6940,7 @@ function SummerDetailPage({ setPage, openInquiry }) {
       tag: "STOCKS · BONDS · ETFS · CRYPTO · INVESTOR THINKING · SIMULATED TRADING",
       desc: "This lab introduces students to markets and the Wall Street world of trading, investment and fintech innovation. Students learn how exchanges work, what stocks, bonds, ETFs, indices, and crypto assets are, why prices move, how investors form a thesis, and why risk management matters more than hype. Students examine diversification, market psychology, bubbles, volatility, scams, financial media, and the difference between investing, trading, gambling, and speculation. The goal is not to encourage risky behavior. The goal is to teach students how disciplined investors think. The applied portion includes a simulated investing exercise where students build an investment thesis, diversified portfolio, explain their reasoning, and defend their decisions.",
       takeaway: "Students learn how markets move, how investors make decisions, and how not to get fooled by hype — building financial literacy, analytical discipline, and risk-aware thinking.",
-      earlyBird: "$450", regular: "$490", format: "Single Day",
+      earlyBird: "$350", regular: "$450", format: "Single Day",
     },
     {
       date: "Aug 20", label: "College, Career & Personal Strategy",
@@ -6948,7 +6948,7 @@ function SummerDetailPage({ setPage, openInquiry }) {
       tag: "CAREER INTERESTS · COLLEGE GOALS · FUTURE ROADMAP · RESUME · INTERVIEWS",
       desc: "High school students are often told to \"prepare for the future,\" but rarely shown how to think strategically about who they are becoming. This lab helps students connect their strengths, interests, academic choices, extracurriculars, career curiosity, and personal story into a clearer direction. Students explore emerging careers, college positioning, resume development, personal narrative, internships, leadership experiences, interview answers, and how to communicate their value with maturity. They learn how selective environments evaluate not just grades, but direction, initiative, depth, and fit. The college strategy session is led by a top Orange County college advisor and former member of the Yale University admissions committee.",
       takeaway: "Students leave with a stronger sense of direction, a clearer personal narrative, and practical preparation for college applications, interviews, internships, and future opportunities.",
-      earlyBird: "$450", regular: "$490", format: "Single Day",
+      earlyBird: "$350", regular: "$450", format: "Single Day",
     },
   ];
 
@@ -7302,14 +7302,15 @@ function SummerDetailPage({ setPage, openInquiry }) {
 // payment summaries only; the Edge Function is the source of truth for
 // what's actually charged.
 const SUMMER_SESSION_PRICES = {
-  "Public Speaking & Executive Presence I — July 21": 450,
-  "AI, Business & the Future of Work — July 28": 450,
+  "Public Speaking & Executive Presence I — July 21": 350,
+  "AI, Business & the Future of Work — July 28": 350,
   "Two-Day Venture Launchpad Intensive — Aug 1–2": 790,
-  "Sports, NASCAR, Formula 1 & Business — Aug 4": 450,
-  "Personal Finance & Financial Literacy for Teens — Aug 6": 450,
-  "Leadership, Negotiation & Power Dynamics — Aug 11": 450,
-  "Wall Street, Stocks & Investor Thinking — Aug 13": 450,
-  "College, Career & Personal Strategy — Aug 20": 450,
+  "Sports, NASCAR, Formula 1 & Business — Aug 4": 350,
+  "Personal Finance & Financial Literacy for Teens — Aug 6": 350,
+  "Leadership, Negotiation & Power Dynamics — Aug 11": 350,
+  "Wall Street, Stocks & Investor Thinking — Aug 13": 350,
+  "College, Career & Personal Strategy — Aug 20": 350,
+  "Gift — $1 Test Lab": 1,
 };
 
 function PortalPage({ setPage }) {
@@ -9112,6 +9113,7 @@ function PortalPage({ setPage }) {
                         { session: "Leadership, Negotiation & Power Dynamics — Aug 11" },
                         { session: "Wall Street, Stocks & Investor Thinking — Aug 13" },
                         { session: "College, Career & Personal Strategy — Aug 20" },
+                        { session: "Gift — $1 Test Lab" },
                       ].map(({ session, full }) => {
                         const active = (appForm.summer.selectedSessions || []).includes(session);
                         if (full) {
