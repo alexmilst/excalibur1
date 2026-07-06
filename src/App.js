@@ -637,7 +637,7 @@ function Nav({ page, setPage }) {
     ["Home", "home", null],
     ["The Academy", "about", null],
     ["View Programs", "programs", [
-      { label: "Summer Masterseries", page: "summer-detail", sub: "Masterclass Labs · July 21 – Aug 27" },
+      { label: "Summer Masterseries", page: "summer-detail", sub: "Masterclass Labs · July 21 – Aug 20" },
       { label: "Foundation Semester", page: "foundation-detail", sub: "Sep 2026 – Dec 2026" },
       { label: "Venture Semester", page: "venture-detail", sub: "Jan – May 2027" },
       { label: "Six-Week Intensive", page: "intensive", sub: "Four Waves Per Year" },
@@ -2814,7 +2814,7 @@ function ApplyPage({ setPage, openInquiry }) {
             eyebrow: "Summer Masterseries",
             label: "Summer Masterseries",
             status: "Enrollment Open", statusColor: "#3F6B3F",
-            dates: "July 21 – August 27, 2026", price: "From $450", period: "per lab",
+            dates: "July 21 – August 20, 2026", price: "From $450", period: "per lab",
             desc: "A two-week summer intensive for students ready to test entrepreneurship in a fast, immersive format. Students build a venture, train daily in public speaking and pitch craft, and present at a live Shark Tank-inspired Finale.\n\nDesigned as both a standalone experience and an introduction to the Excalibur Flagship.",
             meta: [
               ["Dates", "Jul 27, 2026 – Aug 8, 2026 · Mon–Fri"],
@@ -3234,16 +3234,16 @@ function HomePage({ setPage, openInquiry }) {
 
   // Quick Reference data — mirrors the labs array on the Summer Masterclass Labs detail page.
   const summerLabs = [
-    { date: "July 21", label: "AI, Business & the Future of Work", topic: "AI & the Future of Business", earlyBird: "$450", regular: "$490", format: "Single Day" },
-    { date: "July 28", label: "Voice, Presence & Persuasion", topic: "Public Speaking & Rhetoric I", earlyBird: "$450", regular: "$490", format: "Single Day" },
-    { date: "Aug 1–2", label: "Two-Day Venture Launchpad Intensive", topic: "Founder's Lab — Venture Launchpad", earlyBird: "$790", regular: "$890", format: "Weekend Intensive" },
-    { date: "Aug 4", label: "College, Career & Personal Strategy", topic: "Design Your Future", earlyBird: "$450", regular: "$490", format: "Single Day" },
-    { date: "Aug 6", label: "Personal Finance & Financial Literacy for Teens", topic: "Money Moves", earlyBird: "$450", regular: "$490", format: "Single Day" },
-    { date: "Aug 11", label: "Sports, Esports & the Business of Competition", topic: "Inside the Arena", earlyBird: "$450", regular: "$490", format: "Single Day" },
-    { date: "Aug 13", label: "Wall Street, Crypto & Investor Thinking", topic: "Wall Street 101", earlyBird: "$450", regular: "$490", format: "Single Day" },
-    { date: "Aug 20", label: "Leadership, Negotiation & Power Dynamics", topic: "The Influence Lab", earlyBird: "$450", regular: "$490", format: "Single Day" },
-    { date: "Aug 25", label: "Luxury Cars, Collectibles, NASCAR & Formula 1", topic: "Horsepower & High Finance", earlyBird: "$450", regular: "$490", format: "Single Day" },
-    { date: "Aug 27", label: "The Real Estate Deal Lab", topic: "Flip, Rent, or Walk Away?", earlyBird: "$450", regular: "$490", format: "Single Day" },
+    { date: "July 21", label: "Public Speaking & Executive Presence I", topic: "Public Speaking & Executive Presence I", earlyBird: "$450", regular: "$490", format: "Single Day" },
+    { date: "July 28", label: "AI, Business & the Future of Work", topic: "AI, Business & the Future of Work", earlyBird: "$450", regular: "$490", format: "Single Day" },
+    { date: "Aug 1–2", label: "Two-Day Venture Launchpad Intensive", topic: "Two-Day Venture Launchpad Intensive", earlyBird: "$790", regular: "$890", format: "Weekend Intensive" },
+    { date: "Aug 4", label: "Leadership, Negotiation & Power Dynamics", topic: "Leadership, Negotiation & Power Dynamics", earlyBird: "$450", regular: "$490", format: "Single Day" },
+    { date: "Aug 6", label: "Personal Finance & Financial Literacy for Teens", topic: "Personal Finance & Financial Literacy for Teens", earlyBird: "$450", regular: "$490", format: "Single Day" },
+    { date: "Aug 11", label: "Sports, NASCAR, Formula 1 & Business", topic: "Sports, NASCAR, Formula 1 & Business", earlyBird: "$450", regular: "$490", format: "Single Day" },
+    { date: "Aug 13", label: "Wall Street, Stocks & Investor Thinking", topic: "Wall Street, Stocks & Investor Thinking", earlyBird: "$450", regular: "$490", format: "Single Day" },
+    { date: "Aug 20", label: "College, Career & Personal Strategy", topic: "College, Career & Personal Strategy", earlyBird: "$450", regular: "$490", format: "Single Day" },
+    { date: "Aug 25", label: "Luxury Cars, Collectibles, NASCAR & Formula 1", topic: "Luxury Cars, Collectibles, NASCAR & Formula 1", earlyBird: "$450", regular: "$490", format: "Single Day", full: true },
+    { date: "Aug 27", label: "The Real Estate Deal Lab", topic: "The Real Estate Deal Lab", earlyBird: "$450", regular: "$490", format: "Single Day", full: true },
   ];
   const isSummerWeekend = (lab) => lab.format === "Weekend Intensive";
 
@@ -3532,7 +3532,7 @@ function HomePage({ setPage, openInquiry }) {
                   Academy Introduction – Summer Labs
                 </h2>
                 <p style={{ fontFamily: "'Cinzel', serif", fontSize: isMobile ? 18 : 22, fontWeight: 400, color: "#A48D6E", marginBottom: 28, letterSpacing: "0.04em" , textTransform: "uppercase" }}>
-                  July 21 – August 27, 2026
+                  July 21 – August 20, 2026
                 </p>
 
                 {/* Body copy */}
@@ -3583,9 +3583,9 @@ function HomePage({ setPage, openInquiry }) {
                 <div style={{ padding: "0 22px", flex: 1 }}>
                   {[
                     ["Sessions", "10:00 AM – 5:00 PM · Single-Day Labs"],
-                    ["Series", "July 21 – August 27, 2026 · 12 sessions"],
+                    ["Series", "July 21 – August 20, 2026 · 9 sessions"],
                     ["Weekend", "2-Day Venture Launchpad · Aug 1–2 · Live pitch before a judging panel"],
-                    ["This Summer", "AI, Business & the Future of Work, Voice, Presence & Persuasion, Two-Day Venture Launchpad Intensive, College, Career & Personal Strategy, Personal Finance & Financial Literacy for Teens, Sports, Esports & the Business of Competition, Wall Street, Crypto & Investor Thinking, Leadership, Negotiation & Power Dynamics, Luxury Cars, Collectibles, NASCAR & Formula 1, The Real Estate Deal Lab"],
+                    ["This Summer", "Public Speaking & Executive Presence I, AI, Business & the Future of Work, Two-Day Venture Launchpad Intensive, Leadership, Negotiation & Power Dynamics, Personal Finance & Financial Literacy for Teens, Sports, NASCAR, Formula 1 & Business, Wall Street, Stocks & Investor Thinking, College, Career & Personal Strategy"],
                     ["Guest Speakers", "Distinguished guest speakers from different industries"],
                     ["Eligibility", "Ages 14–18 · limited capacity per session"],
                   ].map(([k, v], i) => (
@@ -3635,12 +3635,18 @@ function HomePage({ setPage, openInquiry }) {
               </thead>
               <tbody>
                 {summerLabs.map((lab, i) => (
-                  <tr key={i} style={{ borderBottom: "1px solid rgba(52,21,15,.15)", background: isSummerWeekend(lab) ? "#34150F" : "transparent" }}>
-                    <td style={{ padding: "14px 16px", color: isSummerWeekend(lab) ? "#D9C7A9" : "#34150F", whiteSpace: "nowrap" }}>{lab.date}</td>
-                    <td style={{ padding: "14px 16px", color: isSummerWeekend(lab) ? "#D9C7A9" : "#1A1208", fontWeight: 600 }}>{lab.label}</td>
-                    <td style={{ padding: "14px 16px", color: isSummerWeekend(lab) ? "rgba(217,199,169,.75)" : "#6B5C40", fontStyle: "italic" }}>{lab.topic}</td>
-                    <td style={{ padding: "14px 16px", color: isSummerWeekend(lab) ? "#D9C7A9" : "#1A1208", fontWeight: 600, whiteSpace: "nowrap" }}>{lab.earlyBird}</td>
-                    <td style={{ padding: "14px 16px", color: isSummerWeekend(lab) ? "#D9C7A9" : "#1A1208", whiteSpace: "nowrap" }}>{lab.regular}</td>
+                  <tr key={i} style={{ borderBottom: "1px solid rgba(52,21,15,.15)", background: lab.full ? "rgba(52,21,15,.06)" : isSummerWeekend(lab) ? "#34150F" : "transparent" }}>
+                    <td style={{ padding: "14px 16px", color: lab.full ? "#8A7A63" : isSummerWeekend(lab) ? "#D9C7A9" : "#34150F", whiteSpace: "nowrap" }}>{lab.date}</td>
+                    <td style={{ padding: "14px 16px", color: lab.full ? "#8A7A63" : isSummerWeekend(lab) ? "#D9C7A9" : "#1A1208", fontWeight: 600, textDecoration: lab.full ? "line-through" : "none" }}>{lab.label}</td>
+                    <td style={{ padding: "14px 16px", color: lab.full ? "#8A7A63" : isSummerWeekend(lab) ? "rgba(217,199,169,.75)" : "#6B5C40", fontStyle: "italic" }}>{lab.topic}</td>
+                    {lab.full ? (
+                      <td colSpan={2} style={{ padding: "14px 16px", color: "#A0522D", fontWeight: 700, fontSize: 12, letterSpacing: "0.06em", textTransform: "uppercase" }}>Enrollment Closed — Masterclass Full</td>
+                    ) : (
+                      <>
+                        <td style={{ padding: "14px 16px", color: isSummerWeekend(lab) ? "#D9C7A9" : "#1A1208", fontWeight: 600, whiteSpace: "nowrap" }}>{lab.earlyBird}</td>
+                        <td style={{ padding: "14px 16px", color: isSummerWeekend(lab) ? "#D9C7A9" : "#1A1208", whiteSpace: "nowrap" }}>{lab.regular}</td>
+                      </>
+                    )}
                   </tr>
                 ))}
               </tbody>
@@ -3812,7 +3818,7 @@ function HomePage({ setPage, openInquiry }) {
               <div style={{ position:"absolute", inset:0, padding:isMobile?"34px":"52px", display:"flex", flexDirection:"column", justifyContent:"flex-end" }}>
                 <h3 style={{ fontFamily:"'Cinzel', serif", fontSize:35, fontWeight:400, color:"#E4D5C1", lineHeight:1, letterSpacing:"0.08em", textTransform:"uppercase", marginBottom:12 }}>Summer Masterseries</h3>
                 <p style={{ fontFamily:serif, fontSize:18, color:"#E4D5C1", fontStyle:"italic", fontWeight:400, lineHeight:1.5, marginBottom:8 }}>Full day Masterclass Labs · Introduction to the Academy.</p>
-                <p style={{ fontFamily:lora, fontSize:13, color:"#A48D6E", fontWeight:400, letterSpacing:"0.04em", marginBottom:24 }}>July 21 – August 27, 2026</p>
+                <p style={{ fontFamily:lora, fontSize:13, color:"#A48D6E", fontWeight:400, letterSpacing:"0.04em", marginBottom:24 }}>July 21 – August 20, 2026</p>
                 <button style={{ fontFamily:sans, fontSize:9, fontWeight:700, letterSpacing:"0.2em", textTransform:"uppercase", background:"transparent", border:"1px solid rgba(228,213,193,0.4)", color:"#E4D5C1", padding:"10px 20px", cursor:"pointer", alignSelf:"flex-start", transition:"all 0.2s" }}
                   onMouseEnter={e=>{e.currentTarget.style.background="#E4D5C1";e.currentTarget.style.color="#0F0F0F";}}
                   onMouseLeave={e=>{e.currentTarget.style.background="transparent";e.currentTarget.style.color="#E4D5C1";}}>
@@ -4488,7 +4494,7 @@ function HomePage({ setPage, openInquiry }) {
               Masterclass Labs
             </h2>
             <p style={{ fontFamily: lora, fontSize: isMobile ? 15 : 18, color: "#E4D5C1", fontWeight: 300, fontStyle: "italic", lineHeight: 1.7, maxWidth: 620, margin: "24px auto 0" }}>
-              Twelve sessions. July 21 – August 27, 2026. Orange County, CA.
+              Nine sessions. July 21 – August 20, 2026. Orange County, CA.
             </p>
             <button onClick={() => setPage("summer-detail")} style={{ fontFamily: "'Lato', sans-serif", background: "#D9C7A9", color: "#100F0C", padding: "16px 44px", fontSize: 11, fontWeight: 700, letterSpacing: "0.22em", textTransform: "uppercase", border: "none", cursor: "pointer", marginTop: 40 }}>Apply to the Summer Series →</button>
           </Fade>
@@ -6849,84 +6855,84 @@ function SummerDetailPage({ setPage, openInquiry }) {
 
   const labs = [
     {
-      date: "July 21", label: "AI, Business & the Future of Work",
-      topic: "AI & the Future of Business",
-      tag: "ARTIFICIAL INTELLIGENCE · DIGITAL LITERACY · FUTURE OF WORK",
-      desc: "AI is already reshaping how people work, study, build companies, create media, practice law, diagnose illness, run campaigns, and make decisions. This lab gives students a practical, serious introduction to the tools and judgment they will need in an AI-driven world. Students explore ChatGPT, Claude, Gemini, Copilot, image and video AI, prompt strategy, verification methods, hallucinations, bias, deepfakes, scams, and real business use cases. The focus is not \"using AI to cheat,\" but learning how to think with AI, question its output, and use it as a force multiplier. In the applied build, each student creates something useful: a personal AI productivity system, an AI-powered career roadmap, a scam detector, an advisory board of AI personas, a community solution, or a product concept.",
-      takeaway: "Students learn how to use AI as leverage, not as a shortcut — developing digital judgment, future-of-work awareness, responsible AI fluency, and the ability to separate real opportunity from hype.",
-      earlyBird: "$450", regular: "$490", format: "Single Day",
-    },
-    {
-      date: "July 28", label: "Voice, Presence & Persuasion",
-      topic: "Public Speaking & Rhetoric I",
-      tag: "PUBLIC SPEAKING · EXECUTIVE PRESENCE · STORYTELLING",
+      date: "July 21", label: "Public Speaking & Executive Presence I",
+      topic: "Public Speaking & Executive Presence I",
+      tag: "VOICE · POSTURE · FIRST IMPRESSIONS · STORYTELLING · CONFIDENCE UNDER PRESSURE",
       desc: "Most students are told to \"be confident,\" but almost no one teaches them how confidence actually looks, sounds, and feels in a room. This lab gives students the fundamentals of presence: how to enter a room, introduce themselves, make eye contact, stand with composure, speak clearly, hold attention, and tell a story people remember. Students work on posture, voice, tone, pacing, body language, first impressions, speech structure, storytelling, persuasion, and recovery from awkward moments. They practice live, receive direct feedback, and learn how to become more polished without becoming fake.",
       takeaway: "Students become more confident, clear, and memorable — building real presentation skill, social maturity, and the kind of communication presence that helps in interviews, classrooms, leadership roles, and future professional settings.",
       earlyBird: "$450", regular: "$490", format: "Single Day",
     },
     {
+      date: "July 28", label: "AI, Business & the Future of Work",
+      topic: "AI, Business & the Future of Work",
+      tag: "AI TOOLS · SMARTER STUDYING · AI SCAMS · FUTURE CAREERS · BUILDING WITH AI",
+      desc: "AI is already reshaping how people work, study, build companies, create media, practice law, diagnose illness, run campaigns, and make decisions. This lab gives students a practical, serious introduction to the tools and judgment they will need in an AI-driven world. Students explore ChatGPT, Claude, Gemini, Copilot, image and video AI, prompt strategy, verification methods, hallucinations, bias, deepfakes, scams, and real business use cases. The focus is not \"using AI to cheat,\" but learning how to think with AI, question its output, and use it as a force multiplier. In the applied build, each student creates something useful: a personal AI productivity system, an AI-powered career roadmap, a scam detector, an advisory board of AI personas, a community solution, or a product concept.",
+      takeaway: "Students learn how to use AI as leverage, not as a shortcut — developing digital judgment, future-of-work awareness, responsible AI fluency, and the ability to separate real opportunity from hype.",
+      earlyBird: "$450", regular: "$490", format: "Single Day",
+    },
+    {
       date: "Aug 1–2", label: "Two-Day Venture Launchpad Intensive",
-      topic: "Founder's Lab — Venture Launchpad",
-      tag: "VENTURE LAUNCHPAD · WEEKEND INTENSIVE · FOUNDER'S LAB",
+      topic: "Two-Day Venture Launchpad Intensive",
+      tag: "FROM DREAM TO ACTION · MARKET OPPORTUNITY · LIVE INVESTOR PANEL",
       desc: "This two-day intensive introduces students to the actual process behind building a venture. Students move from idea to pitch: identifying a problem, researching a customer, testing demand, designing a business model, building a pitch deck, and preparing to defend their concept. Students may develop a business plan for a startup, nonprofit, product, service, or community impact idea. They are pushed to think clearly, challenge weak assumptions, work in teams, and present with confidence. The intensive ends with a live pitch before a judging panel of investors and industry leaders.",
       takeaway: "Students experience the pressure and excitement of building like founders — gaining entrepreneurial confidence, teamwork experience, financial reasoning, and live presentation practice.",
       earlyBird: "$790", regular: "$890", format: "Weekend Intensive",
     },
     {
-      date: "Aug 4", label: "College, Career & Personal Strategy",
-      topic: "Design Your Future",
-      tag: "COLLEGE STRATEGY · CAREER POSITIONING · PERSONAL NARRATIVE",
-      desc: "High school students are often told to \"prepare for the future,\" but rarely shown how to think strategically about who they are becoming. This lab helps students connect their strengths, interests, academic choices, extracurriculars, career curiosity, and personal story into a clearer direction. Students explore emerging careers, college positioning, resume development, personal narrative, internships, leadership experiences, interview answers, and how to communicate their value with maturity. They learn how selective environments evaluate not just grades, but direction, initiative, depth, and fit. The college strategy session is led by a top Orange County college advisor and former member of the Yale University admissions committee.",
-      takeaway: "Students leave with a stronger sense of direction, a clearer personal narrative, and practical preparation for college applications, interviews, internships, and future opportunities.",
-      earlyBird: "$450", regular: "$490", format: "Single Day",
-    },
-    {
-      date: "Aug 6", label: "Personal Finance & Financial Literacy for Teens",
-      topic: "Money Moves",
-      tag: "PERSONAL FINANCE · FINANCIAL LITERACY · INVESTMENT BASICS",
-      desc: "This lab teaches the financial lessons many adults wish they had learned before life became expensive. Students learn how money works in the real world: income, taxes, budgeting, credit, debt, saving, investing, rent, insurance, salary negotiation, and the true cost of bad financial decisions. Students learn how to read a paycheck, understand a credit score, compare debt costs, calculate compound interest, think about investing fundamentals, and recognize financial traps. The goal is to build real life judgment and financial literacy early.",
-      takeaway: "Students learn how to make smarter financial decisions before the stakes are high — developing practical money confidence, responsibility, risk awareness, and early financial independence.",
-      earlyBird: "$450", regular: "$490", format: "Single Day",
-    },
-    {
-      date: "Aug 11", label: "Sports, Esports & the Business of Competition",
-      topic: "Inside the Arena",
-      tag: "SPORTS BUSINESS · ESPORTS · FRANCHISE ECONOMICS",
-      desc: "Sports are not just games. They are billion-dollar businesses built on media rights, sponsorships, ticketing, licensing, athletes, franchises, data, merchandise, fan loyalty, and global attention. This lab shows students the business machine behind the teams, games, leagues, athletes, streamers, and brands they follow. Students explore how professional leagues like NFL, NHL, NBA make money, how esports and gaming are monetized, why Formula 1 became a global business phenomenon, how sponsorships and franchise are valued, and how attention becomes revenue. In the applied challenge, students design a mock sports, gaming, or esports franchise and present its business model.",
-      takeaway: "Students learn the economics behind competition — developing business model thinking, branding awareness, strategic analysis, valuation logic, and a deeper understanding of how entertainment becomes enterprise.",
-      earlyBird: "$450", regular: "$490", format: "Single Day",
-    },
-    {
-      date: "Aug 13", label: "Wall Street, Crypto & Investor Thinking",
-      topic: "Wall Street 101",
-      tag: "FINANCIAL MARKETS · INVESTING · RISK MANAGEMENT",
-      desc: "This lab introduces students to markets and the Wall Street world of trading, investment and fintech innovation. Students learn how exchanges work, what stocks, bonds, ETFs, indices, and crypto assets are, why prices move, how investors form a thesis, and why risk management matters more than hype. Students examine diversification, market psychology, bubbles, volatility, scams, financial media, and the difference between investing, trading, gambling, and speculation. The goal is not to encourage risky behavior. The goal is to teach students how disciplined investors think. The applied portion includes a simulated investing exercise where students build an investment thesis, diversified portfolio, explain their reasoning, and defend their decisions.",
-      takeaway: "Students learn how markets move, how investors make decisions, and how not to get fooled by hype — building financial literacy, analytical discipline, and risk-aware thinking.",
-      earlyBird: "$450", regular: "$490", format: "Single Day",
-    },
-    {
-      date: "Aug 20", label: "Leadership, Negotiation & Power Dynamics",
-      topic: "The Influence Lab",
-      tag: "LEADERSHIP · NEGOTIATION · INFLUENCE & PERSUASION",
+      date: "Aug 4", label: "Leadership, Negotiation & Power Dynamics",
+      topic: "Leadership, Negotiation & Power Dynamics",
+      tag: "LEADERSHIP PSYCHOLOGY · NEGOTIATION MECHANICS · INFLUENCE · LIVE SIMULATION",
       desc: "Leadership is not a title. It is the ability to influence people, set standards, make decisions, read a room, negotiate fairly, and take responsibility when pressure rises. This lab introduces students to the real mechanics of influence and leadership. Students study persuasion, negotiation, body language, rhetoric, incentives, group dynamics, decision-making, power, trust, and credibility. They learn how to project confidence, influence others, and command authority while earning respect. The day includes a live negotiation simulation and a team leadership challenge.",
       takeaway: "Students learn how leaders move people toward action — developing maturity, negotiation awareness, persuasive communication, team judgment, and stronger leadership presence.",
       earlyBird: "$450", regular: "$490", format: "Single Day",
     },
     {
-      date: "Aug 25", label: "Luxury Cars, Collectibles, NASCAR & Formula 1",
-      topic: "Horsepower & High Finance",
-      tag: "LUXURY & COLLECTOR MARKETS · MOTORSPORT BUSINESS · VALUATION",
-      desc: "Cars and racing offer a powerful way to teach business, markets, branding, valuation, and investment thinking. This lab uses luxury cars, collector vehicles, NASCAR, and Formula 1 to show students how passion-driven markets actually work. Students explore how racing teams make money, how sponsorships and media rights operate, how luxury brands create scarcity, how collectible assets are valued, and what makes some vehicles appreciate while others lose value. In the applied challenge, students analyze a real luxury collectible or retro vehicle listing and build an investment case: buy, hold, flip, negotiate, or walk away.",
-      takeaway: "Students learn the business behind cars, racing, brands, and collectibles — practicing valuation, market analysis, risk assessment, and persuasive investment reasoning.",
+      date: "Aug 6", label: "Personal Finance & Financial Literacy for Teens",
+      topic: "Personal Finance & Financial Literacy for Teens",
+      tag: "FIRST PAYCHECK · BUDGETING · CREDIT · CAR PAYMENTS · INVESTING · AVOIDING DEBT",
+      desc: "This lab teaches the financial lessons many adults wish they had learned before life became expensive. Students learn how money works in the real world: income, taxes, budgeting, credit, debt, saving, investing, rent, insurance, salary negotiation, and the true cost of bad financial decisions. Students learn how to read a paycheck, understand a credit score, compare debt costs, calculate compound interest, think about investing fundamentals, and recognize financial traps. The goal is to build real life judgment and financial literacy early.",
+      takeaway: "Students learn how to make smarter financial decisions before the stakes are high — developing practical money confidence, responsibility, risk awareness, and early financial independence.",
       earlyBird: "$450", regular: "$490", format: "Single Day",
     },
     {
+      date: "Aug 11", label: "Sports, NASCAR, Formula 1 & Business",
+      topic: "Sports, NASCAR, Formula 1 & Business",
+      tag: "FORMULA 1, NASCAR · NFL, NBA, NHL · MEDIA RIGHTS & SPONSORSHIPS",
+      desc: "Sports and motorsport are not just entertainment. They are billion-dollar businesses built on media rights, sponsorships, ticketing, licensing, franchises, data, merchandise, fan loyalty, and global attention. This lab shows students the business machine behind the leagues, teams, drivers, and brands they follow: how professional leagues like the NFL, NBA, and NHL generate revenue, how esports and gaming are monetized, and why Formula 1 and NASCAR have become global business phenomena through sponsorships, media rights, and brand valuation. Students also explore the luxury and collector vehicle market — how scarcity is engineered, how collectible assets are valued, and what makes certain vehicles appreciate while others lose value. In the applied challenge, students design a mock sports or racing franchise, or analyze a real luxury vehicle listing, and build a business or investment case.",
+      takeaway: "Students learn the economics behind competition and collectibility — developing business model thinking, branding awareness, valuation logic, and a deeper understanding of how sport, motorsport, and luxury markets become enterprise.",
+      earlyBird: "$450", regular: "$490", format: "Single Day",
+    },
+    {
+      date: "Aug 13", label: "Wall Street, Stocks & Investor Thinking",
+      topic: "Wall Street, Stocks & Investor Thinking",
+      tag: "STOCKS · BONDS · ETFS · CRYPTO · INVESTOR THINKING · SIMULATED TRADING",
+      desc: "This lab introduces students to markets and the Wall Street world of trading, investment and fintech innovation. Students learn how exchanges work, what stocks, bonds, ETFs, indices, and crypto assets are, why prices move, how investors form a thesis, and why risk management matters more than hype. Students examine diversification, market psychology, bubbles, volatility, scams, financial media, and the difference between investing, trading, gambling, and speculation. The goal is not to encourage risky behavior. The goal is to teach students how disciplined investors think. The applied portion includes a simulated investing exercise where students build an investment thesis, diversified portfolio, explain their reasoning, and defend their decisions.",
+      takeaway: "Students learn how markets move, how investors make decisions, and how not to get fooled by hype — building financial literacy, analytical discipline, and risk-aware thinking.",
+      earlyBird: "$450", regular: "$490", format: "Single Day",
+    },
+    {
+      date: "Aug 20", label: "College, Career & Personal Strategy",
+      topic: "College, Career & Personal Strategy",
+      tag: "CAREER INTERESTS · COLLEGE GOALS · FUTURE ROADMAP · RESUME · INTERVIEWS",
+      desc: "High school students are often told to \"prepare for the future,\" but rarely shown how to think strategically about who they are becoming. This lab helps students connect their strengths, interests, academic choices, extracurriculars, career curiosity, and personal story into a clearer direction. Students explore emerging careers, college positioning, resume development, personal narrative, internships, leadership experiences, interview answers, and how to communicate their value with maturity. They learn how selective environments evaluate not just grades, but direction, initiative, depth, and fit. The college strategy session is led by a top Orange County college advisor and former member of the Yale University admissions committee.",
+      takeaway: "Students leave with a stronger sense of direction, a clearer personal narrative, and practical preparation for college applications, interviews, internships, and future opportunities.",
+      earlyBird: "$450", regular: "$490", format: "Single Day",
+    },
+    {
+      date: "Aug 25", label: "Luxury Cars, Collectibles, NASCAR & Formula 1",
+      topic: "Luxury Cars, Collectibles, NASCAR & Formula 1",
+      tag: "LUXURY & COLLECTOR MARKETS · MOTORSPORT BUSINESS · VALUATION",
+      desc: "Cars and racing offer a powerful way to teach business, markets, branding, valuation, and investment thinking. This lab uses luxury cars, collector vehicles, NASCAR, and Formula 1 to show students how passion-driven markets actually work. Students explore how racing teams make money, how sponsorships and media rights operate, how luxury brands create scarcity, how collectible assets are valued, and what makes some vehicles appreciate while others lose value. In the applied challenge, students analyze a real luxury collectible or retro vehicle listing and build an investment case: buy, hold, flip, negotiate, or walk away.",
+      takeaway: "Students learn the business behind cars, racing, brands, and collectibles — practicing valuation, market analysis, risk assessment, and persuasive investment reasoning.",
+      earlyBird: "$450", regular: "$490", format: "Single Day", full: true,
+    },
+    {
       date: "Aug 27", label: "The Real Estate Deal Lab",
-      topic: "Flip, Rent, or Walk Away?",
+      topic: "The Real Estate Deal Lab",
       tag: "REAL ESTATE · DEAL ANALYSIS · INVESTMENT STRATEGY",
       desc: "Real estate is one of the clearest ways to teach valuation, financing, risk, cash flow, negotiation, and investment discipline. This lab gives students a practical introduction to how investors evaluate a property before they buy. Students learn how to analyze a listing, estimate renovation costs, understand financing, compare a flip versus rental model, evaluate neighborhood factors, calculate basic returns, and identify hidden risks. The goal is not fantasy wealth-building. The goal is disciplined deal judgment. In the applied portion, students analyze a real local property and present a recommendation: flip it, rent it, renegotiate, or walk away.",
       takeaway: "Students learn how real estate investors think before making a decision — developing practical financial reasoning, analytical discipline, risk awareness, and real-world investment literacy.",
-      earlyBird: "$450", regular: "$490", format: "Single Day",
+      earlyBird: "$450", regular: "$490", format: "Single Day", full: true,
     },
   ];
 
@@ -7027,12 +7033,18 @@ function SummerDetailPage({ setPage, openInquiry }) {
               </thead>
               <tbody>
                 {labs.map((lab, i) => (
-                  <tr key={i} style={{ borderBottom: "1px solid rgba(52,21,15,.15)", background: isWeekend(lab) ? "#34150F" : "transparent" }}>
-                    <td style={{ padding: "14px 16px", color: isWeekend(lab) ? "#D9C7A9" : "#34150F", whiteSpace: "nowrap" }}>{lab.date}</td>
-                    <td style={{ padding: "14px 16px", color: isWeekend(lab) ? "#D9C7A9" : "#1A1208", fontWeight: 600 }}>{lab.label}</td>
-                    <td style={{ padding: "14px 16px", color: isWeekend(lab) ? "rgba(217,199,169,.75)" : "#6B5C40", fontStyle: "italic" }}>{lab.topic}</td>
-                    <td style={{ padding: "14px 16px", color: isWeekend(lab) ? "#D9C7A9" : "#1A1208", fontWeight: 600, whiteSpace: "nowrap" }}>{lab.earlyBird}</td>
-                    <td style={{ padding: "14px 16px", color: isWeekend(lab) ? "#D9C7A9" : "#1A1208", whiteSpace: "nowrap" }}>{lab.regular}</td>
+                  <tr key={i} style={{ borderBottom: "1px solid rgba(52,21,15,.15)", background: lab.full ? "rgba(52,21,15,.06)" : isWeekend(lab) ? "#34150F" : "transparent" }}>
+                    <td style={{ padding: "14px 16px", color: lab.full ? "#8A7A63" : isWeekend(lab) ? "#D9C7A9" : "#34150F", whiteSpace: "nowrap" }}>{lab.date}</td>
+                    <td style={{ padding: "14px 16px", color: lab.full ? "#8A7A63" : isWeekend(lab) ? "#D9C7A9" : "#1A1208", fontWeight: 600, textDecoration: lab.full ? "line-through" : "none" }}>{lab.label}</td>
+                    <td style={{ padding: "14px 16px", color: lab.full ? "#8A7A63" : isWeekend(lab) ? "rgba(217,199,169,.75)" : "#6B5C40", fontStyle: "italic" }}>{lab.topic}</td>
+                    {lab.full ? (
+                      <td colSpan={2} style={{ padding: "14px 16px", color: "#A0522D", fontWeight: 700, fontSize: 12, letterSpacing: "0.06em", textTransform: "uppercase" }}>Enrollment Closed — Masterclass Full</td>
+                    ) : (
+                      <>
+                        <td style={{ padding: "14px 16px", color: isWeekend(lab) ? "#D9C7A9" : "#1A1208", fontWeight: 600, whiteSpace: "nowrap" }}>{lab.earlyBird}</td>
+                        <td style={{ padding: "14px 16px", color: isWeekend(lab) ? "#D9C7A9" : "#1A1208", whiteSpace: "nowrap" }}>{lab.regular}</td>
+                      </>
+                    )}
                   </tr>
                 ))}
               </tbody>
@@ -7070,20 +7082,26 @@ function SummerDetailPage({ setPage, openInquiry }) {
               const open = activeLabIdx === i;
               const weekend = isWeekend(lab);
               return (
-                <div key={i} style={{ background: weekend ? "#34150F" : dark, borderTop: `2px solid ${weekend ? "#D9C7A9" : gold}` }}>
+                <div key={i} style={{ background: weekend ? "#34150F" : dark, borderTop: `2px solid ${lab.full ? "rgba(164,141,110,.35)" : weekend ? "#D9C7A9" : gold}`, opacity: lab.full ? 0.7 : 1 }}>
                   <div
                     onClick={() => setActiveLabIdx(open ? null : i)}
                     style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr auto" : "130px 1fr auto", gap: isMobile ? 12 : 24, padding: isMobile ? "24px 20px" : "32px 44px", alignItems: "center", cursor: "pointer" }}
                   >
-                    {!isMobile && <p style={{ fontFamily: cg, fontSize: 17, color: gold, fontWeight: 400 }}>{lab.date}</p>}
+                    {!isMobile && <p style={{ fontFamily: cg, fontSize: 17, color: lab.full ? "rgba(228,213,193,.4)" : gold, fontWeight: 400 }}>{lab.date}</p>}
                     <div>
-                      {isMobile && <p style={{ fontFamily: sans, fontSize: 9, letterSpacing: "0.2em", color: gold, fontWeight: 700, textTransform: "uppercase", marginBottom: 4 }}>{lab.date}</p>}
-                      <p style={{ fontFamily: cg, fontSize: isMobile ? 20 : 26, color: parch, fontWeight: 400 }}>{lab.label}</p>
+                      {isMobile && <p style={{ fontFamily: sans, fontSize: 9, letterSpacing: "0.2em", color: lab.full ? "rgba(228,213,193,.4)" : gold, fontWeight: 700, textTransform: "uppercase", marginBottom: 4 }}>{lab.date}</p>}
+                      <p style={{ fontFamily: cg, fontSize: isMobile ? 20 : 26, color: lab.full ? "rgba(228,213,193,.55)" : parch, fontWeight: 400, textDecoration: lab.full ? "line-through" : "none" }}>{lab.label}</p>
                       <p style={{ fontFamily: cg, fontSize: isMobile ? 14 : 18, color: "rgba(228,213,193,.6)", fontWeight: 300, marginTop: 4 }}>{lab.topic}</p>
                     </div>
                     <div style={{ textAlign: "right" }}>
-                      <p style={{ fontFamily: sans, fontSize: 11, color: gold, fontWeight: 700, letterSpacing: "0.05em" }}>From {lab.earlyBird}</p>
-                      <p style={{ fontFamily: sans, fontSize: 9, color: "rgba(228,213,193,.45)", letterSpacing: "0.1em", textTransform: "uppercase", marginTop: 2 }}>{weekend ? "Weekend" : "Single Day"}</p>
+                      {lab.full ? (
+                        <p style={{ fontFamily: sans, fontSize: 10, color: "#C08552", fontWeight: 700, letterSpacing: "0.05em", textTransform: "uppercase" }}>Enrollment Closed<br/>Masterclass Full</p>
+                      ) : (
+                        <>
+                          <p style={{ fontFamily: sans, fontSize: 11, color: gold, fontWeight: 700, letterSpacing: "0.05em" }}>From {lab.earlyBird}</p>
+                          <p style={{ fontFamily: sans, fontSize: 9, color: "rgba(228,213,193,.45)", letterSpacing: "0.1em", textTransform: "uppercase", marginTop: 2 }}>{weekend ? "Weekend" : "Single Day"}</p>
+                        </>
+                      )}
                       <p style={{ fontFamily: sans, fontSize: 18, color: "rgba(228,213,193,.4)", marginTop: 6 }}>{open ? "↑" : "↓"}</p>
                     </div>
                   </div>
@@ -7098,19 +7116,28 @@ function SummerDetailPage({ setPage, openInquiry }) {
                         <p style={{ fontFamily: lora, fontSize: isMobile ? 14 : 15, color: parch, fontStyle: "italic", lineHeight: 1.75 }}>{lab.takeaway}</p>
                       </div>
 
-                      <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(2,1fr)", gap: 12, maxWidth: 380, marginBottom: 28 }}>
-                        {[
-                          { tier: "Early Bird", price: lab.earlyBird },
-                          { tier: "Regular", price: lab.regular },
-                        ].map((p, pi) => (
-                          <div key={pi} style={{ background: dark, border: `1px solid rgba(164,141,110,.25)`, padding: "14px 18px" }}>
-                            <p style={{ fontFamily: sans, fontSize: 9, letterSpacing: "0.15em", color: "rgba(228,213,193,.5)", textTransform: "uppercase", marginBottom: 6 }}>{p.tier}</p>
-                            <p style={{ fontFamily: cg, fontSize: 24, color: parch, fontWeight: 400 }}>{p.price}</p>
+                      {lab.full ? (
+                        <div style={{ background: "rgba(192,133,82,.1)", border: "1px solid rgba(192,133,82,.3)", padding: "16px 20px", maxWidth: 480 }}>
+                          <p style={{ fontFamily: sans, fontSize: 12, color: "#C08552", fontWeight: 700, letterSpacing: "0.05em", textTransform: "uppercase" }}>Enrollment Closed — Masterclass Full</p>
+                          <p style={{ fontFamily: lora, fontSize: 13, color: "rgba(228,213,193,.7)", marginTop: 6, lineHeight: 1.6 }}>This lab is no longer accepting applications. Explore the other Labs still open this summer above.</p>
+                        </div>
+                      ) : (
+                        <>
+                          <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(2,1fr)", gap: 12, maxWidth: 380, marginBottom: 28 }}>
+                            {[
+                              { tier: "Early Bird", price: lab.earlyBird },
+                              { tier: "Regular", price: lab.regular },
+                            ].map((p, pi) => (
+                              <div key={pi} style={{ background: dark, border: `1px solid rgba(164,141,110,.25)`, padding: "14px 18px" }}>
+                                <p style={{ fontFamily: sans, fontSize: 9, letterSpacing: "0.15em", color: "rgba(228,213,193,.5)", textTransform: "uppercase", marginBottom: 6 }}>{p.tier}</p>
+                                <p style={{ fontFamily: cg, fontSize: 24, color: parch, fontWeight: 400 }}>{p.price}</p>
+                              </div>
+                            ))}
                           </div>
-                        ))}
-                      </div>
 
-                      <button onClick={() => setPage("portal")} style={{ fontFamily: sans, fontSize: 10, letterSpacing: "0.2em", padding: "13px 28px", background: gold, border: "none", color: dark, textTransform: "uppercase", cursor: "pointer", fontWeight: 700 }}>Reserve Your Place →</button>
+                          <button onClick={() => setPage("portal")} style={{ fontFamily: sans, fontSize: 10, letterSpacing: "0.2em", padding: "13px 28px", background: gold, border: "none", color: dark, textTransform: "uppercase", cursor: "pointer", fontWeight: 700 }}>Reserve Your Place →</button>
+                        </>
+                      )}
                     </div>
                   )}
                 </div>
@@ -7259,16 +7286,14 @@ function SummerDetailPage({ setPage, openInquiry }) {
 // payment summaries only; the Edge Function is the source of truth for
 // what's actually charged.
 const SUMMER_SESSION_PRICES = {
-  "AI, Business & the Future of Work — July 21": 450,
-  "Voice, Presence & Persuasion — July 28": 450,
+  "Public Speaking & Executive Presence I — July 21": 450,
+  "AI, Business & the Future of Work — July 28": 450,
   "Two-Day Venture Launchpad Intensive — Aug 1–2": 790,
-  "College, Career & Personal Strategy — Aug 4": 450,
+  "Leadership, Negotiation & Power Dynamics — Aug 4": 450,
   "Personal Finance & Financial Literacy for Teens — Aug 6": 450,
-  "Sports, Esports & the Business of Competition — Aug 11": 450,
-  "Wall Street, Crypto & Investor Thinking — Aug 13": 450,
-  "Leadership, Negotiation & Power Dynamics — Aug 20": 450,
-  "Luxury Cars, Collectibles, NASCAR & Formula 1 — Aug 25": 450,
-  "The Real Estate Deal Lab — Aug 27": 450,
+  "Sports, NASCAR, Formula 1 & Business — Aug 11": 450,
+  "Wall Street, Stocks & Investor Thinking — Aug 13": 450,
+  "College, Career & Personal Strategy — Aug 20": 450,
 };
 
 function PortalPage({ setPage }) {
@@ -8698,16 +8723,14 @@ function PortalPage({ setPage }) {
   // deadlines recalculate automatically.
   const daysBefore = (date, days) => { const d = new Date(date); d.setDate(d.getDate() - days); return d; };
   const SUMMER_LAB_SCHEDULE = [
-    { label: "AI, Business & the Future of Work", date: new Date(2026, 6, 21) },
-    { label: "Voice, Presence & Persuasion", date: new Date(2026, 6, 28) },
+    { label: "Public Speaking & Executive Presence I", date: new Date(2026, 6, 21) },
+    { label: "AI, Business & the Future of Work", date: new Date(2026, 6, 28) },
     { label: "Two-Day Venture Launchpad Intensive", date: new Date(2026, 7, 1) },
-    { label: "College, Career & Personal Strategy", date: new Date(2026, 7, 4) },
+    { label: "Leadership, Negotiation & Power Dynamics", date: new Date(2026, 7, 4) },
     { label: "Personal Finance & Financial Literacy for Teens", date: new Date(2026, 7, 6) },
-    { label: "Sports, Esports & the Business of Competition", date: new Date(2026, 7, 11) },
-    { label: "Wall Street, Crypto & Investor Thinking", date: new Date(2026, 7, 13) },
-    { label: "Leadership, Negotiation & Power Dynamics", date: new Date(2026, 7, 20) },
-    { label: "Luxury Cars, Collectibles, NASCAR & Formula 1", date: new Date(2026, 7, 25) },
-    { label: "The Real Estate Deal Lab", date: new Date(2026, 7, 27) },
+    { label: "Sports, NASCAR, Formula 1 & Business", date: new Date(2026, 7, 11) },
+    { label: "Wall Street, Stocks & Investor Thinking", date: new Date(2026, 7, 13) },
+    { label: "College, Career & Personal Strategy", date: new Date(2026, 7, 20) },
   ];
   const summerLabEvents = SUMMER_LAB_SCHEDULE.flatMap(lab => [
     { date: daysBefore(lab.date, 7), label: `Summer Masterseries — ${lab.label} (Early Bird Deadline)`, color: m_amber, program: "Summer Masterseries" },
@@ -8997,7 +9020,7 @@ function PortalPage({ setPage }) {
           };
 
           const programLabels = {
-            summer: "Excalibur Masterclass Labs — July 21 to August 27, 2026",
+            summer: "Excalibur Masterclass Labs — July 21 to August 20, 2026",
             foundation: "Foundation Semester — Fall 2026",
             venture: "Venture Semester — Spring 2027",
             "full-year": "Full Academic Year — Foundation + Venture",
@@ -9012,7 +9035,7 @@ function PortalPage({ setPage }) {
           const showProgramPicker = !isSubmitted && (forceProgramPicker || !programPickerDone);
           if (showProgramPicker) {
             const programCards = [
-              { key: "summer", icon: "sun", title: "Summer Masterseries", subtitle: "Masterclass Labs — July 21 to August 27, 2026" },
+              { key: "summer", icon: "sun", title: "Summer Masterseries", subtitle: "Masterclass Labs — July 21 to August 20, 2026" },
               { key: "foundation", icon: "cap", title: "Foundation Semester", subtitle: "Fall 2026 — leadership & business fundamentals" },
               { key: "venture", icon: "rocket", title: "Venture Semester", subtitle: "Spring 2027 — build & pitch your own venture" },
               { key: "full-year", icon: "star", title: "Full Academic Year", subtitle: "Foundation + Venture — the complete experience" },
@@ -9060,8 +9083,27 @@ function PortalPage({ setPage }) {
                     <p style={{ fontFamily: sans, fontWeight: 700, fontSize: 15, color: m_ink, marginBottom: 6 }}>Excalibur Masterclass Labs</p>
                     <p style={{ fontFamily: sans, fontSize: 13, color: m_gray, lineHeight: 1.6, marginBottom: 16 }}>Select which Lab(s) and/or the Venture Launchpad weekend you'd like to attend — choose as many as you'd like.</p>
                     <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
-                      {["AI, Business & the Future of Work — July 21", "Voice, Presence & Persuasion — July 28", "Two-Day Venture Launchpad Intensive — Aug 1–2", "College, Career & Personal Strategy — Aug 4", "Personal Finance & Financial Literacy for Teens — Aug 6", "Sports, Esports & the Business of Competition — Aug 11", "Wall Street, Crypto & Investor Thinking — Aug 13", "Leadership, Negotiation & Power Dynamics — Aug 20", "Luxury Cars, Collectibles, NASCAR & Formula 1 — Aug 25", "The Real Estate Deal Lab — Aug 27"].map(session => {
+                      {[
+                        { session: "Public Speaking & Executive Presence I — July 21" },
+                        { session: "AI, Business & the Future of Work — July 28" },
+                        { session: "Two-Day Venture Launchpad Intensive — Aug 1–2" },
+                        { session: "Leadership, Negotiation & Power Dynamics — Aug 4" },
+                        { session: "Personal Finance & Financial Literacy for Teens — Aug 6" },
+                        { session: "Sports, NASCAR, Formula 1 & Business — Aug 11" },
+                        { session: "Wall Street, Stocks & Investor Thinking — Aug 13" },
+                        { session: "College, Career & Personal Strategy — Aug 20" },
+                        { session: "Luxury Cars, Collectibles, NASCAR & Formula 1 — Aug 25", full: true },
+                        { session: "The Real Estate Deal Lab — Aug 27", full: true },
+                      ].map(({ session, full }) => {
                         const active = (appForm.summer.selectedSessions || []).includes(session);
+                        if (full) {
+                          return (
+                            <div key={session} style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 10, padding: "10px 14px", borderRadius: 10, background: "rgba(17,17,17,.03)", opacity: 0.65 }}>
+                              <span style={{ fontFamily: sans, fontSize: 13, color: m_ink, textDecoration: "line-through" }}>{session}</span>
+                              <span style={{ fontFamily: sans, fontSize: 10, color: "#A0522D", fontWeight: 700, letterSpacing: "0.05em", textTransform: "uppercase", flexShrink: 0 }}>Enrollment Closed — Full</span>
+                            </div>
+                          );
+                        }
                         return (
                           <div key={session} onClick={() => toggleVal("summer.selectedSessions", session)} style={{ display: "flex", alignItems: "center", gap: 10, padding: "10px 14px", borderRadius: 10, background: active ? m_ink : m_white, cursor: "pointer", boxShadow: active ? "none" : "0 0 0 1px rgba(17,17,17,.12) inset" }}>
                             <span style={{ width: 16, height: 16, borderRadius: 4, border: `1.5px solid ${active ? m_white : "rgba(17,17,17,.3)"}`, background: active ? m_white : "transparent", flexShrink: 0, position: "relative" }}>
