@@ -7254,6 +7254,23 @@ function SummerDetailPage({ setPage, openInquiry }) {
     </div>
   );
 }
+// Summer Masterclass Labs pricing — must mirror SESSION_PRICES_CENTS in
+// supabase/functions/create-checkout-session/index.ts. Used for on-screen
+// payment summaries only; the Edge Function is the source of truth for
+// what's actually charged.
+const SUMMER_SESSION_PRICES = {
+  "AI, Business & the Future of Work — July 21": 450,
+  "Voice, Presence & Persuasion — July 28": 450,
+  "Two-Day Venture Launchpad Intensive — Aug 1–2": 790,
+  "College, Career & Personal Strategy — Aug 4": 450,
+  "Personal Finance & Financial Literacy for Teens — Aug 6": 450,
+  "Sports, Esports & the Business of Competition — Aug 11": 450,
+  "Wall Street, Crypto & Investor Thinking — Aug 13": 450,
+  "Leadership, Negotiation & Power Dynamics — Aug 20": 450,
+  "Luxury Cars, Collectibles, NASCAR & Formula 1 — Aug 25": 450,
+  "The Real Estate Deal Lab — Aug 27": 450,
+};
+
 function PortalPage({ setPage }) {
   const isMobile = useIsMobile();
   const sb = getSupabase();
@@ -7266,6 +7283,7 @@ function PortalPage({ setPage }) {
   const [authBusy, setAuthBusy] = React.useState(false);
   const [checkoutError, setCheckoutError] = React.useState("");
   const [checkoutBusy, setCheckoutBusy] = React.useState(false);
+  const [showEnrollmentDetails, setShowEnrollmentDetails] = React.useState(false);
 
   // ── Payment status banner — reads the ?payment= param Stripe redirects back with ──
   const [paymentBanner, setPaymentBanner] = React.useState(null); // 'success' | 'cancelled' | null
@@ -7822,10 +7840,6 @@ function PortalPage({ setPage }) {
     setAppSaving(false);
     if (!result.error) {
       setApplication(result.data);
-      const wantsSummerNow = appForm.programs.includes("summer") || appForm.programs.includes("full-year");
-      if (submit && wantsSummerNow && (appForm.summer.selectedSessions || []).length > 0) {
-        await handleSummerCheckout(result.data.id);
-      }
     }
   };
 
@@ -8590,14 +8604,43 @@ function PortalPage({ setPage }) {
     ? [["overview", "Dashboard"], ["application", "Application"], ["consultation", "Schedule Consultation"], ["messages", "Contact Us"], ["family", "Family"], ["faculty", "Faculty"], ["settings", "Settings"]]
     : [["overview", "Dashboard"], ["consultation", "Schedule Consultation"], ["messages", "Contact Us"], ["faculty", "Faculty"], ["settings", "Settings"]];
 
-  const statusSteps = [
-    { key: "draft", label: "Application Started", desc: "You've begun your application. Complete every section and submit when you're ready — you can save your progress at any time." },
-    { key: "submitted", label: "Application Completed", desc: "Your application has been received and is complete. Our admissions committee will begin its review shortly." },
-    { key: "under_review", label: "Under Review", desc: "Our admissions committee is currently reviewing your application alongside your stated program and track preferences." },
-    { key: "accepted", label: "Decision Released", desc: "A decision has been made on your application. Check your email and the Status section below for details." },
-  ];
-  const currentStatusIndex = application ? statusSteps.findIndex(s => s.key === application.status) : -1;
+  const summerSessionsSelected = application?.program_responses?.summer?.selectedSessions || [];
+  const needsSummerPayment = summerSessionsSelected.length > 0;
+  const isSummerPaid = application?.payment_status === "paid";
+
+  const statusSteps = needsSummerPayment
+    ? [
+        { key: "draft", label: "Application Started", desc: "You've begun your application. Complete every section and submit when you're ready — you can save your progress at any time." },
+        { key: "submitted", label: "Application Completed", desc: "Your application has been received and is complete. Our admissions committee will begin its review shortly." },
+        { key: "under_review", label: "Under Review", desc: "Our admissions committee is currently reviewing your application alongside your stated program and track preferences." },
+        { key: "accepted", label: "Decision Released", desc: "A decision has been made on your application. Check your email and the Status section below for details." },
+        { key: "enrolled", label: "Enrollment Confirmed", desc: "Payment received — your seat is confirmed. Click this step for your session time and location." },
+      ]
+    : [
+        { key: "draft", label: "Application Started", desc: "You've begun your application. Complete every section and submit when you're ready — you can save your progress at any time." },
+        { key: "submitted", label: "Application Completed", desc: "Your application has been received and is complete. Our admissions committee will begin its review shortly." },
+        { key: "under_review", label: "Under Review", desc: "Our admissions committee is currently reviewing your application alongside your stated program and track preferences." },
+        { key: "accepted", label: "Decision Released", desc: "A decision has been made on your application. Check your email and the Status section below for details." },
+      ];
+  const currentStatusIndex = isSummerPaid
+    ? statusSteps.length - 1
+    : (application ? statusSteps.findIndex(s => s.key === application.status) : -1);
   const progressPct = application ? Math.round(((currentStatusIndex + 1) / statusSteps.length) * 100) : 0;
+
+  const renderEnrollmentDetails = () => (
+    <div style={{ background: m_canvas, borderRadius: 12, padding: "18px 20px", marginTop: 12 }}>
+      <p style={{ fontFamily: sans, fontSize: 13, fontWeight: 700, color: m_ink, marginBottom: 10 }}>Enrollment Confirmation</p>
+      {summerSessionsSelected.map((s, i) => (
+        <div key={i} style={{ padding: "8px 0", borderBottom: i < summerSessionsSelected.length - 1 ? `1px solid ${m_line}` : "none" }}>
+          <span style={{ fontFamily: sans, fontSize: 13, color: m_ink, fontWeight: 600 }}>{s}</span>
+        </div>
+      ))}
+      <div style={{ marginTop: 12, paddingTop: 12, borderTop: `1px solid ${m_line}` }}>
+        <p style={{ fontFamily: sans, fontSize: 13, color: m_gray, marginBottom: 4 }}><strong style={{ color: m_ink }}>Time:</strong> 10:00 AM – 5:00 PM</p>
+        <p style={{ fontFamily: sans, fontSize: 13, color: m_gray }}><strong style={{ color: m_ink }}>Location:</strong> Newport Beach, CA</p>
+      </div>
+    </div>
+  );
   const greetingHour = new Date().getHours();
   const greeting = greetingHour < 12 ? "Good morning" : greetingHour < 18 ? "Good afternoon" : "Good evening";
   const todayStr = new Date().toLocaleDateString(undefined, { weekday: "long", month: "long", day: "numeric" });
@@ -8783,16 +8826,18 @@ function PortalPage({ setPage }) {
                 ) : (
                   <>
                     {/* admissions status — cards, not a thin stepper line */}
-                    <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr 1fr" : "repeat(4, 1fr)", gap: 12, marginBottom: 14 }}>
+                    <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr 1fr" : `repeat(${statusSteps.length}, 1fr)`, gap: 12, marginBottom: 14 }}>
                       {statusSteps.map((s, i) => {
                         const done = i < currentStatusIndex;
                         const active = i === currentStatusIndex;
+                        const isEnrolledStep = s.key === "enrolled" && active;
                         return (
-                          <div key={s.key} style={{
+                          <div key={s.key} onClick={() => { if (isEnrolledStep) setShowEnrollmentDetails(v => !v); }} style={{
                             background: active ? m_ink : m_white,
                             border: `1px solid ${active ? m_ink : m_line}`,
                             borderRadius: 14, padding: "16px 14px",
                             opacity: i > currentStatusIndex ? 0.55 : 1,
+                            cursor: isEnrolledStep ? "pointer" : "default",
                           }}>
                             <div style={{
                               width: 28, height: 28, borderRadius: 9, marginBottom: 12,
@@ -8801,13 +8846,14 @@ function PortalPage({ setPage }) {
                               color: active || done ? "#fff" : m_ink, fontFamily: sans, fontSize: 13, fontWeight: 700,
                             }}>{done ? "✓" : i + 1}</div>
                             <p style={{ fontFamily: sans, fontWeight: 700, fontSize: isMobile ? 12.5 : 13.5, color: active ? m_white : m_ink, lineHeight: 1.3, marginBottom: 3 }}>{s.label}</p>
-                            <p style={{ fontFamily: sans, fontSize: 11.5, color: active ? "rgba(255,255,255,.65)" : m_gray }}>{done ? "Completed" : active ? "In progress" : "Not yet"}</p>
+                            <p style={{ fontFamily: sans, fontSize: 11.5, color: active ? "rgba(255,255,255,.65)" : m_gray }}>{done ? "Completed" : active ? (isEnrolledStep ? "Tap for details" : "In progress") : "Not yet"}</p>
                           </div>
                         );
                       })}
                     </div>
-                    <p style={{ fontFamily: sans, fontSize: 15, color: m_ink, lineHeight: 1.7, marginBottom: 22, marginTop: 16 }}>{statusSteps[Math.max(currentStatusIndex, 0)].desc}</p>
-                    <div style={{ display: "flex", flexWrap: "wrap", gap: 10 }}>
+                    <p style={{ fontFamily: sans, fontSize: 15, color: m_ink, lineHeight: 1.7, marginBottom: showEnrollmentDetails && statusSteps[currentStatusIndex]?.key === "enrolled" ? 8 : 22, marginTop: 16 }}>{statusSteps[Math.max(currentStatusIndex, 0)].desc}</p>
+                    {showEnrollmentDetails && statusSteps[currentStatusIndex]?.key === "enrolled" && renderEnrollmentDetails()}
+                    <div style={{ display: "flex", flexWrap: "wrap", gap: 10, marginTop: 22 }}>
                       {role === "student" && <button onClick={() => setActiveTab("application")} style={{ fontFamily: sans, padding: "12px 24px", background: m_ink, border: "none", color: m_white, fontSize: 14, fontWeight: 600, cursor: "pointer", borderRadius: 999 }}>{application.status === "draft" ? "Continue Application →" : "View Application →"}</button>}
                       <button onClick={() => setActiveTab("consultation")} style={{ fontFamily: sans, padding: "12px 24px", background: "transparent", border: `1px solid ${m_line}`, color: m_ink, fontSize: 14, fontWeight: 500, cursor: "pointer", borderRadius: 999 }}>Schedule a Consultation →</button>
                     </div>
@@ -9080,33 +9126,60 @@ function PortalPage({ setPage }) {
           });
 
           if (isSubmitted) {
+            const needsPayment = needsSummerPayment && !isSummerPaid;
+            const summerTotal = summerSessionsSelected.reduce((sum, s) => sum + (SUMMER_SESSION_PRICES[s] || 0), 0);
             return (
               <PortalCard>
-                <div style={{ width: 56, height: 56, borderRadius: "50%", background: m_canvas, display: "flex", alignItems: "center", justifyContent: "center", marginBottom: 24, color: m_ink }}>
-                  <PortalIcon name="clipboard" size={26} />
-                </div>
-                <h2 style={{ fontFamily: sans, fontWeight: 800, fontSize: 26, color: m_ink, letterSpacing: "-0.01em", marginBottom: 16 }}>Thank you for your application.</h2>
-                <p style={{ fontFamily: sans, fontSize: 15, color: m_ink, opacity: 0.75, lineHeight: 1.8, marginBottom: 16, maxWidth: 600 }}>
-                  You will be notified within 3 business days by a dedicated Enrollment Coordinator. In the meantime, please contact us at any time with questions, or schedule a consultation through the dashboard.
-                </p>
-
-                {(() => {
-                  const summerSelected = (application?.program_responses?.summer?.selectedSessions || []).length > 0;
-                  const isPaid = application?.payment_status === "paid";
-                  if (!summerSelected || isPaid) return null;
-                  return (
-                    <div style={{ background: "rgba(200,120,60,.1)", border: "1px solid rgba(200,120,60,.3)", borderRadius: 12, padding: "18px 20px", marginBottom: 20, maxWidth: 600 }}>
-                      <p style={{ fontFamily: sans, fontSize: 14, fontWeight: 700, color: "#8A4A1E", marginBottom: 6 }}>Payment still needed</p>
-                      <p style={{ fontFamily: sans, fontSize: 13, color: "#8A4A1E", lineHeight: 1.6, marginBottom: 12 }}>
-                        Your application was received, but payment for your selected Summer sessions hasn't gone through yet. Your seat isn't confirmed until payment is complete.
-                      </p>
-                      {checkoutError && (
-                        <p style={{ fontFamily: sans, fontSize: 13, color: "#8A4A1E", fontWeight: 600, marginBottom: 12 }}>Error: {checkoutError}</p>
-                      )}
-                      <button onClick={() => handleSummerCheckout(application.id)} disabled={checkoutBusy} style={{ fontFamily: sans, padding: "10px 20px", background: "#8A4A1E", border: "none", color: "#FFFFFF", fontSize: 13, fontWeight: 700, cursor: checkoutBusy ? "default" : "pointer", borderRadius: 999, opacity: checkoutBusy ? 0.6 : 1 }}>{checkoutBusy ? "Opening Checkout..." : "Complete Payment →"}</button>
+                {needsPayment ? (
+                  <>
+                    <div style={{ width: 56, height: 56, borderRadius: "50%", background: m_canvas, display: "flex", alignItems: "center", justifyContent: "center", marginBottom: 24, color: m_ink }}>
+                      <PortalIcon name="clipboard" size={26} />
                     </div>
-                  );
-                })()}
+                    <h2 style={{ fontFamily: sans, fontWeight: 800, fontSize: 26, color: m_ink, letterSpacing: "-0.01em", marginBottom: 16 }}>Application Received — Complete Your Payment</h2>
+                    <p style={{ fontFamily: sans, fontSize: 15, color: m_ink, opacity: 0.75, lineHeight: 1.8, marginBottom: 20, maxWidth: 600 }}>
+                      Your Summer Masterclass Labs application has been received. Your seat is not yet reserved — complete payment below to confirm your enrollment.
+                    </p>
+
+                    <div style={{ background: m_white, border: `1px solid ${m_line}`, borderRadius: 16, padding: "22px 24px", marginBottom: 20, maxWidth: 480, width: "100%" }}>
+                      <p style={{ fontFamily: sans, fontSize: 12, letterSpacing: "0.08em", textTransform: "uppercase", color: m_gray, fontWeight: 700, marginBottom: 14 }}>Payment Summary</p>
+                      {summerSessionsSelected.map((s, i) => (
+                        <div key={i} style={{ display: "flex", justifyContent: "space-between", gap: 12, padding: "10px 0", borderBottom: `1px solid ${m_line}` }}>
+                          <span style={{ fontFamily: sans, fontSize: 14, color: m_ink }}>{s}</span>
+                          <span style={{ fontFamily: sans, fontSize: 14, color: m_ink, fontWeight: 700, flexShrink: 0 }}>${SUMMER_SESSION_PRICES[s] || "—"}</span>
+                        </div>
+                      ))}
+                      <div style={{ display: "flex", justifyContent: "space-between", paddingTop: 14, marginTop: 4 }}>
+                        <span style={{ fontFamily: sans, fontSize: 15, color: m_ink, fontWeight: 800 }}>Total</span>
+                        <span style={{ fontFamily: sans, fontSize: 15, color: m_ink, fontWeight: 800 }}>${summerTotal}</span>
+                      </div>
+                    </div>
+
+                    {checkoutError && (
+                      <p style={{ fontFamily: sans, fontSize: 13, color: "#8A4A1E", fontWeight: 600, marginBottom: 12 }}>Error: {checkoutError}</p>
+                    )}
+                    <button onClick={() => handleSummerCheckout(application.id)} disabled={checkoutBusy} style={{ fontFamily: sans, padding: "14px 28px", background: m_ink, border: "none", color: m_white, fontSize: 14, fontWeight: 700, cursor: checkoutBusy ? "default" : "pointer", borderRadius: 999, opacity: checkoutBusy ? 0.6 : 1, marginBottom: 28 }}>{checkoutBusy ? "Opening Secure Checkout..." : "Proceed to Secure Payment →"}</button>
+                  </>
+                ) : needsSummerPayment ? (
+                  <>
+                    <div style={{ width: 56, height: 56, borderRadius: "50%", background: m_canvas, display: "flex", alignItems: "center", justifyContent: "center", marginBottom: 24, color: m_ink }}>
+                      <PortalIcon name="check" size={26} />
+                    </div>
+                    <h2 style={{ fontFamily: sans, fontWeight: 800, fontSize: 26, color: m_ink, letterSpacing: "-0.01em", marginBottom: 16 }}>Thank you for your payment!</h2>
+                    <p style={{ fontFamily: sans, fontSize: 15, color: m_ink, opacity: 0.75, lineHeight: 1.8, marginBottom: 28, maxWidth: 600 }}>
+                      Your application is received and your spot is reserved. A confirmation email has been sent to {appForm.studentEmail || appForm.parentEmail || "the email on your application"}. We look forward to seeing you this summer!
+                    </p>
+                  </>
+                ) : (
+                  <>
+                    <div style={{ width: 56, height: 56, borderRadius: "50%", background: m_canvas, display: "flex", alignItems: "center", justifyContent: "center", marginBottom: 24, color: m_ink }}>
+                      <PortalIcon name="clipboard" size={26} />
+                    </div>
+                    <h2 style={{ fontFamily: sans, fontWeight: 800, fontSize: 26, color: m_ink, letterSpacing: "-0.01em", marginBottom: 16 }}>Thank you for your application.</h2>
+                    <p style={{ fontFamily: sans, fontSize: 15, color: m_ink, opacity: 0.75, lineHeight: 1.8, marginBottom: 16, maxWidth: 600 }}>
+                      You will be notified within 3 business days by a dedicated Enrollment Coordinator. In the meantime, please contact us at any time with questions, or schedule a consultation through the dashboard.
+                    </p>
+                  </>
+                )}
 
                 <div style={{ display: "flex", flexWrap: "wrap", gap: 10, marginBottom: 28 }}>
                   <button onClick={() => setViewingSubmitted(v => !v)} style={{ fontFamily: sans, padding: "12px 24px", background: m_ink, border: "none", color: m_white, fontSize: 14, fontWeight: 600, cursor: "pointer", borderRadius: 999 }}>{viewingSubmitted ? "Hide Application ↑" : "View My Application →"}</button>
@@ -9117,14 +9190,18 @@ function PortalPage({ setPage }) {
                 <div style={{ borderTop: `1px solid ${m_line}`, paddingTop: 20, marginBottom: viewingSubmitted ? 28 : 0 }}>
                   <p style={{ fontFamily: sans, fontSize: 13, color: m_gray, marginBottom: 10, fontWeight: 600 }}>Admissions Status</p>
                   <div style={{ display: "flex", marginBottom: 10 }}>
-                    {statusSteps.map((s, i) => (
-                      <div key={s.key} style={{ flex: 1, paddingRight: i < statusSteps.length - 1 ? 8 : 0 }}>
-                        <div style={{ height: 6, borderRadius: 999, background: i <= currentStatusIndex ? m_amber : "rgba(17,17,17,0.08)", marginBottom: 8 }} />
-                        <p style={{ fontFamily: sans, fontSize: 12, fontWeight: i === currentStatusIndex ? 700 : 500, color: i <= currentStatusIndex ? m_ink : m_gray }}>{s.label}</p>
-                      </div>
-                    ))}
+                    {statusSteps.map((s, i) => {
+                      const isEnrolledStep = s.key === "enrolled" && i === currentStatusIndex;
+                      return (
+                        <div key={s.key} onClick={() => { if (isEnrolledStep) setShowEnrollmentDetails(v => !v); }} style={{ flex: 1, paddingRight: i < statusSteps.length - 1 ? 8 : 0, cursor: isEnrolledStep ? "pointer" : "default" }}>
+                          <div style={{ height: 6, borderRadius: 999, background: i <= currentStatusIndex ? m_amber : "rgba(17,17,17,0.08)", marginBottom: 8 }} />
+                          <p style={{ fontFamily: sans, fontSize: 12, fontWeight: i === currentStatusIndex ? 700 : 500, color: i <= currentStatusIndex ? m_ink : m_gray }}>{s.label}{isEnrolledStep ? " ↓" : ""}</p>
+                        </div>
+                      );
+                    })}
                   </div>
                   <p style={{ fontFamily: sans, fontSize: 14, color: m_ink, opacity: 0.75, lineHeight: 1.7 }}>{statusSteps[Math.max(currentStatusIndex, 0)].desc}</p>
+                  {showEnrollmentDetails && statusSteps[currentStatusIndex]?.key === "enrolled" && renderEnrollmentDetails()}
                 </div>
 
                 {viewingSubmitted && (
@@ -9310,7 +9387,7 @@ function PortalPage({ setPage }) {
                       {secIndex < total - 1 ? (
                         <button onClick={goNext} style={{ fontFamily: sans, padding: "13px 24px", background: "#111111", border: "none", color: "#FFFFFF", fontSize: 14, fontWeight: 600, cursor: "pointer", borderRadius: 999 }}>Next →</button>
                       ) : (
-                        <button onClick={() => handleSaveApplication(true)} disabled={appSaving || !appForm.accuracyConfirmed || !appForm.parentPermissionConfirmed || !appForm.studentSignature || !appForm.parentSignature} style={{ fontFamily: sans, padding: "13px 24px", background: "#111111", border: "none", color: "#FFFFFF", fontSize: 14, fontWeight: 600, cursor: "pointer", borderRadius: 999 }}>{appSaving ? "Submitting..." : "Submit Application →"}</button>
+                        <button onClick={() => handleSaveApplication(true)} disabled={appSaving || !appForm.accuracyConfirmed || !appForm.parentPermissionConfirmed || !appForm.studentSignature || !appForm.parentSignature} style={{ fontFamily: sans, padding: "13px 24px", background: "#111111", border: "none", color: "#FFFFFF", fontSize: 14, fontWeight: 600, cursor: "pointer", borderRadius: 999 }}>{appSaving ? "Submitting..." : ((appForm.summer.selectedSessions || []).length > 0 ? "Submit Application & Pay Online →" : "Submit Application →")}</button>
                       )}
                     </div>
                   </div>
@@ -15987,7 +16064,13 @@ function VentureDetailPage({ setPage, openInquiry }) {
 
 
 function ExcaliburApp() {
-  const [page, setPageRaw] = useState("home");
+  const [page, setPageRaw] = useState(() => {
+    if (typeof window !== "undefined") {
+      const params = new URLSearchParams(window.location.search);
+      if (params.get("page") === "portal") return "portal";
+    }
+    return "home";
+  });
   const [inquiryOpen, setInquiryOpen] = useState(false);
   const [inquiryProgram, setInquiryProgram] = useState("");
 
