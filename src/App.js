@@ -3234,6 +3234,8 @@ function HomePage({ setPage, openInquiry }) {
 
   // Quick Reference data — mirrors the labs array on the Summer Masterclass Labs detail page.
   const summerLabs = [
+    { date: "July 14", label: "Public Speaking & Executive Presence I", topic: "Public Speaking & Executive Presence I", earlyBird: "$450", regular: "$490", format: "Single Day", full: true },
+    { date: "July 18–19", label: "Two-Day Venture Launchpad Intensive", topic: "Two-Day Venture Launchpad Intensive", earlyBird: "$790", regular: "$890", format: "Weekend Intensive", full: true },
     { date: "July 21", label: "Public Speaking & Executive Presence I", topic: "Public Speaking & Executive Presence I", earlyBird: "$450", regular: "$490", format: "Single Day" },
     { date: "July 28", label: "AI, Business & the Future of Work", topic: "AI, Business & the Future of Work", earlyBird: "$450", regular: "$490", format: "Single Day" },
     { date: "Aug 1–2", label: "Two-Day Venture Launchpad Intensive", topic: "Two-Day Venture Launchpad Intensive", earlyBird: "$790", regular: "$890", format: "Weekend Intensive" },
@@ -3637,7 +3639,7 @@ function HomePage({ setPage, openInquiry }) {
                 {summerLabs.map((lab, i) => (
                   <tr key={i} style={{ borderBottom: "1px solid rgba(52,21,15,.15)", background: lab.full ? "rgba(52,21,15,.06)" : isSummerWeekend(lab) ? "#34150F" : "transparent" }}>
                     <td style={{ padding: "14px 16px", color: lab.full ? "#8A7A63" : isSummerWeekend(lab) ? "#D9C7A9" : "#34150F", whiteSpace: "nowrap" }}>{lab.date}</td>
-                    <td style={{ padding: "14px 16px", color: lab.full ? "#8A7A63" : isSummerWeekend(lab) ? "#D9C7A9" : "#1A1208", fontWeight: 600, textDecoration: lab.full ? "line-through" : "none" }}>{lab.label}</td>
+                    <td style={{ padding: "14px 16px", color: lab.full ? "#8A7A63" : isSummerWeekend(lab) ? "#D9C7A9" : "#1A1208", fontWeight: 600 }}>{lab.label}</td>
                     <td style={{ padding: "14px 16px", color: lab.full ? "#8A7A63" : isSummerWeekend(lab) ? "rgba(217,199,169,.75)" : "#6B5C40", fontStyle: "italic" }}>{lab.topic}</td>
                     {lab.full ? (
                       <td colSpan={2} style={{ padding: "14px 16px", color: "#A0522D", fontWeight: 700, fontSize: 12, letterSpacing: "0.06em", textTransform: "uppercase" }}>Enrollment Closed — Masterclass Full</td>
@@ -6855,6 +6857,22 @@ function SummerDetailPage({ setPage, openInquiry }) {
 
   const labs = [
     {
+      date: "July 14", label: "Public Speaking & Executive Presence I",
+      topic: "Public Speaking & Executive Presence I",
+      tag: "VOICE · POSTURE · FIRST IMPRESSIONS · STORYTELLING · CONFIDENCE UNDER PRESSURE",
+      desc: "Most students are told to \"be confident,\" but almost no one teaches them how confidence actually looks, sounds, and feels in a room. This lab gives students the fundamentals of presence: how to enter a room, introduce themselves, make eye contact, stand with composure, speak clearly, hold attention, and tell a story people remember. Students work on posture, voice, tone, pacing, body language, first impressions, speech structure, storytelling, persuasion, and recovery from awkward moments. They practice live, receive direct feedback, and learn how to become more polished without becoming fake.",
+      takeaway: "Students become more confident, clear, and memorable — building real presentation skill, social maturity, and the kind of communication presence that helps in interviews, classrooms, leadership roles, and future professional settings.",
+      earlyBird: "$450", regular: "$490", format: "Single Day", full: true,
+    },
+    {
+      date: "July 18–19", label: "Two-Day Venture Launchpad Intensive",
+      topic: "Two-Day Venture Launchpad Intensive",
+      tag: "FROM DREAM TO ACTION · MARKET OPPORTUNITY · LIVE INVESTOR PANEL",
+      desc: "This two-day intensive introduces students to the actual process behind building a venture. Students move from idea to pitch: identifying a problem, researching a customer, testing demand, designing a business model, building a pitch deck, and preparing to defend their concept. Students may develop a business plan for a startup, nonprofit, product, service, or community impact idea. They are pushed to think clearly, challenge weak assumptions, work in teams, and present with confidence. The intensive ends with a live pitch before a judging panel of investors and industry leaders.",
+      takeaway: "Students experience the pressure and excitement of building like founders — gaining entrepreneurial confidence, teamwork experience, financial reasoning, and live presentation practice.",
+      earlyBird: "$790", regular: "$890", format: "Weekend Intensive", full: true,
+    },
+    {
       date: "July 21", label: "Public Speaking & Executive Presence I",
       topic: "Public Speaking & Executive Presence I",
       tag: "VOICE · POSTURE · FIRST IMPRESSIONS · STORYTELLING · CONFIDENCE UNDER PRESSURE",
@@ -7035,7 +7053,7 @@ function SummerDetailPage({ setPage, openInquiry }) {
                 {labs.map((lab, i) => (
                   <tr key={i} style={{ borderBottom: "1px solid rgba(52,21,15,.15)", background: lab.full ? "rgba(52,21,15,.06)" : isWeekend(lab) ? "#34150F" : "transparent" }}>
                     <td style={{ padding: "14px 16px", color: lab.full ? "#8A7A63" : isWeekend(lab) ? "#D9C7A9" : "#34150F", whiteSpace: "nowrap" }}>{lab.date}</td>
-                    <td style={{ padding: "14px 16px", color: lab.full ? "#8A7A63" : isWeekend(lab) ? "#D9C7A9" : "#1A1208", fontWeight: 600, textDecoration: lab.full ? "line-through" : "none" }}>{lab.label}</td>
+                    <td style={{ padding: "14px 16px", color: lab.full ? "#8A7A63" : isWeekend(lab) ? "#D9C7A9" : "#1A1208", fontWeight: 600 }}>{lab.label}</td>
                     <td style={{ padding: "14px 16px", color: lab.full ? "#8A7A63" : isWeekend(lab) ? "rgba(217,199,169,.75)" : "#6B5C40", fontStyle: "italic" }}>{lab.topic}</td>
                     {lab.full ? (
                       <td colSpan={2} style={{ padding: "14px 16px", color: "#A0522D", fontWeight: 700, fontSize: 12, letterSpacing: "0.06em", textTransform: "uppercase" }}>Enrollment Closed — Masterclass Full</td>
@@ -7090,7 +7108,7 @@ function SummerDetailPage({ setPage, openInquiry }) {
                     {!isMobile && <p style={{ fontFamily: cg, fontSize: 17, color: lab.full ? "rgba(228,213,193,.4)" : gold, fontWeight: 400 }}>{lab.date}</p>}
                     <div>
                       {isMobile && <p style={{ fontFamily: sans, fontSize: 9, letterSpacing: "0.2em", color: lab.full ? "rgba(228,213,193,.4)" : gold, fontWeight: 700, textTransform: "uppercase", marginBottom: 4 }}>{lab.date}</p>}
-                      <p style={{ fontFamily: cg, fontSize: isMobile ? 20 : 26, color: lab.full ? "rgba(228,213,193,.55)" : parch, fontWeight: 400, textDecoration: lab.full ? "line-through" : "none" }}>{lab.label}</p>
+                      <p style={{ fontFamily: cg, fontSize: isMobile ? 20 : 26, color: lab.full ? "rgba(228,213,193,.55)" : parch, fontWeight: 400 }}>{lab.label}</p>
                       <p style={{ fontFamily: cg, fontSize: isMobile ? 14 : 18, color: "rgba(228,213,193,.6)", fontWeight: 300, marginTop: 4 }}>{lab.topic}</p>
                     </div>
                     <div style={{ textAlign: "right" }}>
@@ -9084,6 +9102,8 @@ function PortalPage({ setPage }) {
                     <p style={{ fontFamily: sans, fontSize: 13, color: m_gray, lineHeight: 1.6, marginBottom: 16 }}>Select which Lab(s) and/or the Venture Launchpad weekend you'd like to attend — choose as many as you'd like.</p>
                     <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
                       {[
+                        { session: "Public Speaking & Executive Presence I — July 14", full: true },
+                        { session: "Two-Day Venture Launchpad Intensive — July 18–19", full: true },
                         { session: "Public Speaking & Executive Presence I — July 21" },
                         { session: "AI, Business & the Future of Work — July 28" },
                         { session: "Two-Day Venture Launchpad Intensive — Aug 1–2" },
@@ -9099,7 +9119,7 @@ function PortalPage({ setPage }) {
                         if (full) {
                           return (
                             <div key={session} style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 10, padding: "10px 14px", borderRadius: 10, background: "rgba(17,17,17,.03)", opacity: 0.65 }}>
-                              <span style={{ fontFamily: sans, fontSize: 13, color: m_ink, textDecoration: "line-through" }}>{session}</span>
+                              <span style={{ fontFamily: sans, fontSize: 13, color: "rgba(17,17,17,.55)" }}>{session}</span>
                               <span style={{ fontFamily: sans, fontSize: 10, color: "#A0522D", fontWeight: 700, letterSpacing: "0.05em", textTransform: "uppercase", flexShrink: 0 }}>Enrollment Closed — Full</span>
                             </div>
                           );
