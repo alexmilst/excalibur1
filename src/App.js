@@ -8693,11 +8693,30 @@ function PortalPage({ setPage }) {
   }[key] || "dashboard");
 
   // ── Key dates, pulled directly from the Summer / Foundation / Venture pages ──
+  // Summer Masterclass Labs — Early Bird deadline is 1 week before each lab date,
+  // Regular deadline is 3 days before. Update SUMMER_LAB_SCHEDULE if dates change;
+  // deadlines recalculate automatically.
+  const daysBefore = (date, days) => { const d = new Date(date); d.setDate(d.getDate() - days); return d; };
+  const SUMMER_LAB_SCHEDULE = [
+    { label: "AI, Business & the Future of Work", date: new Date(2026, 6, 21) },
+    { label: "Voice, Presence & Persuasion", date: new Date(2026, 6, 28) },
+    { label: "Two-Day Venture Launchpad Intensive", date: new Date(2026, 7, 1) },
+    { label: "College, Career & Personal Strategy", date: new Date(2026, 7, 4) },
+    { label: "Personal Finance & Financial Literacy for Teens", date: new Date(2026, 7, 6) },
+    { label: "Sports, Esports & the Business of Competition", date: new Date(2026, 7, 11) },
+    { label: "Wall Street, Crypto & Investor Thinking", date: new Date(2026, 7, 13) },
+    { label: "Leadership, Negotiation & Power Dynamics", date: new Date(2026, 7, 20) },
+    { label: "Luxury Cars, Collectibles, NASCAR & Formula 1", date: new Date(2026, 7, 25) },
+    { label: "The Real Estate Deal Lab", date: new Date(2026, 7, 27) },
+  ];
+  const summerLabEvents = SUMMER_LAB_SCHEDULE.flatMap(lab => [
+    { date: daysBefore(lab.date, 7), label: `Summer Masterseries — ${lab.label} (Early Bird Deadline)`, color: m_amber, program: "Summer Masterseries" },
+    { date: daysBefore(lab.date, 3), label: `Summer Masterseries — ${lab.label} (Regular Deadline)`, color: m_amber, program: "Summer Masterseries" },
+    { date: lab.date, label: `Summer Masterseries — ${lab.label}`, color: m_amber, program: "Summer Masterseries" },
+  ]);
+
   const calendarEvents = [
-    { date: new Date(2026, 5, 20), label: "Summer Masterseries — Labs Now Enrolling", color: m_amber, program: "Summer Masterseries" },
-    { date: new Date(2026, 6, 15), label: "Summer Masterseries — First Lab (Jul 21)", color: m_amber, program: "Summer Masterseries" },
-    { date: new Date(2026, 6, 20), label: "Summer Masterseries — AI & the Future of Business", color: m_amber, program: "Summer Masterseries" },
-    { date: new Date(2026, 7, 8), label: "Summer Intensive — Venture Finale", color: m_amber, program: "Summer Intensive" },
+    ...summerLabEvents,
     { date: new Date(2026, 5, 1), label: "Foundation Semester — Applications Open", color: m_blue, program: "Foundation Semester" },
     { date: new Date(2026, 6, 15), label: "Foundation Semester — Priority Deadline", color: m_blue, program: "Foundation Semester" },
     { date: new Date(2026, 7, 15), label: "Foundation Semester — Regular Deadline", color: m_blue, program: "Foundation Semester" },
