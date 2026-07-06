@@ -7850,6 +7850,19 @@ function PortalPage({ setPage }) {
     }
   };
 
+  // ── START A NEW APPLICATION — deletes the current one and resets the wizard ──
+  const handleStartNewApplication = async () => {
+    if (!sb || !student) return;
+    if (application?.id) {
+      await sb.from("applications").delete().eq("id", application.id);
+    }
+    setApplication(null);
+    setAppForm(EMPTY_APP_FORM);
+    setViewingSubmitted(false);
+    setProgramPickerDone(false);
+    setForceProgramPicker(false);
+  };
+
   // ── REQUEST EDIT ACCESS ON A SUBMITTED APPLICATION ──
   const handleRequestEditAccess = async () => {
     if (!sb || !student) return;
@@ -9070,6 +9083,7 @@ function PortalPage({ setPage }) {
                   <button onClick={() => setViewingSubmitted(v => !v)} style={{ fontFamily: sans, padding: "12px 24px", background: m_ink, border: "none", color: m_white, fontSize: 14, fontWeight: 600, cursor: "pointer", borderRadius: 999 }}>{viewingSubmitted ? "Hide Application ↑" : "View My Application →"}</button>
                   <button onClick={() => setActiveTab("messages")} style={{ fontFamily: sans, padding: "12px 24px", background: "transparent", border: `1px solid ${m_line}`, color: m_ink, fontSize: 14, fontWeight: 500, cursor: "pointer", borderRadius: 999 }}>Contact Us →</button>
                   <button onClick={() => setActiveTab("consultation")} style={{ fontFamily: sans, padding: "12px 24px", background: "transparent", border: `1px solid ${m_line}`, color: m_ink, fontSize: 14, fontWeight: 500, cursor: "pointer", borderRadius: 999 }}>Schedule a Consultation →</button>
+                  <button onClick={() => { if (window.confirm("This will permanently delete your current application so you can start over. Continue?")) handleStartNewApplication(); }} style={{ fontFamily: sans, padding: "12px 24px", background: "transparent", border: `1px solid ${m_line}`, color: m_gray, fontSize: 14, fontWeight: 500, cursor: "pointer", borderRadius: 999 }}>Start a New Application ↺</button>
                 </div>
                 <div style={{ borderTop: `1px solid ${m_line}`, paddingTop: 20, marginBottom: viewingSubmitted ? 28 : 0 }}>
                   <p style={{ fontFamily: sans, fontSize: 13, color: m_gray, marginBottom: 10, fontWeight: 600 }}>Admissions Status</p>
