@@ -7264,6 +7264,8 @@ function PortalPage({ setPage }) {
   const [authForm, setAuthForm] = React.useState({ email: "", password: "", confirmPassword: "", firstName: "", lastName: "", phone: "", roleChoice: "student" });
   const [authError, setAuthError] = React.useState("");
   const [authBusy, setAuthBusy] = React.useState(false);
+  const [checkoutError, setCheckoutError] = React.useState("");
+  const [checkoutBusy, setCheckoutBusy] = React.useState(false);
 
   // ── Payment status banner — reads the ?payment= param Stripe redirects back with ──
   const [paymentBanner, setPaymentBanner] = React.useState(null); // 'success' | 'cancelled' | null
@@ -7575,7 +7577,7 @@ function PortalPage({ setPage }) {
           gpaRange: app.gpa_range || "", academicInterests: app.academic_interests || [], extracurriculars: app.extracurriculars || "", priorProgramsExperience: app.prior_programs_experience ? "yes" : "", priorProgramsDescription: app.prior_programs_description || "",
           programs: app.programs || [], applyingMultiple: app.applying_multiple ? "yes" : "", firstChoiceProgram: app.first_choice_program || "", heardAbout: app.heard_about || "", referralName: app.referral_name || "",
           dreamAnswer: app.dream_answer || "", whyJoin: app.why_join || "", leadershipStory: app.leadership_story || "", growthArea: app.growth_area || "", publicSpeakingComfort: app.public_speaking_comfort || "", teamRole: app.team_role || "",
-          summer: { wave: "", wantsScholarship: "", scholarshipReason: "", hasIdea: "", ideaDescription: "", ventureTypes: [], teamComfort: "", outsideCommitment: "", successDefinition: "", trackInterest: "", teamRolePreference: "", ...(pr.summer || {}) },
+          summer: { selectedSessions: [], hasIdea: "", ideaDescription: "", ventureTypes: [], teamComfort: "", outsideCommitment: "", ...(pr.summer || {}) },
           foundation: { excitingAreas: [], leaderVision: "", shapingExperience: "", commitmentReady: "", endGoal: "", ...(pr.foundation || {}) },
           venture: { hasConcept: "", conceptDescription: "", excitingAreas: [], trackInterest: "", problemToSolve: "", commitmentReady: "", endPresentation: "", ...(pr.venture || {}) },
           track: app.track || "", academicYearConflicts: app.academic_year_conflicts || "",
@@ -7829,6 +7831,8 @@ function PortalPage({ setPage }) {
 
   // ── STRIPE CHECKOUT — triggered on final submission when Summer sessions are selected ──
   const handleSummerCheckout = async (applicationId) => {
+    setCheckoutError("");
+    setCheckoutBusy(true);
     try {
       const resp = await fetch(`${SUPABASE_URL}/functions/v1/create-checkout-session`, {
         method: "POST",
@@ -7839,14 +7843,20 @@ function PortalPage({ setPage }) {
           selectedSessions: appForm.summer.selectedSessions,
         }),
       });
-      const data = await resp.json();
-      if (data && data.url) {
+      let data = null;
+      try { data = await resp.json(); } catch (parseErr) { /* non-JSON response, handled below */ }
+      if (resp.ok && data && data.url) {
         window.location.href = data.url;
-      } else {
-        console.error("Checkout session error:", data && data.error);
+        return;
       }
+      const message = (data && data.error) || `Checkout could not be started (status ${resp.status}).`;
+      console.error("Checkout session error:", message);
+      setCheckoutError(message);
     } catch (err) {
       console.error("Checkout request failed:", err);
+      setCheckoutError(err.message || "Could not reach the payment service. Please check your connection and try again.");
+    } finally {
+      setCheckoutBusy(false);
     }
   };
 
@@ -9079,6 +9089,25 @@ function PortalPage({ setPage }) {
                 <p style={{ fontFamily: sans, fontSize: 15, color: m_ink, opacity: 0.75, lineHeight: 1.8, marginBottom: 16, maxWidth: 600 }}>
                   You will be notified within 3 business days by a dedicated Enrollment Coordinator. In the meantime, please contact us at any time with questions, or schedule a consultation through the dashboard.
                 </p>
+
+                {(() => {
+                  const summerSelected = (application?.program_responses?.summer?.selectedSessions || []).length > 0;
+                  const isPaid = application?.payment_status === "paid";
+                  if (!summerSelected || isPaid) return null;
+                  return (
+                    <div style={{ background: "rgba(200,120,60,.1)", border: "1px solid rgba(200,120,60,.3)", borderRadius: 12, padding: "18px 20px", marginBottom: 20, maxWidth: 600 }}>
+                      <p style={{ fontFamily: sans, fontSize: 14, fontWeight: 700, color: "#8A4A1E", marginBottom: 6 }}>Payment still needed</p>
+                      <p style={{ fontFamily: sans, fontSize: 13, color: "#8A4A1E", lineHeight: 1.6, marginBottom: 12 }}>
+                        Your application was received, but payment for your selected Summer sessions hasn't gone through yet. Your seat isn't confirmed until payment is complete.
+                      </p>
+                      {checkoutError && (
+                        <p style={{ fontFamily: sans, fontSize: 13, color: "#8A4A1E", fontWeight: 600, marginBottom: 12 }}>Error: {checkoutError}</p>
+                      )}
+                      <button onClick={() => handleSummerCheckout(application.id)} disabled={checkoutBusy} style={{ fontFamily: sans, padding: "10px 20px", background: "#8A4A1E", border: "none", color: "#FFFFFF", fontSize: 13, fontWeight: 700, cursor: checkoutBusy ? "default" : "pointer", borderRadius: 999, opacity: checkoutBusy ? 0.6 : 1 }}>{checkoutBusy ? "Opening Checkout..." : "Complete Payment →"}</button>
+                    </div>
+                  );
+                })()}
+
                 <div style={{ display: "flex", flexWrap: "wrap", gap: 10, marginBottom: 28 }}>
                   <button onClick={() => setViewingSubmitted(v => !v)} style={{ fontFamily: sans, padding: "12px 24px", background: m_ink, border: "none", color: m_white, fontSize: 14, fontWeight: 600, cursor: "pointer", borderRadius: 999 }}>{viewingSubmitted ? "Hide Application ↑" : "View My Application →"}</button>
                   <button onClick={() => setActiveTab("messages")} style={{ fontFamily: sans, padding: "12px 24px", background: "transparent", border: `1px solid ${m_line}`, color: m_ink, fontSize: 14, fontWeight: 500, cursor: "pointer", borderRadius: 999 }}>Contact Us →</button>
