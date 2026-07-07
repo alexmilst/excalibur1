@@ -16096,7 +16096,7 @@ function ExcaliburApp() {
     if (typeof window !== "undefined") {
       const params = new URLSearchParams(window.location.search);
       if (params.get("page") === "portal") return "portal";
-      if (params.get("page") === "faculty") return "faculty";
+      if (params.get("page") === "faculty-portal") return "faculty-portal";
     }
     return "home";
   });
@@ -16172,7 +16172,7 @@ function ExcaliburApp() {
     if (page === "admissions") return <ApplyPage setPage={setPage} openInquiry={openInquiry} />;
     if (page === "apply-now") return <ApplicationPage setPage={setPage} defaultProgram={inquiryProgram} />;
     if (page === "portal") return <PortalPage setPage={setPage} />;
-    if (page === "faculty") return <FacultyPortalPage setPage={setPage} />;
+    if (page === "faculty-portal") return <FacultyPortalPage setPage={setPage} />;
     if (page === "flagship-detail") return <FlagshipDetailPage2 setPage={setPage} openInquiry={openInquiry} />;
     if (page === "summer-detail") return <SummerDetailPage setPage={setPage} openInquiry={openInquiry} />;
     if (page.startsWith("module:")) return <ModulePage slug={page.replace("module:", "")} setPage={setPage} />;
