@@ -627,14 +627,15 @@ function Nav({ page, setPage }) {
     events: "https://i.imgur.com/SjLpa14.jpeg",
     Contact: "https://i.imgur.com/5xUqLbH.jpeg",
     Events: "https://i.imgur.com/SjLpa14.jpeg",
-    summit: "https://i.imgur.com/smIfyPa.jpeg",
+    summit: "https://i.imgur.com/pYSEb3O.jpeg",
+    portal: "https://i.imgur.com/yU5ZUtp.jpeg",
   };
 
   const allLinks = [
     ["Home", "home", null],
     ["The Academy", "about", null],
     ["View Programs", "programs", [
-      { label: "Summer Masterseries", page: "summer-detail", sub: "Masterclass Labs · July 21 – Aug 20" },
+      { label: "Summer Masterseries", page: "summer-detail", sub: "The Founder's Day · Jul 28 & Aug 11" },
       { label: "Foundation Semester", page: "foundation-detail", sub: "Sep 2026 – Dec 2026" },
       { label: "Venture Semester", page: "venture-detail", sub: "Jan – May 2027" },
       { label: "Six-Week Intensive", page: "intensive", sub: "Four Waves Per Year" },
@@ -2704,32 +2705,30 @@ function ApplyPage({ setPage, openInquiry }) {
 
         {[
           {
-            img: "https://i.imgur.com/obiNhvF.jpeg",
-            eyebrow: "Summer Masterseries",
-            label: "Summer Masterseries",
+            img: "https://i.imgur.com/WmrwNcO.jpeg",
+            eyebrow: "The Excalibur Founder's Day",
+            label: "The Excalibur Founder's Day",
             status: "Enrollment Open", statusColor: "#3F6B3F",
-            dates: "July 21 – August 20, 2026", price: "From $350", period: "per lab",
-            desc: "A two-week summer intensive for students ready to test entrepreneurship in a fast, immersive format. Students build a venture, train daily in public speaking and pitch craft, and present at a live Shark Tank-inspired Finale.\n\nDesigned as both a standalone experience and an introduction to the Excalibur Flagship.",
+            dates: "July 28 & August 11, 2026", price: "From $350", period: "per day",
+            desc: "A single, immersive day for ambitious high school students, and the perfect introduction to Excalibur Academy. Students build the core skills of the Academy — public speaking, financial literacy, AI fluency, and entrepreneurial thinking — then pitch a real venture in teams, live, before faculty, families, and invited founders and investors.\n\nOffered twice this summer — same day, same curriculum, either date.",
             meta: [
-              ["Dates", "Jul 27, 2026 – Aug 8, 2026 · Mon–Fri"],
-              ["Schedule", "9:30 AM – 4:00 PM"],
-              ["Class Size", "Limited to 20 students"],
-              ["Ages", "14–17 · High school students"],
+              ["Dates", "July 28, 2026 or August 11, 2026"],
+              ["Schedule", "10:00 AM – 6:00 PM"],
+              ["Team Size", "3–4 students per founding team"],
+              ["Ages", "14–18 · High school students"],
               ["Location", "South Orange County, CA"],
-              ["Finale", "Venture Finale — Aug 8, 2026"],
-              ["Application Deadline", "July 15, 2026"],
+              ["Culminates In", "A live 60-second pitch before a judging panel"],
             ],
             includes: [
-              "Daily public speaking and executive communication training",
-              "Venture development — market research, competitor analysis, business planning",
-              "Marketing strategy, branding, and customer psychology",
-              "AI tools for business research, analysis, and presentation",
-              "Sales, persuasion, and pitch training",
-              "Distinguished guest speakers from different industry sectors",
-              "Excalibur Venture Finale — live Shark Tank-inspired pitch",
-              "Certificate of Completion and Student Venture Portfolio",
-              "Catered daily lunches, snacks, smoothies and refreshments",
-              "Priority consideration for the Ten-Month Flagship Overview",
+              "Public speaking and executive presence training",
+              "Financial literacy and investor thinking",
+              "AI & the future of work",
+              "The Venture Challenge — a team-based community-impact or market-gap venture",
+              "Applied Capstone — building and rehearsing a live 60-second founder pitch",
+              "The Showcase — pitching before a judging panel of faculty, founders & investors",
+              "The Family Soirée — a closing reception and Academy Information Session",
+              "Catered lunch and refreshments throughout the day",
+              "Priority consideration for Excalibur's Foundation & Venture Semesters",
             ],
             applyLabel: "Apply to Excalibur", applyKey: "summer", detailPage: "summer-detail",
           },
@@ -3075,20 +3074,10 @@ function HomePage({ setPage, openInquiry }) {
   const [activeMod, setActiveMod] = useState(0);
   const [activeCurrTab, setActiveCurrTab] = useState("master");
 
-  // Quick Reference data — mirrors the labs array on the Summer Masterclass Labs detail page.
+  // Quick Reference data — mirrors the Founder's Day dates on the detail page.
   const summerLabs = [
-    { date: "July 14", label: "Public Speaking & Executive Presence I", topic: "Public Speaking & Executive Presence I", earlyBird: "$350", regular: "$450", format: "Single Day", full: true },
-    { date: "July 15", label: "The Real Estate Deal Lab", topic: "The Real Estate Deal Lab", earlyBird: "$350", regular: "$450", format: "Single Day", full: true },
-    { date: "July 16", label: "Luxury Cars, Collectibles, NASCAR & Formula 1", topic: "Luxury Cars, Collectibles, NASCAR & Formula 1", earlyBird: "$350", regular: "$450", format: "Single Day", full: true },
-    { date: "July 18–19", label: "Two-Day Venture Launchpad Intensive", topic: "Two-Day Venture Launchpad Intensive", earlyBird: "$790", regular: "$890", format: "Weekend Intensive", full: true },
-    { date: "July 21", label: "Public Speaking & Executive Presence I", topic: "Public Speaking & Executive Presence I", earlyBird: "$350", regular: "$450", format: "Single Day" },
-    { date: "July 28", label: "AI, Business & the Future of Work", topic: "AI, Business & the Future of Work", earlyBird: "$350", regular: "$450", format: "Single Day" },
-    { date: "Aug 1–2", label: "Two-Day Venture Launchpad Intensive", topic: "Two-Day Venture Launchpad Intensive", earlyBird: "$790", regular: "$890", format: "Weekend Intensive" },
-    { date: "Aug 4", label: "Sports, NASCAR, Formula 1 & Business", topic: "Sports, NASCAR, Formula 1 & Business", earlyBird: "$350", regular: "$450", format: "Single Day" },
-    { date: "Aug 6", label: "Personal Finance & Financial Literacy for Teens", topic: "Personal Finance & Financial Literacy for Teens", earlyBird: "$350", regular: "$450", format: "Single Day" },
-    { date: "Aug 11", label: "Leadership, Negotiation & Power Dynamics", topic: "Leadership, Negotiation & Power Dynamics", earlyBird: "$350", regular: "$450", format: "Single Day" },
-    { date: "Aug 13", label: "Wall Street, Stocks & Investor Thinking", topic: "Wall Street, Stocks & Investor Thinking", earlyBird: "$350", regular: "$450", format: "Single Day" },
-    { date: "Aug 20", label: "College, Career & Personal Strategy", topic: "College, Career & Personal Strategy", earlyBird: "$350", regular: "$450", format: "Single Day" },
+    { date: "July 28", label: "The Excalibur Founder's Day", topic: "The Excalibur Founder's Day", earlyBird: "$350", regular: "$450", format: "Single Day" },
+    { date: "August 11", label: "The Excalibur Founder's Day", topic: "The Excalibur Founder's Day", earlyBird: "$350", regular: "$450", format: "Single Day" },
   ];
   const isSummerWeekend = (lab) => lab.format === "Weekend Intensive";
 
@@ -3209,7 +3198,7 @@ function HomePage({ setPage, openInquiry }) {
       {/* FOUNDING BANNER */}
       <div style={{ background: "#34150F", padding: isMobile ? "10px 16px" : "10px 40px", textAlign: "center" }}>
         <p style={{ fontFamily: "'Lato', sans-serif", fontSize: isMobile ? 11 : 11, letterSpacing: isMobile ? "0.04em" : "0.22em", color:"#BCA696", fontWeight: 700, textTransform: "uppercase", lineHeight: 1.5, padding: isMobile ? "0 8px" : 0 }}>
-          Summer Intensive Waves &nbsp;·&nbsp; Closed · Cohorts Full &nbsp; ✦ &nbsp; Masterclass Labs &nbsp;·&nbsp; <span style={{ cursor: "pointer", textDecoration: "underline", textUnderlineOffset: 3 }} onClick={() => setPage("summer-detail")}>Now Enrolling</span> &nbsp; ✦
+          Summer Intensive Waves &nbsp;·&nbsp; Closed · Cohorts Full &nbsp; ✦ &nbsp; The Founder's Day &nbsp;·&nbsp; <span style={{ cursor: "pointer", textDecoration: "underline", textUnderlineOffset: 3 }} onClick={() => setPage("summer-detail")}>Now Enrolling</span> &nbsp; ✦
         </p>
       </div>
 
@@ -3371,44 +3360,44 @@ function HomePage({ setPage, openInquiry }) {
 
                 {/* Heading */}
                 <h2 style={{ fontFamily: "'Forum', serif", fontSize: isMobile ? 14 : 16, fontWeight: 400, color: "#D9C7A9", lineHeight: 1.2, marginBottom: 10, letterSpacing: "0.35em", textTransform: "uppercase" }}>
-                  Summer Masterseries
+                  Summer 2026
                 </h2>
                 <h2 style={{ fontFamily: "'Forum', serif", fontSize: isMobile ? 34 : 52, fontWeight: 400, color: "#D9C7A9", lineHeight: 1.0, marginBottom: 6, letterSpacing: "0.08em", textTransform: "uppercase" }}>
-                  Academy Introduction – Summer Labs
+                  The Excalibur Founder's Day
                 </h2>
                 <p style={{ fontFamily: "'Cinzel', serif", fontSize: isMobile ? 18 : 22, fontWeight: 400, color: "#A48D6E", marginBottom: 28, letterSpacing: "0.04em" , textTransform: "uppercase" }}>
-                  July 21 – August 20, 2026
+                  July 28 &amp; August 11, 2026
                 </p>
 
                 {/* Body copy */}
                 <p style={{ fontFamily: lora, fontSize: 15, lineHeight: 1.9, color: "#E4D5C1", fontWeight: 400, marginBottom: 20, textAlign: "justify", letterSpacing: "0.02em" }}>
-                  Excalibur Masterclass Labs are immersive, real-world intensives for ambitious high school students who want to learn the skills most traditional classrooms do not teach directly enough: communication, leadership, artificial intelligence, money, markets, negotiation, business, career strategy, and executive presence.
+                  Spend a day living like a founder. In one day, students build the core skills of the Academy — public speaking, financial literacy, AI fluency, and entrepreneurial thinking — then put it all to work building and pitching a real venture in teams, live, in front of faculty, peers, families, and invited real founders and investors.
                 </p>
                 <p style={{ fontFamily: lora, fontSize: 15, lineHeight: 1.9, color: "#E4D5C1", fontWeight: 400, marginBottom: 24, textAlign: "justify", letterSpacing: "0.02em" }}>
-                  The Labs are built for students who are curious, ambitious, and ready to be treated seriously. They are designed to expand confidence without encouraging arrogance, sharpen judgment without killing creativity, and expose students to the kinds of conversations, decisions, and opportunities they will encounter in college, career, entrepreneurship, and leadership.
+                  This single day is designed as your family's introduction to Excalibur Academy's flagship year-round program.
                 </p>
 
-                {/* Two Ways In */}
+                {/* Dates card */}
                 <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 8, marginBottom: 24 }}>
                   <div style={{ background: "rgba(228,214,193,1)", border: "1px solid rgba(164,141,110,1)", padding: "16px 18px" }}>
-                    <p style={{ fontFamily: lora, fontSize: 11, letterSpacing: "0.3em", color:"rgba(16,15,12,1)", fontWeight: 600, textTransform: "uppercase", marginBottom: 5 }}>Full Day</p>
-                    <p style={{ fontFamily: "'Cinzel', serif", fontSize: 18, fontWeight: 300, color:"rgba(16,15,12,1)", marginBottom: 3 , textTransform: "uppercase" }}>Masterclass Lab</p>
+                    <p style={{ fontFamily: lora, fontSize: 11, letterSpacing: "0.3em", color:"rgba(16,15,12,1)", fontWeight: 600, textTransform: "uppercase", marginBottom: 5 }}>Date One</p>
+                    <p style={{ fontFamily: "'Cinzel', serif", fontSize: 18, fontWeight: 300, color:"rgba(16,15,12,1)", marginBottom: 3 , textTransform: "uppercase" }}>July 28, 2026</p>
                     <p style={{ fontFamily: sans, fontSize: 11, color:"rgba(16,15,12,1)", letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 8 }}>From $350</p>
-                    <p style={{ fontFamily: lora, fontSize: 13, color:"rgba(16,15,12,1)", fontWeight: 300, lineHeight: 1.7, textAlign: "justify" }}>One discipline, one day, one tangible outcome — AI, public speaking, finance, leadership, and more.</p>
+                    <p style={{ fontFamily: lora, fontSize: 13, color:"rgba(16,15,12,1)", fontWeight: 300, lineHeight: 1.7, textAlign: "justify" }}>10:00 AM – 6:00 PM · same day, same curriculum as August 11.</p>
                   </div>
                   <div style={{ background: "#e4d7c2", border: "1.5px solid rgba(216,183,140,.3)", padding: "16px 18px" }}>
-                    <p style={{ fontFamily: lora, fontSize: 11, letterSpacing: "0.3em", color: "rgba(16,15,12,1)", fontWeight: 600, textTransform: "uppercase", marginBottom: 5 }}>Weekend</p>
-                    <p style={{ fontFamily: "'Cinzel', serif", fontSize: 18, fontWeight: 300, color: "rgba(16,15,12,1)", marginBottom: 3 , textTransform: "uppercase" }}>2-Day Venture Launchpad</p>
-                    <p style={{ fontFamily: sans, fontSize: 11, color: "rgba(16,15,12,1)", letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 8 }}>From $790</p>
-                    <p style={{ fontFamily: lora, fontSize: 13, color: "rgba(16,15,12,1)", fontWeight: 300, lineHeight: 1.7, textAlign: "justify" }}>2 days — a complete venture conceived, built, and pitched live before a judging panel.</p>
+                    <p style={{ fontFamily: lora, fontSize: 11, letterSpacing: "0.3em", color: "rgba(16,15,12,1)", fontWeight: 600, textTransform: "uppercase", marginBottom: 5 }}>Date Two</p>
+                    <p style={{ fontFamily: "'Cinzel', serif", fontSize: 18, fontWeight: 300, color: "rgba(16,15,12,1)", marginBottom: 3 , textTransform: "uppercase" }}>August 11, 2026</p>
+                    <p style={{ fontFamily: sans, fontSize: 11, color: "rgba(16,15,12,1)", letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 8 }}>From $350</p>
+                    <p style={{ fontFamily: lora, fontSize: 13, color: "rgba(16,15,12,1)", fontWeight: 300, lineHeight: 1.7, textAlign: "justify" }}>10:00 AM – 6:00 PM · same day, same curriculum as July 28.</p>
                   </div>
                 </div>
 
-                {/* Included in Every Lab */}
+                {/* Included in the Day */}
                 <div style={{ borderTop: "1px solid rgba(216,183,140,.1)", paddingTop: 20 }}>
-                  <p style={{ fontFamily: "'Cinzel', serif", fontSize: 18, letterSpacing: "0.1em", color: "#A48D6E", fontWeight: 400, textTransform: "uppercase", marginBottom: 14 }}>Included in Every Lab</p>
+                  <p style={{ fontFamily: "'Cinzel', serif", fontSize: 18, letterSpacing: "0.1em", color: "#A48D6E", fontWeight: 400, textTransform: "uppercase", marginBottom: 14 }}>Included in the Day</p>
                   <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 0 }}>
-                    {["A full day of specialist-led instruction and applied workshop practice","Distinguished guest speakers and practitioners throughout the series","A tangible outcome — a pitch, prototype, portfolio, or presentation","Venture Launchpad weekends culminate in a live pitch before a judging panel","Certificate of completion for every Lab","Catered lunch, snacks & refreshments","Closing Academy Information Session for families","Priority consideration for Excalibur's Foundation & Venture Semesters"].map((item, i) => (
+                    {["A full day of faculty-led instruction across speaking, finance, and AI","A team-based Venture Challenge — community-impact or market-gap track","A rehearsed, live 60-second founder pitch before a judging panel","Invited real founders and investors on the judging panel","Catered lunch and refreshments throughout the day","The Family Soirée — a closing reception for parents","A complete Academy Information Session on Foundation & Venture enrollment","Priority consideration for Excalibur's Foundation & Venture Semesters"].map((item, i) => (
                       <div key={i} style={{ display: "flex", gap: 8, padding: "6px 0", alignItems: "flex-start" }}>
                         <span style={{ color: "#A48D6E", fontSize: 10, marginTop: 3, flexShrink: 0 }}>—</span>
                         <span style={{ fontFamily: lora, fontSize: 14, color: "#E4D5C1", fontWeight: 400, lineHeight: 1.55 }}>{item}</span>
@@ -3427,12 +3416,12 @@ function HomePage({ setPage, openInquiry }) {
                 </div>
                 <div style={{ padding: "0 22px", flex: 1 }}>
                   {[
-                    ["Sessions", "10:00 AM – 5:00 PM · Single-Day Labs"],
-                    ["Series", "July 21 – August 20, 2026 · 9 sessions"],
-                    ["Weekend", "2-Day Venture Launchpad · Aug 1–2 · Live pitch before a judging panel"],
-                    ["This Summer", "Public Speaking & Executive Presence I, AI, Business & the Future of Work, Two-Day Venture Launchpad Intensive, Sports, NASCAR, Formula 1 & Business, Personal Finance & Financial Literacy for Teens, Leadership, Negotiation & Power Dynamics, Wall Street, Stocks & Investor Thinking, College, Career & Personal Strategy"],
+                    ["Hours", "10:00 AM – 6:00 PM"],
+                    ["Dates", "July 28 & August 11, 2026"],
+                    ["Team Size", "3–4 students per founding team"],
+                    ["Culminates In", "A live 60-second pitch before a judging panel of faculty, founders & investors"],
                     ["Guest Speakers", "Distinguished guest speakers from different industries"],
-                    ["Eligibility", "Ages 14–18 · limited capacity per session"],
+                    ["Eligibility", "Ages 14–18 · limited capacity per date"],
                   ].map(([k, v], i) => (
                     <div key={i} style={{ display: "grid", gridTemplateColumns: "82px 1fr", gap: 10, padding: "10px 0", borderBottom: "1px solid rgba(216,183,140,.07)", alignItems: "flex-start" }}>
                       <span style={{ fontFamily: lora, fontSize: 11, letterSpacing: "0.12em", color: "#A48D6E", paddingTop: 2, flexShrink: 0, fontWeight: 700, textTransform: "uppercase" }}>{k}</span>
@@ -3442,12 +3431,12 @@ function HomePage({ setPage, openInquiry }) {
                 </div>
                 {/* Photo */}
                 <div style={{ overflow: "hidden", height: 280, flexShrink: 0 }}>
-                  <img src="https://i.imgur.com/obiNhvF.jpeg" alt="Excalibur Masterclass Labs" style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center top" }} />
+                  <img src="https://i.imgur.com/WmrwNcO.jpeg" alt="The Excalibur Founder's Day" style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center top" }} />
                 </div>
                 {/* Tuition */}
                 <div style={{ padding: "16px 22px", borderTop: `1px solid rgba(216,183,140,.1)` }}>
-                  <p style={{ fontFamily: "'Cinzel', serif", fontSize: 41, fontWeight: 300, color: "#E4D5C1", lineHeight: 1, marginBottom: 6, textTransform: "uppercase" }}>$350<span style={{ fontSize: 14 }}> / lab</span></p>
-                  <p style={{ fontFamily: "Lora, serif", fontSize: 12, color: "#A48D6E", fontWeight: 400, letterSpacing: "0.08em" }}>Venture Launchpad weekends from $790</p>
+                  <p style={{ fontFamily: "'Cinzel', serif", fontSize: 41, fontWeight: 300, color: "#E4D5C1", lineHeight: 1, marginBottom: 6, textTransform: "uppercase" }}>$350<span style={{ fontSize: 14 }}> early bird</span></p>
+                  <p style={{ fontFamily: "Lora, serif", fontSize: 12, color: "#A48D6E", fontWeight: 400, letterSpacing: "0.08em" }}>$450 regular · one flat price per day</p>
                 </div>
                 {/* CTA buttons */}
                 <div style={{ padding: "14px 22px", borderTop: `1px solid rgba(216,183,140,.1)`, display: "flex", gap: 8, flexWrap: "wrap" }}>
@@ -3468,36 +3457,27 @@ function HomePage({ setPage, openInquiry }) {
       <section style={{ background: "#D9C7A9", padding: isMobile ? "72px 24px" : "100px 80px" }}>
         <div style={{ maxWidth: 1100, margin: "0 auto" }}>
           <p style={{ fontFamily: sans, fontSize: 10, letterSpacing: "0.45em", color: "#34150F", fontWeight: 700, textTransform: "uppercase", marginBottom: 20 }}>Quick Reference</p>
-          <h2 style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: isMobile ? "clamp(28px,6vw,44px)" : "clamp(36px,4vw,52px)", fontWeight: 400, color: "#1A0A08", textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: 36 }}>This Summer's Schedule</h2>
-          <div style={{ overflowX: "auto" }}>
-            <table style={{ width: "100%", borderCollapse: "collapse", fontFamily: lora, fontSize: isMobile ? 13 : 14 }}>
-              <thead>
-                <tr style={{ borderBottom: "2px solid #34150F" }}>
-                  {["Date", "Masterclass Lab", "Topic", "Early Bird", "Regular"].map(h => (
-                    <th key={h} style={{ fontFamily: sans, fontSize: 9, letterSpacing: "0.2em", color: "#34150F", textTransform: "uppercase", fontWeight: 700, padding: "12px 16px", textAlign: "left" }}>{h}</th>
-                  ))}
-                </tr>
-              </thead>
-              <tbody>
-                {summerLabs.map((lab, i) => (
-                  <tr key={i} style={{ borderBottom: "1px solid rgba(52,21,15,.15)", background: lab.full ? "rgba(52,21,15,.06)" : isSummerWeekend(lab) ? "#34150F" : "transparent" }}>
-                    <td style={{ padding: "14px 16px", color: lab.full ? "#8A7A63" : isSummerWeekend(lab) ? "#D9C7A9" : "#34150F", whiteSpace: "nowrap" }}>{lab.date}</td>
-                    <td style={{ padding: "14px 16px", color: lab.full ? "#8A7A63" : isSummerWeekend(lab) ? "#D9C7A9" : "#1A1208", fontWeight: 600 }}>{lab.label}</td>
-                    <td style={{ padding: "14px 16px", color: lab.full ? "#8A7A63" : isSummerWeekend(lab) ? "rgba(217,199,169,.75)" : "#6B5C40", fontStyle: "italic" }}>{lab.topic}</td>
-                    {lab.full ? (
-                      <td colSpan={2} style={{ padding: "14px 16px", color: "#A0522D", fontWeight: 700, fontSize: 12, letterSpacing: "0.06em", textTransform: "uppercase" }}>Enrollment Closed — Masterclass Full</td>
-                    ) : (
-                      <>
-                        <td style={{ padding: "14px 16px", color: isSummerWeekend(lab) ? "#D9C7A9" : "#1A1208", fontWeight: 600, whiteSpace: "nowrap" }}>{lab.earlyBird}</td>
-                        <td style={{ padding: "14px 16px", color: isSummerWeekend(lab) ? "#D9C7A9" : "#1A1208", whiteSpace: "nowrap" }}>{lab.regular}</td>
-                      </>
-                    )}
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+          <h2 style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: isMobile ? "clamp(28px,6vw,44px)" : "clamp(36px,4vw,52px)", fontWeight: 400, color: "#1A0A08", textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: 36 }}>This Summer's Dates</h2>
+          <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 16 }}>
+            {summerLabs.map((lab, i) => (
+              <div key={i} style={{ border: "1px solid rgba(52,21,15,.2)", padding: "24px 28px" }}>
+                <p style={{ fontFamily: sans, fontSize: 10, letterSpacing: "0.2em", color: "#6B5C40", textTransform: "uppercase", fontWeight: 700, marginBottom: 8 }}>{lab.label}</p>
+                <p style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: 26, color: "#1A0A08", fontWeight: 400, marginBottom: 6 }}>{lab.date}, 2026</p>
+                <p style={{ fontFamily: lora, fontSize: 13, color: "#3A2012", fontStyle: "italic", marginBottom: 14 }}>10:00 AM – 6:00 PM</p>
+                <div style={{ display: "flex", gap: 24 }}>
+                  <div>
+                    <p style={{ fontFamily: sans, fontSize: 9, letterSpacing: "0.15em", color: "#6B5C40", textTransform: "uppercase", marginBottom: 2 }}>Early Bird</p>
+                    <p style={{ fontFamily: lora, fontSize: 15, color: "#1A0A08", fontWeight: 600 }}>{lab.earlyBird}</p>
+                  </div>
+                  <div>
+                    <p style={{ fontFamily: sans, fontSize: 9, letterSpacing: "0.15em", color: "#6B5C40", textTransform: "uppercase", marginBottom: 2 }}>Regular</p>
+                    <p style={{ fontFamily: lora, fontSize: 15, color: "#1A0A08", fontWeight: 600 }}>{lab.regular}</p>
+                  </div>
+                </div>
+              </div>
+            ))}
           </div>
-          <p style={{ fontFamily: lora, fontSize: 13, color: "#3A2012", fontStyle: "italic", marginTop: 20 }}>Shaded rows denote the Founder's Lab, our flagship weekend intensive. Early enrollment is recommended, as dates are confirmed on a first-come basis.</p>
+          <p style={{ fontFamily: lora, fontSize: 13, color: "#3A2012", fontStyle: "italic", marginTop: 20 }}>Both dates offer the identical Founder's Day curriculum. Early enrollment is recommended, as places are confirmed on a first-come basis.</p>
         </div>
       </section>
 
@@ -3661,9 +3641,9 @@ function HomePage({ setPage, openInquiry }) {
               onMouseLeave={e => { e.currentTarget.style.transform = "translateY(-10px)"; e.currentTarget.style.boxShadow = "0 30px 60px -18px rgba(0,0,0,0.85), 0 0 0 1px rgba(164,141,110,0.3), 0 16px 32px rgba(164,141,110,0.12)"; e.currentTarget.style.borderColor = "#A48D6E"; }}
             >
               <div style={{ position:"absolute", inset:0, padding:isMobile?"34px":"52px", display:"flex", flexDirection:"column", justifyContent:"flex-end" }}>
-                <h3 style={{ fontFamily:"'Cinzel', serif", fontSize:35, fontWeight:400, color:"#E4D5C1", lineHeight:1, letterSpacing:"0.08em", textTransform:"uppercase", marginBottom:12 }}>Summer Masterseries</h3>
-                <p style={{ fontFamily:serif, fontSize:18, color:"#E4D5C1", fontStyle:"italic", fontWeight:400, lineHeight:1.5, marginBottom:8 }}>Full day Masterclass Labs · Introduction to the Academy.</p>
-                <p style={{ fontFamily:lora, fontSize:13, color:"#A48D6E", fontWeight:400, letterSpacing:"0.04em", marginBottom:24 }}>July 21 – August 20, 2026</p>
+                <h3 style={{ fontFamily:"'Cinzel', serif", fontSize:35, fontWeight:400, color:"#E4D5C1", lineHeight:1, letterSpacing:"0.08em", textTransform:"uppercase", marginBottom:12 }}>The Founder's Day</h3>
+                <p style={{ fontFamily:serif, fontSize:18, color:"#E4D5C1", fontStyle:"italic", fontWeight:400, lineHeight:1.5, marginBottom:8 }}>A single day · Introduction to the Academy.</p>
+                <p style={{ fontFamily:lora, fontSize:13, color:"#A48D6E", fontWeight:400, letterSpacing:"0.04em", marginBottom:24 }}>July 28 & August 11, 2026</p>
                 <button style={{ fontFamily:sans, fontSize:9, fontWeight:700, letterSpacing:"0.2em", textTransform:"uppercase", background:"transparent", border:"1px solid rgba(228,213,193,0.4)", color:"#E4D5C1", padding:"10px 20px", cursor:"pointer", alignSelf:"flex-start", transition:"all 0.2s" }}
                   onMouseEnter={e=>{e.currentTarget.style.background="#E4D5C1";e.currentTarget.style.color="#0F0F0F";}}
                   onMouseLeave={e=>{e.currentTarget.style.background="transparent";e.currentTarget.style.color="#E4D5C1";}}>
@@ -4334,14 +4314,14 @@ function HomePage({ setPage, openInquiry }) {
 
         <div style={{ padding: isMobile ? "80px 24px" : "120px 80px", textAlign: "center" }}>
           <Fade>
-            <span style={{ fontFamily: "'Lato', sans-serif", fontSize: 13, letterSpacing: "0.3em", color: "#A48D6E", fontWeight: 500, textTransform: "uppercase" }}>Summer Masterseries 2026</span>
+            <span style={{ fontFamily: "'Lato', sans-serif", fontSize: 13, letterSpacing: "0.3em", color: "#A48D6E", fontWeight: 500, textTransform: "uppercase" }}>Summer 2026</span>
             <h2 style={{ fontFamily: "'Cinzel', serif", fontSize: isMobile ? "clamp(32px,7vw,52px)" : "clamp(40px,5vw,68px)", fontWeight: 400, lineHeight: 1.2, letterSpacing: "0.12em", textTransform: "uppercase", color: "#D9C7A9", margin: "20px 0 0" }}>
-              Masterclass Labs
+              The Founder's Day
             </h2>
             <p style={{ fontFamily: lora, fontSize: isMobile ? 15 : 18, color: "#E4D5C1", fontWeight: 300, fontStyle: "italic", lineHeight: 1.7, maxWidth: 620, margin: "24px auto 0" }}>
-              Full Day Masterclass Labs. Exclusive Introduction to the Academy. $350 Early Bird Price. Limited spots. July 21 – August 20, 2026. South Orange County, CA.
+              A single, immersive day for ambitious high school students. $350 Early Bird Price. Limited spots. July 28 & August 11, 2026. South Orange County, CA.
             </p>
-            <button onClick={() => setPage("summer-detail")} style={{ fontFamily: "'Lato', sans-serif", background: "#D9C7A9", color: "#100F0C", padding: "16px 44px", fontSize: 11, fontWeight: 700, letterSpacing: "0.22em", textTransform: "uppercase", border: "none", cursor: "pointer", marginTop: 40 }}>Apply to the Summer Series →</button>
+            <button onClick={() => setPage("summer-detail")} style={{ fontFamily: "'Lato', sans-serif", background: "#D9C7A9", color: "#100F0C", padding: "16px 44px", fontSize: 11, fontWeight: 700, letterSpacing: "0.22em", textTransform: "uppercase", border: "none", cursor: "pointer", marginTop: 40 }}>Apply to the Founder's Day →</button>
           </Fade>
         </div>
       </section>
@@ -6647,321 +6627,115 @@ function SummerDetailPage({ setPage, openInquiry }) {
   const dark = "#100F0C";
   const ox = "#34150F";
 
-  const labs = [
-    {
-      date: "July 14", label: "Public Speaking & Executive Presence I",
-      topic: "Public Speaking & Executive Presence I",
-      tag: "VOICE · POSTURE · FIRST IMPRESSIONS · STORYTELLING · CONFIDENCE UNDER PRESSURE",
-      desc: "Most students are told to \"be confident,\" but almost no one teaches them how confidence actually looks, sounds, and feels in a room. This lab gives students the fundamentals of presence: how to enter a room, introduce themselves, make eye contact, stand with composure, speak clearly, hold attention, and tell a story people remember. Students work on posture, voice, tone, pacing, body language, first impressions, speech structure, storytelling, persuasion, and recovery from awkward moments. They practice live, receive direct feedback, and learn how to become more polished without becoming fake.",
-      takeaway: "Students become more confident, clear, and memorable — building real presentation skill, social maturity, and the kind of communication presence that helps in interviews, classrooms, leadership roles, and future professional settings.",
-      earlyBird: "$350", regular: "$450", format: "Single Day", full: true,
-    },
-    {
-      date: "July 15", label: "The Real Estate Deal Lab",
-      topic: "The Real Estate Deal Lab",
-      tag: "REAL ESTATE · DEAL ANALYSIS · INVESTMENT STRATEGY",
-      desc: "Real estate is one of the clearest ways to teach valuation, financing, risk, cash flow, negotiation, and investment discipline. This lab gives students a practical introduction to how investors evaluate a property before they buy. Students learn how to analyze a listing, estimate renovation costs, understand financing, compare a flip versus rental model, evaluate neighborhood factors, calculate basic returns, and identify hidden risks. The goal is not fantasy wealth-building. The goal is disciplined deal judgment. In the applied portion, students analyze a real local property and present a recommendation: flip it, rent it, renegotiate, or walk away.",
-      takeaway: "Students learn how real estate investors think before making a decision — developing practical financial reasoning, analytical discipline, risk awareness, and real-world investment literacy.",
-      earlyBird: "$350", regular: "$450", format: "Single Day", full: true,
-    },
-    {
-      date: "July 16", label: "Luxury Cars, Collectibles, NASCAR & Formula 1",
-      topic: "Luxury Cars, Collectibles, NASCAR & Formula 1",
-      tag: "LUXURY & COLLECTOR MARKETS · MOTORSPORT BUSINESS · VALUATION",
-      desc: "Cars and racing offer a powerful way to teach business, markets, branding, valuation, and investment thinking. This lab uses luxury cars, collector vehicles, NASCAR, and Formula 1 to show students how passion-driven markets actually work. Students explore how racing teams make money, how sponsorships and media rights operate, how luxury brands create scarcity, how collectible assets are valued, and what makes some vehicles appreciate while others lose value. In the applied challenge, students analyze a real luxury collectible or retro vehicle listing and build an investment case: buy, hold, flip, negotiate, or walk away.",
-      takeaway: "Students learn the business behind cars, racing, brands, and collectibles — practicing valuation, market analysis, risk assessment, and persuasive investment reasoning.",
-      earlyBird: "$350", regular: "$450", format: "Single Day", full: true,
-    },
-    {
-      date: "July 18–19", label: "Two-Day Venture Launchpad Intensive",
-      topic: "Two-Day Venture Launchpad Intensive",
-      tag: "FROM DREAM TO ACTION · MARKET OPPORTUNITY · LIVE INVESTOR PANEL",
-      desc: "This two-day intensive introduces students to the actual process behind building a venture. Students move from idea to pitch: identifying a problem, researching a customer, testing demand, designing a business model, building a pitch deck, and preparing to defend their concept. Students may develop a business plan for a startup, nonprofit, product, service, or community impact idea. They are pushed to think clearly, challenge weak assumptions, work in teams, and present with confidence. The intensive ends with a live pitch before a judging panel of investors and industry leaders.",
-      takeaway: "Students experience the pressure and excitement of building like founders — gaining entrepreneurial confidence, teamwork experience, financial reasoning, and live presentation practice.",
-      earlyBird: "$790", regular: "$890", format: "Weekend Intensive", full: true,
-    },
-    {
-      date: "July 21", label: "Public Speaking & Executive Presence I",
-      topic: "Public Speaking & Executive Presence I",
-      tag: "VOICE · POSTURE · FIRST IMPRESSIONS · STORYTELLING · CONFIDENCE UNDER PRESSURE",
-      desc: "Most students are told to \"be confident,\" but almost no one teaches them how confidence actually looks, sounds, and feels in a room. This lab gives students the fundamentals of presence: how to enter a room, introduce themselves, make eye contact, stand with composure, speak clearly, hold attention, and tell a story people remember. Students work on posture, voice, tone, pacing, body language, first impressions, speech structure, storytelling, persuasion, and recovery from awkward moments. They practice live, receive direct feedback, and learn how to become more polished without becoming fake.",
-      takeaway: "Students become more confident, clear, and memorable — building real presentation skill, social maturity, and the kind of communication presence that helps in interviews, classrooms, leadership roles, and future professional settings.",
-      earlyBird: "$350", regular: "$450", format: "Single Day",
-    },
-    {
-      date: "July 28", label: "AI, Business & the Future of Work",
-      topic: "AI, Business & the Future of Work",
-      tag: "AI TOOLS · SMARTER STUDYING · AI SCAMS · FUTURE CAREERS · BUILDING WITH AI",
-      desc: "AI is already reshaping how people work, study, build companies, create media, practice law, diagnose illness, run campaigns, and make decisions. This lab gives students a practical, serious introduction to the tools and judgment they will need in an AI-driven world. Students explore ChatGPT, Claude, Gemini, Copilot, image and video AI, prompt strategy, verification methods, hallucinations, bias, deepfakes, scams, and real business use cases. The focus is not \"using AI to cheat,\" but learning how to think with AI, question its output, and use it as a force multiplier. In the applied build, each student creates something useful: a personal AI productivity system, an AI-powered career roadmap, a scam detector, an advisory board of AI personas, a community solution, or a product concept.",
-      takeaway: "Students learn how to use AI as leverage, not as a shortcut — developing digital judgment, future-of-work awareness, responsible AI fluency, and the ability to separate real opportunity from hype.",
-      earlyBird: "$350", regular: "$450", format: "Single Day",
-    },
-    {
-      date: "Aug 1–2", label: "Two-Day Venture Launchpad Intensive",
-      topic: "Two-Day Venture Launchpad Intensive",
-      tag: "FROM DREAM TO ACTION · MARKET OPPORTUNITY · LIVE INVESTOR PANEL",
-      desc: "This two-day intensive introduces students to the actual process behind building a venture. Students move from idea to pitch: identifying a problem, researching a customer, testing demand, designing a business model, building a pitch deck, and preparing to defend their concept. Students may develop a business plan for a startup, nonprofit, product, service, or community impact idea. They are pushed to think clearly, challenge weak assumptions, work in teams, and present with confidence. The intensive ends with a live pitch before a judging panel of investors and industry leaders.",
-      takeaway: "Students experience the pressure and excitement of building like founders — gaining entrepreneurial confidence, teamwork experience, financial reasoning, and live presentation practice.",
-      earlyBird: "$790", regular: "$890", format: "Weekend Intensive",
-    },
-    {
-      date: "Aug 4", label: "Sports, NASCAR, Formula 1 & Business",
-      topic: "Sports, NASCAR, Formula 1 & Business",
-      tag: "FORMULA 1, NASCAR · NFL, NBA, NHL · MEDIA RIGHTS & SPONSORSHIPS",
-      desc: "Sports and motorsport are not just entertainment. They are billion-dollar businesses built on media rights, sponsorships, ticketing, licensing, franchises, data, merchandise, fan loyalty, and global attention. This lab shows students the business machine behind the leagues, teams, drivers, and brands they follow: how professional leagues like the NFL, NBA, and NHL generate revenue, how esports and gaming are monetized, and why Formula 1 and NASCAR have become global business phenomena through sponsorships, media rights, and brand valuation. Students also explore the luxury and collector vehicle market — how scarcity is engineered, how collectible assets are valued, and what makes certain vehicles appreciate while others lose value. In the applied challenge, students design a mock sports or racing franchise, or analyze a real luxury vehicle listing, and build a business or investment case.",
-      takeaway: "Students learn the economics behind competition and collectibility — developing business model thinking, branding awareness, valuation logic, and a deeper understanding of how sport, motorsport, and luxury markets become enterprise.",
-      earlyBird: "$350", regular: "$450", format: "Single Day",
-    },
-    {
-      date: "Aug 6", label: "Personal Finance & Financial Literacy for Teens",
-      topic: "Personal Finance & Financial Literacy for Teens",
-      tag: "FIRST PAYCHECK · BUDGETING · CREDIT · CAR PAYMENTS · INVESTING · AVOIDING DEBT",
-      desc: "This lab teaches the financial lessons many adults wish they had learned before life became expensive. Students learn how money works in the real world: income, taxes, budgeting, credit, debt, saving, investing, rent, insurance, salary negotiation, and the true cost of bad financial decisions. Students learn how to read a paycheck, understand a credit score, compare debt costs, calculate compound interest, think about investing fundamentals, and recognize financial traps. The goal is to build real life judgment and financial literacy early.",
-      takeaway: "Students learn how to make smarter financial decisions before the stakes are high — developing practical money confidence, responsibility, risk awareness, and early financial independence.",
-      earlyBird: "$350", regular: "$450", format: "Single Day",
-    },
-    {
-      date: "Aug 11", label: "Leadership, Negotiation & Power Dynamics",
-      topic: "Leadership, Negotiation & Power Dynamics",
-      tag: "LEADERSHIP PSYCHOLOGY · NEGOTIATION MECHANICS · INFLUENCE · LIVE SIMULATION",
-      desc: "Leadership is not a title. It is the ability to influence people, set standards, make decisions, read a room, negotiate fairly, and take responsibility when pressure rises. This lab introduces students to the real mechanics of influence and leadership. Students study persuasion, negotiation, body language, rhetoric, incentives, group dynamics, decision-making, power, trust, and credibility. They learn how to project confidence, influence others, and command authority while earning respect. The day includes a live negotiation simulation and a team leadership challenge.",
-      takeaway: "Students learn how leaders move people toward action — developing maturity, negotiation awareness, persuasive communication, team judgment, and stronger leadership presence.",
-      earlyBird: "$350", regular: "$450", format: "Single Day",
-    },
-    {
-      date: "Aug 13", label: "Wall Street, Stocks & Investor Thinking",
-      topic: "Wall Street, Stocks & Investor Thinking",
-      tag: "STOCKS · BONDS · ETFS · CRYPTO · INVESTOR THINKING · SIMULATED TRADING",
-      desc: "This lab introduces students to markets and the Wall Street world of trading, investment and fintech innovation. Students learn how exchanges work, what stocks, bonds, ETFs, indices, and crypto assets are, why prices move, how investors form a thesis, and why risk management matters more than hype. Students examine diversification, market psychology, bubbles, volatility, scams, financial media, and the difference between investing, trading, gambling, and speculation. The goal is not to encourage risky behavior. The goal is to teach students how disciplined investors think. The applied portion includes a simulated investing exercise where students build an investment thesis, diversified portfolio, explain their reasoning, and defend their decisions.",
-      takeaway: "Students learn how markets move, how investors make decisions, and how not to get fooled by hype — building financial literacy, analytical discipline, and risk-aware thinking.",
-      earlyBird: "$350", regular: "$450", format: "Single Day",
-    },
-    {
-      date: "Aug 20", label: "College, Career & Personal Strategy",
-      topic: "College, Career & Personal Strategy",
-      tag: "CAREER INTERESTS · COLLEGE GOALS · FUTURE ROADMAP · RESUME · INTERVIEWS",
-      desc: "High school students are often told to \"prepare for the future,\" but rarely shown how to think strategically about who they are becoming. This lab helps students connect their strengths, interests, academic choices, extracurriculars, career curiosity, and personal story into a clearer direction. Students explore emerging careers, college positioning, resume development, personal narrative, internships, leadership experiences, interview answers, and how to communicate their value with maturity. They learn how selective environments evaluate not just grades, but direction, initiative, depth, and fit. The college strategy session is led by a top Orange County college advisor and former member of the Yale University admissions committee.",
-      takeaway: "Students leave with a stronger sense of direction, a clearer personal narrative, and practical preparation for college applications, interviews, internships, and future opportunities.",
-      earlyBird: "$350", regular: "$450", format: "Single Day",
-    },
+  const founderDaySchedule = [
+    { time: "10:00 – 10:20 AM", block: "Arrival, Orientation & Team Formation", desc: "Students arrive, meet their team of three to four peers, and are welcomed by TAs and Academy coordinators. Faculty introduce the day's agenda — by 4:00 PM, every team will pitch a real venture — setting a tone of serious, focused ambition from the first minute." },
+    { time: "10:20 – 11:05 AM", block: "Public Speaking & Executive Presence", desc: "Students learn the fundamentals of presence and executive rhetoric — the pitch toolkit of a founder, which students will use to deliver their own pitch on this same stage at 4:00 PM.", topics: ["Posture, physical bearing, and command of a room", "Voice projection, tonal control, and deliberate pacing", "Eye contact and the mechanics of audience command", "First impressions — how a room forms judgment within seconds", "Composure and command under pressure", "Narrative architecture for a founder's pitch", "Recovering from a stumble without breaking presence", "Impromptu response and live questioning"] },
+    { time: "11:05 – 11:50 AM", block: "Financial Literacy & Investor Thinking", desc: "How money actually works & financial literacy for teens — the fundamentals of how founders monetize their business models and investors evaluate business ventures.", topics: ["Reading a paycheck — gross earnings, taxation, and net compensation", "Personal budgeting and cash flow discipline", "Credit, credit scores, and the true cost of debt", "Saving versus investing — the fundamentals of capital growth", "How investors evaluate an opportunity", "Revenue models and how ventures generate income", "Unit economics — cost structure, pricing, and margin", "Equity, valuation, and ownership fundamentals", "Common financial missteps young founders must avoid"] },
+    { time: "11:50 AM – 12:05 PM", block: "Break", desc: "A short pause before the day's most hands-on stretch begins." },
+    { time: "12:05 – 12:50 PM", block: "AI & the Future of Work", desc: "A practical, serious introduction to using AI as a thinking partner, not a shortcut.", topics: ["How modern AI systems actually function", "Prompt strategy — extracting precise, useful output", "Verification discipline — identifying hallucination and bias", "Constructing a personal AI advisory board for academic and professional use", "Detecting AI-driven scams and manipulated content", "Responsible and ethical AI practice", "AI's transformation of careers, industries, and the labor market", "Deploying AI as a strategic thinking partner"] },
+    { time: "12:50 – 1:35 PM", block: "Lunch", desc: "A catered midday break — students continue informal conversation with faculty and their teammates." },
+    { time: "1:35 – 3:05 PM", block: "The Venture Challenge", desc: "Faculty present teams with two real-world problems to choose from: a community-impact challenge or a market-gap challenge. Each team selects one and builds a complete venture plan around it — exactly as a real founder would, using the knowledge and skills gained earlier, with the help of assigned TAs and faculty members throughout.", topics: ["Identifying a genuine gap — civic or commercial", "Defining and profiling the target customer", "Constructing a precise solution thesis", "Business model architecture", "Go-to-market and positioning strategy", "Competitive analysis and points of differentiation", "Framing a clear, disciplined ask", "Operating effectively within a founding team"] },
+    { time: "3:05 – 4:05 PM", block: "Applied Capstone: Build Your Team Pitch", desc: "Teams translate their venture plan into a rehearsed, sixty-second founder pitch with the help and training of faculty and TAs.", topics: ["Founder pitch architecture — hook, problem, solution, model, ask", "Using AI to refine language and sharpen delivery", "Allocating speaking roles across the founding team", "Rehearsal, critique, and iterative refinement", "Pacing and command within a sixty-second pitch", "Defending the venture under live questioning"] },
+    { time: "4:05 – 4:35 PM", block: "The Showcase", desc: "Each team delivers its pitch live before a judging panel of faculty, invited founders, and investors — experiencing the same kind of questions and environment a real founder faces when raising capital." },
+    { time: "4:35 – 5:00 PM", block: "Transition", desc: "Room reset for the Family Soirée." },
+    { time: "5:00 – 6:00 PM", block: "The Family Soirée", desc: "Parents are warmly invited to join the final portion of the day for a closing reception with light refreshments. This session introduces families to the full Excalibur Academy experience and provides a clear overview of the academic-year pathway." },
   ];
 
-  const schedule = [
-    { time: "10:00 AM", block: "Arrival & Orientation", dur: "15 minutes", desc: "Students arrive, meet their cohort, and are welcomed into the discipline of the day. Faculty introduce the theme, expectations, and standards of the workshop, setting the tone for a serious, focused, and highly engaged experience." },
-    { time: "10:15 AM – 1:00 PM", block: "The Morning Immersion", dur: "2 hours 45 minutes", desc: "The day begins with faculty-led instruction in the core ideas, frameworks, language, and real-world context behind the subject. Whether the focus is AI, finance, leadership, public speaking, real estate, venture building, or negotiation, students are taught the material as practitioners use it — with clarity, relevance, and application. This is not passive lecture. Students are challenged to think, respond, ask questions, and see exactly how the discipline plays out in real decisions, stakes, and outcomes." },
-    { time: "1:00 – 1:45 PM", block: "Luncheon", dur: "45 minutes", desc: "A catered midday pause allows students to reset while continuing informal conversation with peers, faculty, and teaching assistants." },
-    { time: "1:45 – 4:00 PM", block: "The Applied Workshop", dur: "2 hours 15 minutes", desc: "This is the heart of the day. Students move from theory into execution. Depending on the lab, they may build a pitch, analyze an investment, code an AI agent, design a venture concept, deliver a speech, negotiate a deal, create a strategy, evaluate a real-world case, or defend a recommendation. Faculty and teaching assistants guide students closely as they work through the challenge, sharpen their thinking, and prepare a tangible final outcome. The objective is not simply to understand the subject. The objective is to use it." },
-    { time: "4:00 – 4:30 PM", block: "The Showcase", dur: "30 minutes", desc: "Each student presents the work of the day to peers and faculty. This may take the form of a speech, pitch, investment analysis, business model, negotiation outcome, strategy brief, prototype, or portfolio piece. The Showcase gives students the experience of standing behind their work, communicating it clearly, and receiving feedback in a serious but supportive environment." },
-    { time: "4:30 – 5:00 PM", block: "Academy Information Session & Closing Reception", dur: "30 minutes", desc: "Parents are warmly invited to join the final portion of the day for a closing reception with light refreshments. This session introduces families to the full Excalibur Academy experience and provides a clear overview of the academic-year pathway." },
-  ];
+  const founderDayDates = ["July 28", "August 11"];
 
-  const [activeLabIdx, setActiveLabIdx] = useState(null);
-  const [scheduleTab, setScheduleTab] = useState("single");
-  const isWeekend = (lab) => lab.format === "Weekend Intensive";
-  const parseLabDate = (dateStr) => {
-    const months = { January:0, February:1, March:2, April:3, May:4, June:5, July:6, August:7, September:8, October:9, November:10, December:11 };
-    const [monthName, dayPart] = dateStr.split(" ");
-    const day = parseInt(dayPart.split(/[–-]/)[0], 10);
-    return new Date(2026, months[monthName], day);
-  };
-  const applyByDate = (dateStr, daysBefore) => {
-    const d = parseLabDate(dateStr);
-    d.setDate(d.getDate() - daysBefore);
-    return d.toLocaleDateString(undefined, { month: "short", day: "numeric" });
-  };
+  const [openBlockIdx, setOpenBlockIdx] = useState(null);
 
   return (
     <div style={{ background: dark, minHeight: "100vh" }}>
 
       {/* BREADCRUMB */}
-      <Breadcrumb items={[{ label: "View Programs", page: "programs" }, { label: "Masterclass Labs", page: "summer-detail" }]} setPage={setPage} />
+      <Breadcrumb items={[{ label: "View Programs", page: "programs" }, { label: "The Founder's Day", page: "summer-detail" }]} setPage={setPage} />
 
       {/* ── HERO ── */}
-      <div style={{ position: "relative", overflow: "hidden", minHeight: isMobile ? 420 : 580 }}>
-        <img src="https://i.imgur.com/obiNhvF.jpeg" alt="Excalibur Masterclass Labs" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "center" }} />
-        <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(10,10,8,.92) 0%, rgba(10,10,8,.5) 55%, rgba(10,10,8,.1) 100%)" }} />
-        <div style={{ position: "relative", maxWidth: 1100, margin: "0 auto", padding: isMobile ? "100px 24px 52px" : "140px 80px 72px", display: "flex", flexDirection: "column", justifyContent: "flex-end", minHeight: isMobile ? 420 : 580 }}>
-          <p style={{ fontFamily: sans, fontSize: 10, letterSpacing: "0.45em", color: gold, fontWeight: 700, textTransform: "uppercase", marginBottom: 16 }}>Summer 2026 · South Orange County, CA</p>
-          <h1 style={{ fontFamily: cg, fontSize: isMobile ? "clamp(36px,9vw,56px)" : "clamp(52px,6vw,82px)", fontWeight: 400, color: parch, lineHeight: 1.0, letterSpacing: "0.02em", marginBottom: 20, textTransform: "uppercase" }}>Excalibur<br />Masterclass Labs</h1>
-          <p style={{ fontFamily: lora, fontSize: isMobile ? 15 : 18, color: parch, fontWeight: 300, fontStyle: "italic", lineHeight: 1.7, maxWidth: 620, marginBottom: 32 }}>A summer introduction to Excalibur Academy's flagship program — immersive Masterclass Labs where students meet faculty, learn alongside ambitious peers, and develop communication, leadership, business judgment, and real-world capability through rigorous hands-on learning.</p>
-          <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
-            <button onClick={() => { const el = document.getElementById("labs-section"); if (el) el.scrollIntoView({ behavior: "smooth" }); }} style={{ fontFamily: sans, fontSize: 10, letterSpacing: "0.2em", padding: "14px 32px", background: gold, border: "none", color: dark, textTransform: "uppercase", cursor: "pointer", fontWeight: 700 }}>View This Summer's Labs</button>
-            <button onClick={() => setPage("portal")} style={{ fontFamily: sans, fontSize: 10, letterSpacing: "0.2em", padding: "14px 28px", background: "transparent", border: `1px solid rgba(228,213,193,.4)`, color: parch, textTransform: "uppercase", cursor: "pointer", fontWeight: 600 }}>Apply Now →</button>
-          </div>
-        </div>
-      </div>
+      <section style={{ background: dark, padding: 0, overflow: "hidden" }}>
+        <div style={{ maxWidth: 1400, margin: "0 auto", display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", minHeight: isMobile ? "auto" : 620, alignItems: "stretch" }}>
 
-      {/* ── SUMMER WAVES STATUS BANNER ── */}
-      <div style={{ background: "#D9C7A9", borderTop: "1px solid rgba(0,0,0,.08)", borderBottom: "1px solid rgba(0,0,0,.08)", padding: isMobile ? "20px 24px" : "20px 80px" }}>
-        <div style={{ maxWidth: 1100, margin: "0 auto", display: "flex", alignItems: "center", gap: 24, flexWrap: "wrap" }}>
-          <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-            <div style={{ width: 8, height: 8, borderRadius: "50%", background: "#888" }} />
-            <span style={{ fontFamily: sans, fontSize: 11, letterSpacing: "0.2em", color: "#6B5C40", textTransform: "uppercase", fontWeight: 700 }}>Summer Intensive Waves — Closed · Cohorts Full</span>
+          {/* LEFT — heading, copy, buttons */}
+          <div style={{ padding: isMobile ? "72px 24px 56px" : "120px 80px 96px", display: "flex", flexDirection: "column", justifyContent: "center" }}>
+            <div style={{ width: 32, height: 1, background: gold, opacity: .6, marginBottom: 32 }} />
+            <p style={{ fontFamily: sans, fontSize: 10, letterSpacing: "0.45em", color: gold, fontWeight: 700, textTransform: "uppercase", marginBottom: 16 }}>Summer 2026 · South Orange County, CA</p>
+            <h1 style={{ fontFamily: cg, fontSize: isMobile ? "clamp(36px,9vw,56px)" : "clamp(52px,6vw,82px)", fontWeight: 400, color: parch, lineHeight: 1.0, letterSpacing: "0.02em", marginBottom: 20, textTransform: "uppercase" }}>The Excalibur<br />Founder's Day</h1>
+            <div style={{ width: 48, height: 1, background: gold, opacity: .4, marginBottom: 24 }} />
+            <p style={{ fontFamily: lora, fontSize: isMobile ? 15 : 18, color: parch, fontWeight: 300, fontStyle: "italic", lineHeight: 1.7, maxWidth: 480, marginBottom: 32 }}>A single, immersive day for ambitious high school students — and the perfect introduction to Excalibur Academy.</p>
+            <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
+              <button onClick={() => { const el = document.getElementById("day-structure"); if (el) el.scrollIntoView({ behavior: "smooth" }); }} style={{ fontFamily: sans, fontSize: 10, letterSpacing: "0.2em", padding: "14px 32px", background: gold, border: "none", color: dark, textTransform: "uppercase", cursor: "pointer", fontWeight: 700 }}>View the Structure of the Day</button>
+              <button onClick={() => setPage("portal")} style={{ fontFamily: sans, fontSize: 10, letterSpacing: "0.2em", padding: "14px 28px", background: "transparent", border: `1px solid rgba(228,213,193,.4)`, color: parch, textTransform: "uppercase", cursor: "pointer", fontWeight: 600 }}>Apply Now →</button>
+            </div>
           </div>
-          <div style={{ height: 1, flex: 1, background: "rgba(0,0,0,.1)" }} />
-          <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-            <div style={{ width: 8, height: 8, borderRadius: "50%", background: "#4FB07A" }} />
-            <span style={{ fontFamily: sans, fontSize: 11, letterSpacing: "0.2em", color: "#3A7A5C", textTransform: "uppercase", fontWeight: 700 }}>Masterclass Labs — Now Enrolling</span>
-          </div>
-        </div>
-      </div>
 
-      {/* ── WHAT IS A MASTERCLASS LAB ── */}
+          {/* RIGHT — photo */}
+          {!isMobile && (
+            <div style={{ position: "relative", overflow: "hidden" }}>
+              <img src="https://i.imgur.com/WmrwNcO.jpeg" alt="The Excalibur Founder's Day" style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center" }} />
+              <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to right, #100F0C 0%, transparent 30%)" }} />
+              <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, #100F0C 0%, transparent 30%)" }} />
+              <div style={{ position: "absolute", bottom: 40, right: 40 }}>
+                <div style={{ border: "1px solid rgba(164,141,110,.6)", padding: "12px 24px", backdropFilter: "blur(4px)", background: "rgba(16,15,12,.45)" }}>
+                  <p style={{ fontFamily: sans, fontSize: 8, letterSpacing: "0.4em", color: gold, textTransform: "uppercase", margin: 0 }}>Jul 28 &amp; Aug 11, 2026</p>
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
+      </section>
+
+      {/* ── WHAT THIS DAY IS ── */}
       <div style={{ background: dark, padding: isMobile ? "72px 24px" : "100px 80px", borderBottom: `1px solid rgba(164,141,110,.1)` }}>
         <div style={{ maxWidth: 1100, margin: "0 auto", display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: isMobile ? 40 : 80, alignItems: "center" }}>
           <div>
-            <p style={{ fontFamily: sans, fontSize: 10, letterSpacing: "0.45em", color: gold, fontWeight: 700, textTransform: "uppercase", marginBottom: 20 }}>Introduction to the Academy</p>
-            <h2 style={{ fontFamily: cg, fontSize: isMobile ? "clamp(32px,7vw,48px)" : "clamp(40px,4vw,60px)", fontWeight: 400, color: parch, lineHeight: 1.05, textTransform: "uppercase", letterSpacing: "0.04em", marginBottom: 24 }}>Masterclass Overview</h2>
+            <p style={{ fontFamily: sans, fontSize: 10, letterSpacing: "0.45em", color: gold, fontWeight: 700, textTransform: "uppercase", marginBottom: 20 }}>What This Day Is</p>
+            <h2 style={{ fontFamily: cg, fontSize: isMobile ? "clamp(32px,7vw,48px)" : "clamp(40px,4vw,60px)", fontWeight: 400, color: parch, lineHeight: 1.05, textTransform: "uppercase", letterSpacing: "0.04em", marginBottom: 24 }}>Live Like a Founder, for One Day</h2>
             <div style={{ width: 36, height: 1, background: gold, marginBottom: 24 }} />
-            <p style={{ fontFamily: lora, fontSize: isMobile ? 15 : 17, color: parch, fontWeight: 300, lineHeight: 1.85, marginBottom: 20 }}>Immersive, real-world Masterclass Labs designed as the perfect introduction to Excalibur Academy's flagship program. Experience our distinctive teaching philosophy, meet the faculty, learn alongside future classmates, and discover how the Academy develops communication, leadership, business judgment, and real-world capability through rigorous, hands-on learning.</p>
-            <p style={{ fontFamily: lora, fontSize: isMobile ? 15 : 17, color: parch, fontWeight: 300, lineHeight: 1.85, marginBottom: 20 }}>These are not passive lectures or generic enrichment classes. Students are placed in applied scenarios where they must think, speak, build, analyze, negotiate, present, and defend their ideas.</p>
-            <p style={{ fontFamily: lora, fontSize: isMobile ? 15 : 17, color: parch, fontWeight: 300, lineHeight: 1.85 }}>Each Masterclass Lab ends with a tangible outcome: a pitch, presentation, strategy, roadmap, analysis, simulation, or live performance. Students leave not only with new knowledge, but with evidence of what they can create, explain, and defend.</p>
+            <p style={{ fontFamily: lora, fontSize: isMobile ? 15 : 17, color: parch, fontWeight: 300, lineHeight: 1.85, marginBottom: 20 }}>Spend a day living like a founder. In one day, students build the core skills of the Academy — public speaking, financial literacy, AI fluency, and entrepreneurial thinking — then put it all to work building and pitching a real venture in teams, live, in front of faculty, peers, families, and invited real founders and investors.</p>
+            <p style={{ fontFamily: lora, fontSize: isMobile ? 15 : 17, color: parch, fontWeight: 300, lineHeight: 1.85 }}>This single day is designed as your family's introduction to Excalibur Academy's flagship year-round program — Foundation Semester, Venture Semester, and the Full Academic Year.</p>
           </div>
           <div>
             <div style={{ background: "#0D0C0A", border: `1px solid rgba(164,141,110,.25)`, padding: isMobile ? 28 : 40 }}>
-              <p style={{ fontFamily: sans, fontSize: 10, letterSpacing: "0.35em", color: gold, fontWeight: 700, textTransform: "uppercase", marginBottom: 24 }}>Two Ways In This Summer</p>
-              {[
-                { label: "Single-Day Masterclass Lab", sub: "One discipline. One day. One tangible outcome.", price: "From $425" },
-                { label: "The Venture Launchpad", sub: "48 hours. A venture developed, business plan built and presented live.", price: "From $895" },
-              ].map((item, i) => (
-                <div key={i} style={{ paddingBottom: i === 0 ? 24 : 0, marginBottom: i === 0 ? 24 : 0, borderBottom: i === 0 ? `1px solid rgba(164,141,110,.15)` : "none" }}>
-                  <p style={{ fontFamily: cg, fontSize: isMobile ? 20 : 24, fontWeight: 400, color: parch, marginBottom: 6 }}>{item.label}</p>
-                  <p style={{ fontFamily: lora, fontSize: 14, color: parch, fontWeight: 300, lineHeight: 1.65, fontStyle: "italic", marginBottom: 10 }}>{item.sub}</p>
-                  <p style={{ fontFamily: sans, fontSize: 13, color: gold, fontWeight: 700, letterSpacing: "0.05em" }}>{item.price}</p>
-                </div>
-              ))}
-            </div>
-            <div style={{ marginTop: 16, padding: "16px 20px", background: "rgba(164,141,110,.06)", border: `1px solid rgba(164,141,110,.15)` }}>
-              <p style={{ fontFamily: lora, fontSize: 13, color: parch, fontWeight: 400, lineHeight: 1.7, fontStyle: "italic" }}>Each Lab concludes with an Academy Information Session, where families are introduced to Excalibur's academic-year programs and can review curriculum, schedules, and standards firsthand.</p>
+              <p style={{ fontFamily: sans, fontSize: 10, letterSpacing: "0.35em", color: gold, fontWeight: 700, textTransform: "uppercase", marginBottom: 24 }}>Taught by Excalibur's Lead Faculty</p>
+              <p style={{ fontFamily: lora, fontSize: 14, color: parch, fontWeight: 300, lineHeight: 1.85 }}>Our mentors come from the arenas where leadership is tested: a CEO who built the world's first autonomous racing series, directed the Formula BMW program, and oversaw a $13B NASDAQ listing; a former Citigroup Managing Director and Georgetown MBA professor with 100+ Wall Street M&amp;A transactions and 600+ CEO advisory engagements; a Top 10 Dale Carnegie Public Speaking Trainer in North America; and a doctoral candidate serving as an Orange County Sheriff's Department Deputy Sheriff. They have built companies, advised CEOs, taught MBA students, led in public service, and bring that experience directly into the Excalibur classroom.</p>
             </div>
           </div>
         </div>
       </div>
 
-      {/* ── QUICK REFERENCE TABLE ── */}
-      <div style={{ background: "#D9C7A9", padding: isMobile ? "72px 24px" : "100px 80px" }}>
+      {/* ── STRUCTURE OF THE DAY ── */}
+      <div id="day-structure" style={{ background: "#D9C7A9", padding: isMobile ? "72px 24px" : "100px 80px" }}>
         <div style={{ maxWidth: 1100, margin: "0 auto" }}>
-          <p style={{ fontFamily: sans, fontSize: 10, letterSpacing: "0.45em", color: "#34150F", fontWeight: 700, textTransform: "uppercase", marginBottom: 20 }}>Quick Reference</p>
-          <h2 style={{ fontFamily: cg, fontSize: isMobile ? "clamp(28px,6vw,44px)" : "clamp(36px,4vw,52px)", fontWeight: 400, color: "#1A0A08", textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: 36 }}>This Summer's Schedule</h2>
-          <div style={{ overflowX: "auto" }}>
-            <table style={{ width: "100%", borderCollapse: "collapse", fontFamily: lora, fontSize: isMobile ? 13 : 14 }}>
-              <thead>
-                <tr style={{ borderBottom: "2px solid #34150F" }}>
-                  {["Date", "Masterclass Lab", "Topic", "Early Bird", "Regular"].map(h => (
-                    <th key={h} style={{ fontFamily: sans, fontSize: 9, letterSpacing: "0.2em", color: "#34150F", textTransform: "uppercase", fontWeight: 700, padding: "12px 16px", textAlign: "left" }}>{h}</th>
-                  ))}
-                </tr>
-              </thead>
-              <tbody>
-                {labs.map((lab, i) => (
-                  <tr key={i} style={{ borderBottom: "1px solid rgba(52,21,15,.15)", background: lab.full ? "rgba(52,21,15,.06)" : isWeekend(lab) ? "#34150F" : "transparent" }}>
-                    <td style={{ padding: "14px 16px", color: lab.full ? "#8A7A63" : isWeekend(lab) ? "#D9C7A9" : "#34150F", whiteSpace: "nowrap" }}>{lab.date}</td>
-                    <td style={{ padding: "14px 16px", color: lab.full ? "#8A7A63" : isWeekend(lab) ? "#D9C7A9" : "#1A1208", fontWeight: 600 }}>{lab.label}</td>
-                    <td style={{ padding: "14px 16px", color: lab.full ? "#8A7A63" : isWeekend(lab) ? "rgba(217,199,169,.75)" : "#6B5C40", fontStyle: "italic" }}>{lab.topic}</td>
-                    {lab.full ? (
-                      <td colSpan={2} style={{ padding: "14px 16px", color: "#A0522D", fontWeight: 700, fontSize: 12, letterSpacing: "0.06em", textTransform: "uppercase" }}>Enrollment Closed — Masterclass Full</td>
-                    ) : (
-                      <>
-                        <td style={{ padding: "14px 16px", color: isWeekend(lab) ? "#D9C7A9" : "#1A1208", fontWeight: 600, whiteSpace: "nowrap" }}>{lab.earlyBird}</td>
-                        <td style={{ padding: "14px 16px", color: isWeekend(lab) ? "#D9C7A9" : "#1A1208", whiteSpace: "nowrap" }}>{lab.regular}</td>
-                      </>
-                    )}
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-          <p style={{ fontFamily: lora, fontSize: 13, color: "#3A2012", fontStyle: "italic", marginTop: 20 }}>Shaded rows denote the Founder's Lab, our flagship weekend intensive. Early enrollment is recommended, as dates are confirmed on a first-come basis.</p>
-        </div>
-      </div>
-
-      {/* ── THIS SUMMER'S LABS ── */}
-      <div id="labs-section" style={{ background: dark, padding: isMobile ? "72px 24px" : "100px 80px" }}>
-        <div style={{ maxWidth: 1100, margin: "0 auto" }}>
-          <p style={{ fontFamily: sans, fontSize: 10, letterSpacing: "0.45em", color: gold, fontWeight: 700, textTransform: "uppercase", marginBottom: 20, textAlign: "center" }}>Summer 2026 Schedule</p>
-          <h2 style={{ fontFamily: cg, fontSize: isMobile ? "clamp(32px,7vw,48px)" : "clamp(40px,4vw,56px)", fontWeight: 400, color: parch, lineHeight: 1.0, textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: 12, textAlign: "center" }}>This Summer's Masterclass Labs</h2>
-          <p style={{ fontFamily: lora, fontSize: isMobile ? 14 : 16, color: parch, fontStyle: "italic", fontWeight: 300, lineHeight: 1.8, maxWidth: 620, margin: "0 auto 52px", textAlign: "center" }}>Each lab below is a complete, self-contained day — a discipline taught with rigor, and a real outcome built by hand.</p>
-
-          {/* PRICING LEGEND */}
-          <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(2,1fr)", gap: 12, marginBottom: 48 }}>
-            {[
-              { tier: "Early Bird", desc: "Best rate. Available until 1 week before each date.", badge: "RESERVE NOW" },
-              { tier: "Regular", desc: "Standard rate. Available until 3 days before the date.", badge: "" },
-            ].map((t, i) => (
-              <div key={i} style={{ background: "#0D0C0A", border: `1px solid rgba(164,141,110,.2)`, padding: "20px 24px" }}>
-                <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 8 }}>
-                  <p style={{ fontFamily: sans, fontSize: 12, fontWeight: 700, color: parch, letterSpacing: "0.05em" }}>{t.tier}</p>
-                  {t.badge && <span style={{ fontFamily: sans, fontSize: 9, letterSpacing: "0.12em", color: dark, background: gold, padding: "2px 8px", fontWeight: 700, textTransform: "uppercase" }}>{t.badge}</span>}
-                </div>
-                <p style={{ fontFamily: lora, fontSize: 13, color: "rgba(228,213,193,.65)", lineHeight: 1.6 }}>{t.desc}</p>
-              </div>
-            ))}
-          </div>
-
-          <div style={{ display: "flex", flexDirection: "column", gap: 2 }}>
-            {labs.map((lab, i) => {
-              const open = activeLabIdx === i;
-              const weekend = isWeekend(lab);
+          <p style={{ fontFamily: sans, fontSize: 10, letterSpacing: "0.45em", color: "#34150F", fontWeight: 700, textTransform: "uppercase", marginBottom: 20, textAlign: "center" }}>10:00 AM – 6:00 PM</p>
+          <h2 style={{ fontFamily: cg, fontSize: isMobile ? "clamp(32px,7vw,48px)" : "clamp(40px,4vw,56px)", fontWeight: 400, color: "#1A0A08", lineHeight: 1.0, textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: 48, textAlign: "center" }}>The Structure of the Day</h2>
+          <div style={{ display: "flex", flexDirection: "column", gap: 0 }}>
+            {founderDaySchedule.map((block, i) => {
+              const open = openBlockIdx === i;
+              const hasTopics = !!block.topics;
               return (
-                <div key={i} style={{ background: weekend ? "#34150F" : dark, borderTop: `2px solid ${lab.full ? "rgba(164,141,110,.35)" : weekend ? "#D9C7A9" : gold}`, opacity: lab.full ? 0.7 : 1 }}>
-                  <div
-                    onClick={() => setActiveLabIdx(open ? null : i)}
-                    style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr auto" : "130px 1fr auto", gap: isMobile ? 12 : 24, padding: isMobile ? "24px 20px" : "32px 44px", alignItems: "center", cursor: "pointer" }}
-                  >
-                    {!isMobile && <p style={{ fontFamily: cg, fontSize: 17, color: lab.full ? "rgba(228,213,193,.4)" : gold, fontWeight: 400 }}>{lab.date}</p>}
-                    <div>
-                      {isMobile && <p style={{ fontFamily: sans, fontSize: 9, letterSpacing: "0.2em", color: lab.full ? "rgba(228,213,193,.4)" : gold, fontWeight: 700, textTransform: "uppercase", marginBottom: 4 }}>{lab.date}</p>}
-                      <p style={{ fontFamily: cg, fontSize: isMobile ? 20 : 26, color: lab.full ? "rgba(228,213,193,.55)" : parch, fontWeight: 400 }}>{lab.label}</p>
-                      <p style={{ fontFamily: cg, fontSize: isMobile ? 14 : 18, color: "rgba(228,213,193,.6)", fontWeight: 300, marginTop: 4 }}>{lab.topic}</p>
-                    </div>
-                    <div style={{ textAlign: "right" }}>
-                      {lab.full ? (
-                        <p style={{ fontFamily: sans, fontSize: 13, color: "#C08552", fontWeight: 700, letterSpacing: "0.05em", textTransform: "uppercase" }}>Enrollment Closed<br/>Masterclass Full</p>
-                      ) : (
-                        <>
-                          <p style={{ fontFamily: sans, fontSize: 11, color: gold, fontWeight: 700, letterSpacing: "0.05em" }}>From {lab.earlyBird}</p>
-                          <p style={{ fontFamily: sans, fontSize: 9, color: "rgba(228,213,193,.45)", letterSpacing: "0.1em", textTransform: "uppercase", marginTop: 2 }}>{weekend ? "Weekend" : "Single Day"}</p>
-                        </>
-                      )}
-                      <p style={{ fontFamily: sans, fontSize: 18, color: "rgba(228,213,193,.4)", marginTop: 6 }}>{open ? "↑" : "↓"}</p>
-                    </div>
+                <div key={i} style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "220px 1fr", borderTop: i === 0 ? "2px solid #34150F" : "1px solid rgba(52,21,15,.15)" }}>
+                  <div style={{ padding: isMobile ? "24px 24px 8px" : "32px 36px", borderRight: isMobile ? "none" : `1px solid rgba(52,21,15,.15)` }}>
+                    <p style={{ fontFamily: cg, fontSize: isMobile ? 18 : 22, color: "#34150F", fontWeight: 400 }}>{block.time}</p>
                   </div>
-
-                  {open && (
-                    <div style={{ borderTop: `1px solid rgba(164,141,110,.15)`, padding: isMobile ? "28px 20px 36px" : "36px 44px 48px" }}>
-                      <p style={{ fontFamily: sans, fontSize: 9, letterSpacing: "0.35em", color: gold, fontWeight: 700, textTransform: "uppercase", marginBottom: 14 }}>{lab.tag}</p>
-                      <p style={{ fontFamily: lora, fontSize: isMobile ? 15 : 16, color: parch, fontWeight: 300, lineHeight: 1.85, marginBottom: 28, maxWidth: 780 }}>{lab.desc}</p>
-
-                      <div style={{ background: "rgba(164,141,110,.07)", border: `1px solid rgba(164,141,110,.2)`, padding: "20px 24px", marginBottom: 28, maxWidth: 680 }}>
-                        <p style={{ fontFamily: sans, fontSize: 9, letterSpacing: "0.35em", color: gold, fontWeight: 700, textTransform: "uppercase", marginBottom: 10 }}>Student Takeaway</p>
-                        <p style={{ fontFamily: lora, fontSize: isMobile ? 14 : 15, color: parch, fontStyle: "italic", lineHeight: 1.75 }}>{lab.takeaway}</p>
-                      </div>
-
-                      {lab.full ? (
-                        <div style={{ background: "rgba(192,133,82,.1)", border: "1px solid rgba(192,133,82,.3)", padding: "16px 20px", maxWidth: 480 }}>
-                          <p style={{ fontFamily: sans, fontSize: 15, color: "#C08552", fontWeight: 700, letterSpacing: "0.05em", textTransform: "uppercase" }}>Enrollment Closed — Masterclass Full</p>
-                          <p style={{ fontFamily: lora, fontSize: 13, color: "rgba(228,213,193,.7)", marginTop: 6, lineHeight: 1.6 }}>This lab is no longer accepting applications. Explore the other Labs still open this summer above.</p>
-                        </div>
-                      ) : (
-                        <>
-                          <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(2,1fr)", gap: 12, maxWidth: 380, marginBottom: 28 }}>
-                            {[
-                              { tier: "Early Bird", price: lab.earlyBird, applyBy: applyByDate(lab.date, 7) },
-                              { tier: "Regular", price: lab.regular, applyBy: applyByDate(lab.date, 3) },
-                            ].map((p, pi) => (
-                              <div key={pi} style={{ background: dark, border: `1px solid rgba(164,141,110,.25)`, padding: "14px 18px" }}>
-                                <p style={{ fontFamily: sans, fontSize: 9, letterSpacing: "0.15em", color: "rgba(228,213,193,.5)", textTransform: "uppercase", marginBottom: 6 }}>{p.tier}</p>
-                                <p style={{ fontFamily: cg, fontSize: 24, color: parch, fontWeight: 400 }}>{p.price}</p>
-                                <p style={{ fontFamily: sans, fontSize: 10, color: "rgba(228,213,193,.5)", marginTop: 4 }}>Apply by {p.applyBy}</p>
+                  <div style={{ padding: isMobile ? "8px 24px 28px" : "32px 44px" }}>
+                    <p style={{ fontFamily: cg, fontSize: isMobile ? 18 : 22, color: "#1A0A08", fontWeight: 400, marginBottom: 10 }}>{block.block}</p>
+                    <p style={{ fontFamily: lora, fontSize: isMobile ? 14 : 15, color: "#3A2012", fontWeight: 300, lineHeight: 1.8, marginBottom: hasTopics ? 12 : 0 }}>{block.desc}</p>
+                    {hasTopics && (
+                      <>
+                        <span onClick={() => setOpenBlockIdx(open ? null : i)} style={{ fontFamily: sans, fontSize: 11, letterSpacing: "0.1em", color: "#34150F", fontWeight: 700, textTransform: "uppercase", cursor: "pointer", textDecoration: "underline" }}>{open ? "Hide Topics ↑" : "View Topics Studied ↓"}</span>
+                        {open && (
+                          <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: "4px 24px", marginTop: 14 }}>
+                            {block.topics.map((t, ti) => (
+                              <div key={ti} style={{ display: "flex", gap: 8, alignItems: "flex-start", padding: "4px 0" }}>
+                                <span style={{ color: "#34150F", fontSize: 10, marginTop: 5, flexShrink: 0 }}>—</span>
+                                <span style={{ fontFamily: lora, fontSize: 13, color: "#3A2012", lineHeight: 1.6 }}>{t}</span>
                               </div>
                             ))}
                           </div>
-
-                          <button onClick={() => setPage("portal")} style={{ fontFamily: sans, fontSize: 10, letterSpacing: "0.2em", padding: "13px 28px", background: gold, border: "none", color: dark, textTransform: "uppercase", cursor: "pointer", fontWeight: 700 }}>Reserve Your Place →</button>
-                        </>
-                      )}
-                    </div>
-                  )}
+                        )}
+                      </>
+                    )}
+                  </div>
                 </div>
               );
             })}
@@ -6969,102 +6743,62 @@ function SummerDetailPage({ setPage, openInquiry }) {
         </div>
       </div>
 
-      {/* ── DAY STRUCTURE ── */}
-      <div style={{ background: "#D9C7A9", padding: isMobile ? "72px 24px" : "100px 80px" }}>
-        <div style={{ maxWidth: 1100, margin: "0 auto" }}>
-          <p style={{ fontFamily: sans, fontSize: 10, letterSpacing: "0.45em", color: "#34150F", fontWeight: 700, textTransform: "uppercase", marginBottom: 20, textAlign: "center" }}>The Architecture of the Day</p>
-          <h2 style={{ fontFamily: cg, fontSize: isMobile ? "clamp(32px,7vw,48px)" : "clamp(40px,4vw,56px)", fontWeight: 400, color: "#1A0A08", lineHeight: 1.0, textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: 12, textAlign: "center" }}>The Structure of a Day</h2>
-          <p style={{ fontFamily: lora, fontSize: isMobile ? 14 : 16, color: "#3A2012", fontWeight: 300, lineHeight: 1.8, maxWidth: 680, margin: "0 auto 12px", textAlign: "center" }}>Every Excalibur Masterclass Lab is built around a simple principle: rigor creates confidence, and confidence creates command. Each day is deliberately structured to move students from instruction to application.</p>
-          <p style={{ fontFamily: lora, fontSize: isMobile ? 14 : 16, color: "#3A2012", fontWeight: 300, lineHeight: 1.8, maxWidth: 680, margin: "0 auto 36px", textAlign: "center" }}>Students do not simply attend a class. They enter a focused academic environment, engage with expert faculty, work through a discipline in depth, and leave with something they have built, presented, analyzed, or defended.</p>
-
-          {/* TAB SWITCH */}
-          <div style={{ display: "flex", gap: 2, marginBottom: 32, justifyContent: "center" }}>
-            {[["single", "Single-Day Masterclass Lab"], ["twoday", "Two-Day Venture Launchpad Intensive"]].map(([key, label]) => (
-              <button key={key} onClick={() => setScheduleTab(key)} style={{ fontFamily: sans, fontSize: 11, letterSpacing: "0.15em", fontWeight: 700, textTransform: "uppercase", padding: "12px 28px", border: "none", cursor: "pointer", background: scheduleTab === key ? "#34150F" : "rgba(52,21,15,.15)", color: scheduleTab === key ? "#D9C7A9" : "#34150F" }}>{label}</button>
-            ))}
+      {/* ── THE VENTURE CHALLENGE ── */}
+      <div style={{ background: dark, padding: isMobile ? "72px 24px" : "100px 80px", borderBottom: `1px solid rgba(164,141,110,.1)` }}>
+        <div style={{ maxWidth: 900, margin: "0 auto", textAlign: "center" }}>
+          <p style={{ fontFamily: sans, fontSize: 10, letterSpacing: "0.45em", color: gold, fontWeight: 700, textTransform: "uppercase", marginBottom: 20 }}>The Heart of the Day</p>
+          <h2 style={{ fontFamily: cg, fontSize: isMobile ? "clamp(32px,7vw,48px)" : "clamp(40px,4vw,56px)", fontWeight: 400, color: parch, lineHeight: 1.05, textTransform: "uppercase", letterSpacing: "0.04em", marginBottom: 32 }}>The Venture Challenge</h2>
+          <p style={{ fontFamily: lora, fontSize: isMobile ? 15 : 17, color: parch, fontWeight: 300, lineHeight: 1.85, marginBottom: 40, maxWidth: 700, marginLeft: "auto", marginRight: "auto" }}>Faculty present every team with two real-world problems to choose from. Each team selects one lane and builds a complete venture plan around it — exactly as a real founder would.</p>
+          <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 12 }}>
+            <div style={{ background: "#0D0C0A", border: `1px solid rgba(164,141,110,.25)`, padding: isMobile ? 28 : 36, textAlign: "left" }}>
+              <p style={{ fontFamily: sans, fontSize: 10, letterSpacing: "0.3em", color: gold, fontWeight: 700, textTransform: "uppercase", marginBottom: 12 }}>Lane One</p>
+              <p style={{ fontFamily: cg, fontSize: isMobile ? 20 : 24, color: parch, fontWeight: 400, marginBottom: 12 }}>The Community-Impact Challenge</p>
+              <p style={{ fontFamily: lora, fontSize: 14, color: "rgba(228,213,193,.75)", fontWeight: 300, lineHeight: 1.7 }}>A genuine civic gap facing our own South Orange County community — teams build a venture designed to address it directly.</p>
+            </div>
+            <div style={{ background: "#0D0C0A", border: `1px solid rgba(164,141,110,.25)`, padding: isMobile ? 28 : 36, textAlign: "left" }}>
+              <p style={{ fontFamily: sans, fontSize: 10, letterSpacing: "0.3em", color: gold, fontWeight: 700, textTransform: "uppercase", marginBottom: 12 }}>Lane Two</p>
+              <p style={{ fontFamily: cg, fontSize: isMobile ? 20 : 24, color: parch, fontWeight: 400, marginBottom: 12 }}>The Market-Gap Challenge</p>
+              <p style={{ fontFamily: lora, fontSize: 14, color: "rgba(228,213,193,.75)", fontWeight: 300, lineHeight: 1.7 }}>A real commercial opportunity going unaddressed — teams build a venture designed to compete and win in that market.</p>
+            </div>
           </div>
+        </div>
+      </div>
 
-          {scheduleTab === "single" && (
-          <div style={{ display: "flex", flexDirection: "column", gap: 0 }}>
-            {schedule.map((block, i) => (
-              <div key={i} style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "220px 1fr", borderTop: i === 0 ? "2px solid #34150F" : "1px solid rgba(52,21,15,.15)" }}>
-                <div style={{ padding: isMobile ? "24px 24px 8px" : "32px 36px", borderRight: isMobile ? "none" : `1px solid rgba(52,21,15,.15)` }}>
-                  <p style={{ fontFamily: cg, fontSize: isMobile ? 20 : 24, color: "#34150F", fontWeight: 400, marginBottom: 4 }}>{block.time}</p>
-                  <p style={{ fontFamily: sans, fontSize: 9, letterSpacing: "0.2em", color: "#6B5C40", textTransform: "uppercase" }}>{block.dur}</p>
-                </div>
-                <div style={{ padding: isMobile ? "8px 24px 28px" : "32px 44px" }}>
-                  <p style={{ fontFamily: cg, fontSize: isMobile ? 18 : 22, color: "#1A0A08", fontWeight: 400, marginBottom: 10 }}>{block.block}</p>
-                  <p style={{ fontFamily: lora, fontSize: isMobile ? 14 : 15, color: "#3A2012", fontWeight: 300, lineHeight: 1.8 }}>{block.desc}</p>
-                  {block.block === "Academy Information Session & Closing Reception" && (
-                    <div style={{ marginTop: 16 }}>
-                      <p style={{ fontFamily: lora, fontSize: 14, color: "#1A0A08", fontStyle: "italic", fontWeight: 400, marginBottom: 10 }}>Families will receive:</p>
-                      {["A formal introduction to the Excalibur Academy mission, standards, and educational philosophy", "A complete overview of the Foundation Semester and Venture Semester curricula", "A briefing on the academic calendar, weekly schedule, cohort structure, and program expectations", "An introduction to the College Advantage, including our approach to college counseling, application strategy, executive communication, portfolio-building, and student positioning, led by a top Orange County college advisor and former member of the Yale University admissions committee", "A complete Admissions Packet, including tuition, enrollment timeline, application steps, and next actions", "An opportunity for open conversation with faculty and a dedicated Program Coordinator"].map((item, j) => (
-                        <div key={j} style={{ display: "flex", gap: 12, paddingTop: j === 0 ? 12 : 8, alignItems: "flex-start" }}>
-                          <span style={{ color: "#34150F", fontSize: 12, flexShrink: 0, marginTop: 2 }}>—</span>
-                          <p style={{ fontFamily: lora, fontSize: 14, color: "#3A2012", lineHeight: 1.7 }}>{item}</p>
-                        </div>
-                      ))}
-                    </div>
-                  )}
-                </div>
+      {/* ── DATES & PRICING ── */}
+      <div style={{ background: "#34150F", padding: isMobile ? "72px 24px" : "100px 80px" }}>
+        <div style={{ maxWidth: 900, margin: "0 auto", textAlign: "center" }}>
+          <p style={{ fontFamily: sans, fontSize: 10, letterSpacing: "0.45em", color: gold, fontWeight: 700, textTransform: "uppercase", marginBottom: 20 }}>Dates &amp; Pricing</p>
+          <h2 style={{ fontFamily: cg, fontSize: isMobile ? "clamp(32px,7vw,48px)" : "clamp(40px,4vw,56px)", fontWeight: 400, color: parch, lineHeight: 1.05, textTransform: "uppercase", letterSpacing: "0.04em", marginBottom: 40 }}>Reserve Your Family's Place</h2>
+          <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(2,1fr)", gap: 12, marginBottom: 40 }}>
+            {founderDayDates.map((d, i) => (
+              <div key={i} style={{ background: dark, border: `1px solid rgba(164,141,110,.25)`, padding: isMobile ? 28 : 36 }}>
+                <p style={{ fontFamily: cg, fontSize: isMobile ? 24 : 30, color: parch, fontWeight: 400 }}>{d}, 2026</p>
+                <p style={{ fontFamily: sans, fontSize: 10, letterSpacing: "0.15em", color: gold, textTransform: "uppercase", marginTop: 6, fontWeight: 700 }}>10:00 AM – 6:00 PM</p>
               </div>
             ))}
           </div>
-          )}
-
-          {scheduleTab === "twoday" && (() => {
-            const twoDay = [
-              { day: "Day 1", blocks: [
-                { time: "10:00 AM", block: "Arrival & Welcome", dur: "15 min", desc: "Students arrive, meet their team, and are introduced to the faculty and TAs leading the weekend." },
-                { time: "10:15 AM – 1:00 PM", block: "Venture Frameworks & Opportunity Identification", dur: "2 hr 45 min", desc: "Faculty-led instruction in the foundational language of entrepreneurship: problem identification, market sizing, customer segments, and idea evaluation. Students begin scoping their venture concept." },
-                { time: "1:00 – 1:45 PM", block: "Luncheon", dur: "45 min", desc: "A catered midday pause, where conversations continue informally." },
-                { time: "1:45 – 4:00 PM", block: "Customer Discovery & Business Model Workshop", dur: "2 hr 15 min", desc: "Teams validate their concept, map a business model canvas, and pressure-test assumptions with faculty and TAs." },
-                { time: "4:00 – 4:30 PM", block: "Day 1 Debrief & Pitch Preview", dur: "30 min", desc: "Each team delivers a 90-second concept pitch for feedback — setting the standard for Day 2." },
-                { time: "4:30 – 5:00 PM", block: "Academy Information Session", dur: "30 min", desc: "Parents are welcomed to join for a closing reception and a complete presentation of Excalibur's academic-year programs." },
-              ]},
-              { day: "Day 2", blocks: [
-                { time: "10:00 AM", block: "Arrival & Morning Brief", dur: "15 min", desc: "Teams reconvene, review Day 1 feedback, and set execution targets for the final session." },
-                { time: "10:15 AM – 1:00 PM", block: "Pitch Deck Construction & Financial Logic", dur: "2 hr 45 min", desc: "Teams build their pitch deck — problem, solution, market, model, ask — and develop a basic financial rationale to accompany their presentation." },
-                { time: "1:00 – 1:45 PM", block: "Luncheon", dur: "45 min", desc: "A catered midday pause. Teams finalize their pitch strategy." },
-                { time: "1:45 – 3:30 PM", block: "Final Pitch Rehearsal & Coaching", dur: "1 hr 45 min", desc: "Faculty and TAs run each team through a live pitch rehearsal and give direct, high-standard feedback before the judging panel." },
-                { time: "3:30 – 4:30 PM", block: "Live Pitch Before Judging Panel", dur: "1 hr", desc: "Each team delivers their venture pitch before a live judging panel. Families are invited to attend." },
-                { time: "4:30 – 5:00 PM", block: "Awards, Closing & Next Steps", dur: "30 min", desc: "The Venture Launchpad closes with faculty remarks, awards, and an introduction to Excalibur's full academic-year programs." },
-              ]},
-            ];
-            return (
-              <div style={{ display: "flex", flexDirection: "column", gap: 32 }}>
-                {twoDay.map((dayBlock, di) => (
-                  <div key={di}>
-                    <p style={{ fontFamily: sans, fontSize: 10, letterSpacing: "0.35em", color: "#34150F", fontWeight: 700, textTransform: "uppercase", marginBottom: 12 }}>{dayBlock.day}</p>
-                    <div style={{ display: "flex", flexDirection: "column", gap: 2 }}>
-                      {dayBlock.blocks.map((block, i) => (
-                        <div key={i} style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "220px 1fr", background: dark, borderTop: `2px solid ${i === 0 ? "#34150F" : gold}` }}>
-                          <div style={{ padding: isMobile ? "24px 24px 8px" : "32px 36px", borderRight: isMobile ? "none" : `1px solid rgba(164,141,110,.15)` }}>
-                            <p style={{ fontFamily: cg, fontSize: isMobile ? 20 : 24, color: gold, fontWeight: 400, marginBottom: 4 }}>{block.time}</p>
-                            <p style={{ fontFamily: sans, fontSize: 9, letterSpacing: "0.2em", color: "rgba(228,213,193,.5)", textTransform: "uppercase" }}>{block.dur}</p>
-                          </div>
-                          <div style={{ padding: isMobile ? "8px 24px 28px" : "32px 44px" }}>
-                            <p style={{ fontFamily: cg, fontSize: isMobile ? 18 : 22, color: parch, fontWeight: 400, marginBottom: 10 }}>{block.block}</p>
-                            <p style={{ fontFamily: lora, fontSize: isMobile ? 14 : 15, color: "rgba(228,213,193,.75)", fontWeight: 300, lineHeight: 1.8 }}>{block.desc}</p>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                ))}
-              </div>
-            );
-          })()}
+          <div style={{ display: "flex", justifyContent: "center", gap: 40, flexWrap: "wrap", marginBottom: 32 }}>
+            <div>
+              <p style={{ fontFamily: sans, fontSize: 10, letterSpacing: "0.2em", color: gold, textTransform: "uppercase", fontWeight: 700, marginBottom: 8 }}>Early Bird</p>
+              <p style={{ fontFamily: cg, fontSize: 40, color: parch, fontWeight: 400 }}>$350</p>
+            </div>
+            <div>
+              <p style={{ fontFamily: sans, fontSize: 10, letterSpacing: "0.2em", color: gold, textTransform: "uppercase", fontWeight: 700, marginBottom: 8 }}>Regular</p>
+              <p style={{ fontFamily: cg, fontSize: 40, color: parch, fontWeight: 400 }}>$450</p>
+            </div>
+          </div>
+          <p style={{ fontFamily: lora, fontSize: 14, color: "rgba(228,213,193,.7)", fontStyle: "italic", marginBottom: 32 }}>Limited seats per date — apply online to reserve your family's place.</p>
+          <button onClick={() => setPage("portal")} style={{ fontFamily: sans, fontSize: 10, letterSpacing: "0.2em", padding: "16px 44px", background: gold, border: "none", color: dark, textTransform: "uppercase", cursor: "pointer", fontWeight: 700 }}>Apply Online →</button>
         </div>
       </div>
 
       {/* ── WHERE THIS LEADS ── */}
-      <div style={{ background: dark, padding: isMobile ? "72px 24px" : "100px 80px", borderTop: `1px solid rgba(164,141,110,.1)` }}>
+      <div style={{ background: dark, padding: isMobile ? "72px 24px" : "100px 80px", borderBottom: `1px solid rgba(164,141,110,.1)` }}>
         <div style={{ maxWidth: 1100, margin: "0 auto", display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: isMobile ? 48 : 80 }}>
           <div>
             <p style={{ fontFamily: sans, fontSize: 10, letterSpacing: "0.45em", color: gold, fontWeight: 700, textTransform: "uppercase", marginBottom: 20 }}>Where This Leads</p>
-            <h2 style={{ fontFamily: cg, fontSize: isMobile ? "clamp(28px,6vw,44px)" : "clamp(36px,4vw,52px)", fontWeight: 400, color: parch, textTransform: "uppercase", letterSpacing: "0.04em", marginBottom: 24 }}>Every Lab Is a First Step</h2>
-            <p style={{ fontFamily: lora, fontSize: isMobile ? 15 : 17, color: parch, fontWeight: 300, lineHeight: 1.85, marginBottom: 32 }}>Each Masterclass Lab offers a direct introduction to Excalibur Academy's flagship Academic Year Programs — where students go deeper, build over time, and develop a portfolio of real work.</p>
+            <h2 style={{ fontFamily: cg, fontSize: isMobile ? "clamp(28px,6vw,44px)" : "clamp(36px,4vw,52px)", fontWeight: 400, color: parch, textTransform: "uppercase", letterSpacing: "0.04em", marginBottom: 24 }}>A First Step, Not a Finish Line</h2>
+            <p style={{ fontFamily: lora, fontSize: isMobile ? 15 : 17, color: parch, fontWeight: 300, lineHeight: 1.85, marginBottom: 32 }}>The Founder's Day offers a direct introduction to Excalibur Academy's flagship Academic Year Programs — where students go deeper, build over time, and develop a portfolio of real work.</p>
             {[
               { title: "Foundation Semester", sub: "14 weeks · Fall 2026 · September–December", desc: "Core curriculum in Business, Entrepreneurship, The Art of Class, Leadership, communication, and executive presence." },
               { title: "Venture Semester", sub: "16 weeks · Spring 2027", desc: "Students work in teams to plan, build, and pitch a real venture across a full semester, culminating in a Shark Tank-inspired Finale." },
@@ -7078,14 +6812,14 @@ function SummerDetailPage({ setPage, openInquiry }) {
             ))}
           </div>
           <div>
-            <p style={{ fontFamily: sans, fontSize: 10, letterSpacing: "0.45em", color: gold, fontWeight: 700, textTransform: "uppercase", marginBottom: 20 }}>Limited Cohort · 20 Seats</p>
+            <p style={{ fontFamily: sans, fontSize: 10, letterSpacing: "0.45em", color: gold, fontWeight: 700, textTransform: "uppercase", marginBottom: 20 }}>Limited Seats</p>
             <h2 style={{ fontFamily: cg, fontSize: isMobile ? "clamp(28px,6vw,44px)" : "clamp(36px,4vw,52px)", fontWeight: 400, color: parch, textTransform: "uppercase", letterSpacing: "0.04em", marginBottom: 32 }}>How to Reserve a Place</h2>
 
             {[
-              { n: "01", step: "Choose Your Date", body: "Consult the schedule above for this summer's complete offering." },
+              { n: "01", step: "Choose Your Date", body: "July 28 or August 11 — consult the schedule above for what this day includes." },
               { n: "02", step: "Apply Online", body: "Fill out a brief application through the Student Portal — places are confirmed on a first-come basis." },
               { n: "03", step: "Confirm Your Place", body: "Pricing and details are sent directly to you by a dedicated enrollment coordinator." },
-              { n: "04", step: "Arrive Ready to Learn & Build", body: "No prior experience or knowledge is required for any lab." },
+              { n: "04", step: "Arrive Ready to Learn & Build", body: "No prior experience or knowledge is required." },
             ].map((s, i) => (
               <div key={i} style={{ display: "grid", gridTemplateColumns: "44px 1fr", gap: 20, paddingBottom: 24, marginBottom: 24, borderBottom: "1px solid rgba(52,21,15,.15)" }}>
                 <span style={{ fontFamily: cg, fontSize: 28, color: gold, fontWeight: 300, lineHeight: 1 }}>{s.n}</span>
@@ -7103,19 +6837,23 @@ function SummerDetailPage({ setPage, openInquiry }) {
     </div>
   );
 }
-// Summer Masterclass Labs pricing — must mirror SESSION_PRICES_CENTS in
+
+// Founder's Day pricing — must mirror SESSION_PRICES_CENTS in
 // supabase/functions/create-checkout-session/index.ts. Used for on-screen
 // payment summaries only; the Edge Function is the source of truth for
 // what's actually charged.
 const SUMMER_SESSION_PRICES = {
-  "Public Speaking & Executive Presence I — July 21": 350,
-  "AI, Business & the Future of Work — July 28": 350,
-  "Two-Day Venture Launchpad Intensive — Aug 1–2": 790,
-  "Sports, NASCAR, Formula 1 & Business — Aug 4": 350,
-  "Personal Finance & Financial Literacy for Teens — Aug 6": 350,
-  "Leadership, Negotiation & Power Dynamics — Aug 11": 350,
-  "Wall Street, Stocks & Investor Thinking — Aug 13": 350,
-  "College, Career & Personal Strategy — Aug 20": 350,
+  "The Excalibur Founder's Day — July 28": 350,
+  "The Excalibur Founder's Day — August 11": 350,
+};
+
+
+// Academic-year tuition — must mirror TUITION_PRICES_CENTS in
+// supabase/functions/create-tuition-checkout-session/index.ts.
+const TUITION_PRICES = {
+  foundation: { label: "Foundation Semester", amount: 8500 },
+  venture: { label: "Venture Semester", amount: 9500 },
+  "full-year": { label: "Full Academic Year", amount: 16000 },
 };
 
 function PortalPage({ setPage }) {
@@ -7723,6 +7461,37 @@ function PortalPage({ setPage }) {
     }
   };
 
+  // ── TUITION CHECKOUT — Foundation/Venture/Full Year, triggered only after admissions acceptance ──
+  const handleTuitionCheckout = async (applicationId, program) => {
+    setCheckoutError("");
+    setCheckoutBusy(true);
+    try {
+      const resp = await fetch(`${SUPABASE_URL}/functions/v1/create-tuition-checkout-session`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", "Authorization": `Bearer ${SUPABASE_ANON_KEY}` },
+        body: JSON.stringify({
+          applicationId,
+          program,
+          email: appForm.studentEmail || appForm.parentEmail,
+        }),
+      });
+      let data = null;
+      try { data = await resp.json(); } catch (parseErr) { /* non-JSON response, handled below */ }
+      if (resp.ok && data && data.url) {
+        window.location.href = data.url;
+        return;
+      }
+      const message = (data && data.error) || `Checkout could not be started (status ${resp.status}).`;
+      console.error("Tuition checkout error:", message);
+      setCheckoutError(message);
+    } catch (err) {
+      console.error("Tuition checkout request failed:", err);
+      setCheckoutError(err.message || "Could not reach the payment service. Please check your connection and try again.");
+    } finally {
+      setCheckoutBusy(false);
+    }
+  };
+
   // ── Notify admissions@excaliburacademy.org whenever a student/parent sends a portal message ──
   const notifyAdmissionsOfMessage = async (studentId, body, senderRole) => {
     try {
@@ -7884,7 +7653,7 @@ function PortalPage({ setPage }) {
 
           {/* LEFT — photo panel, no overlay text */}
           <div style={{ position: "relative", minHeight: isMobile ? 220 : "auto", overflow: "hidden" }}>
-            <img src="https://i.imgur.com/aFoFz2M.jpeg" alt="Excalibur Academy" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "center" }} onError={e => e.target.style.display = "none"} />
+            <img src="https://i.imgur.com/yU5ZUtp.jpeg" alt="Excalibur Academy" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "center" }} onError={e => e.target.style.display = "none"} />
             <div style={{ position: "absolute", inset: 0, background: "linear-gradient(180deg, rgba(17,17,17,.08) 0%, rgba(17,17,17,.55) 100%)" }} />
             <div style={{ position: "absolute", top: isMobile ? 20 : 36, left: isMobile ? 20 : 36 }}>
               <p style={{ fontFamily: cg, fontSize: 15, letterSpacing: "0.18em", color: t_white, textTransform: "uppercase" }}>Excalibur Academy</p>
@@ -8519,7 +8288,7 @@ function PortalPage({ setPage }) {
         </div>
       ))}
       <div style={{ marginTop: 12, paddingTop: 12, borderTop: `1px solid ${m_line}` }}>
-        <p style={{ fontFamily: sans, fontSize: 13, color: m_gray, marginBottom: 4 }}><strong style={{ color: m_ink }}>Time:</strong> 10:00 AM – 5:00 PM</p>
+        <p style={{ fontFamily: sans, fontSize: 13, color: m_gray, marginBottom: 4 }}><strong style={{ color: m_ink }}>Time:</strong> 10:00 AM – 6:00 PM</p>
         <p style={{ fontFamily: sans, fontSize: 13, color: m_gray }}><strong style={{ color: m_ink }}>Location:</strong> Newport Beach, CA</p>
       </div>
       <div style={{ marginTop: 16, paddingTop: 16, borderTop: `1px solid ${m_line}` }}>
@@ -8560,19 +8329,13 @@ function PortalPage({ setPage }) {
   }[key] || "dashboard");
 
   // ── Key dates, pulled directly from the Summer / Foundation / Venture pages ──
-  // Summer Masterclass Labs — Early Bird deadline is 1 week before each lab date,
+  // The Founder's Day — Early Bird deadline is 1 week before each date,
   // Regular deadline is 3 days before. Update SUMMER_LAB_SCHEDULE if dates change;
   // deadlines recalculate automatically.
   const daysBefore = (date, days) => { const d = new Date(date); d.setDate(d.getDate() - days); return d; };
   const SUMMER_LAB_SCHEDULE = [
-    { label: "Public Speaking & Executive Presence I", date: new Date(2026, 6, 21) },
-    { label: "AI, Business & the Future of Work", date: new Date(2026, 6, 28) },
-    { label: "Two-Day Venture Launchpad Intensive", date: new Date(2026, 7, 1) },
-    { label: "Sports, NASCAR, Formula 1 & Business", date: new Date(2026, 7, 4) },
-    { label: "Personal Finance & Financial Literacy for Teens", date: new Date(2026, 7, 6) },
-    { label: "Leadership, Negotiation & Power Dynamics", date: new Date(2026, 7, 11) },
-    { label: "Wall Street, Stocks & Investor Thinking", date: new Date(2026, 7, 13) },
-    { label: "College, Career & Personal Strategy", date: new Date(2026, 7, 20) },
+    { label: "The Excalibur Founder's Day", date: new Date(2026, 6, 28) },
+    { label: "The Excalibur Founder's Day", date: new Date(2026, 7, 11) },
   ];
   const summerLabEvents = SUMMER_LAB_SCHEDULE.flatMap(lab => [
     { date: daysBefore(lab.date, 7), label: `Summer Masterseries — ${lab.label} (Early Bird Deadline)`, color: m_amber, program: "Summer Masterseries" },
@@ -8776,6 +8539,25 @@ function PortalPage({ setPage }) {
               ))}
             </div>
 
+            {application && application.status === "accepted" && TUITION_PRICES[application.program] && application.payment_status !== "paid" && (
+              <div style={{ background: m_white, border: `1px solid ${m_line}`, borderRadius: 18, padding: isMobile ? "28px 24px" : "36px 40px", marginBottom: 16 }}>
+                <p style={{ fontFamily: sans, fontSize: 13, color: m_gray, marginBottom: 8 }}>Enrollment</p>
+                <p style={{ fontFamily: sans, fontWeight: 700, fontSize: isMobile ? 20 : 24, color: m_ink, marginBottom: 10, lineHeight: 1.3 }}>You've been accepted! Complete tuition payment to confirm your seat.</p>
+                <p style={{ fontFamily: sans, fontSize: 14, color: m_gray, marginBottom: 20, lineHeight: 1.7 }}>
+                  {TUITION_PRICES[application.program].label} — ${TUITION_PRICES[application.program].amount.toLocaleString()}. Pay in full by card, or choose Klarna or Affirm at checkout to split the cost into installments.
+                </p>
+                {checkoutError && (
+                  <p style={{ fontFamily: sans, fontSize: 13, color: "#8A4A1E", fontWeight: 600, marginBottom: 12 }}>Error: {checkoutError}</p>
+                )}
+                <button onClick={() => handleTuitionCheckout(application.id, application.program)} disabled={checkoutBusy} style={{ fontFamily: sans, padding: "14px 28px", background: m_ink, border: "none", color: m_white, fontSize: 14, fontWeight: 700, cursor: checkoutBusy ? "default" : "pointer", borderRadius: 999, opacity: checkoutBusy ? 0.6 : 1 }}>{checkoutBusy ? "Opening Secure Checkout..." : "Pay Tuition →"}</button>
+              </div>
+            )}
+            {application && application.status === "accepted" && TUITION_PRICES[application.program] && application.payment_status === "paid" && (
+              <div style={{ background: "rgba(80,160,100,.1)", border: "1px solid rgba(80,160,100,.3)", borderRadius: 18, padding: isMobile ? "22px 20px" : "26px 32px", marginBottom: 16 }}>
+                <p style={{ fontFamily: sans, fontWeight: 700, fontSize: 15, color: "#2E6B4A" }}>Tuition paid — enrollment confirmed for {TUITION_PRICES[application.program].label}.</p>
+              </div>
+            )}
+
             <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1.3fr 1fr", gap: 16, marginBottom: 16 }}>
               {/* Admissions status — college-style stepper */}
               <div style={{ background: m_white, border: `1px solid ${m_line}`, borderRadius: 18, padding: isMobile ? "28px 24px" : "36px 40px" }}>
@@ -8902,7 +8684,7 @@ function PortalPage({ setPage }) {
           };
 
           const programLabels = {
-            summer: "Excalibur Masterclass Labs — July 21 to August 20, 2026",
+            summer: "The Excalibur Founder's Day — July 28 or August 11, 2026",
             foundation: "Foundation Semester — Fall 2026",
             venture: "Venture Semester — Spring 2027",
             "full-year": "Full Academic Year — Foundation + Venture",
@@ -8917,7 +8699,7 @@ function PortalPage({ setPage }) {
           const showProgramPicker = !isSubmitted && (forceProgramPicker || !programPickerDone);
           if (showProgramPicker) {
             const programCards = [
-              { key: "summer", icon: "sun", title: "Summer Masterseries", subtitle: "Masterclass Labs — July 21 to August 20, 2026" },
+              { key: "summer", icon: "sun", title: "Summer Masterseries", subtitle: "The Founder's Day — July 28 & August 11, 2026" },
               { key: "foundation", icon: "cap", title: "Foundation Semester", subtitle: "Fall 2026 — leadership & business fundamentals" },
               { key: "venture", icon: "rocket", title: "Venture Semester", subtitle: "Spring 2027 — build & pitch your own venture" },
               { key: "full-year", icon: "star", title: "Full Academic Year", subtitle: "Foundation + Venture — the complete experience" },
@@ -8962,36 +8744,18 @@ function PortalPage({ setPage }) {
 
                 {appForm.programs.includes("summer") && (
                   <div style={{ background: m_canvas, borderRadius: 16, padding: isMobile ? "22px 20px" : "26px 28px", marginBottom: 32 }}>
-                    <p style={{ fontFamily: sans, fontWeight: 700, fontSize: 15, color: m_ink, marginBottom: 6 }}>Excalibur Masterclass Labs</p>
-                    <p style={{ fontFamily: sans, fontSize: 13, color: m_gray, lineHeight: 1.6, marginBottom: 16 }}>Select which Lab(s) and/or the Venture Launchpad weekend you'd like to attend — choose as many as you'd like.</p>
+                    <p style={{ fontFamily: sans, fontWeight: 700, fontSize: 15, color: m_ink, marginBottom: 6 }}>The Excalibur Founder's Day</p>
+                    <p style={{ fontFamily: sans, fontSize: 13, color: m_gray, lineHeight: 1.6, marginBottom: 16 }}>Same day, same curriculum, offered twice this summer — choose the date that works for your family.</p>
                     <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
                       {[
-                        { session: "Public Speaking & Executive Presence I — July 14", full: true },
-                        { session: "The Real Estate Deal Lab — July 15", full: true },
-                        { session: "Luxury Cars, Collectibles, NASCAR & Formula 1 — July 16", full: true },
-                        { session: "Two-Day Venture Launchpad Intensive — July 18–19", full: true },
-                        { session: "Public Speaking & Executive Presence I — July 21" },
-                        { session: "AI, Business & the Future of Work — July 28" },
-                        { session: "Two-Day Venture Launchpad Intensive — Aug 1–2" },
-                        { session: "Sports, NASCAR, Formula 1 & Business — Aug 4" },
-                        { session: "Personal Finance & Financial Literacy for Teens — Aug 6" },
-                        { session: "Leadership, Negotiation & Power Dynamics — Aug 11" },
-                        { session: "Wall Street, Stocks & Investor Thinking — Aug 13" },
-                        { session: "College, Career & Personal Strategy — Aug 20" },
-                      ].map(({ session, full }) => {
+                        { session: "The Excalibur Founder's Day — July 28" },
+                        { session: "The Excalibur Founder's Day — August 11" },
+                      ].map(({ session }) => {
                         const active = (appForm.summer.selectedSessions || []).includes(session);
-                        if (full) {
-                          return (
-                            <div key={session} style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 10, padding: "10px 14px", borderRadius: 10, background: "rgba(17,17,17,.03)", opacity: 0.65 }}>
-                              <span style={{ fontFamily: sans, fontSize: 13, color: "rgba(17,17,17,.55)" }}>{session}</span>
-                              <span style={{ fontFamily: sans, fontSize: 10, color: "#A0522D", fontWeight: 700, letterSpacing: "0.05em", textTransform: "uppercase", flexShrink: 0 }}>Enrollment Closed — Full</span>
-                            </div>
-                          );
-                        }
                         return (
-                          <div key={session} onClick={() => toggleVal("summer.selectedSessions", session)} style={{ display: "flex", alignItems: "center", gap: 10, padding: "10px 14px", borderRadius: 10, background: active ? m_ink : m_white, cursor: "pointer", boxShadow: active ? "none" : "0 0 0 1px rgba(17,17,17,.12) inset" }}>
-                            <span style={{ width: 16, height: 16, borderRadius: 4, border: `1.5px solid ${active ? m_white : "rgba(17,17,17,.3)"}`, background: active ? m_white : "transparent", flexShrink: 0, position: "relative" }}>
-                              {active && <span style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center", color: m_ink, fontSize: 11, fontWeight: 700, lineHeight: 1 }}>✓</span>}
+                          <div key={session} onClick={() => setVal("summer.selectedSessions", [session])} style={{ display: "flex", alignItems: "center", gap: 10, padding: "10px 14px", borderRadius: 10, background: active ? m_ink : m_white, cursor: "pointer", boxShadow: active ? "none" : "0 0 0 1px rgba(17,17,17,.12) inset" }}>
+                            <span style={{ width: 16, height: 16, borderRadius: "50%", border: `1.5px solid ${active ? m_white : "rgba(17,17,17,.3)"}`, background: active ? m_white : "transparent", flexShrink: 0, position: "relative" }}>
+                              {active && <span style={{ position: "absolute", inset: 3, borderRadius: "50%", background: m_ink }} />}
                             </span>
                             <span style={{ fontFamily: sans, fontSize: 13, color: active ? m_white : m_ink, fontWeight: active ? 600 : 400 }}>{session}</span>
                           </div>
@@ -9047,7 +8811,7 @@ function PortalPage({ setPage }) {
             { section: "School & Academic Background", path: "priorProgramsDescription", label: "If yes, please briefly describe the program, activity, or experience.", type: "textarea", hint: "Please include the name of the program or activity, your role, and what you learned or accomplished.", conditional: f => f.priorProgramsExperience === "yes" },
 
             { section: "Program Selection & Scholarship", path: "applyingMultiple", label: "Are you applying for more than one program?", type: "pills", conditional: () => !summerOnly, options: [["yes", "Yes"], ["no", "No"]] },
-            { section: "Program Selection & Scholarship", path: "firstChoiceProgram", label: "If yes, which program is your first choice?", type: "pills", conditional: f => !summerOnly && f.applyingMultiple === "yes", options: [["summer", "Summer Masterseries Masterclass Labs"], ["foundation", "Foundation Semester"], ["venture", "Venture Semester"], ["full-year", "Full Academic Year"], ["unsure", "Not sure yet"]] },
+            { section: "Program Selection & Scholarship", path: "firstChoiceProgram", label: "If yes, which program is your first choice?", type: "pills", conditional: f => !summerOnly && f.applyingMultiple === "yes", options: [["summer", "Summer Masterseries — The Founder's Day"], ["foundation", "Foundation Semester"], ["venture", "Venture Semester"], ["full-year", "Full Academic Year"], ["unsure", "Not sure yet"]] },
 
             { section: "Student Short Answers", path: "dreamAnswer", label: "Do you have a Dream? How would you describe it, and where do you hope to see yourself in 10 years?", type: "textarea", hint: "This does not need to be a fully developed career plan. We are interested in your ambitions, imagination, values, and sense of direction." },
             { section: "Student Short Answers", path: "whyJoin", label: "Why do you want to join Excalibur Academy?", type: "textarea", hint: "Please explain what attracted you to the program and what you hope to gain from the experience.", conditional: () => !summerOnly },
@@ -9119,7 +8883,7 @@ function PortalPage({ setPage }) {
                     </div>
                     <h2 style={{ fontFamily: sans, fontWeight: 800, fontSize: 26, color: m_ink, letterSpacing: "-0.01em", marginBottom: 16 }}>Application Received — Complete Your Payment</h2>
                     <p style={{ fontFamily: sans, fontSize: 15, color: m_ink, opacity: 0.75, lineHeight: 1.8, marginBottom: 20, maxWidth: 600 }}>
-                      Your Summer Masterclass Labs application has been received. Your seat is not yet reserved — complete payment below to confirm your enrollment.
+                      Your Founder's Day application has been received. Your seat is not yet reserved — complete payment below to confirm your enrollment.
                     </p>
 
                     <div style={{ background: m_white, border: `1px solid ${m_line}`, borderRadius: 16, padding: "22px 24px", marginBottom: 20, maxWidth: 480, width: "100%" }}>
@@ -9151,7 +8915,7 @@ function PortalPage({ setPage }) {
                       Your application is received and your spot is reserved. A confirmation email has been sent to {appForm.studentEmail || appForm.parentEmail || "the email on your application"}. We look forward to seeing you this summer!
                     </p>
                     <p style={{ fontFamily: sans, fontSize: 14, color: m_ink, opacity: 0.6, lineHeight: 1.8, marginBottom: 28, maxWidth: 600 }}>
-                      Need to switch to a different Lab? Open "Enrollment Confirmed" in your Admissions Status below and use Request to Reschedule.
+                      Need to switch to a different date? Open "Enrollment Confirmed" in your Admissions Status below and use Request to Reschedule.
                     </p>
                   </>
                 ) : (
@@ -14487,7 +14251,7 @@ function VentureDetailPage({ setPage, openInquiry }) {
                 ["Weekday Track","Tuesday & Thursday · 4:00 – 6:30 PM"],
                 ["Cohort Size","20 students per cohort"],
                 ["Weekly Format","5 hours per week"],
-                ["Tuition","From $1,900/month · Full Payment or Installment Plan"],
+                ["Tuition",<>$9,500 in full<br/>or $1,750/month · Installment plans available</>],
               ].map(([k,v],i)=>(
                 <div key={k} style={{ padding:"20px 24px", background:"#100F0C", borderBottom:`1px solid rgba(164,141,110,.12)`, borderRight:!isMobile&&(i%3!==2)?"1px solid rgba(164,141,110,.12)":"none" }}>
                   <span style={{ display:"block", fontFamily:"'Lato', sans-serif", fontSize:11, letterSpacing:"0.2em", color:"#A48D6E", textTransform:"uppercase", marginBottom:8, fontWeight:600 }}>{k}</span>
