@@ -15986,6 +15986,10 @@ function FacultyPortalShell({ facultyProfile, facultyRole, onSignOut }) {
       <div style={{ flex: 1, padding: isMobile ? 24 : 40, maxWidth: 1100, background: "#FFFFFF", minHeight: "100vh" }}>
         {activeSection === "dashboard" ? (
           <FacultyDashboardHome facultyProfile={facultyProfile} facultyRole={facultyRole} />
+        ) : activeSection === "schedule" ? (
+          <MyScheduleSection facultyProfile={facultyProfile} />
+        ) : activeSection === "lessons" ? (
+          <LessonPlansSection facultyProfile={facultyProfile} facultyRole={facultyRole} />
         ) : (
           <div>
             <h2 style={{ fontFamily: cg, fontSize: 26, color: "#100F0C", fontWeight: 500, margin: "0 0 12px" }}>
@@ -16000,6 +16004,392 @@ function FacultyPortalShell({ facultyProfile, facultyRole, onSignOut }) {
     </div>
   );
 }
+
+// ═══════════════════════════════════════════════════════════════════════
+// MY SCHEDULE + LESSON PLANS & MATERIALS
+// Both sections share the same underlying data (faculty_sessions joined to
+// lesson_plans via lesson_plan_topic_key), so they're built together.
+// ═══════════════════════════════════════════════════════════════════════
+
+const RATE_LABELS = {
+  teaching_single: "flat",
+  teaching_multi: "hourly",
+  class_prep: "included",
+  parent_info_session: "included",
+  faculty_meeting: "included",
+  event_competition: "hourly",
+  admissions_first: "flat",
+  admissions_additional: "hourly",
+  private_mentorship: "included",
+};
+
+function formatRate(rateRule) {
+  if (!rateRule) return "—";
+  if (rateRule.rate_type === "included") return "Included";
+  if (rateRule.rate_type === "flat") return `$${Number(rateRule.rate_amount)} flat`;
+  if (rateRule.rate_type === "hourly") return `$${Number(rateRule.rate_amount)}/hr`;
+  return "—";
+}
+
+const WEEKDAY_NAMES = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+
+function FolderIcon({ status, size = 20 }) {
+  const color = status === "approved" ? "#3D8B5F" : status === "pending_review" ? "#C9A227" : "#B4433A";
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" style={{ flexShrink: 0 }}>
+      <path
+        d="M3 6.5C3 5.67157 3.67157 5 4.5 5H9.5L11.5 7H19.5C20.3284 7 21 7.67157 21 8.5V17.5C21 18.3284 20.3284 19 19.5 19H4.5C3.67157 19 3 18.3284 3 17.5V6.5Z"
+        fill={color}
+        stroke={color}
+        strokeWidth="1"
+      />
+    </svg>
+  );
+}
+
+function FolderStatusLabel({ status }) {
+  const lora = "'Lora', Georgia, serif";
+  const text = status === "approved" ? "Confirmed" : status === "pending_review" ? "Pending Review" : "Not Uploaded Yet";
+  const color = status === "approved" ? "#3D8B5F" : status === "pending_review" ? "#9C7F1A" : "#B4433A";
+  return <span style={{ fontFamily: lora, fontSize: 12, color, fontWeight: 600 }}>{text}</span>;
+}
+
+// ── Fetches faculty_sessions + rate rules + lesson_plans for one faculty member ──
+function useFacultyScheduleData(sb, facultyId) {
+  const [sessions, setSessions] = useState([]);
+  const [rateRules, setRateRules] = useState([]);
+  const [lessonPlans, setLessonPlans] = useState([]);
+  const [programs, setPrograms] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    if (!sb || !facultyId) return;
+    setLoading(true);
+    (async () => {
+      const [sessionsRes, ratesRes, plansRes, programsRes] = await Promise.all([
+        sb.from("faculty_sessions").select("*").eq("faculty_id", facultyId).order("session_date", { ascending: true }),
+        sb.from("faculty_rate_rules").select("*").eq("faculty_id", facultyId),
+        sb.from("lesson_plans").select("*").eq("assigned_faculty_id", facultyId),
+        sb.from("programs").select("*").order("sort_order", { ascending: true }),
+      ]);
+      setSessions(sessionsRes.data || []);
+      setRateRules(ratesRes.data || []);
+      setLessonPlans(plansRes.data || []);
+      setPrograms(programsRes.data || []);
+      setLoading(false);
+    })();
+  }, [sb, facultyId]);
+
+  return { sessions, rateRules, lessonPlans, programs, loading };
+}
+
+function MyScheduleSection({ facultyProfile }) {
+  const sb = getSupabase();
+  const lora = "'Lora', Georgia, serif";
+  const cg = "'Cormorant Garamond', Georgia, serif";
+  const { sessions, rateRules, lessonPlans, programs, loading } = useFacultyScheduleData(sb, facultyProfile?.id);
+
+  const rateByType = {};
+  rateRules.forEach((r) => { rateByType[r.activity_type] = r; });
+  const planByTopicKey = {};
+  lessonPlans.forEach((p) => { planByTopicKey[p.topic_key] = p; });
+
+  if (loading) {
+    return <p style={{ fontFamily: cg, fontSize: 16, color: "#6B6459", fontStyle: "italic" }}>Loading your schedule…</p>;
+  }
+
+  const sessionsByProgram = {};
+  programs.forEach((p) => { sessionsByProgram[p.id] = []; });
+  sessions.forEach((s) => {
+    if (!sessionsByProgram[s.program_id]) sessionsByProgram[s.program_id] = [];
+    sessionsByProgram[s.program_id].push(s);
+  });
+
+  return (
+    <div>
+      {programs.map((program) => {
+        const progSessions = sessionsByProgram[program.id] || [];
+        return (
+          <div key={program.id} style={{ marginBottom: 40 }}>
+            <h3 style={{ fontFamily: cg, fontSize: 21, color: "#100F0C", fontWeight: 600, margin: "0 0 4px" }}>
+              {program.name}
+            </h3>
+            {program.status === "under_construction" ? (
+              <p style={{ fontFamily: cg, fontSize: 16, color: "#B4433A", fontStyle: "italic", marginTop: 8 }}>
+                Under Construction — schedule not yet available.
+              </p>
+            ) : progSessions.length === 0 ? (
+              <p style={{ fontFamily: cg, fontSize: 16, color: "#6B6459", fontStyle: "italic", marginTop: 8 }}>
+                No sessions scheduled yet.
+              </p>
+            ) : (
+              <div style={{ border: "1px solid rgba(16,15,12,0.1)", borderRadius: 4, overflow: "hidden", marginTop: 12 }}>
+                {progSessions.map((s, i) => {
+                  const d = new Date(s.session_date + "T00:00:00");
+                  const weekday = WEEKDAY_NAMES[d.getDay()];
+                  const dateLabel = d.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
+                  const timeLabel = s.start_time ? s.start_time.slice(0, 5) : "TBC";
+                  const rateRule = rateByType[s.activity_type];
+                  const plan = s.lesson_plan_topic_key ? planByTopicKey[s.lesson_plan_topic_key] : null;
+                  return (
+                    <div
+                      key={s.id}
+                      style={{
+                        display: "flex", alignItems: "center", gap: 16, padding: "14px 18px",
+                        background: i % 2 === 0 ? "#FFFFFF" : "#FAF7F2",
+                        borderTop: i === 0 ? "none" : "1px solid rgba(16,15,12,0.06)",
+                        flexWrap: "wrap",
+                      }}
+                    >
+                      <div style={{ width: 150, flexShrink: 0 }}>
+                        <p style={{ fontFamily: lora, fontSize: 13, color: "#100F0C", margin: 0, fontWeight: 600 }}>{dateLabel}</p>
+                        <p style={{ fontFamily: lora, fontSize: 12, color: "#8B7355", margin: 0 }}>{weekday} · {timeLabel}</p>
+                      </div>
+                      <div style={{ flex: 1, minWidth: 200 }}>
+                        <p style={{ fontFamily: lora, fontSize: 13.5, color: "#100F0C", margin: 0 }}>{s.block_label}</p>
+                      </div>
+                      <div style={{ width: 110, flexShrink: 0 }}>
+                        <p style={{ fontFamily: lora, fontSize: 12, color: "#8B7355", margin: 0, textTransform: "uppercase", letterSpacing: "0.05em" }}>
+                          {s.billable_hours != null ? `${s.billable_hours} hr` : "—"}
+                        </p>
+                      </div>
+                      <div style={{ width: 100, flexShrink: 0 }}>
+                        <p style={{ fontFamily: lora, fontSize: 13, color: "#100F0C", margin: 0, fontWeight: 600 }}>
+                          {formatRate(rateRule)}
+                        </p>
+                      </div>
+                      {plan ? (
+                        <div style={{ display: "flex", alignItems: "center", gap: 6, width: 150, flexShrink: 0 }}>
+                          <FolderIcon status={plan.status} size={16} />
+                          <FolderStatusLabel status={plan.status} />
+                        </div>
+                      ) : (
+                        <div style={{ width: 150, flexShrink: 0 }} />
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
+            )}
+          </div>
+        );
+      })}
+    </div>
+  );
+}
+
+function LessonPlanUploadRow({ plan, facultyProfile, onUpdated }) {
+  const sb = getSupabase();
+  const lora = "'Lora', Georgia, serif";
+  const [uploading, setUploading] = useState(false);
+  const fileInputRef = React.useRef(null);
+
+  const handleFileSelected = async (e) => {
+    const file = e.target.files?.[0];
+    if (!file || !sb) return;
+    setUploading(true);
+    try {
+      const path = `${plan.topic_key}/${Date.now()}_${file.name}`;
+      const { error: uploadError } = await sb.storage.from("lesson-plans").upload(path, file, { upsert: false });
+      if (uploadError) throw uploadError;
+      const { data: urlData } = sb.storage.from("lesson-plans").getPublicUrl(path);
+
+      await sb.from("lesson_plans").update({
+        file_url: urlData.publicUrl,
+        file_name: file.name,
+        uploaded_by_type: "faculty",
+        uploaded_by_id: facultyProfile.id,
+        uploaded_at: new Date().toISOString(),
+        status: "pending_review",
+        updated_at: new Date().toISOString(),
+      }).eq("id", plan.id);
+
+      await sb.from("lesson_plan_revisions").insert({
+        lesson_plan_id: plan.id,
+        file_url: urlData.publicUrl,
+        file_name: file.name,
+        uploaded_by_type: "faculty",
+        uploaded_by_id: facultyProfile.id,
+        action: "uploaded",
+        note: "Modified version submitted for review.",
+      });
+
+      onUpdated();
+    } catch (err) {
+      console.error("Lesson plan upload error:", err);
+      alert("Something went wrong uploading that file. Please try again.");
+    } finally {
+      setUploading(false);
+    }
+  };
+
+  return (
+    <div style={{ display: "flex", alignItems: "center", gap: 10, flexWrap: "wrap" }}>
+      {plan.file_url && (
+        <a
+          href={plan.file_url} target="_blank" rel="noreferrer"
+          style={{ fontFamily: lora, fontSize: 12.5, color: "#8B7355", textDecoration: "underline" }}
+        >
+          Download current file
+        </a>
+      )}
+      <button
+        onClick={() => fileInputRef.current?.click()}
+        disabled={uploading}
+        style={{
+          padding: "6px 14px", background: "transparent", border: "1px solid rgba(16,15,12,0.25)",
+          borderRadius: 3, color: "#100F0C", fontFamily: lora, fontSize: 12, cursor: uploading ? "default" : "pointer",
+          opacity: uploading ? 0.6 : 1,
+        }}
+      >
+        {uploading ? "Uploading…" : "Upload Modified Version"}
+      </button>
+      <input ref={fileInputRef} type="file" onChange={handleFileSelected} style={{ display: "none" }} />
+    </div>
+  );
+}
+
+function LessonPlansSection({ facultyProfile, facultyRole }) {
+  const sb = getSupabase();
+  const lora = "'Lora', Georgia, serif";
+  const cg = "'Cormorant Garamond', Georgia, serif";
+  const [myPlans, setMyPlans] = useState([]);
+  const [pendingAcrossAll, setPendingAcrossAll] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [showGuide, setShowGuide] = useState(false);
+
+  const loadData = React.useCallback(async () => {
+    if (!sb || !facultyProfile) return;
+    setLoading(true);
+    const { data: mine } = await sb.from("lesson_plans").select("*").eq("assigned_faculty_id", facultyProfile.id).order("topic_label");
+    setMyPlans(mine || []);
+
+    if (facultyRole === "admin") {
+      const { data: pending } = await sb.from("lesson_plans").select("*, faculty_profiles(full_name)").eq("status", "pending_review");
+      setPendingAcrossAll(pending || []);
+    }
+    setLoading(false);
+  }, [sb, facultyProfile, facultyRole]);
+
+  useEffect(() => { loadData(); }, [loadData]);
+
+  const handleApprove = async (plan) => {
+    if (!sb) return;
+    await sb.from("lesson_plans").update({
+      status: "approved",
+      approved_by: facultyProfile.id,
+      approved_at: new Date().toISOString(),
+      updated_at: new Date().toISOString(),
+    }).eq("id", plan.id);
+    await sb.from("lesson_plan_revisions").insert({
+      lesson_plan_id: plan.id,
+      file_url: plan.file_url,
+      file_name: plan.file_name,
+      uploaded_by_type: "admin",
+      uploaded_by_id: facultyProfile.id,
+      action: "approved",
+      note: "Approved and confirmed.",
+    });
+    loadData();
+  };
+
+  const cardStyle = { border: "1px solid rgba(16,15,12,0.1)", borderRadius: 4, padding: 18, marginBottom: 12, background: "#FFFFFF" };
+
+  if (loading) {
+    return <p style={{ fontFamily: cg, fontSize: 16, color: "#6B6459", fontStyle: "italic" }}>Loading lesson plans…</p>;
+  }
+
+  return (
+    <div>
+      <button
+        onClick={() => setShowGuide((v) => !v)}
+        style={{
+          marginBottom: 20, padding: "8px 16px", background: "#FAF7F2", border: "1px solid rgba(164,141,110,0.3)",
+          borderRadius: 3, color: "#8B7355", fontFamily: lora, fontSize: 12.5, cursor: "pointer",
+        }}
+      >
+        {showGuide ? "Hide" : "How does this work?"}
+      </button>
+
+      {showGuide && (
+        <div style={{ background: "#FAF7F2", border: "1px solid rgba(16,15,12,0.1)", borderRadius: 4, padding: 20, marginBottom: 24 }}>
+          <p style={{ fontFamily: lora, fontSize: 13.5, color: "#100F0C", margin: "0 0 12px", fontWeight: 600 }}>
+            The folder colors tell you the status of each lesson plan:
+          </p>
+          <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 8 }}>
+            <FolderIcon status="missing" size={16} /><span style={{ fontFamily: lora, fontSize: 13, color: "#6B6459" }}>Red — no lesson plan uploaded for this topic yet.</span>
+          </div>
+          <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 8 }}>
+            <FolderIcon status="pending_review" size={16} /><span style={{ fontFamily: lora, fontSize: 13, color: "#6B6459" }}>Yellow — a file is there, but it hasn't been approved yet (this includes your own modified resubmissions, while they're awaiting review).</span>
+          </div>
+          <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 12 }}>
+            <FolderIcon status="approved" size={16} /><span style={{ fontFamily: lora, fontSize: 13, color: "#6B6459" }}>Green — approved and confirmed. This is the version to teach from.</span>
+          </div>
+          <p style={{ fontFamily: lora, fontSize: 13, color: "#6B6459", margin: 0 }}>
+            You can download the current file, modify it, and upload your modified version at any time —
+            it goes to yellow ("Pending Review") until Alexander or Amina confirms it, at which point it turns green.
+          </p>
+        </div>
+      )}
+
+      {facultyRole === "admin" && pendingAcrossAll.length > 0 && (
+        <div style={{ marginBottom: 32 }}>
+          <h3 style={{ fontFamily: cg, fontSize: 20, color: "#100F0C", fontWeight: 600, margin: "0 0 12px" }}>
+            Pending Your Review ({pendingAcrossAll.length})
+          </h3>
+          {pendingAcrossAll.map((plan) => (
+            <div key={plan.id} style={{ ...cardStyle, borderColor: "rgba(201,162,39,0.4)", background: "#FFFDF5" }}>
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", flexWrap: "wrap", gap: 12 }}>
+                <div>
+                  <p style={{ fontFamily: lora, fontSize: 14, color: "#100F0C", margin: "0 0 4px", fontWeight: 600 }}>{plan.topic_label}</p>
+                  <p style={{ fontFamily: lora, fontSize: 12.5, color: "#8B7355", margin: 0 }}>
+                    Submitted by {plan.faculty_profiles?.full_name || "faculty member"}
+                  </p>
+                </div>
+                <div style={{ display: "flex", gap: 10, alignItems: "center" }}>
+                  {plan.file_url && (
+                    <a href={plan.file_url} target="_blank" rel="noreferrer" style={{ fontFamily: lora, fontSize: 12.5, color: "#8B7355", textDecoration: "underline" }}>
+                      View file
+                    </a>
+                  )}
+                  <button
+                    onClick={() => handleApprove(plan)}
+                    style={{ padding: "7px 16px", background: "#3D8B5F", border: "none", borderRadius: 3, color: "#FFFFFF", fontFamily: lora, fontSize: 12.5, fontWeight: 600, cursor: "pointer" }}
+                  >
+                    Approve
+                  </button>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+
+      <h3 style={{ fontFamily: cg, fontSize: 20, color: "#100F0C", fontWeight: 600, margin: "0 0 12px" }}>
+        My Lesson Plans
+      </h3>
+      {myPlans.length === 0 ? (
+        <p style={{ fontFamily: cg, fontSize: 16, color: "#6B6459", fontStyle: "italic" }}>No lesson plan topics assigned yet.</p>
+      ) : (
+        myPlans.map((plan) => (
+          <div key={plan.id} style={cardStyle}>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", flexWrap: "wrap", gap: 12 }}>
+              <div>
+                <p style={{ fontFamily: lora, fontSize: 14, color: "#100F0C", margin: "0 0 6px", fontWeight: 600 }}>{plan.topic_label}</p>
+                <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
+                  <FolderIcon status={plan.status} size={16} />
+                  <FolderStatusLabel status={plan.status} />
+                </div>
+              </div>
+              <LessonPlanUploadRow plan={plan} facultyProfile={facultyProfile} onUpdated={loadData} />
+            </div>
+          </div>
+        ))
+      )}
+    </div>
+  );
+}
+
 
 function FacultyPortalPage({ setPage }) {
   const [facultySession, setFacultySession] = useState(null);
