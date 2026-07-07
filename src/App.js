@@ -16011,6 +16011,230 @@ function FacultyPortalShell({ facultyProfile, facultyRole, onSignOut }) {
 // lesson_plans via lesson_plan_topic_key), so they're built together.
 // ═══════════════════════════════════════════════════════════════════════
 
+// ═══════════════════════════════════════════════════════════════════════
+// DAY AGENDA TEMPLATES + DAY DETAIL MODAL
+// Static reference schedules for each recurring day-type, used to show the
+// FULL day's agenda (every block, not just the logged-in faculty member's
+// own) when a session row in My Schedule is clicked. The faculty's own
+// block(s) that day are highlighted within the full agenda.
+// ═══════════════════════════════════════════════════════════════════════
+
+const DAY_AGENDA_TEMPLATES = {
+  "founders-day": {
+    label: "The Excalibur Founder's Day",
+    blocks: [
+      { start: "10:00", end: "10:20", label: "Arrival, Orientation & Team Formation", who: "TAs & Coordinators" },
+      { start: "10:20", end: "11:05", label: "Public Speaking & Executive Presence", who: "Keree" },
+      { start: "11:05", end: "11:50", label: "Financial Literacy & Investor Thinking", who: "Faculty TBD" },
+      { start: "11:50", end: "12:05", label: "Break", who: "—" },
+      { start: "12:05", end: "12:50", label: "AI & the Future of Work", who: "Chip" },
+      { start: "12:50", end: "13:25", label: "Lunch", who: "—" },
+      { start: "13:25", end: "15:05", label: "The Venture Challenge", who: "Chip (Lead) · Erik (Support)" },
+      { start: "15:05", end: "16:20", label: "Applied Capstone: Build Your Team Pitch", who: "Keree · Chris Sanders · Erik" },
+      { start: "16:20", end: "16:50", label: "The Showcase", who: "Judging Panel" },
+      { start: "16:50", end: "17:00", label: "Transition", who: "TAs" },
+      { start: "17:00", end: "18:00", label: "The Family Soirée", who: "Academy Staff & Faculty" },
+    ],
+  },
+  "flagship-groupb-tuethu": {
+    label: "Flagship — Group B (Tuesday & Thursday)",
+    blocks: [
+      { start: "15:45", end: "16:00", label: "Arrival", who: "TA & Ops" },
+      { start: "16:00", end: "16:40", label: "Block 1 — Public Speaking", who: "Public Speaking Instructor" },
+      { start: "16:40", end: "16:55", label: "Snack Break", who: "—" },
+      { start: "16:55", end: "17:35", label: "Block 2 — Monthly Specialist", who: "Bill Morris / Outside Specialist" },
+      { start: "17:35", end: "17:45", label: "Short Break", who: "—" },
+      { start: "17:45", end: "18:25", label: "Block 3 — War Room", who: "Chip / Erik" },
+    ],
+  },
+  "flagship-groupa-saturday": {
+    label: "Flagship — Group A (Saturday)",
+    blocks: [
+      { start: "10:15", end: "10:30", label: "Arrival", who: "TA & Ops" },
+      { start: "10:30", end: "11:10", label: "Block 1a — Public Speaking", who: "Public Speaking Instructor" },
+      { start: "11:10", end: "11:25", label: "Snack Break", who: "—" },
+      { start: "11:25", end: "12:10", label: "Block 1b — Public Speaking", who: "Public Speaking Instructor" },
+      { start: "12:10", end: "12:40", label: "Lunch Break", who: "—" },
+      { start: "12:40", end: "14:00", label: "Block 2 — Monthly Specialist", who: "Bill Morris / Outside Specialist" },
+      { start: "14:00", end: "14:15", label: "Snack Break", who: "—" },
+      { start: "14:15", end: "14:55", label: "Block 3a — War Room", who: "Chip" },
+      { start: "14:55", end: "15:05", label: "Short Break", who: "—" },
+      { start: "15:05", end: "15:45", label: "Block 3b — War Room", who: "Chip" },
+      { start: "15:45", end: "15:50", label: "Debrief & Close", who: "War Room Lead" },
+    ],
+  },
+  "sixweek-groupa-monwed": {
+    label: "Six-Week Wave — Group A (Monday & Wednesday)",
+    blocks: [
+      { start: "15:45", end: "16:00", label: "Arrival", who: "TA & Ops" },
+      { start: "16:00", end: "16:40", label: "Block 1 — Public Speaking", who: "Public Speaking Instructor" },
+      { start: "16:40", end: "16:55", label: "Snack Break", who: "—" },
+      { start: "16:55", end: "17:35", label: "Block 2 — Specialist", who: "Bill Morris / Outside Specialist" },
+      { start: "17:35", end: "17:45", label: "Short Break", who: "—" },
+      { start: "17:45", end: "18:25", label: "Block 3 — War Room", who: "Erik" },
+    ],
+  },
+  "sixweek-groupb-sunday": {
+    label: "Six-Week Wave — Group B (Sunday)",
+    blocks: [
+      { start: "10:15", end: "10:30", label: "Arrival", who: "TA & Ops" },
+      { start: "10:30", end: "11:10", label: "Block 1a — Public Speaking", who: "Public Speaking Instructor" },
+      { start: "11:10", end: "11:50", label: "Block 1b — Public Speaking", who: "Public Speaking Instructor" },
+      { start: "11:50", end: "12:20", label: "Lunch Break", who: "—" },
+      { start: "12:20", end: "13:40", label: "Block 2 — Specialist", who: "Monthly Specialist" },
+      { start: "13:40", end: "13:55", label: "Break", who: "—" },
+      { start: "13:55", end: "14:35", label: "Block 3a — War Room", who: "Chip" },
+      { start: "14:35", end: "14:50", label: "Break", who: "—" },
+      { start: "14:50", end: "15:30", label: "Block 3b — War Room", who: "Chip" },
+      { start: "15:30", end: "15:35", label: "Debrief", who: "Chip" },
+    ],
+  },
+};
+
+function getAgendaTemplateKey(session, programName) {
+  if (programName === "Founder's Day") return "founders-day";
+  const bl = session.block_label || "";
+  if (bl.includes("Flagship Group B")) return "flagship-groupb-tuethu";
+  if (bl.includes("Flagship Group A")) return "flagship-groupa-saturday";
+  if (bl.includes("Six-Week Wave") && bl.includes("Group A")) return "sixweek-groupa-monwed";
+  if (bl.includes("Six-Week Wave") && bl.includes("Group B")) return "sixweek-groupb-sunday";
+  return null;
+}
+
+function timeToMinutes(t) {
+  if (!t) return null;
+  const [h, m] = t.split(":").map(Number);
+  return h * 60 + m;
+}
+
+function DayDetailModal({ date, sessionsThisDay, programName, onClose }) {
+  const lora = "'Lora', Georgia, serif";
+  const cg = "'Cormorant Garamond', Georgia, serif";
+  const d = new Date(date + "T00:00:00");
+  const dateLabel = d.toLocaleDateString("en-US", { weekday: "long", month: "long", day: "numeric", year: "numeric" });
+
+  const templateKey = getAgendaTemplateKey(sessionsThisDay[0], programName);
+  const template = templateKey ? DAY_AGENDA_TEMPLATES[templateKey] : null;
+
+  const isOwnBlock = (blockStart, blockEnd) => {
+    const bStart = timeToMinutes(blockStart);
+    const bEnd = timeToMinutes(blockEnd);
+    return sessionsThisDay.some((s) => {
+      const sStart = timeToMinutes(s.start_time);
+      const sEnd = timeToMinutes(s.end_time);
+      if (sStart == null) return false;
+      return sStart < bEnd && (sEnd || sStart + 1) > bStart;
+    });
+  };
+
+  return (
+    <div
+      onClick={onClose}
+      style={{
+        position: "fixed", inset: 0, background: "rgba(16,15,12,0.5)", zIndex: 1000,
+        display: "flex", alignItems: "center", justifyContent: "center", padding: 20,
+      }}
+    >
+      <div
+        onClick={(e) => e.stopPropagation()}
+        style={{
+          background: "#FFFFFF", borderRadius: 6, maxWidth: 640, width: "100%",
+          maxHeight: "85vh", overflowY: "auto", padding: 32, position: "relative",
+        }}
+      >
+        <button
+          onClick={onClose}
+          style={{ position: "absolute", top: 20, right: 20, background: "none", border: "none", fontSize: 20, cursor: "pointer", color: "#8B7355" }}
+        >
+          ×
+        </button>
+
+        <p style={{ fontFamily: lora, fontSize: 11, letterSpacing: "0.15em", color: "#8B7355", textTransform: "uppercase", margin: "0 0 4px" }}>
+          {programName}
+        </p>
+        <h2 style={{ fontFamily: cg, fontSize: 26, color: "#100F0C", fontWeight: 600, margin: "0 0 20px" }}>
+          {dateLabel}
+        </h2>
+
+        {sessionsThisDay[0]?.location && (
+          <p style={{ fontFamily: lora, fontSize: 13, color: "#6B6459", margin: "0 0 20px" }}>
+            📍 {sessionsThisDay[0].location}
+          </p>
+        )}
+
+        {/* ── Your block(s) — details ── */}
+        {sessionsThisDay.map((s) => (
+          <div key={s.id} style={{ background: "#FAF7F2", border: "1px solid rgba(164,141,110,0.35)", borderRadius: 4, padding: 16, marginBottom: 12 }}>
+            <p style={{ fontFamily: lora, fontSize: 13.5, color: "#100F0C", fontWeight: 700, margin: "0 0 8px" }}>
+              Your Block: {s.block_label}
+            </p>
+            <div style={{ display: "flex", gap: 24, flexWrap: "wrap" }}>
+              <div>
+                <p style={{ fontFamily: lora, fontSize: 10.5, color: "#8B7355", textTransform: "uppercase", letterSpacing: "0.06em", margin: "0 0 2px" }}>Arrive By</p>
+                <p style={{ fontFamily: lora, fontSize: 13, color: "#100F0C", margin: 0 }}>{s.arrival_time ? s.arrival_time.slice(0, 5) : "—"}</p>
+              </div>
+              <div>
+                <p style={{ fontFamily: lora, fontSize: 10.5, color: "#8B7355", textTransform: "uppercase", letterSpacing: "0.06em", margin: "0 0 2px" }}>Block Starts</p>
+                <p style={{ fontFamily: lora, fontSize: 13, color: "#100F0C", margin: 0 }}>{s.start_time ? s.start_time.slice(0, 5) : "TBC"}</p>
+              </div>
+              <div>
+                <p style={{ fontFamily: lora, fontSize: 10.5, color: "#8B7355", textTransform: "uppercase", letterSpacing: "0.06em", margin: "0 0 2px" }}>TA Assigned</p>
+                <p style={{ fontFamily: lora, fontSize: 13, color: s.ta_assigned_name ? "#100F0C" : "#B4433A", margin: 0, fontStyle: s.ta_assigned_name ? "normal" : "italic" }}>
+                  {s.ta_assigned_name || "Not yet assigned"}
+                </p>
+              </div>
+            </div>
+          </div>
+        ))}
+
+        {/* ── Full day agenda ── */}
+        {template ? (
+          <>
+            <p style={{ fontFamily: lora, fontSize: 11, letterSpacing: "0.1em", color: "#8B7355", textTransform: "uppercase", margin: "24px 0 10px" }}>
+              Full Day Agenda
+            </p>
+            <div style={{ border: "1px solid rgba(16,15,12,0.1)", borderRadius: 4, overflow: "hidden" }}>
+              {template.blocks.map((b, i) => {
+                const mine = isOwnBlock(b.start, b.end);
+                return (
+                  <div
+                    key={i}
+                    style={{
+                      display: "flex", gap: 16, padding: "10px 16px", alignItems: "center",
+                      background: mine ? "#FAF0DC" : i % 2 === 0 ? "#FFFFFF" : "#FAFAFA",
+                      borderTop: i === 0 ? "none" : "1px solid rgba(16,15,12,0.06)",
+                      borderLeft: mine ? "3px solid #A48D6E" : "3px solid transparent",
+                    }}
+                  >
+                    <span style={{ fontFamily: lora, fontSize: 12, color: "#8B7355", width: 110, flexShrink: 0 }}>
+                      {b.start} – {b.end}
+                    </span>
+                    <span style={{ fontFamily: lora, fontSize: 13, color: "#100F0C", fontWeight: mine ? 700 : 400, flex: 1 }}>
+                      {b.label} {mine && <span style={{ color: "#A48D6E", fontWeight: 700 }}>— Your Block</span>}
+                    </span>
+                    <span style={{ fontFamily: lora, fontSize: 11.5, color: "#8B7355" }}>{b.who}</span>
+                  </div>
+                );
+              })}
+            </div>
+          </>
+        ) : (
+          <p style={{ fontFamily: cg, fontSize: 15, color: "#6B6459", fontStyle: "italic", marginTop: 16 }}>
+            This is a standalone event — no full-day agenda template applies.
+          </p>
+        )}
+      </div>
+    </div>
+  );
+}
+
+
+// ═══════════════════════════════════════════════════════════════════════
+// MY SCHEDULE + LESSON PLANS & MATERIALS
+// Both sections share the same underlying data (faculty_sessions joined to
+// lesson_plans via lesson_plan_topic_key), so they're built together.
+// ═══════════════════════════════════════════════════════════════════════
+
 const RATE_LABELS = {
   teaching_single: "flat",
   teaching_multi: "hourly",
@@ -16033,10 +16257,23 @@ function formatRate(rateRule) {
 
 const WEEKDAY_NAMES = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 
-function FolderIcon({ status, size = 20 }) {
+function handleFolderClick(plan, e) {
+  if (e) e.stopPropagation();
+  if (plan?.file_url) {
+    window.open(plan.file_url, "_blank");
+  } else {
+    alert("No lesson plan has been uploaded yet for this topic.");
+  }
+}
+
+function FolderIcon({ status, size = 20, onClick }) {
   const color = status === "approved" ? "#3D8B5F" : status === "pending_review" ? "#C9A227" : "#B4433A";
   return (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" style={{ flexShrink: 0 }}>
+    <svg
+      width={size} height={size} viewBox="0 0 24 24" fill="none"
+      onClick={onClick}
+      style={{ flexShrink: 0, cursor: onClick ? "pointer" : "default" }}
+    >
       <path
         d="M3 6.5C3 5.67157 3.67157 5 4.5 5H9.5L11.5 7H19.5C20.3284 7 21 7.67157 21 8.5V17.5C21 18.3284 20.3284 19 19.5 19H4.5C3.67157 19 3 18.3284 3 17.5V6.5Z"
         fill={color}
@@ -16088,6 +16325,7 @@ function MyScheduleSection({ facultyProfile }) {
   const lora = "'Lora', Georgia, serif";
   const cg = "'Cormorant Garamond', Georgia, serif";
   const { sessions, rateRules, lessonPlans, programs, loading } = useFacultyScheduleData(sb, facultyProfile?.id);
+  const [selectedDay, setSelectedDay] = useState(null); // { date, programName }
 
   const rateByType = {};
   rateRules.forEach((r) => { rateByType[r.activity_type] = r; });
@@ -16104,6 +16342,10 @@ function MyScheduleSection({ facultyProfile }) {
     if (!sessionsByProgram[s.program_id]) sessionsByProgram[s.program_id] = [];
     sessionsByProgram[s.program_id].push(s);
   });
+
+  const sessionsForSelectedDay = selectedDay
+    ? sessions.filter((s) => s.session_date === selectedDay.date)
+    : [];
 
   return (
     <div>
@@ -16134,11 +16376,12 @@ function MyScheduleSection({ facultyProfile }) {
                   return (
                     <div
                       key={s.id}
+                      onClick={() => setSelectedDay({ date: s.session_date, programName: program.name })}
                       style={{
                         display: "flex", alignItems: "center", gap: 16, padding: "14px 18px",
                         background: i % 2 === 0 ? "#FFFFFF" : "#FAF7F2",
                         borderTop: i === 0 ? "none" : "1px solid rgba(16,15,12,0.06)",
-                        flexWrap: "wrap",
+                        flexWrap: "wrap", cursor: "pointer",
                       }}
                     >
                       <div style={{ width: 150, flexShrink: 0 }}>
@@ -16160,7 +16403,7 @@ function MyScheduleSection({ facultyProfile }) {
                       </div>
                       {plan ? (
                         <div style={{ display: "flex", alignItems: "center", gap: 6, width: 150, flexShrink: 0 }}>
-                          <FolderIcon status={plan.status} size={16} />
+                          <FolderIcon status={plan.status} size={16} onClick={(e) => handleFolderClick(plan, e)} />
                           <FolderStatusLabel status={plan.status} />
                         </div>
                       ) : (
@@ -16174,6 +16417,15 @@ function MyScheduleSection({ facultyProfile }) {
           </div>
         );
       })}
+
+      {selectedDay && (
+        <DayDetailModal
+          date={selectedDay.date}
+          sessionsThisDay={sessionsForSelectedDay}
+          programName={selectedDay.programName}
+          onClose={() => setSelectedDay(null)}
+        />
+      )}
     </div>
   );
 }
@@ -16211,7 +16463,7 @@ function LessonPlanUploadRow({ plan, facultyProfile, onUpdated }) {
         uploaded_by_type: "faculty",
         uploaded_by_id: facultyProfile.id,
         action: "uploaded",
-        note: "Modified version submitted for review.",
+        note: plan.status === "missing" ? "Initial lesson plan uploaded." : "Modified version submitted for review.",
       });
 
       onUpdated();
@@ -16242,7 +16494,7 @@ function LessonPlanUploadRow({ plan, facultyProfile, onUpdated }) {
           opacity: uploading ? 0.6 : 1,
         }}
       >
-        {uploading ? "Uploading…" : "Upload Modified Version"}
+        {uploading ? "Uploading…" : plan.status === "missing" ? "Upload Lesson Plan" : "Upload Modified Version"}
       </button>
       <input ref={fileInputRef} type="file" onChange={handleFileSelected} style={{ display: "none" }} />
     </div>
@@ -16314,7 +16566,7 @@ function LessonPlansSection({ facultyProfile, facultyRole }) {
       {showGuide && (
         <div style={{ background: "#FAF7F2", border: "1px solid rgba(16,15,12,0.1)", borderRadius: 4, padding: 20, marginBottom: 24 }}>
           <p style={{ fontFamily: lora, fontSize: 13.5, color: "#100F0C", margin: "0 0 12px", fontWeight: 600 }}>
-            The folder colors tell you the status of each lesson plan:
+            The folder colors tell you the status of each lesson plan — click any folder to open the current file:
           </p>
           <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 8 }}>
             <FolderIcon status="missing" size={16} /><span style={{ fontFamily: lora, fontSize: 13, color: "#6B6459" }}>Red — no lesson plan uploaded for this topic yet.</span>
@@ -16377,7 +16629,7 @@ function LessonPlansSection({ facultyProfile, facultyRole }) {
               <div>
                 <p style={{ fontFamily: lora, fontSize: 14, color: "#100F0C", margin: "0 0 6px", fontWeight: 600 }}>{plan.topic_label}</p>
                 <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
-                  <FolderIcon status={plan.status} size={16} />
+                  <FolderIcon status={plan.status} size={16} onClick={(e) => handleFolderClick(plan, e)} />
                   <FolderStatusLabel status={plan.status} />
                 </div>
               </div>
