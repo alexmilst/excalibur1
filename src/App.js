@@ -15767,7 +15767,11 @@ function FacultyLoginForm({ onLoginSuccess }) {
     try {
       const resp = await fetch(`${SUPABASE_URL}/functions/v1/faculty-login`, {
         method: "POST",
-        headers: { "Content-Type": "application/json", apikey: SUPABASE_ANON_KEY },
+        headers: {
+          "Content-Type": "application/json",
+          apikey: SUPABASE_ANON_KEY,
+          Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
+        },
         body: JSON.stringify({ username: username.trim(), password }),
       });
       const data = await resp.json();
@@ -15861,45 +15865,56 @@ function FacultyDashboardHome({ facultyProfile, facultyRole }) {
   const lora = "'Lora', Georgia, serif";
   const cg = "'Cormorant Garamond', Georgia, serif";
 
-  const card = { background: "#17181B", border: "1px solid rgba(228,213,193,0.12)", borderRadius: 4, padding: 24 };
-  const cardLabel = { fontFamily: lora, fontSize: 11, letterSpacing: "0.12em", color: "#9A9186", textTransform: "uppercase", marginBottom: 12 };
+  const card = { background: "#FAF7F2", border: "1px solid rgba(16,15,12,0.1)", borderRadius: 4, padding: 24 };
+  const cardLabel = { fontFamily: lora, fontSize: 11, letterSpacing: "0.12em", color: "#8B7355", textTransform: "uppercase", marginBottom: 12 };
 
   return (
     <div>
-      <h2 style={{ fontFamily: cg, fontSize: 28, color: "#E4D5C1", fontWeight: 500, margin: "0 0 6px" }}>
-        Welcome, {facultyProfile?.full_name?.split(" ")[0] || "there"}
-      </h2>
-      <p style={{ fontFamily: lora, fontSize: 14, color: "#9A9186", margin: "0 0 32px" }}>
-        {facultyProfile?.role_title || (facultyRole === "admin" ? "Administrator" : "")}
-      </p>
+      <div style={{ display: "flex", alignItems: "center", gap: 24, marginBottom: 32 }}>
+        {facultyProfile?.photo_url && (
+          <img
+            src={facultyProfile.photo_url}
+            alt={facultyProfile?.full_name || "Faculty photo"}
+            style={{ width: 120, height: 120, borderRadius: 6, objectFit: "cover", flexShrink: 0, border: "1px solid rgba(16,15,12,0.1)" }}
+          />
+        )}
+        <div>
+          <h2 style={{ fontFamily: cg, fontSize: 28, color: "#100F0C", fontWeight: 500, margin: "0 0 6px" }}>
+            Welcome, {facultyProfile?.full_name?.split(" ")[0] || "there"}
+          </h2>
+          <p style={{ fontFamily: lora, fontSize: 14, color: "#6B6459", margin: 0 }}>
+            {facultyProfile?.role_title || (facultyRole === "admin" ? "Administrator" : "")}
+          </p>
+        </div>
+      </div>
 
       <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: 20 }}>
         <div style={card}>
           <p style={cardLabel}>This Week's Schedule</p>
-          <p style={{ fontFamily: lora, fontSize: 14, color: "#6B6459", fontStyle: "italic" }}>
+          <p style={{ fontFamily: cg, fontSize: 16, color: "#6B6459", fontStyle: "italic" }}>
             No sessions to show yet — this widget connects to My Schedule in the next build pass.
           </p>
         </div>
 
         <div style={card}>
           <p style={cardLabel}>Pending Confirmations</p>
-          <p style={{ fontFamily: lora, fontSize: 14, color: "#6B6459", fontStyle: "italic" }}>
+          <p style={{ fontFamily: cg, fontSize: 16, color: "#6B6459", fontStyle: "italic" }}>
             Weekly hour confirmations will appear here once Time Tracking is built.
           </p>
         </div>
 
         <div style={card}>
           <p style={cardLabel}>Action Items</p>
-          <p style={{ fontFamily: lora, fontSize: 14, color: "#6B6459", fontStyle: "italic" }}>
+          <p style={{ fontFamily: cg, fontSize: 16, color: "#6B6459", fontStyle: "italic" }}>
             Nothing outstanding right now.
           </p>
         </div>
       </div>
 
       {facultyRole === "admin" && (
-        <div style={{ ...card, marginTop: 20, borderColor: "rgba(164,141,110,0.4)" }}>
+        <div style={{ ...card, marginTop: 20, borderColor: "rgba(164,141,110,0.5)" }}>
           <p style={cardLabel}>Admin — Faculty Overview</p>
-          <p style={{ fontFamily: lora, fontSize: 14, color: "#6B6459", fontStyle: "italic" }}>
+          <p style={{ fontFamily: cg, fontSize: 16, color: "#6B6459", fontStyle: "italic" }}>
             Invoice review, approval, and faculty-wide visibility will live here once Billing & Invoices is built.
           </p>
         </div>
@@ -15968,15 +15983,15 @@ function FacultyPortalShell({ facultyProfile, facultyRole, onSignOut }) {
       </div>
 
       {/* ── CONTENT AREA ── */}
-      <div style={{ flex: 1, padding: isMobile ? 24 : 40, maxWidth: 1100 }}>
+      <div style={{ flex: 1, padding: isMobile ? 24 : 40, maxWidth: 1100, background: "#FFFFFF", minHeight: "100vh" }}>
         {activeSection === "dashboard" ? (
           <FacultyDashboardHome facultyProfile={facultyProfile} facultyRole={facultyRole} />
         ) : (
           <div>
-            <h2 style={{ fontFamily: cg, fontSize: 26, color: "#E4D5C1", fontWeight: 500, margin: "0 0 12px" }}>
+            <h2 style={{ fontFamily: cg, fontSize: 26, color: "#100F0C", fontWeight: 500, margin: "0 0 12px" }}>
               {FACULTY_NAV_SECTIONS.find((s) => s.key === activeSection)?.label}
             </h2>
-            <p style={{ fontFamily: lora, fontSize: 14, color: "#6B6459", fontStyle: "italic" }}>
+            <p style={{ fontFamily: cg, fontSize: 16, color: "#6B6459", fontStyle: "italic" }}>
               Coming soon — this section is being built next.
             </p>
           </div>
