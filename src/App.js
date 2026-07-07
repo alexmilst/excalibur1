@@ -15862,11 +15862,34 @@ function FacultyLoginForm({ onLoginSuccess }) {
 }
 
 function FacultyDashboardHome({ facultyProfile, facultyRole }) {
+  const sb = getSupabase();
   const lora = "'Lora', Georgia, serif";
   const cg = "'Cormorant Garamond', Georgia, serif";
+  const { sessions, rateRules, programs, loading } = useFacultyScheduleData(sb, facultyProfile?.id);
+  const [calendarModalDate, setCalendarModalDate] = useState(null);
 
-  const card = { background: "#FAF7F2", border: "1px solid rgba(16,15,12,0.1)", borderRadius: 4, padding: 24 };
+  const rateByType = {};
+  rateRules.forEach((r) => { rateByType[r.activity_type] = r; });
+  const programById = {};
+  programs.forEach((p) => { programById[p.id] = p; });
+
+  const todayStr = new Date().toISOString().slice(0, 10);
+  const dayGroups = groupSessionsByDay(sessions, rateByType);
+  const upcomingGroups = dayGroups.filter((g) => g.date >= todayStr).sort((a, b) => a.date.localeCompare(b.date));
+  const nextGroup = upcomingGroups[0] || null;
+
+  const sessionsByDate = {};
+  sessions.forEach((s) => {
+    if (!sessionsByDate[s.session_date]) sessionsByDate[s.session_date] = [];
+    sessionsByDate[s.session_date].push(s);
+  });
+
+  const card = { background: "#FAF7F2", border: "1px solid rgba(16,15,12,0.1)", borderRadius: 6, padding: 24 };
   const cardLabel = { fontFamily: lora, fontSize: 11, letterSpacing: "0.12em", color: "#8B7355", textTransform: "uppercase", marginBottom: 12 };
+
+  const modalProgramName = calendarModalDate && sessionsByDate[calendarModalDate]?.[0]
+    ? programById[sessionsByDate[calendarModalDate][0].program_id]?.name
+    : "";
 
   return (
     <div>
@@ -15879,7 +15902,7 @@ function FacultyDashboardHome({ facultyProfile, facultyRole }) {
           />
         )}
         <div>
-          <h2 style={{ fontFamily: cg, fontSize: 28, color: "#100F0C", fontWeight: 500, margin: "0 0 6px" }}>
+          <h2 style={{ fontFamily: cg, fontSize: 30, color: "#100F0C", fontWeight: 600, margin: "0 0 6px" }}>
             Welcome, {facultyProfile?.full_name?.split(" ")[0] || "there"}
           </h2>
           <p style={{ fontFamily: lora, fontSize: 14, color: "#6B6459", margin: 0 }}>
@@ -15888,12 +15911,26 @@ function FacultyDashboardHome({ facultyProfile, facultyRole }) {
         </div>
       </div>
 
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: 20 }}>
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: 20, marginBottom: 40 }}>
         <div style={card}>
-          <p style={cardLabel}>This Week's Schedule</p>
-          <p style={{ fontFamily: cg, fontSize: 16, color: "#6B6459", fontStyle: "italic" }}>
-            No sessions to show yet — this widget connects to My Schedule in the next build pass.
-          </p>
+          <p style={cardLabel}>Next Class</p>
+          {loading ? (
+            <p style={{ fontFamily: cg, fontSize: 16, color: "#6B6459", fontStyle: "italic" }}>Loading…</p>
+          ) : !nextGroup ? (
+            <p style={{ fontFamily: cg, fontSize: 16, color: "#6B6459", fontStyle: "italic" }}>Nothing scheduled yet.</p>
+          ) : (
+            <div onClick={() => setCalendarModalDate(nextGroup.date)} style={{ cursor: "pointer" }}>
+              <p style={{ fontFamily: lora, fontSize: 15, color: "#100F0C", fontWeight: 700, margin: "0 0 6px" }}>
+                {new Date(nextGroup.date + "T00:00:00").toLocaleDateString("en-US", { weekday: "long", month: "long", day: "numeric" })}
+              </p>
+              {nextGroup.allSessions.map((s) => (
+                <p key={s.id} style={{ fontFamily: lora, fontSize: 13, color: "#6B6459", margin: "2px 0" }}>
+                  {s.start_time ? s.start_time.slice(0, 5) : "TBC"} — {s.block_label}
+                </p>
+              ))}
+              <p style={{ fontFamily: lora, fontSize: 12, color: "#A48D6E", margin: "10px 0 0", textDecoration: "underline" }}>View full day →</p>
+            </div>
+          )}
         </div>
 
         <div style={card}>
@@ -15912,16 +15949,84 @@ function FacultyDashboardHome({ facultyProfile, facultyRole }) {
       </div>
 
       {facultyRole === "admin" && (
-        <div style={{ ...card, marginTop: 20, borderColor: "rgba(164,141,110,0.5)" }}>
+        <div style={{ ...card, marginBottom: 40, borderColor: "rgba(164,141,110,0.5)" }}>
           <p style={cardLabel}>Admin — Faculty Overview</p>
           <p style={{ fontFamily: cg, fontSize: 16, color: "#6B6459", fontStyle: "italic" }}>
             Invoice review, approval, and faculty-wide visibility will live here once Billing & Invoices is built.
           </p>
         </div>
       )}
+
+      <div>
+        <h3 style={{ fontFamily: cg, fontSize: 22, color: "#100F0C", fontWeight: 600, margin: "0 0 18px" }}>
+          Foundation Semester — Calendar
+        </h3>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: 28 }}>
+          {[[2026, 8], [2026, 9], [2026, 10], [2026, 11]].map(([y, m]) => (
+            <MonthlyCalendarGrid key={`${y}-${m}`} year={y} monthIndex0={m} sessionsByDate={sessionsByDate} onDayClick={setCalendarModalDate} />
+          ))}
+        </div>
+      </div>
+
+      {calendarModalDate && (
+        <DayDetailModal
+          date={calendarModalDate}
+          sessionsThisDay={sessionsByDate[calendarModalDate] || []}
+          programName={modalProgramName}
+          onClose={() => setCalendarModalDate(null)}
+        />
+      )}
     </div>
   );
 }
+
+function MonthlyCalendarGrid({ year, monthIndex0, sessionsByDate, onDayClick }) {
+  const lora = "'Lora', Georgia, serif";
+  const cg = "'Cormorant Garamond', Georgia, serif";
+  const monthName = new Date(year, monthIndex0, 1).toLocaleDateString("en-US", { month: "long", year: "numeric" });
+  const firstDayWeekday = new Date(year, monthIndex0, 1).getDay();
+  const daysInMonth = new Date(year, monthIndex0 + 1, 0).getDate();
+  const cells = [];
+  for (let i = 0; i < firstDayWeekday; i++) cells.push(null);
+  for (let d = 1; d <= daysInMonth; d++) cells.push(d);
+
+  return (
+    <div style={{ background: "#FFFFFF", border: "1px solid rgba(16,15,12,0.08)", borderRadius: 6, padding: 16 }}>
+      <p style={{ fontFamily: cg, fontSize: 16, color: "#100F0C", fontWeight: 600, margin: "0 0 12px" }}>{monthName}</p>
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(7, 1fr)", gap: 3 }}>
+        {["S", "M", "T", "W", "T", "F", "S"].map((d, i) => (
+          <div key={i} style={{ fontFamily: lora, fontSize: 9.5, color: "#8B7355", textAlign: "center", textTransform: "uppercase", paddingBottom: 4 }}>{d}</div>
+        ))}
+        {cells.map((day, i) => {
+          if (day == null) return <div key={i} />;
+          const dateStr = `${year}-${String(monthIndex0 + 1).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
+          const daySessions = sessionsByDate[dateStr];
+          const hasSessions = daySessions && daySessions.length > 0;
+          return (
+            <div
+              key={i}
+              onClick={() => hasSessions && onDayClick(dateStr)}
+              style={{
+                aspectRatio: "1", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center",
+                borderRadius: 4, cursor: hasSessions ? "pointer" : "default",
+                background: hasSessions ? "#FAF0DC" : "transparent",
+                border: hasSessions ? "1px solid rgba(164,141,110,0.5)" : "1px solid transparent",
+              }}
+            >
+              <span style={{ fontFamily: lora, fontSize: 11.5, color: "#100F0C", fontWeight: hasSessions ? 700 : 400 }}>{day}</span>
+              {hasSessions && (
+                <span style={{ fontFamily: lora, fontSize: 8, color: "#A48D6E" }}>
+                  {daySessions[0].start_time ? daySessions[0].start_time.slice(0, 5) : ""}
+                </span>
+              )}
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
 
 function FacultyPortalShell({ facultyProfile, facultyRole, onSignOut }) {
   const lora = "'Lora', Georgia, serif";
@@ -16004,12 +16109,6 @@ function FacultyPortalShell({ facultyProfile, facultyRole, onSignOut }) {
     </div>
   );
 }
-
-// ═══════════════════════════════════════════════════════════════════════
-// MY SCHEDULE + LESSON PLANS & MATERIALS
-// Both sections share the same underlying data (faculty_sessions joined to
-// lesson_plans via lesson_plan_topic_key), so they're built together.
-// ═══════════════════════════════════════════════════════════════════════
 
 // ═══════════════════════════════════════════════════════════════════════
 // DAY AGENDA TEMPLATES + DAY DETAIL MODAL
@@ -16230,22 +16329,8 @@ function DayDetailModal({ date, sessionsThisDay, programName, onClose }) {
 
 
 // ═══════════════════════════════════════════════════════════════════════
-// MY SCHEDULE + LESSON PLANS & MATERIALS
-// Both sections share the same underlying data (faculty_sessions joined to
-// lesson_plans via lesson_plan_topic_key), so they're built together.
+// SHARED HELPERS: rate formatting, folder status, day-grouping, time formatting
 // ═══════════════════════════════════════════════════════════════════════
-
-const RATE_LABELS = {
-  teaching_single: "flat",
-  teaching_multi: "hourly",
-  class_prep: "included",
-  parent_info_session: "included",
-  faculty_meeting: "included",
-  event_competition: "hourly",
-  admissions_first: "flat",
-  admissions_additional: "hourly",
-  private_mentorship: "included",
-};
 
 function formatRate(rateRule) {
   if (!rateRule) return "—";
@@ -16257,12 +16342,21 @@ function formatRate(rateRule) {
 
 const WEEKDAY_NAMES = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 
-function handleFolderClick(plan, e) {
+function formatMinutes(total) {
+  if (total == null) return "—";
+  const h = Math.floor(total / 60);
+  const m = total % 60;
+  if (h === 0) return `${m}m`;
+  if (m === 0) return `${h}h`;
+  return `${h}h ${m}m`;
+}
+
+function handleFileClick(fileUrl, e) {
   if (e) e.stopPropagation();
-  if (plan?.file_url) {
-    window.open(plan.file_url, "_blank");
+  if (fileUrl) {
+    window.open(fileUrl, "_blank");
   } else {
-    alert("No lesson plan has been uploaded yet for this topic.");
+    alert("No lesson plan has been uploaded yet for this session.");
   }
 }
 
@@ -16291,11 +16385,64 @@ function FolderStatusLabel({ status }) {
   return <span style={{ fontFamily: lora, fontSize: 12, color, fontWeight: 600 }}>{text}</span>;
 }
 
-// ── Fetches faculty_sessions + rate rules + lesson_plans for one faculty member ──
+// Groups a flat list of sessions by calendar date. Teaching-type sessions on
+// the same date are summed ONCE for the day (actual minutes -> rounded up ->
+// billed hours -> rate), matching the contract's per-day consecutive-block
+// rule rather than rounding each block separately.
+function groupSessionsByDay(sessions, rateByType) {
+  const byDate = {};
+  sessions.forEach((s) => {
+    if (!byDate[s.session_date]) byDate[s.session_date] = [];
+    byDate[s.session_date].push(s);
+  });
+
+  return Object.keys(byDate).sort().map((date) => {
+    const daySessions = byDate[date].slice().sort((a, b) => (a.start_time || "").localeCompare(b.start_time || ""));
+    const teachingBlocks = daySessions.filter((s) => s.activity_type === "teaching_single" || s.activity_type === "teaching_multi");
+
+    let teachingSummary = null;
+    if (teachingBlocks.length > 0) {
+      const totalActualMinutes = teachingBlocks.reduce((sum, s) => sum + (s.duration_minutes || 0), 0);
+      const totalBilledHours = Math.max(1, Math.ceil(totalActualMinutes / 60));
+      const useHourly = totalBilledHours > 1;
+      const rateRule = useHourly ? rateByType["teaching_multi"] : rateByType["teaching_single"];
+      const rateAmount = rateRule ? Number(rateRule.rate_amount) : (useHourly ? 300 : 350);
+      const totalPay = useHourly ? totalBilledHours * rateAmount : rateAmount;
+      teachingSummary = { blocks: teachingBlocks, totalActualMinutes, totalBilledHours, rateType: useHourly ? "hourly" : "flat", rateAmount, totalPay };
+    }
+
+    return { date, allSessions: daySessions, teachingSummary };
+  });
+}
+
+function formatOtherBilled(sessionsList, rateByType) {
+  if (sessionsList.length !== 1) return "—";
+  const s = sessionsList[0];
+  const rr = rateByType[s.activity_type];
+  if (!rr) return "—";
+  if (rr.rate_type === "included") return "Included";
+  if (rr.rate_type === "flat") return "1 session";
+  return s.billable_hours != null ? `${s.billable_hours} hr` : "—";
+}
+function formatOtherRate(sessionsList, rateByType) {
+  if (sessionsList.length !== 1) return "—";
+  return formatRate(rateByType[sessionsList[0].activity_type]);
+}
+function formatOtherPay(sessionsList, rateByType) {
+  if (sessionsList.length !== 1) return "—";
+  const s = sessionsList[0];
+  const rr = rateByType[s.activity_type];
+  if (!rr) return "—";
+  if (rr.rate_type === "flat") return `$${Number(rr.rate_amount)}`;
+  if (rr.rate_type === "included") return "Included";
+  if (rr.rate_type === "hourly" && s.billable_hours != null) return `$${Number(rr.rate_amount) * s.billable_hours}`;
+  return "—";
+}
+
+// ── Fetches faculty_sessions + rate rules + programs for one faculty member ──
 function useFacultyScheduleData(sb, facultyId) {
   const [sessions, setSessions] = useState([]);
   const [rateRules, setRateRules] = useState([]);
-  const [lessonPlans, setLessonPlans] = useState([]);
   const [programs, setPrograms] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -16303,34 +16450,34 @@ function useFacultyScheduleData(sb, facultyId) {
     if (!sb || !facultyId) return;
     setLoading(true);
     (async () => {
-      const [sessionsRes, ratesRes, plansRes, programsRes] = await Promise.all([
+      const [sessionsRes, ratesRes, programsRes] = await Promise.all([
         sb.from("faculty_sessions").select("*").eq("faculty_id", facultyId).order("session_date", { ascending: true }),
         sb.from("faculty_rate_rules").select("*").eq("faculty_id", facultyId),
-        sb.from("lesson_plans").select("*").eq("assigned_faculty_id", facultyId),
         sb.from("programs").select("*").order("sort_order", { ascending: true }),
       ]);
       setSessions(sessionsRes.data || []);
       setRateRules(ratesRes.data || []);
-      setLessonPlans(plansRes.data || []);
       setPrograms(programsRes.data || []);
       setLoading(false);
     })();
   }, [sb, facultyId]);
 
-  return { sessions, rateRules, lessonPlans, programs, loading };
+  return { sessions, rateRules, programs, loading };
 }
+
+// ═══════════════════════════════════════════════════════════════════════
+// MY SCHEDULE
+// ═══════════════════════════════════════════════════════════════════════
 
 function MyScheduleSection({ facultyProfile }) {
   const sb = getSupabase();
   const lora = "'Lora', Georgia, serif";
   const cg = "'Cormorant Garamond', Georgia, serif";
-  const { sessions, rateRules, lessonPlans, programs, loading } = useFacultyScheduleData(sb, facultyProfile?.id);
-  const [selectedDay, setSelectedDay] = useState(null); // { date, programName }
+  const { sessions, rateRules, programs, loading } = useFacultyScheduleData(sb, facultyProfile?.id);
+  const [selectedDay, setSelectedDay] = useState(null);
 
   const rateByType = {};
   rateRules.forEach((r) => { rateByType[r.activity_type] = r; });
-  const planByTopicKey = {};
-  lessonPlans.forEach((p) => { planByTopicKey[p.topic_key] = p; });
 
   if (loading) {
     return <p style={{ fontFamily: cg, fontSize: 16, color: "#6B6459", fontStyle: "italic" }}>Loading your schedule…</p>;
@@ -16343,72 +16490,98 @@ function MyScheduleSection({ facultyProfile }) {
     sessionsByProgram[s.program_id].push(s);
   });
 
-  const sessionsForSelectedDay = selectedDay
-    ? sessions.filter((s) => s.session_date === selectedDay.date)
-    : [];
+  const colHeaderStyle = {
+    fontFamily: lora, fontSize: 10.5, letterSpacing: "0.08em", color: "#E4D5C1",
+    textTransform: "uppercase", padding: "12px 14px", textAlign: "left",
+  };
+  const gridCols = "120px 1fr 130px 90px 110px 100px 70px";
 
   return (
     <div>
       {programs.map((program) => {
         const progSessions = sessionsByProgram[program.id] || [];
+        const dayGroups = groupSessionsByDay(progSessions, rateByType);
         return (
-          <div key={program.id} style={{ marginBottom: 40 }}>
-            <h3 style={{ fontFamily: cg, fontSize: 21, color: "#100F0C", fontWeight: 600, margin: "0 0 4px" }}>
+          <div key={program.id} style={{ marginBottom: 44 }}>
+            <h3 style={{
+              fontFamily: cg, fontSize: 23, color: "#100F0C", fontWeight: 600, margin: "0 0 4px",
+              borderBottom: "2px solid #A48D6E", paddingBottom: 8, display: "inline-block",
+            }}>
               {program.name}
             </h3>
             {program.status === "under_construction" ? (
-              <p style={{ fontFamily: cg, fontSize: 16, color: "#B4433A", fontStyle: "italic", marginTop: 8 }}>
+              <p style={{ fontFamily: cg, fontSize: 16, color: "#B4433A", fontStyle: "italic", marginTop: 14 }}>
                 Under Construction — schedule not yet available.
               </p>
-            ) : progSessions.length === 0 ? (
-              <p style={{ fontFamily: cg, fontSize: 16, color: "#6B6459", fontStyle: "italic", marginTop: 8 }}>
+            ) : dayGroups.length === 0 ? (
+              <p style={{ fontFamily: cg, fontSize: 16, color: "#6B6459", fontStyle: "italic", marginTop: 14 }}>
                 No sessions scheduled yet.
               </p>
             ) : (
-              <div style={{ border: "1px solid rgba(16,15,12,0.1)", borderRadius: 4, overflow: "hidden", marginTop: 12 }}>
-                {progSessions.map((s, i) => {
-                  const d = new Date(s.session_date + "T00:00:00");
+              <div style={{ marginTop: 16, border: "1px solid rgba(16,15,12,0.1)", borderRadius: 6, overflow: "hidden", boxShadow: "0 1px 4px rgba(16,15,12,0.06)" }}>
+                <div style={{ display: "grid", gridTemplateColumns: gridCols, background: "#100F0C" }}>
+                  <div style={colHeaderStyle}>Date</div>
+                  <div style={colHeaderStyle}>Blocks</div>
+                  <div style={colHeaderStyle}>Teaching Time</div>
+                  <div style={colHeaderStyle}>Billed</div>
+                  <div style={colHeaderStyle}>Rate</div>
+                  <div style={colHeaderStyle}>Total Pay</div>
+                  <div style={colHeaderStyle}>Plan</div>
+                </div>
+                {dayGroups.map((group, i) => {
+                  const d = new Date(group.date + "T00:00:00");
                   const weekday = WEEKDAY_NAMES[d.getDay()];
-                  const dateLabel = d.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
-                  const timeLabel = s.start_time ? s.start_time.slice(0, 5) : "TBC";
-                  const rateRule = rateByType[s.activity_type];
-                  const plan = s.lesson_plan_topic_key ? planByTopicKey[s.lesson_plan_topic_key] : null;
+                  const dateLabel = d.toLocaleDateString("en-US", { month: "short", day: "numeric" });
+                  const teachingSessionsThisDay = group.allSessions.filter((s) => s.activity_type === "teaching_single" || s.activity_type === "teaching_multi");
+
                   return (
                     <div
-                      key={s.id}
-                      onClick={() => setSelectedDay({ date: s.session_date, programName: program.name })}
+                      key={group.date}
+                      onClick={() => setSelectedDay({ date: group.date, sessionsThisDay: group.allSessions, programName: program.name })}
                       style={{
-                        display: "flex", alignItems: "center", gap: 16, padding: "14px 18px",
-                        background: i % 2 === 0 ? "#FFFFFF" : "#FAF7F2",
-                        borderTop: i === 0 ? "none" : "1px solid rgba(16,15,12,0.06)",
-                        flexWrap: "wrap", cursor: "pointer",
+                        display: "grid", gridTemplateColumns: gridCols, padding: "14px",
+                        background: i % 2 === 0 ? "#FFFFFF" : "#FAF7F2", cursor: "pointer",
+                        borderTop: i === 0 ? "none" : "1px solid rgba(16,15,12,0.07)",
                       }}
                     >
-                      <div style={{ width: 150, flexShrink: 0 }}>
-                        <p style={{ fontFamily: lora, fontSize: 13, color: "#100F0C", margin: 0, fontWeight: 600 }}>{dateLabel}</p>
-                        <p style={{ fontFamily: lora, fontSize: 12, color: "#8B7355", margin: 0 }}>{weekday} · {timeLabel}</p>
+                      <div>
+                        <p style={{ fontFamily: lora, fontSize: 13, color: "#100F0C", margin: 0, fontWeight: 700 }}>{dateLabel}</p>
+                        <p style={{ fontFamily: lora, fontSize: 11.5, color: "#8B7355", margin: 0 }}>{weekday}</p>
                       </div>
-                      <div style={{ flex: 1, minWidth: 200 }}>
-                        <p style={{ fontFamily: lora, fontSize: 13.5, color: "#100F0C", margin: 0 }}>{s.block_label}</p>
+                      <div>
+                        {group.allSessions.map((s) => (
+                          <p key={s.id} style={{ fontFamily: lora, fontSize: 13, color: "#100F0C", margin: "0 0 3px" }}>
+                            {s.start_time ? s.start_time.slice(0, 5) : "TBC"} · {s.block_label}
+                          </p>
+                        ))}
                       </div>
-                      <div style={{ width: 110, flexShrink: 0 }}>
-                        <p style={{ fontFamily: lora, fontSize: 12, color: "#8B7355", margin: 0, textTransform: "uppercase", letterSpacing: "0.05em" }}>
-                          {s.billable_hours != null ? `${s.billable_hours} hr` : "—"}
+                      <div>
+                        <p style={{ fontFamily: lora, fontSize: 12.5, color: "#6B6459", margin: 0 }}>
+                          {group.teachingSummary ? formatMinutes(group.teachingSummary.totalActualMinutes) : "—"}
                         </p>
                       </div>
-                      <div style={{ width: 100, flexShrink: 0 }}>
-                        <p style={{ fontFamily: lora, fontSize: 13, color: "#100F0C", margin: 0, fontWeight: 600 }}>
-                          {formatRate(rateRule)}
+                      <div>
+                        <p style={{ fontFamily: lora, fontSize: 12.5, color: "#100F0C", margin: 0, fontWeight: 600 }}>
+                          {group.teachingSummary ? `${group.teachingSummary.totalBilledHours} hr` : formatOtherBilled(group.allSessions, rateByType)}
                         </p>
                       </div>
-                      {plan ? (
-                        <div style={{ display: "flex", alignItems: "center", gap: 6, width: 150, flexShrink: 0 }}>
-                          <FolderIcon status={plan.status} size={16} onClick={(e) => handleFolderClick(plan, e)} />
-                          <FolderStatusLabel status={plan.status} />
-                        </div>
-                      ) : (
-                        <div style={{ width: 150, flexShrink: 0 }} />
-                      )}
+                      <div>
+                        <p style={{ fontFamily: lora, fontSize: 12.5, color: "#100F0C", margin: 0 }}>
+                          {group.teachingSummary
+                            ? (group.teachingSummary.rateType === "flat" ? `$${group.teachingSummary.rateAmount} flat` : `$${group.teachingSummary.rateAmount}/hr`)
+                            : formatOtherRate(group.allSessions, rateByType)}
+                        </p>
+                      </div>
+                      <div>
+                        <p style={{ fontFamily: lora, fontSize: 13, color: "#100F0C", margin: 0, fontWeight: 700 }}>
+                          {group.teachingSummary ? `$${group.teachingSummary.totalPay}` : formatOtherPay(group.allSessions, rateByType)}
+                        </p>
+                      </div>
+                      <div style={{ display: "flex", flexDirection: "column", gap: 5, alignItems: "flex-start" }}>
+                        {teachingSessionsThisDay.map((s) => (
+                          <FolderIcon key={s.id} status={s.lesson_plan_status} size={16} onClick={(e) => handleFileClick(s.lesson_plan_file_url, e)} />
+                        ))}
+                      </div>
                     </div>
                   );
                 })}
@@ -16421,7 +16594,7 @@ function MyScheduleSection({ facultyProfile }) {
       {selectedDay && (
         <DayDetailModal
           date={selectedDay.date}
-          sessionsThisDay={sessionsForSelectedDay}
+          sessionsThisDay={selectedDay.sessionsThisDay}
           programName={selectedDay.programName}
           onClose={() => setSelectedDay(null)}
         />
@@ -16430,7 +16603,11 @@ function MyScheduleSection({ facultyProfile }) {
   );
 }
 
-function LessonPlanUploadRow({ plan, facultyProfile, onUpdated }) {
+// ═══════════════════════════════════════════════════════════════════════
+// LESSON PLANS & MATERIALS — one per individual session, grouped by program
+// ═══════════════════════════════════════════════════════════════════════
+
+function SessionLessonPlanUploadRow({ session, facultyProfile, onUpdated }) {
   const sb = getSupabase();
   const lora = "'Lora', Georgia, serif";
   const [uploading, setUploading] = useState(false);
@@ -16441,29 +16618,28 @@ function LessonPlanUploadRow({ plan, facultyProfile, onUpdated }) {
     if (!file || !sb) return;
     setUploading(true);
     try {
-      const path = `${plan.topic_key}/${Date.now()}_${file.name}`;
+      const path = `${session.id}/${Date.now()}_${file.name}`;
       const { error: uploadError } = await sb.storage.from("lesson-plans").upload(path, file, { upsert: false });
       if (uploadError) throw uploadError;
       const { data: urlData } = sb.storage.from("lesson-plans").getPublicUrl(path);
 
-      await sb.from("lesson_plans").update({
-        file_url: urlData.publicUrl,
-        file_name: file.name,
-        uploaded_by_type: "faculty",
-        uploaded_by_id: facultyProfile.id,
-        uploaded_at: new Date().toISOString(),
-        status: "pending_review",
-        updated_at: new Date().toISOString(),
-      }).eq("id", plan.id);
+      await sb.from("faculty_sessions").update({
+        lesson_plan_file_url: urlData.publicUrl,
+        lesson_plan_file_name: file.name,
+        lesson_plan_uploaded_by_type: "faculty",
+        lesson_plan_uploaded_by_id: facultyProfile.id,
+        lesson_plan_uploaded_at: new Date().toISOString(),
+        lesson_plan_status: "pending_review",
+      }).eq("id", session.id);
 
       await sb.from("lesson_plan_revisions").insert({
-        lesson_plan_id: plan.id,
+        session_id: session.id,
         file_url: urlData.publicUrl,
         file_name: file.name,
         uploaded_by_type: "faculty",
         uploaded_by_id: facultyProfile.id,
         action: "uploaded",
-        note: plan.status === "missing" ? "Initial lesson plan uploaded." : "Modified version submitted for review.",
+        note: session.lesson_plan_status === "missing" ? "Initial lesson plan uploaded." : "Modified version submitted for review.",
       });
 
       onUpdated();
@@ -16477,9 +16653,9 @@ function LessonPlanUploadRow({ plan, facultyProfile, onUpdated }) {
 
   return (
     <div style={{ display: "flex", alignItems: "center", gap: 10, flexWrap: "wrap" }}>
-      {plan.file_url && (
+      {session.lesson_plan_file_url && (
         <a
-          href={plan.file_url} target="_blank" rel="noreferrer"
+          href={session.lesson_plan_file_url} target="_blank" rel="noreferrer"
           style={{ fontFamily: lora, fontSize: 12.5, color: "#8B7355", textDecoration: "underline" }}
         >
           Download current file
@@ -16494,7 +16670,7 @@ function LessonPlanUploadRow({ plan, facultyProfile, onUpdated }) {
           opacity: uploading ? 0.6 : 1,
         }}
       >
-        {uploading ? "Uploading…" : plan.status === "missing" ? "Upload Lesson Plan" : "Upload Modified Version"}
+        {uploading ? "Uploading…" : session.lesson_plan_status === "missing" ? "Upload Lesson Plan" : "Upload Modified Version"}
       </button>
       <input ref={fileInputRef} type="file" onChange={handleFileSelected} style={{ display: "none" }} />
     </div>
@@ -16505,7 +16681,8 @@ function LessonPlansSection({ facultyProfile, facultyRole }) {
   const sb = getSupabase();
   const lora = "'Lora', Georgia, serif";
   const cg = "'Cormorant Garamond', Georgia, serif";
-  const [myPlans, setMyPlans] = useState([]);
+  const [mySessions, setMySessions] = useState([]);
+  const [programs, setPrograms] = useState([]);
   const [pendingAcrossAll, setPendingAcrossAll] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showGuide, setShowGuide] = useState(false);
@@ -16513,11 +16690,18 @@ function LessonPlansSection({ facultyProfile, facultyRole }) {
   const loadData = React.useCallback(async () => {
     if (!sb || !facultyProfile) return;
     setLoading(true);
-    const { data: mine } = await sb.from("lesson_plans").select("*").eq("assigned_faculty_id", facultyProfile.id).order("topic_label");
-    setMyPlans(mine || []);
+    const [sessionsRes, programsRes] = await Promise.all([
+      sb.from("faculty_sessions").select("*").eq("faculty_id", facultyProfile.id)
+        .in("activity_type", ["teaching_single", "teaching_multi"]).order("session_date", { ascending: true }),
+      sb.from("programs").select("*").order("sort_order", { ascending: true }),
+    ]);
+    setMySessions(sessionsRes.data || []);
+    setPrograms(programsRes.data || []);
 
     if (facultyRole === "admin") {
-      const { data: pending } = await sb.from("lesson_plans").select("*, faculty_profiles(full_name)").eq("status", "pending_review");
+      const { data: pending } = await sb.from("faculty_sessions")
+        .select("*, faculty_profiles(full_name), programs(name)")
+        .eq("lesson_plan_status", "pending_review");
       setPendingAcrossAll(pending || []);
     }
     setLoading(false);
@@ -16525,18 +16709,17 @@ function LessonPlansSection({ facultyProfile, facultyRole }) {
 
   useEffect(() => { loadData(); }, [loadData]);
 
-  const handleApprove = async (plan) => {
+  const handleApprove = async (session) => {
     if (!sb) return;
-    await sb.from("lesson_plans").update({
-      status: "approved",
-      approved_by: facultyProfile.id,
-      approved_at: new Date().toISOString(),
-      updated_at: new Date().toISOString(),
-    }).eq("id", plan.id);
+    await sb.from("faculty_sessions").update({
+      lesson_plan_status: "approved",
+      lesson_plan_approved_by: facultyProfile.id,
+      lesson_plan_approved_at: new Date().toISOString(),
+    }).eq("id", session.id);
     await sb.from("lesson_plan_revisions").insert({
-      lesson_plan_id: plan.id,
-      file_url: plan.file_url,
-      file_name: plan.file_name,
+      session_id: session.id,
+      file_url: session.lesson_plan_file_url,
+      file_name: session.lesson_plan_file_name,
       uploaded_by_type: "admin",
       uploaded_by_id: facultyProfile.id,
       action: "approved",
@@ -16545,11 +16728,18 @@ function LessonPlansSection({ facultyProfile, facultyRole }) {
     loadData();
   };
 
-  const cardStyle = { border: "1px solid rgba(16,15,12,0.1)", borderRadius: 4, padding: 18, marginBottom: 12, background: "#FFFFFF" };
+  const cardStyle = { border: "1px solid rgba(16,15,12,0.1)", borderRadius: 6, padding: 16, marginBottom: 10, background: "#FFFFFF" };
 
   if (loading) {
     return <p style={{ fontFamily: cg, fontSize: 16, color: "#6B6459", fontStyle: "italic" }}>Loading lesson plans…</p>;
   }
+
+  const sessionsByProgram = {};
+  programs.forEach((p) => { sessionsByProgram[p.id] = []; });
+  mySessions.forEach((s) => {
+    if (!sessionsByProgram[s.program_id]) sessionsByProgram[s.program_id] = [];
+    sessionsByProgram[s.program_id].push(s);
+  });
 
   return (
     <div>
@@ -16564,22 +16754,21 @@ function LessonPlansSection({ facultyProfile, facultyRole }) {
       </button>
 
       {showGuide && (
-        <div style={{ background: "#FAF7F2", border: "1px solid rgba(16,15,12,0.1)", borderRadius: 4, padding: 20, marginBottom: 24 }}>
+        <div style={{ background: "#FAF7F2", border: "1px solid rgba(16,15,12,0.1)", borderRadius: 6, padding: 20, marginBottom: 24 }}>
           <p style={{ fontFamily: lora, fontSize: 13.5, color: "#100F0C", margin: "0 0 12px", fontWeight: 600 }}>
-            The folder colors tell you the status of each lesson plan — click any folder to open the current file:
+            Every individual class session has its own lesson plan folder — click any folder to open the current file:
           </p>
           <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 8 }}>
-            <FolderIcon status="missing" size={16} /><span style={{ fontFamily: lora, fontSize: 13, color: "#6B6459" }}>Red — no lesson plan uploaded for this topic yet.</span>
+            <FolderIcon status="missing" size={16} /><span style={{ fontFamily: lora, fontSize: 13, color: "#6B6459" }}>Red — no lesson plan uploaded for this session yet.</span>
           </div>
           <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 8 }}>
-            <FolderIcon status="pending_review" size={16} /><span style={{ fontFamily: lora, fontSize: 13, color: "#6B6459" }}>Yellow — a file is there, but it hasn't been approved yet (this includes your own modified resubmissions, while they're awaiting review).</span>
+            <FolderIcon status="pending_review" size={16} /><span style={{ fontFamily: lora, fontSize: 13, color: "#6B6459" }}>Yellow — a file is there, awaiting approval.</span>
           </div>
           <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 12 }}>
-            <FolderIcon status="approved" size={16} /><span style={{ fontFamily: lora, fontSize: 13, color: "#6B6459" }}>Green — approved and confirmed. This is the version to teach from.</span>
+            <FolderIcon status="approved" size={16} /><span style={{ fontFamily: lora, fontSize: 13, color: "#6B6459" }}>Green — approved and confirmed.</span>
           </div>
           <p style={{ fontFamily: lora, fontSize: 13, color: "#6B6459", margin: 0 }}>
-            You can download the current file, modify it, and upload your modified version at any time —
-            it goes to yellow ("Pending Review") until Alexander or Amina confirms it, at which point it turns green.
+            Download the current file, modify it, and upload your modified version any time — it goes yellow until approved, then turns green.
           </p>
         </div>
       )}
@@ -16589,23 +16778,25 @@ function LessonPlansSection({ facultyProfile, facultyRole }) {
           <h3 style={{ fontFamily: cg, fontSize: 20, color: "#100F0C", fontWeight: 600, margin: "0 0 12px" }}>
             Pending Your Review ({pendingAcrossAll.length})
           </h3>
-          {pendingAcrossAll.map((plan) => (
-            <div key={plan.id} style={{ ...cardStyle, borderColor: "rgba(201,162,39,0.4)", background: "#FFFDF5" }}>
+          {pendingAcrossAll.map((s) => (
+            <div key={s.id} style={{ ...cardStyle, borderColor: "rgba(201,162,39,0.4)", background: "#FFFDF5" }}>
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", flexWrap: "wrap", gap: 12 }}>
                 <div>
-                  <p style={{ fontFamily: lora, fontSize: 14, color: "#100F0C", margin: "0 0 4px", fontWeight: 600 }}>{plan.topic_label}</p>
+                  <p style={{ fontFamily: lora, fontSize: 14, color: "#100F0C", margin: "0 0 4px", fontWeight: 600 }}>
+                    {s.programs?.name} / {s.block_label} / {new Date(s.session_date + "T00:00:00").toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })}
+                  </p>
                   <p style={{ fontFamily: lora, fontSize: 12.5, color: "#8B7355", margin: 0 }}>
-                    Submitted by {plan.faculty_profiles?.full_name || "faculty member"}
+                    Submitted by {s.faculty_profiles?.full_name || "faculty member"}
                   </p>
                 </div>
                 <div style={{ display: "flex", gap: 10, alignItems: "center" }}>
-                  {plan.file_url && (
-                    <a href={plan.file_url} target="_blank" rel="noreferrer" style={{ fontFamily: lora, fontSize: 12.5, color: "#8B7355", textDecoration: "underline" }}>
+                  {s.lesson_plan_file_url && (
+                    <a href={s.lesson_plan_file_url} target="_blank" rel="noreferrer" style={{ fontFamily: lora, fontSize: 12.5, color: "#8B7355", textDecoration: "underline" }}>
                       View file
                     </a>
                   )}
                   <button
-                    onClick={() => handleApprove(plan)}
+                    onClick={() => handleApprove(s)}
                     style={{ padding: "7px 16px", background: "#3D8B5F", border: "none", borderRadius: 3, color: "#FFFFFF", fontFamily: lora, fontSize: 12.5, fontWeight: 600, cursor: "pointer" }}
                   >
                     Approve
@@ -16617,27 +16808,50 @@ function LessonPlansSection({ facultyProfile, facultyRole }) {
         </div>
       )}
 
-      <h3 style={{ fontFamily: cg, fontSize: 20, color: "#100F0C", fontWeight: 600, margin: "0 0 12px" }}>
-        My Lesson Plans
-      </h3>
-      {myPlans.length === 0 ? (
-        <p style={{ fontFamily: cg, fontSize: 16, color: "#6B6459", fontStyle: "italic" }}>No lesson plan topics assigned yet.</p>
-      ) : (
-        myPlans.map((plan) => (
-          <div key={plan.id} style={cardStyle}>
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", flexWrap: "wrap", gap: 12 }}>
-              <div>
-                <p style={{ fontFamily: lora, fontSize: 14, color: "#100F0C", margin: "0 0 6px", fontWeight: 600 }}>{plan.topic_label}</p>
-                <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
-                  <FolderIcon status={plan.status} size={16} onClick={(e) => handleFolderClick(plan, e)} />
-                  <FolderStatusLabel status={plan.status} />
-                </div>
+      {programs.map((program) => {
+        const progSessions = sessionsByProgram[program.id] || [];
+        return (
+          <div key={program.id} style={{ marginBottom: 40 }}>
+            <h3 style={{
+              fontFamily: cg, fontSize: 23, color: "#100F0C", fontWeight: 600, margin: "0 0 4px",
+              borderBottom: "2px solid #A48D6E", paddingBottom: 8, display: "inline-block",
+            }}>
+              {program.name}
+            </h3>
+            {program.status === "under_construction" ? (
+              <p style={{ fontFamily: cg, fontSize: 16, color: "#B4433A", fontStyle: "italic", marginTop: 14 }}>
+                Under Construction.
+              </p>
+            ) : progSessions.length === 0 ? (
+              <p style={{ fontFamily: cg, fontSize: 16, color: "#6B6459", fontStyle: "italic", marginTop: 14 }}>
+                No teaching sessions yet.
+              </p>
+            ) : (
+              <div style={{ marginTop: 16 }}>
+                {progSessions.map((s) => {
+                  const dateLabel = new Date(s.session_date + "T00:00:00").toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
+                  return (
+                    <div key={s.id} style={cardStyle}>
+                      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", flexWrap: "wrap", gap: 12 }}>
+                        <div>
+                          <p style={{ fontFamily: lora, fontSize: 14, color: "#100F0C", margin: "0 0 6px", fontWeight: 600 }}>
+                            {program.name} / {s.block_label} / {dateLabel}
+                          </p>
+                          <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
+                            <FolderIcon status={s.lesson_plan_status} size={16} onClick={(e) => handleFileClick(s.lesson_plan_file_url, e)} />
+                            <FolderStatusLabel status={s.lesson_plan_status} />
+                          </div>
+                        </div>
+                        <SessionLessonPlanUploadRow session={s} facultyProfile={facultyProfile} onUpdated={loadData} />
+                      </div>
+                    </div>
+                  );
+                })}
               </div>
-              <LessonPlanUploadRow plan={plan} facultyProfile={facultyProfile} onUpdated={loadData} />
-            </div>
+            )}
           </div>
-        ))
-      )}
+        );
+      })}
     </div>
   );
 }
