@@ -15925,9 +15925,26 @@ function FacultyDashboardHome({ facultyProfile, facultyRole }) {
               </p>
               {nextGroup.allSessions.map((s) => (
                 <p key={s.id} style={{ fontFamily: lora, fontSize: 13, color: "#6B6459", margin: "2px 0" }}>
-                  {s.start_time ? s.start_time.slice(0, 5) : "TBC"} — {s.block_label}
+                  {s.start_time ? s.start_time.slice(0, 5) : "TBC"}{s.end_time ? ` – ${s.end_time.slice(0, 5)}` : ""} — {s.block_label}
                 </p>
               ))}
+              {nextGroup.allSessions[0]?.location && (
+                <p style={{ fontFamily: lora, fontSize: 12.5, color: "#8B7355", margin: "6px 0 0" }}>
+                  📍 {nextGroup.allSessions[0].location}
+                </p>
+              )}
+              {nextGroup.teachingSummary && (
+                <div style={{ display: "flex", gap: 20, marginTop: 12, paddingTop: 12, borderTop: "1px solid rgba(16,15,12,0.08)" }}>
+                  <div>
+                    <p style={{ fontFamily: lora, fontSize: 9.5, color: "#8B7355", textTransform: "uppercase", letterSpacing: "0.08em", margin: "0 0 2px" }}>Teaching Hours</p>
+                    <p style={{ fontFamily: lora, fontSize: 13, color: "#100F0C", fontWeight: 700, margin: 0 }}>{formatMinutes(nextGroup.teachingSummary.totalActualMinutes)}</p>
+                  </div>
+                  <div>
+                    <p style={{ fontFamily: lora, fontSize: 9.5, color: "#8B7355", textTransform: "uppercase", letterSpacing: "0.08em", margin: "0 0 2px" }}>Billing Hours</p>
+                    <p style={{ fontFamily: lora, fontSize: 13, color: "#100F0C", fontWeight: 700, margin: 0 }}>{nextGroup.teachingSummary.totalBilledHours} hr</p>
+                  </div>
+                </div>
+              )}
               <p style={{ fontFamily: lora, fontSize: 12, color: "#A48D6E", margin: "10px 0 0", textDecoration: "underline" }}>View full day →</p>
             </div>
           )}
@@ -15956,6 +15973,17 @@ function FacultyDashboardHome({ facultyProfile, facultyRole }) {
           </p>
         </div>
       )}
+
+      <div style={{ marginBottom: 40 }}>
+        <h3 style={{ fontFamily: cg, fontSize: 22, color: "#100F0C", fontWeight: 600, margin: "0 0 18px" }}>
+          Summer Founder's Day — Calendar
+        </h3>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: 28 }}>
+          {[[2026, 6], [2026, 7]].map(([y, m]) => (
+            <MonthlyCalendarGrid key={`${y}-${m}`} year={y} monthIndex0={m} sessionsByDate={sessionsByDate} onDayClick={setCalendarModalDate} />
+          ))}
+        </div>
+      </div>
 
       <div>
         <h3 style={{ fontFamily: cg, fontSize: 22, color: "#100F0C", fontWeight: 600, margin: "0 0 18px" }}>
@@ -16111,6 +16139,21 @@ function FacultyPortalShell({ facultyProfile, facultyRole, onSignOut }) {
 }
 
 // ═══════════════════════════════════════════════════════════════════════
+// FACULTY-PORTAL DISPLAY NAME HELPER
+// The "programs" table stores the short internal name "Founder's Day" for
+// the summer flagship event. Everywhere that name is shown to faculty, it
+// must read "Summer Founder's Day" so it isn't mistaken for the academic
+// year offerings. Wrap any user-facing program.name with this helper.
+// ═══════════════════════════════════════════════════════════════════════
+function facultyDisplayProgramName(name) {
+  if (!name) return name;
+  if (name === "Founder's Day" || name === "Founders Day" || name === "The Founder's Day") {
+    return "Summer Founder's Day";
+  }
+  return name;
+}
+
+// ═══════════════════════════════════════════════════════════════════════
 // DAY AGENDA TEMPLATES + DAY DETAIL MODAL
 // Static reference schedules for each recurring day-type, used to show the
 // FULL day's agenda (every block, not just the logged-in faculty member's
@@ -16120,7 +16163,7 @@ function FacultyPortalShell({ facultyProfile, facultyRole, onSignOut }) {
 
 const DAY_AGENDA_TEMPLATES = {
   "founders-day": {
-    label: "The Excalibur Founder's Day",
+    label: "Summer Founder's Day",
     blocks: [
       { start: "10:00", end: "10:20", label: "Arrival, Orientation & Team Formation", who: "TAs & Coordinators" },
       { start: "10:20", end: "11:05", label: "Public Speaking & Executive Presence", who: "Keree" },
@@ -16211,6 +16254,7 @@ function DayDetailModal({ date, sessionsThisDay, programName, onClose }) {
   const cg = "'Cormorant Garamond', Georgia, serif";
   const d = new Date(date + "T00:00:00");
   const dateLabel = d.toLocaleDateString("en-US", { weekday: "long", month: "long", day: "numeric", year: "numeric" });
+  const displayProgramName = facultyDisplayProgramName(programName);
 
   const templateKey = getAgendaTemplateKey(sessionsThisDay[0], programName);
   const template = templateKey ? DAY_AGENDA_TEMPLATES[templateKey] : null;
@@ -16249,7 +16293,7 @@ function DayDetailModal({ date, sessionsThisDay, programName, onClose }) {
         </button>
 
         <p style={{ fontFamily: lora, fontSize: 11, letterSpacing: "0.15em", color: "#8B7355", textTransform: "uppercase", margin: "0 0 4px" }}>
-          {programName}
+          {displayProgramName}
         </p>
         <h2 style={{ fontFamily: cg, fontSize: 26, color: "#100F0C", fontWeight: 600, margin: "0 0 20px" }}>
           {dateLabel}
@@ -16490,24 +16534,36 @@ function MyScheduleSection({ facultyProfile }) {
     sessionsByProgram[s.program_id].push(s);
   });
 
-  const colHeaderStyle = {
-    fontFamily: lora, fontSize: 10.5, letterSpacing: "0.08em", color: "#E4D5C1",
-    textTransform: "uppercase", padding: "12px 14px", textAlign: "left",
-  };
-  const gridCols = "120px 1fr 130px 90px 110px 100px 70px";
+  const SCHEDULE_COLUMNS = [
+    { key: "date", label: "Date", align: "left" },
+    { key: "blocks", label: "Blocks", align: "left" },
+    { key: "teaching", label: "Teaching Time", align: "right" },
+    { key: "billed", label: "Billed", align: "right" },
+    { key: "rate", label: "Rate", align: "right" },
+    { key: "pay", label: "Total Pay", align: "right" },
+    { key: "plans", label: "Lesson Plans", align: "left" },
+  ];
+  const gridCols = "112px 1fr 128px 92px 108px 112px 152px";
+  const colHeaderCell = (align) => ({
+    fontFamily: lora, fontSize: 10.5, letterSpacing: "0.1em", color: "#E4D5C1",
+    textTransform: "uppercase", fontWeight: 600, padding: "14px 16px",
+    display: "flex", alignItems: "center", justifyContent: align === "right" ? "flex-end" : "flex-start",
+    textAlign: align,
+  });
 
   return (
     <div>
       {programs.map((program) => {
         const progSessions = sessionsByProgram[program.id] || [];
         const dayGroups = groupSessionsByDay(progSessions, rateByType);
+        const displayName = facultyDisplayProgramName(program.name);
         return (
           <div key={program.id} style={{ marginBottom: 44 }}>
             <h3 style={{
               fontFamily: cg, fontSize: 23, color: "#100F0C", fontWeight: 600, margin: "0 0 4px",
               borderBottom: "2px solid #A48D6E", paddingBottom: 8, display: "inline-block",
             }}>
-              {program.name}
+              {displayName}
             </h3>
             {program.status === "under_construction" ? (
               <p style={{ fontFamily: cg, fontSize: 16, color: "#B4433A", fontStyle: "italic", marginTop: 14 }}>
@@ -16520,13 +16576,9 @@ function MyScheduleSection({ facultyProfile }) {
             ) : (
               <div style={{ marginTop: 16, border: "1px solid rgba(16,15,12,0.1)", borderRadius: 6, overflow: "hidden", boxShadow: "0 1px 4px rgba(16,15,12,0.06)" }}>
                 <div style={{ display: "grid", gridTemplateColumns: gridCols, background: "#100F0C" }}>
-                  <div style={colHeaderStyle}>Date</div>
-                  <div style={colHeaderStyle}>Blocks</div>
-                  <div style={colHeaderStyle}>Teaching Time</div>
-                  <div style={colHeaderStyle}>Billed</div>
-                  <div style={colHeaderStyle}>Rate</div>
-                  <div style={colHeaderStyle}>Total Pay</div>
-                  <div style={colHeaderStyle}>Plan</div>
+                  {SCHEDULE_COLUMNS.map((c) => (
+                    <div key={c.key} style={colHeaderCell(c.align)}>{c.label}</div>
+                  ))}
                 </div>
                 {dayGroups.map((group, i) => {
                   const d = new Date(group.date + "T00:00:00");
@@ -16539,9 +16591,10 @@ function MyScheduleSection({ facultyProfile }) {
                       key={group.date}
                       onClick={() => setSelectedDay({ date: group.date, sessionsThisDay: group.allSessions, programName: program.name })}
                       style={{
-                        display: "grid", gridTemplateColumns: gridCols, padding: "14px",
+                        display: "grid", gridTemplateColumns: gridCols, padding: "16px",
                         background: i % 2 === 0 ? "#FFFFFF" : "#FAF7F2", cursor: "pointer",
                         borderTop: i === 0 ? "none" : "1px solid rgba(16,15,12,0.07)",
+                        alignItems: "center",
                       }}
                     >
                       <div>
@@ -16551,35 +16604,45 @@ function MyScheduleSection({ facultyProfile }) {
                       <div>
                         {group.allSessions.map((s) => (
                           <p key={s.id} style={{ fontFamily: lora, fontSize: 13, color: "#100F0C", margin: "0 0 3px" }}>
-                            {s.start_time ? s.start_time.slice(0, 5) : "TBC"} · {s.block_label}
+                            {s.start_time ? s.start_time.slice(0, 5) : "TBC"}{s.end_time ? ` – ${s.end_time.slice(0, 5)}` : ""} · {s.block_label}
                           </p>
                         ))}
                       </div>
-                      <div>
+                      <div style={{ textAlign: "right" }}>
                         <p style={{ fontFamily: lora, fontSize: 12.5, color: "#6B6459", margin: 0 }}>
                           {group.teachingSummary ? formatMinutes(group.teachingSummary.totalActualMinutes) : "—"}
                         </p>
                       </div>
-                      <div>
+                      <div style={{ textAlign: "right" }}>
                         <p style={{ fontFamily: lora, fontSize: 12.5, color: "#100F0C", margin: 0, fontWeight: 600 }}>
                           {group.teachingSummary ? `${group.teachingSummary.totalBilledHours} hr` : formatOtherBilled(group.allSessions, rateByType)}
                         </p>
                       </div>
-                      <div>
+                      <div style={{ textAlign: "right" }}>
                         <p style={{ fontFamily: lora, fontSize: 12.5, color: "#100F0C", margin: 0 }}>
                           {group.teachingSummary
                             ? (group.teachingSummary.rateType === "flat" ? `$${group.teachingSummary.rateAmount} flat` : `$${group.teachingSummary.rateAmount}/hr`)
                             : formatOtherRate(group.allSessions, rateByType)}
                         </p>
                       </div>
-                      <div>
+                      <div style={{ textAlign: "right" }}>
                         <p style={{ fontFamily: lora, fontSize: 13, color: "#100F0C", margin: 0, fontWeight: 700 }}>
                           {group.teachingSummary ? `$${group.teachingSummary.totalPay}` : formatOtherPay(group.allSessions, rateByType)}
                         </p>
                       </div>
-                      <div style={{ display: "flex", flexDirection: "column", gap: 5, alignItems: "flex-start" }}>
-                        {teachingSessionsThisDay.map((s) => (
-                          <FolderIcon key={s.id} status={s.lesson_plan_status} size={16} onClick={(e) => handleFileClick(s.lesson_plan_file_url, e)} />
+                      <div style={{ display: "flex", flexDirection: "column", gap: 8, alignItems: "flex-start" }}>
+                        {teachingSessionsThisDay.length === 0 ? (
+                          <span style={{ fontFamily: lora, fontSize: 12, color: "#8B7355" }}>—</span>
+                        ) : teachingSessionsThisDay.map((s) => (
+                          <div key={s.id} style={{ display: "flex", alignItems: "center", gap: 6 }} onClick={(e) => e.stopPropagation()}>
+                            <FolderIcon status={s.lesson_plan_status} size={16} onClick={(e) => handleFileClick(s.lesson_plan_file_url, e)} />
+                            <span
+                              onClick={(e) => handleFileClick(s.lesson_plan_file_url, e)}
+                              style={{ fontFamily: lora, fontSize: 12, color: "#8B7355", textDecoration: "underline", cursor: "pointer" }}
+                            >
+                              View Plan
+                            </span>
+                          </div>
                         ))}
                       </div>
                     </div>
@@ -16783,7 +16846,7 @@ function LessonPlansSection({ facultyProfile, facultyRole }) {
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", flexWrap: "wrap", gap: 12 }}>
                 <div>
                   <p style={{ fontFamily: lora, fontSize: 14, color: "#100F0C", margin: "0 0 4px", fontWeight: 600 }}>
-                    {s.programs?.name} / {s.block_label} / {new Date(s.session_date + "T00:00:00").toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })}
+                    {facultyDisplayProgramName(s.programs?.name)} / {s.block_label} / {new Date(s.session_date + "T00:00:00").toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })}
                   </p>
                   <p style={{ fontFamily: lora, fontSize: 12.5, color: "#8B7355", margin: 0 }}>
                     Submitted by {s.faculty_profiles?.full_name || "faculty member"}
@@ -16809,14 +16872,31 @@ function LessonPlansSection({ facultyProfile, facultyRole }) {
       )}
 
       {programs.map((program) => {
-        const progSessions = sessionsByProgram[program.id] || [];
+        const progSessions = (sessionsByProgram[program.id] || []).slice().sort((a, b) => {
+          const dateCompare = (a.session_date || "").localeCompare(b.session_date || "");
+          if (dateCompare !== 0) return dateCompare;
+          return (a.start_time || "").localeCompare(b.start_time || "");
+        });
+        const displayName = facultyDisplayProgramName(program.name);
+
+        // Group into month sub-categories while numbering lessons
+        // sequentially across the whole program (Lesson 1, 2, 3…).
+        const monthGroups = [];
+        progSessions.forEach((s, idx) => {
+          const d = new Date(s.session_date + "T00:00:00");
+          const monthKey = d.toLocaleDateString("en-US", { month: "long", year: "numeric" });
+          let mg = monthGroups.find((g) => g.monthKey === monthKey);
+          if (!mg) { mg = { monthKey, items: [] }; monthGroups.push(mg); }
+          mg.items.push({ session: s, lessonNumber: idx + 1 });
+        });
+
         return (
-          <div key={program.id} style={{ marginBottom: 40 }}>
+          <div key={program.id} style={{ marginBottom: 44 }}>
             <h3 style={{
               fontFamily: cg, fontSize: 23, color: "#100F0C", fontWeight: 600, margin: "0 0 4px",
               borderBottom: "2px solid #A48D6E", paddingBottom: 8, display: "inline-block",
             }}>
-              {program.name}
+              {displayName}
             </h3>
             {program.status === "under_construction" ? (
               <p style={{ fontFamily: cg, fontSize: 16, color: "#B4433A", fontStyle: "italic", marginTop: 14 }}>
@@ -16827,26 +16907,40 @@ function LessonPlansSection({ facultyProfile, facultyRole }) {
                 No teaching sessions yet.
               </p>
             ) : (
-              <div style={{ marginTop: 16 }}>
-                {progSessions.map((s) => {
-                  const dateLabel = new Date(s.session_date + "T00:00:00").toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
-                  return (
-                    <div key={s.id} style={cardStyle}>
-                      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", flexWrap: "wrap", gap: 12 }}>
-                        <div>
-                          <p style={{ fontFamily: lora, fontSize: 14, color: "#100F0C", margin: "0 0 6px", fontWeight: 600 }}>
-                            {program.name} / {s.block_label} / {dateLabel}
-                          </p>
-                          <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
-                            <FolderIcon status={s.lesson_plan_status} size={16} onClick={(e) => handleFileClick(s.lesson_plan_file_url, e)} />
-                            <FolderStatusLabel status={s.lesson_plan_status} />
+              <div style={{ marginTop: 20 }}>
+                {monthGroups.map((mg) => (
+                  <div key={mg.monthKey} style={{ marginBottom: 28 }}>
+                    <p style={{
+                      fontFamily: lora, fontSize: 11.5, letterSpacing: "0.14em", color: "#8B7355",
+                      textTransform: "uppercase", fontWeight: 700, margin: "0 0 12px", paddingBottom: 6,
+                      borderBottom: "1px solid rgba(164,141,110,0.25)",
+                    }}>
+                      {mg.monthKey}
+                    </p>
+                    {mg.items.map(({ session: s, lessonNumber }) => {
+                      const dateLabel = new Date(s.session_date + "T00:00:00").toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
+                      return (
+                        <div key={s.id} style={cardStyle}>
+                          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", flexWrap: "wrap", gap: 12 }}>
+                            <div>
+                              <p style={{ fontFamily: lora, fontSize: 10.5, letterSpacing: "0.1em", color: "#A48D6E", textTransform: "uppercase", fontWeight: 700, margin: "0 0 4px" }}>
+                                Lesson {lessonNumber}
+                              </p>
+                              <p style={{ fontFamily: lora, fontSize: 14, color: "#100F0C", margin: "0 0 8px", fontWeight: 600 }}>
+                                {displayName} / {s.block_label} / {dateLabel}
+                              </p>
+                              <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
+                                <FolderIcon status={s.lesson_plan_status} size={16} onClick={(e) => handleFileClick(s.lesson_plan_file_url, e)} />
+                                <FolderStatusLabel status={s.lesson_plan_status} />
+                              </div>
+                            </div>
+                            <SessionLessonPlanUploadRow session={s} facultyProfile={facultyProfile} onUpdated={loadData} />
                           </div>
                         </div>
-                        <SessionLessonPlanUploadRow session={s} facultyProfile={facultyProfile} onUpdated={loadData} />
-                      </div>
-                    </div>
-                  );
-                })}
+                      );
+                    })}
+                  </div>
+                ))}
               </div>
             )}
           </div>
