@@ -15720,11 +15720,383 @@ function VentureDetailPage({ setPage, openInquiry }) {
 }
 
 
+// ═══════════════════════════════════════════════════════════════════════
+// FACULTY & STAFF PORTAL
+// Separate login (username-based, via the faculty-login Edge Function) and
+// a completely separate dashboard shell from the student/parent/admin portal
+// above — same Supabase project, same getSupabase() client, but its own
+// auth session handling and its own role resolution (staff_admins vs
+// faculty_profiles instead of students/parent_links/admins).
+//
+// Reached via ?page=faculty
+//
+// BUILD STATUS: Login + Dashboard shell only. Every other nav section shows
+// a "Coming soon" placeholder — built one at a time in following passes.
+// ═══════════════════════════════════════════════════════════════════════
+
+const FACULTY_NAV_SECTIONS = [
+  { key: "dashboard", label: "Dashboard" },
+  { key: "schedule", label: "My Schedule" },
+  { key: "lessons", label: "Lesson Plans & Materials" },
+  { key: "time", label: "Time Tracking" },
+  { key: "pay", label: "Rate & Pay Summary" },
+  { key: "billing", label: "Billing & Invoices" },
+  { key: "messages", label: "Messages" },
+  { key: "meetings", label: "Meetings" },
+  { key: "documents", label: "Documents & Compliance" },
+  { key: "guide", label: "Guide" },
+  { key: "profile", label: "Profile & Settings" },
+];
+
+function FacultyLoginForm({ onLoginSuccess }) {
+  const lora = "'Lora', Georgia, serif";
+  const cg = "'Cormorant Garamond', Georgia, serif";
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError("");
+    if (!username.trim() || !password) {
+      setError("Enter your username and password.");
+      return;
+    }
+    setLoading(true);
+    try {
+      const resp = await fetch(`${SUPABASE_URL}/functions/v1/faculty-login`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", apikey: SUPABASE_ANON_KEY },
+        body: JSON.stringify({ username: username.trim(), password }),
+      });
+      const data = await resp.json();
+      if (!resp.ok || data.error) {
+        setError(data.error || "Incorrect username or password.");
+        setLoading(false);
+        return;
+      }
+      const sb = getSupabase();
+      if (sb) {
+        await sb.auth.setSession({ access_token: data.access_token, refresh_token: data.refresh_token });
+      }
+      onLoginSuccess();
+    } catch (err) {
+      console.error("Faculty login error:", err);
+      setError("Something went wrong. Please try again.");
+      setLoading(false);
+    }
+  };
+
+  return (
+    <div style={{
+      minHeight: "100vh", background: "#100F0C", display: "flex",
+      alignItems: "center", justifyContent: "center", padding: 24,
+    }}>
+      <div style={{ width: "100%", maxWidth: 400 }}>
+        <div style={{ textAlign: "center", marginBottom: 40 }}>
+          <p style={{ fontFamily: lora, fontSize: 11, letterSpacing: "0.25em", color: "#A48D6E", textTransform: "uppercase", marginBottom: 10 }}>
+            Excalibur Academy
+          </p>
+          <h1 style={{ fontFamily: cg, fontSize: 32, color: "#E4D5C1", fontWeight: 500, margin: 0 }}>
+            Faculty &amp; Staff Portal
+          </h1>
+        </div>
+
+        <form onSubmit={handleSubmit} style={{
+          background: "#17181B", border: "1px solid rgba(228,213,193,0.15)",
+          borderRadius: 4, padding: 32,
+        }}>
+          <label style={{ display: "block", fontFamily: lora, fontSize: 11, letterSpacing: "0.1em", color: "#9A9186", textTransform: "uppercase", marginBottom: 8 }}>
+            Username
+          </label>
+          <input
+            type="text" autoCapitalize="none" autoCorrect="off" value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            style={{
+              width: "100%", boxSizing: "border-box", padding: "12px 14px", marginBottom: 20,
+              background: "#0B0B0D", border: "1px solid rgba(228,213,193,0.2)", borderRadius: 3,
+              color: "#E4D5C1", fontFamily: lora, fontSize: 15, outline: "none",
+            }}
+          />
+
+          <label style={{ display: "block", fontFamily: lora, fontSize: 11, letterSpacing: "0.1em", color: "#9A9186", textTransform: "uppercase", marginBottom: 8 }}>
+            Password
+          </label>
+          <input
+            type="password" value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            style={{
+              width: "100%", boxSizing: "border-box", padding: "12px 14px", marginBottom: 24,
+              background: "#0B0B0D", border: "1px solid rgba(228,213,193,0.2)", borderRadius: 3,
+              color: "#E4D5C1", fontFamily: lora, fontSize: 15, outline: "none",
+            }}
+          />
+
+          {error && (
+            <p style={{ fontFamily: lora, fontSize: 13, color: "#C23B3B", marginBottom: 20 }}>{error}</p>
+          )}
+
+          <button
+            type="submit" disabled={loading}
+            style={{
+              width: "100%", padding: "13px 0", background: "#A48D6E", border: "none", borderRadius: 3,
+              color: "#100F0C", fontFamily: lora, fontSize: 13, letterSpacing: "0.1em", textTransform: "uppercase",
+              fontWeight: 600, cursor: loading ? "default" : "pointer", opacity: loading ? 0.6 : 1,
+            }}
+          >
+            {loading ? "Signing In…" : "Sign In"}
+          </button>
+        </form>
+
+        <p style={{ fontFamily: lora, fontSize: 12, color: "#6B6459", textAlign: "center", marginTop: 24 }}>
+          Having trouble signing in? Contact Amina, Director of Operations.
+        </p>
+      </div>
+    </div>
+  );
+}
+
+function FacultyDashboardHome({ facultyProfile, facultyRole }) {
+  const lora = "'Lora', Georgia, serif";
+  const cg = "'Cormorant Garamond', Georgia, serif";
+
+  const card = { background: "#17181B", border: "1px solid rgba(228,213,193,0.12)", borderRadius: 4, padding: 24 };
+  const cardLabel = { fontFamily: lora, fontSize: 11, letterSpacing: "0.12em", color: "#9A9186", textTransform: "uppercase", marginBottom: 12 };
+
+  return (
+    <div>
+      <h2 style={{ fontFamily: cg, fontSize: 28, color: "#E4D5C1", fontWeight: 500, margin: "0 0 6px" }}>
+        Welcome, {facultyProfile?.full_name?.split(" ")[0] || "there"}
+      </h2>
+      <p style={{ fontFamily: lora, fontSize: 14, color: "#9A9186", margin: "0 0 32px" }}>
+        {facultyProfile?.role_title || (facultyRole === "admin" ? "Administrator" : "")}
+      </p>
+
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: 20 }}>
+        <div style={card}>
+          <p style={cardLabel}>This Week's Schedule</p>
+          <p style={{ fontFamily: lora, fontSize: 14, color: "#6B6459", fontStyle: "italic" }}>
+            No sessions to show yet — this widget connects to My Schedule in the next build pass.
+          </p>
+        </div>
+
+        <div style={card}>
+          <p style={cardLabel}>Pending Confirmations</p>
+          <p style={{ fontFamily: lora, fontSize: 14, color: "#6B6459", fontStyle: "italic" }}>
+            Weekly hour confirmations will appear here once Time Tracking is built.
+          </p>
+        </div>
+
+        <div style={card}>
+          <p style={cardLabel}>Action Items</p>
+          <p style={{ fontFamily: lora, fontSize: 14, color: "#6B6459", fontStyle: "italic" }}>
+            Nothing outstanding right now.
+          </p>
+        </div>
+      </div>
+
+      {facultyRole === "admin" && (
+        <div style={{ ...card, marginTop: 20, borderColor: "rgba(164,141,110,0.4)" }}>
+          <p style={cardLabel}>Admin — Faculty Overview</p>
+          <p style={{ fontFamily: lora, fontSize: 14, color: "#6B6459", fontStyle: "italic" }}>
+            Invoice review, approval, and faculty-wide visibility will live here once Billing & Invoices is built.
+          </p>
+        </div>
+      )}
+    </div>
+  );
+}
+
+function FacultyPortalShell({ facultyProfile, facultyRole, onSignOut }) {
+  const lora = "'Lora', Georgia, serif";
+  const cg = "'Cormorant Garamond', Georgia, serif";
+  const [activeSection, setActiveSection] = useState("dashboard");
+  const isMobile = useIsMobile();
+
+  return (
+    <div style={{ minHeight: "100vh", background: "#0B0B0D", display: "flex", flexDirection: isMobile ? "column" : "row" }}>
+      {/* ── SIDEBAR ── */}
+      <div style={{
+        width: isMobile ? "100%" : 260, flexShrink: 0, background: "#100F0C",
+        borderRight: isMobile ? "none" : "1px solid rgba(228,213,193,0.1)",
+        borderBottom: isMobile ? "1px solid rgba(228,213,193,0.1)" : "none",
+        padding: "28px 20px", display: "flex", flexDirection: "column",
+      }}>
+        <div style={{ marginBottom: 32 }}>
+          <p style={{ fontFamily: lora, fontSize: 10, letterSpacing: "0.2em", color: "#A48D6E", textTransform: "uppercase", margin: "0 0 4px" }}>
+            Excalibur Academy
+          </p>
+          <p style={{ fontFamily: cg, fontSize: 20, color: "#E4D5C1", fontWeight: 500, margin: 0 }}>
+            Faculty Portal
+          </p>
+        </div>
+
+        <nav style={{ display: "flex", flexDirection: isMobile ? "row" : "column", flexWrap: "wrap", gap: 4, flex: 1 }}>
+          {FACULTY_NAV_SECTIONS.map((s) => (
+            <button
+              key={s.key}
+              onClick={() => setActiveSection(s.key)}
+              style={{
+                textAlign: "left", padding: "10px 14px", borderRadius: 3, border: "none",
+                background: activeSection === s.key ? "rgba(164,141,110,0.15)" : "transparent",
+                color: activeSection === s.key ? "#E4D5C1" : "#9A9186",
+                fontFamily: lora, fontSize: 13.5, cursor: "pointer",
+                borderLeft: activeSection === s.key ? "2px solid #A48D6E" : "2px solid transparent",
+              }}
+            >
+              {s.label}
+            </button>
+          ))}
+        </nav>
+
+        <div style={{ borderTop: "1px solid rgba(228,213,193,0.1)", paddingTop: 16, marginTop: 16 }}>
+          <p style={{ fontFamily: lora, fontSize: 13, color: "#E4D5C1", margin: "0 0 2px" }}>{facultyProfile?.full_name}</p>
+          <p style={{ fontFamily: lora, fontSize: 11, color: "#6B6459", margin: "0 0 12px" }}>{facultyProfile?.role_title}</p>
+          <button
+            onClick={onSignOut}
+            style={{
+              width: "100%", padding: "9px 0", background: "transparent",
+              border: "1px solid rgba(228,213,193,0.2)", borderRadius: 3,
+              color: "#9A9186", fontFamily: lora, fontSize: 12, letterSpacing: "0.05em",
+              textTransform: "uppercase", cursor: "pointer",
+            }}
+          >
+            Sign Out
+          </button>
+        </div>
+      </div>
+
+      {/* ── CONTENT AREA ── */}
+      <div style={{ flex: 1, padding: isMobile ? 24 : 40, maxWidth: 1100 }}>
+        {activeSection === "dashboard" ? (
+          <FacultyDashboardHome facultyProfile={facultyProfile} facultyRole={facultyRole} />
+        ) : (
+          <div>
+            <h2 style={{ fontFamily: cg, fontSize: 26, color: "#E4D5C1", fontWeight: 500, margin: "0 0 12px" }}>
+              {FACULTY_NAV_SECTIONS.find((s) => s.key === activeSection)?.label}
+            </h2>
+            <p style={{ fontFamily: lora, fontSize: 14, color: "#6B6459", fontStyle: "italic" }}>
+              Coming soon — this section is being built next.
+            </p>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+function FacultyPortalPage({ setPage }) {
+  const [facultySession, setFacultySession] = useState(null);
+  const [facultyRole, setFacultyRole] = useState(null); // 'admin' | 'faculty' | null
+  const [facultyProfile, setFacultyProfile] = useState(null);
+  const [roleResolved, setRoleResolved] = useState(false);
+  const [accountNotRecognized, setAccountNotRecognized] = useState(false);
+
+  const facultyRoleCheckRef = React.useRef(null);
+
+  const resetFacultyState = React.useCallback(() => {
+    setFacultyRole(null);
+    setFacultyProfile(null);
+    setRoleResolved(false);
+    setAccountNotRecognized(false);
+  }, []);
+
+  // Restore an existing session on page load/refresh.
+  useEffect(() => {
+    const sb = getSupabase();
+    if (!sb) return;
+    sb.auth.getSession().then(({ data }) => {
+      if (data?.session) setFacultySession(data.session);
+    });
+    const { data: sub } = sb.auth.onAuthStateChange((_event, session) => {
+      setFacultySession(session);
+    });
+    return () => sub.subscription.unsubscribe();
+  }, []);
+
+  // Resolve role: staff_admins first, then faculty_profiles.
+  useEffect(() => {
+    const sb = getSupabase();
+    if (!sb || !facultySession) return;
+    const uid = facultySession.user.id;
+    facultyRoleCheckRef.current = uid;
+    resetFacultyState();
+
+    (async () => {
+      const { data: adminRow } = await sb.from("staff_admins").select("*").eq("id", uid).maybeSingle();
+      if (facultyRoleCheckRef.current !== uid) return;
+      if (adminRow) {
+        setFacultyRole("admin");
+        setFacultyProfile(adminRow);
+        setRoleResolved(true);
+        return;
+      }
+
+      const { data: facultyRow } = await sb.from("faculty_profiles").select("*").eq("id", uid).maybeSingle();
+      if (facultyRoleCheckRef.current !== uid) return;
+      if (facultyRow) {
+        setFacultyRole("faculty");
+        setFacultyProfile(facultyRow);
+        setRoleResolved(true);
+        return;
+      }
+
+      setAccountNotRecognized(true);
+      setRoleResolved(true);
+    })();
+  }, [facultySession, resetFacultyState]);
+
+  const handleSignOut = async () => {
+    const sb = getSupabase();
+    if (sb) await sb.auth.signOut();
+    setFacultySession(null);
+    resetFacultyState();
+  };
+
+  if (!facultySession) {
+    return <FacultyLoginForm onLoginSuccess={() => { /* onAuthStateChange picks up the new session */ }} />;
+  }
+
+  if (!roleResolved) {
+    return (
+      <div style={{ minHeight: "100vh", background: "#0B0B0D", display: "flex", alignItems: "center", justifyContent: "center" }}>
+        <p style={{ fontFamily: "'Lora', Georgia, serif", color: "#9A9186", fontSize: 14 }}>Loading…</p>
+      </div>
+    );
+  }
+
+  if (accountNotRecognized) {
+    return (
+      <div style={{ minHeight: "100vh", background: "#0B0B0D", display: "flex", alignItems: "center", justifyContent: "center", padding: 24 }}>
+        <div style={{ textAlign: "center", maxWidth: 420 }}>
+          <p style={{ fontFamily: "'Lora', Georgia, serif", color: "#E4D5C1", fontSize: 16, marginBottom: 12 }}>
+            This account isn't set up in the Faculty Portal yet.
+          </p>
+          <p style={{ fontFamily: "'Lora', Georgia, serif", color: "#6B6459", fontSize: 13, marginBottom: 24 }}>
+            Contact Amina or Alexander to get access.
+          </p>
+          <button
+            onClick={handleSignOut}
+            style={{ padding: "10px 24px", background: "transparent", border: "1px solid rgba(228,213,193,0.2)", borderRadius: 3, color: "#9A9186", fontFamily: "'Lora', Georgia, serif", fontSize: 13, cursor: "pointer" }}
+          >
+            Sign Out
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  return <FacultyPortalShell facultyProfile={facultyProfile} facultyRole={facultyRole} onSignOut={handleSignOut} />;
+}
+
+
 function ExcaliburApp() {
   const [page, setPageRaw] = useState(() => {
     if (typeof window !== "undefined") {
       const params = new URLSearchParams(window.location.search);
       if (params.get("page") === "portal") return "portal";
+      if (params.get("page") === "faculty") return "faculty";
     }
     return "home";
   });
@@ -15800,6 +16172,7 @@ function ExcaliburApp() {
     if (page === "admissions") return <ApplyPage setPage={setPage} openInquiry={openInquiry} />;
     if (page === "apply-now") return <ApplicationPage setPage={setPage} defaultProgram={inquiryProgram} />;
     if (page === "portal") return <PortalPage setPage={setPage} />;
+    if (page === "faculty") return <FacultyPortalPage setPage={setPage} />;
     if (page === "flagship-detail") return <FlagshipDetailPage2 setPage={setPage} openInquiry={openInquiry} />;
     if (page === "summer-detail") return <SummerDetailPage setPage={setPage} openInquiry={openInquiry} />;
     if (page.startsWith("module:")) return <ModulePage slug={page.replace("module:", "")} setPage={setPage} />;
