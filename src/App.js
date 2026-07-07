@@ -61,23 +61,21 @@ function PortalStudentAvatar({ student, photo, size = 44, t_white = "#FFFFFF", t
 // TODO: replace with the hosted URL of the crest image (e.g. uploaded to Imgur, same as other site images).
 const FAVICON_URL = "https://i.imgur.com/haaR4XD.jpeg";
 
-// ── CALENDLY EMBED — loads the widget script once, then renders the inline scheduler ──
-// TODO: replace with Alexander's real Calendly scheduling-page URL.
-const CALENDLY_URL = "https://calendly.com/excalibur-academy/consultation";
-function CalendlyEmbed({ prefill = {} }) {
-  React.useEffect(() => {
-    if (document.querySelector('script[src="https://assets.calendly.com/assets/external/widget.js"]')) return;
-    const script = document.createElement("script");
-    script.src = "https://assets.calendly.com/assets/external/widget.js";
-    script.async = true;
-    document.body.appendChild(script);
-  }, []);
+// ── ZCAL EMBED — inline scheduling widget, prefilled with the student/parent's name & email ──
+const ZCAL_URL = "https://zcal.co/excaliburacademy/meetingbook";
+function ZcalEmbed({ prefill = {} }) {
   const params = new URLSearchParams();
   if (prefill.name) params.set("name", prefill.name);
   if (prefill.email) params.set("email", prefill.email);
   const qs = params.toString();
-  const url = qs ? `${CALENDLY_URL}?${qs}` : CALENDLY_URL;
-  return <div className="calendly-inline-widget" data-url={url} style={{ minWidth: 280, height: 720 }} />;
+  const url = qs ? `${ZCAL_URL}?${qs}` : ZCAL_URL;
+  return (
+    <iframe
+      src={url}
+      title="Schedule a Consultation"
+      style={{ width: "100%", minWidth: 280, height: 720, border: "none" }}
+    />
+  );
 }
 
 function PortalCard({ children, style: extra = {} }) {
@@ -1794,59 +1792,13 @@ function CurriculumPage({ setPage, openInquiry }) {
 
 
 
-      {/* FAMILY CONSULTATION FORM */}
+      {/* BOOK A CALL */}
       <div style={{ background: "rgba(16, 15, 12, 1)", padding: isMobile ? "52px 24px" : "72px 80px", borderTop: "1px solid rgba(0,0,0,.08)" }}>
-        <div style={{ maxWidth: 740, margin: "0 auto" }}>
+        <div style={{ maxWidth: 640, margin: "0 auto", textAlign: "center" }}>
           <p style={{ fontFamily: "'Lato', sans-serif", fontSize: 9, letterSpacing: "0.4em", color: "#A48D6E", fontWeight: 600, textTransform: "uppercase", marginBottom: 16 }}>Private Admissions Consultation</p>
-          <h2 style={{ fontFamily: serif, fontSize: isMobile ? 28 : 40, fontWeight: 600, color: "#A48D6E", lineHeight: 1.05, marginBottom: 8 }}>Schedule a Family Consultation</h2>
-          <p style={{ fontFamily: sans, fontSize: 15, color: "#E4D6C1", fontWeight: 300, lineHeight: 1.8, marginBottom: 36, maxWidth: 580 }}>Please submit your information to schedule a private admissions consultation. A dedicated Program Pathways Coordinator will guide your family through program options, admissions steps, curriculum, tuition, schedule fit, and next steps.</p>
-          <div style={{ background: "rgba(16, 15, 12, 1)", borderTop: `2px solid #A48D6E`, padding: "36px 32px" }}>
-            <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 11, letterSpacing: "0.25em", color: "#A48D6E", fontWeight: 600, textTransform: "uppercase", marginBottom: 12 }}>Parent / Guardian</p>
-            <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 10, marginBottom: 10 }}>
-              {[["First Name", "text"], ["Last Name", "text"]].map(([ph, type]) => (
-                <input key={ph} type={type} placeholder={ph} className="inquiry-input" style={{ background: "#FBF7EE", border: "1px solid rgba(0,0,0,.2)", color: "#010000", padding: "13px 16px", fontFamily: "'Lato', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
-              ))}
-            </div>
-            <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 10, marginBottom: 10 }}>
-              {[["Email Address", "email"], ["Phone Number", "tel"]].map(([ph, type]) => (
-                <input key={ph} type={type} placeholder={ph} className="inquiry-input" style={{ background: "#FBF7EE", border: "1px solid rgba(0,0,0,.2)", color: "#010000", padding: "13px 16px", fontFamily: "'Lato', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
-              ))}
-            </div>
-            <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr 80px", gap: 10, marginBottom: 24 }}>
-              <input type="text" placeholder="City *" className="inquiry-input" style={{ background: "#FBF7EE", border: "1px solid rgba(0,0,0,.2)", color: "#010000", padding: "13px 16px", fontFamily: "'Lato', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} required />
-              <input type="text" placeholder="State" className="inquiry-input" style={{ background: "#FBF7EE", border: "1px solid rgba(0,0,0,.2)", color: "#010000", padding: "13px 16px", fontFamily: "'Lato', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
-              <input type="text" placeholder="ZIP *" className="inquiry-input" style={{ background: "#FBF7EE", border: "1px solid rgba(0,0,0,.2)", color: "#010000", padding: "13px 16px", fontFamily: "'Lato', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} required />
-            </div>
-            <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 11, letterSpacing: "0.25em", borderStyle: "none", color: "#A48D6E", fontWeight: 600, textTransform: "uppercase", marginBottom: 12 }}>Student</p>
-            <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 10, marginBottom: 10 }}>
-              {[["First Name", "text"], ["Last Name", "text"]].map(([ph, type]) => (
-                <input key={ph} type={type} placeholder={ph} className="inquiry-input" style={{ background: "#FBF7EE", border: "1px solid rgba(0,0,0,.2)", color: "#010000", padding: "13px 16px", fontFamily: "'Lato', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
-              ))}
-            </div>
-            <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 10, marginBottom: 10 }}>
-              <input type="text" placeholder="Age" className="inquiry-input" style={{ background: "#FBF7EE", border: "1px solid rgba(0,0,0,.2)", color: "#010000", padding: "13px 16px", fontFamily: "'Lato', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
-              <input type="text" placeholder="Current Grade" className="inquiry-input" style={{ background: "#FBF7EE", border: "1px solid rgba(0,0,0,.2)", color: "#010000", padding: "13px 16px", fontFamily: "'Lato', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
-            </div>
-            <select defaultValue="" style={{ background: "#fcf7ee", border: "1px solid rgba(16,15,12,.2)", color: "#100F0C", padding: "13px 16px", fontFamily: "'Lora', Georgia, serif", fontSize: 13, fontWeight: 400, outline: "none", width: "100%", marginBottom: 24, appearance: "none" }}>
-              <option value="" disabled>Program of Interest</option>
-              <option value="flagship">Flagship Program — Full Year, Foundation Semester, or Venture Semester</option>
-              <option value="sixweek">Six-Week Intensive</option>
-              <option value="summer">Summer Intensive</option>
-            </select>
-            <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 11, letterSpacing: "0.25em", color: "#A48D6E", fontWeight: 600, textTransform: "uppercase", marginBottom: 12, marginTop: 0 }}>Consultation Preferences</p>
-            <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 10, marginBottom: 10 }}>
-              <select className="inquiry-input" defaultValue="" style={{ background: "#FBF7EE", border: "1px solid rgba(0,0,0,.2)", color: "#010000", padding: "13px 16px", fontFamily: "'Lato', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%", appearance: "none" }}>
-                <option value="" disabled>Preferred Contact Method</option>
-                <option value="phone">Phone Call</option>
-                <option value="email">Email</option>
-                <option value="either">Either</option>
-              </select>
-              <input type="date" placeholder="Preferred Consultation Date" className="inquiry-input" style={{ background: "#FBF7EE", border: "1px solid rgba(0,0,0,.2)", color: "#010000", padding: "13px 16px", fontFamily: "'Lato', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
-            </div>
-            <TimeRangePicker isMobile={isMobile} />
-            <textarea placeholder="Questions or context you would like us to know (optional)" className="inquiry-input" rows={4} style={{ background: "#FBF7EE", border: "1px solid rgba(0,0,0,.2)", color: "#010000", padding: "13px 16px", fontFamily: "'Lato', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%", marginBottom: 28, resize: "vertical" }} />
-            <button onClick={() => openInquiry && openInquiry("curriculum")} style={{ fontFamily: "'Lato', sans-serif", padding: "15px 40px", background: "#DAC8AA", border: "none", color: "#100F0C", fontSize: 11, fontWeight: 600, letterSpacing: "0.15em", textTransform: "uppercase", cursor: "pointer", width: "100%" }}>REQUEST A PRIVATE CONSULTATION</button>
-          </div>
+          <h2 style={{ fontFamily: serif, fontSize: isMobile ? 28 : 40, fontWeight: 600, color: "#A48D6E", lineHeight: 1.05, marginBottom: 16 }}>Schedule a Family Consultation</h2>
+          <p style={{ fontFamily: sans, fontSize: 15, color: "#E4D6C1", fontWeight: 300, lineHeight: 1.8, marginBottom: 32, maxWidth: 560, marginLeft: "auto", marginRight: "auto" }}>Choose a time that works for your family below. A dedicated Program Pathways Coordinator will guide you through program options, admissions steps, curriculum, tuition, and next steps.</p>
+          <a href="https://zcal.co/excaliburacademy/meetingbook" target="_blank" rel="noopener noreferrer" style={{ display: "inline-block", fontFamily: "'Lato', sans-serif", padding: "15px 48px", background: "#DAC8AA", border: "none", color: "#100F0C", fontSize: 11, fontWeight: 600, letterSpacing: "0.15em", textTransform: "uppercase", cursor: "pointer", textDecoration: "none" }}>Book a Call →</a>
         </div>
       </div>
 
@@ -2108,59 +2060,13 @@ function IntensivePage({ setPage, openInquiry }) {
         </div>
       </div>
 
-      {/* FAMILY CONSULTATION FORM */}
+      {/* BOOK A CALL */}
       <div style={{ background: "rgba(16, 15, 12, 1)", padding: isMobile ? "52px 24px" : "72px 80px", borderTop: "1px solid rgba(0,0,0,.08)" }}>
-        <div style={{ maxWidth: 740, margin: "0 auto" }}>
+        <div style={{ maxWidth: 640, margin: "0 auto", textAlign: "center" }}>
           <p style={{ fontFamily: "'Lato', sans-serif", fontSize: 9, letterSpacing: "0.4em", color: "#A48D6E", fontWeight: 600, textTransform: "uppercase", marginBottom: 16 }}>Private Admissions Consultation</p>
-          <h2 style={{ fontFamily: serif, fontSize: isMobile ? 28 : 40, fontWeight: 600, color: "#A48D6E", lineHeight: 1.05, marginBottom: 8 }}>Schedule a Family Consultation</h2>
-          <p style={{ fontFamily: sans, fontSize: 15, color: "#E4D6C1", fontWeight: 300, lineHeight: 1.8, marginBottom: 36, maxWidth: 580 }}>Please submit your information to schedule a private admissions consultation. A dedicated Program Pathways Coordinator will guide your family through program options, admissions steps, curriculum, tuition, schedule fit, and next steps.</p>
-          <div style={{ background: "rgba(16, 15, 12, 1)", borderTop: `2px solid #A48D6E`, padding: "36px 32px" }}>
-            <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 11, letterSpacing: "0.25em", color: "#A48D6E", fontWeight: 600, textTransform: "uppercase", marginBottom: 12 }}>Parent / Guardian</p>
-            <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 10, marginBottom: 10 }}>
-              {[["First Name", "text"], ["Last Name", "text"]].map(([ph, type]) => (
-                <input key={ph} type={type} placeholder={ph} className="inquiry-input" style={{ background: "#FBF7EE", border: "1px solid rgba(0,0,0,.2)", color: "#010000", padding: "13px 16px", fontFamily: "'Lato', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
-              ))}
-            </div>
-            <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 10, marginBottom: 10 }}>
-              {[["Email Address", "email"], ["Phone Number", "tel"]].map(([ph, type]) => (
-                <input key={ph} type={type} placeholder={ph} className="inquiry-input" style={{ background: "#FBF7EE", border: "1px solid rgba(0,0,0,.2)", color: "#010000", padding: "13px 16px", fontFamily: "'Lato', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
-              ))}
-            </div>
-            <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr 80px", gap: 10, marginBottom: 24 }}>
-              <input type="text" placeholder="City *" className="inquiry-input" style={{ background: "#FBF7EE", border: "1px solid rgba(0,0,0,.2)", color: "#010000", padding: "13px 16px", fontFamily: "'Lato', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} required />
-              <input type="text" placeholder="State" className="inquiry-input" style={{ background: "#FBF7EE", border: "1px solid rgba(0,0,0,.2)", color: "#010000", padding: "13px 16px", fontFamily: "'Lato', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
-              <input type="text" placeholder="ZIP *" className="inquiry-input" style={{ background: "#FBF7EE", border: "1px solid rgba(0,0,0,.2)", color: "#010000", padding: "13px 16px", fontFamily: "'Lato', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} required />
-            </div>
-            <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 11, letterSpacing: "0.25em", borderStyle: "none", color: "#A48D6E", fontWeight: 600, textTransform: "uppercase", marginBottom: 12 }}>Student</p>
-            <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 10, marginBottom: 10 }}>
-              {[["First Name", "text"], ["Last Name", "text"]].map(([ph, type]) => (
-                <input key={ph} type={type} placeholder={ph} className="inquiry-input" style={{ background: "#FBF7EE", border: "1px solid rgba(0,0,0,.2)", color: "#010000", padding: "13px 16px", fontFamily: "'Lato', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
-              ))}
-            </div>
-            <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 10, marginBottom: 10 }}>
-              <input type="text" placeholder="Age" className="inquiry-input" style={{ background: "#FBF7EE", border: "1px solid rgba(0,0,0,.2)", color: "#010000", padding: "13px 16px", fontFamily: "'Lato', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
-              <input type="text" placeholder="Current Grade" className="inquiry-input" style={{ background: "#FBF7EE", border: "1px solid rgba(0,0,0,.2)", color: "#010000", padding: "13px 16px", fontFamily: "'Lato', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
-            </div>
-            <select defaultValue="" style={{ background: "#fcf7ee", border: "1px solid rgba(16,15,12,.2)", color: "#100F0C", padding: "13px 16px", fontFamily: "'Lora', Georgia, serif", fontSize: 13, fontWeight: 400, outline: "none", width: "100%", marginBottom: 24, appearance: "none" }}>
-              <option value="" disabled>Program of Interest</option>
-              <option value="flagship">Flagship Program — Full Year, Foundation Semester, or Venture Semester</option>
-              <option value="sixweek">Six-Week Intensive</option>
-              <option value="summer">Summer Intensive</option>
-            </select>
-            <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 11, letterSpacing: "0.25em", color: "#A48D6E", fontWeight: 600, textTransform: "uppercase", marginBottom: 12, marginTop: 0 }}>Consultation Preferences</p>
-            <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 10, marginBottom: 10 }}>
-              <select className="inquiry-input" defaultValue="" style={{ background: "#FBF7EE", border: "1px solid rgba(0,0,0,.2)", color: "#010000", padding: "13px 16px", fontFamily: "'Lato', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%", appearance: "none" }}>
-                <option value="" disabled>Preferred Contact Method</option>
-                <option value="phone">Phone Call</option>
-                <option value="email">Email</option>
-                <option value="either">Either</option>
-              </select>
-              <input type="date" placeholder="Preferred Consultation Date" className="inquiry-input" style={{ background: "#FBF7EE", border: "1px solid rgba(0,0,0,.2)", color: "#010000", padding: "13px 16px", fontFamily: "'Lato', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
-            </div>
-            <TimeRangePicker isMobile={isMobile} />
-            <textarea placeholder="Questions or context you would like us to know (optional)" className="inquiry-input" rows={4} style={{ background: "#FBF7EE", border: "1px solid rgba(0,0,0,.2)", color: "#010000", padding: "13px 16px", fontFamily: "'Lato', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%", marginBottom: 28, resize: "vertical" }} />
-            <button onClick={() => openInquiry && openInquiry("intensive")} style={{ fontFamily: "'Lato', sans-serif", padding: "15px 40px", background: "#DAC8AA", border: "none", color: "#100F0C", fontSize: 11, fontWeight: 600, letterSpacing: "0.15em", textTransform: "uppercase", cursor: "pointer", width: "100%" }}>REQUEST A PRIVATE CONSULTATION</button>
-          </div>
+          <h2 style={{ fontFamily: serif, fontSize: isMobile ? 28 : 40, fontWeight: 600, color: "#A48D6E", lineHeight: 1.05, marginBottom: 16 }}>Schedule a Family Consultation</h2>
+          <p style={{ fontFamily: sans, fontSize: 15, color: "#E4D6C1", fontWeight: 300, lineHeight: 1.8, marginBottom: 32, maxWidth: 560, marginLeft: "auto", marginRight: "auto" }}>Choose a time that works for your family below. A dedicated Program Pathways Coordinator will guide you through program options, admissions steps, curriculum, tuition, and next steps.</p>
+          <a href="https://zcal.co/excaliburacademy/meetingbook" target="_blank" rel="noopener noreferrer" style={{ display: "inline-block", fontFamily: "'Lato', sans-serif", padding: "15px 48px", background: "#DAC8AA", border: "none", color: "#100F0C", fontSize: 11, fontWeight: 600, letterSpacing: "0.15em", textTransform: "uppercase", cursor: "pointer", textDecoration: "none" }}>Book a Call →</a>
         </div>
       </div>
 
@@ -3160,59 +3066,13 @@ function ApplyPage({ setPage, openInquiry }) {
         </div>
       </div>
 
-      {/* FAMILY CONSULTATION FORM */}
+      {/* BOOK A CALL */}
       <div style={{ background: "rgba(16, 15, 12, 1)", padding: isMobile ? "52px 24px" : "72px 80px", borderTop: "1px solid rgba(0,0,0,.08)" }}>
-        <div style={{ maxWidth: 740, margin: "0 auto" }}>
+        <div style={{ maxWidth: 640, margin: "0 auto", textAlign: "center" }}>
           <p style={{ fontFamily: "'Lato', sans-serif", fontSize: 9, letterSpacing: "0.4em", color: "#A48D6E", fontWeight: 600, textTransform: "uppercase", marginBottom: 16 }}>Private Admissions Consultation</p>
-          <h2 style={{ fontFamily: serif, fontSize: isMobile ? 28 : 40, fontWeight: 600, color: "#A48D6E", lineHeight: 1.05, marginBottom: 8 }}>Schedule a Family Consultation</h2>
-          <p style={{ fontFamily: sans, fontSize: 15, color: "#E4D6C1", fontWeight: 300, lineHeight: 1.8, marginBottom: 36, maxWidth: 580 }}>Please submit your information to schedule a private admissions consultation. A dedicated Program Pathways Coordinator will guide your family through program options, admissions steps, curriculum, tuition, schedule fit, and next steps.</p>
-          <div style={{ background: "rgba(16, 15, 12, 1)", borderTop: `2px solid #A48D6E`, padding: "36px 32px" }}>
-            <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 11, letterSpacing: "0.25em", color: "#A48D6E", fontWeight: 600, textTransform: "uppercase", marginBottom: 12 }}>Parent / Guardian</p>
-            <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 10, marginBottom: 10 }}>
-              {[["First Name", "text"], ["Last Name", "text"]].map(([ph, type]) => (
-                <input key={ph} type={type} placeholder={ph} className="inquiry-input" style={{ background: "#FBF7EE", border: "1px solid rgba(0,0,0,.2)", color: "#010000", padding: "13px 16px", fontFamily: "'Lato', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
-              ))}
-            </div>
-            <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 10, marginBottom: 10 }}>
-              {[["Email Address", "email"], ["Phone Number", "tel"]].map(([ph, type]) => (
-                <input key={ph} type={type} placeholder={ph} className="inquiry-input" style={{ background: "#FBF7EE", border: "1px solid rgba(0,0,0,.2)", color: "#010000", padding: "13px 16px", fontFamily: "'Lato', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
-              ))}
-            </div>
-            <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr 80px", gap: 10, marginBottom: 24 }}>
-              <input type="text" placeholder="City *" className="inquiry-input" style={{ background: "#FBF7EE", border: "1px solid rgba(0,0,0,.2)", color: "#010000", padding: "13px 16px", fontFamily: "'Lato', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} required />
-              <input type="text" placeholder="State" className="inquiry-input" style={{ background: "#FBF7EE", border: "1px solid rgba(0,0,0,.2)", color: "#010000", padding: "13px 16px", fontFamily: "'Lato', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
-              <input type="text" placeholder="ZIP *" className="inquiry-input" style={{ background: "#FBF7EE", border: "1px solid rgba(0,0,0,.2)", color: "#010000", padding: "13px 16px", fontFamily: "'Lato', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} required />
-            </div>
-            <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 11, letterSpacing: "0.25em", borderStyle: "none", color: "#A48D6E", fontWeight: 600, textTransform: "uppercase", marginBottom: 12 }}>Student</p>
-            <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 10, marginBottom: 10 }}>
-              {[["First Name", "text"], ["Last Name", "text"]].map(([ph, type]) => (
-                <input key={ph} type={type} placeholder={ph} className="inquiry-input" style={{ background: "#FBF7EE", border: "1px solid rgba(0,0,0,.2)", color: "#010000", padding: "13px 16px", fontFamily: "'Lato', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
-              ))}
-            </div>
-            <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 10, marginBottom: 10 }}>
-              <input type="text" placeholder="Age" className="inquiry-input" style={{ background: "#FBF7EE", border: "1px solid rgba(0,0,0,.2)", color: "#010000", padding: "13px 16px", fontFamily: "'Lato', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
-              <input type="text" placeholder="Current Grade" className="inquiry-input" style={{ background: "#FBF7EE", border: "1px solid rgba(0,0,0,.2)", color: "#010000", padding: "13px 16px", fontFamily: "'Lato', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
-            </div>
-            <select defaultValue="" style={{ background: "#fcf7ee", border: "1px solid rgba(16,15,12,.2)", color: "#100F0C", padding: "13px 16px", fontFamily: "'Lora', Georgia, serif", fontSize: 13, fontWeight: 400, outline: "none", width: "100%", marginBottom: 24, appearance: "none" }}>
-              <option value="" disabled>Program of Interest</option>
-              <option value="flagship">Flagship Program — Full Year, Foundation Semester, or Venture Semester</option>
-              <option value="sixweek">Six-Week Intensive</option>
-              <option value="summer">Summer Intensive</option>
-            </select>
-            <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 11, letterSpacing: "0.25em", color: "#A48D6E", fontWeight: 600, textTransform: "uppercase", marginBottom: 12, marginTop: 0 }}>Consultation Preferences</p>
-            <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 10, marginBottom: 10 }}>
-              <select className="inquiry-input" defaultValue="" style={{ background: "#FBF7EE", border: "1px solid rgba(0,0,0,.2)", color: "#010000", padding: "13px 16px", fontFamily: "'Lato', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%", appearance: "none" }}>
-                <option value="" disabled>Preferred Contact Method</option>
-                <option value="phone">Phone Call</option>
-                <option value="email">Email</option>
-                <option value="either">Either</option>
-              </select>
-              <input type="date" placeholder="Preferred Consultation Date" className="inquiry-input" style={{ background: "#FBF7EE", border: "1px solid rgba(0,0,0,.2)", color: "#010000", padding: "13px 16px", fontFamily: "'Lato', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
-            </div>
-            <TimeRangePicker isMobile={isMobile} />
-            <textarea placeholder="Questions or context you would like us to know (optional)" className="inquiry-input" rows={4} style={{ background: "#FBF7EE", border: "1px solid rgba(0,0,0,.2)", color: "#010000", padding: "13px 16px", fontFamily: "'Lato', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%", marginBottom: 28, resize: "vertical" }} />
-            <button onClick={() => openInquiry && openInquiry("admissions")} style={{ fontFamily: "'Lato', sans-serif", padding: "15px 40px", background: "#DAC8AA", border: "none", color: "#100F0C", fontSize: 11, fontWeight: 600, letterSpacing: "0.15em", textTransform: "uppercase", cursor: "pointer", width: "100%" }}>REQUEST A PRIVATE CONSULTATION</button>
-          </div>
+          <h2 style={{ fontFamily: serif, fontSize: isMobile ? 28 : 40, fontWeight: 600, color: "#A48D6E", lineHeight: 1.05, marginBottom: 16 }}>Schedule a Family Consultation</h2>
+          <p style={{ fontFamily: sans, fontSize: 15, color: "#E4D6C1", fontWeight: 300, lineHeight: 1.8, marginBottom: 32, maxWidth: 560, marginLeft: "auto", marginRight: "auto" }}>Choose a time that works for your family below. A dedicated Program Pathways Coordinator will guide you through program options, admissions steps, curriculum, tuition, and next steps.</p>
+          <a href="https://zcal.co/excaliburacademy/meetingbook" target="_blank" rel="noopener noreferrer" style={{ display: "inline-block", fontFamily: "'Lato', sans-serif", padding: "15px 48px", background: "#DAC8AA", border: "none", color: "#100F0C", fontSize: 11, fontWeight: 600, letterSpacing: "0.15em", textTransform: "uppercase", cursor: "pointer", textDecoration: "none" }}>Book a Call →</a>
         </div>
       </div>
 
@@ -4502,59 +4362,13 @@ function HomePage({ setPage, openInquiry }) {
       </section>
 
 
-      {/* FAMILY CONSULTATION FORM */}
+      {/* BOOK A CALL */}
       <div style={{ background: "rgba(16, 15, 12, 1)", padding: isMobile ? "52px 24px" : "72px 80px", borderTop: "1px solid rgba(0,0,0,.08)" }}>
-        <div style={{ maxWidth: 740, margin: "0 auto" }}>
+        <div style={{ maxWidth: 640, margin: "0 auto", textAlign: "center" }}>
           <p style={{ fontFamily: "'Lato', sans-serif", fontSize: 9, letterSpacing: "0.4em", color: "#A48D6E", fontWeight: 600, textTransform: "uppercase", marginBottom: 16 }}>Private Admissions Consultation</p>
-          <h2 style={{ fontFamily: serif, fontSize: isMobile ? 28 : 40, fontWeight: 600, color: "#A48D6E", lineHeight: 1.05, marginBottom: 8 }}>Schedule a Family Consultation</h2>
-          <p style={{ fontFamily: sans, fontSize: 15, color: "#E4D6C1", fontWeight: 300, lineHeight: 1.8, marginBottom: 36, maxWidth: 580 }}>Please submit your information to schedule a private admissions consultation. A dedicated Program Pathways Coordinator will guide your family through program options, admissions steps, curriculum, tuition, schedule fit, and next steps.</p>
-          <div style={{ background: "rgba(16, 15, 12, 1)", borderTop: `2px solid #A48D6E`, padding: "36px 32px" }}>
-            <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 11, letterSpacing: "0.25em", color: "#A48D6E", fontWeight: 600, textTransform: "uppercase", marginBottom: 12 }}>Parent / Guardian</p>
-            <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 10, marginBottom: 10 }}>
-              {[["First Name", "text"], ["Last Name", "text"]].map(([ph, type]) => (
-                <input key={ph} type={type} placeholder={ph} className="inquiry-input" style={{ background: "#FBF7EE", border: "1px solid rgba(0,0,0,.2)", color: "#010000", padding: "13px 16px", fontFamily: "'Lato', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
-              ))}
-            </div>
-            <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 10, marginBottom: 10 }}>
-              {[["Email Address", "email"], ["Phone Number", "tel"]].map(([ph, type]) => (
-                <input key={ph} type={type} placeholder={ph} className="inquiry-input" style={{ background: "#FBF7EE", border: "1px solid rgba(0,0,0,.2)", color: "#010000", padding: "13px 16px", fontFamily: "'Lato', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
-              ))}
-            </div>
-            <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr 80px", gap: 10, marginBottom: 24 }}>
-              <input type="text" placeholder="City *" className="inquiry-input" style={{ background: "#FBF7EE", border: "1px solid rgba(0,0,0,.2)", color: "#010000", padding: "13px 16px", fontFamily: "'Lato', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} required />
-              <input type="text" placeholder="State" className="inquiry-input" style={{ background: "#FBF7EE", border: "1px solid rgba(0,0,0,.2)", color: "#010000", padding: "13px 16px", fontFamily: "'Lato', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
-              <input type="text" placeholder="ZIP *" className="inquiry-input" style={{ background: "#FBF7EE", border: "1px solid rgba(0,0,0,.2)", color: "#010000", padding: "13px 16px", fontFamily: "'Lato', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} required />
-            </div>
-            <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 11, letterSpacing: "0.25em", borderStyle: "none", color: "#A48D6E", fontWeight: 600, textTransform: "uppercase", marginBottom: 12 }}>Student</p>
-            <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 10, marginBottom: 10 }}>
-              {[["First Name", "text"], ["Last Name", "text"]].map(([ph, type]) => (
-                <input key={ph} type={type} placeholder={ph} className="inquiry-input" style={{ background: "#FBF7EE", border: "1px solid rgba(0,0,0,.2)", color: "#010000", padding: "13px 16px", fontFamily: "'Lato', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
-              ))}
-            </div>
-            <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 10, marginBottom: 10 }}>
-              <input type="text" placeholder="Age" className="inquiry-input" style={{ background: "#FBF7EE", border: "1px solid rgba(0,0,0,.2)", color: "#010000", padding: "13px 16px", fontFamily: "'Lato', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
-              <input type="text" placeholder="Current Grade" className="inquiry-input" style={{ background: "#FBF7EE", border: "1px solid rgba(0,0,0,.2)", color: "#010000", padding: "13px 16px", fontFamily: "'Lato', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
-            </div>
-            <select defaultValue="" style={{ background: "#fcf7ee", border: "1px solid rgba(16,15,12,.2)", color: "#100F0C", padding: "13px 16px", fontFamily: "'Lora', Georgia, serif", fontSize: 13, fontWeight: 400, outline: "none", width: "100%", marginBottom: 24, appearance: "none" }}>
-              <option value="" disabled>Program of Interest</option>
-              <option value="flagship">Flagship Program — Full Year, Foundation Semester, or Venture Semester</option>
-              <option value="sixweek">Six-Week Intensive</option>
-              <option value="summer">Summer Intensive</option>
-            </select>
-            <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 11, letterSpacing: "0.25em", color: "#A48D6E", fontWeight: 600, textTransform: "uppercase", marginBottom: 12, marginTop: 0 }}>Consultation Preferences</p>
-            <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 10, marginBottom: 10 }}>
-              <select className="inquiry-input" defaultValue="" style={{ background: "#FBF7EE", border: "1px solid rgba(0,0,0,.2)", color: "#010000", padding: "13px 16px", fontFamily: "'Lato', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%", appearance: "none" }}>
-                <option value="" disabled>Preferred Contact Method</option>
-                <option value="phone">Phone Call</option>
-                <option value="email">Email</option>
-                <option value="either">Either</option>
-              </select>
-              <input type="date" placeholder="Preferred Consultation Date" className="inquiry-input" style={{ background: "#FBF7EE", border: "1px solid rgba(0,0,0,.2)", color: "#010000", padding: "13px 16px", fontFamily: "'Lato', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
-            </div>
-            <TimeRangePicker isMobile={isMobile} />
-            <textarea placeholder="Questions or context you would like us to know (optional)" className="inquiry-input" rows={4} style={{ background: "#FBF7EE", border: "1px solid rgba(0,0,0,.2)", color: "#010000", padding: "13px 16px", fontFamily: "'Lato', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%", marginBottom: 28, resize: "vertical" }} />
-            <button onClick={() => openInquiry && openInquiry("home")} style={{ fontFamily: "'Lato', sans-serif", padding: "15px 40px", background: "#DAC8AA", border: "none", color: "#100F0C", fontSize: 11, fontWeight: 600, letterSpacing: "0.15em", textTransform: "uppercase", cursor: "pointer", width: "100%" }}>REQUEST A PRIVATE CONSULTATION</button>
-          </div>
+          <h2 style={{ fontFamily: serif, fontSize: isMobile ? 28 : 40, fontWeight: 600, color: "#A48D6E", lineHeight: 1.05, marginBottom: 16 }}>Schedule a Family Consultation</h2>
+          <p style={{ fontFamily: sans, fontSize: 15, color: "#E4D6C1", fontWeight: 300, lineHeight: 1.8, marginBottom: 32, maxWidth: 560, marginLeft: "auto", marginRight: "auto" }}>Choose a time that works for your family below. A dedicated Program Pathways Coordinator will guide you through program options, admissions steps, curriculum, tuition, and next steps.</p>
+          <a href="https://zcal.co/excaliburacademy/meetingbook" target="_blank" rel="noopener noreferrer" style={{ display: "inline-block", fontFamily: "'Lato', sans-serif", padding: "15px 48px", background: "#DAC8AA", border: "none", color: "#100F0C", fontSize: 11, fontWeight: 600, letterSpacing: "0.15em", textTransform: "uppercase", cursor: "pointer", textDecoration: "none" }}>Book a Call →</a>
         </div>
       </div>
 
@@ -9572,12 +9386,12 @@ function PortalPage({ setPage }) {
           );
         })()}
 
-        {/* CONSULTATION TAB — Calendly */}
+        {/* CONSULTATION TAB — Zcal */}
         {activeTab === "consultation" && (
           <PortalCard>
             <PortalSectionHeading title="Schedule a Family Consultation" cg={sans} isMobile={isMobile} />
             <p style={{ fontFamily: sans, fontSize: 15, color: "#111111", opacity: 0.7, lineHeight: 1.7, marginBottom: 28 }}>Pick a time that works for you below, and a member of our admissions team will confirm the consultation directly.</p>
-            <CalendlyEmbed
+            <ZcalEmbed
               prefill={{
                 name: [appForm.studentFirstName, appForm.studentLastName].filter(Boolean).join(" ") || (student ? `${student.first_name || ""} ${student.last_name || ""}`.trim() : ""),
                 email: appForm.parentEmail || appForm.studentEmail || "",
@@ -9735,59 +9549,13 @@ function ContactPage({ setPage, openInquiry }) {
         </div>
       </div>
 
-      {/* FAMILY CONSULTATION FORM */}
+      {/* BOOK A CALL */}
       <div style={{ background: "rgba(16, 15, 12, 1)", padding: isMobile ? "52px 24px" : "72px 80px", borderTop: "1px solid rgba(0,0,0,.08)" }}>
-        <div style={{ maxWidth: 740, margin: "0 auto" }}>
+        <div style={{ maxWidth: 640, margin: "0 auto", textAlign: "center" }}>
           <p style={{ fontFamily: "'Lato', sans-serif", fontSize: 9, letterSpacing: "0.4em", color: "#A48D6E", fontWeight: 600, textTransform: "uppercase", marginBottom: 16 }}>Private Admissions Consultation</p>
-          <h2 style={{ fontFamily: serif, fontSize: isMobile ? 28 : 40, fontWeight: 600, color: "#A48D6E", lineHeight: 1.05, marginBottom: 8 }}>Schedule a Family Consultation</h2>
-          <p style={{ fontFamily: sans, fontSize: 15, color: "#E4D6C1", fontWeight: 300, lineHeight: 1.8, marginBottom: 36, maxWidth: 580 }}>Please submit your information to schedule a private admissions consultation. A dedicated Program Pathways Coordinator will guide your family through program options, admissions steps, curriculum, tuition, schedule fit, and next steps.</p>
-          <div style={{ background: "rgba(16, 15, 12, 1)", borderTop: `2px solid #A48D6E`, padding: "36px 32px" }}>
-            <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 11, letterSpacing: "0.25em", color: "#A48D6E", fontWeight: 600, textTransform: "uppercase", marginBottom: 12 }}>Parent / Guardian</p>
-            <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 10, marginBottom: 10 }}>
-              {[["First Name", "text"], ["Last Name", "text"]].map(([ph, type]) => (
-                <input key={ph} type={type} placeholder={ph} className="inquiry-input" style={{ background: "#FBF7EE", border: "1px solid rgba(0,0,0,.2)", color: "#010000", padding: "13px 16px", fontFamily: "'Lato', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
-              ))}
-            </div>
-            <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 10, marginBottom: 10 }}>
-              {[["Email Address", "email"], ["Phone Number", "tel"]].map(([ph, type]) => (
-                <input key={ph} type={type} placeholder={ph} className="inquiry-input" style={{ background: "#FBF7EE", border: "1px solid rgba(0,0,0,.2)", color: "#010000", padding: "13px 16px", fontFamily: "'Lato', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
-              ))}
-            </div>
-            <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr 80px", gap: 10, marginBottom: 24 }}>
-              <input type="text" placeholder="City *" className="inquiry-input" style={{ background: "#FBF7EE", border: "1px solid rgba(0,0,0,.2)", color: "#010000", padding: "13px 16px", fontFamily: "'Lato', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} required />
-              <input type="text" placeholder="State" className="inquiry-input" style={{ background: "#FBF7EE", border: "1px solid rgba(0,0,0,.2)", color: "#010000", padding: "13px 16px", fontFamily: "'Lato', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
-              <input type="text" placeholder="ZIP *" className="inquiry-input" style={{ background: "#FBF7EE", border: "1px solid rgba(0,0,0,.2)", color: "#010000", padding: "13px 16px", fontFamily: "'Lato', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} required />
-            </div>
-            <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 11, letterSpacing: "0.25em", borderStyle: "none", color: "#A48D6E", fontWeight: 600, textTransform: "uppercase", marginBottom: 12 }}>Student</p>
-            <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 10, marginBottom: 10 }}>
-              {[["First Name", "text"], ["Last Name", "text"]].map(([ph, type]) => (
-                <input key={ph} type={type} placeholder={ph} className="inquiry-input" style={{ background: "#FBF7EE", border: "1px solid rgba(0,0,0,.2)", color: "#010000", padding: "13px 16px", fontFamily: "'Lato', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
-              ))}
-            </div>
-            <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 10, marginBottom: 10 }}>
-              <input type="text" placeholder="Age" className="inquiry-input" style={{ background: "#FBF7EE", border: "1px solid rgba(0,0,0,.2)", color: "#010000", padding: "13px 16px", fontFamily: "'Lato', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
-              <input type="text" placeholder="Current Grade" className="inquiry-input" style={{ background: "#FBF7EE", border: "1px solid rgba(0,0,0,.2)", color: "#010000", padding: "13px 16px", fontFamily: "'Lato', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
-            </div>
-            <select defaultValue="" style={{ background: "#fcf7ee", border: "1px solid rgba(16,15,12,.2)", color: "#100F0C", padding: "13px 16px", fontFamily: "'Lora', Georgia, serif", fontSize: 13, fontWeight: 400, outline: "none", width: "100%", marginBottom: 24, appearance: "none" }}>
-              <option value="" disabled>Program of Interest</option>
-              <option value="flagship">Flagship Program — Full Year, Foundation Semester, or Venture Semester</option>
-              <option value="sixweek">Six-Week Intensive</option>
-              <option value="summer">Summer Intensive</option>
-            </select>
-            <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 11, letterSpacing: "0.25em", color: "#A48D6E", fontWeight: 600, textTransform: "uppercase", marginBottom: 12, marginTop: 0 }}>Consultation Preferences</p>
-            <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 10, marginBottom: 10 }}>
-              <select className="inquiry-input" defaultValue="" style={{ background: "#FBF7EE", border: "1px solid rgba(0,0,0,.2)", color: "#010000", padding: "13px 16px", fontFamily: "'Lato', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%", appearance: "none" }}>
-                <option value="" disabled>Preferred Contact Method</option>
-                <option value="phone">Phone Call</option>
-                <option value="email">Email</option>
-                <option value="either">Either</option>
-              </select>
-              <input type="date" placeholder="Preferred Consultation Date" className="inquiry-input" style={{ background: "#FBF7EE", border: "1px solid rgba(0,0,0,.2)", color: "#010000", padding: "13px 16px", fontFamily: "'Lato', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
-            </div>
-            <TimeRangePicker isMobile={isMobile} />
-            <textarea placeholder="Questions or context you would like us to know (optional)" className="inquiry-input" rows={4} style={{ background: "#FBF7EE", border: "1px solid rgba(0,0,0,.2)", color: "#010000", padding: "13px 16px", fontFamily: "'Lato', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%", marginBottom: 28, resize: "vertical" }} />
-            <button onClick={() => openInquiry && openInquiry("contact")} style={{ fontFamily: "'Lato', sans-serif", padding: "15px 40px", background: "#DAC8AA", border: "none", color: "#100F0C", fontSize: 11, fontWeight: 600, letterSpacing: "0.15em", textTransform: "uppercase", cursor: "pointer", width: "100%" }}>REQUEST A PRIVATE CONSULTATION</button>
-          </div>
+          <h2 style={{ fontFamily: serif, fontSize: isMobile ? 28 : 40, fontWeight: 600, color: "#A48D6E", lineHeight: 1.05, marginBottom: 16 }}>Schedule a Family Consultation</h2>
+          <p style={{ fontFamily: sans, fontSize: 15, color: "#E4D6C1", fontWeight: 300, lineHeight: 1.8, marginBottom: 32, maxWidth: 560, marginLeft: "auto", marginRight: "auto" }}>Choose a time that works for your family below. A dedicated Program Pathways Coordinator will guide you through program options, admissions steps, curriculum, tuition, and next steps.</p>
+          <a href="https://zcal.co/excaliburacademy/meetingbook" target="_blank" rel="noopener noreferrer" style={{ display: "inline-block", fontFamily: "'Lato', sans-serif", padding: "15px 48px", background: "#DAC8AA", border: "none", color: "#100F0C", fontSize: 11, fontWeight: 600, letterSpacing: "0.15em", textTransform: "uppercase", cursor: "pointer", textDecoration: "none" }}>Book a Call →</a>
         </div>
       </div>
 
@@ -12278,59 +12046,13 @@ function FlagshipDetailPage2({ setPage, openInquiry }) {
 
         </div>
       </div>
-      {/* FAMILY CONSULTATION FORM */}
+      {/* BOOK A CALL */}
       <div style={{ background: "rgba(16, 15, 12, 1)", padding: isMobile ? "52px 24px" : "72px 80px", borderTop: "1px solid rgba(0,0,0,.08)" }}>
-        <div style={{ maxWidth: 740, margin: "0 auto" }}>
+        <div style={{ maxWidth: 640, margin: "0 auto", textAlign: "center" }}>
           <p style={{ fontFamily: "'Lato', sans-serif", fontSize: 9, letterSpacing: "0.4em", color: "#A48D6E", fontWeight: 600, textTransform: "uppercase", marginBottom: 16 }}>Private Admissions Consultation</p>
-          <h2 style={{ fontFamily: serif, fontSize: isMobile ? 28 : 40, fontWeight: 600, color: "#A48D6E", lineHeight: 1.05, marginBottom: 8 }}>Schedule a Family Consultation</h2>
-          <p style={{ fontFamily: sans, fontSize: 15, color: "#E4D6C1", fontWeight: 300, lineHeight: 1.8, marginBottom: 36, maxWidth: 580 }}>Please submit your information to schedule a private admissions consultation. A dedicated Program Pathways Coordinator will guide your family through program options, admissions steps, curriculum, tuition, schedule fit, and next steps.</p>
-          <div style={{ background: "rgba(16, 15, 12, 1)", borderTop: `2px solid #A48D6E`, padding: "36px 32px" }}>
-            <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 11, letterSpacing: "0.25em", color: "#A48D6E", fontWeight: 600, textTransform: "uppercase", marginBottom: 12 }}>Parent / Guardian</p>
-            <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 10, marginBottom: 10 }}>
-              {[["First Name", "text"], ["Last Name", "text"]].map(([ph, type]) => (
-                <input key={ph} type={type} placeholder={ph} className="inquiry-input" style={{ background: "#FBF7EE", border: "1px solid rgba(0,0,0,.2)", color: "#010000", padding: "13px 16px", fontFamily: "'Lato', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
-              ))}
-            </div>
-            <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 10, marginBottom: 10 }}>
-              {[["Email Address", "email"], ["Phone Number", "tel"]].map(([ph, type]) => (
-                <input key={ph} type={type} placeholder={ph} className="inquiry-input" style={{ background: "#FBF7EE", border: "1px solid rgba(0,0,0,.2)", color: "#010000", padding: "13px 16px", fontFamily: "'Lato', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
-              ))}
-            </div>
-            <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr 80px", gap: 10, marginBottom: 24 }}>
-              <input type="text" placeholder="City *" className="inquiry-input" style={{ background: "#FBF7EE", border: "1px solid rgba(0,0,0,.2)", color: "#010000", padding: "13px 16px", fontFamily: "'Lato', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} required />
-              <input type="text" placeholder="State" className="inquiry-input" style={{ background: "#FBF7EE", border: "1px solid rgba(0,0,0,.2)", color: "#010000", padding: "13px 16px", fontFamily: "'Lato', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
-              <input type="text" placeholder="ZIP *" className="inquiry-input" style={{ background: "#FBF7EE", border: "1px solid rgba(0,0,0,.2)", color: "#010000", padding: "13px 16px", fontFamily: "'Lato', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} required />
-            </div>
-            <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 11, letterSpacing: "0.25em", borderStyle: "none", color: "#A48D6E", fontWeight: 600, textTransform: "uppercase", marginBottom: 12 }}>Student</p>
-            <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 10, marginBottom: 10 }}>
-              {[["First Name", "text"], ["Last Name", "text"]].map(([ph, type]) => (
-                <input key={ph} type={type} placeholder={ph} className="inquiry-input" style={{ background: "#FBF7EE", border: "1px solid rgba(0,0,0,.2)", color: "#010000", padding: "13px 16px", fontFamily: "'Lato', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
-              ))}
-            </div>
-            <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 10, marginBottom: 10 }}>
-              <input type="text" placeholder="Age" className="inquiry-input" style={{ background: "#FBF7EE", border: "1px solid rgba(0,0,0,.2)", color: "#010000", padding: "13px 16px", fontFamily: "'Lato', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
-              <input type="text" placeholder="Current Grade" className="inquiry-input" style={{ background: "#FBF7EE", border: "1px solid rgba(0,0,0,.2)", color: "#010000", padding: "13px 16px", fontFamily: "'Lato', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
-            </div>
-            <select defaultValue="" style={{ background: "#fcf7ee", border: "1px solid rgba(16,15,12,.2)", color: "#100F0C", padding: "13px 16px", fontFamily: "'Lora', Georgia, serif", fontSize: 13, fontWeight: 400, outline: "none", width: "100%", marginBottom: 24, appearance: "none" }}>
-              <option value="" disabled>Program of Interest</option>
-              <option value="flagship">Flagship Program — Full Year, Foundation Semester, or Venture Semester</option>
-              <option value="sixweek">Six-Week Intensive</option>
-              <option value="summer">Summer Intensive</option>
-            </select>
-            <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 11, letterSpacing: "0.25em", color: "#A48D6E", fontWeight: 600, textTransform: "uppercase", marginBottom: 12, marginTop: 0 }}>Consultation Preferences</p>
-            <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 10, marginBottom: 10 }}>
-              <select className="inquiry-input" defaultValue="" style={{ background: "#FBF7EE", border: "1px solid rgba(0,0,0,.2)", color: "#010000", padding: "13px 16px", fontFamily: "'Lato', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%", appearance: "none" }}>
-                <option value="" disabled>Preferred Contact Method</option>
-                <option value="phone">Phone Call</option>
-                <option value="email">Email</option>
-                <option value="either">Either</option>
-              </select>
-              <input type="date" placeholder="Preferred Consultation Date" className="inquiry-input" style={{ background: "#FBF7EE", border: "1px solid rgba(0,0,0,.2)", color: "#010000", padding: "13px 16px", fontFamily: "'Lato', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%" }} />
-            </div>
-            <TimeRangePicker isMobile={isMobile} />
-            <textarea placeholder="Questions or context you would like us to know (optional)" className="inquiry-input" rows={4} style={{ background: "#FBF7EE", border: "1px solid rgba(0,0,0,.2)", color: "#010000", padding: "13px 16px", fontFamily: "'Lato', sans-serif", fontSize: 13, fontWeight: 300, outline: "none", width: "100%", marginBottom: 28, resize: "vertical" }} />
-            <button onClick={() => openInquiry && openInquiry("flagship")} style={{ fontFamily: "'Lato', sans-serif", padding: "15px 40px", background: "#DAC8AA", border: "none", color: "#100F0C", fontSize: 11, fontWeight: 600, letterSpacing: "0.15em", textTransform: "uppercase", cursor: "pointer", width: "100%" }}>REQUEST A PRIVATE CONSULTATION</button>
-          </div>
+          <h2 style={{ fontFamily: serif, fontSize: isMobile ? 28 : 40, fontWeight: 600, color: "#A48D6E", lineHeight: 1.05, marginBottom: 16 }}>Schedule a Family Consultation</h2>
+          <p style={{ fontFamily: sans, fontSize: 15, color: "#E4D6C1", fontWeight: 300, lineHeight: 1.8, marginBottom: 32, maxWidth: 560, marginLeft: "auto", marginRight: "auto" }}>Choose a time that works for your family below. A dedicated Program Pathways Coordinator will guide you through program options, admissions steps, curriculum, tuition, and next steps.</p>
+          <a href="https://zcal.co/excaliburacademy/meetingbook" target="_blank" rel="noopener noreferrer" style={{ display: "inline-block", fontFamily: "'Lato', sans-serif", padding: "15px 48px", background: "#DAC8AA", border: "none", color: "#100F0C", fontSize: 11, fontWeight: 600, letterSpacing: "0.15em", textTransform: "uppercase", cursor: "pointer", textDecoration: "none" }}>Book a Call →</a>
         </div>
       </div>
       </MobileAccordionSection>
