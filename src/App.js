@@ -7091,8 +7091,8 @@ function SummerDetailPage({ setPage, openInquiry }) {
           {/* PRICING LEGEND */}
           <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(2,1fr)", gap: 12, marginBottom: 48 }}>
             {[
-              { tier: "Early Bird", desc: "Best rate. Available until 3 weeks before each date.", badge: "RESERVE NOW" },
-              { tier: "Regular", desc: "Standard rate. Available until one week before the date.", badge: "" },
+              { tier: "Early Bird", desc: "Best rate. Available until 1 week before each date.", badge: "RESERVE NOW" },
+              { tier: "Regular", desc: "Standard rate. Available until 3 days before the date.", badge: "" },
             ].map((t, i) => (
               <div key={i} style={{ background: "#0D0C0A", border: `1px solid rgba(164,141,110,.2)`, padding: "20px 24px" }}>
                 <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 8 }}>
@@ -7322,7 +7322,6 @@ const SUMMER_SESSION_PRICES = {
   "Leadership, Negotiation & Power Dynamics — Aug 11": 350,
   "Wall Street, Stocks & Investor Thinking — Aug 13": 350,
   "College, Career & Personal Strategy — Aug 20": 350,
-  "Gift — $1 Test Lab": 1,
 };
 
 function PortalPage({ setPage }) {
@@ -7337,7 +7336,6 @@ function PortalPage({ setPage }) {
   const [authBusy, setAuthBusy] = React.useState(false);
   const [checkoutError, setCheckoutError] = React.useState("");
   const [checkoutBusy, setCheckoutBusy] = React.useState(false);
-  const [showEnrollmentDetails, setShowEnrollmentDetails] = React.useState(false);
   const [rescheduleOpen, setRescheduleOpen] = React.useState(false);
   const [rescheduleTarget, setRescheduleTarget] = React.useState("");
   const [rescheduleRequested, setRescheduleRequested] = React.useState(false);
@@ -8671,7 +8669,7 @@ function PortalPage({ setPage }) {
   const sans = "'Inter', sans-serif";
 
   const cap = (s) => (s ? s.charAt(0).toUpperCase() + s.slice(1) : s);
-  const programLabelsShort = { summer: "Summer Intensive", foundation: "Foundation Semester", venture: "Venture Semester", "full-year": "Full Academic Year", unsure: "Not Sure Yet" };
+  const programLabelsShort = { summer: "Summer Masterseries", foundation: "Foundation Semester", venture: "Venture Semester", "full-year": "Full Academic Year", unsure: "Not Sure Yet" };
 
   const tabs = role === "student"
     ? [["overview", "Dashboard"], ["application", "Application"], ["consultation", "Schedule Consultation"], ["messages", "Contact Us"], ["family", "Family"], ["faculty", "Faculty"], ["settings", "Settings"]]
@@ -8950,7 +8948,7 @@ function PortalPage({ setPage }) {
             {/* Snapshot cards */}
             <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr 1fr" : "repeat(4, 1fr)", gap: isMobile ? 12 : 16, marginBottom: 16 }}>
               {[
-                { label: "Program", value: application ? (programLabelsShort[application.program] || cap(application.program) || "—") : "Not Selected", icon: "cap" },
+                { label: "Program", value: application ? (programLabelsShort[application.program] || cap(application.program) || "—") : "Not Selected", icon: "cap", sub: (application?.program_responses?.summer?.selectedSessions || []).join(", ") || null },
                 { label: "Status", value: application ? statusSteps[Math.max(currentStatusIndex, 0)].label : "Not Started", icon: "clipboard" },
                 { label: "Consultations", value: consultations.length ? `${consultations.length} Requested` : "None Yet", icon: "phone" },
                 { label: "Cohort", value: role === "student" ? "2026–2027" : "Family Access", icon: "building" },
@@ -8961,6 +8959,7 @@ function PortalPage({ setPage }) {
                   </div>
                   <p style={{ fontFamily: sans, fontSize: 13, color: m_gray, marginBottom: 4 }}>{s.label}</p>
                   <p style={{ fontFamily: sans, fontWeight: 700, fontSize: isMobile ? 15 : 18, color: m_ink, lineHeight: 1.2 }}>{s.value}</p>
+                  {s.sub && <p style={{ fontFamily: sans, fontSize: 12, color: m_gray, marginTop: 6, lineHeight: 1.4 }}>{s.sub}</p>}
                 </div>
               ))}
             </div>
@@ -8983,12 +8982,11 @@ function PortalPage({ setPage }) {
                         const active = i === currentStatusIndex;
                         const isEnrolledStep = s.key === "enrolled" && active;
                         return (
-                          <div key={s.key} onClick={() => { if (isEnrolledStep) setShowEnrollmentDetails(v => !v); }} style={{
+                          <div key={s.key} style={{
                             background: active ? m_ink : m_white,
                             border: `1px solid ${active ? m_ink : m_line}`,
                             borderRadius: 14, padding: "16px 14px",
                             opacity: i > currentStatusIndex ? 0.55 : 1,
-                            cursor: isEnrolledStep ? "pointer" : "default",
                           }}>
                             <div style={{
                               width: 28, height: 28, borderRadius: 9, marginBottom: 12,
@@ -8997,13 +8995,13 @@ function PortalPage({ setPage }) {
                               color: active || done ? "#fff" : m_ink, fontFamily: sans, fontSize: 13, fontWeight: 700,
                             }}>{done ? "✓" : i + 1}</div>
                             <p style={{ fontFamily: sans, fontWeight: 700, fontSize: isMobile ? 12.5 : 13.5, color: active ? m_white : m_ink, lineHeight: 1.3, marginBottom: 3 }}>{s.label}</p>
-                            <p style={{ fontFamily: sans, fontSize: 11.5, color: active ? "rgba(255,255,255,.65)" : m_gray }}>{done ? "Completed" : active ? (isEnrolledStep ? "Tap for details" : "In progress") : "Not yet"}</p>
+                            <p style={{ fontFamily: sans, fontSize: 11.5, color: active ? "rgba(255,255,255,.65)" : m_gray }}>{done ? "Completed" : active ? (isEnrolledStep ? "Confirmed" : "In progress") : "Not yet"}</p>
                           </div>
                         );
                       })}
                     </div>
-                    <p style={{ fontFamily: sans, fontSize: 15, color: m_ink, lineHeight: 1.7, marginBottom: showEnrollmentDetails && statusSteps[currentStatusIndex]?.key === "enrolled" ? 8 : 22, marginTop: 16 }}>{statusSteps[Math.max(currentStatusIndex, 0)].desc}</p>
-                    {showEnrollmentDetails && statusSteps[currentStatusIndex]?.key === "enrolled" && renderEnrollmentDetails()}
+                    <p style={{ fontFamily: sans, fontSize: 15, color: m_ink, lineHeight: 1.7, marginBottom: statusSteps[currentStatusIndex]?.key === "enrolled" ? 8 : 22, marginTop: 16 }}>{statusSteps[Math.max(currentStatusIndex, 0)].desc}</p>
+                    {statusSteps[currentStatusIndex]?.key === "enrolled" && renderEnrollmentDetails()}
                     <div style={{ display: "flex", flexWrap: "wrap", gap: 10, marginTop: 22 }}>
                       {role === "student" && <button onClick={() => setActiveTab("application")} style={{ fontFamily: sans, padding: "12px 24px", background: m_ink, border: "none", color: m_white, fontSize: 14, fontWeight: 600, cursor: "pointer", borderRadius: 999 }}>{application.status === "draft" ? "Continue Application →" : "View Application →"}</button>}
                       <button onClick={() => setActiveTab("consultation")} style={{ fontFamily: sans, padding: "12px 24px", background: "transparent", border: `1px solid ${m_line}`, color: m_ink, fontSize: 14, fontWeight: 500, cursor: "pointer", borderRadius: 999 }}>Schedule a Consultation →</button>
@@ -9168,7 +9166,6 @@ function PortalPage({ setPage }) {
                         { session: "Leadership, Negotiation & Power Dynamics — Aug 11" },
                         { session: "Wall Street, Stocks & Investor Thinking — Aug 13" },
                         { session: "College, Career & Personal Strategy — Aug 20" },
-                        { session: "Gift — $1 Test Lab" },
                       ].map(({ session, full }) => {
                         const active = (appForm.summer.selectedSessions || []).includes(session);
                         if (full) {
@@ -9367,17 +9364,16 @@ function PortalPage({ setPage }) {
                   <p style={{ fontFamily: sans, fontSize: 13, color: m_gray, marginBottom: 10, fontWeight: 600 }}>Admissions Status</p>
                   <div style={{ display: "flex", marginBottom: 10 }}>
                     {statusSteps.map((s, i) => {
-                      const isEnrolledStep = s.key === "enrolled" && i === currentStatusIndex;
                       return (
-                        <div key={s.key} onClick={() => { if (isEnrolledStep) setShowEnrollmentDetails(v => !v); }} style={{ flex: 1, paddingRight: i < statusSteps.length - 1 ? 8 : 0, cursor: isEnrolledStep ? "pointer" : "default" }}>
+                        <div key={s.key} style={{ flex: 1, paddingRight: i < statusSteps.length - 1 ? 8 : 0 }}>
                           <div style={{ height: 6, borderRadius: 999, background: i <= currentStatusIndex ? m_amber : "rgba(17,17,17,0.08)", marginBottom: 8 }} />
-                          <p style={{ fontFamily: sans, fontSize: 12, fontWeight: i === currentStatusIndex ? 700 : 500, color: i <= currentStatusIndex ? m_ink : m_gray }}>{s.label}{isEnrolledStep ? " ↓" : ""}</p>
+                          <p style={{ fontFamily: sans, fontSize: 12, fontWeight: i === currentStatusIndex ? 700 : 500, color: i <= currentStatusIndex ? m_ink : m_gray }}>{s.label}</p>
                         </div>
                       );
                     })}
                   </div>
                   <p style={{ fontFamily: sans, fontSize: 14, color: m_ink, opacity: 0.75, lineHeight: 1.7 }}>{statusSteps[Math.max(currentStatusIndex, 0)].desc}</p>
-                  {showEnrollmentDetails && statusSteps[currentStatusIndex]?.key === "enrolled" && renderEnrollmentDetails()}
+                  {statusSteps[currentStatusIndex]?.key === "enrolled" && renderEnrollmentDetails()}
                 </div>
 
                 {viewingSubmitted && (
