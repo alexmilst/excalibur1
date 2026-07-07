@@ -15891,6 +15891,17 @@ function FacultyDashboardHome({ facultyProfile, facultyRole }) {
     ? programById[sessionsByDate[calendarModalDate][0].program_id]?.name
     : "";
 
+  if (calendarModalDate) {
+    return (
+      <DayOverviewView
+        date={calendarModalDate}
+        sessionsThisDay={sessionsByDate[calendarModalDate] || []}
+        programName={modalProgramName}
+        onBack={() => setCalendarModalDate(null)}
+      />
+    );
+  }
+
   return (
     <div>
       <div style={{ display: "flex", alignItems: "center", gap: 24, marginBottom: 32 }}>
@@ -15996,14 +16007,6 @@ function FacultyDashboardHome({ facultyProfile, facultyRole }) {
         </div>
       </div>
 
-      {calendarModalDate && (
-        <DayDetailModal
-          date={calendarModalDate}
-          sessionsThisDay={sessionsByDate[calendarModalDate] || []}
-          programName={modalProgramName}
-          onClose={() => setCalendarModalDate(null)}
-        />
-      )}
     </div>
   );
 }
@@ -16165,17 +16168,17 @@ const DAY_AGENDA_TEMPLATES = {
   "founders-day": {
     label: "Summer Founder's Day",
     blocks: [
-      { start: "10:00", end: "10:20", label: "Arrival, Orientation & Team Formation", who: "TAs & Coordinators" },
-      { start: "10:20", end: "11:05", label: "Public Speaking & Executive Presence", who: "Keree" },
-      { start: "11:05", end: "11:50", label: "Financial Literacy & Investor Thinking", who: "Faculty TBD" },
-      { start: "11:50", end: "12:05", label: "Break", who: "—" },
-      { start: "12:05", end: "12:50", label: "AI & the Future of Work", who: "Chip" },
-      { start: "12:50", end: "13:25", label: "Lunch", who: "—" },
-      { start: "13:25", end: "15:05", label: "The Venture Challenge", who: "Chip (Lead) · Erik (Support)" },
-      { start: "15:05", end: "16:20", label: "Applied Capstone: Build Your Team Pitch", who: "Keree · Chris Sanders · Erik" },
-      { start: "16:20", end: "16:50", label: "The Showcase", who: "Judging Panel" },
-      { start: "16:50", end: "17:00", label: "Transition", who: "TAs" },
-      { start: "17:00", end: "18:00", label: "The Family Soirée", who: "Academy Staff & Faculty" },
+      { start: "10:00", end: "10:20", label: "Arrival, Orientation & Team Formation", who: "TAs & Coordinators", desc: "Students arrive, meet their team of three to four peers, and are welcomed by TAs and Academy coordinators. Faculty introduce the day's agenda — by 4:20 PM, every team will pitch a real venture — setting a tone of serious, focused ambition from the first minute." },
+      { start: "10:20", end: "11:05", label: "Public Speaking & Executive Presence", who: "Keree", desc: "Students learn the founder's communication toolkit: clarity, executive presence, persuasive storytelling, and the ability to make an audience genuinely care. Informed by pitch principles from Y Combinator, Sequoia Capital, Harvard Business School & Innovation Labs, this session trains students to explain ideas with precision, frame problems through human stakes, and speak with the confidence expected of young leaders." },
+      { start: "11:05", end: "11:50", label: "Financial Literacy & Investor Thinking", who: "Faculty TBD", desc: "How money actually works and financial literacy for teens — the fundamentals of how founders monetize their business models and investors evaluate business ventures." },
+      { start: "11:50", end: "12:05", label: "Break", who: "—", desc: "A short pause before the day's most hands-on stretch begins." },
+      { start: "12:05", end: "12:50", label: "AI & the Future of Work", who: "Chip", desc: "A practical, serious introduction to using AI as a thinking partner, not a shortcut." },
+      { start: "12:50", end: "13:25", label: "Lunch", who: "—", desc: "A catered midday break — students continue informal conversation with faculty and their teammates." },
+      { start: "13:25", end: "15:05", label: "The Venture Challenge", who: "Chip (Lead) · Erik (Support)", desc: "Teams choose either the community-impact challenge or market-gap challenge and build their venture plan with faculty and TA support." },
+      { start: "15:05", end: "16:20", label: "Applied Capstone: Build Your Team Pitch", who: "Keree · Chris Sanders · Erik", desc: "Teams turn their venture into a rehearsed 60-second founder pitch with a simple support deck." },
+      { start: "16:20", end: "16:50", label: "The Showcase", who: "Judging Panel", desc: "Each team delivers its pitch live before a judging panel of faculty, invited founders, and investors — experiencing the same kind of questions and environment a real founder faces when raising capital." },
+      { start: "16:50", end: "17:00", label: "Transition", who: "TAs", desc: "Room reset for the Family Soirée." },
+      { start: "17:00", end: "18:00", label: "The Family Soirée", who: "Academy Staff & Faculty", desc: "Parents are warmly invited to join the final portion of the day for a closing reception with light refreshments. This session introduces families to the full Excalibur Academy experience and provides a clear overview of the academic-year pathway." },
     ],
   },
   "flagship-groupb-tuethu": {
@@ -16249,7 +16252,29 @@ function timeToMinutes(t) {
   return h * 60 + m;
 }
 
-function DayDetailModal({ date, sessionsThisDay, programName, onClose }) {
+// Day-overview copy, copied verbatim from the public Summer Founder's Day
+// page, so faculty get the same "what is this day" context parents see —
+// shown only when the selected day resolves to the founders-day template.
+const FOUNDERS_DAY_OVERVIEW = {
+  intro: [
+    "Spend a day living like a founder. In one day, students build the core skills of the Academy — public speaking, financial literacy, AI fluency, and entrepreneurial thinking — then put it all to work building and pitching a real venture in teams, live, in front of faculty, peers, families, and invited real founders and investors.",
+    "This single day is designed as your family's introduction to Excalibur Academy's flagship year-round program — Foundation Semester, Venture Semester, and the Full Academic Year.",
+  ],
+  hours: "10:00 AM – 6:00 PM, offered July 28 and August 11, 2026 — both dates run the identical curriculum.",
+  ventureChallenge: {
+    intro: "Faculty present every team with two real-world problems to choose from. Each team selects one lane and builds a complete venture plan around it — exactly as a real founder would.",
+    lanes: [
+      { title: "Lane One — The Community-Impact Challenge", desc: "A genuine civic gap facing our own South Orange County community — teams build a venture designed to address it directly." },
+      { title: "Lane Two — The Market-Gap Challenge", desc: "A real commercial opportunity going unaddressed — teams build a venture designed to compete and win in that market." },
+    ],
+  },
+  whereThisLeads: "The Founder's Day offers a direct introduction to Excalibur Academy's flagship Academic Year Programs — where students go deeper, build over time, and develop a portfolio of real work: the Foundation Semester (Fall 2026), the Venture Semester (Spring 2027), and year-round College Advantage counseling.",
+};
+
+// Full-page day view — replaces the old fixed-overlay popup. Reached the
+// same way (clicking a day in a calendar or schedule row) but renders as a
+// regular in-content view with a "← Back" link, not a modal window.
+function DayOverviewView({ date, sessionsThisDay, programName, onBack }) {
   const lora = "'Lora', Georgia, serif";
   const cg = "'Cormorant Garamond', Georgia, serif";
   const d = new Date(date + "T00:00:00");
@@ -16258,6 +16283,7 @@ function DayDetailModal({ date, sessionsThisDay, programName, onClose }) {
 
   const templateKey = getAgendaTemplateKey(sessionsThisDay[0], programName);
   const template = templateKey ? DAY_AGENDA_TEMPLATES[templateKey] : null;
+  const isFoundersDay = templateKey === "founders-day";
 
   const isOwnBlock = (blockStart, blockEnd) => {
     const bStart = timeToMinutes(blockStart);
@@ -16270,103 +16296,125 @@ function DayDetailModal({ date, sessionsThisDay, programName, onClose }) {
     });
   };
 
+  const sectionLabel = { fontFamily: lora, fontSize: 11, letterSpacing: "0.12em", color: "#8B7355", textTransform: "uppercase", fontWeight: 700, margin: "28px 0 12px" };
+  const bodyText = { fontFamily: lora, fontSize: 14, color: "#3A2F28", lineHeight: 1.75, margin: "0 0 14px" };
+
   return (
-    <div
-      onClick={onClose}
-      style={{
-        position: "fixed", inset: 0, background: "rgba(16,15,12,0.5)", zIndex: 1000,
-        display: "flex", alignItems: "center", justifyContent: "center", padding: 20,
-      }}
-    >
-      <div
-        onClick={(e) => e.stopPropagation()}
-        style={{
-          background: "#FFFFFF", borderRadius: 6, maxWidth: 640, width: "100%",
-          maxHeight: "85vh", overflowY: "auto", padding: 32, position: "relative",
-        }}
+    <div>
+      <span
+        onClick={onBack}
+        style={{ fontFamily: lora, fontSize: 12, letterSpacing: "0.1em", color: "#A48D6E", textTransform: "uppercase", cursor: "pointer", textDecoration: "underline" }}
       >
-        <button
-          onClick={onClose}
-          style={{ position: "absolute", top: 20, right: 20, background: "none", border: "none", fontSize: 20, cursor: "pointer", color: "#8B7355" }}
-        >
-          ×
-        </button>
+        ← Back
+      </span>
 
-        <p style={{ fontFamily: lora, fontSize: 11, letterSpacing: "0.15em", color: "#8B7355", textTransform: "uppercase", margin: "0 0 4px" }}>
-          {displayProgramName}
+      <p style={{ fontFamily: lora, fontSize: 11, letterSpacing: "0.15em", color: "#8B7355", textTransform: "uppercase", margin: "18px 0 4px" }}>
+        {displayProgramName}
+      </p>
+      <h2 style={{ fontFamily: cg, fontSize: 30, color: "#100F0C", fontWeight: 600, margin: "0 0 20px" }}>
+        {dateLabel}
+      </h2>
+
+      {sessionsThisDay[0]?.location && (
+        <p style={{ fontFamily: lora, fontSize: 13, color: "#6B6459", margin: "0 0 20px" }}>
+          📍 {sessionsThisDay[0].location}
         </p>
-        <h2 style={{ fontFamily: cg, fontSize: 26, color: "#100F0C", fontWeight: 600, margin: "0 0 20px" }}>
-          {dateLabel}
-        </h2>
+      )}
 
-        {sessionsThisDay[0]?.location && (
-          <p style={{ fontFamily: lora, fontSize: 13, color: "#6B6459", margin: "0 0 20px" }}>
-            📍 {sessionsThisDay[0].location}
+      {/* ── Your block(s) — details ── */}
+      {sessionsThisDay.map((s) => (
+        <div key={s.id} style={{ background: "#FAF7F2", border: "1px solid rgba(164,141,110,0.35)", borderRadius: 4, padding: 16, marginBottom: 12 }}>
+          <p style={{ fontFamily: lora, fontSize: 13.5, color: "#100F0C", fontWeight: 700, margin: "0 0 8px" }}>
+            Your Block: {s.block_label}
           </p>
-        )}
-
-        {/* ── Your block(s) — details ── */}
-        {sessionsThisDay.map((s) => (
-          <div key={s.id} style={{ background: "#FAF7F2", border: "1px solid rgba(164,141,110,0.35)", borderRadius: 4, padding: 16, marginBottom: 12 }}>
-            <p style={{ fontFamily: lora, fontSize: 13.5, color: "#100F0C", fontWeight: 700, margin: "0 0 8px" }}>
-              Your Block: {s.block_label}
-            </p>
-            <div style={{ display: "flex", gap: 24, flexWrap: "wrap" }}>
-              <div>
-                <p style={{ fontFamily: lora, fontSize: 10.5, color: "#8B7355", textTransform: "uppercase", letterSpacing: "0.06em", margin: "0 0 2px" }}>Arrive By</p>
-                <p style={{ fontFamily: lora, fontSize: 13, color: "#100F0C", margin: 0 }}>{s.arrival_time ? s.arrival_time.slice(0, 5) : "—"}</p>
-              </div>
-              <div>
-                <p style={{ fontFamily: lora, fontSize: 10.5, color: "#8B7355", textTransform: "uppercase", letterSpacing: "0.06em", margin: "0 0 2px" }}>Block Starts</p>
-                <p style={{ fontFamily: lora, fontSize: 13, color: "#100F0C", margin: 0 }}>{s.start_time ? s.start_time.slice(0, 5) : "TBC"}</p>
-              </div>
-              <div>
-                <p style={{ fontFamily: lora, fontSize: 10.5, color: "#8B7355", textTransform: "uppercase", letterSpacing: "0.06em", margin: "0 0 2px" }}>TA Assigned</p>
-                <p style={{ fontFamily: lora, fontSize: 13, color: s.ta_assigned_name ? "#100F0C" : "#B4433A", margin: 0, fontStyle: s.ta_assigned_name ? "normal" : "italic" }}>
-                  {s.ta_assigned_name || "Not yet assigned"}
-                </p>
-              </div>
+          <div style={{ display: "flex", gap: 24, flexWrap: "wrap" }}>
+            <div>
+              <p style={{ fontFamily: lora, fontSize: 10.5, color: "#8B7355", textTransform: "uppercase", letterSpacing: "0.06em", margin: "0 0 2px" }}>Arrive By</p>
+              <p style={{ fontFamily: lora, fontSize: 13, color: "#100F0C", margin: 0 }}>{s.arrival_time ? s.arrival_time.slice(0, 5) : "—"}</p>
+            </div>
+            <div>
+              <p style={{ fontFamily: lora, fontSize: 10.5, color: "#8B7355", textTransform: "uppercase", letterSpacing: "0.06em", margin: "0 0 2px" }}>Block Starts</p>
+              <p style={{ fontFamily: lora, fontSize: 13, color: "#100F0C", margin: 0 }}>{s.start_time ? s.start_time.slice(0, 5) : "TBC"}</p>
+            </div>
+            <div>
+              <p style={{ fontFamily: lora, fontSize: 10.5, color: "#8B7355", textTransform: "uppercase", letterSpacing: "0.06em", margin: "0 0 2px" }}>TA Assigned</p>
+              <p style={{ fontFamily: lora, fontSize: 13, color: s.ta_assigned_name ? "#100F0C" : "#B4433A", margin: 0, fontStyle: s.ta_assigned_name ? "normal" : "italic" }}>
+                {s.ta_assigned_name || "Not yet assigned"}
+              </p>
             </div>
           </div>
-        ))}
+        </div>
+      ))}
 
-        {/* ── Full day agenda ── */}
-        {template ? (
-          <>
-            <p style={{ fontFamily: lora, fontSize: 11, letterSpacing: "0.1em", color: "#8B7355", textTransform: "uppercase", margin: "24px 0 10px" }}>
-              Full Day Agenda
-            </p>
-            <div style={{ border: "1px solid rgba(16,15,12,0.1)", borderRadius: 4, overflow: "hidden" }}>
-              {template.blocks.map((b, i) => {
-                const mine = isOwnBlock(b.start, b.end);
-                return (
-                  <div
-                    key={i}
-                    style={{
-                      display: "flex", gap: 16, padding: "10px 16px", alignItems: "center",
-                      background: mine ? "#FAF0DC" : i % 2 === 0 ? "#FFFFFF" : "#FAFAFA",
-                      borderTop: i === 0 ? "none" : "1px solid rgba(16,15,12,0.06)",
-                      borderLeft: mine ? "3px solid #A48D6E" : "3px solid transparent",
-                    }}
-                  >
-                    <span style={{ fontFamily: lora, fontSize: 12, color: "#8B7355", width: 110, flexShrink: 0 }}>
+      {/* ── Summer Founder's Day — Day Overview ── */}
+      {isFoundersDay && (
+        <div>
+          <p style={sectionLabel}>Summer Founder's Day — Day Overview</p>
+          <h3 style={{ fontFamily: cg, fontSize: 20, color: "#100F0C", fontWeight: 600, margin: "0 0 12px" }}>Live Like a Founder, for One Day</h3>
+          {FOUNDERS_DAY_OVERVIEW.intro.map((p, i) => (
+            <p key={i} style={bodyText}>{p}</p>
+          ))}
+          <p style={{ ...bodyText, fontStyle: "italic", color: "#8B7355" }}>{FOUNDERS_DAY_OVERVIEW.hours}</p>
+        </div>
+      )}
+
+      {/* ── The Structure of the Day — every block, not just faculty's own ── */}
+      {template ? (
+        <>
+          <p style={sectionLabel}>The Structure of the Day</p>
+          <div style={{ border: "1px solid rgba(16,15,12,0.1)", borderRadius: 4, overflow: "hidden" }}>
+            {template.blocks.map((b, i) => {
+              const mine = isOwnBlock(b.start, b.end);
+              return (
+                <div
+                  key={i}
+                  style={{
+                    padding: "14px 16px",
+                    background: mine ? "#FAF0DC" : i % 2 === 0 ? "#FFFFFF" : "#FAFAFA",
+                    borderTop: i === 0 ? "none" : "1px solid rgba(16,15,12,0.06)",
+                    borderLeft: mine ? "3px solid #A48D6E" : "3px solid transparent",
+                  }}
+                >
+                  <div style={{ display: "flex", gap: 16, alignItems: "baseline", flexWrap: "wrap", marginBottom: b.desc ? 6 : 0 }}>
+                    <span style={{ fontFamily: lora, fontSize: 12, color: "#8B7355", width: 120, flexShrink: 0 }}>
                       {b.start} – {b.end}
                     </span>
-                    <span style={{ fontFamily: lora, fontSize: 13, color: "#100F0C", fontWeight: mine ? 700 : 400, flex: 1 }}>
+                    <span style={{ fontFamily: lora, fontSize: 14, color: "#100F0C", fontWeight: mine ? 700 : 600, flex: 1 }}>
                       {b.label} {mine && <span style={{ color: "#A48D6E", fontWeight: 700 }}>— Your Block</span>}
                     </span>
-                    <span style={{ fontFamily: lora, fontSize: 11.5, color: "#8B7355" }}>{b.who}</span>
+                    <span style={{ fontFamily: lora, fontSize: 11.5, color: "#8B7355", fontStyle: "italic" }}>{b.who}</span>
                   </div>
-                );
-              })}
-            </div>
-          </>
-        ) : (
-          <p style={{ fontFamily: cg, fontSize: 15, color: "#6B6459", fontStyle: "italic", marginTop: 16 }}>
-            This is a standalone event — no full-day agenda template applies.
-          </p>
-        )}
-      </div>
+                  {b.desc && (
+                    <p style={{ fontFamily: lora, fontSize: 13, color: "#3A2F28", lineHeight: 1.7, margin: 0 }}>{b.desc}</p>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+        </>
+      ) : (
+        <p style={{ fontFamily: cg, fontSize: 15, color: "#6B6459", fontStyle: "italic", marginTop: 16 }}>
+          This is a standalone event — no full-day agenda template applies.
+        </p>
+      )}
+
+      {/* ── The Venture Challenge + Where This Leads ── */}
+      {isFoundersDay && (
+        <div>
+          <p style={sectionLabel}>The Heart of the Day — The Venture Challenge</p>
+          <p style={bodyText}>{FOUNDERS_DAY_OVERVIEW.ventureChallenge.intro}</p>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: 16, marginBottom: 8 }}>
+            {FOUNDERS_DAY_OVERVIEW.ventureChallenge.lanes.map((lane, i) => (
+              <div key={i} style={{ background: "#FAF7F2", border: "1px solid rgba(16,15,12,0.1)", borderRadius: 4, padding: 16 }}>
+                <p style={{ fontFamily: lora, fontSize: 13.5, color: "#100F0C", fontWeight: 700, margin: "0 0 6px" }}>{lane.title}</p>
+                <p style={{ fontFamily: lora, fontSize: 13, color: "#3A2F28", lineHeight: 1.6, margin: 0 }}>{lane.desc}</p>
+              </div>
+            ))}
+          </div>
+          <p style={sectionLabel}>Where This Leads</p>
+          <p style={bodyText}>{FOUNDERS_DAY_OVERVIEW.whereThisLeads}</p>
+        </div>
+      )}
     </div>
   );
 }
@@ -16527,6 +16575,17 @@ function MyScheduleSection({ facultyProfile }) {
     return <p style={{ fontFamily: cg, fontSize: 16, color: "#6B6459", fontStyle: "italic" }}>Loading your schedule…</p>;
   }
 
+  if (selectedDay) {
+    return (
+      <DayOverviewView
+        date={selectedDay.date}
+        sessionsThisDay={selectedDay.sessionsThisDay}
+        programName={selectedDay.programName}
+        onBack={() => setSelectedDay(null)}
+      />
+    );
+  }
+
   const sessionsByProgram = {};
   programs.forEach((p) => { sessionsByProgram[p.id] = []; });
   sessions.forEach((s) => {
@@ -16543,11 +16602,20 @@ function MyScheduleSection({ facultyProfile }) {
     { key: "pay", label: "Total Pay", align: "right" },
     { key: "plans", label: "Lesson Plans", align: "left" },
   ];
-  const gridCols = "112px 1fr 128px 92px 108px 112px 152px";
+  // Fixed px tracks for every column except the flexible "Blocks" column.
+  // IMPORTANT: header cells AND row cells must carry the padding themselves
+  // (never the grid container) — otherwise the header's content box and the
+  // row's content box end up different widths and every column past the
+  // 1fr track drifts out of alignment.
+  const gridCols = "112px 1fr 128px 92px 108px 112px 160px";
   const colHeaderCell = (align) => ({
     fontFamily: lora, fontSize: 10.5, letterSpacing: "0.1em", color: "#E4D5C1",
-    textTransform: "uppercase", fontWeight: 600, padding: "14px 16px",
+    textTransform: "uppercase", fontWeight: 600, padding: "14px 16px", boxSizing: "border-box",
     display: "flex", alignItems: "center", justifyContent: align === "right" ? "flex-end" : "flex-start",
+    textAlign: align, minWidth: 0,
+  });
+  const rowCell = (align) => ({
+    padding: "16px", boxSizing: "border-box", minWidth: 0,
     textAlign: align,
   });
 
@@ -16591,46 +16659,46 @@ function MyScheduleSection({ facultyProfile }) {
                       key={group.date}
                       onClick={() => setSelectedDay({ date: group.date, sessionsThisDay: group.allSessions, programName: program.name })}
                       style={{
-                        display: "grid", gridTemplateColumns: gridCols, padding: "16px",
+                        display: "grid", gridTemplateColumns: gridCols,
                         background: i % 2 === 0 ? "#FFFFFF" : "#FAF7F2", cursor: "pointer",
                         borderTop: i === 0 ? "none" : "1px solid rgba(16,15,12,0.07)",
                         alignItems: "center",
                       }}
                     >
-                      <div>
+                      <div style={rowCell("left")}>
                         <p style={{ fontFamily: lora, fontSize: 13, color: "#100F0C", margin: 0, fontWeight: 700 }}>{dateLabel}</p>
                         <p style={{ fontFamily: lora, fontSize: 11.5, color: "#8B7355", margin: 0 }}>{weekday}</p>
                       </div>
-                      <div>
+                      <div style={rowCell("left")}>
                         {group.allSessions.map((s) => (
                           <p key={s.id} style={{ fontFamily: lora, fontSize: 13, color: "#100F0C", margin: "0 0 3px" }}>
                             {s.start_time ? s.start_time.slice(0, 5) : "TBC"}{s.end_time ? ` – ${s.end_time.slice(0, 5)}` : ""} · {s.block_label}
                           </p>
                         ))}
                       </div>
-                      <div style={{ textAlign: "right" }}>
+                      <div style={rowCell("right")}>
                         <p style={{ fontFamily: lora, fontSize: 12.5, color: "#6B6459", margin: 0 }}>
                           {group.teachingSummary ? formatMinutes(group.teachingSummary.totalActualMinutes) : "—"}
                         </p>
                       </div>
-                      <div style={{ textAlign: "right" }}>
+                      <div style={rowCell("right")}>
                         <p style={{ fontFamily: lora, fontSize: 12.5, color: "#100F0C", margin: 0, fontWeight: 600 }}>
                           {group.teachingSummary ? `${group.teachingSummary.totalBilledHours} hr` : formatOtherBilled(group.allSessions, rateByType)}
                         </p>
                       </div>
-                      <div style={{ textAlign: "right" }}>
+                      <div style={rowCell("right")}>
                         <p style={{ fontFamily: lora, fontSize: 12.5, color: "#100F0C", margin: 0 }}>
                           {group.teachingSummary
                             ? (group.teachingSummary.rateType === "flat" ? `$${group.teachingSummary.rateAmount} flat` : `$${group.teachingSummary.rateAmount}/hr`)
                             : formatOtherRate(group.allSessions, rateByType)}
                         </p>
                       </div>
-                      <div style={{ textAlign: "right" }}>
+                      <div style={rowCell("right")}>
                         <p style={{ fontFamily: lora, fontSize: 13, color: "#100F0C", margin: 0, fontWeight: 700 }}>
                           {group.teachingSummary ? `$${group.teachingSummary.totalPay}` : formatOtherPay(group.allSessions, rateByType)}
                         </p>
                       </div>
-                      <div style={{ display: "flex", flexDirection: "column", gap: 8, alignItems: "flex-start" }}>
+                      <div style={{ ...rowCell("left"), display: "flex", flexDirection: "column", gap: 8, alignItems: "flex-start" }}>
                         {teachingSessionsThisDay.length === 0 ? (
                           <span style={{ fontFamily: lora, fontSize: 12, color: "#8B7355" }}>—</span>
                         ) : teachingSessionsThisDay.map((s) => (
@@ -16654,14 +16722,6 @@ function MyScheduleSection({ facultyProfile }) {
         );
       })}
 
-      {selectedDay && (
-        <DayDetailModal
-          date={selectedDay.date}
-          sessionsThisDay={selectedDay.sessionsThisDay}
-          programName={selectedDay.programName}
-          onClose={() => setSelectedDay(null)}
-        />
-      )}
     </div>
   );
 }
