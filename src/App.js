@@ -959,7 +959,7 @@ function Footer({ setPage }) {
           {/* Business info */}
           <div style={{ display: "flex", flexDirection: "column", gap: 5 }}>
             <span style={{ fontFamily: eyebrow_font, fontSize: 11, color: "#BCA696", letterSpacing: "0.25em", textTransform: "uppercase", fontWeight: 600, marginBottom: 4 }}>Excalibur Academy LLC</span>
-            <span style={{ fontFamily: serif, fontSize: 18, color: "#BCA696", fontStyle: "italic", letterSpacing: "0.05em" }}>Orange County, California</span>
+            <span style={{ fontFamily: serif, fontSize: 18, color: "#BCA696", fontStyle: "italic", letterSpacing: "0.05em" }}>120 Newport Center Drive, Newport Beach, CA</span>
           </div>
           {/* Applications email */}
           <div style={{ display: "flex", flexDirection: "column", gap: 5, borderLeft: isMobile ? "none" : "1px solid rgba(188,166,150,.15)", paddingLeft: isMobile ? 0 : 48 }}>
@@ -975,7 +975,7 @@ function Footer({ setPage }) {
       </div>
       {/* Copyright */}
       <div style={{ maxWidth: 1200, margin: "0 auto", padding: isMobile ? "20px 24px" : "20px 60px", display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 8 }}>
-        <p style={{ fontFamily: sans, fontSize: 9, color: "#BCA696", letterSpacing: "0.08em", textTransform: "uppercase" }}>© 2026 Excalibur Academy LLC · Orange County, California</p>
+        <p style={{ fontFamily: sans, fontSize: 9, color: "#BCA696", letterSpacing: "0.08em", textTransform: "uppercase" }}>© 2026 Excalibur Academy LLC · Newport Beach, CA</p>
       </div>
     </footer>
   );
@@ -1793,13 +1793,8 @@ function CurriculumPage({ setPage, openInquiry }) {
 
 
       {/* BOOK A CALL */}
-      <div style={{ background: "rgba(16, 15, 12, 1)", padding: isMobile ? "52px 24px" : "72px 80px", borderTop: "1px solid rgba(0,0,0,.08)" }}>
-        <div style={{ maxWidth: 640, margin: "0 auto", textAlign: "center" }}>
-          <p style={{ fontFamily: "'Lato', sans-serif", fontSize: 9, letterSpacing: "0.4em", color: "#A48D6E", fontWeight: 600, textTransform: "uppercase", marginBottom: 16 }}>Private Admissions Consultation</p>
-          <h2 style={{ fontFamily: serif, fontSize: isMobile ? 28 : 40, fontWeight: 600, color: "#A48D6E", lineHeight: 1.05, marginBottom: 16 }}>Schedule a Family Consultation</h2>
-          <p style={{ fontFamily: sans, fontSize: 15, color: "#E4D6C1", fontWeight: 300, lineHeight: 1.8, marginBottom: 32, maxWidth: 560, marginLeft: "auto", marginRight: "auto" }}>Choose a time that works for your family below. A dedicated Program Pathways Coordinator will guide you through program options, admissions steps, curriculum, tuition, and next steps.</p>
-          <a href="https://zcal.co/excaliburacademy/meetingbook" target="_blank" rel="noopener noreferrer" style={{ display: "inline-block", fontFamily: "'Lato', sans-serif", padding: "15px 48px", background: "#DAC8AA", border: "none", color: "#100F0C", fontSize: 11, fontWeight: 600, letterSpacing: "0.15em", textTransform: "uppercase", cursor: "pointer", textDecoration: "none" }}>Book a Call →</a>
-        </div>
+      <div style={{ background: "rgba(16, 15, 12, 1)", padding: isMobile ? "40px 24px" : "56px 80px", borderTop: "1px solid rgba(0,0,0,.08)", textAlign: "center" }}>
+        <a href="https://zcal.co/excaliburacademy/meetingbook" target="_blank" rel="noopener noreferrer" style={{ display: "inline-block", fontFamily: "'Lato', sans-serif", padding: "15px 48px", background: "#DAC8AA", border: "none", color: "#100F0C", fontSize: 11, fontWeight: 600, letterSpacing: "0.15em", textTransform: "uppercase", cursor: "pointer", textDecoration: "none" }}>Book a Call →</a>
       </div>
 
     </div>
@@ -2061,13 +2056,8 @@ function IntensivePage({ setPage, openInquiry }) {
       </div>
 
       {/* BOOK A CALL */}
-      <div style={{ background: "rgba(16, 15, 12, 1)", padding: isMobile ? "52px 24px" : "72px 80px", borderTop: "1px solid rgba(0,0,0,.08)" }}>
-        <div style={{ maxWidth: 640, margin: "0 auto", textAlign: "center" }}>
-          <p style={{ fontFamily: "'Lato', sans-serif", fontSize: 9, letterSpacing: "0.4em", color: "#A48D6E", fontWeight: 600, textTransform: "uppercase", marginBottom: 16 }}>Private Admissions Consultation</p>
-          <h2 style={{ fontFamily: serif, fontSize: isMobile ? 28 : 40, fontWeight: 600, color: "#A48D6E", lineHeight: 1.05, marginBottom: 16 }}>Schedule a Family Consultation</h2>
-          <p style={{ fontFamily: sans, fontSize: 15, color: "#E4D6C1", fontWeight: 300, lineHeight: 1.8, marginBottom: 32, maxWidth: 560, marginLeft: "auto", marginRight: "auto" }}>Choose a time that works for your family below. A dedicated Program Pathways Coordinator will guide you through program options, admissions steps, curriculum, tuition, and next steps.</p>
-          <a href="https://zcal.co/excaliburacademy/meetingbook" target="_blank" rel="noopener noreferrer" style={{ display: "inline-block", fontFamily: "'Lato', sans-serif", padding: "15px 48px", background: "#DAC8AA", border: "none", color: "#100F0C", fontSize: 11, fontWeight: 600, letterSpacing: "0.15em", textTransform: "uppercase", cursor: "pointer", textDecoration: "none" }}>Book a Call →</a>
-        </div>
+      <div style={{ background: "rgba(16, 15, 12, 1)", padding: isMobile ? "40px 24px" : "56px 80px", borderTop: "1px solid rgba(0,0,0,.08)", textAlign: "center" }}>
+        <a href="https://zcal.co/excaliburacademy/meetingbook" target="_blank" rel="noopener noreferrer" style={{ display: "inline-block", fontFamily: "'Lato', sans-serif", padding: "15px 48px", background: "#DAC8AA", border: "none", color: "#100F0C", fontSize: 11, fontWeight: 600, letterSpacing: "0.15em", textTransform: "uppercase", cursor: "pointer", textDecoration: "none" }}>Book a Call →</a>
       </div>
 
     </div>
@@ -3067,13 +3057,8 @@ function ApplyPage({ setPage, openInquiry }) {
       </div>
 
       {/* BOOK A CALL */}
-      <div style={{ background: "rgba(16, 15, 12, 1)", padding: isMobile ? "52px 24px" : "72px 80px", borderTop: "1px solid rgba(0,0,0,.08)" }}>
-        <div style={{ maxWidth: 640, margin: "0 auto", textAlign: "center" }}>
-          <p style={{ fontFamily: "'Lato', sans-serif", fontSize: 9, letterSpacing: "0.4em", color: "#A48D6E", fontWeight: 600, textTransform: "uppercase", marginBottom: 16 }}>Private Admissions Consultation</p>
-          <h2 style={{ fontFamily: serif, fontSize: isMobile ? 28 : 40, fontWeight: 600, color: "#A48D6E", lineHeight: 1.05, marginBottom: 16 }}>Schedule a Family Consultation</h2>
-          <p style={{ fontFamily: sans, fontSize: 15, color: "#E4D6C1", fontWeight: 300, lineHeight: 1.8, marginBottom: 32, maxWidth: 560, marginLeft: "auto", marginRight: "auto" }}>Choose a time that works for your family below. A dedicated Program Pathways Coordinator will guide you through program options, admissions steps, curriculum, tuition, and next steps.</p>
-          <a href="https://zcal.co/excaliburacademy/meetingbook" target="_blank" rel="noopener noreferrer" style={{ display: "inline-block", fontFamily: "'Lato', sans-serif", padding: "15px 48px", background: "#DAC8AA", border: "none", color: "#100F0C", fontSize: 11, fontWeight: 600, letterSpacing: "0.15em", textTransform: "uppercase", cursor: "pointer", textDecoration: "none" }}>Book a Call →</a>
-        </div>
+      <div style={{ background: "rgba(16, 15, 12, 1)", padding: isMobile ? "40px 24px" : "56px 80px", borderTop: "1px solid rgba(0,0,0,.08)", textAlign: "center" }}>
+        <a href="https://zcal.co/excaliburacademy/meetingbook" target="_blank" rel="noopener noreferrer" style={{ display: "inline-block", fontFamily: "'Lato', sans-serif", padding: "15px 48px", background: "#DAC8AA", border: "none", color: "#100F0C", fontSize: 11, fontWeight: 600, letterSpacing: "0.15em", textTransform: "uppercase", cursor: "pointer", textDecoration: "none" }}>Book a Call →</a>
       </div>
 
     </div>
@@ -4354,7 +4339,7 @@ function HomePage({ setPage, openInquiry }) {
               Masterclass Labs
             </h2>
             <p style={{ fontFamily: lora, fontSize: isMobile ? 15 : 18, color: "#E4D5C1", fontWeight: 300, fontStyle: "italic", lineHeight: 1.7, maxWidth: 620, margin: "24px auto 0" }}>
-              Nine sessions. July 21 – August 20, 2026. Orange County, CA.
+              Full Day Masterclass Labs. Exclusive Introduction to the Academy. $350 Early Bird Price. Limited spots. July 21 – August 20, 2026. South Orange County, CA.
             </p>
             <button onClick={() => setPage("summer-detail")} style={{ fontFamily: "'Lato', sans-serif", background: "#D9C7A9", color: "#100F0C", padding: "16px 44px", fontSize: 11, fontWeight: 700, letterSpacing: "0.22em", textTransform: "uppercase", border: "none", cursor: "pointer", marginTop: 40 }}>Apply to the Summer Series →</button>
           </Fade>
@@ -4363,13 +4348,8 @@ function HomePage({ setPage, openInquiry }) {
 
 
       {/* BOOK A CALL */}
-      <div style={{ background: "rgba(16, 15, 12, 1)", padding: isMobile ? "52px 24px" : "72px 80px", borderTop: "1px solid rgba(0,0,0,.08)" }}>
-        <div style={{ maxWidth: 640, margin: "0 auto", textAlign: "center" }}>
-          <p style={{ fontFamily: "'Lato', sans-serif", fontSize: 9, letterSpacing: "0.4em", color: "#A48D6E", fontWeight: 600, textTransform: "uppercase", marginBottom: 16 }}>Private Admissions Consultation</p>
-          <h2 style={{ fontFamily: serif, fontSize: isMobile ? 28 : 40, fontWeight: 600, color: "#A48D6E", lineHeight: 1.05, marginBottom: 16 }}>Schedule a Family Consultation</h2>
-          <p style={{ fontFamily: sans, fontSize: 15, color: "#E4D6C1", fontWeight: 300, lineHeight: 1.8, marginBottom: 32, maxWidth: 560, marginLeft: "auto", marginRight: "auto" }}>Choose a time that works for your family below. A dedicated Program Pathways Coordinator will guide you through program options, admissions steps, curriculum, tuition, and next steps.</p>
-          <a href="https://zcal.co/excaliburacademy/meetingbook" target="_blank" rel="noopener noreferrer" style={{ display: "inline-block", fontFamily: "'Lato', sans-serif", padding: "15px 48px", background: "#DAC8AA", border: "none", color: "#100F0C", fontSize: 11, fontWeight: 600, letterSpacing: "0.15em", textTransform: "uppercase", cursor: "pointer", textDecoration: "none" }}>Book a Call →</a>
-        </div>
+      <div style={{ background: "rgba(16, 15, 12, 1)", padding: isMobile ? "40px 24px" : "56px 80px", borderTop: "1px solid rgba(0,0,0,.08)", textAlign: "center" }}>
+        <a href="https://zcal.co/excaliburacademy/meetingbook" target="_blank" rel="noopener noreferrer" style={{ display: "inline-block", fontFamily: "'Lato', sans-serif", padding: "15px 48px", background: "#DAC8AA", border: "none", color: "#100F0C", fontSize: 11, fontWeight: 600, letterSpacing: "0.15em", textTransform: "uppercase", cursor: "pointer", textDecoration: "none" }}>Book a Call →</a>
       </div>
 
     </div>
@@ -7743,6 +7723,19 @@ function PortalPage({ setPage }) {
     }
   };
 
+  // ── Notify admissions@excaliburacademy.org whenever a student/parent sends a portal message ──
+  const notifyAdmissionsOfMessage = async (studentId, body, senderRole) => {
+    try {
+      await fetch(`${SUPABASE_URL}/functions/v1/notify-message`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", "Authorization": `Bearer ${SUPABASE_ANON_KEY}` },
+        body: JSON.stringify({ studentId, body, senderRole }),
+      });
+    } catch (err) {
+      console.error("Message notification failed to send:", err);
+    }
+  };
+
   // ── START A NEW APPLICATION — deletes the current one and resets the wizard ──
   const handleStartNewApplication = async () => {
     if (!sb || !student) return;
@@ -7759,26 +7752,30 @@ function PortalPage({ setPage }) {
   // ── REQUEST EDIT ACCESS ON A SUBMITTED APPLICATION ──
   const handleRequestEditAccess = async () => {
     if (!sb || !student) return;
+    const body = "Requesting permission to edit my submitted application. Please reopen it for editing or let me know what needs to change.";
     await sb.from("messages").insert({
       student_id: student.id,
       sender_role: role,
       sender_id: session.user.id,
-      body: "Requesting permission to edit my submitted application. Please reopen it for editing or let me know what needs to change.",
+      body,
     });
     setEditRequested(true);
+    notifyAdmissionsOfMessage(student.id, body, role);
   };
 
   // ── REQUEST TO RESCHEDULE A PAID SUMMER SESSION ──
   const handleRequestReschedule = async () => {
     if (!sb || !student || !rescheduleTarget) return;
     const currentSessions = (application?.program_responses?.summer?.selectedSessions || []).join(", ") || "—";
+    const body = `Reschedule request: I am currently enrolled in "${currentSessions}" and would like to move to "${rescheduleTarget}" instead. Please confirm availability and any next steps.`;
     await sb.from("messages").insert({
       student_id: student.id,
       sender_role: role,
       sender_id: session.user.id,
-      body: `Reschedule request: I am currently enrolled in "${currentSessions}" and would like to move to "${rescheduleTarget}" instead. Please confirm availability and any next steps.`,
+      body,
     });
     setRescheduleRequested(true);
+    notifyAdmissionsOfMessage(student.id, body, role);
   };
 
   // ── AUTO-PROMOTE SUBMITTED APPLICATIONS TO "UNDER REVIEW" 30 MINUTES AFTER SUBMISSION ──
@@ -7828,6 +7825,7 @@ function PortalPage({ setPage }) {
     if (!error) {
       setMessages(m => [...m, data]);
       setNewMessage("");
+      notifyAdmissionsOfMessage(student.id, data.body, role);
     }
   };
 
@@ -9539,6 +9537,7 @@ function ContactPage({ setPage, openInquiry }) {
         <div style={{ maxWidth: 1100, margin: "0 auto", display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr" }}>
           {[
             { label: "Family Support", email: "support@excaliburacademy.org", desc: "Family support, scheduling, program questions, and general correspondence." },
+            { label: "Admissions", email: "admissions@excaliburacademy.org", desc: "Applications, enrollment, program placement, and admissions decisions." },
           ].map(({ label, email, desc }) => (
             <div key={label} style={{ padding: isMobile ? "36px 28px" : "52px 80px", borderRight: !isMobile ? `1px solid rgba(164,141,110,.1)` : "none", borderBottom: isMobile ? `1px solid rgba(164,141,110,.1)` : "none" }}>
               <p style={{ fontFamily: lora, fontSize: 9, letterSpacing: "0.35em", color: gold, fontWeight: 700, textTransform: "uppercase", marginBottom: 12 }}>{label}</p>
@@ -9554,7 +9553,7 @@ function ContactPage({ setPage, openInquiry }) {
         <div style={{ maxWidth: 640, margin: "0 auto", textAlign: "center" }}>
           <p style={{ fontFamily: "'Lato', sans-serif", fontSize: 9, letterSpacing: "0.4em", color: "#A48D6E", fontWeight: 600, textTransform: "uppercase", marginBottom: 16 }}>Private Admissions Consultation</p>
           <h2 style={{ fontFamily: serif, fontSize: isMobile ? 28 : 40, fontWeight: 600, color: "#A48D6E", lineHeight: 1.05, marginBottom: 16 }}>Schedule a Family Consultation</h2>
-          <p style={{ fontFamily: sans, fontSize: 15, color: "#E4D6C1", fontWeight: 300, lineHeight: 1.8, marginBottom: 32, maxWidth: 560, marginLeft: "auto", marginRight: "auto" }}>Choose a time that works for your family below. A dedicated Program Pathways Coordinator will guide you through program options, admissions steps, curriculum, tuition, and next steps.</p>
+          <p style={{ fontFamily: sans, fontSize: 15, color: "#E4D6C1", fontWeight: 300, lineHeight: 1.8, marginBottom: 32, maxWidth: 560, marginLeft: "auto", marginRight: "auto" }}>Choose a time that works for your family below. A dedicated Program Coordinator will guide you through program options, admissions steps, curriculum, tuition, and next steps.</p>
           <a href="https://zcal.co/excaliburacademy/meetingbook" target="_blank" rel="noopener noreferrer" style={{ display: "inline-block", fontFamily: "'Lato', sans-serif", padding: "15px 48px", background: "#DAC8AA", border: "none", color: "#100F0C", fontSize: 11, fontWeight: 600, letterSpacing: "0.15em", textTransform: "uppercase", cursor: "pointer", textDecoration: "none" }}>Book a Call →</a>
         </div>
       </div>
@@ -12047,13 +12046,8 @@ function FlagshipDetailPage2({ setPage, openInquiry }) {
         </div>
       </div>
       {/* BOOK A CALL */}
-      <div style={{ background: "rgba(16, 15, 12, 1)", padding: isMobile ? "52px 24px" : "72px 80px", borderTop: "1px solid rgba(0,0,0,.08)" }}>
-        <div style={{ maxWidth: 640, margin: "0 auto", textAlign: "center" }}>
-          <p style={{ fontFamily: "'Lato', sans-serif", fontSize: 9, letterSpacing: "0.4em", color: "#A48D6E", fontWeight: 600, textTransform: "uppercase", marginBottom: 16 }}>Private Admissions Consultation</p>
-          <h2 style={{ fontFamily: serif, fontSize: isMobile ? 28 : 40, fontWeight: 600, color: "#A48D6E", lineHeight: 1.05, marginBottom: 16 }}>Schedule a Family Consultation</h2>
-          <p style={{ fontFamily: sans, fontSize: 15, color: "#E4D6C1", fontWeight: 300, lineHeight: 1.8, marginBottom: 32, maxWidth: 560, marginLeft: "auto", marginRight: "auto" }}>Choose a time that works for your family below. A dedicated Program Pathways Coordinator will guide you through program options, admissions steps, curriculum, tuition, and next steps.</p>
-          <a href="https://zcal.co/excaliburacademy/meetingbook" target="_blank" rel="noopener noreferrer" style={{ display: "inline-block", fontFamily: "'Lato', sans-serif", padding: "15px 48px", background: "#DAC8AA", border: "none", color: "#100F0C", fontSize: 11, fontWeight: 600, letterSpacing: "0.15em", textTransform: "uppercase", cursor: "pointer", textDecoration: "none" }}>Book a Call →</a>
-        </div>
+      <div style={{ background: "rgba(16, 15, 12, 1)", padding: isMobile ? "40px 24px" : "56px 80px", borderTop: "1px solid rgba(0,0,0,.08)", textAlign: "center" }}>
+        <a href="https://zcal.co/excaliburacademy/meetingbook" target="_blank" rel="noopener noreferrer" style={{ display: "inline-block", fontFamily: "'Lato', sans-serif", padding: "15px 48px", background: "#DAC8AA", border: "none", color: "#100F0C", fontSize: 11, fontWeight: 600, letterSpacing: "0.15em", textTransform: "uppercase", cursor: "pointer", textDecoration: "none" }}>Book a Call →</a>
       </div>
       </MobileAccordionSection>
 
