@@ -3383,13 +3383,13 @@ function HomePage({ setPage, openInquiry }) {
                     <p style={{ fontFamily: lora, fontSize: 11, letterSpacing: "0.3em", color:"rgba(16,15,12,1)", fontWeight: 600, textTransform: "uppercase", marginBottom: 5 }}>Date One</p>
                     <p style={{ fontFamily: "'Cinzel', serif", fontSize: 18, fontWeight: 300, color:"rgba(16,15,12,1)", marginBottom: 3 , textTransform: "uppercase" }}>July 28, 2026</p>
                     <p style={{ fontFamily: sans, fontSize: 11, color:"rgba(16,15,12,1)", letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 8 }}>From $350</p>
-                    <p style={{ fontFamily: lora, fontSize: 13, color:"rgba(16,15,12,1)", fontWeight: 300, lineHeight: 1.7, textAlign: "justify" }}>10:00 AM – 6:00 PM · same day, same curriculum as August 11.</p>
+                    <p style={{ fontFamily: lora, fontSize: 13, color:"rgba(16,15,12,1)", fontWeight: 300, lineHeight: 1.7, textAlign: "justify" }}>10:00 AM – 5:00 PM, plus the Family Soirée from 5:00 – 6:00 PM · same day, same curriculum as August 11.</p>
                   </div>
                   <div style={{ background: "#e4d7c2", border: "1.5px solid rgba(216,183,140,.3)", padding: "16px 18px" }}>
                     <p style={{ fontFamily: lora, fontSize: 11, letterSpacing: "0.3em", color: "rgba(16,15,12,1)", fontWeight: 600, textTransform: "uppercase", marginBottom: 5 }}>Date Two</p>
                     <p style={{ fontFamily: "'Cinzel', serif", fontSize: 18, fontWeight: 300, color: "rgba(16,15,12,1)", marginBottom: 3 , textTransform: "uppercase" }}>August 11, 2026</p>
                     <p style={{ fontFamily: sans, fontSize: 11, color: "rgba(16,15,12,1)", letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 8 }}>From $350</p>
-                    <p style={{ fontFamily: lora, fontSize: 13, color: "rgba(16,15,12,1)", fontWeight: 300, lineHeight: 1.7, textAlign: "justify" }}>10:00 AM – 6:00 PM · same day, same curriculum as July 28.</p>
+                    <p style={{ fontFamily: lora, fontSize: 13, color: "rgba(16,15,12,1)", fontWeight: 300, lineHeight: 1.7, textAlign: "justify" }}>10:00 AM – 5:00 PM, plus the Family Soirée from 5:00 – 6:00 PM · same day, same curriculum as July 28.</p>
                   </div>
                 </div>
 
@@ -3397,7 +3397,7 @@ function HomePage({ setPage, openInquiry }) {
                 <div style={{ borderTop: "1px solid rgba(216,183,140,.1)", paddingTop: 20 }}>
                   <p style={{ fontFamily: "'Cinzel', serif", fontSize: 18, letterSpacing: "0.1em", color: "#A48D6E", fontWeight: 400, textTransform: "uppercase", marginBottom: 14 }}>Included in the Day</p>
                   <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 0 }}>
-                    {["A full day of faculty-led instruction across speaking, finance, and AI","A team-based Venture Challenge — community-impact or market-gap track","A rehearsed, live 60-second founder pitch before a judging panel","Invited real founders and investors on the judging panel","Catered lunch and refreshments throughout the day","The Family Soirée — a closing reception for parents","A complete Academy Information Session on Foundation & Venture enrollment","Priority consideration for Excalibur's Foundation & Venture Semesters"].map((item, i) => (
+                    {["A full day of faculty-led instruction across speaking, finance, and AI","A team-based Venture Challenge — community-impact or market-gap track","A rehearsed, live 60-second founder pitch before a judging panel","Invited real founders and investors on the judging panel","Catered lunch and refreshments throughout the day","The Family Soirée (5:00 – 6:00 PM) — a closing reception for parents","A complete Academy Information Session on Foundation & Venture enrollment","Priority consideration for Excalibur's Foundation & Venture Semesters"].map((item, i) => (
                       <div key={i} style={{ display: "flex", gap: 8, padding: "6px 0", alignItems: "flex-start" }}>
                         <span style={{ color: "#A48D6E", fontSize: 10, marginTop: 3, flexShrink: 0 }}>—</span>
                         <span style={{ fontFamily: lora, fontSize: 14, color: "#E4D5C1", fontWeight: 400, lineHeight: 1.55 }}>{item}</span>
@@ -3414,9 +3414,10 @@ function HomePage({ setPage, openInquiry }) {
                 <div style={{ padding: "12px 22px", borderBottom: `1px solid rgba(216,183,140,.1)`, borderTop: `1px solid rgba(216,183,140,.1)` }}>
                   <p style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: 26, color: "#E4D5C1", fontWeight: 400, margin: 0 , fontStyle: "italic" }}>Program Details</p>
                 </div>
-                <div style={{ padding: "0 22px", flex: 1 }}>
+                <div style={{ padding: "0 22px" }}>
                   {[
-                    ["Hours", "10:00 AM – 6:00 PM"],
+                    ["Hours", "10:00 AM – 5:00 PM"],
+                    ["Family Soirée", "5:00 – 6:00 PM · a closing reception for parents"],
                     ["Dates", "July 28 & August 11, 2026"],
                     ["Team Size", "3–4 students per founding team"],
                     ["Culminates In", "A live 60-second pitch before a judging panel of faculty, founders & investors"],
@@ -3429,14 +3430,16 @@ function HomePage({ setPage, openInquiry }) {
                     </div>
                   ))}
                 </div>
-                {/* Photo */}
-                <div style={{ overflow: "hidden", height: 280, flexShrink: 0 }}>
-                  <img src="https://i.imgur.com/WmrwNcO.jpeg" alt="The Excalibur Founder's Day" style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center top" }} />
+                {/* Photo — fills whatever vertical space the details list and other
+                    fixed-height panels don't use, instead of sitting at a fixed height,
+                    so the image runs the full height of the right-hand column. */}
+                <div style={{ overflow: "hidden", flex: 1, minHeight: 280 }}>
+                  <img src="https://i.imgur.com/WmrwNcO.jpeg" alt="The Excalibur Founder's Day" style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center top", display: "block" }} />
                 </div>
                 {/* Tuition */}
                 <div style={{ padding: "16px 22px", borderTop: `1px solid rgba(216,183,140,.1)` }}>
                   <p style={{ fontFamily: "'Cinzel', serif", fontSize: 41, fontWeight: 300, color: "#E4D5C1", lineHeight: 1, marginBottom: 6, textTransform: "uppercase" }}>$350<span style={{ fontSize: 14 }}> early bird</span></p>
-                  <p style={{ fontFamily: "Lora, serif", fontSize: 12, color: "#A48D6E", fontWeight: 400, letterSpacing: "0.08em" }}>$450 regular · one flat price per day</p>
+                  <p style={{ fontFamily: "Lora, serif", fontSize: 12, color: "#A48D6E", fontWeight: 400, letterSpacing: "0.08em" }}>$450 regular</p>
                 </div>
                 {/* CTA buttons */}
                 <div style={{ padding: "14px 22px", borderTop: `1px solid rgba(216,183,140,.1)`, display: "flex", gap: 8, flexWrap: "wrap" }}>
@@ -15897,6 +15900,7 @@ function FacultyDashboardHome({ facultyProfile, facultyRole }) {
         date={calendarModalDate}
         sessionsThisDay={sessionsByDate[calendarModalDate] || []}
         programName={modalProgramName}
+        rateByType={rateByType}
         onBack={() => setCalendarModalDate(null)}
       />
     );
@@ -16123,7 +16127,7 @@ function FacultyPortalShell({ facultyProfile, facultyRole, onSignOut }) {
         {activeSection === "dashboard" ? (
           <FacultyDashboardHome facultyProfile={facultyProfile} facultyRole={facultyRole} />
         ) : activeSection === "schedule" ? (
-          <MyScheduleSection facultyProfile={facultyProfile} />
+          <MyScheduleSection facultyProfile={facultyProfile} facultyRole={facultyRole} />
         ) : activeSection === "lessons" ? (
           <LessonPlansSection facultyProfile={facultyProfile} facultyRole={facultyRole} />
         ) : (
@@ -16274,7 +16278,7 @@ const FOUNDERS_DAY_OVERVIEW = {
 // Full-page day view — replaces the old fixed-overlay popup. Reached the
 // same way (clicking a day in a calendar or schedule row) but renders as a
 // regular in-content view with a "← Back" link, not a modal window.
-function DayOverviewView({ date, sessionsThisDay, programName, onBack }) {
+function DayOverviewView({ date, sessionsThisDay, programName, rateByType, onBack }) {
   const lora = "'Lora', Georgia, serif";
   const cg = "'Cormorant Garamond', Georgia, serif";
   const d = new Date(date + "T00:00:00");
@@ -16294,6 +16298,19 @@ function DayOverviewView({ date, sessionsThisDay, programName, onBack }) {
       if (sStart == null) return false;
       return sStart < bEnd && (sEnd || sStart + 1) > bStart;
     });
+  };
+
+  // Same day-level math used in My Schedule — total teaching time, billed
+  // hours, rate, and pay for everything faculty is teaching this day.
+  const daySummary = rateByType ? groupSessionsByDay(sessionsThisDay, rateByType)[0] : null;
+  const teachingSummary = daySummary?.teachingSummary || null;
+
+  const blockDurationMinutes = (s) => {
+    if (s.duration_minutes != null) return s.duration_minutes;
+    const start = timeToMinutes(s.start_time);
+    const end = timeToMinutes(s.end_time);
+    if (start == null || end == null) return null;
+    return end - start;
   };
 
   const sectionLabel = { fontFamily: lora, fontSize: 11, letterSpacing: "0.12em", color: "#8B7355", textTransform: "uppercase", fontWeight: 700, margin: "28px 0 12px" };
@@ -16337,6 +16354,10 @@ function DayOverviewView({ date, sessionsThisDay, programName, onBack }) {
               <p style={{ fontFamily: lora, fontSize: 13, color: "#100F0C", margin: 0 }}>{s.start_time ? s.start_time.slice(0, 5) : "TBC"}</p>
             </div>
             <div>
+              <p style={{ fontFamily: lora, fontSize: 10.5, color: "#8B7355", textTransform: "uppercase", letterSpacing: "0.06em", margin: "0 0 2px" }}>Duration</p>
+              <p style={{ fontFamily: lora, fontSize: 13, color: "#100F0C", margin: 0 }}>{formatMinutes(blockDurationMinutes(s))}</p>
+            </div>
+            <div>
               <p style={{ fontFamily: lora, fontSize: 10.5, color: "#8B7355", textTransform: "uppercase", letterSpacing: "0.06em", margin: "0 0 2px" }}>TA Assigned</p>
               <p style={{ fontFamily: lora, fontSize: 13, color: s.ta_assigned_name ? "#100F0C" : "#B4433A", margin: 0, fontStyle: s.ta_assigned_name ? "normal" : "italic" }}>
                 {s.ta_assigned_name || "Not yet assigned"}
@@ -16345,6 +16366,30 @@ function DayOverviewView({ date, sessionsThisDay, programName, onBack }) {
           </div>
         </div>
       ))}
+
+      {/* ── Today's Totals — same math as the My Schedule table, on this page ── */}
+      {teachingSummary && (
+        <div style={{ background: "#100F0C", borderRadius: 4, padding: "18px 20px", marginBottom: 24, display: "flex", gap: 28, flexWrap: "wrap" }}>
+          <div>
+            <p style={{ fontFamily: lora, fontSize: 10, color: "#A48D6E", textTransform: "uppercase", letterSpacing: "0.1em", margin: "0 0 3px" }}>Teaching Time</p>
+            <p style={{ fontFamily: lora, fontSize: 16, color: "#E4D5C1", fontWeight: 700, margin: 0 }}>{formatMinutes(teachingSummary.totalActualMinutes)}</p>
+          </div>
+          <div>
+            <p style={{ fontFamily: lora, fontSize: 10, color: "#A48D6E", textTransform: "uppercase", letterSpacing: "0.1em", margin: "0 0 3px" }}>Billed</p>
+            <p style={{ fontFamily: lora, fontSize: 16, color: "#E4D5C1", fontWeight: 700, margin: 0 }}>{teachingSummary.totalBilledHours} hr</p>
+          </div>
+          <div>
+            <p style={{ fontFamily: lora, fontSize: 10, color: "#A48D6E", textTransform: "uppercase", letterSpacing: "0.1em", margin: "0 0 3px" }}>Rate</p>
+            <p style={{ fontFamily: lora, fontSize: 16, color: "#E4D5C1", fontWeight: 700, margin: 0 }}>
+              {teachingSummary.rateType === "flat" ? `$${teachingSummary.rateAmount} flat` : `$${teachingSummary.rateAmount}/hr`}
+            </p>
+          </div>
+          <div>
+            <p style={{ fontFamily: lora, fontSize: 10, color: "#A48D6E", textTransform: "uppercase", letterSpacing: "0.1em", margin: "0 0 3px" }}>Total Earnings</p>
+            <p style={{ fontFamily: lora, fontSize: 16, color: "#E4D5C1", fontWeight: 700, margin: 0 }}>${teachingSummary.totalPay}</p>
+          </div>
+        </div>
+      )}
 
       {/* ── Summer Founder's Day — Day Overview ── */}
       {isFoundersDay && (
@@ -16472,7 +16517,7 @@ function FolderIcon({ status, size = 20, onClick }) {
 
 function FolderStatusLabel({ status }) {
   const lora = "'Lora', Georgia, serif";
-  const text = status === "approved" ? "Confirmed" : status === "pending_review" ? "Pending Review" : "Not Uploaded Yet";
+  const text = status === "approved" ? "Confirmed" : status === "pending_review" ? "In Review" : "Not Uploaded Yet";
   const color = status === "approved" ? "#3D8B5F" : status === "pending_review" ? "#9C7F1A" : "#B4433A";
   return <span style={{ fontFamily: lora, fontSize: 12, color, fontWeight: 600 }}>{text}</span>;
 }
@@ -16561,12 +16606,13 @@ function useFacultyScheduleData(sb, facultyId) {
 // MY SCHEDULE
 // ═══════════════════════════════════════════════════════════════════════
 
-function MyScheduleSection({ facultyProfile }) {
+function MyScheduleSection({ facultyProfile, facultyRole }) {
   const sb = getSupabase();
   const lora = "'Lora', Georgia, serif";
   const cg = "'Cormorant Garamond', Georgia, serif";
   const { sessions, rateRules, programs, loading } = useFacultyScheduleData(sb, facultyProfile?.id);
   const [selectedDay, setSelectedDay] = useState(null);
+  const [selectedMaterialsId, setSelectedMaterialsId] = useState(null);
 
   const rateByType = {};
   rateRules.forEach((r) => { rateByType[r.activity_type] = r; });
@@ -16575,12 +16621,30 @@ function MyScheduleSection({ facultyProfile }) {
     return <p style={{ fontFamily: cg, fontSize: 16, color: "#6B6459", fontStyle: "italic" }}>Loading your schedule…</p>;
   }
 
+  if (selectedMaterialsId) {
+    const activeSession = sessions.find((s) => s.id === selectedMaterialsId);
+    if (activeSession) {
+      const prog = programs.find((p) => p.id === activeSession.program_id);
+      return (
+        <SessionMaterialsView
+          session={activeSession}
+          programName={prog?.name}
+          facultyProfile={facultyProfile}
+          facultyRole={facultyRole}
+          onBack={() => setSelectedMaterialsId(null)}
+          onUpdated={() => {}}
+        />
+      );
+    }
+  }
+
   if (selectedDay) {
     return (
       <DayOverviewView
         date={selectedDay.date}
         sessionsThisDay={selectedDay.sessionsThisDay}
         programName={selectedDay.programName}
+        rateByType={rateByType}
         onBack={() => setSelectedDay(null)}
       />
     );
@@ -16702,13 +16766,15 @@ function MyScheduleSection({ facultyProfile }) {
                         {teachingSessionsThisDay.length === 0 ? (
                           <span style={{ fontFamily: lora, fontSize: 12, color: "#8B7355" }}>—</span>
                         ) : teachingSessionsThisDay.map((s) => (
-                          <div key={s.id} style={{ display: "flex", alignItems: "center", gap: 6 }} onClick={(e) => e.stopPropagation()}>
-                            <FolderIcon status={s.lesson_plan_status} size={16} onClick={(e) => handleFileClick(s.lesson_plan_file_url, e)} />
-                            <span
-                              onClick={(e) => handleFileClick(s.lesson_plan_file_url, e)}
-                              style={{ fontFamily: lora, fontSize: 12, color: "#8B7355", textDecoration: "underline", cursor: "pointer" }}
-                            >
-                              View Plan
+                          <div
+                            key={s.id}
+                            onClick={(e) => { e.stopPropagation(); setSelectedMaterialsId(s.id); }}
+                            style={{ display: "flex", alignItems: "center", gap: 6, cursor: "pointer" }}
+                          >
+                            <span title="Lesson Plan Guide"><FolderIcon status={s.lesson_plan_status} size={16} /></span>
+                            <span title="Presentation (PPTX)"><FolderIcon status={s.presentation_status} size={16} /></span>
+                            <span style={{ fontFamily: lora, fontSize: 12, color: "#8B7355", textDecoration: "underline" }}>
+                              Open Materials →
                             </span>
                           </div>
                         ))}
@@ -16730,72 +16796,252 @@ function MyScheduleSection({ facultyProfile }) {
 // LESSON PLANS & MATERIALS — one per individual session, grouped by program
 // ═══════════════════════════════════════════════════════════════════════
 
-function SessionLessonPlanUploadRow({ session, facultyProfile, onUpdated }) {
+// Each teaching session carries TWO independent materials — the Lesson Plan
+// Guide and the Presentation (PPTX) — each tracked with its own file, status
+// (missing → pending_review "In Review" → approved "Confirmed"), uploader,
+// and note/revision history. Both faculty and admins can upload either one;
+// only an admin can confirm. See portal-schema-session-materials.sql.
+const MATERIAL_TYPES = [
+  { key: "lesson_plan", label: "Lesson Plan Guide" },
+  { key: "presentation", label: "Presentation (PPTX)" },
+];
+
+function materialField(session, materialType, field) {
+  return session ? session[`${materialType}_${field}`] : undefined;
+}
+
+function MaterialPanel({ session, materialType, label, facultyProfile, facultyRole, onUpdated }) {
   const sb = getSupabase();
   const lora = "'Lora', Georgia, serif";
   const [uploading, setUploading] = useState(false);
+  const [confirming, setConfirming] = useState(false);
+  const [addingNote, setAddingNote] = useState(false);
+  const [note, setNote] = useState("");
+  const [showHistory, setShowHistory] = useState(false);
+  const [revisions, setRevisions] = useState([]);
   const fileInputRef = React.useRef(null);
+
+  const status = materialField(session, materialType, "status") || "missing";
+  const fileUrl = materialField(session, materialType, "file_url");
+  const fileName = materialField(session, materialType, "file_name");
+
+  const loadRevisions = React.useCallback(async () => {
+    if (!sb) return;
+    const { data } = await sb.from("lesson_plan_revisions").select("*")
+      .eq("session_id", session.id).eq("material_type", materialType)
+      .order("created_at", { ascending: false });
+    setRevisions(data || []);
+  }, [sb, session.id, materialType]);
+
+  useEffect(() => { if (showHistory) loadRevisions(); }, [showHistory, loadRevisions]);
 
   const handleFileSelected = async (e) => {
     const file = e.target.files?.[0];
     if (!file || !sb) return;
     setUploading(true);
     try {
-      const path = `${session.id}/${Date.now()}_${file.name}`;
+      const path = `${session.id}/${materialType}/${Date.now()}_${file.name}`;
       const { error: uploadError } = await sb.storage.from("lesson-plans").upload(path, file, { upsert: false });
       if (uploadError) throw uploadError;
       const { data: urlData } = sb.storage.from("lesson-plans").getPublicUrl(path);
+      const uploaderType = facultyRole === "admin" ? "admin" : "faculty";
 
       await sb.from("faculty_sessions").update({
-        lesson_plan_file_url: urlData.publicUrl,
-        lesson_plan_file_name: file.name,
-        lesson_plan_uploaded_by_type: "faculty",
-        lesson_plan_uploaded_by_id: facultyProfile.id,
-        lesson_plan_uploaded_at: new Date().toISOString(),
-        lesson_plan_status: "pending_review",
+        [`${materialType}_file_url`]: urlData.publicUrl,
+        [`${materialType}_file_name`]: file.name,
+        [`${materialType}_uploaded_by_type`]: uploaderType,
+        [`${materialType}_uploaded_by_id`]: facultyProfile.id,
+        [`${materialType}_uploaded_at`]: new Date().toISOString(),
+        [`${materialType}_status`]: "pending_review",
       }).eq("id", session.id);
 
       await sb.from("lesson_plan_revisions").insert({
         session_id: session.id,
+        material_type: materialType,
         file_url: urlData.publicUrl,
         file_name: file.name,
-        uploaded_by_type: "faculty",
+        uploaded_by_type: uploaderType,
         uploaded_by_id: facultyProfile.id,
         action: "uploaded",
-        note: session.lesson_plan_status === "missing" ? "Initial lesson plan uploaded." : "Modified version submitted for review.",
+        note: note.trim() || (status === "missing" ? "Initial version uploaded." : "New version submitted for review."),
       });
 
+      setNote("");
       onUpdated();
+      if (showHistory) loadRevisions();
     } catch (err) {
-      console.error("Lesson plan upload error:", err);
-      alert("Something went wrong uploading that file. Please try again.");
+      console.error(`${materialType} upload error:`, err);
+      const detail = err?.message || err?.error_description || err?.statusText || "Unknown error — check the browser console for details.";
+      alert(`Upload failed: ${detail}`);
     } finally {
       setUploading(false);
     }
   };
 
+  const handleAddNote = async () => {
+    if (!sb || !note.trim()) return;
+    setAddingNote(true);
+    try {
+      await sb.from("lesson_plan_revisions").insert({
+        session_id: session.id,
+        material_type: materialType,
+        uploaded_by_type: facultyRole === "admin" ? "admin" : "faculty",
+        uploaded_by_id: facultyProfile.id,
+        action: "note",
+        note: note.trim(),
+      });
+      setNote("");
+      setShowHistory(true);
+      loadRevisions();
+    } catch (err) {
+      console.error("Note error:", err);
+      alert(`Could not save note: ${err?.message || "Unknown error"}`);
+    } finally {
+      setAddingNote(false);
+    }
+  };
+
+  const handleConfirm = async () => {
+    if (!sb) return;
+    setConfirming(true);
+    try {
+      await sb.from("faculty_sessions").update({
+        [`${materialType}_status`]: "approved",
+        [`${materialType}_confirmed_by`]: facultyProfile.id,
+        [`${materialType}_confirmed_at`]: new Date().toISOString(),
+      }).eq("id", session.id);
+      await sb.from("lesson_plan_revisions").insert({
+        session_id: session.id,
+        material_type: materialType,
+        file_url: fileUrl,
+        file_name: fileName,
+        uploaded_by_type: "admin",
+        uploaded_by_id: facultyProfile.id,
+        action: "confirmed",
+        note: "Confirmed.",
+      });
+      onUpdated();
+      if (showHistory) loadRevisions();
+    } catch (err) {
+      console.error("Confirm error:", err);
+      alert(`Could not confirm: ${err?.message || "Unknown error"}`);
+    } finally {
+      setConfirming(false);
+    }
+  };
+
   return (
-    <div style={{ display: "flex", alignItems: "center", gap: 10, flexWrap: "wrap" }}>
-      {session.lesson_plan_file_url && (
-        <a
-          href={session.lesson_plan_file_url} target="_blank" rel="noreferrer"
-          style={{ fontFamily: lora, fontSize: 12.5, color: "#8B7355", textDecoration: "underline" }}
-        >
-          Download current file
-        </a>
+    <div style={{ border: "1px solid rgba(16,15,12,0.1)", borderRadius: 6, padding: 20, background: "#FFFFFF" }}>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", flexWrap: "wrap", gap: 10, marginBottom: 14 }}>
+        <div>
+          <p style={{ fontFamily: lora, fontSize: 15, color: "#100F0C", fontWeight: 700, margin: "0 0 6px" }}>{label}</p>
+          <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
+            <FolderIcon status={status} size={18} />
+            <FolderStatusLabel status={status} />
+          </div>
+        </div>
+        {facultyRole === "admin" && status === "pending_review" && (
+          <button
+            onClick={handleConfirm} disabled={confirming}
+            style={{ padding: "7px 16px", background: "#3D8B5F", border: "none", borderRadius: 3, color: "#FFFFFF", fontFamily: lora, fontSize: 12.5, fontWeight: 600, cursor: confirming ? "default" : "pointer", opacity: confirming ? 0.6 : 1 }}
+          >
+            {confirming ? "Confirming…" : "Confirm"}
+          </button>
+        )}
+      </div>
+
+      {fileName && (
+        <p style={{ fontFamily: lora, fontSize: 12.5, color: "#6B6459", margin: "0 0 14px" }}>
+          Current file: <a href={fileUrl} target="_blank" rel="noreferrer" style={{ color: "#8B7355", textDecoration: "underline" }}>{fileName}</a>
+        </p>
       )}
-      <button
-        onClick={() => fileInputRef.current?.click()}
-        disabled={uploading}
-        style={{
-          padding: "6px 14px", background: "transparent", border: "1px solid rgba(16,15,12,0.25)",
-          borderRadius: 3, color: "#100F0C", fontFamily: lora, fontSize: 12, cursor: uploading ? "default" : "pointer",
-          opacity: uploading ? 0.6 : 1,
-        }}
+
+      <div style={{ display: "flex", alignItems: "center", gap: 10, flexWrap: "wrap", marginBottom: 14 }}>
+        <button
+          onClick={() => fileInputRef.current?.click()}
+          disabled={uploading}
+          style={{ padding: "8px 16px", background: "transparent", border: "1px solid rgba(16,15,12,0.25)", borderRadius: 3, color: "#100F0C", fontFamily: lora, fontSize: 12.5, cursor: uploading ? "default" : "pointer", opacity: uploading ? 0.6 : 1 }}
+        >
+          {uploading ? "Uploading…" : status === "missing" ? "Upload File" : "Upload New Version"}
+        </button>
+        <input ref={fileInputRef} type="file" onChange={handleFileSelected} style={{ display: "none" }} />
+      </div>
+
+      <textarea
+        value={note} onChange={(e) => setNote(e.target.value)}
+        placeholder="Add a note (optional) — visible to anyone reviewing this material"
+        rows={2}
+        style={{ width: "100%", boxSizing: "border-box", padding: "10px 12px", fontFamily: lora, fontSize: 13, border: "1px solid rgba(16,15,12,0.15)", borderRadius: 3, marginBottom: 8, resize: "vertical" }}
+      />
+      <div>
+        <button
+          onClick={handleAddNote}
+          disabled={addingNote || !note.trim()}
+          style={{ padding: "6px 14px", background: "#FAF7F2", border: "1px solid rgba(164,141,110,0.3)", borderRadius: 3, color: "#8B7355", fontFamily: lora, fontSize: 12, cursor: note.trim() ? "pointer" : "default", opacity: note.trim() ? 1 : 0.5, marginBottom: 14 }}
+        >
+          {addingNote ? "Saving…" : "Add Note"}
+        </button>
+      </div>
+
+      <div>
+        <span onClick={() => setShowHistory((v) => !v)} style={{ fontFamily: lora, fontSize: 12, color: "#A48D6E", textDecoration: "underline", cursor: "pointer" }}>
+          {showHistory ? "Hide history ↑" : "View history ↓"}
+        </span>
+        {showHistory && (
+          <div style={{ marginTop: 10, borderTop: "1px solid rgba(16,15,12,0.08)", paddingTop: 10 }}>
+            {revisions.length === 0 ? (
+              <p style={{ fontFamily: lora, fontSize: 12.5, color: "#8B7355", fontStyle: "italic" }}>No activity yet.</p>
+            ) : revisions.map((r) => (
+              <div key={r.id} style={{ marginBottom: 10 }}>
+                <p style={{ fontFamily: lora, fontSize: 11, color: "#8B7355", textTransform: "uppercase", letterSpacing: "0.05em", margin: "0 0 2px", fontWeight: 700 }}>
+                  {r.action === "uploaded" ? "Uploaded" : r.action === "confirmed" ? "Confirmed" : "Note"} · {r.uploaded_by_type === "admin" ? "Admin" : "Faculty"} · {new Date(r.created_at).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })}
+                </p>
+                {r.file_name && <p style={{ fontFamily: lora, fontSize: 12.5, color: "#100F0C", margin: "0 0 2px" }}>{r.file_name}</p>}
+                {r.note && <p style={{ fontFamily: lora, fontSize: 12.5, color: "#3A2F28", margin: 0 }}>{r.note}</p>}
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+// Full-page view (not a popup) opened by clicking a session's lesson-plan
+// folder from either My Schedule or Lesson Plans & Materials.
+function SessionMaterialsView({ session, programName, facultyProfile, facultyRole, onBack, onUpdated }) {
+  const lora = "'Lora', Georgia, serif";
+  const cg = "'Cormorant Garamond', Georgia, serif";
+  const displayName = facultyDisplayProgramName(programName);
+  const dateLabel = new Date(session.session_date + "T00:00:00").toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
+
+  return (
+    <div>
+      <span
+        onClick={onBack}
+        style={{ fontFamily: lora, fontSize: 12, letterSpacing: "0.1em", color: "#A48D6E", textTransform: "uppercase", cursor: "pointer", textDecoration: "underline" }}
       >
-        {uploading ? "Uploading…" : session.lesson_plan_status === "missing" ? "Upload Lesson Plan" : "Upload Modified Version"}
-      </button>
-      <input ref={fileInputRef} type="file" onChange={handleFileSelected} style={{ display: "none" }} />
+        ← Back
+      </span>
+      <p style={{ fontFamily: lora, fontSize: 11, letterSpacing: "0.1em", color: "#A48D6E", textTransform: "uppercase", fontWeight: 700, margin: "18px 0 4px" }}>
+        Lesson Materials
+      </p>
+      <h2 style={{ fontFamily: cg, fontSize: 26, color: "#100F0C", fontWeight: 600, margin: "0 0 24px" }}>
+        {displayName} / {session.block_label} / {dateLabel}
+      </h2>
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))", gap: 20 }}>
+        {MATERIAL_TYPES.map((m) => (
+          <MaterialPanel
+            key={m.key}
+            session={session}
+            materialType={m.key}
+            label={m.label}
+            facultyProfile={facultyProfile}
+            facultyRole={facultyRole}
+            onUpdated={onUpdated}
+          />
+        ))}
+      </div>
     </div>
   );
 }
@@ -16809,6 +17055,7 @@ function LessonPlansSection({ facultyProfile, facultyRole }) {
   const [pendingAcrossAll, setPendingAcrossAll] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showGuide, setShowGuide] = useState(false);
+  const [selectedMaterialsId, setSelectedMaterialsId] = useState(null);
 
   const loadData = React.useCallback(async () => {
     if (!sb || !facultyProfile) return;
@@ -16822,9 +17069,10 @@ function LessonPlansSection({ facultyProfile, facultyRole }) {
     setPrograms(programsRes.data || []);
 
     if (facultyRole === "admin") {
+      // A session needs review if EITHER material is awaiting confirmation.
       const { data: pending } = await sb.from("faculty_sessions")
         .select("*, faculty_profiles(full_name), programs(name)")
-        .eq("lesson_plan_status", "pending_review");
+        .or("lesson_plan_status.eq.pending_review,presentation_status.eq.pending_review");
       setPendingAcrossAll(pending || []);
     }
     setLoading(false);
@@ -16832,29 +17080,27 @@ function LessonPlansSection({ facultyProfile, facultyRole }) {
 
   useEffect(() => { loadData(); }, [loadData]);
 
-  const handleApprove = async (session) => {
-    if (!sb) return;
-    await sb.from("faculty_sessions").update({
-      lesson_plan_status: "approved",
-      lesson_plan_approved_by: facultyProfile.id,
-      lesson_plan_approved_at: new Date().toISOString(),
-    }).eq("id", session.id);
-    await sb.from("lesson_plan_revisions").insert({
-      session_id: session.id,
-      file_url: session.lesson_plan_file_url,
-      file_name: session.lesson_plan_file_name,
-      uploaded_by_type: "admin",
-      uploaded_by_id: facultyProfile.id,
-      action: "approved",
-      note: "Approved and confirmed.",
-    });
-    loadData();
-  };
-
   const cardStyle = { border: "1px solid rgba(16,15,12,0.1)", borderRadius: 6, padding: 16, marginBottom: 10, background: "#FFFFFF" };
 
   if (loading) {
     return <p style={{ fontFamily: cg, fontSize: 16, color: "#6B6459", fontStyle: "italic" }}>Loading lesson plans…</p>;
+  }
+
+  if (selectedMaterialsId) {
+    const activeSession = mySessions.find((s) => s.id === selectedMaterialsId) || pendingAcrossAll.find((s) => s.id === selectedMaterialsId);
+    if (activeSession) {
+      const prog = programs.find((p) => p.id === activeSession.program_id);
+      return (
+        <SessionMaterialsView
+          session={activeSession}
+          programName={prog?.name || activeSession.programs?.name}
+          facultyProfile={facultyProfile}
+          facultyRole={facultyRole}
+          onBack={() => setSelectedMaterialsId(null)}
+          onUpdated={loadData}
+        />
+      );
+    }
   }
 
   const sessionsByProgram = {};
@@ -16879,19 +17125,19 @@ function LessonPlansSection({ facultyProfile, facultyRole }) {
       {showGuide && (
         <div style={{ background: "#FAF7F2", border: "1px solid rgba(16,15,12,0.1)", borderRadius: 6, padding: 20, marginBottom: 24 }}>
           <p style={{ fontFamily: lora, fontSize: 13.5, color: "#100F0C", margin: "0 0 12px", fontWeight: 600 }}>
-            Every individual class session has its own lesson plan folder — click any folder to open the current file:
+            Every individual class session has its own Lesson Materials folder, with two independent pieces inside — a Lesson Plan Guide and a Presentation (PPTX). Click "Open Materials" on any session to view, upload, or review either one.
           </p>
           <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 8 }}>
-            <FolderIcon status="missing" size={16} /><span style={{ fontFamily: lora, fontSize: 13, color: "#6B6459" }}>Red — no lesson plan uploaded for this session yet.</span>
+            <FolderIcon status="missing" size={16} /><span style={{ fontFamily: lora, fontSize: 13, color: "#6B6459" }}>Red — nothing uploaded for this material yet.</span>
           </div>
           <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 8 }}>
-            <FolderIcon status="pending_review" size={16} /><span style={{ fontFamily: lora, fontSize: 13, color: "#6B6459" }}>Yellow — a file is there, awaiting approval.</span>
+            <FolderIcon status="pending_review" size={16} /><span style={{ fontFamily: lora, fontSize: 13, color: "#6B6459" }}>Yellow — a file is there, in review.</span>
           </div>
           <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 12 }}>
-            <FolderIcon status="approved" size={16} /><span style={{ fontFamily: lora, fontSize: 13, color: "#6B6459" }}>Green — approved and confirmed.</span>
+            <FolderIcon status="approved" size={16} /><span style={{ fontFamily: lora, fontSize: 13, color: "#6B6459" }}>Green — confirmed.</span>
           </div>
           <p style={{ fontFamily: lora, fontSize: 13, color: "#6B6459", margin: 0 }}>
-            Download the current file, modify it, and upload your modified version any time — it goes yellow until approved, then turns green.
+            Anyone — faculty or admin — can upload a new version at any time; uploading always puts that material back in review. Notes can be left alongside any upload. An admin confirms each material independently once it's ready.
           </p>
         </div>
       )}
@@ -16908,23 +17154,26 @@ function LessonPlansSection({ facultyProfile, facultyRole }) {
                   <p style={{ fontFamily: lora, fontSize: 14, color: "#100F0C", margin: "0 0 4px", fontWeight: 600 }}>
                     {facultyDisplayProgramName(s.programs?.name)} / {s.block_label} / {new Date(s.session_date + "T00:00:00").toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })}
                   </p>
-                  <p style={{ fontFamily: lora, fontSize: 12.5, color: "#8B7355", margin: 0 }}>
-                    Submitted by {s.faculty_profiles?.full_name || "faculty member"}
+                  <p style={{ fontFamily: lora, fontSize: 12.5, color: "#8B7355", margin: "0 0 6px" }}>
+                    Faculty: {s.faculty_profiles?.full_name || "faculty member"}
                   </p>
+                  <div style={{ display: "flex", gap: 14 }}>
+                    <span style={{ display: "flex", alignItems: "center", gap: 5 }}>
+                      <FolderIcon status={s.lesson_plan_status} size={14} />
+                      <span style={{ fontFamily: lora, fontSize: 11.5, color: "#6B6459" }}>Lesson Plan Guide</span>
+                    </span>
+                    <span style={{ display: "flex", alignItems: "center", gap: 5 }}>
+                      <FolderIcon status={s.presentation_status} size={14} />
+                      <span style={{ fontFamily: lora, fontSize: 11.5, color: "#6B6459" }}>Presentation</span>
+                    </span>
+                  </div>
                 </div>
-                <div style={{ display: "flex", gap: 10, alignItems: "center" }}>
-                  {s.lesson_plan_file_url && (
-                    <a href={s.lesson_plan_file_url} target="_blank" rel="noreferrer" style={{ fontFamily: lora, fontSize: 12.5, color: "#8B7355", textDecoration: "underline" }}>
-                      View file
-                    </a>
-                  )}
-                  <button
-                    onClick={() => handleApprove(s)}
-                    style={{ padding: "7px 16px", background: "#3D8B5F", border: "none", borderRadius: 3, color: "#FFFFFF", fontFamily: lora, fontSize: 12.5, fontWeight: 600, cursor: "pointer" }}
-                  >
-                    Approve
-                  </button>
-                </div>
+                <button
+                  onClick={() => setSelectedMaterialsId(s.id)}
+                  style={{ padding: "7px 16px", background: "#100F0C", border: "none", borderRadius: 3, color: "#E4D5C1", fontFamily: lora, fontSize: 12.5, fontWeight: 600, cursor: "pointer" }}
+                >
+                  Open →
+                </button>
               </div>
             </div>
           ))}
@@ -16989,12 +17238,23 @@ function LessonPlansSection({ facultyProfile, facultyRole }) {
                               <p style={{ fontFamily: lora, fontSize: 14, color: "#100F0C", margin: "0 0 8px", fontWeight: 600 }}>
                                 {displayName} / {s.block_label} / {dateLabel}
                               </p>
-                              <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
-                                <FolderIcon status={s.lesson_plan_status} size={16} onClick={(e) => handleFileClick(s.lesson_plan_file_url, e)} />
-                                <FolderStatusLabel status={s.lesson_plan_status} />
+                              <div style={{ display: "flex", gap: 16 }}>
+                                <span style={{ display: "flex", alignItems: "center", gap: 6 }}>
+                                  <FolderIcon status={s.lesson_plan_status} size={16} />
+                                  <FolderStatusLabel status={s.lesson_plan_status} />
+                                </span>
+                                <span style={{ display: "flex", alignItems: "center", gap: 6 }}>
+                                  <FolderIcon status={s.presentation_status} size={16} />
+                                  <FolderStatusLabel status={s.presentation_status} />
+                                </span>
                               </div>
                             </div>
-                            <SessionLessonPlanUploadRow session={s} facultyProfile={facultyProfile} onUpdated={loadData} />
+                            <button
+                              onClick={() => setSelectedMaterialsId(s.id)}
+                              style={{ padding: "8px 18px", background: "transparent", border: "1px solid rgba(16,15,12,0.25)", borderRadius: 3, color: "#100F0C", fontFamily: lora, fontSize: 12.5, cursor: "pointer", whiteSpace: "nowrap" }}
+                            >
+                              Open Materials →
+                            </button>
                           </div>
                         </div>
                       );
