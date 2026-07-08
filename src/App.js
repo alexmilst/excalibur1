@@ -1793,11 +1793,6 @@ function CurriculumPage({ setPage, openInquiry }) {
 
 
 
-      {/* BOOK A CALL */}
-      <div style={{ background: "rgba(16, 15, 12, 1)", padding: isMobile ? "40px 24px" : "56px 80px", borderTop: "1px solid rgba(0,0,0,.08)", textAlign: "center" }}>
-        <a href="https://zcal.co/excaliburacademy/meetingbook" target="_blank" rel="noopener noreferrer" style={{ display: "inline-block", fontFamily: "'Lato', sans-serif", padding: "15px 48px", background: "#DAC8AA", border: "none", color: "#100F0C", fontSize: 11, fontWeight: 600, letterSpacing: "0.15em", textTransform: "uppercase", cursor: "pointer", textDecoration: "none" }}>Book a Call →</a>
-      </div>
-
     </div>
   );
 }
@@ -2054,11 +2049,6 @@ function IntensivePage({ setPage, openInquiry }) {
             </div>
           )}
         </div>
-      </div>
-
-      {/* BOOK A CALL */}
-      <div style={{ background: "rgba(16, 15, 12, 1)", padding: isMobile ? "40px 24px" : "56px 80px", borderTop: "1px solid rgba(0,0,0,.08)", textAlign: "center" }}>
-        <a href="https://zcal.co/excaliburacademy/meetingbook" target="_blank" rel="noopener noreferrer" style={{ display: "inline-block", fontFamily: "'Lato', sans-serif", padding: "15px 48px", background: "#DAC8AA", border: "none", color: "#100F0C", fontSize: 11, fontWeight: 600, letterSpacing: "0.15em", textTransform: "uppercase", cursor: "pointer", textDecoration: "none" }}>Book a Call →</a>
       </div>
 
     </div>
@@ -3055,11 +3045,6 @@ function ApplyPage({ setPage, openInquiry }) {
         </div>
       </div>
 
-      {/* BOOK A CALL */}
-      <div style={{ background: "rgba(16, 15, 12, 1)", padding: isMobile ? "40px 24px" : "56px 80px", borderTop: "1px solid rgba(0,0,0,.08)", textAlign: "center" }}>
-        <a href="https://zcal.co/excaliburacademy/meetingbook" target="_blank" rel="noopener noreferrer" style={{ display: "inline-block", fontFamily: "'Lato', sans-serif", padding: "15px 48px", background: "#DAC8AA", border: "none", color: "#100F0C", fontSize: 11, fontWeight: 600, letterSpacing: "0.15em", textTransform: "uppercase", cursor: "pointer", textDecoration: "none" }}>Book a Call →</a>
-      </div>
-
     </div>
   );
 }
@@ -3456,6 +3441,69 @@ function HomePage({ setPage, openInquiry }) {
         <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: "1px", background: `linear-gradient(90deg, transparent, rgba(188,166,150,.25), transparent)` }} />
       </section>
 
+      {/* ── THE DAY, IN DETAIL: Structure of the Day (left) + Venture Challenge (right) ── */}
+      <section style={{ background: "#FAF7F2", padding: isMobile ? "64px 24px" : "88px 80px" }}>
+        <div style={{ maxWidth: 1200, margin: "0 auto", display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1.15fr 1fr", gap: isMobile ? 48 : 64 }}>
+
+          {/* LEFT — Structure of the Day (condensed) */}
+          <div>
+            <p style={{ fontFamily: sans, fontSize: 10, letterSpacing: "0.35em", color: "#A48D6E", fontWeight: 700, textTransform: "uppercase", marginBottom: 14 }}>The Day, Hour by Hour</p>
+            <h2 style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: isMobile ? "clamp(26px,5.5vw,34px)" : 34, fontWeight: 400, fontStyle: "italic", color: "#100F0C", marginBottom: 24, lineHeight: 1.15 }}>The Structure of the Day</h2>
+            <div style={{ borderTop: "1px solid rgba(16,15,12,.12)" }}>
+              {[
+                ["10:00 – 10:20", "Arrival, Orientation & Team Formation", "TAs & Coordinators", "Teams form and the day's agenda is set."],
+                ["10:20 – 11:05", "Public Speaking & Executive Presence", "Keree James", "The founder communication toolkit — clarity, presence, and persuasion."],
+                ["11:05 – 11:50", "Financial Literacy & Investor Thinking", "Faculty TBD", "How founders monetize and investors evaluate a venture."],
+                ["11:50 – 12:05", "Break", "—", "A short pause before the day's most hands-on stretch."],
+                ["12:05 – 12:50", "AI & the Future of Work", "Chip", "Using AI as a thinking partner, not a shortcut."],
+                ["12:50 – 1:25", "Lunch", "—", "A catered midday break with faculty and teammates."],
+                ["1:25 – 3:05", "The Venture Challenge", "Chip (Lead) · Erik", "Teams build a complete venture plan around a real problem."],
+                ["3:05 – 4:20", "Applied Capstone: Build Your Team Pitch", "Keree · Chris · Erik", "Teams rehearse a 60-second founder pitch with a support deck."],
+                ["4:20 – 4:50", "The Showcase", "Judging Panel", "Teams pitch live before faculty, founders, and investors."],
+                ["4:50 – 5:00", "Transition", "TAs", "Room reset for the Family Soirée."],
+                ["5:00 – 6:00", "The Family Soirée", "Academy Staff & Faculty", "A closing reception — parents join for the final hour."],
+              ].map(([time, name, who, desc], i) => (
+                <div key={i} style={{ padding: "12px 0", borderBottom: "1px solid rgba(16,15,12,.12)", display: "flex", gap: 16 }}>
+                  <span style={{ fontFamily: lora, fontSize: 11.5, color: "#A48D6E", width: 78, flexShrink: 0, paddingTop: 1 }}>{time}</span>
+                  <div>
+                    <p style={{ fontFamily: lora, fontSize: 13.5, color: "#100F0C", fontWeight: 700, margin: "0 0 2px" }}>
+                      {name} <span style={{ fontFamily: sans, fontSize: 10, color: "#8B7355", fontWeight: 400, textTransform: "uppercase", letterSpacing: "0.04em" }}> · {who}</span>
+                    </p>
+                    <p style={{ fontFamily: lora, fontSize: 12.5, color: "#6B6459", margin: 0, lineHeight: 1.5 }}>{desc}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* RIGHT — The Heart of the Day: The Venture Challenge */}
+          <div>
+            <p style={{ fontFamily: sans, fontSize: 10, letterSpacing: "0.35em", color: "#A48D6E", fontWeight: 700, textTransform: "uppercase", marginBottom: 14 }}>The Heart of the Day</p>
+            <h2 style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: isMobile ? "clamp(26px,5.5vw,34px)" : 34, fontWeight: 400, fontStyle: "italic", color: "#100F0C", marginBottom: 18, lineHeight: 1.15 }}>The Venture Challenge</h2>
+            <p style={{ fontFamily: lora, fontSize: 14.5, color: "#3A2F28", lineHeight: 1.75, marginBottom: 28 }}>
+              Faculty present every team with two real-world problems to choose from. Each team selects one lane and builds a complete venture plan around it — exactly as a real founder would.
+            </p>
+            <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+              <div style={{ background: "#100F0C", padding: "24px 26px" }}>
+                <p style={{ fontFamily: sans, fontSize: 9.5, letterSpacing: "0.2em", color: "#A48D6E", textTransform: "uppercase", fontWeight: 700, marginBottom: 8 }}>Lane One</p>
+                <p style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: 21, fontStyle: "italic", color: "#E4D5C1", marginBottom: 10 }}>The Community-Impact Challenge</p>
+                <p style={{ fontFamily: lora, fontSize: 13.5, color: "rgba(228,213,193,.8)", lineHeight: 1.65, margin: 0 }}>
+                  A genuine civic gap facing our own South Orange County community — teams build a venture designed to address it directly.
+                </p>
+              </div>
+              <div style={{ background: "#100F0C", padding: "24px 26px" }}>
+                <p style={{ fontFamily: sans, fontSize: 9.5, letterSpacing: "0.2em", color: "#A48D6E", textTransform: "uppercase", fontWeight: 700, marginBottom: 8 }}>Lane Two</p>
+                <p style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: 21, fontStyle: "italic", color: "#E4D5C1", marginBottom: 10 }}>The Market-Gap Challenge</p>
+                <p style={{ fontFamily: lora, fontSize: 13.5, color: "rgba(228,213,193,.8)", lineHeight: 1.65, margin: 0 }}>
+                  A real commercial opportunity going unaddressed — teams build a venture designed to compete and win in that market.
+                </p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
       {/* ── QUICK REFERENCE TABLE ── */}
       <section style={{ background: "#D9C7A9", padding: isMobile ? "72px 24px" : "100px 80px" }}>
         <div style={{ maxWidth: 1100, margin: "0 auto" }}>
@@ -3466,7 +3514,7 @@ function HomePage({ setPage, openInquiry }) {
               <div key={i} style={{ border: "1px solid rgba(52,21,15,.2)", padding: "24px 28px" }}>
                 <p style={{ fontFamily: sans, fontSize: 10, letterSpacing: "0.2em", color: "#6B5C40", textTransform: "uppercase", fontWeight: 700, marginBottom: 8 }}>{lab.label}</p>
                 <p style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: 26, color: "#1A0A08", fontWeight: 400, marginBottom: 6 }}>{lab.date}, 2026</p>
-                <p style={{ fontFamily: lora, fontSize: 13, color: "#3A2012", fontStyle: "italic", marginBottom: 14 }}>10:00 AM – 6:00 PM</p>
+                <p style={{ fontFamily: lora, fontSize: 13, color: "#3A2012", fontStyle: "italic", marginBottom: 14 }}>10:00 AM – 5:00 PM · Family Soirée 5:00 – 6:00 PM</p>
                 <div style={{ display: "flex", gap: 24 }}>
                   <div>
                     <p style={{ fontFamily: sans, fontSize: 9, letterSpacing: "0.15em", color: "#6B5C40", textTransform: "uppercase", marginBottom: 2 }}>Early Bird</p>
@@ -4329,11 +4377,6 @@ function HomePage({ setPage, openInquiry }) {
         </div>
       </section>
 
-
-      {/* BOOK A CALL */}
-      <div style={{ background: "rgba(16, 15, 12, 1)", padding: isMobile ? "40px 24px" : "56px 80px", borderTop: "1px solid rgba(0,0,0,.08)", textAlign: "center" }}>
-        <a href="https://zcal.co/excaliburacademy/meetingbook" target="_blank" rel="noopener noreferrer" style={{ display: "inline-block", fontFamily: "'Lato', sans-serif", padding: "15px 48px", background: "#DAC8AA", border: "none", color: "#100F0C", fontSize: 11, fontWeight: 600, letterSpacing: "0.15em", textTransform: "uppercase", cursor: "pointer", textDecoration: "none" }}>Book a Call →</a>
-      </div>
 
     </div>
   );
@@ -11812,10 +11855,6 @@ function FlagshipDetailPage2({ setPage, openInquiry }) {
 
         </div>
       </div>
-      {/* BOOK A CALL */}
-      <div style={{ background: "rgba(16, 15, 12, 1)", padding: isMobile ? "40px 24px" : "56px 80px", borderTop: "1px solid rgba(0,0,0,.08)", textAlign: "center" }}>
-        <a href="https://zcal.co/excaliburacademy/meetingbook" target="_blank" rel="noopener noreferrer" style={{ display: "inline-block", fontFamily: "'Lato', sans-serif", padding: "15px 48px", background: "#DAC8AA", border: "none", color: "#100F0C", fontSize: 11, fontWeight: 600, letterSpacing: "0.15em", textTransform: "uppercase", cursor: "pointer", textDecoration: "none" }}>Book a Call →</a>
-      </div>
       </MobileAccordionSection>
 
     </div>
@@ -16066,7 +16105,23 @@ function MonthlyCalendarGrid({ year, monthIndex0, sessionsByDate, onDayClick }) 
 function FacultyPortalShell({ facultyProfile, facultyRole, onSignOut }) {
   const lora = "'Lora', Georgia, serif";
   const cg = "'Cormorant Garamond', Georgia, serif";
-  const [activeSection, setActiveSection] = useState("dashboard");
+  // Persisted in sessionStorage so that if the browser tears down and
+  // reloads this tab (common when a backgrounded tab is reclaimed for
+  // memory, especially on mobile), the portal reopens on the section the
+  // person was actually on instead of silently resetting to Dashboard.
+  // sessionStorage clears itself when the tab is truly closed, so this
+  // never leaks across a fresh session.
+  const [activeSection, setActiveSection] = useState(() => {
+    if (typeof window === "undefined") return "dashboard";
+    try {
+      return window.sessionStorage.getItem("facultyPortalActiveSection") || "dashboard";
+    } catch (e) {
+      return "dashboard";
+    }
+  });
+  useEffect(() => {
+    try { window.sessionStorage.setItem("facultyPortalActiveSection", activeSection); } catch (e) { /* ignore */ }
+  }, [activeSection]);
   const isMobile = useIsMobile();
 
   return (
@@ -16840,13 +16895,17 @@ function MaterialPanel({ session, materialType, label, facultyProfile, facultyRo
     if (!file || !sb) return;
     setUploading(true);
     try {
-      const path = `${session.id}/${materialType}/${Date.now()}_${file.name}`;
+      // Storage keys are safest limited to letters, numbers, dots, dashes,
+      // and underscores — sanitize so an unusual filename (spaces, #, etc.)
+      // can never be the reason an otherwise-valid upload gets rejected.
+      const safeName = file.name.replace(/[^a-zA-Z0-9._-]/g, "_");
+      const path = `${session.id}/${materialType}/${Date.now()}_${safeName}`;
       const { error: uploadError } = await sb.storage.from("lesson-plans").upload(path, file, { upsert: false });
       if (uploadError) throw uploadError;
       const { data: urlData } = sb.storage.from("lesson-plans").getPublicUrl(path);
       const uploaderType = facultyRole === "admin" ? "admin" : "faculty";
 
-      await sb.from("faculty_sessions").update({
+      const { error: updateError } = await sb.from("faculty_sessions").update({
         [`${materialType}_file_url`]: urlData.publicUrl,
         [`${materialType}_file_name`]: file.name,
         [`${materialType}_uploaded_by_type`]: uploaderType,
@@ -16854,8 +16913,9 @@ function MaterialPanel({ session, materialType, label, facultyProfile, facultyRo
         [`${materialType}_uploaded_at`]: new Date().toISOString(),
         [`${materialType}_status`]: "pending_review",
       }).eq("id", session.id);
+      if (updateError) throw updateError;
 
-      await sb.from("lesson_plan_revisions").insert({
+      const { error: insertError } = await sb.from("lesson_plan_revisions").insert({
         session_id: session.id,
         material_type: materialType,
         file_url: urlData.publicUrl,
@@ -16865,6 +16925,7 @@ function MaterialPanel({ session, materialType, label, facultyProfile, facultyRo
         action: "uploaded",
         note: note.trim() || (status === "missing" ? "Initial version uploaded." : "New version submitted for review."),
       });
+      if (insertError) throw insertError;
 
       setNote("");
       onUpdated();
@@ -16882,7 +16943,7 @@ function MaterialPanel({ session, materialType, label, facultyProfile, facultyRo
     if (!sb || !note.trim()) return;
     setAddingNote(true);
     try {
-      await sb.from("lesson_plan_revisions").insert({
+      const { error: insertError } = await sb.from("lesson_plan_revisions").insert({
         session_id: session.id,
         material_type: materialType,
         uploaded_by_type: facultyRole === "admin" ? "admin" : "faculty",
@@ -16890,6 +16951,7 @@ function MaterialPanel({ session, materialType, label, facultyProfile, facultyRo
         action: "note",
         note: note.trim(),
       });
+      if (insertError) throw insertError;
       setNote("");
       setShowHistory(true);
       loadRevisions();
@@ -16905,12 +16967,14 @@ function MaterialPanel({ session, materialType, label, facultyProfile, facultyRo
     if (!sb) return;
     setConfirming(true);
     try {
-      await sb.from("faculty_sessions").update({
+      const { error: updateError } = await sb.from("faculty_sessions").update({
         [`${materialType}_status`]: "approved",
         [`${materialType}_confirmed_by`]: facultyProfile.id,
         [`${materialType}_confirmed_at`]: new Date().toISOString(),
       }).eq("id", session.id);
-      await sb.from("lesson_plan_revisions").insert({
+      if (updateError) throw updateError;
+
+      const { error: insertError } = await sb.from("lesson_plan_revisions").insert({
         session_id: session.id,
         material_type: materialType,
         file_url: fileUrl,
@@ -16920,6 +16984,8 @@ function MaterialPanel({ session, materialType, label, facultyProfile, facultyRo
         action: "confirmed",
         note: "Confirmed.",
       });
+      if (insertError) throw insertError;
+
       onUpdated();
       if (showHistory) loadRevisions();
     } catch (err) {
