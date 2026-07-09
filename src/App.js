@@ -8603,6 +8603,19 @@ function PortalPage({ setPage }) {
                 <button onClick={() => handleTuitionCheckout(application.id, application.program)} disabled={checkoutBusy} style={{ fontFamily: sans, padding: "14px 28px", background: m_ink, border: "none", color: m_white, fontSize: 14, fontWeight: 700, cursor: checkoutBusy ? "default" : "pointer", borderRadius: 999, opacity: checkoutBusy ? 0.6 : 1 }}>{checkoutBusy ? "Opening Secure Checkout..." : "Pay Tuition →"}</button>
               </div>
             )}
+            {application && needsSummerPayment && !isSummerPaid && application.status !== "draft" && (
+              <div style={{ background: m_white, border: `1px solid ${m_line}`, borderRadius: 18, padding: isMobile ? "28px 24px" : "36px 40px", marginBottom: 16 }}>
+                <p style={{ fontFamily: sans, fontSize: 13, color: m_gray, marginBottom: 8 }}>Founder's Day</p>
+                <p style={{ fontFamily: sans, fontWeight: 700, fontSize: isMobile ? 20 : 24, color: m_ink, marginBottom: 10, lineHeight: 1.3 }}>Your application is complete — payment is the last step to reserve your seat.</p>
+                <p style={{ fontFamily: sans, fontSize: 14, color: m_gray, marginBottom: 20, lineHeight: 1.7 }}>
+                  {summerSessionsSelected.join(", ")} — ${summerSessionsSelected.reduce((sum, s) => sum + (SUMMER_SESSION_PRICES[s] || 0), 0).toLocaleString()}. Pay in full by card, or choose Klarna or Affirm at checkout to split the cost into installments.
+                </p>
+                {checkoutError && (
+                  <p style={{ fontFamily: sans, fontSize: 13, color: "#8A4A1E", fontWeight: 600, marginBottom: 12 }}>Error: {checkoutError}</p>
+                )}
+                <button onClick={() => handleSummerCheckout(application.id)} disabled={checkoutBusy} style={{ fontFamily: sans, padding: "14px 28px", background: m_ink, border: "none", color: m_white, fontSize: 14, fontWeight: 700, cursor: checkoutBusy ? "default" : "pointer", borderRadius: 999, opacity: checkoutBusy ? 0.6 : 1 }}>{checkoutBusy ? "Opening Secure Checkout..." : "Pay Online →"}</button>
+              </div>
+            )}
             {application && application.status === "accepted" && TUITION_PRICES[application.program] && application.payment_status === "paid" && (
               <div style={{ background: "rgba(80,160,100,.1)", border: "1px solid rgba(80,160,100,.3)", borderRadius: 18, padding: isMobile ? "22px 20px" : "26px 32px", marginBottom: 16 }}>
                 <p style={{ fontFamily: sans, fontWeight: 700, fontSize: 15, color: "#2E6B4A" }}>Tuition paid — enrollment confirmed for {TUITION_PRICES[application.program].label}.</p>
