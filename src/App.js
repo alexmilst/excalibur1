@@ -2730,7 +2730,7 @@ function ApplyPage({ setPage, openInquiry }) {
             dates: "September 2026 – December 2026", price: "From $1,700", period: "per month",
             desc: "A 14-week semester for ambitious students ready to develop public speaking, business judgment, and the discipline of real-world execution.\n\nStudents complete the Junior Consultant Program, attend monthly guest masterclasses, and present at the Excalibur Gala.\n\nLimited enrollment per cohort. 20 students.",
             meta: [
-              ["Tuition", "$8,500 total · pay in full or installments"],
+              ["Tuition", "$8,500 total · Plans from $295/mo via Affirm & Klarna"],
               ["Hourly Equivalent", "$90/hr · 95 total hours"],
               ["Schedule", "Tue & Thu 4–6:30 PM or Sat 10:30 AM–3:30 PM"],
               ["Class Size", "20 students per cohort"],
@@ -2762,7 +2762,7 @@ function ApplyPage({ setPage, openInquiry }) {
             dates: "January 2027 – May 2027", price: "From $1,700", period: "per month",
             desc: "A 16-week semester focused on venture development, market validation, and applied entrepreneurship — culminating in the Venture Finale.\n\nStudents move from concept to a working venture, defended before real investors and faculty.\n\nPriority placement is given to Foundation Semester completers.",
             meta: [
-              ["Tuition", "$9,500 in full · $10,000 installments"],
+              ["Tuition", "$9,500 in full · Plans from $295/mo via Affirm & Klarna"],
               ["Hourly Equivalent", "$90/hr · 105 total hours"],
               ["Schedule", "Tue & Thu 4–6:30 PM or Sat 10:30 AM–3:30 PM"],
               ["Class Size", "20 students per cohort"],
@@ -12588,7 +12588,7 @@ function FoundationDetailPage({ setPage, openInquiry }) {
                 ["Weekday Cohort","Tuesday & Thursday · 4:00 – 6:30 PM"],
                 ["Cohort Size","20 students per cohort"],
                 ["Weekly Format","5 hours per week"],
-                ["Tuition","$8,500 · Full Payment or Installment Plan"],
+                ["Tuition","$8,500 · Plans from $295/mo via Affirm & Klarna"],
               ].map(([k,v],i)=>(
                 <div key={k} style={{ padding:"20px 24px", background:"#100F0C", borderBottom:`1px solid rgba(164,141,110,.12)`, borderRight:!isMobile&&(i%3!==2)?"1px solid rgba(164,141,110,.12)":"none" }}>
                   <span style={{ display:"block", fontFamily:sans, fontSize:7, letterSpacing:"0.2em", color:"#A48D6E", textTransform:"uppercase", marginBottom:8, fontWeight:700 }}>{k}</span>
@@ -13678,6 +13678,7 @@ function FoundationDetailPage({ setPage, openInquiry }) {
                 <p style={{ fontFamily:sans, fontSize:7, letterSpacing:"0.3em", color:"#A48D6E", textTransform:"uppercase", fontWeight:600, marginBottom:12 }}>Venture Term Adds</p>
                 <p style={{ fontFamily:lora, fontSize:13, color:"#E4D5C1", fontWeight:300, lineHeight:1.85, marginBottom:16 }}>Startup Externship · Venture Studio + Launch · Venture Modules · Excalibur Venture Finale</p>
                 <p style={{ fontFamily:lora, fontSize:13, color:"rgba(251,247,238,.55)", fontWeight:300, lineHeight:1.7, margin:0 }}>Field trips are optional and priced separately. &nbsp;·&nbsp; Tuition is program-based. Hourly equivalent calculated for reference, and based on total academic & event hours: Foundation 95 hrs · Venture 105 hrs · Full Year 200 hrs.</p>
+                <p style={{ fontFamily:lora, fontSize:13, color:"rgba(251,247,238,.55)", fontWeight:300, lineHeight:1.7, margin:"12px 0 0" }}>Flexible payment plans available at checkout through Affirm and Klarna, including 0% APR options for qualifying families. Plans starting as low as $295/month — subject to credit approval. Rates from 0%–15.99% APR. Exact terms shown at checkout.</p>
               </div>
             </div>
           </div>
@@ -14309,7 +14310,7 @@ function VentureDetailPage({ setPage, openInquiry }) {
                 ["Weekday Track","Tuesday & Thursday · 4:00 – 6:30 PM"],
                 ["Cohort Size","20 students per cohort"],
                 ["Weekly Format","5 hours per week"],
-                ["Tuition",<>$9,500 in full<br/>or $1,750/month · Installment plans available</>],
+                ["Tuition",<>$9,500 in full<br/>Plans from $295/mo via Affirm & Klarna</>],
               ].map(([k,v],i)=>(
                 <div key={k} style={{ padding:"20px 24px", background:"#100F0C", borderBottom:`1px solid rgba(164,141,110,.12)`, borderRight:!isMobile&&(i%3!==2)?"1px solid rgba(164,141,110,.12)":"none" }}>
                   <span style={{ display:"block", fontFamily:"'Lato', sans-serif", fontSize:11, letterSpacing:"0.2em", color:"#A48D6E", textTransform:"uppercase", marginBottom:8, fontWeight:600 }}>{k}</span>
@@ -15581,6 +15582,7 @@ function VentureDetailPage({ setPage, openInquiry }) {
           </div>
 
           <div style={{ background:"rgba(164,141,110,.06)", border:"1px solid rgba(164,141,110,.12)", padding:isMobile?"20px 24px":"24px 40px" }}>
+            <p style={{ fontFamily:"Lora, serif", fontSize:13, color:"rgba(251,247,238,.7)", fontWeight:300, lineHeight:1.7, margin:0 }}>Flexible payment plans available at checkout through Affirm and Klarna, including 0% APR options for qualifying families. Plans starting as low as $295/month — subject to credit approval. Rates from 0%–15.99% APR. Exact terms shown at checkout.</p>
           </div>
         </div>
       </div>
