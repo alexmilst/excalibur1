@@ -6936,7 +6936,7 @@ function PortalPage({ setPage }) {
   // ── Empty-state shapes, reused both for initial useState() and for the full reset on sign-out / new session ──
   const EMPTY_APP_FORM = {
     // Section 1: Student Information
-    studentFirstName: "", studentLastName: "", preferredName: "", dateOfBirth: "", currentGrade: "", gradeEnteringFall: "", currentSchool: "", cityOfResidence: "", studentEmail: "", studentPhone: "",
+    studentFullName: "", dateOfBirth: "", gradeEnteringFall: "", currentSchool: "", cityOfResidence: "", studentEmail: "", studentPhone: "",
     // Section 2: Parent / Guardian
     parentFirstName: "", parentLastName: "", parentRelationship: "", parentEmail: "", parentPhone: "",
     addSecondaryParent: "", secondaryParentName: "", secondaryParentEmail: "", secondaryParentPhone: "", preferredContactMethod: "",
@@ -6972,6 +6972,10 @@ function PortalPage({ setPage }) {
   const TOTAL_APP_STEPS = 9;
   const [appSaving, setAppSaving] = React.useState(false);
   const [viewingSubmitted, setViewingSubmitted] = React.useState(false);
+  // Lets a family self-edit their already-submitted application (no admin
+  // approval needed) any time before payment is completed. Once payment is
+  // done, editing goes back through the "Request to Edit" admissions flow.
+  const [editingApplication, setEditingApplication] = React.useState(false);
   const [editRequested, setEditRequested] = React.useState(false);
   const [forceProgramPicker, setForceProgramPicker] = React.useState(false); // lets a student reopen the program-choice screen after already picking one
   const [programPickerDone, setProgramPickerDone] = React.useState(false); // only true once the student clicks "Next step" on the program picker — selecting a card alone does not advance
@@ -7222,7 +7226,7 @@ function PortalPage({ setPage }) {
         // and confirmed at the start of a session, never silently skipped.
         const pr = app.program_responses || {};
         setAppForm({
-          studentFirstName: app.student_first_name || "", studentLastName: app.student_last_name || "", preferredName: app.preferred_name || "", dateOfBirth: app.date_of_birth || "", currentGrade: app.current_grade || "", gradeEnteringFall: app.grade_entering_fall || "", currentSchool: app.current_school || "", cityOfResidence: app.city_of_residence || "", studentEmail: app.student_email || "", studentPhone: app.student_phone || "",
+          studentFullName: [app.student_first_name, app.student_last_name].filter(Boolean).join(" "), dateOfBirth: app.date_of_birth || "", gradeEnteringFall: app.grade_entering_fall || "", currentSchool: app.current_school || "", cityOfResidence: app.city_of_residence || "", studentEmail: app.student_email || "", studentPhone: app.student_phone || "",
           parentFirstName: app.parent_first_name || "", parentLastName: app.parent_last_name || "", parentRelationship: app.parent_relationship || "", parentEmail: app.parent_email || "", parentPhone: app.parent_phone || "",
           secondaryParentName: app.secondary_parent_name || "", secondaryParentEmail: app.secondary_parent_email || "", secondaryParentPhone: app.secondary_parent_phone || "", preferredContactMethod: app.preferred_contact_method || "",
           gpaRange: app.gpa_range || "", academicInterests: app.academic_interests || [], extracurriculars: app.extracurriculars || "", priorProgramsExperience: app.prior_programs_experience ? "yes" : "", priorProgramsDescription: app.prior_programs_description || "",
@@ -7402,11 +7406,9 @@ function PortalPage({ setPage }) {
     const payload = {
       student_id: student.id,
       // Section 1
-      student_first_name: appForm.studentFirstName,
-      student_last_name: appForm.studentLastName,
-      preferred_name: appForm.preferredName,
+      student_first_name: (appForm.studentFullName || "").trim().split(/\s+/)[0] || "",
+      student_last_name: (appForm.studentFullName || "").trim().split(/\s+/).slice(1).join(" "),
       date_of_birth: appForm.dateOfBirth || null,
-      current_grade: appForm.currentGrade,
       grade_entering_fall: appForm.gradeEnteringFall,
       current_school: appForm.currentSchool,
       city_of_residence: appForm.cityOfResidence,
@@ -7460,8 +7462,12 @@ function PortalPage({ setPage }) {
       student_signature: appForm.studentSignature,
       parent_signature: appForm.parentSignature,
       // Meta
-      status: submit ? "submitted" : "draft",
-      submitted_at: submit ? new Date().toISOString() : null,
+      // Once an application has moved past "draft", saving without hitting
+      // final Submit (e.g. self-editing before payment) must never quietly
+      // regress its status back to draft — only a brand-new application
+      // should ever be saved as "draft".
+      status: submit ? "submitted" : (application && application.status !== "draft" ? application.status : "draft"),
+      submitted_at: submit ? new Date().toISOString() : (application?.submitted_at || null),
       updated_at: new Date().toISOString(),
     };
     let result;
@@ -8309,9 +8315,8 @@ function PortalPage({ setPage }) {
   const statusSteps = needsSummerPayment
     ? [
         { key: "draft", label: "Application Started", desc: "You've begun your application. Complete every section and submit when you're ready — you can save your progress at any time." },
-        { key: "submitted", label: "Application Completed", desc: "Your application has been received and is complete. Our admissions committee will begin its review shortly." },
-        { key: "under_review", label: "Under Review", desc: "Our admissions committee is currently reviewing your application alongside your stated program and track preferences." },
-        { key: "accepted", label: "Decision Released", desc: "A decision has been made on your application. Check your email and the Status section below for details." },
+        { key: "submitted", label: "Application Completed", desc: "Your application has been received and is complete. Complete payment below to reserve your seat — you can still edit your application at any time before paying." },
+        { key: "paid", label: "Payment Completed", desc: "Your payment has been received." },
         { key: "enrolled", label: "Enrollment Confirmed", desc: "Payment received — your seat is confirmed. Click this step for your session time and location." },
       ]
     : [
@@ -8714,7 +8719,7 @@ function PortalPage({ setPage }) {
         )}
 
         {activeTab === "application" && role === "student" && (() => {
-          const isSubmitted = application && application.status !== "draft";
+          const isSubmitted = application && application.status !== "draft" && !editingApplication;
           const getVal = (path) => path.split(".").reduce((o, k) => (o == null ? undefined : o[k]), appForm);
           const setVal = (path, v) => {
             const keys = path.split(".");
@@ -8826,13 +8831,8 @@ function PortalPage({ setPage }) {
           }
 
           const allQuestions = [
-            { section: "Student Information", path: "studentFirstName", label: "Student's First Name", type: "text" },
-            { section: "Student Information", path: "studentLastName", label: "Student's Last Name", type: "text" },
-            { section: "Student Information", path: "preferredName", label: "Do you use a preferred name?", type: "text", optional: true, hint: "If you go by a name different from your legal first name, please enter it here." },
+            { section: "Student Information", path: "studentFullName", label: "Student's Full Name", type: "fullname" },
             { section: "Student Information", path: "dateOfBirth", label: "Student's Date of Birth", type: "text", inputType: "date" },
-            { section: "Student Information", path: "currentGrade", label: "What grade are you currently in?", type: "pills", options: [["8th", "8th"], ["9th", "9th"], ["10th", "10th"], ["11th", "11th"], ["12th", "12th"]] },
-            { section: "Student Information", path: "gradeEnteringFall", label: "What grade will you be entering in Fall 2026?", type: "pills", options: [["9th", "9th"], ["10th", "10th"], ["11th", "11th"], ["12th", "12th"], ["gap-other", "Gap Year / Other"]] },
-            { section: "Student Information", path: "currentSchool", label: "What school do you currently attend?", type: "text" },
             { section: "Student Information", path: "cityOfResidence", label: "What city do you live in?", type: "text" },
             { section: "Student Information", path: "studentEmail", label: "What is your email address?", type: "text", inputType: "email" },
             { section: "Student Information", path: "studentPhone", label: "What is your phone number?", type: "text", inputType: "tel", optional: true },
@@ -8850,11 +8850,9 @@ function PortalPage({ setPage }) {
             { section: "Parent / Guardian Information", path: "secondaryParentPhone", label: "Secondary Parent/Guardian: Phone number", type: "text", inputType: "tel", conditional: f => f.addSecondaryParent === "yes" },
             { section: "Parent / Guardian Information", path: "preferredContactMethod", label: "Parent/Guardian: What is your preferred method of contact?", type: "pills", options: [["email", "Email"], ["phone", "Phone"], ["text", "Text"]] },
 
-            { section: "School & Academic Background", path: "gpaRange", label: "What is your current GPA range?", type: "pills", options: [["4.0+", "4.0+"], ["3.7-3.99", "3.7–3.99"], ["3.3-3.69", "3.3–3.69"], ["3.0-3.29", "3.0–3.29"], ["below-3.0", "Below 3.0"], ["prefer-not", "Prefer not to say"]] },
+            { section: "School & Academic Background", path: "gradeEnteringFall", label: "What grade will you be entering in Fall 2026?", type: "pills", options: [["9th", "9th"], ["10th", "10th"], ["11th", "11th"], ["12th", "12th"], ["gap-other", "Gap Year / Other"]] },
+            { section: "School & Academic Background", path: "currentSchool", label: "What school do you currently attend?", type: "text" },
             { section: "School & Academic Background", path: "academicInterests", label: "Which academic or professional fields are you most interested in exploring?", type: "checks", hint: "Please select the subjects, industries, or professional fields that interest you most.", options: ["Business", "Entrepreneurship", "Finance", "Law", "Politics / Government", "Technology / AI", "Engineering", "Medicine / Healthcare", "Media / Communications", "Arts / Design", "Social Impact / Nonprofit", "Leadership", "Other"] },
-            { section: "School & Academic Background", path: "extracurriculars", label: "Which activities, commitments, or leadership experiences have been most important to you, and why?", type: "textarea", hint: "This may include clubs, athletics, student government, volunteering, internships, paid work, family responsibilities, creative projects, community involvement, or leadership roles. Please describe what you contributed, what responsibilities you held, and what you learned." },
-            { section: "School & Academic Background", path: "priorProgramsExperience", label: "Have you previously participated in entrepreneurship, debate, leadership, business, Model UN, speech, finance, coding, or similar programs?", type: "pills", options: [["yes", "Yes"], ["no", "No"]] },
-            { section: "School & Academic Background", path: "priorProgramsDescription", label: "If yes, please briefly describe the program, activity, or experience.", type: "textarea", hint: "Please include the name of the program or activity, your role, and what you learned or accomplished.", conditional: f => f.priorProgramsExperience === "yes" },
 
             { section: "Program Selection & Scholarship", path: "applyingMultiple", label: "Are you applying for more than one program?", type: "pills", conditional: () => !summerOnly, options: [["yes", "Yes"], ["no", "No"]] },
             { section: "Program Selection & Scholarship", path: "firstChoiceProgram", label: "If yes, which program is your first choice?", type: "pills", conditional: f => !summerOnly && f.applyingMultiple === "yes", options: [["summer", "Summer Masterseries — The Founder's Day"], ["foundation", "Foundation Semester"], ["venture", "Venture Semester"], ["full-year", "Full Academic Year"], ["unsure", "Not sure yet"]] },
@@ -8893,8 +8891,6 @@ function PortalPage({ setPage }) {
             { section: "College Counseling", path: "hasCollegeCounselor", label: "Do you currently work with a college counselor, either independent or school-based?", type: "pills", conditional: () => !summerOnly, options: [["yes", "Yes"], ["no", "No"], ["not-sure", "Not sure"]] },
             { section: "College Counseling", path: "coordinateWithCounselor", label: "If yes, would you like Excalibur Academy to coordinate your Excalibur portfolio with your college counselor after program completion?", type: "pills", hint: "This may include sharing your final venture portfolio, presentation work, leadership materials, or program summary with your family's approval.", conditional: f => !summerOnly && f.hasCollegeCounselor === "yes", options: [["yes", "Yes"], ["no", "No"], ["not-sure", "Not sure yet"]] },
 
-            { section: "Parent Confirmation", path: "__statement", label: "I understand that Excalibur Academy programs are active, discussion-based, team-based, and presentation-driven. Students are expected to participate respectfully, attend consistently, complete assigned work, and contribute to a serious learning environment.", type: "display" },
-            { section: "Parent Confirmation", path: "parentStatementAgreed", label: "Parent/Guardian: Please confirm that you have read and understood the statement above.", type: "confirm", confirmLabel: "I confirm." },
             { section: "Parent Confirmation", path: "learningStyleNotes", label: "Parent/Guardian: Is there anything the admissions team should know about the student's learning style, communication style, confidence level, or support needs?", type: "textarea", optional: true, hint: "This may include information that would help our team support the student's participation, confidence, communication, or transition into the program." },
             { section: "Parent Confirmation", path: "dietaryNotes", label: "Parent/Guardian: Does the student have any dietary restrictions or allergies we should be aware of during onboarding?", type: "text", optional: true, hint: "Full dietary and medical information may be collected after admission during onboarding." },
 
@@ -8949,7 +8945,10 @@ function PortalPage({ setPage }) {
                     {checkoutError && (
                       <p style={{ fontFamily: sans, fontSize: 13, color: "#8A4A1E", fontWeight: 600, marginBottom: 12 }}>Error: {checkoutError}</p>
                     )}
-                    <button onClick={() => handleSummerCheckout(application.id)} disabled={checkoutBusy} style={{ fontFamily: sans, padding: "14px 28px", background: m_ink, border: "none", color: m_white, fontSize: 14, fontWeight: 700, cursor: checkoutBusy ? "default" : "pointer", borderRadius: 999, opacity: checkoutBusy ? 0.6 : 1, marginBottom: 28 }}>{checkoutBusy ? "Opening Secure Checkout..." : "Proceed to Secure Payment →"}</button>
+                    <button onClick={() => handleSummerCheckout(application.id)} disabled={checkoutBusy} style={{ fontFamily: sans, padding: "14px 28px", background: m_ink, border: "none", color: m_white, fontSize: 14, fontWeight: 700, cursor: checkoutBusy ? "default" : "pointer", borderRadius: 999, opacity: checkoutBusy ? 0.6 : 1, marginBottom: 12 }}>{checkoutBusy ? "Opening Secure Checkout..." : "Proceed to Secure Payment →"}</button>
+                    <p style={{ fontFamily: sans, fontSize: 13, color: m_gray, marginBottom: 28 }}>
+                      Need to fix something first? You can edit your application freely up until payment is complete — no need to request access.
+                    </p>
                   </>
                 ) : needsSummerPayment ? (
                   <>
@@ -8977,6 +8976,9 @@ function PortalPage({ setPage }) {
                 )}
 
                 <div style={{ display: "flex", flexWrap: "wrap", gap: 10, marginBottom: 28 }}>
+                  {needsPayment && (
+                    <button onClick={() => setEditingApplication(true)} style={{ fontFamily: sans, padding: "12px 24px", background: "transparent", border: `1px solid ${m_ink}`, color: m_ink, fontSize: 14, fontWeight: 600, cursor: "pointer", borderRadius: 999 }}>Edit Application →</button>
+                  )}
                   <button onClick={() => setViewingSubmitted(v => !v)} style={{ fontFamily: sans, padding: "12px 24px", background: m_ink, border: "none", color: m_white, fontSize: 14, fontWeight: 600, cursor: "pointer", borderRadius: 999 }}>{viewingSubmitted ? "Hide Application ↑" : "View My Application →"}</button>
                   <button onClick={() => setActiveTab("messages")} style={{ fontFamily: sans, padding: "12px 24px", background: "transparent", border: `1px solid ${m_line}`, color: m_ink, fontSize: 14, fontWeight: 500, cursor: "pointer", borderRadius: 999 }}>Contact Us →</button>
                   <button onClick={() => setActiveTab("consultation")} style={{ fontFamily: sans, padding: "12px 24px", background: "transparent", border: `1px solid ${m_line}`, color: m_ink, fontSize: 14, fontWeight: 500, cursor: "pointer", borderRadius: 999 }}>Schedule a Consultation →</button>
@@ -9002,13 +9004,19 @@ function PortalPage({ setPage }) {
                   <div style={{ borderTop: `1px solid ${m_line}`, paddingTop: 24 }}>
                     <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 8, flexWrap: "wrap", gap: 10 }}>
                       <p style={{ fontFamily: sans, fontSize: 17, fontWeight: 800, color: m_ink }}>Your Submitted Application</p>
-                      {editRequested ? (
+                      {needsPayment ? (
+                        <button onClick={() => setEditingApplication(true)} style={{ fontFamily: sans, padding: "9px 18px", background: m_ink, border: "none", color: m_white, fontSize: 13, fontWeight: 600, cursor: "pointer", borderRadius: 999 }}>Edit Application →</button>
+                      ) : editRequested ? (
                         <span style={{ fontFamily: sans, fontSize: 13, color: m_gray, fontWeight: 600 }}>Edit request sent ✓</span>
                       ) : (
                         <button onClick={handleRequestEditAccess} style={{ fontFamily: sans, padding: "9px 18px", background: "transparent", border: `1px solid ${m_line}`, color: m_ink, fontSize: 13, fontWeight: 600, cursor: "pointer", borderRadius: 999 }}>Request to Edit →</button>
                       )}
                     </div>
-                    <p style={{ fontFamily: sans, fontSize: 13, color: m_gray, lineHeight: 1.6, marginBottom: 20 }}>This is a read-only view of what you submitted. To make changes, request edit access and our admissions team will reopen it for you.</p>
+                    <p style={{ fontFamily: sans, fontSize: 13, color: m_gray, lineHeight: 1.6, marginBottom: 20 }}>
+                      {needsPayment
+                        ? "You can edit any part of your application directly, any time before payment is completed."
+                        : "This is a read-only view of what you submitted. To make changes, request edit access and our admissions team will reopen it for you."}
+                    </p>
                     {groups.filter(g => g.section !== "Review").map(g => (
                       <div key={g.section} style={{ marginBottom: 22 }}>
                         <p style={{ fontFamily: sans, fontSize: 12, letterSpacing: "0.08em", color: m_gray, fontWeight: 700, textTransform: "uppercase", marginBottom: 10 }}>{g.section}</p>
@@ -9073,6 +9081,9 @@ function PortalPage({ setPage }) {
           );
 
           const renderInput = (q) => {
+            if (q.type === "fullname") {
+              return <input type="text" value={getVal(q.path) || ""} onChange={e => setVal(q.path, e.target.value)} placeholder="First and last name" style={whiteInput} />;
+            }
             if (q.type === "text") {
               return <input type={q.inputType || "text"} value={getVal(q.path) || ""} onChange={e => setVal(q.path, e.target.value)} style={whiteInput} />;
             }
@@ -9140,9 +9151,14 @@ function PortalPage({ setPage }) {
             <div style={{ background: "#FFFFFF", border: "1px solid rgba(17,17,17,.08)", borderRadius: 18, width: "100%", padding: isMobile ? "28px 22px" : "40px 48px", boxSizing: "border-box" }}>
                   <style>{`@keyframes slideInQ { from { transform: translateX(28px); opacity: 0; } to { transform: translateX(0); opacity: 1; } }`}</style>
 
-                  <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 24 }}>
+                  <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 24, flexWrap: "wrap", gap: 8 }}>
                     <p style={{ fontFamily: sans, fontSize: 13, letterSpacing: "0.1em", color: "#8A8A86", fontWeight: 600, textTransform: "uppercase" }}>Section {secIndex + 1} of {total}</p>
-                    <p onClick={() => setForceProgramPicker(true)} style={{ fontFamily: sans, fontSize: 12.5, color: "#8A8A86", textDecoration: "underline", cursor: "pointer" }}>Change Program Selection</p>
+                    <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
+                      {editingApplication && (
+                        <p onClick={() => setEditingApplication(false)} style={{ fontFamily: sans, fontSize: 12.5, color: "#8A8A86", textDecoration: "underline", cursor: "pointer" }}>← Back to Application Status</p>
+                      )}
+                      <p onClick={() => setForceProgramPicker(true)} style={{ fontFamily: sans, fontSize: 12.5, color: "#8A8A86", textDecoration: "underline", cursor: "pointer" }}>Change Program Selection</p>
+                    </div>
                   </div>
 
                   <div style={{ display: "flex", gap: 4, marginBottom: 32 }}>
@@ -9181,11 +9197,11 @@ function PortalPage({ setPage }) {
                         <p style={{ fontFamily: sans, fontSize: 12, color: "#8A4A1E" }}>Please answer all required questions above to continue.</p>
                       )}
                       <div style={{ display: "flex", gap: 12 }}>
-                        <button onClick={() => handleSaveApplication(false)} disabled={appSaving} style={{ fontFamily: sans, padding: "13px 22px", background: "transparent", border: "1px solid rgba(17,17,17,.15)", color: "#111111", fontSize: 14, fontWeight: 500, cursor: "pointer", borderRadius: 999 }}>{appSaving ? "Saving..." : "Save Draft"}</button>
+                        <button onClick={() => handleSaveApplication(false).then(() => setEditingApplication(false))} disabled={appSaving} style={{ fontFamily: sans, padding: "13px 22px", background: "transparent", border: "1px solid rgba(17,17,17,.15)", color: "#111111", fontSize: 14, fontWeight: 500, cursor: "pointer", borderRadius: 999 }}>{appSaving ? "Saving..." : editingApplication ? "Save Changes" : "Save Draft"}</button>
                         {secIndex < total - 1 ? (
                           <button onClick={goNext} disabled={!groupComplete} style={{ fontFamily: sans, padding: "13px 24px", background: groupComplete ? "#111111" : "rgba(17,17,17,0.15)", border: "none", color: "#FFFFFF", fontSize: 14, fontWeight: 600, cursor: groupComplete ? "pointer" : "default", borderRadius: 999 }}>Next →</button>
                         ) : (
-                          <button onClick={() => handleSaveApplication(true)} disabled={appSaving || !appForm.accuracyConfirmed || !appForm.parentPermissionConfirmed || !appForm.studentSignature || !appForm.parentSignature} style={{ fontFamily: sans, padding: "13px 24px", background: "#111111", border: "none", color: "#FFFFFF", fontSize: 14, fontWeight: 600, cursor: "pointer", borderRadius: 999 }}>{appSaving ? "Submitting..." : ((appForm.summer.selectedSessions || []).length > 0 ? "Submit Application & Pay Online →" : "Submit Application →")}</button>
+                          <button onClick={() => handleSaveApplication(true).then(() => setEditingApplication(false))} disabled={appSaving || !appForm.accuracyConfirmed || !appForm.parentPermissionConfirmed || !appForm.studentSignature || !appForm.parentSignature} style={{ fontFamily: sans, padding: "13px 24px", background: "#111111", border: "none", color: "#FFFFFF", fontSize: 14, fontWeight: 600, cursor: "pointer", borderRadius: 999 }}>{appSaving ? "Submitting..." : editingApplication ? "Save Changes →" : ((appForm.summer.selectedSessions || []).length > 0 ? "Submit Application & Pay Online →" : "Submit Application →")}</button>
                         )}
                       </div>
                     </div>
@@ -9201,7 +9217,7 @@ function PortalPage({ setPage }) {
             <p style={{ fontFamily: sans, fontSize: 15, color: "#111111", opacity: 0.7, lineHeight: 1.7, marginBottom: 28 }}>Pick a time that works for you below, and a member of our admissions team will confirm the consultation directly.</p>
             <ZcalEmbed
               prefill={{
-                name: [appForm.studentFirstName, appForm.studentLastName].filter(Boolean).join(" ") || (student ? `${student.first_name || ""} ${student.last_name || ""}`.trim() : ""),
+                name: appForm.studentFullName || (student ? `${student.first_name || ""} ${student.last_name || ""}`.trim() : ""),
                 email: appForm.parentEmail || appForm.studentEmail || "",
               }}
             />
@@ -16142,6 +16158,22 @@ function FacultyPortalShell({ facultyProfile, facultyRole, onSignOut }) {
           </p>
         </div>
 
+        <div style={{ borderBottom: "1px solid rgba(228,213,193,0.1)", paddingBottom: 16, marginBottom: 16 }}>
+          <p style={{ fontFamily: lora, fontSize: 13, color: "#E4D5C1", margin: "0 0 2px" }}>{facultyProfile?.full_name}</p>
+          <p style={{ fontFamily: lora, fontSize: 11, color: "#6B6459", margin: "0 0 12px" }}>{facultyProfile?.role_title}</p>
+          <button
+            onClick={onSignOut}
+            style={{
+              width: "100%", padding: "9px 0", background: "transparent",
+              border: "1px solid rgba(228,213,193,0.2)", borderRadius: 3,
+              color: "#9A9186", fontFamily: lora, fontSize: 12, letterSpacing: "0.05em",
+              textTransform: "uppercase", cursor: "pointer",
+            }}
+          >
+            Sign Out
+          </button>
+        </div>
+
         <nav style={{ display: "flex", flexDirection: isMobile ? "row" : "column", flexWrap: "wrap", gap: 4, flex: 1 }}>
           {FACULTY_NAV_SECTIONS.map((s) => (
             <button
@@ -16159,22 +16191,6 @@ function FacultyPortalShell({ facultyProfile, facultyRole, onSignOut }) {
             </button>
           ))}
         </nav>
-
-        <div style={{ borderTop: "1px solid rgba(228,213,193,0.1)", paddingTop: 16, marginTop: 16 }}>
-          <p style={{ fontFamily: lora, fontSize: 13, color: "#E4D5C1", margin: "0 0 2px" }}>{facultyProfile?.full_name}</p>
-          <p style={{ fontFamily: lora, fontSize: 11, color: "#6B6459", margin: "0 0 12px" }}>{facultyProfile?.role_title}</p>
-          <button
-            onClick={onSignOut}
-            style={{
-              width: "100%", padding: "9px 0", background: "transparent",
-              border: "1px solid rgba(228,213,193,0.2)", borderRadius: 3,
-              color: "#9A9186", fontFamily: lora, fontSize: 12, letterSpacing: "0.05em",
-              textTransform: "uppercase", cursor: "pointer",
-            }}
-          >
-            Sign Out
-          </button>
-        </div>
       </div>
 
       {/* ── CONTENT AREA ── */}
