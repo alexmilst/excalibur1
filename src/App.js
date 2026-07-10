@@ -6842,9 +6842,9 @@ function SummerDetailPage({ setPage, openInquiry }) {
       <div style={{ background: dark, padding: isMobile ? "72px 24px" : "100px 80px", borderBottom: `1px solid rgba(164,141,110,.1)` }}>
         <div style={{ maxWidth: 1100, margin: "0 auto", display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: isMobile ? 48 : 80 }}>
           <div>
-            <p style={{ fontFamily: sans, fontSize: 10, letterSpacing: "0.45em", color: gold, fontWeight: 700, textTransform: "uppercase", marginBottom: 20 }}>Where This Leads</p>
-            <h2 style={{ fontFamily: cg, fontSize: isMobile ? "clamp(28px,6vw,44px)" : "clamp(36px,4vw,52px)", fontWeight: 400, color: parch, textTransform: "uppercase", letterSpacing: "0.04em", marginBottom: 24 }}>A First Step, Not a Finish Line</h2>
-            <p style={{ fontFamily: lora, fontSize: isMobile ? 15 : 17, color: parch, fontWeight: 300, lineHeight: 1.85, marginBottom: 32 }}>The Founder's Day offers a direct introduction to Excalibur Academy's flagship Academic Year Programs — where students go deeper, build over time, and develop a portfolio of real work.</p>
+            <p style={{ fontFamily: sans, fontSize: 10, letterSpacing: "0.45em", color: gold, fontWeight: 700, textTransform: "uppercase", marginBottom: 20 }}>Introduction to the Academy</p>
+            <h2 style={{ fontFamily: cg, fontSize: isMobile ? "clamp(28px,6vw,44px)" : "clamp(36px,4vw,52px)", fontWeight: 400, color: parch, textTransform: "uppercase", letterSpacing: "0.04em", marginBottom: 24 }}>Where This Leads</h2>
+            <p style={{ fontFamily: lora, fontSize: isMobile ? 15 : 17, color: parch, fontWeight: 300, lineHeight: 1.85, marginBottom: 32 }}>The Founder's Day offers a direct introduction to Excalibur Academy's flagship after-school Academic Year Programs:</p>
             {[
               { title: "Foundation Semester", sub: "14 weeks · Fall 2026 · September–December", desc: "Core curriculum in Business, Entrepreneurship, The Art of Class, Leadership, communication, and executive presence." },
               { title: "Venture Semester", sub: "16 weeks · Spring 2027", desc: "Students work in teams to plan, build, and pitch a real venture across a full semester, culminating in a Shark Tank-inspired Finale." },
