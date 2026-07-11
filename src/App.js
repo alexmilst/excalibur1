@@ -16653,24 +16653,63 @@ function groupSessionsByDay(sessions, rateByType) {
   });
 }
 
+// Sessions for activity types with a tiered "included, then overage" rate
+// rule (included_per_month / included_per_year + overage_rate_amount set on
+// faculty_rate_rules) get tagged with their occurrence count within the
+// relevant period (calendar month or calendar year, based on session_date)
+// and whether that occurrence exceeds the included allowance. Runs once,
+// centrally, in useFacultyScheduleData -- every screen that reads sessions
+// from that hook (Dashboard, My Schedule, Rate & Pay Summary) automatically
+// sees correctly-billed overage sessions without recomputing anything.
+function applyTieredOverageBilling(sessions, rateByType) {
+  const counters = {};
+  const sorted = sessions.slice().sort((a, b) => (a.session_date || "").localeCompare(b.session_date || ""));
+
+  return sorted.map((s) => {
+    const rr = rateByType[s.activity_type];
+    const allowance = rr ? (rr.included_per_month || rr.included_per_year) : null;
+    if (!rr || rr.rate_type !== "included" || !allowance) return s;
+
+    const periodKey = rr.included_per_month ? (s.session_date || "").slice(0, 7) : (s.session_date || "").slice(0, 4);
+    const counterKey = `${s.activity_type}|${periodKey}`;
+    counters[counterKey] = (counters[counterKey] || 0) + 1;
+    const occurrence = counters[counterKey];
+
+    return {
+      ...s,
+      _tierOccurrence: occurrence,
+      _tierAllowance: allowance,
+      _tierPeriod: rr.included_per_month ? "month" : "year",
+      _tierIsOverage: occurrence > allowance,
+      _tierOverageRate: rr.overage_rate_amount != null ? Number(rr.overage_rate_amount) : null,
+    };
+  });
+}
+
 function formatOtherBilled(sessionsList, rateByType) {
   if (sessionsList.length !== 1) return "—";
   const s = sessionsList[0];
   const rr = rateByType[s.activity_type];
   if (!rr) return "—";
+  if (s._tierIsOverage) return s.billable_hours != null ? `${s.billable_hours} hr` : "—";
   if (rr.rate_type === "included") return "Included";
   if (rr.rate_type === "flat") return "1 session";
   return s.billable_hours != null ? `${s.billable_hours} hr` : "—";
 }
 function formatOtherRate(sessionsList, rateByType) {
   if (sessionsList.length !== 1) return "—";
-  return formatRate(rateByType[sessionsList[0].activity_type]);
+  const s = sessionsList[0];
+  if (s._tierIsOverage) return s._tierOverageRate != null ? `$${s._tierOverageRate}/hr` : "—";
+  return formatRate(rateByType[s.activity_type]);
 }
 function formatOtherPay(sessionsList, rateByType) {
   if (sessionsList.length !== 1) return "—";
   const s = sessionsList[0];
   const rr = rateByType[s.activity_type];
   if (!rr) return "—";
+  if (s._tierIsOverage) {
+    return (s._tierOverageRate != null && s.billable_hours != null) ? `$${s._tierOverageRate * s.billable_hours}` : "—";
+  }
   if (rr.rate_type === "flat") return `$${Number(rr.rate_amount)}`;
   if (rr.rate_type === "included") return "Included";
   if (rr.rate_type === "hourly" && s.billable_hours != null) return `$${Number(rr.rate_amount) * s.billable_hours}`;
@@ -16693,8 +16732,11 @@ function useFacultyScheduleData(sb, facultyId) {
         sb.from("faculty_rate_rules").select("*").eq("faculty_id", facultyId),
         sb.from("programs").select("*").order("sort_order", { ascending: true }),
       ]);
-      setSessions(sessionsRes.data || []);
-      setRateRules(ratesRes.data || []);
+      const rules = ratesRes.data || [];
+      const rateByType = {};
+      rules.forEach((r) => { rateByType[r.activity_type] = r; });
+      setSessions(applyTieredOverageBilling(sessionsRes.data || [], rateByType));
+      setRateRules(rules);
       setPrograms(programsRes.data || []);
       setLoading(false);
     })();
@@ -16838,6 +16880,11 @@ function MyScheduleSection({ facultyProfile, facultyRole }) {
                         {group.allSessions.map((s) => (
                           <p key={s.id} style={{ fontFamily: lora, fontSize: 13, color: "#100F0C", margin: "0 0 3px" }}>
                             {s.start_time ? s.start_time.slice(0, 5) : "TBC"}{s.end_time ? ` – ${s.end_time.slice(0, 5)}` : ""} · {s.block_label}
+                            {s._tierIsOverage && (
+                              <span style={{ fontFamily: lora, fontSize: 10.5, color: "#B4433A", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.04em", marginLeft: 8 }} title={`Occurrence #${s._tierOccurrence} this ${s._tierPeriod} — included allowance of ${s._tierAllowance} exceeded`}>
+                                Billed ({s._tierOccurrence}{s._tierPeriod === "year" ? "th this year" : "rd this month"})
+                              </span>
+                            )}
                           </p>
                         ))}
                       </div>
@@ -16918,6 +16965,7 @@ function computeGroupBilledHoursNumeric(group, rateByType) {
   if (group.teachingSummary) return group.teachingSummary.totalBilledHours;
   if (group.allSessions.length !== 1) return 0;
   const s = group.allSessions[0];
+  if (s._tierIsOverage) return s.billable_hours != null ? Number(s.billable_hours) : 0;
   const rr = rateByType[s.activity_type];
   if (!rr) return 0;
   if (rr.rate_type === "hourly" && s.billable_hours != null) return Number(s.billable_hours);
@@ -16927,6 +16975,9 @@ function computeGroupPayNumeric(group, rateByType) {
   if (group.teachingSummary) return group.teachingSummary.totalPay;
   if (group.allSessions.length !== 1) return 0;
   const s = group.allSessions[0];
+  if (s._tierIsOverage) {
+    return (s._tierOverageRate != null && s.billable_hours != null) ? Number(s._tierOverageRate) * Number(s.billable_hours) : 0;
+  }
   const rr = rateByType[s.activity_type];
   if (!rr) return 0;
   if (rr.rate_type === "flat") return Number(rr.rate_amount);
@@ -17066,6 +17117,11 @@ function RatePaySummarySection({ facultyProfile, facultyRole }) {
                       {group.allSessions.map((s) => (
                         <p key={s.id} style={{ fontFamily: lora, fontSize: 13, color: "#100F0C", margin: "0 0 3px" }}>
                           {s.start_time ? s.start_time.slice(0, 5) : "TBC"}{s.end_time ? ` – ${s.end_time.slice(0, 5)}` : ""} · {s.block_label}
+                          {s._tierIsOverage && (
+                            <span style={{ fontFamily: lora, fontSize: 10.5, color: "#B4433A", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.04em", marginLeft: 8 }} title={`Occurrence #${s._tierOccurrence} this ${s._tierPeriod} — included allowance of ${s._tierAllowance} exceeded`}>
+                              Billed ({s._tierOccurrence}{s._tierPeriod === "year" ? "th this year" : "rd this month"})
+                            </span>
+                          )}
                         </p>
                       ))}
                     </div>
