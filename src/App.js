@@ -15803,8 +15803,10 @@ function VentureDetailPage({ setPage, openInquiry }) {
 //
 // Reached via ?page=faculty
 //
-// BUILD STATUS: Login + Dashboard shell only. Every other nav section shows
-// a "Coming soon" placeholder — built one at a time in following passes.
+// BUILD STATUS: Login, Dashboard, My Schedule, Lesson Plans & Materials, and
+// Rate & Pay Summary are built. Every other nav section still shows a
+// "Coming soon" placeholder — built one at a time in following passes.
+// Next up: Billing & Invoices.
 // ═══════════════════════════════════════════════════════════════════════
 
 const FACULTY_NAV_SECTIONS = [
@@ -16050,6 +16052,15 @@ function FacultyDashboardHome({ facultyProfile, facultyRole }) {
         </div>
       </div>
 
+      {facultyProfile?.full_name !== "Bill Morris" && (
+        <div style={{ marginBottom: 40 }}>
+          <h3 style={{ fontFamily: cg, fontSize: 22, color: "#100F0C", fontWeight: 600, margin: "0 0 18px" }}>
+            Your Rate Card
+          </h3>
+          <StandardRateCardTable compact />
+        </div>
+      )}
+
       {facultyRole === "admin" && (
         <div style={{ ...card, marginBottom: 40, borderColor: "rgba(164,141,110,0.5)" }}>
           <p style={cardLabel}>Admin — Faculty Overview</p>
@@ -16216,6 +16227,10 @@ function FacultyPortalShell({ facultyProfile, facultyRole, onSignOut }) {
           <MyScheduleSection facultyProfile={facultyProfile} facultyRole={facultyRole} />
         ) : activeSection === "lessons" ? (
           <LessonPlansSection facultyProfile={facultyProfile} facultyRole={facultyRole} />
+        ) : activeSection === "pay" ? (
+          <RatePaySummarySection facultyProfile={facultyProfile} facultyRole={facultyRole} />
+        ) : activeSection === "billing" ? (
+          <BillingSection facultyProfile={facultyProfile} facultyRole={facultyRole} />
         ) : (
           <div>
             <h2 style={{ fontFamily: cg, fontSize: 26, color: "#100F0C", fontWeight: 500, margin: "0 0 12px" }}>
@@ -16879,6 +16894,381 @@ function MyScheduleSection({ facultyProfile, facultyRole }) {
 }
 
 // ═══════════════════════════════════════════════════════════════════════
+
+// ═══════════════════════════════════════════════════════════════════════
+// RATE & PAY SUMMARY
+// ═══════════════════════════════════════════════════════════════════════
+
+// Falls back to a readable Title Case version of any activity_type we don't
+// have a specific override for, so new rate rule types added later never
+// render as raw snake_case.
+function humanizeActivityType(type) {
+  if (!type) return "—";
+  const overrides = {
+    teaching_single: "Teaching — Single Block",
+    teaching_multi: "Teaching — Multi-Block (Hourly)",
+  };
+  if (overrides[type]) return overrides[type];
+  return type.split("_").map((w) => w.charAt(0).toUpperCase() + w.slice(1)).join(" ");
+}
+
+// Same per-day math as My Schedule, but returns plain numbers (not display
+// strings) so day totals can be summed into program and grand totals.
+function computeGroupBilledHoursNumeric(group, rateByType) {
+  if (group.teachingSummary) return group.teachingSummary.totalBilledHours;
+  if (group.allSessions.length !== 1) return 0;
+  const s = group.allSessions[0];
+  const rr = rateByType[s.activity_type];
+  if (!rr) return 0;
+  if (rr.rate_type === "hourly" && s.billable_hours != null) return Number(s.billable_hours);
+  return 0;
+}
+function computeGroupPayNumeric(group, rateByType) {
+  if (group.teachingSummary) return group.teachingSummary.totalPay;
+  if (group.allSessions.length !== 1) return 0;
+  const s = group.allSessions[0];
+  const rr = rateByType[s.activity_type];
+  if (!rr) return 0;
+  if (rr.rate_type === "flat") return Number(rr.rate_amount);
+  if (rr.rate_type === "hourly" && s.billable_hours != null) return Number(rr.rate_amount) * Number(s.billable_hours);
+  return 0;
+}
+
+function RatePaySummarySection({ facultyProfile, facultyRole }) {
+  const sb = getSupabase();
+  const lora = "'Lora', Georgia, serif";
+  const cg = "'Cormorant Garamond', Georgia, serif";
+  const { sessions, rateRules, programs, loading } = useFacultyScheduleData(sb, facultyProfile?.id);
+
+  if (loading) {
+    return <p style={{ fontFamily: cg, fontSize: 16, color: "#6B6459", fontStyle: "italic" }}>Loading your rate & pay summary…</p>;
+  }
+
+  const rateByType = {};
+  rateRules.forEach((r) => { rateByType[r.activity_type] = r; });
+
+  const sessionsByProgram = {};
+  programs.forEach((p) => { sessionsByProgram[p.id] = []; });
+  sessions.forEach((s) => {
+    if (!sessionsByProgram[s.program_id]) sessionsByProgram[s.program_id] = [];
+    sessionsByProgram[s.program_id].push(s);
+  });
+
+  const programBreakdowns = programs
+    .map((program) => {
+      const progSessions = sessionsByProgram[program.id] || [];
+      const dayGroups = groupSessionsByDay(progSessions, rateByType);
+      const totalBilledHours = dayGroups.reduce((sum, g) => sum + computeGroupBilledHoursNumeric(g, rateByType), 0);
+      const totalPay = dayGroups.reduce((sum, g) => sum + computeGroupPayNumeric(g, rateByType), 0);
+      return { program, dayGroups, totalBilledHours, totalPay };
+    })
+    .filter((pb) => pb.dayGroups.length > 0);
+
+  const grandTotalBilledHours = programBreakdowns.reduce((sum, pb) => sum + pb.totalBilledHours, 0);
+  const grandTotalPay = programBreakdowns.reduce((sum, pb) => sum + pb.totalPay, 0);
+
+  const SUMMARY_COLUMNS = [
+    { key: "date", label: "Date", align: "left" },
+    { key: "blocks", label: "Blocks", align: "left" },
+    { key: "teaching", label: "Teaching Time", align: "right" },
+    { key: "billed", label: "Billed", align: "right" },
+    { key: "rate", label: "Rate", align: "right" },
+    { key: "pay", label: "Total Pay", align: "right" },
+  ];
+  const gridCols = "112px 1fr 128px 92px 108px 112px";
+  const colHeaderCell = (align) => ({
+    fontFamily: lora, fontSize: 10.5, letterSpacing: "0.1em", color: "#E4D5C1",
+    textTransform: "uppercase", fontWeight: 600, padding: "14px 16px", boxSizing: "border-box",
+    display: "flex", alignItems: "center", justifyContent: align === "right" ? "flex-end" : "flex-start",
+    textAlign: align, minWidth: 0,
+  });
+  const rowCell = (align) => ({
+    padding: "16px", boxSizing: "border-box", minWidth: 0, textAlign: align,
+  });
+
+  return (
+    <div>
+      <h2 style={{ fontFamily: cg, fontSize: 26, color: "#100F0C", fontWeight: 500, margin: "0 0 28px" }}>
+        Rate & Pay Summary
+      </h2>
+
+      {/* ── Grand totals strip ── */}
+      <div style={{ background: "#100F0C", borderRadius: 4, padding: "22px 26px", marginBottom: 36, display: "flex", gap: 40, flexWrap: "wrap" }}>
+        <div>
+          <p style={{ fontFamily: lora, fontSize: 10, color: "#A48D6E", textTransform: "uppercase", letterSpacing: "0.1em", margin: "0 0 4px" }}>Total Hours Billed To Date</p>
+          <p style={{ fontFamily: cg, fontSize: 24, color: "#E4D5C1", fontWeight: 600, margin: 0 }}>{grandTotalBilledHours} hr</p>
+        </div>
+        <div>
+          <p style={{ fontFamily: lora, fontSize: 10, color: "#A48D6E", textTransform: "uppercase", letterSpacing: "0.1em", margin: "0 0 4px" }}>Total Pay Earned To Date</p>
+          <p style={{ fontFamily: cg, fontSize: 24, color: "#E4D5C1", fontWeight: 600, margin: 0 }}>${grandTotalPay.toLocaleString()}</p>
+        </div>
+      </div>
+
+      {/* ── Your Rates ── */}
+      <div style={{ marginBottom: 44 }}>
+        <h3 style={{ fontFamily: cg, fontSize: 20, color: "#100F0C", fontWeight: 600, margin: "0 0 4px", borderBottom: "2px solid #A48D6E", paddingBottom: 8, display: "inline-block" }}>
+          Your Rates
+        </h3>
+        {rateRules.length === 0 ? (
+          <p style={{ fontFamily: cg, fontSize: 16, color: "#6B6459", fontStyle: "italic", marginTop: 14 }}>No rate rules on file yet.</p>
+        ) : (
+          <div style={{ marginTop: 16, border: "1px solid rgba(16,15,12,0.1)", borderRadius: 6, overflow: "hidden", boxShadow: "0 1px 4px rgba(16,15,12,0.06)", maxWidth: 520 }}>
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 140px", background: "#100F0C" }}>
+              <div style={colHeaderCell("left")}>Activity</div>
+              <div style={colHeaderCell("right")}>Rate</div>
+            </div>
+            {rateRules.map((r, i) => (
+              <div key={r.id} style={{ display: "grid", gridTemplateColumns: "1fr 140px", background: i % 2 === 0 ? "#FFFFFF" : "#FAF7F2", borderTop: i === 0 ? "none" : "1px solid rgba(16,15,12,0.07)", alignItems: "center" }}>
+                <div style={rowCell("left")}>
+                  <p style={{ fontFamily: lora, fontSize: 13.5, color: "#100F0C", margin: 0 }}>{humanizeActivityType(r.activity_type)}</p>
+                </div>
+                <div style={rowCell("right")}>
+                  <p style={{ fontFamily: lora, fontSize: 13.5, color: "#100F0C", margin: 0, fontWeight: 700 }}>{formatRate(r)}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+
+      {/* ── Per-program breakdown ── */}
+      {programBreakdowns.length === 0 ? (
+        <p style={{ fontFamily: cg, fontSize: 16, color: "#6B6459", fontStyle: "italic" }}>No billable sessions on record yet.</p>
+      ) : programBreakdowns.map(({ program, dayGroups, totalBilledHours, totalPay }) => {
+        const displayName = facultyDisplayProgramName(program.name);
+        return (
+          <div key={program.id} style={{ marginBottom: 44 }}>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", flexWrap: "wrap", gap: 12, marginBottom: 4 }}>
+              <h3 style={{ fontFamily: cg, fontSize: 23, color: "#100F0C", fontWeight: 600, margin: 0, borderBottom: "2px solid #A48D6E", paddingBottom: 8, display: "inline-block" }}>
+                {displayName}
+              </h3>
+              <p style={{ fontFamily: lora, fontSize: 12.5, color: "#8B7355", margin: 0 }}>
+                {totalBilledHours} hr billed · ${totalPay.toLocaleString()} earned
+              </p>
+            </div>
+            <div style={{ marginTop: 16, border: "1px solid rgba(16,15,12,0.1)", borderRadius: 6, overflow: "hidden", boxShadow: "0 1px 4px rgba(16,15,12,0.06)" }}>
+              <div style={{ display: "grid", gridTemplateColumns: gridCols, background: "#100F0C" }}>
+                {SUMMARY_COLUMNS.map((c) => (
+                  <div key={c.key} style={colHeaderCell(c.align)}>{c.label}</div>
+                ))}
+              </div>
+              {dayGroups.map((group, i) => {
+                const d = new Date(group.date + "T00:00:00");
+                const weekday = WEEKDAY_NAMES[d.getDay()];
+                const dateLabel = d.toLocaleDateString("en-US", { month: "short", day: "numeric" });
+                return (
+                  <div key={group.date} style={{ display: "grid", gridTemplateColumns: gridCols, background: i % 2 === 0 ? "#FFFFFF" : "#FAF7F2", borderTop: i === 0 ? "none" : "1px solid rgba(16,15,12,0.07)", alignItems: "center" }}>
+                    <div style={rowCell("left")}>
+                      <p style={{ fontFamily: lora, fontSize: 13, color: "#100F0C", margin: 0, fontWeight: 700 }}>{dateLabel}</p>
+                      <p style={{ fontFamily: lora, fontSize: 11.5, color: "#8B7355", margin: 0 }}>{weekday}</p>
+                    </div>
+                    <div style={rowCell("left")}>
+                      {group.allSessions.map((s) => (
+                        <p key={s.id} style={{ fontFamily: lora, fontSize: 13, color: "#100F0C", margin: "0 0 3px" }}>
+                          {s.start_time ? s.start_time.slice(0, 5) : "TBC"}{s.end_time ? ` – ${s.end_time.slice(0, 5)}` : ""} · {s.block_label}
+                        </p>
+                      ))}
+                    </div>
+                    <div style={rowCell("right")}>
+                      <p style={{ fontFamily: lora, fontSize: 12.5, color: "#6B6459", margin: 0 }}>
+                        {group.teachingSummary ? formatMinutes(group.teachingSummary.totalActualMinutes) : "—"}
+                      </p>
+                    </div>
+                    <div style={rowCell("right")}>
+                      <p style={{ fontFamily: lora, fontSize: 12.5, color: "#100F0C", margin: 0, fontWeight: 600 }}>
+                        {group.teachingSummary ? `${group.teachingSummary.totalBilledHours} hr` : formatOtherBilled(group.allSessions, rateByType)}
+                      </p>
+                    </div>
+                    <div style={rowCell("right")}>
+                      <p style={{ fontFamily: lora, fontSize: 12.5, color: "#100F0C", margin: 0 }}>
+                        {group.teachingSummary
+                          ? (group.teachingSummary.rateType === "flat" ? `$${group.teachingSummary.rateAmount} flat` : `$${group.teachingSummary.rateAmount}/hr`)
+                          : formatOtherRate(group.allSessions, rateByType)}
+                      </p>
+                    </div>
+                    <div style={rowCell("right")}>
+                      <p style={{ fontFamily: lora, fontSize: 13, color: "#100F0C", margin: 0, fontWeight: 700 }}>
+                        {group.teachingSummary ? `$${group.teachingSummary.totalPay}` : formatOtherPay(group.allSessions, rateByType)}
+                      </p>
+                    </div>
+                  </div>
+                );
+              })}
+              {/* ── Program totals footer row ── */}
+              <div style={{ display: "grid", gridTemplateColumns: gridCols, background: "#F4EDE1", borderTop: "2px solid #A48D6E", alignItems: "center" }}>
+                <div style={rowCell("left")}>
+                  <p style={{ fontFamily: lora, fontSize: 12, color: "#100F0C", margin: 0, fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.08em" }}>Program Total</p>
+                </div>
+                <div style={rowCell("left")} />
+                <div style={rowCell("right")} />
+                <div style={rowCell("right")}>
+                  <p style={{ fontFamily: lora, fontSize: 13, color: "#100F0C", margin: 0, fontWeight: 700 }}>{totalBilledHours} hr</p>
+                </div>
+                <div style={rowCell("right")} />
+                <div style={rowCell("right")}>
+                  <p style={{ fontFamily: lora, fontSize: 14, color: "#100F0C", margin: 0, fontWeight: 700 }}>${totalPay.toLocaleString()}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  );
+}
+
+
+// ===========================================================================
+// STANDARD FACULTY RATE CARD — shared reference table shown on the
+// Dashboard and in Billing & Invoices for every faculty member EXCEPT
+// Bill Morris, who will have a separate portal with his own rate
+// structure. These figures mirror each contractor's signed 1099
+// Independent Contractor Agreement, Exhibit A — Compensation Rate
+// Summary (see e.g. Keree James's agreement, EA-KJ-001).
+// ===========================================================================
+
+const STANDARD_RATE_CARD = [
+  {
+    activity: "Teaching — Single Block (1 hour)",
+    rate: "$350 / hr",
+    type: "hourly",
+    note: "Your standard rate for any teaching block scheduled at one hour.",
+  },
+  {
+    activity: "Teaching — Consecutive / Multi-Block (over 1 hour)",
+    rate: "$300 / hr",
+    type: "hourly",
+    note: "Applies when your teaching on a given day totals more than one hour, billed on the full time taught that day.",
+  },
+  {
+    activity: "Class Preparation",
+    rate: "Included",
+    type: "included",
+    note: "Built into your teaching rate. A dedicated Teaching Assistant is provided to support session planning and execution.",
+  },
+  {
+    activity: "Parent Info Sessions",
+    rate: "Included",
+    type: "included",
+    note: "Your first four Parent Info Sessions each year (of an estimated 3–5, ~1–2 hrs each) are included in your rate. The fifth session and beyond are billed at $200/hr.",
+  },
+  {
+    activity: "Faculty Meetings (up to 2 per month)",
+    rate: "Included",
+    type: "included",
+    note: "Approximately one hour each, part of your standard rate.",
+  },
+  {
+    activity: "Faculty Meetings (3rd and beyond per month)",
+    rate: "$200 / hr",
+    type: "hourly",
+    note: "Additional meetings beyond two per month are tracked and billed separately.",
+  },
+  {
+    activity: "Events & Competitions",
+    rate: "$200 / hr",
+    type: "hourly",
+    note: "Pitch Nights, Shark Tank Finales, Demo Day & Graduation, City Championships, and the Parent Launch Event.",
+  },
+  {
+    activity: "Admissions Committee — First Session per Wave",
+    rate: "$500 / session",
+    type: "flat",
+    note: "Roughly 5–6 times per year — once before each enrollment wave.",
+  },
+  {
+    activity: "Admissions Committee — Additional Sessions per Wave",
+    rate: "$250 / hr",
+    type: "hourly",
+    note: "If more than one admissions session is needed before a given wave.",
+  },
+  {
+    activity: "Private 1:1 Mentorship",
+    rate: "Custom",
+    type: "custom",
+    note: "Arranged directly with the family at a rate you set yourself. You keep 100% — the Academy does not take a share.",
+  },
+];
+
+function RateTypeBadge({ type }) {
+  const lora = "'Lora', Georgia, serif";
+  const styles = {
+    hourly: { bg: "rgba(164,141,110,0.15)", fg: "#8B7355", label: "Hourly" },
+    flat: { bg: "rgba(16,15,12,0.08)", fg: "#100F0C", label: "Flat" },
+    included: { bg: "rgba(61,139,95,0.13)", fg: "#3D8B5F", label: "Included" },
+    custom: { bg: "rgba(107,100,89,0.12)", fg: "#6B6459", label: "Custom" },
+  };
+  const s = styles[type] || styles.custom;
+  return (
+    <span style={{ fontFamily: lora, fontSize: 10.5, fontWeight: 700, letterSpacing: "0.06em", textTransform: "uppercase", color: s.fg, background: s.bg, borderRadius: 3, padding: "4px 10px", whiteSpace: "nowrap" }}>
+      {s.label}
+    </span>
+  );
+}
+
+// compact=true hides the plain-language note per row (used on the
+// Dashboard); compact=false (default) shows full explanations (used in
+// Billing & Invoices, where professors are most likely reading closely).
+function StandardRateCardTable({ compact = false }) {
+  const lora = "'Lora', Georgia, serif";
+  return (
+    <div style={{ border: "1px solid rgba(16,15,12,0.1)", borderRadius: 6, overflow: "hidden", boxShadow: "0 1px 4px rgba(16,15,12,0.06)" }}>
+      <div style={{ display: "grid", gridTemplateColumns: "1fr 120px 100px", background: "#100F0C" }}>
+        <div style={{ fontFamily: lora, fontSize: 10.5, letterSpacing: "0.1em", color: "#E4D5C1", textTransform: "uppercase", fontWeight: 600, padding: "14px 16px" }}>Activity</div>
+        <div style={{ fontFamily: lora, fontSize: 10.5, letterSpacing: "0.1em", color: "#E4D5C1", textTransform: "uppercase", fontWeight: 600, padding: "14px 16px", textAlign: "right" }}>Rate</div>
+        <div style={{ fontFamily: lora, fontSize: 10.5, letterSpacing: "0.1em", color: "#E4D5C1", textTransform: "uppercase", fontWeight: 600, padding: "14px 16px", textAlign: "center" }}>Type</div>
+      </div>
+      {STANDARD_RATE_CARD.map((r, i) => (
+        <div key={r.activity} style={{ display: "grid", gridTemplateColumns: "1fr 120px 100px", background: i % 2 === 0 ? "#FFFFFF" : "#FAF7F2", borderTop: i === 0 ? "none" : "1px solid rgba(16,15,12,0.07)", alignItems: "center" }}>
+          <div style={{ padding: "16px" }}>
+            <p style={{ fontFamily: lora, fontSize: 13.5, color: "#100F0C", fontWeight: 700, margin: compact ? 0 : "0 0 4px" }}>{r.activity}</p>
+            {!compact && (
+              <p style={{ fontFamily: lora, fontSize: 12, color: "#6B6459", margin: 0, lineHeight: 1.5 }}>{r.note}</p>
+            )}
+          </div>
+          <div style={{ padding: "16px", textAlign: "right" }}>
+            <p style={{ fontFamily: lora, fontSize: 14, color: "#100F0C", fontWeight: 700, margin: 0 }}>{r.rate}</p>
+          </div>
+          <div style={{ padding: "16px", display: "flex", justifyContent: "center" }}>
+            <RateTypeBadge type={r.type} />
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+// ===========================================================================
+// BILLING & INVOICES — rate card is live; invoicing tools follow once
+// the underlying data model (line items, statuses, payment history)
+// is built out.
+// ===========================================================================
+
+function BillingSection({ facultyProfile, facultyRole }) {
+  const lora = "'Lora', Georgia, serif";
+  const cg = "'Cormorant Garamond', Georgia, serif";
+  const isBillMorris = facultyProfile?.full_name === "Bill Morris";
+
+  return (
+    <div>
+      <h2 style={{ fontFamily: cg, fontSize: 26, color: "#100F0C", fontWeight: 500, margin: "0 0 12px" }}>
+        Billing & Invoices
+      </h2>
+      <p style={{ fontFamily: cg, fontSize: 16, color: "#6B6459", fontStyle: "italic", margin: "0 0 32px" }}>
+        Invoicing tools are coming soon. In the meantime, here is your standard rate card for reference —
+        every rate that applies to your work at the Academy, in one place.
+      </p>
+      {isBillMorris ? (
+        <p style={{ fontFamily: cg, fontSize: 16, color: "#6B6459", fontStyle: "italic" }}>
+          Your rate structure will appear here once your dedicated portal is built.
+        </p>
+      ) : (
+        <StandardRateCardTable />
+      )}
+    </div>
+  );
+}
+
 // LESSON PLANS & MATERIALS — one per individual session, grouped by program
 // ═══════════════════════════════════════════════════════════════════════
 
