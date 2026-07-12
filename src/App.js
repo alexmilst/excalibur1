@@ -16402,6 +16402,14 @@ function FacultyPortalShell({ facultyProfile, facultyRole, onSignOut }) {
           <RatePaySummarySection facultyProfile={facultyProfile} facultyRole={facultyRole} />
         ) : activeSection === "billing" ? (
           <BillingSection facultyProfile={facultyProfile} facultyRole={facultyRole} />
+        ) : activeSection === "messages" ? (
+          <MessagesSection facultyProfile={facultyProfile} facultyRole={facultyRole} />
+        ) : activeSection === "meetings" ? (
+          <MeetingsSection facultyProfile={facultyProfile} facultyRole={facultyRole} />
+        ) : activeSection === "documents" ? (
+          <DocumentsComplianceSection facultyProfile={facultyProfile} facultyRole={facultyRole} />
+        ) : activeSection === "guide" ? (
+          <GuideSection facultyProfile={facultyProfile} facultyRole={facultyRole} />
         ) : activeSection === "profile" ? (
           <ProfileSettingsSection facultyProfile={facultyProfile} facultyRole={facultyRole} />
         ) : (
@@ -17701,7 +17709,8 @@ function computeExactEventPay(s, rateByType) {
       return { rateLabel: `$${Number(rr.rate_amount)}`, hoursLabel: "Duration needed", payLabel: "Duration needed", payValue: 0, known: false };
     }
     const pay = Math.round(Number(rr.rate_amount) * exactHours * 100) / 100;
-    return { rateLabel: `$${Number(rr.rate_amount)}`, hoursLabel: `${exactHours % 1 === 0 ? exactHours : exactHours.toFixed(2)} hr`, payLabel: `$${pay}`, payValue: pay, known: true };
+    const hoursText = `${exactHours % 1 === 0 ? exactHours : exactHours.toFixed(2)} hr${s.duration_is_approximate ? " (approx.)" : ""}`;
+    return { rateLabel: `$${Number(rr.rate_amount)}`, hoursLabel: hoursText, payLabel: `$${pay}${s.duration_is_approximate ? "*" : ""}`, payValue: pay, known: true, approximate: !!s.duration_is_approximate };
   }
   return { rateLabel: "—", hoursLabel: "—", payLabel: "—", payValue: 0, known: false };
 }
@@ -17757,6 +17766,11 @@ function EventsSection({ facultyProfile, facultyRole }) {
       {missingDurationCount > 0 && (
         <p style={{ fontFamily: lora, fontSize: 12.5, color: "#B4433A", marginBottom: 20, fontStyle: "italic" }}>
           {missingDurationCount} event{missingDurationCount === 1 ? "" : "s"} below {missingDurationCount === 1 ? "doesn't" : "don't"} have a confirmed duration yet, so {missingDurationCount === 1 ? "it isn't" : "they aren't"} included in the total above.
+        </p>
+      )}
+      {rows.some((r) => r.calc.approximate) && (
+        <p style={{ fontFamily: lora, fontSize: 12.5, color: "#8B7355", marginBottom: 20, fontStyle: "italic" }}>
+          * Duration is a 2-hour approximation, not yet confirmed against a specific run-of-show time.
         </p>
       )}
 
@@ -18132,6 +18146,668 @@ function ProfileSettingsSection({ facultyProfile, facultyRole, onProfileUpdated 
 }
 
 // ═══════════════════════════════════════════════════════════════════════
+// MESSAGES — faculty <-> Admin / HR / CEO. One continuous thread per
+// faculty member; each outgoing message is tagged with who it's addressed
+// to (there's a single shared admin login today, not separate HR/CEO
+// accounts, so the tag is a routing label for a human to triage, not a
+// literal separate inbox).
+// ═══════════════════════════════════════════════════════════════════════
+
+const MESSAGE_RECIPIENTS = [
+  ["admin", "Admin"],
+  ["hr", "HR"],
+  ["ceo", "CEO"],
+];
+
+function useAdminMessageThreads(sb, active) {
+  const [threads, setThreads] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const load = useCallback(async () => {
+    if (!sb || !active) return;
+    setLoading(true);
+    const res = await sb.from("faculty_messages").select("*, faculty_profiles(full_name)").order("created_at", { ascending: false });
+    const byFaculty = new Map();
+    (res.data || []).forEach((m) => {
+      if (!byFaculty.has(m.faculty_id)) {
+        byFaculty.set(m.faculty_id, { faculty_id: m.faculty_id, faculty_name: m.faculty_profiles?.full_name || "Faculty", latest: m, unread: 0 });
+      }
+      if (m.sender_role === "faculty") byFaculty.get(m.faculty_id).unread += 1;
+    });
+    setThreads(Array.from(byFaculty.values()).sort((a, b) => new Date(b.latest.created_at) - new Date(a.latest.created_at)));
+    setLoading(false);
+  }, [sb, active]);
+  useEffect(() => { load(); }, [load]);
+  return { threads, loading, reload: load };
+}
+
+function MessagesSection({ facultyProfile, facultyRole }) {
+  const sb = getSupabase();
+  const lora = "'Lora', Georgia, serif";
+  const cg = "'Cormorant Garamond', Georgia, serif";
+  const isAdmin = facultyRole === "admin";
+  const [selectedFacultyId, setSelectedFacultyId] = useState(isAdmin ? null : facultyProfile?.id);
+  const [selectedFacultyName, setSelectedFacultyName] = useState(isAdmin ? null : facultyProfile?.full_name);
+  const [messages, setMessages] = useState([]);
+  const [msgLoading, setMsgLoading] = useState(true);
+  const [newMessage, setNewMessage] = useState("");
+  const [recipient, setRecipient] = useState("admin");
+  const [sending, setSending] = useState(false);
+
+  const threadQuery = useAdminMessageThreads(sb, isAdmin);
+
+  const loadMessages = useCallback(async () => {
+    if (!sb || !selectedFacultyId) return;
+    setMsgLoading(true);
+    const res = await sb.from("faculty_messages").select("*").eq("faculty_id", selectedFacultyId).order("created_at", { ascending: true });
+    setMessages(res.data || []);
+    setMsgLoading(false);
+  }, [sb, selectedFacultyId]);
+
+  useEffect(() => { loadMessages(); }, [loadMessages]);
+
+  const send = async () => {
+    if (!sb || !newMessage.trim() || !selectedFacultyId) return;
+    setSending(true);
+    await sb.from("faculty_messages").insert({
+      faculty_id: selectedFacultyId,
+      sender_role: isAdmin ? "admin" : "faculty",
+      sender_id: facultyProfile.id,
+      recipient_category: isAdmin ? null : recipient,
+      body: newMessage.trim(),
+    });
+    setNewMessage("");
+    setSending(false);
+    loadMessages();
+    if (isAdmin) threadQuery.reload();
+  };
+
+  const bubbleStyle = (mine) => ({
+    alignSelf: mine ? "flex-end" : "flex-start",
+    maxWidth: "75%",
+    background: mine ? "#100F0C" : "rgba(164,141,110,0.18)",
+    color: mine ? "#E4D5C1" : "#100F0C",
+    padding: "10px 14px",
+    borderRadius: 6,
+  });
+
+  return (
+    <div>
+      <p style={{ fontFamily: lora, fontSize: 11, letterSpacing: "0.4em", color: "#A48D6E", fontWeight: 600, textTransform: "uppercase", marginBottom: 10 }}>
+        Faculty Portal
+      </p>
+      <h2 style={{ fontFamily: cg, fontSize: 30, color: "#100F0C", fontWeight: 600, margin: "0 0 6px" }}>Messages</h2>
+      <p style={{ fontFamily: lora, fontSize: 13.5, color: "#6B6459", margin: "0 0 24px", maxWidth: 640, lineHeight: 1.6 }}>
+        {isAdmin ? "Every faculty conversation, in one place." : "Send a message directly to Admin, HR, or the CEO — pick who it's for below."}
+      </p>
+
+      {isAdmin && (
+        <div style={{ display: "flex", gap: 24, alignItems: "flex-start", flexWrap: "wrap" }}>
+          <div style={{ flex: "0 0 260px", border: "1px solid rgba(16,15,12,0.1)", borderRadius: 6, overflow: "hidden" }}>
+            {threadQuery.loading ? (
+              <p style={{ fontFamily: lora, fontSize: 13, color: "#6B6459", padding: 16 }}>Loading…</p>
+            ) : threadQuery.threads.length === 0 ? (
+              <p style={{ fontFamily: cg, fontSize: 14, color: "#6B6459", fontStyle: "italic", padding: 16 }}>No conversations yet.</p>
+            ) : threadQuery.threads.map((t) => (
+              <div
+                key={t.faculty_id}
+                onClick={() => { setSelectedFacultyId(t.faculty_id); setSelectedFacultyName(t.faculty_name); }}
+                style={{
+                  padding: "12px 16px", cursor: "pointer",
+                  background: selectedFacultyId === t.faculty_id ? "#FAF7F2" : "#FFFFFF",
+                  borderBottom: "1px solid rgba(16,15,12,0.07)",
+                }}
+              >
+                <p style={{ fontFamily: lora, fontSize: 13, color: "#100F0C", fontWeight: 700, margin: "0 0 2px" }}>{t.faculty_name}</p>
+                <p style={{ fontFamily: lora, fontSize: 11.5, color: "#8B7355", margin: 0, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
+                  {t.latest.sender_role === "admin" ? "You: " : ""}{t.latest.body}
+                </p>
+              </div>
+            ))}
+          </div>
+          <div style={{ flex: "1 1 400px" }}>
+            {!selectedFacultyId ? (
+              <p style={{ fontFamily: cg, fontSize: 15, color: "#6B6459", fontStyle: "italic" }}>Select a conversation on the left.</p>
+            ) : (
+              <>
+                <p style={{ fontFamily: cg, fontSize: 18, color: "#100F0C", fontWeight: 600, margin: "0 0 12px" }}>{selectedFacultyName}</p>
+                <MessageThreadBody messages={messages} loading={msgLoading} bubbleStyle={bubbleStyle} isAdmin={isAdmin} />
+                <div style={{ display: "flex", gap: 10, marginTop: 14 }}>
+                  <input type="text" value={newMessage} onChange={(e) => setNewMessage(e.target.value)} onKeyDown={(e) => { if (e.key === "Enter") send(); }} placeholder="Type a reply…" style={{ flex: 1, fontFamily: lora, fontSize: 13.5, padding: "11px 14px", border: "1px solid rgba(16,15,12,0.2)", borderRadius: 4 }} />
+                  <button onClick={send} disabled={sending || !newMessage.trim()} style={{ fontFamily: lora, fontSize: 12.5, fontWeight: 700, padding: "11px 22px", background: "#100F0C", color: "#E4D5C1", border: "none", borderRadius: 4, cursor: "pointer" }}>Send</button>
+                </div>
+              </>
+            )}
+          </div>
+        </div>
+      )}
+
+      {!isAdmin && (
+        <div>
+          <div style={{ marginBottom: 14 }}>
+            <p style={{ fontFamily: lora, fontSize: 11, letterSpacing: "0.08em", color: "#8B7355", textTransform: "uppercase", fontWeight: 600, marginBottom: 8 }}>Send To</p>
+            <div style={{ display: "flex", gap: 8 }}>
+              {MESSAGE_RECIPIENTS.map(([key, label]) => (
+                <button
+                  key={key}
+                  onClick={() => setRecipient(key)}
+                  style={{
+                    fontFamily: lora, fontSize: 11.5, fontWeight: 700, padding: "7px 16px", borderRadius: 20, cursor: "pointer",
+                    background: recipient === key ? "#100F0C" : "transparent",
+                    color: recipient === key ? "#E4D5C1" : "#100F0C",
+                    border: `1px solid ${recipient === key ? "#100F0C" : "rgba(16,15,12,0.25)"}`,
+                  }}
+                >
+                  {label}
+                </button>
+              ))}
+            </div>
+          </div>
+          <MessageThreadBody messages={messages} loading={msgLoading} bubbleStyle={bubbleStyle} isAdmin={isAdmin} />
+          <div style={{ display: "flex", gap: 10, marginTop: 14 }}>
+            <input type="text" value={newMessage} onChange={(e) => setNewMessage(e.target.value)} onKeyDown={(e) => { if (e.key === "Enter") send(); }} placeholder={`Message ${MESSAGE_RECIPIENTS.find((r) => r[0] === recipient)[1]}…`} style={{ flex: 1, fontFamily: lora, fontSize: 13.5, padding: "11px 14px", border: "1px solid rgba(16,15,12,0.2)", borderRadius: 4 }} />
+            <button onClick={send} disabled={sending || !newMessage.trim()} style={{ fontFamily: lora, fontSize: 12.5, fontWeight: 700, padding: "11px 22px", background: "#100F0C", color: "#E4D5C1", border: "none", borderRadius: 4, cursor: "pointer" }}>Send</button>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+function MessageThreadBody({ messages, loading, bubbleStyle, isAdmin }) {
+  const lora = "'Lora', Georgia, serif";
+  return (
+    <div style={{ background: "#FAF7F2", border: "1px solid rgba(16,15,12,0.1)", borderRadius: 6, padding: 20, minHeight: 300, maxHeight: 440, overflowY: "auto", display: "flex", flexDirection: "column", gap: 12 }}>
+      {loading ? (
+        <p style={{ fontFamily: lora, fontSize: 13, color: "#6B6459" }}>Loading…</p>
+      ) : messages.length === 0 ? (
+        <p style={{ fontFamily: lora, fontSize: 13, color: "#6B6459" }}>No messages yet. Say hello below.</p>
+      ) : messages.map((m) => {
+        const mine = isAdmin ? m.sender_role === "admin" : m.sender_role === "faculty";
+        return (
+          <div key={m.id} style={bubbleStyle(mine)}>
+            {!isAdmin && m.sender_role === "faculty" && m.recipient_category && (
+              <p style={{ fontFamily: lora, fontSize: 10, opacity: 0.7, margin: "0 0 3px", textTransform: "uppercase", letterSpacing: "0.06em" }}>
+                To: {MESSAGE_RECIPIENTS.find((r) => r[0] === m.recipient_category)?.[1] || m.recipient_category}
+              </p>
+            )}
+            <p style={{ fontFamily: lora, fontSize: 13.5, margin: 0, lineHeight: 1.5 }}>{m.body}</p>
+          </div>
+        );
+      })}
+    </div>
+  );
+}
+
+// ═══════════════════════════════════════════════════════════════════════
+// MEETINGS — request a meeting with Admin or Amina (Director of
+// Operations), in-person or Zoom. Same request-then-confirm pattern as
+// the student portal's consultation flow.
+// ═══════════════════════════════════════════════════════════════════════
+
+function MeetingsSection({ facultyProfile, facultyRole }) {
+  const sb = getSupabase();
+  const lora = "'Lora', Georgia, serif";
+  const cg = "'Cormorant Garamond', Georgia, serif";
+  const isAdmin = facultyRole === "admin";
+  const [requests, setRequests] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [showForm, setShowForm] = useState(false);
+  const [form, setForm] = useState({ requested_with: "admin", meeting_type: "zoom", preferred_dates: "", preferred_times: "", notes: "" });
+  const [busy, setBusy] = useState(false);
+
+  const load = useCallback(async () => {
+    if (!sb) return;
+    setLoading(true);
+    let query = sb.from("faculty_meeting_requests").select("*, faculty_profiles(full_name)").order("created_at", { ascending: false });
+    if (!isAdmin) query = query.eq("faculty_id", facultyProfile.id);
+    const res = await query;
+    setRequests(res.data || []);
+    setLoading(false);
+  }, [sb, isAdmin, facultyProfile?.id]);
+
+  useEffect(() => { load(); }, [load]);
+
+  const submit = async () => {
+    if (!sb || !form.preferred_dates.trim()) return;
+    setBusy(true);
+    await sb.from("faculty_meeting_requests").insert({
+      faculty_id: facultyProfile.id,
+      requested_with: form.requested_with,
+      meeting_type: form.meeting_type,
+      preferred_dates: form.preferred_dates.trim(),
+      preferred_times: form.preferred_times.trim(),
+      notes: form.notes.trim(),
+      status: "requested",
+    });
+    setBusy(false);
+    setShowForm(false);
+    setForm({ requested_with: "admin", meeting_type: "zoom", preferred_dates: "", preferred_times: "", notes: "" });
+    load();
+  };
+
+  const updateStatus = async (id, status) => {
+    await sb.from("faculty_meeting_requests").update({ status }).eq("id", id);
+    load();
+  };
+
+  const pillStyle = (active) => ({
+    fontFamily: lora, fontSize: 12, fontWeight: 700, padding: "8px 16px", borderRadius: 20, cursor: "pointer",
+    background: active ? "#100F0C" : "transparent", color: active ? "#E4D5C1" : "#100F0C",
+    border: `1px solid ${active ? "#100F0C" : "rgba(16,15,12,0.25)"}`,
+  });
+  const inputStyle = { fontFamily: lora, fontSize: 13.5, padding: "10px 12px", border: "1px solid rgba(16,15,12,0.2)", borderRadius: 4, width: "100%", boxSizing: "border-box" };
+  const labelStyle = { fontFamily: lora, fontSize: 11, letterSpacing: "0.08em", color: "#8B7355", textTransform: "uppercase", fontWeight: 600, marginBottom: 6, display: "block" };
+  const STATUS_COLORS = { requested: "#9C7F1A", scheduled: "#3D8B5F", completed: "#6B6459", canceled: "#B4433A" };
+
+  return (
+    <div>
+      <p style={{ fontFamily: lora, fontSize: 11, letterSpacing: "0.4em", color: "#A48D6E", fontWeight: 600, textTransform: "uppercase", marginBottom: 10 }}>
+        Faculty Portal
+      </p>
+      <h2 style={{ fontFamily: cg, fontSize: 30, color: "#100F0C", fontWeight: 600, margin: "0 0 6px" }}>Meetings</h2>
+      <p style={{ fontFamily: lora, fontSize: 13.5, color: "#6B6459", margin: "0 0 24px", maxWidth: 640, lineHeight: 1.6 }}>
+        Request time with Admin or Amina — Director of Operations — in person or over Zoom. Submit your preferred
+        dates and times, and we'll confirm directly with you.
+      </p>
+
+      {!isAdmin && (
+        <>
+          <button
+            onClick={() => setShowForm((v) => !v)}
+            style={{ fontFamily: lora, fontSize: 12.5, fontWeight: 700, padding: "11px 22px", background: showForm ? "transparent" : "#100F0C", color: showForm ? "#100F0C" : "#E4D5C1", border: showForm ? "1px solid rgba(16,15,12,0.25)" : "none", borderRadius: 4, cursor: "pointer", marginBottom: 20 }}
+          >
+            {showForm ? "Cancel" : "+ Request a Meeting"}
+          </button>
+
+          {showForm && (
+            <div style={{ background: "#FAF7F2", border: "1px solid rgba(164,141,110,0.3)", borderRadius: 6, padding: 22, marginBottom: 28, maxWidth: 480 }}>
+              <div style={{ marginBottom: 14 }}>
+                <label style={labelStyle}>Meet With</label>
+                <div style={{ display: "flex", gap: 8 }}>
+                  <span onClick={() => setForm((f) => ({ ...f, requested_with: "admin" }))} style={pillStyle(form.requested_with === "admin")}>Admin</span>
+                  <span onClick={() => setForm((f) => ({ ...f, requested_with: "amina" }))} style={pillStyle(form.requested_with === "amina")}>Amina (Dir. of Operations)</span>
+                </div>
+              </div>
+              <div style={{ marginBottom: 14 }}>
+                <label style={labelStyle}>Format</label>
+                <div style={{ display: "flex", gap: 8 }}>
+                  <span onClick={() => setForm((f) => ({ ...f, meeting_type: "zoom" }))} style={pillStyle(form.meeting_type === "zoom")}>Zoom</span>
+                  <span onClick={() => setForm((f) => ({ ...f, meeting_type: "in_person" }))} style={pillStyle(form.meeting_type === "in_person")}>In Person</span>
+                </div>
+              </div>
+              <div style={{ display: "flex", gap: 12, marginBottom: 14 }}>
+                <div style={{ flex: 1 }}>
+                  <label style={labelStyle}>Preferred Date(s)</label>
+                  <input type="text" value={form.preferred_dates} onChange={(e) => setForm((f) => ({ ...f, preferred_dates: e.target.value }))} placeholder="e.g. next Tue or Wed" style={inputStyle} />
+                </div>
+                <div style={{ flex: 1 }}>
+                  <label style={labelStyle}>Preferred Time(s)</label>
+                  <input type="text" value={form.preferred_times} onChange={(e) => setForm((f) => ({ ...f, preferred_times: e.target.value }))} placeholder="e.g. afternoons" style={inputStyle} />
+                </div>
+              </div>
+              <div style={{ marginBottom: 18 }}>
+                <label style={labelStyle}>Notes (optional)</label>
+                <textarea value={form.notes} onChange={(e) => setForm((f) => ({ ...f, notes: e.target.value }))} rows={3} style={{ ...inputStyle, resize: "vertical" }} />
+              </div>
+              <button
+                onClick={submit}
+                disabled={busy || !form.preferred_dates.trim()}
+                style={{ fontFamily: lora, fontSize: 12.5, fontWeight: 700, padding: "11px 24px", background: "#100F0C", color: "#E4D5C1", border: "none", borderRadius: 4, cursor: "pointer", opacity: form.preferred_dates.trim() ? 1 : 0.5 }}
+              >
+                {busy ? "Submitting…" : "Submit Request"}
+              </button>
+            </div>
+          )}
+        </>
+      )}
+
+      <h3 style={{ fontFamily: cg, fontSize: 20, color: "#100F0C", fontWeight: 600, margin: "0 0 16px" }}>{isAdmin ? "All Requests" : "Your Requests"}</h3>
+      {loading ? (
+        <p style={{ fontFamily: lora, fontSize: 13, color: "#6B6459" }}>Loading…</p>
+      ) : requests.length === 0 ? (
+        <p style={{ fontFamily: cg, fontSize: 15, color: "#6B6459", fontStyle: "italic" }}>No meeting requests yet.</p>
+      ) : (
+        <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+          {requests.map((r) => (
+            <div key={r.id} style={{ background: "#FFFFFF", border: "1px solid rgba(16,15,12,0.1)", borderLeft: `3px solid ${STATUS_COLORS[r.status]}`, borderRadius: 6, padding: "14px 18px" }}>
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 16, flexWrap: "wrap" }}>
+                <div>
+                  {isAdmin && <p style={{ fontFamily: lora, fontSize: 12.5, color: "#8B7355", margin: "0 0 4px" }}>{r.faculty_profiles?.full_name}</p>}
+                  <p style={{ fontFamily: lora, fontSize: 13.5, color: "#100F0C", fontWeight: 700, margin: "0 0 3px" }}>
+                    {r.requested_with === "admin" ? "Admin" : "Amina"} · {r.meeting_type === "zoom" ? "Zoom" : "In Person"}
+                  </p>
+                  <p style={{ fontFamily: lora, fontSize: 12, color: "#6B6459", margin: 0 }}>
+                    {r.preferred_dates}{r.preferred_times ? ` · ${r.preferred_times}` : ""}
+                  </p>
+                  {r.notes && <p style={{ fontFamily: lora, fontSize: 12, color: "#6B6459", margin: "4px 0 0" }}>{r.notes}</p>}
+                </div>
+                <span style={{ fontFamily: lora, fontSize: 11, fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.06em", color: STATUS_COLORS[r.status] }}>
+                  {r.status.replace("_", " ")}
+                </span>
+              </div>
+              {isAdmin && r.status === "requested" && (
+                <div style={{ display: "flex", gap: 8, marginTop: 12 }}>
+                  <button onClick={() => updateStatus(r.id, "scheduled")} style={{ fontFamily: lora, fontSize: 11, fontWeight: 700, padding: "6px 14px", background: "#3D8B5F", color: "#FFF", border: "none", borderRadius: 4, cursor: "pointer" }}>Mark Scheduled</button>
+                  <button onClick={() => updateStatus(r.id, "canceled")} style={{ fontFamily: lora, fontSize: 11, fontWeight: 700, padding: "6px 14px", background: "transparent", color: "#B4433A", border: "1px solid #B4433A", borderRadius: 4, cursor: "pointer" }}>Cancel</button>
+                </div>
+              )}
+              {isAdmin && r.status === "scheduled" && (
+                <button onClick={() => updateStatus(r.id, "completed")} style={{ fontFamily: lora, fontSize: 11, fontWeight: 700, padding: "6px 14px", marginTop: 12, background: "transparent", color: "#6B6459", border: "1px solid rgba(16,15,12,0.2)", borderRadius: 4, cursor: "pointer" }}>Mark Completed</button>
+              )}
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
+// ═══════════════════════════════════════════════════════════════════════
+// DOCUMENTS & COMPLIANCE — 1099 Agreement, W9 & Direct Deposit,
+// Appendixes, Monthly Invoices. Stored in a PRIVATE storage bucket
+// (unlike lesson plan materials, these can contain SSNs and banking
+// details) — access is via short-lived signed URLs, never a public link.
+// ═══════════════════════════════════════════════════════════════════════
+
+const DOCUMENT_FOLDERS = [
+  ["1099_agreement", "1099 Agreement"],
+  ["w9_direct_deposit", "W9 & Direct Deposit"],
+  ["appendixes", "Appendixes"],
+  ["monthly_invoices", "Monthly Invoices"],
+];
+
+function DocumentsComplianceSection({ facultyProfile, facultyRole }) {
+  const sb = getSupabase();
+  const lora = "'Lora', Georgia, serif";
+  const cg = "'Cormorant Garamond', Georgia, serif";
+  const isAdmin = facultyRole === "admin";
+  const [facultyList, setFacultyList] = useState([]);
+  const [targetFacultyId, setTargetFacultyId] = useState(isAdmin ? null : facultyProfile?.id);
+  const [documents, setDocuments] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [uploadingFolder, setUploadingFolder] = useState(null);
+  const fileInputRef = React.useRef(null);
+
+  useEffect(() => {
+    if (!isAdmin || !sb) return;
+    sb.from("faculty_profiles").select("id, full_name").order("full_name").then(({ data }) => setFacultyList(data || []));
+  }, [isAdmin, sb]);
+
+  const loadDocs = useCallback(async () => {
+    if (!sb || !targetFacultyId) return;
+    setLoading(true);
+    const res = await sb.from("faculty_documents").select("*").eq("faculty_id", targetFacultyId).order("created_at", { ascending: false });
+    setDocuments(res.data || []);
+    setLoading(false);
+  }, [sb, targetFacultyId]);
+
+  useEffect(() => { loadDocs(); }, [loadDocs]);
+
+  const handleUpload = async (e, folder) => {
+    const file = e.target.files?.[0];
+    if (!file || !sb || !targetFacultyId) return;
+    setUploadingFolder(folder);
+    try {
+      const safeName = file.name.replace(/[^a-zA-Z0-9._-]/g, "_");
+      const path = `${targetFacultyId}/${folder}/${Date.now()}_${safeName}`;
+      const { error: uploadError } = await sb.storage.from("faculty-documents").upload(path, file, { upsert: false });
+      if (uploadError) throw uploadError;
+      await sb.from("faculty_documents").insert({
+        faculty_id: targetFacultyId,
+        folder_category: folder,
+        file_name: file.name,
+        file_path: path,
+        uploaded_by_type: isAdmin ? "admin" : "faculty",
+        uploaded_by_id: facultyProfile.id,
+      });
+      loadDocs();
+    } catch (err) {
+      alert(`Upload failed: ${err?.message || "Unknown error"}`);
+    } finally {
+      setUploadingFolder(null);
+    }
+  };
+
+  const openDoc = async (path) => {
+    const { data, error } = await sb.storage.from("faculty-documents").createSignedUrl(path, 300);
+    if (error) { alert("Couldn't open that file — please try again."); return; }
+    window.open(data.signedUrl, "_blank");
+  };
+
+  const targetName = isAdmin ? facultyList.find((f) => f.id === targetFacultyId)?.full_name : facultyProfile?.full_name;
+
+  return (
+    <div>
+      <p style={{ fontFamily: lora, fontSize: 11, letterSpacing: "0.4em", color: "#A48D6E", fontWeight: 600, textTransform: "uppercase", marginBottom: 10 }}>
+        Faculty Portal
+      </p>
+      <h2 style={{ fontFamily: cg, fontSize: 30, color: "#100F0C", fontWeight: 600, margin: "0 0 6px" }}>Documents & Compliance</h2>
+      <p style={{ fontFamily: lora, fontSize: 13.5, color: "#6B6459", margin: "0 0 24px", maxWidth: 640, lineHeight: 1.6 }}>
+        Your signed agreements, tax forms, and invoices, organized by folder. These are private to you and Admin —
+        never a public link.
+      </p>
+
+      {isAdmin && (
+        <div style={{ marginBottom: 28, maxWidth: 320 }}>
+          <label style={{ fontFamily: lora, fontSize: 11, letterSpacing: "0.08em", color: "#8B7355", textTransform: "uppercase", fontWeight: 600, marginBottom: 6, display: "block" }}>Faculty Member</label>
+          <select value={targetFacultyId || ""} onChange={(e) => setTargetFacultyId(e.target.value || null)} style={{ fontFamily: lora, fontSize: 13.5, padding: "10px 12px", border: "1px solid rgba(16,15,12,0.2)", borderRadius: 4, width: "100%", background: "#FFFFFF" }}>
+            <option value="">Select a faculty member…</option>
+            {facultyList.map((f) => <option key={f.id} value={f.id}>{f.full_name}</option>)}
+          </select>
+        </div>
+      )}
+
+      {!targetFacultyId ? (
+        <p style={{ fontFamily: cg, fontSize: 15, color: "#6B6459", fontStyle: "italic" }}>Select a faculty member above.</p>
+      ) : (
+        <div>
+          {isAdmin && <p style={{ fontFamily: cg, fontSize: 18, color: "#100F0C", fontWeight: 600, margin: "0 0 20px" }}>{targetName}</p>}
+          {DOCUMENT_FOLDERS.map(([key, label]) => {
+            const docsInFolder = documents.filter((d) => d.folder_category === key);
+            return (
+              <div key={key} style={{ marginBottom: 28 }}>
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 12, borderBottom: "2px solid #A48D6E", paddingBottom: 8 }}>
+                  <h3 style={{ fontFamily: cg, fontSize: 19, color: "#100F0C", fontWeight: 600, margin: 0 }}>{label}</h3>
+                  <label style={{ fontFamily: lora, fontSize: 11.5, fontWeight: 700, padding: "7px 16px", background: "transparent", color: "#100F0C", border: "1px solid rgba(16,15,12,0.25)", borderRadius: 4, cursor: "pointer" }}>
+                    {uploadingFolder === key ? "Uploading…" : "+ Upload"}
+                    <input type="file" onChange={(e) => handleUpload(e, key)} style={{ display: "none" }} />
+                  </label>
+                </div>
+                {loading ? (
+                  <p style={{ fontFamily: lora, fontSize: 13, color: "#6B6459" }}>Loading…</p>
+                ) : docsInFolder.length === 0 ? (
+                  <p style={{ fontFamily: cg, fontSize: 14, color: "#6B6459", fontStyle: "italic" }}>No documents uploaded yet.</p>
+                ) : (
+                  <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+                    {docsInFolder.map((d) => (
+                      <div
+                        key={d.id}
+                        onClick={() => openDoc(d.file_path)}
+                        style={{ background: "#FAF7F2", border: "1px solid rgba(16,15,12,0.1)", borderRadius: 4, padding: "10px 16px", cursor: "pointer", display: "flex", justifyContent: "space-between", alignItems: "center", gap: 12, flexWrap: "wrap" }}
+                      >
+                        <span style={{ fontFamily: lora, fontSize: 13, color: "#100F0C", textDecoration: "underline" }}>{d.file_name}</span>
+                        <span style={{ fontFamily: lora, fontSize: 11.5, color: "#8B7355" }}>
+                          {d.uploaded_by_type === "admin" ? "Uploaded by Admin" : "Uploaded by you"} · {new Date(d.created_at).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+            );
+          })}
+        </div>
+      )}
+    </div>
+  );
+}
+
+// ═══════════════════════════════════════════════════════════════════════
+// GUIDE — a full, plain-language walkthrough of the portal, written so a
+// new faculty member can onboard themselves without needing to ask.
+// ═══════════════════════════════════════════════════════════════════════
+
+const GUIDE_SECTIONS = [
+  {
+    id: "welcome",
+    title: "Welcome",
+    body: [
+      "This portal is where your teaching life at Excalibur Academy lives — your schedule, your pay, your materials, and the people you need to reach. Nothing here requires special training. If you can use email, you can use this.",
+      "Everything below is organized the same way the sidebar on the left is organized, top to bottom, so you can either read this guide straight through once, or come back to just the one section you need.",
+    ],
+  },
+  {
+    id: "dashboard",
+    title: "Dashboard",
+    body: [
+      "This is your home screen — the first thing you see when you log in. It gives you a quick look at what's coming up next on your schedule, without needing to dig into any other tab.",
+      "If you're a program administrator, you'll also see an Attendance & Availability panel here — a running list of anything faculty have flagged as \"unable to teach\" or \"unable to attend,\" along with any reported session issues, so nothing submitted by a colleague ever goes unseen.",
+    ],
+  },
+  {
+    id: "schedule",
+    title: "My Schedule",
+    body: [
+      "This is the heart of the portal — every teaching session, faculty meeting, and event you're committed to, organized by program.",
+      "At the top, you'll find a Weekly Snapshot (for Foundation Semester) or Daily Snapshot (for Founder's Day) — a plain-English summary of what a typical week or day looks like for you, so you can picture your commitment at a glance before diving into exact dates.",
+      "Below that is the full schedule, and you'll notice it's split into three colors: gold for Teaching, blue for Events, and green for Faculty Meetings. Use the filter buttons at the top — All, Teaching, Events, Faculty Meetings — to narrow the view to just what you're looking for.",
+      "Click any date to open its full detail — arrival time, block time, duration, and, for teaching sessions, whether a Teaching Assistant has been assigned yet.",
+      "On each session, you'll also see two things worth knowing:",
+      "• Confirm Availability / Unable to Teach (or Can Attend / Unable to Attend for events) — this lets you tell us in advance if something's come up. If you mark yourself unable, you'll be asked for a brief reason, and it goes straight to Admin.",
+      "• Report an Issue — if something about a session looks wrong (wrong date, wrong time, wrong block), this is a quick way to flag it without needing to send a separate message.",
+    ],
+  },
+  {
+    id: "events",
+    title: "Events",
+    body: [
+      "A dedicated home for everything that isn't regular teaching — Pitch Nights, Shark Tank Finales, Admissions Committee sessions, and Parent Info Sessions — each with its own rate, hours, and pay.",
+      "Unlike teaching time, event hours are never rounded up; you're paid for the exact time recorded. Where a duration hasn't been finalized yet, you'll see a note rather than a guess.",
+      "The same Can Attend / Unable to Attend option from My Schedule appears here too, so you can respond to events the same way.",
+    ],
+  },
+  {
+    id: "lessons",
+    title: "Lesson Plans & Materials",
+    body: [
+      "Every teaching session has two materials attached to it — a Lesson Plan Guide and a Presentation (PPTX) — and this tab is where you upload, review, or replace either one.",
+      "A color key sits at the top of the page: red means nothing's been uploaded yet, yellow means something's uploaded and waiting on confirmation, and green means it's confirmed. You'll see this same color language throughout the tab, so once you know it here, you know it everywhere.",
+      "To upload, open any session and use the upload button under the material you're working on. You can leave a short note with your upload if there's context worth flagging. Once uploaded, an admin will review and confirm it — you'll see the color update once that happens.",
+    ],
+  },
+  {
+    id: "time",
+    title: "Time Tracking",
+    body: [
+      "Use this tab to log any billable work that isn't already sitting on your calendar — things like curriculum revisions or other prep that falls under one of your billable categories.",
+      "Click \"+ Log Time,\" give it a short description, a date, a category, and how long it took. Every entry goes to Admin as \"Awaiting Approval\" and only counts toward your pay once approved — you'll see the status update right on the entry.",
+    ],
+  },
+  {
+    id: "pay",
+    title: "Rate & Pay Summary",
+    body: [
+      "Your complete rate card, and a running total of what you've actually earned to date — not a projection of the full year, just what's genuinely been billed so far.",
+      "Below the summary, each program shows a day-by-day breakdown: what you taught, how it was billed, and what it paid — the same numbers, just organized by program instead of by date.",
+    ],
+  },
+  {
+    id: "billing",
+    title: "Billing & Invoices",
+    body: [
+      "For now, this tab shows your Standard Rate Card — every rate that applies to your work at the Academy, all in one place for easy reference. Full invoicing tools are coming soon.",
+    ],
+  },
+  {
+    id: "messages",
+    title: "Messages",
+    body: [
+      "A direct line to Admin, HR, or the CEO. When you send a message, pick who it's for using the pills above the message box — that tag travels with your message so it reaches the right person.",
+      "This works like any messaging app you've used before: type, hit Send, and the conversation stays right here for you to return to.",
+    ],
+  },
+  {
+    id: "meetings",
+    title: "Meetings",
+    body: [
+      "Need time with Admin or with Amina, our Director of Operations? Use \"+ Request a Meeting,\" choose in-person or Zoom, and give us your preferred dates and times. We'll follow up to confirm — you'll see the status of your request update right here, from \"Requested\" to \"Scheduled\" to \"Completed.\"",
+    ],
+  },
+  {
+    id: "documents",
+    title: "Documents & Compliance",
+    body: [
+      "Your signed agreements and financial paperwork, organized into four folders: 1099 Agreement, W9 & Direct Deposit, Appendixes, and Monthly Invoices.",
+      "You can upload documents into any folder yourself, and Admin can do the same on their end — so whichever of you has the current version, it ends up in the same place. Everything here is private to you and Admin; nothing is ever a public link.",
+    ],
+  },
+  {
+    id: "profile",
+    title: "Profile & Settings",
+    body: [
+      "Your name, role, username, and contractor type are managed by Admissions — if any of those need to change, a quick message to Amina takes care of it. Your contact email and phone number, though, are yours to keep current — update them here any time.",
+    ],
+  },
+  {
+    id: "closing",
+    title: "One Last Thing",
+    body: [
+      "If anything in this portal is ever confusing, unclear, or just not working the way you'd expect, please say so — through Messages, through Report an Issue on a session, or directly to Amina. This portal exists to make your work easier, and it only gets better with what you tell us.",
+      "Welcome to Excalibur Academy. We're glad you're here.",
+    ],
+  },
+];
+
+function GuideSection({ facultyProfile, facultyRole }) {
+  const lora = "'Lora', Georgia, serif";
+  const cg = "'Cormorant Garamond', Georgia, serif";
+
+  const scrollTo = (id) => {
+    const el = document.getElementById(`guide-${id}`);
+    if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
+
+  return (
+    <div>
+      <p style={{ fontFamily: lora, fontSize: 11, letterSpacing: "0.4em", color: "#A48D6E", fontWeight: 600, textTransform: "uppercase", marginBottom: 10 }}>
+        Faculty Portal
+      </p>
+      <h2 style={{ fontFamily: cg, fontSize: 30, color: "#100F0C", fontWeight: 600, margin: "0 0 24px" }}>Guide</h2>
+
+      <div style={{ background: "#FAF7F2", border: "1px solid rgba(164,141,110,0.3)", borderRadius: 6, padding: 20, marginBottom: 32, maxWidth: 480 }}>
+        <p style={{ fontFamily: lora, fontSize: 11, letterSpacing: "0.1em", color: "#8B7355", textTransform: "uppercase", fontWeight: 700, marginBottom: 12 }}>Jump To</p>
+        <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
+          {GUIDE_SECTIONS.map((s) => (
+            <span
+              key={s.id}
+              onClick={() => scrollTo(s.id)}
+              style={{ fontFamily: lora, fontSize: 12, color: "#100F0C", padding: "6px 12px", background: "#FFFFFF", border: "1px solid rgba(164,141,110,0.3)", borderRadius: 16, cursor: "pointer" }}
+            >
+              {s.title}
+            </span>
+          ))}
+        </div>
+      </div>
+
+      <div style={{ maxWidth: 680 }}>
+        {GUIDE_SECTIONS.map((s) => (
+          <div key={s.id} id={`guide-${s.id}`} style={{ marginBottom: 36, scrollMarginTop: 24 }}>
+            <h3 style={{ fontFamily: cg, fontSize: 21, color: "#100F0C", fontWeight: 600, margin: "0 0 12px", borderBottom: "2px solid #A48D6E", paddingBottom: 8 }}>
+              {s.title}
+            </h3>
+            {s.body.map((p, i) => (
+              <p key={i} style={{ fontFamily: lora, fontSize: 14, color: "#3A2F28", lineHeight: 1.75, margin: "0 0 12px" }}>
+                {p}
+              </p>
+            ))}
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+// ═══════════════════════════════════════════════════════════════════════
 // RATE & PAY SUMMARY
 // ═══════════════════════════════════════════════════════════════════════
 
@@ -18178,6 +18854,7 @@ function RatePaySummarySection({ facultyProfile, facultyRole }) {
   const sb = getSupabase();
   const lora = "'Lora', Georgia, serif";
   const cg = "'Cormorant Garamond', Georgia, serif";
+  const isMobile = useIsMobile();
   const { sessions, rateRules, programs, loading } = useFacultyScheduleData(sb, facultyProfile?.id);
 
   if (loading) {
@@ -18293,6 +18970,40 @@ function RatePaySummarySection({ facultyProfile, facultyRole }) {
               </p>
             </div>
             <div style={{ marginTop: 16, border: "1px solid rgba(16,15,12,0.1)", borderRadius: 6, overflow: "hidden", boxShadow: "0 1px 4px rgba(16,15,12,0.06)" }}>
+              {isMobile ? (
+                <div style={{ display: "flex", flexDirection: "column" }}>
+                  {dayGroups.map((group, i) => {
+                    const d = new Date(group.date + "T00:00:00");
+                    const weekday = WEEKDAY_NAMES[d.getDay()];
+                    const dateLabel = d.toLocaleDateString("en-US", { month: "short", day: "numeric" });
+                    const pay = group.teachingSummary ? `$${group.teachingSummary.totalPay}` : formatOtherPay(group.allSessions, rateByType);
+                    return (
+                      <div key={group.date} style={{ padding: 14, background: i % 2 === 0 ? "#FFFFFF" : "#FAF7F2", borderTop: i === 0 ? "none" : "1px solid rgba(16,15,12,0.07)" }}>
+                        <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 6 }}>
+                          <div>
+                            <span style={{ fontFamily: lora, fontSize: 13, color: "#100F0C", fontWeight: 700 }}>{dateLabel}</span>
+                            <span style={{ fontFamily: lora, fontSize: 11.5, color: "#8B7355", marginLeft: 6 }}>{weekday}</span>
+                          </div>
+                          <p style={{ fontFamily: lora, fontSize: 13, color: "#100F0C", margin: 0, fontWeight: 700 }}>{pay}</p>
+                        </div>
+                        {group.allSessions.map((s) => (
+                          <p key={s.id} style={{ fontFamily: lora, fontSize: 12.5, color: "#100F0C", margin: "0 0 3px" }}>
+                            {s.start_time ? s.start_time.slice(0, 5) : "TBC"}{s.end_time ? ` – ${s.end_time.slice(0, 5)}` : ""} · {s.block_label}
+                          </p>
+                        ))}
+                        <p style={{ fontFamily: lora, fontSize: 11.5, color: "#6B6459", margin: "6px 0 0" }}>
+                          {group.teachingSummary ? `${formatMinutes(group.teachingSummary.totalActualMinutes)} taught · ${group.teachingSummary.totalBilledHours} hr billed · $${group.teachingSummary.rateAmount}` : `${formatOtherBilled(group.allSessions, rateByType)} · ${formatOtherRate(group.allSessions, rateByType)}`}
+                        </p>
+                      </div>
+                    );
+                  })}
+                  <div style={{ padding: 14, background: "#F4EDE1", borderTop: "2px solid #A48D6E", display: "flex", justifyContent: "space-between" }}>
+                    <p style={{ fontFamily: lora, fontSize: 12, color: "#100F0C", margin: 0, fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.08em" }}>Program Total</p>
+                    <p style={{ fontFamily: lora, fontSize: 13, color: "#100F0C", margin: 0, fontWeight: 700 }}>{totalBilledHours} hr · ${totalPay.toLocaleString()}</p>
+                  </div>
+                </div>
+              ) : (
+              <>
               <div style={{ display: "grid", gridTemplateColumns: gridCols, background: "#100F0C" }}>
                 {SUMMARY_COLUMNS.map((c) => (
                   <div key={c.key} style={colHeaderCell(c.align)}>{c.label}</div>
@@ -18360,6 +19071,8 @@ function RatePaySummarySection({ facultyProfile, facultyRole }) {
                   <p style={{ fontFamily: lora, fontSize: 14, color: "#100F0C", margin: 0, fontWeight: 700 }}>${totalPay.toLocaleString()}</p>
                 </div>
               </div>
+              </>
+              )}
             </div>
           </div>
         );
