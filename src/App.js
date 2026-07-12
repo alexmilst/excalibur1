@@ -16153,6 +16153,7 @@ function FacultyDashboardHome({ facultyProfile, facultyRole }) {
         onBack={() => setCalendarModalDate(null)}
         sb={sb}
         onAttendanceUpdated={reload}
+        facultyId={facultyProfile?.id}
       />
     );
   }
@@ -16567,7 +16568,7 @@ const FOUNDERS_DAY_OVERVIEW = {
 // Full-page day view — replaces the old fixed-overlay popup. Reached the
 // same way (clicking a day in a calendar or schedule row) but renders as a
 // regular in-content view with a "← Back" link, not a modal window.
-function DayOverviewView({ date, sessionsThisDay, programName, rateByType, onBack, sb, onAttendanceUpdated }) {
+function DayOverviewView({ date, sessionsThisDay, programName, rateByType, onBack, sb, onAttendanceUpdated, facultyId }) {
   const lora = "'Lora', Georgia, serif";
   const cg = "'Cormorant Garamond', Georgia, serif";
   const d = new Date(date + "T00:00:00");
@@ -16670,6 +16671,9 @@ function DayOverviewView({ date, sessionsThisDay, programName, rateByType, onBac
           </div>
           <div style={{ marginTop: 10 }}>
             <ReportIssueControl session={s} sb={sb} onUpdated={onAttendanceUpdated} />
+          </div>
+          <div style={{ marginTop: 10, paddingTop: 10, borderTop: "1px solid rgba(164,141,110,0.25)" }}>
+            <SessionInvoiceControl session={s} sb={sb} facultyId={facultyId} rateByType={rateByType} />
           </div>
         </div>
       ))}
@@ -17112,6 +17116,166 @@ function ReportIssueControl({ session, sb, onUpdated }) {
 }
 
 // ═══════════════════════════════════════════════════════════════════════
+// SESSION INVOICING — "Add to Invoice" / "Send for Approval"
+// Each schedule block gets its own row in time_entries once a faculty
+// member submits it:
+//   • Unedited hours (matches the scheduled block exactly) -> "Add to
+//     Invoice" -> time_entries.confirmed = true immediately. Nothing about
+//     the plan changed, so no admin review is needed.
+//   • Edited hours (the session ran long or short) -> "Send for Approval"
+//     -> time_entries.confirmed = false, and it sits in the same admin
+//     queue Time Tracking already uses until approved.
+// Nothing here — or anywhere pay is totaled — ever assumes a session
+// happened just because its calendar date has passed. A session only
+// counts toward pay once a time_entries row exists for it.
+// ═══════════════════════════════════════════════════════════════════════
+
+function weekStartSunday(dateStr) {
+  const d = new Date(dateStr + "T00:00:00");
+  d.setDate(d.getDate() - d.getDay());
+  return d.toISOString().slice(0, 10);
+}
+
+function defaultSessionHours(session) {
+  if (session.duration_minutes != null) return Math.round((session.duration_minutes / 60) * 100) / 100;
+  if (session.billable_hours != null) return Number(session.billable_hours);
+  return 1;
+}
+
+function computeSessionInvoiceAmount(session, hours, rateByType) {
+  const rr = rateByType[session.activity_type];
+  if (!rr) return null;
+  if (rr.rate_type === "flat") return { rateAmount: Number(rr.rate_amount), rateType: "flat", amount: Number(rr.rate_amount) };
+  if (rr.rate_type === "hourly") return { rateAmount: Number(rr.rate_amount), rateType: "hourly", amount: Math.round(Number(rr.rate_amount) * hours * 100) / 100 };
+  if (rr.rate_type === "included") return { rateAmount: 0, rateType: "included", amount: 0 };
+  return null;
+}
+
+// Fetches every time_entries row for a faculty member and exposes the three
+// invoicing states Billing & Invoices summarizes: awaiting approval,
+// approved (ready to invoice), and already added to an invoice.
+function useFacultyTimeEntries(sb, facultyId) {
+  const [entries, setEntries] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const load = useCallback(async () => {
+    if (!sb || !facultyId) return;
+    setLoading(true);
+    const { data } = await sb.from("time_entries").select("*").eq("faculty_id", facultyId).order("entry_date", { ascending: false });
+    setEntries(data || []);
+    setLoading(false);
+  }, [sb, facultyId]);
+  useEffect(() => { load(); }, [load]);
+
+  const awaitingApproval = entries.filter((e) => !e.confirmed && !e.invoice_id);
+  const approved = entries.filter((e) => e.confirmed && !e.invoice_id);
+  const addedToInvoice = entries.filter((e) => e.invoice_id);
+  const sumHours = (list) => list.reduce((sum, e) => sum + Number(e.hours || 0), 0);
+  const sumAmount = (list) => list.reduce((sum, e) => sum + Number(e.amount || 0), 0);
+
+  return {
+    entries, loading, reload: load,
+    awaitingApproval, approved, addedToInvoice,
+    awaitingApprovalHours: sumHours(awaitingApproval), awaitingApprovalPay: sumAmount(awaitingApproval),
+    approvedHours: sumHours(approved), approvedPay: sumAmount(approved),
+    addedToInvoiceHours: sumHours(addedToInvoice), addedToInvoicePay: sumAmount(addedToInvoice),
+    confirmedHoursToDate: sumHours(approved) + sumHours(addedToInvoice),
+    confirmedPayToDate: sumAmount(approved) + sumAmount(addedToInvoice),
+  };
+}
+
+function SessionInvoiceControl({ session, sb, facultyId, rateByType }) {
+  const lora = "'Lora', Georgia, serif";
+  const [entry, setEntry] = useState(undefined); // undefined = loading, null = none submitted yet
+  const [hoursValue, setHoursValue] = useState(() => String(defaultSessionHours(session)));
+  const [busy, setBusy] = useState(false);
+
+  const load = useCallback(async () => {
+    if (!sb || !session?.id) return;
+    const { data } = await sb.from("time_entries").select("*").eq("session_id", session.id).maybeSingle();
+    setEntry(data || null);
+  }, [sb, session?.id]);
+
+  useEffect(() => { load(); }, [load]);
+
+  if (!facultyId || entry === undefined) return null;
+
+  if (entry) {
+    const statusLabel = entry.invoice_id ? "Added to Invoice" : entry.confirmed ? "Approved — Ready to Invoice" : "Awaiting Approval";
+    const statusColor = entry.invoice_id ? "#3D8B5F" : entry.confirmed ? "#2F4858" : "#9C7F1A";
+    return (
+      <p style={{ fontFamily: lora, fontSize: 11.5, color: statusColor, fontWeight: 700, margin: 0 }}>
+        {statusLabel} — {entry.hours} hr{entry.amount != null ? ` · $${entry.amount}` : ""}
+      </p>
+    );
+  }
+
+  const defaultHours = defaultSessionHours(session);
+  const isEdited = Number(hoursValue) !== defaultHours;
+  const todayStr = new Date().toISOString().slice(0, 10);
+  const isFuture = session.session_date && session.session_date > todayStr;
+  const rr = rateByType[session.activity_type];
+
+  if (isFuture) {
+    return (
+      <p style={{ fontFamily: lora, fontSize: 11.5, color: "#8B7355", fontStyle: "italic", margin: 0 }}>
+        Available for invoicing after this session takes place.
+      </p>
+    );
+  }
+
+  if (!rr) {
+    return (
+      <p style={{ fontFamily: lora, fontSize: 11.5, color: "#8B7355", fontStyle: "italic", margin: 0 }}>
+        No rate on file for this activity — contact admin.
+      </p>
+    );
+  }
+
+  const submit = async () => {
+    const hours = Number(hoursValue);
+    if (!hours || hours <= 0) return;
+    const calc = computeSessionInvoiceAmount(session, hours, rateByType);
+    if (!calc) return;
+    setBusy(true);
+    const { data } = await sb.from("time_entries").insert({
+      faculty_id: facultyId,
+      session_id: session.id,
+      entry_type: "session",
+      activity_type: session.activity_type,
+      entry_date: session.session_date,
+      hours,
+      rate_amount: calc.rateAmount,
+      rate_type: calc.rateType,
+      amount: calc.amount,
+      week_start: weekStartSunday(session.session_date),
+      description: session.block_label,
+      confirmed: !isEdited,
+      confirmed_at: isEdited ? null : new Date().toISOString(),
+    }).select().single();
+    setBusy(false);
+    if (data) setEntry(data);
+  };
+
+  return (
+    <div onClick={(e) => e.stopPropagation()} style={{ display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap" }}>
+      <label style={{ fontFamily: lora, fontSize: 11, color: "#8B7355", textTransform: "uppercase", letterSpacing: "0.06em" }}>Hours</label>
+      <input
+        type="number" step="0.25" min="0.25" value={hoursValue}
+        onChange={(e) => setHoursValue(e.target.value)}
+        style={{ fontFamily: lora, fontSize: 12.5, padding: "5px 8px", border: "1px solid rgba(16,15,12,0.25)", borderRadius: 4, width: 70 }}
+      />
+      <button
+        onClick={submit}
+        disabled={busy}
+        style={{ fontFamily: lora, fontSize: 11, fontWeight: 700, padding: "6px 14px", background: isEdited ? "#9C7F1A" : "#100F0C", color: "#FFFFFF", border: "none", borderRadius: 4, cursor: "pointer" }}
+      >
+        {busy ? "Submitting…" : isEdited ? "Send for Approval" : "Add to Invoice"}
+      </button>
+    </div>
+  );
+}
+
+// ═══════════════════════════════════════════════════════════════════════
 // DAILY / WEEKLY SNAPSHOT HELPERS
 // Computed live from real session data — never hardcoded — so these stay
 // accurate as the schedule changes. Labeled "Snapshot" throughout because
@@ -17124,6 +17288,15 @@ function formatTimeLabel(t) {
   const period = h >= 12 ? "PM" : "AM";
   const h12 = h % 12 === 0 ? 12 : h % 12;
   return `${h12}:${String(m).padStart(2, "0")} ${period}`;
+}
+
+// Six-week wave overlap months (Oct–Nov, Jan–Feb, Apr–May) run a different
+// weekly rhythm than standard non-overlap months (Sep, Dec, Mar, Jun) for
+// faculty covering both Flagship groups. Shared by the Weekly Snapshot split
+// in MyScheduleSection.
+const OVERLAP_MONTHS = new Set([10, 11, 1, 2, 4, 5]);
+function monthOf(dateStr) {
+  return dateStr ? new Date(dateStr + "T00:00:00").getMonth() + 1 : null;
 }
 
 // Dedupes teaching sessions into distinct (weekday, time, block) shapes.
@@ -17243,6 +17416,7 @@ function MyScheduleSection({ facultyProfile, facultyRole }) {
         onBack={() => setSelectedDay(null)}
         sb={sb}
         onAttendanceUpdated={reload}
+        facultyId={facultyProfile?.id}
       />
     );
   }
@@ -17469,25 +17643,50 @@ function MyScheduleSection({ facultyProfile, facultyRole }) {
           );
         }
 
+        // Six-week wave overlap months (Oct–Nov, Jan–Feb, Apr–May) run a
+        // different weekly rhythm than standard non-overlap months (Sep,
+        // Dec, Mar, Jun) for any faculty member covering both Flagship
+        // groups (e.g. Chip: Tue/Thu + Sat normally, Sat + Sun during
+        // overlap). Detected live from actual session weekdays — never
+        // hardcoded to a name — so it only splits into two snapshots when
+        // the real schedule actually has two distinct shapes.
+        const overlapSessions = progSessions.filter((s) => OVERLAP_MONTHS.has(monthOf(s.session_date)));
+        const nonOverlapSessions = progSessions.filter((s) => !OVERLAP_MONTHS.has(monthOf(s.session_date)));
+        const overlapPatterns = computeTeachingPatterns(overlapSessions);
+        const nonOverlapPatterns = computeTeachingPatterns(nonOverlapSessions);
+        const weekdaySignature = (patterns) => Array.from(new Set(patterns.map((p) => p.weekday))).sort().join(",");
+        const patternsDiffer = overlapPatterns.length > 0 && nonOverlapPatterns.length > 0 && weekdaySignature(overlapPatterns) !== weekdaySignature(nonOverlapPatterns);
+
+        const renderSnapshotCard = (keySuffix, labelSuffix, note, patterns) => {
+          const shapes = describeTeachingPatterns(patterns);
+          return (
+            <div key={`${program.id}-${keySuffix}`} style={{ marginBottom: 24, background: "#FAF7F2", border: "1px solid rgba(164,141,110,0.3)", borderRadius: 6, padding: "18px 22px" }}>
+              <h4 style={{ fontFamily: cg, fontSize: 18, color: "#100F0C", fontWeight: 600, margin: "0 0 4px" }}>{facultyDisplayProgramName(program.name)} — Weekly Snapshot{labelSuffix}</h4>
+              <p style={{ fontFamily: lora, fontSize: 12, color: "#8B7355", margin: "0 0 14px", fontStyle: "italic" }}>{note}</p>
+              {shapes.map((shape, i) => (
+                <p key={i} style={{ fontFamily: lora, fontSize: 13.5, color: "#100F0C", margin: "0 0 6px" }}>
+                  On <strong>{joinWeekdayNames(shape.weekdays)}</strong>, you teach <strong>{shape.block_label}</strong> from {formatTimeLabel(shape.start_time)}–{formatTimeLabel(shape.end_time)}{shape.notes ? ` (${shape.notes})` : ""}.
+                </p>
+              ))}
+              <div style={{ marginTop: 12 }}>
+                <WeeklySnapshotGrid patterns={patterns} lora={lora} />
+              </div>
+            </div>
+          );
+        };
+
+        if (patternsDiffer) {
+          return (
+            <React.Fragment key={program.id}>
+              {renderSnapshotCard("overlap", " — With Six-Week Wave Overlap", "A snapshot of a typical week during six-week wave overlap months (Oct–Nov, Jan–Feb, Apr–May) — some weeks vary (see the full schedule below for exact dates).", overlapPatterns)}
+              {renderSnapshotCard("non-overlap", " — Standard Weeks (No Overlap)", "A snapshot of a typical week during standard, non-overlap months (Sep, Dec, Mar, Jun) — some weeks vary (see the full schedule below for exact dates).", nonOverlapPatterns)}
+            </React.Fragment>
+          );
+        }
+
         const patterns = computeTeachingPatterns(progSessions);
         if (patterns.length === 0) return null;
-        const shapes = describeTeachingPatterns(patterns);
-        return (
-          <div key={program.id} style={{ marginBottom: 24, background: "#FAF7F2", border: "1px solid rgba(164,141,110,0.3)", borderRadius: 6, padding: "18px 22px" }}>
-            <h4 style={{ fontFamily: cg, fontSize: 18, color: "#100F0C", fontWeight: 600, margin: "0 0 4px" }}>{facultyDisplayProgramName(program.name)} — Weekly Snapshot</h4>
-            <p style={{ fontFamily: lora, fontSize: 12, color: "#8B7355", margin: "0 0 14px", fontStyle: "italic" }}>
-              A snapshot of a typical week — some weeks vary (see the full schedule below for exact dates).
-            </p>
-            {shapes.map((shape, i) => (
-              <p key={i} style={{ fontFamily: lora, fontSize: 13.5, color: "#100F0C", margin: "0 0 6px" }}>
-                On <strong>{joinWeekdayNames(shape.weekdays)}</strong>, you teach <strong>{shape.block_label}</strong> from {formatTimeLabel(shape.start_time)}–{formatTimeLabel(shape.end_time)}{shape.notes ? ` (${shape.notes})` : ""}.
-              </p>
-            ))}
-            <div style={{ marginTop: 12 }}>
-              <WeeklySnapshotGrid patterns={patterns} lora={lora} />
-            </div>
-          </div>
-        );
+        return renderSnapshotCard("standard", "", "A snapshot of a typical week — some weeks vary (see the full schedule below for exact dates).", patterns);
       })}
 
       {programs.map((program) => {
@@ -17728,8 +17927,9 @@ function EventsSection({ facultyProfile, facultyRole }) {
   const cg = "'Cormorant Garamond', Georgia, serif";
   const isMobile = useIsMobile();
   const { sessions, rateRules, programs, loading, reload } = useFacultyScheduleData(sb, facultyProfile?.id);
+  const { confirmedHoursToDate, confirmedPayToDate, loading: entriesLoading } = useFacultyTimeEntries(sb, facultyProfile?.id);
 
-  if (loading) return <p style={{ fontFamily: lora, fontSize: 14, color: "#6B6459" }}>Loading…</p>;
+  if (loading || entriesLoading) return <p style={{ fontFamily: lora, fontSize: 14, color: "#6B6459" }}>Loading…</p>;
 
   const rateByType = {};
   rateRules.forEach((r) => { rateByType[r.activity_type] = r; });
@@ -17745,8 +17945,6 @@ function EventsSection({ facultyProfile, facultyRole }) {
   programs.forEach((p) => { programById[p.id] = p; });
 
   const rows = eventSessions.map((s) => ({ session: s, calc: computeExactEventPay(s, rateByType) }));
-  const totalKnownPay = rows.reduce((sum, r) => sum + (r.calc.known ? r.calc.payValue : 0), 0);
-  const missingDurationCount = rows.filter((r) => !r.calc.known && r.calc.payLabel === "Duration needed").length;
 
   return (
     <div>
@@ -17766,15 +17964,14 @@ function EventsSection({ facultyProfile, facultyRole }) {
           <p style={{ fontFamily: cg, fontSize: 28, color: "#E4D5C1", fontWeight: 600, margin: 0 }}>{eventSessions.length}</p>
         </div>
         <div style={{ flex: "1 1 200px", background: "#100F0C", borderRadius: 6, padding: "20px 24px" }}>
-          <p style={{ fontFamily: lora, fontSize: 10.5, letterSpacing: "0.1em", color: "#A48D6E", textTransform: "uppercase", fontWeight: 600, margin: "0 0 6px" }}>Total Pay (Known Durations)</p>
-          <p style={{ fontFamily: cg, fontSize: 28, color: "#E4D5C1", fontWeight: 600, margin: 0 }}>${totalKnownPay % 1 === 0 ? totalKnownPay : totalKnownPay.toFixed(2)}</p>
+          <p style={{ fontFamily: lora, fontSize: 10.5, letterSpacing: "0.1em", color: "#A48D6E", textTransform: "uppercase", fontWeight: 600, margin: "0 0 6px" }}>Total Pay</p>
+          <p style={{ fontFamily: cg, fontSize: 28, color: "#E4D5C1", fontWeight: 600, margin: 0 }}>${confirmedPayToDate % 1 === 0 ? confirmedPayToDate : confirmedPayToDate.toFixed(2)}</p>
+          <p style={{ fontFamily: lora, fontSize: 10.5, color: "#A48D6E", margin: "4px 0 0" }}>{confirmedHoursToDate % 1 === 0 ? confirmedHoursToDate : confirmedHoursToDate.toFixed(2)} hr confirmed to date</p>
         </div>
       </div>
-      {missingDurationCount > 0 && (
-        <p style={{ fontFamily: lora, fontSize: 12.5, color: "#B4433A", marginBottom: 20, fontStyle: "italic" }}>
-          {missingDurationCount} event{missingDurationCount === 1 ? "" : "s"} below {missingDurationCount === 1 ? "doesn't" : "don't"} have a confirmed duration yet, so {missingDurationCount === 1 ? "it isn't" : "they aren't"} included in the total above.
-        </p>
-      )}
+      <p style={{ fontFamily: lora, fontSize: 12.5, color: "#8B7355", marginBottom: 20, fontStyle: "italic" }}>
+        Reflects only events you've submitted via "Add to Invoice" below and that are approved or already on an invoice — never a projection from the schedule.
+      </p>
       {rows.some((r) => r.calc.approximate) && (
         <p style={{ fontFamily: lora, fontSize: 12.5, color: "#8B7355", marginBottom: 20, fontStyle: "italic" }}>
           * Duration is a 2-hour approximation, not yet confirmed against a specific run-of-show time.
@@ -17802,14 +17999,17 @@ function EventsSection({ facultyProfile, facultyRole }) {
                 <p style={{ fontFamily: lora, fontSize: 11.5, color: "#6B6459", margin: "0 0 8px" }}>{calc.hoursLabel} · {calc.rateLabel}</p>
                 {s.notes && <p style={{ fontFamily: lora, fontSize: 11.5, color: "#6B6459", margin: "0 0 8px" }}>{s.notes}</p>}
                 <AttendanceControl session={s} sb={sb} mode="event" onUpdated={reload} compact />
+                <div style={{ marginTop: 8 }}>
+                  <SessionInvoiceControl session={s} sb={sb} facultyId={facultyProfile?.id} rateByType={rateByType} />
+                </div>
               </div>
             );
           })}
         </div>
       ) : (
         <div style={{ border: "1px solid rgba(16,15,12,0.1)", borderRadius: 6, overflow: "hidden", boxShadow: "0 1px 4px rgba(16,15,12,0.06)" }}>
-          <div style={{ display: "grid", gridTemplateColumns: "110px 1fr 150px 90px 100px 100px 200px", background: "#2F4858" }}>
-            {["Date", "Event", "Program", "Category", "Rate", "Pay", "Attendance"].map((label) => (
+          <div style={{ display: "grid", gridTemplateColumns: "110px 1fr 150px 90px 100px 100px 200px 220px", background: "#2F4858" }}>
+            {["Date", "Event", "Program", "Category", "Rate", "Pay", "Attendance", "Invoice"].map((label) => (
               <div key={label} style={{ fontFamily: lora, fontSize: 10.5, letterSpacing: "0.1em", color: "#EEF3F5", textTransform: "uppercase", fontWeight: 600, padding: "14px 16px" }}>
                 {label}
               </div>
@@ -17821,7 +18021,7 @@ function EventsSection({ facultyProfile, facultyRole }) {
             const program = programById[s.program_id];
             return (
               <div key={s.id} style={{
-                display: "grid", gridTemplateColumns: "110px 1fr 150px 90px 100px 100px 200px",
+                display: "grid", gridTemplateColumns: "110px 1fr 150px 90px 100px 100px 200px 220px",
                 background: i % 2 === 0 ? "#FFFFFF" : "#EEF3F5",
                 borderTop: i === 0 ? "none" : "1px solid rgba(47,72,88,0.12)",
                 borderLeft: "3px solid #2F4858", alignItems: "center",
@@ -17849,6 +18049,9 @@ function EventsSection({ facultyProfile, facultyRole }) {
                 </div>
                 <div style={{ padding: 16 }}>
                   <AttendanceControl session={s} sb={sb} mode="event" onUpdated={reload} compact />
+                </div>
+                <div style={{ padding: 16 }}>
+                  <SessionInvoiceControl session={s} sb={sb} facultyId={facultyProfile?.id} rateByType={rateByType} />
                 </div>
               </div>
             );
@@ -18898,8 +19101,9 @@ function RatePaySummarySection({ facultyProfile, facultyRole }) {
   const cg = "'Cormorant Garamond', Georgia, serif";
   const isMobile = useIsMobile();
   const { sessions, rateRules, programs, loading } = useFacultyScheduleData(sb, facultyProfile?.id);
+  const { entries: timeEntries, loading: entriesLoading, confirmedHoursToDate: grandTotalBilledHours, confirmedPayToDate: grandTotalPay } = useFacultyTimeEntries(sb, facultyProfile?.id);
 
-  if (loading) {
+  if (loading || entriesLoading) {
     return <p style={{ fontFamily: cg, fontSize: 16, color: "#6B6459", fontStyle: "italic" }}>Loading your rate & pay summary…</p>;
   }
 
@@ -18913,24 +19117,30 @@ function RatePaySummarySection({ facultyProfile, facultyRole }) {
     sessionsByProgram[s.program_id].push(s);
   });
 
+  // Confirmed earnings (approved or already on an invoice) per program,
+  // keyed off the session that time entry was submitted for. Manual time
+  // entries (session_id null) aren't tied to a program and are excluded
+  // from these per-program figures — they still count in the grand total.
+  const sessionProgramById = {};
+  sessions.forEach((s) => { sessionProgramById[s.id] = s.program_id; });
+  const confirmedEntries = timeEntries.filter((e) => e.confirmed || e.invoice_id);
+  const confirmedByProgram = {};
+  confirmedEntries.forEach((e) => {
+    const pid = e.session_id ? sessionProgramById[e.session_id] : null;
+    if (!pid) return;
+    if (!confirmedByProgram[pid]) confirmedByProgram[pid] = { hours: 0, pay: 0 };
+    confirmedByProgram[pid].hours += Number(e.hours || 0);
+    confirmedByProgram[pid].pay += Number(e.amount || 0);
+  });
+
   const programBreakdowns = programs
     .map((program) => {
       const progSessions = sessionsByProgram[program.id] || [];
       const dayGroups = groupSessionsByDay(progSessions, rateByType);
-      const totalBilledHours = dayGroups.reduce((sum, g) => sum + computeGroupBilledHoursNumeric(g, rateByType), 0);
-      const totalPay = dayGroups.reduce((sum, g) => sum + computeGroupPayNumeric(g, rateByType), 0);
-      return { program, dayGroups, totalBilledHours, totalPay };
+      const confirmed = confirmedByProgram[program.id] || { hours: 0, pay: 0 };
+      return { program, dayGroups, totalBilledHours: confirmed.hours, totalPay: confirmed.pay };
     })
     .filter((pb) => pb.dayGroups.length > 0);
-
-  // "To Date" totals reflect only sessions that have actually happened —
-  // never the full future-scheduled year. A session with no date is
-  // excluded rather than assumed past.
-  const todayStr = new Date().toISOString().slice(0, 10);
-  const pastSessions = sessions.filter((s) => s.session_date && s.session_date <= todayStr);
-  const pastDayGroups = groupSessionsByDay(pastSessions, rateByType);
-  const grandTotalBilledHours = pastDayGroups.reduce((sum, g) => sum + computeGroupBilledHoursNumeric(g, rateByType), 0);
-  const grandTotalPay = pastDayGroups.reduce((sum, g) => sum + computeGroupPayNumeric(g, rateByType), 0);
 
   const SUMMARY_COLUMNS = [
     { key: "date", label: "Date", align: "left" },
@@ -18958,7 +19168,7 @@ function RatePaySummarySection({ facultyProfile, facultyRole }) {
       </h2>
 
       {/* ── Grand totals strip ── */}
-      <div style={{ background: "#100F0C", borderRadius: 4, padding: "22px 26px", marginBottom: 36, display: "flex", gap: 40, flexWrap: "wrap" }}>
+      <div style={{ background: "#100F0C", borderRadius: 4, padding: "22px 26px", marginBottom: 12, display: "flex", gap: 40, flexWrap: "wrap" }}>
         <div>
           <p style={{ fontFamily: lora, fontSize: 10, color: "#A48D6E", textTransform: "uppercase", letterSpacing: "0.1em", margin: "0 0 4px" }}>Total Hours Billed To Date</p>
           <p style={{ fontFamily: cg, fontSize: 24, color: "#E4D5C1", fontWeight: 600, margin: 0 }}>{grandTotalBilledHours} hr</p>
@@ -18968,6 +19178,9 @@ function RatePaySummarySection({ facultyProfile, facultyRole }) {
           <p style={{ fontFamily: cg, fontSize: 24, color: "#E4D5C1", fontWeight: 600, margin: 0 }}>${grandTotalPay.toLocaleString()}</p>
         </div>
       </div>
+      <p style={{ fontFamily: lora, fontSize: 12.5, color: "#8B7355", marginBottom: 36, fontStyle: "italic" }}>
+        Reflects only sessions you've submitted via "Add to Invoice" on My Schedule that are approved or already on an invoice — never a projection from the schedule.
+      </p>
 
       {/* ── Your Rates ── */}
       <div style={{ marginBottom: 44 }}>
@@ -19039,10 +19252,6 @@ function RatePaySummarySection({ facultyProfile, facultyRole }) {
                       </div>
                     );
                   })}
-                  <div style={{ padding: 14, background: "#F4EDE1", borderTop: "2px solid #A48D6E", display: "flex", justifyContent: "space-between" }}>
-                    <p style={{ fontFamily: lora, fontSize: 12, color: "#100F0C", margin: 0, fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.08em" }}>Program Total</p>
-                    <p style={{ fontFamily: lora, fontSize: 13, color: "#100F0C", margin: 0, fontWeight: 700 }}>{totalBilledHours} hr · ${totalPay.toLocaleString()}</p>
-                  </div>
                 </div>
               ) : (
               <>
@@ -19098,21 +19307,6 @@ function RatePaySummarySection({ facultyProfile, facultyRole }) {
                   </div>
                 );
               })}
-              {/* ── Program totals footer row ── */}
-              <div style={{ display: "grid", gridTemplateColumns: gridCols, background: "#F4EDE1", borderTop: "2px solid #A48D6E", alignItems: "center" }}>
-                <div style={rowCell("left")}>
-                  <p style={{ fontFamily: lora, fontSize: 12, color: "#100F0C", margin: 0, fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.08em" }}>Program Total</p>
-                </div>
-                <div style={rowCell("left")} />
-                <div style={rowCell("right")} />
-                <div style={rowCell("right")}>
-                  <p style={{ fontFamily: lora, fontSize: 13, color: "#100F0C", margin: 0, fontWeight: 700 }}>{totalBilledHours} hr</p>
-                </div>
-                <div style={rowCell("right")} />
-                <div style={rowCell("right")}>
-                  <p style={{ fontFamily: lora, fontSize: 14, color: "#100F0C", margin: 0, fontWeight: 700 }}>${totalPay.toLocaleString()}</p>
-                </div>
-              </div>
               </>
               )}
             </div>
@@ -19251,19 +19445,96 @@ function StandardRateCardTable({ compact = false }) {
 // ===========================================================================
 
 function BillingSection({ facultyProfile, facultyRole }) {
+  const sb = getSupabase();
   const lora = "'Lora', Georgia, serif";
   const cg = "'Cormorant Garamond', Georgia, serif";
+  const isMobile = useIsMobile();
   const isBillMorris = facultyProfile?.full_name === "Bill Morris";
+  const {
+    awaitingApproval, approved, addedToInvoice,
+    awaitingApprovalHours, awaitingApprovalPay,
+    approvedHours, approvedPay,
+    addedToInvoiceHours, addedToInvoicePay,
+    loading,
+  } = useFacultyTimeEntries(sb, facultyProfile?.id);
+
+  const STATUS_CARDS = [
+    { label: "Awaiting Approval", hours: awaitingApprovalHours, pay: awaitingApprovalPay, count: awaitingApproval.length, color: "#9C7F1A" },
+    { label: "Approved — Ready to Invoice", hours: approvedHours, pay: approvedPay, count: approved.length, color: "#2F4858" },
+    { label: "Added to Invoice", hours: addedToInvoiceHours, pay: addedToInvoicePay, count: addedToInvoice.length, color: "#3D8B5F" },
+  ];
+
+  const fmtHrs = (n) => (n % 1 === 0 ? n : n.toFixed(2));
+  const fmtPay = (n) => (n % 1 === 0 ? n.toLocaleString() : n.toFixed(2));
 
   return (
     <div>
       <h2 style={{ fontFamily: cg, fontSize: 26, color: "#100F0C", fontWeight: 500, margin: "0 0 12px" }}>
         Billing & Invoices
       </h2>
-      <p style={{ fontFamily: cg, fontSize: 16, color: "#6B6459", fontStyle: "italic", margin: "0 0 32px" }}>
-        Invoicing tools are coming soon. In the meantime, here is your standard rate card for reference —
-        every rate that applies to your work at the Academy, in one place.
+      <p style={{ fontFamily: lora, fontSize: 13.5, color: "#6B6459", margin: "0 0 28px", maxWidth: 640, lineHeight: 1.6 }}>
+        Every hour you submit via "Add to Invoice" on My Schedule, Events, or Time Tracking lands here. Unedited
+        hours move straight to Approved; edited hours sit in Awaiting Approval until admin confirms them.
       </p>
+
+      {loading ? (
+        <p style={{ fontFamily: cg, fontSize: 16, color: "#6B6459", fontStyle: "italic" }}>Loading…</p>
+      ) : (
+        <div style={{ display: "flex", gap: 16, flexWrap: "wrap", marginBottom: 36 }}>
+          {STATUS_CARDS.map((c) => (
+            <div key={c.label} style={{ flex: "1 1 220px", background: "#100F0C", borderRadius: 6, padding: "20px 24px", borderTop: `3px solid ${c.color}` }}>
+              <p style={{ fontFamily: lora, fontSize: 10.5, letterSpacing: "0.1em", color: "#A48D6E", textTransform: "uppercase", fontWeight: 600, margin: "0 0 6px" }}>{c.label}</p>
+              <p style={{ fontFamily: cg, fontSize: 26, color: "#E4D5C1", fontWeight: 600, margin: 0 }}>${fmtPay(c.pay)}</p>
+              <p style={{ fontFamily: lora, fontSize: 11.5, color: "#A48D6E", margin: "4px 0 0" }}>{fmtHrs(c.hours)} hr · {c.count} entr{c.count === 1 ? "y" : "ies"}</p>
+            </div>
+          ))}
+        </div>
+      )}
+
+      {!loading && awaitingApproval.length > 0 && (
+        <div style={{ marginBottom: 32 }}>
+          <h3 style={{ fontFamily: cg, fontSize: 20, color: "#100F0C", fontWeight: 600, margin: "0 0 14px" }}>Awaiting Approval</h3>
+          <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+            {awaitingApproval.map((e) => (
+              <div key={e.id} style={{ background: "#FFFDF5", border: "1px solid rgba(201,162,39,0.35)", borderRadius: 6, padding: "12px 16px", display: "flex", justifyContent: "space-between", alignItems: "center", gap: 16, flexWrap: "wrap" }}>
+                <div>
+                  <p style={{ fontFamily: lora, fontSize: 13, color: "#100F0C", fontWeight: 700, margin: "0 0 3px" }}>{e.description || humanizeActivityType(e.activity_type)}</p>
+                  <p style={{ fontFamily: lora, fontSize: 12, color: "#6B6459", margin: 0 }}>{e.entry_date} · {e.hours} hr{e.amount != null ? ` · $${e.amount}` : ""}</p>
+                </div>
+                <span style={{ fontFamily: lora, fontSize: 11.5, fontWeight: 700, color: "#9C7F1A" }}>Awaiting Approval</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {!loading && (approved.length > 0 || addedToInvoice.length > 0) && (
+        <div style={{ marginBottom: 32 }}>
+          <h3 style={{ fontFamily: cg, fontSize: 20, color: "#100F0C", fontWeight: 600, margin: "0 0 14px" }}>Approved & Invoiced</h3>
+          <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+            {[...approved, ...addedToInvoice].sort((a, b) => (b.entry_date || "").localeCompare(a.entry_date || "")).map((e) => (
+              <div key={e.id} style={{ background: "#FFFFFF", border: "1px solid rgba(16,15,12,0.1)", borderLeft: `3px solid ${e.invoice_id ? "#3D8B5F" : "#2F4858"}`, borderRadius: 6, padding: "12px 16px", display: "flex", justifyContent: "space-between", alignItems: "center", gap: 16, flexWrap: "wrap" }}>
+                <div>
+                  <p style={{ fontFamily: lora, fontSize: 13, color: "#100F0C", fontWeight: 700, margin: "0 0 3px" }}>{e.description || humanizeActivityType(e.activity_type)}</p>
+                  <p style={{ fontFamily: lora, fontSize: 12, color: "#6B6459", margin: 0 }}>{e.entry_date} · {e.hours} hr{e.amount != null ? ` · $${e.amount}` : ""}</p>
+                </div>
+                <span style={{ fontFamily: lora, fontSize: 11.5, fontWeight: 700, color: e.invoice_id ? "#3D8B5F" : "#2F4858" }}>
+                  {e.invoice_id ? "Added to Invoice" : "Approved — Ready to Invoice"}
+                </span>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {!loading && awaitingApproval.length === 0 && approved.length === 0 && addedToInvoice.length === 0 && (
+        <p style={{ fontFamily: cg, fontSize: 16, color: "#6B6459", fontStyle: "italic", marginBottom: 32 }}>
+          Nothing submitted yet. Add sessions and events to your invoice from My Schedule or Events, or log
+          manual time from Time Tracking.
+        </p>
+      )}
+
+      <h3 style={{ fontFamily: cg, fontSize: 20, color: "#100F0C", fontWeight: 600, margin: "0 0 14px", borderTop: "1px solid rgba(16,15,12,0.1)", paddingTop: 28 }}>Your Rate Card</h3>
       {isBillMorris ? (
         <p style={{ fontFamily: cg, fontSize: 16, color: "#6B6459", fontStyle: "italic" }}>
           Your rate structure will appear here once your dedicated portal is built.
