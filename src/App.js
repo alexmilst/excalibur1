@@ -16623,10 +16623,10 @@ function FolderIcon({ status, size = 20, onClick }) {
   );
 }
 
-function FolderStatusLabel({ status }) {
+function FolderStatusLabel({ status, materialLabel }) {
   const lora = "'Lora', Georgia, serif";
-  const text = status === "approved" ? "Confirmed" : status === "pending_review" ? "In Review" : "Not Uploaded Yet";
   const color = status === "approved" ? "#3D8B5F" : status === "pending_review" ? "#9C7F1A" : "#B4433A";
+  const text = materialLabel || (status === "approved" ? "Confirmed" : status === "pending_review" ? "In Review" : "Not Uploaded Yet");
   return <span style={{ fontFamily: lora, fontSize: 12, color, fontWeight: 600 }}>{text}</span>;
 }
 
@@ -17802,6 +17802,19 @@ function LessonPlansSection({ facultyProfile, facultyRole }) {
 
   return (
     <div>
+      {/* ── Always-visible legend — no need to open the guide to know what the colors mean ── */}
+      <div style={{ display: "flex", gap: 20, flexWrap: "wrap", alignItems: "center", marginBottom: 16, padding: "12px 16px", background: "#FAF7F2", border: "1px solid rgba(16,15,12,0.1)", borderRadius: 6 }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 7 }}>
+          <FolderIcon status="missing" size={14} /><span style={{ fontFamily: lora, fontSize: 12.5, color: "#6B6459" }}>Not uploaded yet</span>
+        </div>
+        <div style={{ display: "flex", alignItems: "center", gap: 7 }}>
+          <FolderIcon status="pending_review" size={14} /><span style={{ fontFamily: lora, fontSize: 12.5, color: "#6B6459" }}>Uploaded, not yet confirmed</span>
+        </div>
+        <div style={{ display: "flex", alignItems: "center", gap: 7 }}>
+          <FolderIcon status="approved" size={14} /><span style={{ fontFamily: lora, fontSize: 12.5, color: "#6B6459" }}>Confirmed</span>
+        </div>
+      </div>
+
       <button
         onClick={() => setShowGuide((v) => !v)}
         style={{
@@ -17931,11 +17944,11 @@ function LessonPlansSection({ facultyProfile, facultyRole }) {
                               <div style={{ display: "flex", gap: 16 }}>
                                 <span style={{ display: "flex", alignItems: "center", gap: 6 }}>
                                   <FolderIcon status={s.lesson_plan_status} size={16} />
-                                  <FolderStatusLabel status={s.lesson_plan_status} />
+                                  <FolderStatusLabel status={s.lesson_plan_status} materialLabel="Lesson Plan" />
                                 </span>
                                 <span style={{ display: "flex", alignItems: "center", gap: 6 }}>
                                   <FolderIcon status={s.presentation_status} size={16} />
-                                  <FolderStatusLabel status={s.presentation_status} />
+                                  <FolderStatusLabel status={s.presentation_status} materialLabel="PPTX Deck" />
                                 </span>
                               </div>
                             </div>
