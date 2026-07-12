@@ -15812,6 +15812,7 @@ function VentureDetailPage({ setPage, openInquiry }) {
 const FACULTY_NAV_SECTIONS = [
   { key: "dashboard", label: "Dashboard" },
   { key: "schedule", label: "My Schedule" },
+  { key: "events", label: "Events" },
   { key: "lessons", label: "Lesson Plans & Materials" },
   { key: "time", label: "Time Tracking" },
   { key: "pay", label: "Rate & Pay Summary" },
@@ -16225,6 +16226,8 @@ function FacultyPortalShell({ facultyProfile, facultyRole, onSignOut }) {
           <FacultyDashboardHome facultyProfile={facultyProfile} facultyRole={facultyRole} />
         ) : activeSection === "schedule" ? (
           <MyScheduleSection facultyProfile={facultyProfile} facultyRole={facultyRole} />
+        ) : activeSection === "events" ? (
+          <EventsSection facultyProfile={facultyProfile} facultyRole={facultyRole} />
         ) : activeSection === "lessons" ? (
           <LessonPlansSection facultyProfile={facultyProfile} facultyRole={facultyRole} />
         ) : activeSection === "pay" ? (
@@ -16706,7 +16709,7 @@ function formatOtherBilled(sessionsList, rateByType) {
 function formatOtherRate(sessionsList, rateByType) {
   if (sessionsList.length !== 1) return "—";
   const s = sessionsList[0];
-  if (s._tierIsOverage) return s._tierOverageRate != null ? `$${s._tierOverageRate}/hr` : "—";
+  if (s._tierIsOverage) return s._tierOverageRate != null ? `$${s._tierOverageRate}` : "—";
   return formatRate(rateByType[s.activity_type]);
 }
 function formatOtherPay(sessionsList, rateByType) {
@@ -17222,6 +17225,152 @@ function MyScheduleSection({ facultyProfile, facultyRole }) {
 }
 
 // ═══════════════════════════════════════════════════════════════════════
+
+// ═══════════════════════════════════════════════════════════════════════
+// EVENTS — separate from teaching. Unlike Teaching Time, event hours are
+// NEVER rounded up — pay is computed from the exact duration_minutes on
+// record. Where a duration hasn't been confirmed yet, this says so plainly
+// rather than guessing at a number.
+// ═══════════════════════════════════════════════════════════════════════
+
+function computeExactEventPay(s, rateByType) {
+  const rr = rateByType[s.activity_type];
+  if (!rr) return { rateLabel: "—", hoursLabel: "—", payLabel: "—", payValue: 0, known: false };
+
+  // Tiered "included, then overage" types (parent_info_session) — same
+  // occurrence tagging as everywhere else, but pay uses exact hours here.
+  if (s._tierIsOverage) {
+    const exactHours = s.duration_minutes != null ? s.duration_minutes / 60 : null;
+    const rate = s._tierOverageRate;
+    return {
+      rateLabel: rate != null ? `$${rate}` : "—",
+      hoursLabel: exactHours != null ? `${exactHours % 1 === 0 ? exactHours : exactHours.toFixed(2)} hr` : "Duration needed",
+      payLabel: rate != null && exactHours != null ? `$${Math.round(rate * exactHours * 100) / 100}` : "Duration needed",
+      payValue: rate != null && exactHours != null ? rate * exactHours : 0,
+      known: rate != null && exactHours != null,
+    };
+  }
+  if (rr.rate_type === "included") {
+    return { rateLabel: "Included", hoursLabel: "—", payLabel: "Included", payValue: 0, known: true };
+  }
+  if (rr.rate_type === "flat") {
+    return { rateLabel: `$${Number(rr.rate_amount)}`, hoursLabel: "1 session", payLabel: `$${Number(rr.rate_amount)}`, payValue: Number(rr.rate_amount), known: true };
+  }
+  if (rr.rate_type === "hourly") {
+    const exactHours = s.duration_minutes != null ? s.duration_minutes / 60 : null;
+    if (exactHours == null) {
+      return { rateLabel: `$${Number(rr.rate_amount)}`, hoursLabel: "Duration needed", payLabel: "Duration needed", payValue: 0, known: false };
+    }
+    const pay = Math.round(Number(rr.rate_amount) * exactHours * 100) / 100;
+    return { rateLabel: `$${Number(rr.rate_amount)}`, hoursLabel: `${exactHours % 1 === 0 ? exactHours : exactHours.toFixed(2)} hr`, payLabel: `$${pay}`, payValue: pay, known: true };
+  }
+  return { rateLabel: "—", hoursLabel: "—", payLabel: "—", payValue: 0, known: false };
+}
+
+function EventsSection({ facultyProfile, facultyRole }) {
+  const sb = getSupabase();
+  const lora = "'Lora', Georgia, serif";
+  const cg = "'Cormorant Garamond', Georgia, serif";
+  const { sessions, rateRules, programs, loading } = useFacultyScheduleData(sb, facultyProfile?.id);
+
+  if (loading) return <p style={{ fontFamily: lora, fontSize: 14, color: "#6B6459" }}>Loading…</p>;
+
+  const rateByType = {};
+  rateRules.forEach((r) => { rateByType[r.activity_type] = r; });
+
+  const isTeaching = (s) => s.activity_type === "teaching_single" || s.activity_type === "teaching_multi";
+  const isMeeting = (s) => s.activity_type === "faculty_meeting";
+  const eventSessions = sessions
+    .filter((s) => !isTeaching(s) && !isMeeting(s))
+    .slice()
+    .sort((a, b) => (a.session_date || "").localeCompare(b.session_date || ""));
+
+  const programById = {};
+  programs.forEach((p) => { programById[p.id] = p; });
+
+  const rows = eventSessions.map((s) => ({ session: s, calc: computeExactEventPay(s, rateByType) }));
+  const totalKnownPay = rows.reduce((sum, r) => sum + (r.calc.known ? r.calc.payValue : 0), 0);
+  const missingDurationCount = rows.filter((r) => !r.calc.known && r.calc.payLabel === "Duration needed").length;
+
+  return (
+    <div>
+      <p style={{ fontFamily: lora, fontSize: 11, letterSpacing: "0.4em", color: "#A48D6E", fontWeight: 600, textTransform: "uppercase", marginBottom: 10 }}>
+        Faculty Portal
+      </p>
+      <h2 style={{ fontFamily: cg, fontSize: 30, color: "#100F0C", fontWeight: 600, margin: "0 0 6px" }}>Events</h2>
+      <p style={{ fontFamily: lora, fontSize: 13.5, color: "#6B6459", margin: "0 0 24px", maxWidth: 640, lineHeight: 1.6 }}>
+        Pitch Nights, Shark Tank Finales, Admissions Committee, and Parent Info Sessions — kept separate from
+        teaching because they're billed differently. Hours here are exact, never rounded up.
+      </p>
+
+      {/* ── Totals strip ── */}
+      <div style={{ display: "flex", gap: 20, flexWrap: "wrap", marginBottom: 28 }}>
+        <div style={{ flex: "1 1 200px", background: "#100F0C", borderRadius: 6, padding: "20px 24px" }}>
+          <p style={{ fontFamily: lora, fontSize: 10.5, letterSpacing: "0.1em", color: "#A48D6E", textTransform: "uppercase", fontWeight: 600, margin: "0 0 6px" }}>Total Events</p>
+          <p style={{ fontFamily: cg, fontSize: 28, color: "#E4D5C1", fontWeight: 600, margin: 0 }}>{eventSessions.length}</p>
+        </div>
+        <div style={{ flex: "1 1 200px", background: "#100F0C", borderRadius: 6, padding: "20px 24px" }}>
+          <p style={{ fontFamily: lora, fontSize: 10.5, letterSpacing: "0.1em", color: "#A48D6E", textTransform: "uppercase", fontWeight: 600, margin: "0 0 6px" }}>Total Pay (Known Durations)</p>
+          <p style={{ fontFamily: cg, fontSize: 28, color: "#E4D5C1", fontWeight: 600, margin: 0 }}>${totalKnownPay % 1 === 0 ? totalKnownPay : totalKnownPay.toFixed(2)}</p>
+        </div>
+      </div>
+      {missingDurationCount > 0 && (
+        <p style={{ fontFamily: lora, fontSize: 12.5, color: "#B4433A", marginBottom: 20, fontStyle: "italic" }}>
+          {missingDurationCount} event{missingDurationCount === 1 ? "" : "s"} below {missingDurationCount === 1 ? "doesn't" : "don't"} have a confirmed duration yet, so {missingDurationCount === 1 ? "it isn't" : "they aren't"} included in the total above.
+        </p>
+      )}
+
+      {eventSessions.length === 0 ? (
+        <p style={{ fontFamily: cg, fontSize: 16, color: "#6B6459", fontStyle: "italic" }}>No events scheduled yet.</p>
+      ) : (
+        <div style={{ border: "1px solid rgba(16,15,12,0.1)", borderRadius: 6, overflow: "hidden", boxShadow: "0 1px 4px rgba(16,15,12,0.06)" }}>
+          <div style={{ display: "grid", gridTemplateColumns: "110px 1fr 150px 90px 100px 100px", background: "#2F4858" }}>
+            {["Date", "Event", "Program", "Category", "Rate", "Pay"].map((label) => (
+              <div key={label} style={{ fontFamily: lora, fontSize: 10.5, letterSpacing: "0.1em", color: "#EEF3F5", textTransform: "uppercase", fontWeight: 600, padding: "14px 16px" }}>
+                {label}
+              </div>
+            ))}
+          </div>
+          {rows.map(({ session: s, calc }, i) => {
+            const d = new Date(s.session_date + "T00:00:00");
+            const dateLabel = d.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
+            const program = programById[s.program_id];
+            return (
+              <div key={s.id} style={{
+                display: "grid", gridTemplateColumns: "110px 1fr 150px 90px 100px 100px",
+                background: i % 2 === 0 ? "#FFFFFF" : "#EEF3F5",
+                borderTop: i === 0 ? "none" : "1px solid rgba(47,72,88,0.12)",
+                borderLeft: "3px solid #2F4858", alignItems: "center",
+              }}>
+                <div style={{ padding: 16 }}>
+                  <p style={{ fontFamily: lora, fontSize: 12.5, color: "#100F0C", margin: 0 }}>{dateLabel}</p>
+                </div>
+                <div style={{ padding: 16 }}>
+                  <p style={{ fontFamily: lora, fontSize: 13, color: "#100F0C", margin: 0, fontWeight: 600 }}>{s.block_label}</p>
+                  {s.notes && <p style={{ fontFamily: lora, fontSize: 11.5, color: "#6B6459", margin: "3px 0 0" }}>{s.notes}</p>}
+                </div>
+                <div style={{ padding: 16 }}>
+                  <p style={{ fontFamily: lora, fontSize: 12, color: "#6B6459", margin: 0 }}>{program ? facultyDisplayProgramName(program.name) : "—"}</p>
+                </div>
+                <div style={{ padding: 16 }}>
+                  <p style={{ fontFamily: lora, fontSize: 11.5, color: "#6B6459", margin: 0 }}>{calc.hoursLabel}</p>
+                </div>
+                <div style={{ padding: 16 }}>
+                  <p style={{ fontFamily: lora, fontSize: 12.5, color: "#100F0C", margin: 0 }}>{calc.rateLabel}</p>
+                </div>
+                <div style={{ padding: 16 }}>
+                  <p style={{ fontFamily: lora, fontSize: 13, color: calc.known ? "#100F0C" : "#B4433A", margin: 0, fontWeight: 700, fontStyle: calc.known ? "normal" : "italic" }}>
+                    {calc.payLabel}
+                  </p>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      )}
+    </div>
+  );
+}
 
 // ═══════════════════════════════════════════════════════════════════════
 // RATE & PAY SUMMARY
