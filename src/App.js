@@ -15937,6 +15937,177 @@ function FacultyLoginForm({ onLoginSuccess }) {
   );
 }
 
+// ── Admin: Attendance & Availability queue ──
+// Cross-faculty query (not scoped to one facultyId) — surfaces every
+// "Unable to Teach" / "Unable to Attend" submission plus a running count of
+// confirmations, so an admin actually sees what faculty have been
+// submitting instead of it silently sitting in the database.
+function useAdminAttendanceQueue(sb, active) {
+  const [unableItems, setUnableItems] = useState([]);
+  const [issueItems, setIssueItems] = useState([]);
+  const [confirmedCount, setConfirmedCount] = useState(0);
+  const [pendingCount, setPendingCount] = useState(0);
+  const [loading, setLoading] = useState(true);
+
+  const load = useCallback(async () => {
+    if (!sb || !active) return;
+    setLoading(true);
+    const [unableRes, issuesRes, confirmedRes, pendingRes] = await Promise.all([
+      sb.from("faculty_sessions")
+        .select("*, faculty_profiles(full_name)")
+        .eq("attendance_status", "unable")
+        .order("attendance_admin_acknowledged", { ascending: true })
+        .order("session_date", { ascending: true }),
+      sb.from("faculty_sessions")
+        .select("*, faculty_profiles(full_name)")
+        .not("reported_issue", "is", null)
+        .eq("reported_issue_resolved", false)
+        .order("reported_issue_at", { ascending: true }),
+      sb.from("faculty_sessions").select("id", { count: "exact", head: true }).eq("attendance_status", "confirmed"),
+      sb.from("faculty_sessions").select("id", { count: "exact", head: true }).eq("attendance_status", "pending").gte("session_date", new Date().toISOString().slice(0, 10)),
+    ]);
+    setUnableItems(unableRes.data || []);
+    setIssueItems(issuesRes.data || []);
+    setConfirmedCount(confirmedRes.count || 0);
+    setPendingCount(pendingRes.count || 0);
+    setLoading(false);
+  }, [sb, active]);
+
+  useEffect(() => { load(); }, [load]);
+  return { unableItems, issueItems, confirmedCount, pendingCount, loading, reload: load };
+}
+
+function AdminAttendanceQueue({ sb }) {
+  const lora = "'Lora', Georgia, serif";
+  const cg = "'Cormorant Garamond', Georgia, serif";
+  const { unableItems, issueItems, confirmedCount, pendingCount, loading, reload } = useAdminAttendanceQueue(sb, true);
+  const [ackBusy, setAckBusy] = useState(null);
+
+  const acknowledge = async (id) => {
+    setAckBusy(id);
+    await sb.from("faculty_sessions").update({ attendance_admin_acknowledged: true }).eq("id", id);
+    setAckBusy(null);
+    reload();
+  };
+
+  const resolveIssue = async (id) => {
+    setAckBusy(id);
+    await sb.from("faculty_sessions").update({ reported_issue_resolved: true }).eq("id", id);
+    setAckBusy(null);
+    reload();
+  };
+
+  const unacknowledged = unableItems.filter((s) => !s.attendance_admin_acknowledged);
+  const acknowledged = unableItems.filter((s) => s.attendance_admin_acknowledged);
+
+  return (
+    <div style={{ background: "#FFFFFF", border: "1px solid rgba(164,141,110,0.5)", borderRadius: 6, padding: 24, marginBottom: 40 }}>
+      <p style={{ fontFamily: lora, fontSize: 11, letterSpacing: "0.12em", color: "#8B7355", textTransform: "uppercase", fontWeight: 700, marginBottom: 14 }}>
+        Admin — Attendance & Availability
+      </p>
+
+      <div style={{ display: "flex", gap: 20, flexWrap: "wrap", marginBottom: 20 }}>
+        <div>
+          <p style={{ fontFamily: cg, fontSize: 24, color: "#B4433A", fontWeight: 700, margin: 0 }}>{unacknowledged.length}</p>
+          <p style={{ fontFamily: lora, fontSize: 11, color: "#8B7355", margin: 0, textTransform: "uppercase", letterSpacing: "0.06em" }}>Needs Your Attention</p>
+        </div>
+        <div>
+          <p style={{ fontFamily: cg, fontSize: 24, color: "#3D8B5F", fontWeight: 700, margin: 0 }}>{confirmedCount}</p>
+          <p style={{ fontFamily: lora, fontSize: 11, color: "#8B7355", margin: 0, textTransform: "uppercase", letterSpacing: "0.06em" }}>Confirmed (All Time)</p>
+        </div>
+        <div>
+          <p style={{ fontFamily: cg, fontSize: 24, color: "#8B7355", fontWeight: 700, margin: 0 }}>{pendingCount}</p>
+          <p style={{ fontFamily: lora, fontSize: 11, color: "#8B7355", margin: 0, textTransform: "uppercase", letterSpacing: "0.06em" }}>Awaiting Response (Upcoming)</p>
+        </div>
+      </div>
+
+      {loading ? (
+        <p style={{ fontFamily: lora, fontSize: 13, color: "#6B6459" }}>Loading…</p>
+      ) : unacknowledged.length === 0 ? (
+        <p style={{ fontFamily: cg, fontSize: 15, color: "#6B6459", fontStyle: "italic" }}>Nothing needs your attention right now.</p>
+      ) : (
+        <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+          {unacknowledged.map((s) => {
+            const dateLabel = new Date(s.session_date + "T00:00:00").toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
+            return (
+              <div key={s.id} style={{ background: "#FFF5F4", border: "1px solid rgba(180,67,58,0.3)", borderRadius: 4, padding: "14px 16px", display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 16, flexWrap: "wrap" }}>
+                <div>
+                  <p style={{ fontFamily: lora, fontSize: 13.5, color: "#100F0C", fontWeight: 700, margin: "0 0 4px" }}>
+                    {s.faculty_profiles?.full_name || "Faculty member"} — {s.block_label}
+                  </p>
+                  <p style={{ fontFamily: lora, fontSize: 12, color: "#6B6459", margin: "0 0 6px" }}>
+                    {dateLabel}{s.start_time ? ` · ${s.start_time.slice(0, 5)}` : ""}
+                  </p>
+                  <p style={{ fontFamily: lora, fontSize: 13, color: "#B4433A", margin: 0, fontStyle: "italic" }}>
+                    "{s.attendance_reason || "No reason given."}"
+                  </p>
+                </div>
+                <button
+                  onClick={() => acknowledge(s.id)}
+                  disabled={ackBusy === s.id}
+                  style={{ fontFamily: lora, fontSize: 11.5, fontWeight: 700, padding: "8px 16px", background: "#100F0C", color: "#E4D5C1", border: "none", borderRadius: 4, cursor: "pointer", whiteSpace: "nowrap" }}
+                >
+                  {ackBusy === s.id ? "…" : "Acknowledge"}
+                </button>
+              </div>
+            );
+          })}
+        </div>
+      )}
+
+      {acknowledged.length > 0 && (
+        <details style={{ marginTop: 18 }}>
+          <summary style={{ fontFamily: lora, fontSize: 12, color: "#8B7355", cursor: "pointer" }}>
+            {acknowledged.length} already acknowledged
+          </summary>
+          <div style={{ display: "flex", flexDirection: "column", gap: 8, marginTop: 10 }}>
+            {acknowledged.map((s) => (
+              <p key={s.id} style={{ fontFamily: lora, fontSize: 12.5, color: "#6B6459", margin: 0 }}>
+                {s.faculty_profiles?.full_name} — {s.block_label} ({new Date(s.session_date + "T00:00:00").toLocaleDateString("en-US", { month: "short", day: "numeric" })})
+              </p>
+            ))}
+          </div>
+        </details>
+      )}
+
+      <div style={{ marginTop: 28, paddingTop: 20, borderTop: "1px solid rgba(164,141,110,0.25)" }}>
+        <p style={{ fontFamily: lora, fontSize: 11, letterSpacing: "0.12em", color: "#8B7355", textTransform: "uppercase", fontWeight: 700, marginBottom: 14 }}>
+          Reported Session Issues ({issueItems.length})
+        </p>
+        {issueItems.length === 0 ? (
+          <p style={{ fontFamily: cg, fontSize: 14, color: "#6B6459", fontStyle: "italic" }}>No open reports.</p>
+        ) : (
+          <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+            {issueItems.map((s) => {
+              const dateLabel = new Date(s.session_date + "T00:00:00").toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
+              return (
+                <div key={s.id} style={{ background: "#FAF7F2", border: "1px solid rgba(164,141,110,0.3)", borderRadius: 4, padding: "14px 16px", display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 16, flexWrap: "wrap" }}>
+                  <div>
+                    <p style={{ fontFamily: lora, fontSize: 13.5, color: "#100F0C", fontWeight: 700, margin: "0 0 4px" }}>
+                      {s.faculty_profiles?.full_name || "Faculty member"} — {s.block_label}
+                    </p>
+                    <p style={{ fontFamily: lora, fontSize: 12, color: "#6B6459", margin: "0 0 6px" }}>{dateLabel}</p>
+                    <p style={{ fontFamily: lora, fontSize: 13, color: "#100F0C", margin: 0, fontStyle: "italic" }}>
+                      "{s.reported_issue}"
+                    </p>
+                  </div>
+                  <button
+                    onClick={() => resolveIssue(s.id)}
+                    disabled={ackBusy === s.id}
+                    style={{ fontFamily: lora, fontSize: 11.5, fontWeight: 700, padding: "8px 16px", background: "#100F0C", color: "#E4D5C1", border: "none", borderRadius: 4, cursor: "pointer", whiteSpace: "nowrap" }}
+                  >
+                    {ackBusy === s.id ? "…" : "Mark Resolved"}
+                  </button>
+                </div>
+              );
+            })}
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
 function FacultyDashboardHome({ facultyProfile, facultyRole }) {
   const sb = getSupabase();
   const lora = "'Lora', Georgia, serif";
@@ -16064,14 +16235,7 @@ function FacultyDashboardHome({ facultyProfile, facultyRole }) {
         </div>
       )}
 
-      {facultyRole === "admin" && (
-        <div style={{ ...card, marginBottom: 40, borderColor: "rgba(164,141,110,0.5)" }}>
-          <p style={cardLabel}>Admin — Faculty Overview</p>
-          <p style={{ fontFamily: cg, fontSize: 16, color: "#6B6459", fontStyle: "italic" }}>
-            Invoice review, approval, and faculty-wide visibility will live here once Billing & Invoices is built.
-          </p>
-        </div>
-      )}
+      {facultyRole === "admin" && <AdminAttendanceQueue sb={sb} />}
 
       <div style={{ marginBottom: 40 }}>
         <h3 style={{ fontFamily: cg, fontSize: 22, color: "#100F0C", fontWeight: 600, margin: "0 0 18px" }}>
@@ -16232,10 +16396,14 @@ function FacultyPortalShell({ facultyProfile, facultyRole, onSignOut }) {
           <EventsSection facultyProfile={facultyProfile} facultyRole={facultyRole} />
         ) : activeSection === "lessons" ? (
           <LessonPlansSection facultyProfile={facultyProfile} facultyRole={facultyRole} />
+        ) : activeSection === "time" ? (
+          <TimeTrackingSection facultyProfile={facultyProfile} facultyRole={facultyRole} />
         ) : activeSection === "pay" ? (
           <RatePaySummarySection facultyProfile={facultyProfile} facultyRole={facultyRole} />
         ) : activeSection === "billing" ? (
           <BillingSection facultyProfile={facultyProfile} facultyRole={facultyRole} />
+        ) : activeSection === "profile" ? (
+          <ProfileSettingsSection facultyProfile={facultyProfile} facultyRole={facultyRole} />
         ) : (
           <div>
             <h2 style={{ fontFamily: cg, fontSize: 26, color: "#100F0C", fontWeight: 500, margin: "0 0 12px" }}>
@@ -16484,6 +16652,9 @@ function DayOverviewView({ date, sessionsThisDay, programName, rateByType, onBac
               mode={(s.activity_type === "teaching_single" || s.activity_type === "teaching_multi") ? "teaching" : "event"}
               onUpdated={onAttendanceUpdated}
             />
+          </div>
+          <div style={{ marginTop: 10 }}>
+            <ReportIssueControl session={s} sb={sb} onUpdated={onAttendanceUpdated} />
           </div>
         </div>
       ))}
@@ -16858,6 +17029,73 @@ function AttendanceControl({ session, sb, mode, onUpdated, compact = false }) {
   );
 }
 
+// ── "Report an issue" — separate from attendance. This is about the DATA
+// being wrong (wrong date, time, block, whatever), not about presence.
+function ReportIssueControl({ session, sb, onUpdated }) {
+  const lora = "'Lora', Georgia, serif";
+  const [open, setOpen] = useState(false);
+  const [text, setText] = useState("");
+  const [busy, setBusy] = useState(false);
+
+  if (session.reported_issue && !session.reported_issue_resolved) {
+    return (
+      <p style={{ fontFamily: lora, fontSize: 11.5, color: "#8B7355", fontStyle: "italic", margin: 0 }}>
+        Issue reported — admin notified.
+      </p>
+    );
+  }
+
+  if (!open) {
+    return (
+      <span
+        onClick={(e) => { e.stopPropagation(); setOpen(true); }}
+        style={{ fontFamily: lora, fontSize: 11.5, color: "#8B7355", textDecoration: "underline", cursor: "pointer" }}
+      >
+        Something wrong with this session? Report an issue
+      </span>
+    );
+  }
+
+  return (
+    <div onClick={(e) => e.stopPropagation()} style={{ display: "flex", flexDirection: "column", gap: 6, maxWidth: 320 }}>
+      <textarea
+        value={text}
+        onChange={(e) => setText(e.target.value)}
+        placeholder="What's wrong — wrong date, wrong time, wrong block, etc.?"
+        rows={2}
+        style={{ fontFamily: lora, fontSize: 12, padding: "6px 8px", border: "1px solid rgba(16,15,12,0.25)", borderRadius: 4, resize: "vertical" }}
+      />
+      <div style={{ display: "flex", gap: 6 }}>
+        <button
+          onClick={async () => {
+            if (!text.trim()) return;
+            setBusy(true);
+            await sb.from("faculty_sessions").update({
+              reported_issue: text.trim(),
+              reported_issue_at: new Date().toISOString(),
+              reported_issue_resolved: false,
+            }).eq("id", session.id);
+            setBusy(false);
+            setOpen(false);
+            setText("");
+            if (onUpdated) onUpdated();
+          }}
+          disabled={busy || !text.trim()}
+          style={{ fontFamily: lora, fontSize: 11, fontWeight: 700, padding: "6px 12px", background: "#100F0C", color: "#E4D5C1", border: "none", borderRadius: 4, cursor: text.trim() ? "pointer" : "default", opacity: text.trim() ? 1 : 0.5 }}
+        >
+          {busy ? "Submitting…" : "Report to Admin"}
+        </button>
+        <button
+          onClick={() => { setOpen(false); setText(""); }}
+          style={{ fontFamily: lora, fontSize: 11, fontWeight: 600, padding: "6px 12px", background: "transparent", color: "#6B6459", border: "1px solid rgba(16,15,12,0.2)", borderRadius: 4, cursor: "pointer" }}
+        >
+          Cancel
+        </button>
+      </div>
+    </div>
+  );
+}
+
 // ═══════════════════════════════════════════════════════════════════════
 // DAILY / WEEKLY SNAPSHOT HELPERS
 // Computed live from real session data — never hardcoded — so these stay
@@ -16950,6 +17188,7 @@ function MyScheduleSection({ facultyProfile, facultyRole }) {
   const sb = getSupabase();
   const lora = "'Lora', Georgia, serif";
   const cg = "'Cormorant Garamond', Georgia, serif";
+  const isMobile = useIsMobile();
   const { sessions, rateRules, programs, loading, reload } = useFacultyScheduleData(sb, facultyProfile?.id);
   const [selectedDay, setSelectedDay] = useState(null);
   const [selectedMaterialsId, setSelectedMaterialsId] = useState(null);
@@ -17071,6 +17310,41 @@ function MyScheduleSection({ facultyProfile, facultyRole }) {
     const k = KIND_STYLES[kind];
     if (items.length === 0) return null;
     const sorted = items.slice().sort((a, b) => (a.session_date || "").localeCompare(b.session_date || ""));
+
+    if (isMobile) {
+      return (
+        <div style={{ marginBottom: 20 }}>
+          <KindHeader kind={kind} />
+          <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+            {sorted.map((s) => {
+              const d = new Date(s.session_date + "T00:00:00");
+              const dateLabel = d.toLocaleDateString("en-US", { weekday: "short", month: "short", day: "numeric" });
+              const showPay = kind === "events";
+              return (
+                <div
+                  key={s.id}
+                  onClick={() => setSelectedDay({ date: s.session_date, sessionsThisDay: [s], programName: program.name })}
+                  style={{ background: "#FFFFFF", border: `1px solid ${k.border}33`, borderLeft: `3px solid ${k.border}`, borderRadius: 6, padding: 14, cursor: "pointer" }}
+                >
+                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 6 }}>
+                    <p style={{ fontFamily: lora, fontSize: 13, color: "#100F0C", margin: 0, fontWeight: 700 }}>{dateLabel}</p>
+                    {showPay && <p style={{ fontFamily: lora, fontSize: 13, color: "#100F0C", margin: 0, fontWeight: 700 }}>{formatOtherPay([s], rateByType)}</p>}
+                  </div>
+                  <p style={{ fontFamily: lora, fontSize: 13, color: "#100F0C", margin: "0 0 3px", fontWeight: 600 }}>{s.block_label}</p>
+                  <p style={{ fontFamily: lora, fontSize: 12, color: "#6B6459", margin: "0 0 8px" }}>
+                    {s.start_time ? s.start_time.slice(0, 5) : "TBC"}{s.end_time ? ` – ${s.end_time.slice(0, 5)}` : ""}
+                    {showPay && ` · ${formatOtherRate([s], rateByType)}`}
+                  </p>
+                  {s.notes && <p style={{ fontFamily: lora, fontSize: 12, color: "#6B6459", margin: "0 0 8px", lineHeight: 1.5 }}>{s.notes}</p>}
+                  <AttendanceControl session={s} sb={sb} mode="event" onUpdated={reload} compact />
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      );
+    }
+
     return (
       <div style={{ marginBottom: 20 }}>
         <KindHeader kind={kind} />
@@ -17234,6 +17508,64 @@ function MyScheduleSection({ facultyProfile, facultyRole }) {
                 {showTeaching && dayGroups.length > 0 && (
                   <div style={{ marginBottom: 20 }}>
                     <KindHeader kind="teaching" />
+                    {isMobile ? (
+                      <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+                        {dayGroups.map((group) => {
+                          const d = new Date(group.date + "T00:00:00");
+                          const weekday = WEEKDAY_NAMES[d.getDay()];
+                          const dateLabel = d.toLocaleDateString("en-US", { month: "short", day: "numeric" });
+                          const teachingSessionsThisDay = group.allSessions.filter(isTeaching);
+                          return (
+                            <div
+                              key={group.date}
+                              onClick={() => setSelectedDay({ date: group.date, sessionsThisDay: group.allSessions, programName: program.name })}
+                              style={{ background: "#FFFFFF", border: "1px solid rgba(16,15,12,0.1)", borderLeft: "3px solid #A48D6E", borderRadius: 6, padding: 16, cursor: "pointer" }}
+                            >
+                              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 10 }}>
+                                <div>
+                                  <p style={{ fontFamily: lora, fontSize: 14, color: "#100F0C", margin: 0, fontWeight: 700 }}>{dateLabel}</p>
+                                  <p style={{ fontFamily: lora, fontSize: 11.5, color: "#8B7355", margin: 0 }}>{weekday}</p>
+                                </div>
+                                <p style={{ fontFamily: lora, fontSize: 15, color: "#100F0C", margin: 0, fontWeight: 700 }}>
+                                  {group.teachingSummary ? `$${group.teachingSummary.totalPay}` : "—"}
+                                </p>
+                              </div>
+                              {group.allSessions.map((s) => (
+                                <p key={s.id} style={{ fontFamily: lora, fontSize: 13, color: "#100F0C", margin: "0 0 4px" }}>
+                                  {s.start_time ? s.start_time.slice(0, 5) : "TBC"}{s.end_time ? ` – ${s.end_time.slice(0, 5)}` : ""} · {s.block_label}
+                                  {s._tierIsOverage && (
+                                    <span style={{ fontFamily: lora, fontSize: 10, color: "#B4433A", fontWeight: 700, textTransform: "uppercase", marginLeft: 6 }}>
+                                      Billed (overage)
+                                    </span>
+                                  )}
+                                </p>
+                              ))}
+                              <div style={{ display: "flex", gap: 14, marginTop: 8, paddingTop: 8, borderTop: "1px solid rgba(16,15,12,0.08)", flexWrap: "wrap" }}>
+                                <span style={{ fontFamily: lora, fontSize: 11.5, color: "#6B6459" }}>
+                                  Teaching: {group.teachingSummary ? formatMinutes(group.teachingSummary.totalActualMinutes) : "—"}
+                                </span>
+                                <span style={{ fontFamily: lora, fontSize: 11.5, color: "#6B6459" }}>
+                                  Billed: {group.teachingSummary ? `${group.teachingSummary.totalBilledHours} hr` : "—"}
+                                </span>
+                                <span style={{ fontFamily: lora, fontSize: 11.5, color: "#6B6459" }}>
+                                  Rate: {group.teachingSummary ? `$${group.teachingSummary.rateAmount}` : "—"}
+                                </span>
+                              </div>
+                              {teachingSessionsThisDay.length > 0 && (
+                                <div
+                                  onClick={(e) => { e.stopPropagation(); setSelectedMaterialsId(teachingSessionsThisDay[0].id); }}
+                                  style={{ marginTop: 10, display: "flex", alignItems: "center", gap: 6 }}
+                                >
+                                  <FolderIcon status={teachingSessionsThisDay[0].lesson_plan_status} size={14} />
+                                  <FolderIcon status={teachingSessionsThisDay[0].presentation_status} size={14} />
+                                  <span style={{ fontFamily: lora, fontSize: 11.5, color: "#8B7355", textDecoration: "underline" }}>Open Materials →</span>
+                                </div>
+                              )}
+                            </div>
+                          );
+                        })}
+                      </div>
+                    ) : (
                     <div style={{ border: "1px solid rgba(16,15,12,0.1)", borderRadius: 6, overflow: "hidden", boxShadow: "0 1px 4px rgba(16,15,12,0.06)" }}>
                       <div style={{ display: "grid", gridTemplateColumns: gridCols, background: "#100F0C" }}>
                         {SCHEDULE_COLUMNS.map((c) => (
@@ -17315,6 +17647,7 @@ function MyScheduleSection({ facultyProfile, facultyRole }) {
                         );
                       })}
                     </div>
+                    )}
                   </div>
                 )}
 
@@ -17377,6 +17710,7 @@ function EventsSection({ facultyProfile, facultyRole }) {
   const sb = getSupabase();
   const lora = "'Lora', Georgia, serif";
   const cg = "'Cormorant Garamond', Georgia, serif";
+  const isMobile = useIsMobile();
   const { sessions, rateRules, programs, loading, reload } = useFacultyScheduleData(sb, facultyProfile?.id);
 
   if (loading) return <p style={{ fontFamily: lora, fontSize: 14, color: "#6B6459" }}>Loading…</p>;
@@ -17428,6 +17762,29 @@ function EventsSection({ facultyProfile, facultyRole }) {
 
       {eventSessions.length === 0 ? (
         <p style={{ fontFamily: cg, fontSize: 16, color: "#6B6459", fontStyle: "italic" }}>No events scheduled yet.</p>
+      ) : isMobile ? (
+        <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+          {rows.map(({ session: s, calc }) => {
+            const d = new Date(s.session_date + "T00:00:00");
+            const dateLabel = d.toLocaleDateString("en-US", { weekday: "short", month: "short", day: "numeric", year: "numeric" });
+            const program = programById[s.program_id];
+            return (
+              <div key={s.id} style={{ background: "#FFFFFF", border: "1px solid rgba(47,72,88,0.2)", borderLeft: "3px solid #2F4858", borderRadius: 6, padding: 14 }}>
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 6 }}>
+                  <p style={{ fontFamily: lora, fontSize: 13, color: "#100F0C", margin: 0, fontWeight: 700 }}>{dateLabel}</p>
+                  <p style={{ fontFamily: lora, fontSize: 13, color: calc.known ? "#100F0C" : "#B4433A", margin: 0, fontWeight: 700, fontStyle: calc.known ? "normal" : "italic" }}>
+                    {calc.payLabel}
+                  </p>
+                </div>
+                <p style={{ fontFamily: lora, fontSize: 13, color: "#100F0C", margin: "0 0 3px", fontWeight: 600 }}>{s.block_label}</p>
+                <p style={{ fontFamily: lora, fontSize: 12, color: "#6B6459", margin: "0 0 4px" }}>{program ? facultyDisplayProgramName(program.name) : "—"}</p>
+                <p style={{ fontFamily: lora, fontSize: 11.5, color: "#6B6459", margin: "0 0 8px" }}>{calc.hoursLabel} · {calc.rateLabel}</p>
+                {s.notes && <p style={{ fontFamily: lora, fontSize: 11.5, color: "#6B6459", margin: "0 0 8px" }}>{s.notes}</p>}
+                <AttendanceControl session={s} sb={sb} mode="event" onUpdated={reload} compact />
+              </div>
+            );
+          })}
+        </div>
       ) : (
         <div style={{ border: "1px solid rgba(16,15,12,0.1)", borderRadius: 6, overflow: "hidden", boxShadow: "0 1px 4px rgba(16,15,12,0.06)" }}>
           <div style={{ display: "grid", gridTemplateColumns: "110px 1fr 150px 90px 100px 100px 200px", background: "#2F4858" }}>
@@ -17477,6 +17834,299 @@ function EventsSection({ facultyProfile, facultyRole }) {
           })}
         </div>
       )}
+    </div>
+  );
+}
+
+// ═══════════════════════════════════════════════════════════════════════
+// TIME TRACKING — manual time entries against billable categories.
+// Faculty log a task, date, category, and duration; every entry goes to
+// admin as "Awaiting Approval" and only counts once approved. This v1
+// covers free-form manual entries (work with no session on the calendar).
+// Editing an existing scheduled session's actual hours is a planned
+// follow-up, not yet built here.
+// ═══════════════════════════════════════════════════════════════════════
+
+// Categories a manual time entry can be logged against — deliberately
+// excludes anything "included" with no real rate (class prep, private
+// mentorship): those are already folded into the base teaching rate and
+// aren't separately billable, so they don't belong in this dropdown.
+function billableCategories(rateRules) {
+  return rateRules.filter((r) => !(r.rate_type === "included" && !r.overage_rate_amount));
+}
+
+function useAdminTimeEntryQueue(sb, active) {
+  const [pending, setPending] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const load = useCallback(async () => {
+    if (!sb || !active) return;
+    setLoading(true);
+    const res = await sb.from("time_entries")
+      .select("*, faculty_profiles(full_name)")
+      .eq("confirmed", false)
+      .order("entry_date", { ascending: true });
+    setPending(res.data || []);
+    setLoading(false);
+  }, [sb, active]);
+  useEffect(() => { load(); }, [load]);
+  return { pending, loading, reload: load };
+}
+
+function TimeTrackingSection({ facultyProfile, facultyRole }) {
+  const sb = getSupabase();
+  const lora = "'Lora', Georgia, serif";
+  const cg = "'Cormorant Garamond', Georgia, serif";
+  const isMobile = useIsMobile();
+  const { rateRules, loading: ratesLoading } = useFacultyScheduleData(sb, facultyProfile?.id);
+  const [entries, setEntries] = useState([]);
+  const [entriesLoading, setEntriesLoading] = useState(true);
+  const [showForm, setShowForm] = useState(false);
+  const [form, setForm] = useState({ description: "", entry_date: "", activity_type: "", hours: "" });
+  const [busy, setBusy] = useState(false);
+
+  const isAdmin = facultyRole === "admin";
+  const adminQueue = useAdminTimeEntryQueue(sb, isAdmin);
+
+  const loadEntries = useCallback(async () => {
+    if (!sb || !facultyProfile?.id) return;
+    setEntriesLoading(true);
+    const res = await sb.from("time_entries").select("*").eq("faculty_id", facultyProfile.id).order("entry_date", { ascending: false });
+    setEntries(res.data || []);
+    setEntriesLoading(false);
+  }, [sb, facultyProfile?.id]);
+
+  useEffect(() => { loadEntries(); }, [loadEntries]);
+
+  const rateByType = {};
+  rateRules.forEach((r) => { rateByType[r.activity_type] = r; });
+  const categories = billableCategories(rateRules);
+
+  const selectedRate = form.activity_type ? rateByType[form.activity_type] : null;
+
+  const inputStyle = { fontFamily: lora, fontSize: 13.5, padding: "10px 12px", border: "1px solid rgba(16,15,12,0.2)", borderRadius: 4, width: "100%", boxSizing: "border-box" };
+  const labelStyle = { fontFamily: lora, fontSize: 11, letterSpacing: "0.08em", color: "#8B7355", textTransform: "uppercase", fontWeight: 600, marginBottom: 6, display: "block" };
+
+  const submitEntry = async () => {
+    if (!sb || !form.description.trim() || !form.entry_date || !form.activity_type || !form.hours) return;
+    setBusy(true);
+    const rr = rateByType[form.activity_type];
+    const hours = Number(form.hours);
+    const rateAmount = rr ? Number(rr.rate_amount) : null;
+    const amount = rr && rr.rate_type === "hourly" ? rateAmount * hours : (rr && rr.rate_type === "flat" ? rateAmount : null);
+    await sb.from("time_entries").insert({
+      faculty_id: facultyProfile.id,
+      session_id: null,
+      entry_type: "manual",
+      activity_type: form.activity_type,
+      entry_date: form.entry_date,
+      hours,
+      rate_amount: rateAmount,
+      rate_type: rr ? rr.rate_type : null,
+      amount,
+      description: form.description.trim(),
+      confirmed: false,
+    });
+    setBusy(false);
+    setShowForm(false);
+    setForm({ description: "", entry_date: "", activity_type: "", hours: "" });
+    loadEntries();
+  };
+
+  const approveEntry = async (id) => {
+    await sb.from("time_entries").update({ confirmed: true, confirmed_at: new Date().toISOString() }).eq("id", id);
+    adminQueue.reload();
+    loadEntries();
+  };
+
+  return (
+    <div>
+      <p style={{ fontFamily: lora, fontSize: 11, letterSpacing: "0.4em", color: "#A48D6E", fontWeight: 600, textTransform: "uppercase", marginBottom: 10 }}>
+        Faculty Portal
+      </p>
+      <h2 style={{ fontFamily: cg, fontSize: 30, color: "#100F0C", fontWeight: 600, margin: "0 0 6px" }}>Time Tracking</h2>
+      <p style={{ fontFamily: lora, fontSize: 13.5, color: "#6B6459", margin: "0 0 24px", maxWidth: 640, lineHeight: 1.6 }}>
+        Log work that isn't already on your schedule — anything billable under your rate card. Every entry goes to
+        admin as "Awaiting Approval" before it counts toward pay.
+      </p>
+
+      {isAdmin && (
+        <div style={{ background: "#FFFDF5", border: "1px solid rgba(201,162,39,0.4)", borderRadius: 6, padding: 20, marginBottom: 32 }}>
+          <p style={{ fontFamily: lora, fontSize: 11, letterSpacing: "0.12em", color: "#9C7F1A", textTransform: "uppercase", fontWeight: 700, marginBottom: 12 }}>
+            Admin — Pending Time Entries ({adminQueue.pending.length})
+          </p>
+          {adminQueue.loading ? (
+            <p style={{ fontFamily: lora, fontSize: 13, color: "#6B6459" }}>Loading…</p>
+          ) : adminQueue.pending.length === 0 ? (
+            <p style={{ fontFamily: cg, fontSize: 14, color: "#6B6459", fontStyle: "italic" }}>Nothing awaiting approval.</p>
+          ) : (
+            <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+              {adminQueue.pending.map((e) => (
+                <div key={e.id} style={{ background: "#FFFFFF", border: "1px solid rgba(16,15,12,0.1)", borderRadius: 4, padding: "12px 16px", display: "flex", justifyContent: "space-between", alignItems: "center", gap: 16, flexWrap: "wrap" }}>
+                  <div>
+                    <p style={{ fontFamily: lora, fontSize: 13, color: "#100F0C", fontWeight: 700, margin: "0 0 3px" }}>
+                      {e.faculty_profiles?.full_name || "Faculty"} — {e.description}
+                    </p>
+                    <p style={{ fontFamily: lora, fontSize: 12, color: "#6B6459", margin: 0 }}>
+                      {e.entry_date} · {humanizeActivityType(e.activity_type)} · {e.hours} hr{e.amount != null ? ` · $${e.amount}` : ""}
+                    </p>
+                  </div>
+                  <button onClick={() => approveEntry(e.id)} style={{ fontFamily: lora, fontSize: 11.5, fontWeight: 700, padding: "7px 16px", background: "#100F0C", color: "#E4D5C1", border: "none", borderRadius: 4, cursor: "pointer" }}>
+                    Approve
+                  </button>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      )}
+
+      <button
+        onClick={() => setShowForm((v) => !v)}
+        style={{ fontFamily: lora, fontSize: 12.5, fontWeight: 700, padding: "11px 22px", background: showForm ? "transparent" : "#100F0C", color: showForm ? "#100F0C" : "#E4D5C1", border: showForm ? "1px solid rgba(16,15,12,0.25)" : "none", borderRadius: 4, cursor: "pointer", marginBottom: 20 }}
+      >
+        {showForm ? "Cancel" : "+ Log Time"}
+      </button>
+
+      {showForm && (
+        <div style={{ background: "#FAF7F2", border: "1px solid rgba(164,141,110,0.3)", borderRadius: 6, padding: 22, marginBottom: 28, maxWidth: 480 }}>
+          <div style={{ marginBottom: 14 }}>
+            <label style={labelStyle}>Task Name / Short Description</label>
+            <input type="text" value={form.description} onChange={(e) => setForm((f) => ({ ...f, description: e.target.value }))} placeholder="e.g. Curriculum revision for Module 3" style={inputStyle} />
+          </div>
+          <div style={{ display: "flex", gap: 12, marginBottom: 14 }}>
+            <div style={{ flex: 1 }}>
+              <label style={labelStyle}>Date</label>
+              <input type="date" value={form.entry_date} onChange={(e) => setForm((f) => ({ ...f, entry_date: e.target.value }))} style={inputStyle} />
+            </div>
+            <div style={{ flex: 1 }}>
+              <label style={labelStyle}>Duration (hours)</label>
+              <input type="number" step="0.25" min="0.25" value={form.hours} onChange={(e) => setForm((f) => ({ ...f, hours: e.target.value }))} placeholder="1.5" style={inputStyle} />
+            </div>
+          </div>
+          <div style={{ marginBottom: 14 }}>
+            <label style={labelStyle}>Category</label>
+            <select value={form.activity_type} onChange={(e) => setForm((f) => ({ ...f, activity_type: e.target.value }))} style={{ ...inputStyle, background: "#FFFFFF" }}>
+              <option value="">Select a category…</option>
+              {categories.map((r) => (
+                <option key={r.activity_type} value={r.activity_type}>{humanizeActivityType(r.activity_type)}</option>
+              ))}
+            </select>
+            {selectedRate && (
+              <p style={{ fontFamily: lora, fontSize: 12, color: "#8B7355", margin: "6px 0 0" }}>
+                Rate: {formatRate(selectedRate)}{selectedRate.rate_type === "hourly" ? " / hr" : ""}
+              </p>
+            )}
+          </div>
+          <button
+            onClick={submitEntry}
+            disabled={busy || !form.description.trim() || !form.entry_date || !form.activity_type || !form.hours}
+            style={{ fontFamily: lora, fontSize: 12.5, fontWeight: 700, padding: "11px 24px", background: "#100F0C", color: "#E4D5C1", border: "none", borderRadius: 4, cursor: "pointer", opacity: (!form.description.trim() || !form.entry_date || !form.activity_type || !form.hours) ? 0.5 : 1 }}
+          >
+            {busy ? "Submitting…" : "Submit for Approval"}
+          </button>
+        </div>
+      )}
+
+      <h3 style={{ fontFamily: cg, fontSize: 20, color: "#100F0C", fontWeight: 600, margin: "0 0 16px" }}>Your Entries</h3>
+      {entriesLoading ? (
+        <p style={{ fontFamily: lora, fontSize: 13, color: "#6B6459" }}>Loading…</p>
+      ) : entries.length === 0 ? (
+        <p style={{ fontFamily: cg, fontSize: 15, color: "#6B6459", fontStyle: "italic" }}>No time entries logged yet.</p>
+      ) : (
+        <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+          {entries.map((e) => (
+            <div key={e.id} style={{ background: "#FFFFFF", border: "1px solid rgba(16,15,12,0.1)", borderLeft: `3px solid ${e.confirmed ? "#3D8B5F" : "#C9A227"}`, borderRadius: 6, padding: "14px 18px", display: "flex", justifyContent: "space-between", alignItems: isMobile ? "flex-start" : "center", gap: 16, flexWrap: "wrap", flexDirection: isMobile ? "column" : "row" }}>
+              <div>
+                <p style={{ fontFamily: lora, fontSize: 13.5, color: "#100F0C", fontWeight: 700, margin: "0 0 3px" }}>{e.description}</p>
+                <p style={{ fontFamily: lora, fontSize: 12, color: "#6B6459", margin: 0 }}>
+                  {e.entry_date} · {humanizeActivityType(e.activity_type)} · {e.hours} hr{e.amount != null ? ` · $${e.amount}` : ""}
+                </p>
+              </div>
+              <span style={{ fontFamily: lora, fontSize: 11.5, fontWeight: 700, color: e.confirmed ? "#3D8B5F" : "#9C7F1A" }}>
+                {e.confirmed ? "✓ Approved" : "Awaiting Approval"}
+              </span>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
+// ═══════════════════════════════════════════════════════════════════════
+// PROFILE & SETTINGS
+// Identity fields (name, role, username, contractor type) are admin-managed
+// and shown read-only — faculty can update contact email and phone number
+// themselves.
+// ═══════════════════════════════════════════════════════════════════════
+
+function ProfileSettingsSection({ facultyProfile, facultyRole, onProfileUpdated }) {
+  const sb = getSupabase();
+  const lora = "'Lora', Georgia, serif";
+  const cg = "'Cormorant Garamond', Georgia, serif";
+  const [contactEmail, setContactEmail] = useState(facultyProfile?.contact_email || "");
+  const [phoneNumber, setPhoneNumber] = useState(facultyProfile?.phone_number || "");
+  const [busy, setBusy] = useState(false);
+  const [saved, setSaved] = useState(false);
+
+  const inputStyle = { fontFamily: lora, fontSize: 13.5, padding: "10px 12px", border: "1px solid rgba(16,15,12,0.2)", borderRadius: 4, width: "100%", boxSizing: "border-box" };
+  const labelStyle = { fontFamily: lora, fontSize: 11, letterSpacing: "0.08em", color: "#8B7355", textTransform: "uppercase", fontWeight: 600, marginBottom: 6, display: "block" };
+  const readOnlyRow = (label, value) => (
+    <div style={{ marginBottom: 16 }}>
+      <p style={labelStyle}>{label}</p>
+      <p style={{ fontFamily: lora, fontSize: 14, color: "#100F0C", margin: 0 }}>{value || "—"}</p>
+    </div>
+  );
+
+  const save = async () => {
+    if (!sb || !facultyProfile?.id) return;
+    setBusy(true);
+    setSaved(false);
+    const table = facultyRole === "admin" ? "staff_admins" : "faculty_profiles";
+    await sb.from(table).update({ contact_email: contactEmail.trim(), phone_number: phoneNumber.trim() }).eq("id", facultyProfile.id);
+    setBusy(false);
+    setSaved(true);
+    if (onProfileUpdated) onProfileUpdated();
+  };
+
+  return (
+    <div>
+      <p style={{ fontFamily: lora, fontSize: 11, letterSpacing: "0.4em", color: "#A48D6E", fontWeight: 600, textTransform: "uppercase", marginBottom: 10 }}>
+        Faculty Portal
+      </p>
+      <h2 style={{ fontFamily: cg, fontSize: 30, color: "#100F0C", fontWeight: 600, margin: "0 0 24px" }}>Profile & Settings</h2>
+
+      <div style={{ background: "#FAF7F2", border: "1px solid rgba(164,141,110,0.3)", borderRadius: 6, padding: 24, marginBottom: 24, maxWidth: 480 }}>
+        <p style={{ fontFamily: lora, fontSize: 11, letterSpacing: "0.12em", color: "#8B7355", textTransform: "uppercase", fontWeight: 700, marginBottom: 16 }}>
+          Managed by Admissions — Contact Amina for Changes
+        </p>
+        {readOnlyRow("Full Name", facultyProfile?.full_name)}
+        {readOnlyRow("Role / Title", facultyProfile?.role_title)}
+        {readOnlyRow("Username", facultyProfile?.username)}
+        {readOnlyRow("Contractor Type", facultyProfile?.contractor_type)}
+      </div>
+
+      <div style={{ background: "#FFFFFF", border: "1px solid rgba(16,15,12,0.1)", borderRadius: 6, padding: 24, maxWidth: 480 }}>
+        <p style={{ fontFamily: lora, fontSize: 11, letterSpacing: "0.12em", color: "#8B7355", textTransform: "uppercase", fontWeight: 700, marginBottom: 16 }}>
+          Your Contact Information
+        </p>
+        <div style={{ marginBottom: 14 }}>
+          <label style={labelStyle}>Contact Email</label>
+          <input type="email" value={contactEmail} onChange={(e) => { setContactEmail(e.target.value); setSaved(false); }} style={inputStyle} />
+        </div>
+        <div style={{ marginBottom: 18 }}>
+          <label style={labelStyle}>Phone Number</label>
+          <input type="tel" value={phoneNumber} onChange={(e) => { setPhoneNumber(e.target.value); setSaved(false); }} placeholder="(555) 123-4567" style={inputStyle} />
+        </div>
+        <button
+          onClick={save}
+          disabled={busy}
+          style={{ fontFamily: lora, fontSize: 12.5, fontWeight: 700, padding: "11px 24px", background: "#100F0C", color: "#E4D5C1", border: "none", borderRadius: 4, cursor: "pointer" }}
+        >
+          {busy ? "Saving…" : "Save Changes"}
+        </button>
+        {saved && <span style={{ fontFamily: lora, fontSize: 12.5, color: "#3D8B5F", fontWeight: 700, marginLeft: 14 }}>✓ Saved</span>}
+      </div>
     </div>
   );
 }
@@ -17737,7 +18387,7 @@ const STANDARD_RATE_CARD = [
   },
   {
     activity: "Teaching — Consecutive / Multi-Block (over 1 hour)",
-    rate: "$300 / hr",
+    rate: "$300",
     type: "hourly",
     note: "Applies when your teaching on a given day totals more than one hour, billed on the full time taught that day.",
   },
@@ -17751,7 +18401,7 @@ const STANDARD_RATE_CARD = [
     activity: "Parent Info Sessions",
     rate: "Included",
     type: "included",
-    note: "Your first four Parent Info Sessions each year (of an estimated 3–5, ~1–2 hrs each) are included in your rate. The fifth session and beyond are billed at $200/hr.",
+    note: "Your first four Parent Info Sessions each year (of an estimated 3–5, ~2 hrs each) are included in your rate. The fifth session and beyond are billed at $200/hr.",
   },
   {
     activity: "Faculty Meetings (up to 2 per month)",
@@ -17761,25 +18411,25 @@ const STANDARD_RATE_CARD = [
   },
   {
     activity: "Faculty Meetings (3rd and beyond per month)",
-    rate: "$200 / hr",
+    rate: "$200",
     type: "hourly",
     note: "Additional meetings beyond two per month are tracked and billed separately.",
   },
   {
     activity: "Events & Competitions",
-    rate: "$200 / hr",
+    rate: "$200",
     type: "hourly",
     note: "Pitch Nights, Shark Tank Finales, Demo Day & Graduation, City Championships, and the Parent Launch Event.",
   },
   {
     activity: "Admissions Committee — First Session per Wave",
-    rate: "$500 / session",
+    rate: "$500",
     type: "flat",
     note: "Roughly 5–6 times per year — once before each enrollment wave.",
   },
   {
     activity: "Admissions Committee — Additional Sessions per Wave",
-    rate: "$250 / hr",
+    rate: "$250",
     type: "hourly",
     note: "If more than one admissions session is needed before a given wave.",
   },
