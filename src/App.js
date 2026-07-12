@@ -16753,6 +16753,90 @@ function useFacultyScheduleData(sb, facultyId) {
 }
 
 // ═══════════════════════════════════════════════════════════════════════
+// DAILY / WEEKLY SNAPSHOT HELPERS
+// Computed live from real session data — never hardcoded — so these stay
+// accurate as the schedule changes. Labeled "Snapshot" throughout because
+// they show the typical pattern, not a guarantee every week matches.
+// ═══════════════════════════════════════════════════════════════════════
+
+function formatTimeLabel(t) {
+  if (!t) return "TBC";
+  const [h, m] = t.split(":").map(Number);
+  const period = h >= 12 ? "PM" : "AM";
+  const h12 = h % 12 === 0 ? 12 : h % 12;
+  return `${h12}:${String(m).padStart(2, "0")} ${period}`;
+}
+
+// Dedupes teaching sessions into distinct (weekday, time, block) shapes.
+function computeTeachingPatterns(sessions) {
+  const teaching = sessions.filter((s) => s.activity_type === "teaching_single" || s.activity_type === "teaching_multi");
+  const seen = new Map();
+  teaching.forEach((s) => {
+    if (!s.session_date || !s.start_time) return;
+    const weekday = new Date(s.session_date + "T00:00:00").getDay();
+    const key = `${weekday}|${s.start_time}|${s.end_time}|${s.block_label}|${s.activity_type}`;
+    if (!seen.has(key)) {
+      seen.set(key, { weekday, start_time: s.start_time, end_time: s.end_time, block_label: s.block_label, activity_type: s.activity_type, notes: s.notes });
+    }
+  });
+  return Array.from(seen.values()).sort((a, b) => a.weekday - b.weekday || (a.start_time || "").localeCompare(b.start_time || ""));
+}
+
+// Groups patterns that share the exact same time/block across different
+// weekdays, so "Tue 4–4:40 · Foo" and "Thu 4–4:40 · Foo" become one
+// sentence ("On Tuesdays and Thursdays…") instead of two.
+function describeTeachingPatterns(patterns) {
+  const byShape = new Map();
+  patterns.forEach((p) => {
+    const shapeKey = `${p.start_time}|${p.end_time}|${p.block_label}|${p.activity_type}`;
+    if (!byShape.has(shapeKey)) byShape.set(shapeKey, { ...p, weekdays: [] });
+    byShape.get(shapeKey).weekdays.push(p.weekday);
+  });
+  return Array.from(byShape.values()).sort((a, b) => Math.min(...a.weekdays) - Math.min(...b.weekdays));
+}
+
+function joinWeekdayNames(weekdayNums) {
+  const names = weekdayNums.slice().sort((a, b) => a - b).map((n) => WEEKDAY_NAMES[n]);
+  if (names.length === 1) return names[0] + "s";
+  if (names.length === 2) return `${names[0]}s and ${names[1]}s`;
+  return names.slice(0, -1).map((n) => n + "s").join(", ") + `, and ${names[names.length - 1]}s`;
+}
+
+function WeeklySnapshotGrid({ patterns, lora }) {
+  const dayGroups = {};
+  patterns.forEach((p) => {
+    if (!dayGroups[p.weekday]) dayGroups[p.weekday] = [];
+    dayGroups[p.weekday].push(p);
+  });
+  return (
+    <div style={{ display: "grid", gridTemplateColumns: "repeat(7, 1fr)", gap: 8 }}>
+      {WEEKDAY_NAMES.map((name, i) => {
+        const items = dayGroups[i] || [];
+        const active = items.length > 0;
+        return (
+          <div key={name} style={{
+            border: `1px solid ${active ? "#A48D6E" : "rgba(16,15,12,0.1)"}`,
+            borderRadius: 6, padding: "10px 8px", minHeight: 84,
+            background: active ? "#FFFFFF" : "#FBFBFA",
+          }}>
+            <p style={{ fontFamily: lora, fontSize: 10, letterSpacing: "0.08em", textTransform: "uppercase", fontWeight: 700, color: active ? "#A48D6E" : "#C4BCAF", margin: "0 0 6px" }}>
+              {name.slice(0, 3)}
+            </p>
+            {items.length === 0 ? (
+              <p style={{ fontFamily: lora, fontSize: 11, color: "#C4BCAF", margin: 0 }}>—</p>
+            ) : items.map((p, idx) => (
+              <p key={idx} style={{ fontFamily: lora, fontSize: 11, color: "#100F0C", margin: "0 0 4px", lineHeight: 1.4 }}>
+                {formatTimeLabel(p.start_time)}–{formatTimeLabel(p.end_time)}
+              </p>
+            ))}
+          </div>
+        );
+      })}
+    </div>
+  );
+}
+
+// ═══════════════════════════════════════════════════════════════════════
 // MY SCHEDULE
 // ═══════════════════════════════════════════════════════════════════════
 
@@ -16951,6 +17035,62 @@ function MyScheduleSection({ facultyProfile, facultyRole }) {
           </button>
         ))}
       </div>
+
+      {/* ── Daily / Weekly Snapshots — Summer (Founder's Day) + Foundation only, for now ── */}
+      {programs.filter((p) => p.name === "Founder's Day" || p.name === "Foundation Semester").map((program) => {
+        const progSessions = sessionsByProgram[program.id] || [];
+        const isFoundersDay = program.name === "Founder's Day";
+
+        if (isFoundersDay) {
+          const teaching = progSessions
+            .filter(isTeaching)
+            .slice()
+            .sort((a, b) => (a.start_time || "").localeCompare(b.start_time || ""));
+          // Both dates (Jul 28 + Aug 11) repeat the identical structure, so
+          // dedupe down to one representative run of show.
+          const seen = new Set();
+          const uniqueBlocks = teaching.filter((s) => {
+            const key = `${s.start_time}|${s.block_label}`;
+            if (seen.has(key)) return false;
+            seen.add(key);
+            return true;
+          });
+          if (uniqueBlocks.length === 0) return null;
+          return (
+            <div key={program.id} style={{ marginBottom: 24, background: "#FAF7F2", border: "1px solid rgba(164,141,110,0.3)", borderRadius: 6, padding: "18px 22px" }}>
+              <h4 style={{ fontFamily: cg, fontSize: 18, color: "#100F0C", fontWeight: 600, margin: "0 0 4px" }}>Founder's Day — Daily Snapshot</h4>
+              <p style={{ fontFamily: lora, fontSize: 12, color: "#8B7355", margin: "0 0 14px", fontStyle: "italic" }}>
+                Same run of show both dates — July 28 and August 11, 2026.
+              </p>
+              {uniqueBlocks.map((s) => (
+                <p key={s.id} style={{ fontFamily: lora, fontSize: 13.5, color: "#100F0C", margin: "0 0 6px" }}>
+                  <strong>{formatTimeLabel(s.start_time)}–{formatTimeLabel(s.end_time)}</strong> — {s.block_label}
+                </p>
+              ))}
+            </div>
+          );
+        }
+
+        const patterns = computeTeachingPatterns(progSessions);
+        if (patterns.length === 0) return null;
+        const shapes = describeTeachingPatterns(patterns);
+        return (
+          <div key={program.id} style={{ marginBottom: 24, background: "#FAF7F2", border: "1px solid rgba(164,141,110,0.3)", borderRadius: 6, padding: "18px 22px" }}>
+            <h4 style={{ fontFamily: cg, fontSize: 18, color: "#100F0C", fontWeight: 600, margin: "0 0 4px" }}>{facultyDisplayProgramName(program.name)} — Weekly Snapshot</h4>
+            <p style={{ fontFamily: lora, fontSize: 12, color: "#8B7355", margin: "0 0 14px", fontStyle: "italic" }}>
+              A snapshot of a typical week — some weeks vary (see the full schedule below for exact dates).
+            </p>
+            {shapes.map((shape, i) => (
+              <p key={i} style={{ fontFamily: lora, fontSize: 13.5, color: "#100F0C", margin: "0 0 6px" }}>
+                On <strong>{joinWeekdayNames(shape.weekdays)}</strong>, you teach <strong>{shape.block_label}</strong> from {formatTimeLabel(shape.start_time)}–{formatTimeLabel(shape.end_time)}{shape.notes ? ` (${shape.notes})` : ""}.
+              </p>
+            ))}
+            <div style={{ marginTop: 12 }}>
+              <WeeklySnapshotGrid patterns={patterns} lora={lora} />
+            </div>
+          </div>
+        );
+      })}
 
       {programs.map((program) => {
         const progSessions = sessionsByProgram[program.id] || [];
