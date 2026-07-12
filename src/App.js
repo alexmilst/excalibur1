@@ -16763,6 +16763,7 @@ function MyScheduleSection({ facultyProfile, facultyRole }) {
   const { sessions, rateRules, programs, loading } = useFacultyScheduleData(sb, facultyProfile?.id);
   const [selectedDay, setSelectedDay] = useState(null);
   const [selectedMaterialsId, setSelectedMaterialsId] = useState(null);
+  const [scheduleFilter, setScheduleFilter] = useState("all"); // 'all' | 'teaching' | 'events' | 'meetings'
 
   const rateByType = {};
   rateRules.forEach((r) => { rateByType[r.activity_type] = r; });
@@ -16807,6 +16808,13 @@ function MyScheduleSection({ facultyProfile, facultyRole }) {
     sessionsByProgram[s.program_id].push(s);
   });
 
+  const isTeaching = (s) => s.activity_type === "teaching_single" || s.activity_type === "teaching_multi";
+  const isMeeting = (s) => s.activity_type === "faculty_meeting";
+  // Everything else (events, admissions committee, parent info sessions) is
+  // grouped as "Events" for display — they're all one-off, billable-or-not
+  // calendar commitments rather than recurring teaching blocks.
+  const isEventLike = (s) => !isTeaching(s) && !isMeeting(s);
+
   const SCHEDULE_COLUMNS = [
     { key: "date", label: "Date", align: "left" },
     { key: "blocks", label: "Blocks", align: "left" },
@@ -16822,8 +16830,8 @@ function MyScheduleSection({ facultyProfile, facultyRole }) {
   // row's content box end up different widths and every column past the
   // 1fr track drifts out of alignment.
   const gridCols = "112px 1fr 128px 92px 108px 112px 160px";
-  const colHeaderCell = (align) => ({
-    fontFamily: lora, fontSize: 10.5, letterSpacing: "0.1em", color: "#E4D5C1",
+  const colHeaderCell = (align, color = "#E4D5C1") => ({
+    fontFamily: lora, fontSize: 10.5, letterSpacing: "0.1em", color,
     textTransform: "uppercase", fontWeight: 600, padding: "14px 16px", boxSizing: "border-box",
     display: "flex", alignItems: "center", justifyContent: align === "right" ? "flex-end" : "flex-start",
     textAlign: align, minWidth: 0,
@@ -16833,12 +16841,129 @@ function MyScheduleSection({ facultyProfile, facultyRole }) {
     textAlign: align,
   });
 
+  // Distinct accent per session kind — matches the color-coded legend style
+  // faculty already know from their printed calendars (teaching / event /
+  // admin). Kept subtle: dark oxblood header stays for teaching (unchanged
+  // from before), events get a steel-blue identity, meetings a sage one.
+  const KIND_STYLES = {
+    teaching: { header: "#100F0C", tint: "#FAF7F2", border: "#A48D6E", label: "Teaching" },
+    events: { header: "#2F4858", tint: "#EEF3F5", border: "#2F4858", label: "Events" },
+    meetings: { header: "#4A5B45", tint: "#F1F3EE", border: "#4A5B45", label: "Faculty Meetings" },
+  };
+
+  const FILTERS = [
+    ["all", "All"],
+    ["teaching", "Teaching"],
+    ["events", "Events"],
+    ["meetings", "Faculty Meetings"],
+  ];
+
+  const showTeaching = scheduleFilter === "all" || scheduleFilter === "teaching";
+  const showEvents = scheduleFilter === "all" || scheduleFilter === "events";
+  const showMeetings = scheduleFilter === "all" || scheduleFilter === "meetings";
+
+  const KindHeader = ({ kind }) => {
+    const k = KIND_STYLES[kind];
+    return (
+      <p style={{ fontFamily: lora, fontSize: 10.5, letterSpacing: "0.14em", textTransform: "uppercase", fontWeight: 700, color: k.border, margin: "18px 0 8px", display: "flex", alignItems: "center", gap: 8 }}>
+        <span style={{ width: 8, height: 8, borderRadius: "50%", background: k.border, display: "inline-block" }} />
+        {k.label}
+      </p>
+    );
+  };
+
+  // Simple one-row-per-item list used for Events and Faculty Meetings —
+  // deliberately lighter than the Teaching table since these don't need
+  // day-level billing aggregation (each row is already one atomic item).
+  const SimpleSessionList = ({ items, kind, program }) => {
+    const k = KIND_STYLES[kind];
+    if (items.length === 0) return null;
+    const sorted = items.slice().sort((a, b) => (a.session_date || "").localeCompare(b.session_date || ""));
+    return (
+      <div style={{ marginBottom: 20 }}>
+        <KindHeader kind={kind} />
+        <div style={{ border: `1px solid ${k.border}33`, borderRadius: 6, overflow: "hidden", boxShadow: "0 1px 4px rgba(16,15,12,0.06)" }}>
+          {sorted.map((s, i) => {
+            const d = new Date(s.session_date + "T00:00:00");
+            const weekday = WEEKDAY_NAMES[d.getDay()];
+            const dateLabel = d.toLocaleDateString("en-US", { month: "short", day: "numeric" });
+            const showPay = kind === "events";
+            return (
+              <div
+                key={s.id}
+                onClick={() => setSelectedDay({ date: s.session_date, sessionsThisDay: [s], programName: program.name })}
+                style={{
+                  display: "grid", gridTemplateColumns: showPay ? "112px 1fr 110px 100px 110px" : "112px 1fr 130px",
+                  background: i % 2 === 0 ? "#FFFFFF" : k.tint, cursor: "pointer",
+                  borderTop: i === 0 ? "none" : `1px solid ${k.border}22`,
+                  borderLeft: `3px solid ${k.border}`,
+                  alignItems: "center",
+                }}
+              >
+                <div style={rowCell("left")}>
+                  <p style={{ fontFamily: lora, fontSize: 13, color: "#100F0C", margin: 0, fontWeight: 700 }}>{dateLabel}</p>
+                  <p style={{ fontFamily: lora, fontSize: 11.5, color: "#8B7355", margin: 0 }}>{weekday}</p>
+                </div>
+                <div style={rowCell("left")}>
+                  <p style={{ fontFamily: lora, fontSize: 13, color: "#100F0C", margin: "0 0 3px", fontWeight: 600 }}>{s.block_label}</p>
+                  {s.notes && <p style={{ fontFamily: lora, fontSize: 12, color: "#6B6459", margin: 0, lineHeight: 1.5 }}>{s.notes}</p>}
+                </div>
+                <div style={rowCell(showPay ? "right" : "left")}>
+                  <p style={{ fontFamily: lora, fontSize: 12.5, color: "#6B6459", margin: 0 }}>
+                    {s.start_time ? s.start_time.slice(0, 5) : "TBC"}{s.end_time ? ` – ${s.end_time.slice(0, 5)}` : ""}
+                  </p>
+                </div>
+                {showPay && (
+                  <>
+                    <div style={rowCell("right")}>
+                      <p style={{ fontFamily: lora, fontSize: 12.5, color: "#100F0C", margin: 0 }}>{formatOtherRate([s], rateByType)}</p>
+                    </div>
+                    <div style={rowCell("right")}>
+                      <p style={{ fontFamily: lora, fontSize: 13, color: "#100F0C", margin: 0, fontWeight: 700 }}>{formatOtherPay([s], rateByType)}</p>
+                    </div>
+                  </>
+                )}
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    );
+  };
+
   return (
     <div>
+      {/* ── Filter ── */}
+      <div style={{ display: "flex", gap: 8, marginBottom: 28, flexWrap: "wrap" }}>
+        {FILTERS.map(([key, label]) => (
+          <button
+            key={key}
+            onClick={() => setScheduleFilter(key)}
+            style={{
+              fontFamily: lora, fontSize: 11.5, fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase",
+              padding: "9px 18px", borderRadius: 20, cursor: "pointer",
+              background: scheduleFilter === key ? "#100F0C" : "transparent",
+              color: scheduleFilter === key ? "#E4D5C1" : "#100F0C",
+              border: `1px solid ${scheduleFilter === key ? "#100F0C" : "rgba(16,15,12,0.25)"}`,
+            }}
+          >
+            {label}
+          </button>
+        ))}
+      </div>
+
       {programs.map((program) => {
         const progSessions = sessionsByProgram[program.id] || [];
-        const dayGroups = groupSessionsByDay(progSessions, rateByType);
+        const teachingSessions = progSessions.filter(isTeaching);
+        const eventSessions = progSessions.filter(isEventLike);
+        const meetingSessions = progSessions.filter(isMeeting);
+        const dayGroups = groupSessionsByDay(teachingSessions, rateByType);
         const displayName = facultyDisplayProgramName(program.name);
+        const nothingToShow =
+          (!showTeaching || dayGroups.length === 0) &&
+          (!showEvents || eventSessions.length === 0) &&
+          (!showMeetings || meetingSessions.length === 0);
+
         return (
           <div key={program.id} style={{ marginBottom: 44 }}>
             <h3 style={{
@@ -16851,92 +16976,101 @@ function MyScheduleSection({ facultyProfile, facultyRole }) {
               <p style={{ fontFamily: cg, fontSize: 16, color: "#B4433A", fontStyle: "italic", marginTop: 14 }}>
                 Under Construction — schedule not yet available.
               </p>
-            ) : dayGroups.length === 0 ? (
+            ) : nothingToShow ? (
               <p style={{ fontFamily: cg, fontSize: 16, color: "#6B6459", fontStyle: "italic", marginTop: 14 }}>
-                No sessions scheduled yet.
+                Nothing scheduled yet in this view.
               </p>
             ) : (
-              <div style={{ marginTop: 16, border: "1px solid rgba(16,15,12,0.1)", borderRadius: 6, overflow: "hidden", boxShadow: "0 1px 4px rgba(16,15,12,0.06)" }}>
-                <div style={{ display: "grid", gridTemplateColumns: gridCols, background: "#100F0C" }}>
-                  {SCHEDULE_COLUMNS.map((c) => (
-                    <div key={c.key} style={colHeaderCell(c.align)}>{c.label}</div>
-                  ))}
-                </div>
-                {dayGroups.map((group, i) => {
-                  const d = new Date(group.date + "T00:00:00");
-                  const weekday = WEEKDAY_NAMES[d.getDay()];
-                  const dateLabel = d.toLocaleDateString("en-US", { month: "short", day: "numeric" });
-                  const teachingSessionsThisDay = group.allSessions.filter((s) => s.activity_type === "teaching_single" || s.activity_type === "teaching_multi");
+              <div style={{ marginTop: 8 }}>
+                {showTeaching && dayGroups.length > 0 && (
+                  <div style={{ marginBottom: 20 }}>
+                    <KindHeader kind="teaching" />
+                    <div style={{ border: "1px solid rgba(16,15,12,0.1)", borderRadius: 6, overflow: "hidden", boxShadow: "0 1px 4px rgba(16,15,12,0.06)" }}>
+                      <div style={{ display: "grid", gridTemplateColumns: gridCols, background: "#100F0C" }}>
+                        {SCHEDULE_COLUMNS.map((c) => (
+                          <div key={c.key} style={colHeaderCell(c.align)}>{c.label}</div>
+                        ))}
+                      </div>
+                      {dayGroups.map((group, i) => {
+                        const d = new Date(group.date + "T00:00:00");
+                        const weekday = WEEKDAY_NAMES[d.getDay()];
+                        const dateLabel = d.toLocaleDateString("en-US", { month: "short", day: "numeric" });
+                        const teachingSessionsThisDay = group.allSessions.filter(isTeaching);
 
-                  return (
-                    <div
-                      key={group.date}
-                      onClick={() => setSelectedDay({ date: group.date, sessionsThisDay: group.allSessions, programName: program.name })}
-                      style={{
-                        display: "grid", gridTemplateColumns: gridCols,
-                        background: i % 2 === 0 ? "#FFFFFF" : "#FAF7F2", cursor: "pointer",
-                        borderTop: i === 0 ? "none" : "1px solid rgba(16,15,12,0.07)",
-                        alignItems: "center",
-                      }}
-                    >
-                      <div style={rowCell("left")}>
-                        <p style={{ fontFamily: lora, fontSize: 13, color: "#100F0C", margin: 0, fontWeight: 700 }}>{dateLabel}</p>
-                        <p style={{ fontFamily: lora, fontSize: 11.5, color: "#8B7355", margin: 0 }}>{weekday}</p>
-                      </div>
-                      <div style={rowCell("left")}>
-                        {group.allSessions.map((s) => (
-                          <p key={s.id} style={{ fontFamily: lora, fontSize: 13, color: "#100F0C", margin: "0 0 3px" }}>
-                            {s.start_time ? s.start_time.slice(0, 5) : "TBC"}{s.end_time ? ` – ${s.end_time.slice(0, 5)}` : ""} · {s.block_label}
-                            {s._tierIsOverage && (
-                              <span style={{ fontFamily: lora, fontSize: 10.5, color: "#B4433A", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.04em", marginLeft: 8 }} title={`Occurrence #${s._tierOccurrence} this ${s._tierPeriod} — included allowance of ${s._tierAllowance} exceeded`}>
-                                Billed ({s._tierOccurrence}{s._tierPeriod === "year" ? "th this year" : "rd this month"})
-                              </span>
-                            )}
-                          </p>
-                        ))}
-                      </div>
-                      <div style={rowCell("right")}>
-                        <p style={{ fontFamily: lora, fontSize: 12.5, color: "#6B6459", margin: 0 }}>
-                          {group.teachingSummary ? formatMinutes(group.teachingSummary.totalActualMinutes) : "—"}
-                        </p>
-                      </div>
-                      <div style={rowCell("right")}>
-                        <p style={{ fontFamily: lora, fontSize: 12.5, color: "#100F0C", margin: 0, fontWeight: 600 }}>
-                          {group.teachingSummary ? `${group.teachingSummary.totalBilledHours} hr` : formatOtherBilled(group.allSessions, rateByType)}
-                        </p>
-                      </div>
-                      <div style={rowCell("right")}>
-                        <p style={{ fontFamily: lora, fontSize: 12.5, color: "#100F0C", margin: 0 }}>
-                          {group.teachingSummary
-                            ? (`$${group.teachingSummary.rateAmount}`)
-                            : formatOtherRate(group.allSessions, rateByType)}
-                        </p>
-                      </div>
-                      <div style={rowCell("right")}>
-                        <p style={{ fontFamily: lora, fontSize: 13, color: "#100F0C", margin: 0, fontWeight: 700 }}>
-                          {group.teachingSummary ? `$${group.teachingSummary.totalPay}` : formatOtherPay(group.allSessions, rateByType)}
-                        </p>
-                      </div>
-                      <div style={{ ...rowCell("left"), display: "flex", flexDirection: "column", gap: 8, alignItems: "flex-start" }}>
-                        {teachingSessionsThisDay.length === 0 ? (
-                          <span style={{ fontFamily: lora, fontSize: 12, color: "#8B7355" }}>—</span>
-                        ) : teachingSessionsThisDay.map((s) => (
+                        return (
                           <div
-                            key={s.id}
-                            onClick={(e) => { e.stopPropagation(); setSelectedMaterialsId(s.id); }}
-                            style={{ display: "flex", alignItems: "center", gap: 6, cursor: "pointer" }}
+                            key={group.date}
+                            onClick={() => setSelectedDay({ date: group.date, sessionsThisDay: group.allSessions, programName: program.name })}
+                            style={{
+                              display: "grid", gridTemplateColumns: gridCols,
+                              background: i % 2 === 0 ? "#FFFFFF" : "#FAF7F2", cursor: "pointer",
+                              borderTop: i === 0 ? "none" : "1px solid rgba(16,15,12,0.07)",
+                              borderLeft: "3px solid #A48D6E",
+                              alignItems: "center",
+                            }}
                           >
-                            <span title="Lesson Plan Guide"><FolderIcon status={s.lesson_plan_status} size={16} /></span>
-                            <span title="Presentation (PPTX)"><FolderIcon status={s.presentation_status} size={16} /></span>
-                            <span style={{ fontFamily: lora, fontSize: 12, color: "#8B7355", textDecoration: "underline" }}>
-                              Open Materials →
-                            </span>
+                            <div style={rowCell("left")}>
+                              <p style={{ fontFamily: lora, fontSize: 13, color: "#100F0C", margin: 0, fontWeight: 700 }}>{dateLabel}</p>
+                              <p style={{ fontFamily: lora, fontSize: 11.5, color: "#8B7355", margin: 0 }}>{weekday}</p>
+                            </div>
+                            <div style={rowCell("left")}>
+                              {group.allSessions.map((s) => (
+                                <p key={s.id} style={{ fontFamily: lora, fontSize: 13, color: "#100F0C", margin: "0 0 3px" }}>
+                                  {s.start_time ? s.start_time.slice(0, 5) : "TBC"}{s.end_time ? ` – ${s.end_time.slice(0, 5)}` : ""} · {s.block_label}
+                                  {s._tierIsOverage && (
+                                    <span style={{ fontFamily: lora, fontSize: 10.5, color: "#B4433A", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.04em", marginLeft: 8 }} title={`Occurrence #${s._tierOccurrence} this ${s._tierPeriod} — included allowance of ${s._tierAllowance} exceeded`}>
+                                      Billed ({s._tierOccurrence}{s._tierPeriod === "year" ? "th this year" : "rd this month"})
+                                    </span>
+                                  )}
+                                </p>
+                              ))}
+                            </div>
+                            <div style={rowCell("right")}>
+                              <p style={{ fontFamily: lora, fontSize: 12.5, color: "#6B6459", margin: 0 }}>
+                                {group.teachingSummary ? formatMinutes(group.teachingSummary.totalActualMinutes) : "—"}
+                              </p>
+                            </div>
+                            <div style={rowCell("right")}>
+                              <p style={{ fontFamily: lora, fontSize: 12.5, color: "#100F0C", margin: 0, fontWeight: 600 }}>
+                                {group.teachingSummary ? `${group.teachingSummary.totalBilledHours} hr` : "—"}
+                              </p>
+                            </div>
+                            <div style={rowCell("right")}>
+                              <p style={{ fontFamily: lora, fontSize: 12.5, color: "#100F0C", margin: 0 }}>
+                                {group.teachingSummary ? `$${group.teachingSummary.rateAmount}` : "—"}
+                              </p>
+                            </div>
+                            <div style={rowCell("right")}>
+                              <p style={{ fontFamily: lora, fontSize: 13, color: "#100F0C", margin: 0, fontWeight: 700 }}>
+                                {group.teachingSummary ? `$${group.teachingSummary.totalPay}` : "—"}
+                              </p>
+                            </div>
+                            <div style={{ ...rowCell("left"), display: "flex", flexDirection: "column", gap: 8, alignItems: "flex-start" }}>
+                              {teachingSessionsThisDay.length === 0 ? (
+                                <span style={{ fontFamily: lora, fontSize: 12, color: "#8B7355" }}>—</span>
+                              ) : teachingSessionsThisDay.map((s) => (
+                                <div
+                                  key={s.id}
+                                  onClick={(e) => { e.stopPropagation(); setSelectedMaterialsId(s.id); }}
+                                  style={{ display: "flex", alignItems: "center", gap: 6, cursor: "pointer" }}
+                                >
+                                  <span title="Lesson Plan Guide"><FolderIcon status={s.lesson_plan_status} size={16} /></span>
+                                  <span title="Presentation (PPTX)"><FolderIcon status={s.presentation_status} size={16} /></span>
+                                  <span style={{ fontFamily: lora, fontSize: 12, color: "#8B7355", textDecoration: "underline" }}>
+                                    Open Materials →
+                                  </span>
+                                </div>
+                              ))}
+                            </div>
                           </div>
-                        ))}
-                      </div>
+                        );
+                      })}
                     </div>
-                  );
-                })}
+                  </div>
+                )}
+
+                {showEvents && <SimpleSessionList items={eventSessions} kind="events" program={program} />}
+                {showMeetings && <SimpleSessionList items={meetingSessions} kind="meetings" program={program} />}
               </div>
             )}
           </div>
