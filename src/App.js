@@ -16458,13 +16458,20 @@ function DayOverviewView({ date, sessionsThisDay, programName, rateByType, onBac
               <p style={{ fontFamily: lora, fontSize: 10.5, color: "#8B7355", textTransform: "uppercase", letterSpacing: "0.06em", margin: "0 0 2px" }}>Duration</p>
               <p style={{ fontFamily: lora, fontSize: 13, color: "#100F0C", margin: 0 }}>{formatMinutes(blockDurationMinutes(s))}</p>
             </div>
-            <div>
-              <p style={{ fontFamily: lora, fontSize: 10.5, color: "#8B7355", textTransform: "uppercase", letterSpacing: "0.06em", margin: "0 0 2px" }}>TA Assigned</p>
-              <p style={{ fontFamily: lora, fontSize: 13, color: s.ta_assigned_name ? "#100F0C" : "#B4433A", margin: 0, fontStyle: s.ta_assigned_name ? "normal" : "italic" }}>
-                {s.ta_assigned_name || "Not yet assigned"}
-              </p>
-            </div>
+            {s.activity_type === "teaching_single" || s.activity_type === "teaching_multi" ? (
+              <div>
+                <p style={{ fontFamily: lora, fontSize: 10.5, color: "#8B7355", textTransform: "uppercase", letterSpacing: "0.06em", margin: "0 0 2px" }}>TA Assigned</p>
+                <p style={{ fontFamily: lora, fontSize: 13, color: s.ta_assigned_name ? "#100F0C" : "#B4433A", margin: 0, fontStyle: s.ta_assigned_name ? "normal" : "italic" }}>
+                  {s.ta_assigned_name || "Not yet assigned"}
+                </p>
+              </div>
+            ) : null}
           </div>
+          {s.activity_type !== "teaching_single" && s.activity_type !== "teaching_multi" && s.notes && (
+            <p style={{ fontFamily: lora, fontSize: 13, color: "#3A2F28", lineHeight: 1.6, margin: "14px 0 0", paddingTop: 12, borderTop: "1px solid rgba(164,141,110,0.25)" }}>
+              {s.notes}
+            </p>
+          )}
         </div>
       ))}
 
@@ -16482,7 +16489,7 @@ function DayOverviewView({ date, sessionsThisDay, programName, rateByType, onBac
           <div>
             <p style={{ fontFamily: lora, fontSize: 10, color: "#A48D6E", textTransform: "uppercase", letterSpacing: "0.1em", margin: "0 0 3px" }}>Rate</p>
             <p style={{ fontFamily: lora, fontSize: 16, color: "#E4D5C1", fontWeight: 700, margin: 0 }}>
-              {teachingSummary.rateType === "flat" ? `$${teachingSummary.rateAmount} flat` : `$${teachingSummary.rateAmount}/hr`}
+              {`$${teachingSummary.rateAmount}`}
             </p>
           </div>
           <div>
@@ -16573,8 +16580,8 @@ function DayOverviewView({ date, sessionsThisDay, programName, rateByType, onBac
 function formatRate(rateRule) {
   if (!rateRule) return "—";
   if (rateRule.rate_type === "included") return "Included";
-  if (rateRule.rate_type === "flat") return `$${Number(rateRule.rate_amount)} flat`;
-  if (rateRule.rate_type === "hourly") return `$${Number(rateRule.rate_amount)}/hr`;
+  if (rateRule.rate_type === "flat") return `$${Number(rateRule.rate_amount)}`;
+  if (rateRule.rate_type === "hourly") return `$${Number(rateRule.rate_amount)}`;
   return "—";
 }
 
@@ -16901,7 +16908,7 @@ function MyScheduleSection({ facultyProfile, facultyRole }) {
                       <div style={rowCell("right")}>
                         <p style={{ fontFamily: lora, fontSize: 12.5, color: "#100F0C", margin: 0 }}>
                           {group.teachingSummary
-                            ? (group.teachingSummary.rateType === "flat" ? `$${group.teachingSummary.rateAmount} flat` : `$${group.teachingSummary.rateAmount}/hr`)
+                            ? (`$${group.teachingSummary.rateAmount}`)
                             : formatOtherRate(group.allSessions, rateByType)}
                         </p>
                       </div>
@@ -17015,8 +17022,14 @@ function RatePaySummarySection({ facultyProfile, facultyRole }) {
     })
     .filter((pb) => pb.dayGroups.length > 0);
 
-  const grandTotalBilledHours = programBreakdowns.reduce((sum, pb) => sum + pb.totalBilledHours, 0);
-  const grandTotalPay = programBreakdowns.reduce((sum, pb) => sum + pb.totalPay, 0);
+  // "To Date" totals reflect only sessions that have actually happened —
+  // never the full future-scheduled year. A session with no date is
+  // excluded rather than assumed past.
+  const todayStr = new Date().toISOString().slice(0, 10);
+  const pastSessions = sessions.filter((s) => s.session_date && s.session_date <= todayStr);
+  const pastDayGroups = groupSessionsByDay(pastSessions, rateByType);
+  const grandTotalBilledHours = pastDayGroups.reduce((sum, g) => sum + computeGroupBilledHoursNumeric(g, rateByType), 0);
+  const grandTotalPay = pastDayGroups.reduce((sum, g) => sum + computeGroupPayNumeric(g, rateByType), 0);
 
   const SUMMARY_COLUMNS = [
     { key: "date", label: "Date", align: "left" },
@@ -17138,7 +17151,7 @@ function RatePaySummarySection({ facultyProfile, facultyRole }) {
                     <div style={rowCell("right")}>
                       <p style={{ fontFamily: lora, fontSize: 12.5, color: "#100F0C", margin: 0 }}>
                         {group.teachingSummary
-                          ? (group.teachingSummary.rateType === "flat" ? `$${group.teachingSummary.rateAmount} flat` : `$${group.teachingSummary.rateAmount}/hr`)
+                          ? (`$${group.teachingSummary.rateAmount}`)
                           : formatOtherRate(group.allSessions, rateByType)}
                       </p>
                     </div>
@@ -17186,8 +17199,8 @@ function RatePaySummarySection({ facultyProfile, facultyRole }) {
 const STANDARD_RATE_CARD = [
   {
     activity: "Teaching — Single Block (1 hour)",
-    rate: "$350 / hr",
-    type: "hourly",
+    rate: "$350",
+    type: "flat",
     note: "Your standard rate for any teaching block scheduled at one hour.",
   },
   {
