@@ -15941,7 +15941,7 @@ function FacultyDashboardHome({ facultyProfile, facultyRole }) {
   const sb = getSupabase();
   const lora = "'Lora', Georgia, serif";
   const cg = "'Cormorant Garamond', Georgia, serif";
-  const { sessions, rateRules, programs, loading } = useFacultyScheduleData(sb, facultyProfile?.id);
+  const { sessions, rateRules, programs, loading, reload } = useFacultyScheduleData(sb, facultyProfile?.id);
   const [calendarModalDate, setCalendarModalDate] = useState(null);
 
   const rateByType = {};
@@ -15975,6 +15975,8 @@ function FacultyDashboardHome({ facultyProfile, facultyRole }) {
         programName={modalProgramName}
         rateByType={rateByType}
         onBack={() => setCalendarModalDate(null)}
+        sb={sb}
+        onAttendanceUpdated={reload}
       />
     );
   }
@@ -16382,7 +16384,7 @@ const FOUNDERS_DAY_OVERVIEW = {
 // Full-page day view — replaces the old fixed-overlay popup. Reached the
 // same way (clicking a day in a calendar or schedule row) but renders as a
 // regular in-content view with a "← Back" link, not a modal window.
-function DayOverviewView({ date, sessionsThisDay, programName, rateByType, onBack }) {
+function DayOverviewView({ date, sessionsThisDay, programName, rateByType, onBack, sb, onAttendanceUpdated }) {
   const lora = "'Lora', Georgia, serif";
   const cg = "'Cormorant Garamond', Georgia, serif";
   const d = new Date(date + "T00:00:00");
@@ -16475,6 +16477,14 @@ function DayOverviewView({ date, sessionsThisDay, programName, rateByType, onBac
               {s.notes}
             </p>
           )}
+          <div style={{ marginTop: 14, paddingTop: 12, borderTop: "1px solid rgba(164,141,110,0.25)" }}>
+            <AttendanceControl
+              session={s}
+              sb={sb}
+              mode={(s.activity_type === "teaching_single" || s.activity_type === "teaching_multi") ? "teaching" : "event"}
+              onUpdated={onAttendanceUpdated}
+            />
+          </div>
         </div>
       ))}
 
@@ -16733,26 +16743,119 @@ function useFacultyScheduleData(sb, facultyId) {
   const [programs, setPrograms] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
+  const load = useCallback(async () => {
     if (!sb || !facultyId) return;
     setLoading(true);
-    (async () => {
-      const [sessionsRes, ratesRes, programsRes] = await Promise.all([
-        sb.from("faculty_sessions").select("*").eq("faculty_id", facultyId).order("session_date", { ascending: true }),
-        sb.from("faculty_rate_rules").select("*").eq("faculty_id", facultyId),
-        sb.from("programs").select("*").order("sort_order", { ascending: true }),
-      ]);
-      const rules = ratesRes.data || [];
-      const rateByType = {};
-      rules.forEach((r) => { rateByType[r.activity_type] = r; });
-      setSessions(applyTieredOverageBilling(sessionsRes.data || [], rateByType));
-      setRateRules(rules);
-      setPrograms(programsRes.data || []);
-      setLoading(false);
-    })();
+    const [sessionsRes, ratesRes, programsRes] = await Promise.all([
+      sb.from("faculty_sessions").select("*").eq("faculty_id", facultyId).order("session_date", { ascending: true }),
+      sb.from("faculty_rate_rules").select("*").eq("faculty_id", facultyId),
+      sb.from("programs").select("*").order("sort_order", { ascending: true }),
+    ]);
+    const rules = ratesRes.data || [];
+    const rateByType = {};
+    rules.forEach((r) => { rateByType[r.activity_type] = r; });
+    setSessions(applyTieredOverageBilling(sessionsRes.data || [], rateByType));
+    setRateRules(rules);
+    setPrograms(programsRes.data || []);
+    setLoading(false);
   }, [sb, facultyId]);
 
-  return { sessions, rateRules, programs, loading };
+  useEffect(() => { load(); }, [load]);
+
+  return { sessions, rateRules, programs, loading, reload: load };
+}
+
+// ── Attendance / availability confirmation ──
+// Shared by teaching sessions ("Confirm Availability" / "Unable to Teach")
+// and events/meetings ("Can Attend" / "Unable to Attend"). Writes directly
+// to faculty_sessions.attendance_status — admin sees the "unable" flag and
+// reason via the pendingAttendanceIssues query used in Lesson Plans &
+// admin views going forward.
+function AttendanceControl({ session, sb, mode, onUpdated, compact = false }) {
+  const lora = "'Lora', Georgia, serif";
+  const [showReasonBox, setShowReasonBox] = useState(false);
+  const [reason, setReason] = useState("");
+  const [busy, setBusy] = useState(false);
+
+  const confirmLabel = mode === "teaching" ? "Confirm Availability" : "Can Attend";
+  const unableLabel = mode === "teaching" ? "Unable to Teach" : "Unable to Attend";
+
+  const submit = async (status, reasonText) => {
+    if (!sb) return;
+    setBusy(true);
+    await sb.from("faculty_sessions").update({
+      attendance_status: status,
+      attendance_reason: reasonText || null,
+      attendance_responded_at: new Date().toISOString(),
+    }).eq("id", session.id);
+    setBusy(false);
+    setShowReasonBox(false);
+    setReason("");
+    if (onUpdated) onUpdated();
+  };
+
+  if (session.attendance_status === "confirmed") {
+    return (
+      <span style={{ fontFamily: lora, fontSize: compact ? 11.5 : 12.5, color: "#3D8B5F", fontWeight: 700 }}>
+        ✓ Confirmed
+      </span>
+    );
+  }
+  if (session.attendance_status === "unable") {
+    return (
+      <span style={{ fontFamily: lora, fontSize: compact ? 11.5 : 12.5, color: "#B4433A", fontWeight: 700 }} title={session.attendance_reason || ""}>
+        ⚠ Marked unable — admin notified
+      </span>
+    );
+  }
+
+  if (showReasonBox) {
+    return (
+      <div onClick={(e) => e.stopPropagation()} style={{ display: "flex", flexDirection: "column", gap: 6, minWidth: 220 }}>
+        <textarea
+          value={reason}
+          onChange={(e) => setReason(e.target.value)}
+          placeholder="Briefly state the reason…"
+          rows={2}
+          style={{ fontFamily: lora, fontSize: 12, padding: "6px 8px", border: "1px solid rgba(180,67,58,0.4)", borderRadius: 4, resize: "vertical" }}
+        />
+        <div style={{ display: "flex", gap: 6 }}>
+          <button
+            onClick={() => submit("unable", reason)}
+            disabled={busy || !reason.trim()}
+            style={{ fontFamily: lora, fontSize: 11, fontWeight: 700, padding: "6px 12px", background: "#B4433A", color: "#FFF", border: "none", borderRadius: 4, cursor: reason.trim() ? "pointer" : "default", opacity: reason.trim() ? 1 : 0.5 }}
+          >
+            {busy ? "Submitting…" : "Submit for Admin Notice"}
+          </button>
+          <button
+            onClick={() => { setShowReasonBox(false); setReason(""); }}
+            style={{ fontFamily: lora, fontSize: 11, fontWeight: 600, padding: "6px 12px", background: "transparent", color: "#6B6459", border: "1px solid rgba(16,15,12,0.2)", borderRadius: 4, cursor: "pointer" }}
+          >
+            Cancel
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div onClick={(e) => e.stopPropagation()} style={{ display: "flex", gap: 6, flexWrap: "wrap" }}>
+      <button
+        onClick={() => submit("confirmed", null)}
+        disabled={busy}
+        style={{ fontFamily: lora, fontSize: 11, fontWeight: 700, padding: "6px 12px", background: "#3D8B5F", color: "#FFF", border: "none", borderRadius: 4, cursor: "pointer" }}
+      >
+        {confirmLabel}
+      </button>
+      <button
+        onClick={() => setShowReasonBox(true)}
+        disabled={busy}
+        style={{ fontFamily: lora, fontSize: 11, fontWeight: 700, padding: "6px 12px", background: "transparent", color: "#B4433A", border: "1px solid #B4433A", borderRadius: 4, cursor: "pointer" }}
+      >
+        {unableLabel}
+      </button>
+    </div>
+  );
 }
 
 // ═══════════════════════════════════════════════════════════════════════
@@ -16847,7 +16950,7 @@ function MyScheduleSection({ facultyProfile, facultyRole }) {
   const sb = getSupabase();
   const lora = "'Lora', Georgia, serif";
   const cg = "'Cormorant Garamond', Georgia, serif";
-  const { sessions, rateRules, programs, loading } = useFacultyScheduleData(sb, facultyProfile?.id);
+  const { sessions, rateRules, programs, loading, reload } = useFacultyScheduleData(sb, facultyProfile?.id);
   const [selectedDay, setSelectedDay] = useState(null);
   const [selectedMaterialsId, setSelectedMaterialsId] = useState(null);
   const [scheduleFilter, setScheduleFilter] = useState("all"); // 'all' | 'teaching' | 'events' | 'meetings'
@@ -16884,6 +16987,8 @@ function MyScheduleSection({ facultyProfile, facultyRole }) {
         programName={selectedDay.programName}
         rateByType={rateByType}
         onBack={() => setSelectedDay(null)}
+        sb={sb}
+        onAttendanceUpdated={reload}
       />
     );
   }
@@ -16993,7 +17098,8 @@ function MyScheduleSection({ facultyProfile, facultyRole }) {
                 </div>
                 <div style={rowCell("left")}>
                   <p style={{ fontFamily: lora, fontSize: 13, color: "#100F0C", margin: "0 0 3px", fontWeight: 600 }}>{s.block_label}</p>
-                  {s.notes && <p style={{ fontFamily: lora, fontSize: 12, color: "#6B6459", margin: 0, lineHeight: 1.5 }}>{s.notes}</p>}
+                  {s.notes && <p style={{ fontFamily: lora, fontSize: 12, color: "#6B6459", margin: "0 0 6px", lineHeight: 1.5 }}>{s.notes}</p>}
+                  <AttendanceControl session={s} sb={sb} mode="event" onUpdated={reload} compact />
                 </div>
                 <div style={rowCell(showPay ? "right" : "left")}>
                   <p style={{ fontFamily: lora, fontSize: 12.5, color: "#6B6459", margin: 0 }}>
@@ -17271,7 +17377,7 @@ function EventsSection({ facultyProfile, facultyRole }) {
   const sb = getSupabase();
   const lora = "'Lora', Georgia, serif";
   const cg = "'Cormorant Garamond', Georgia, serif";
-  const { sessions, rateRules, programs, loading } = useFacultyScheduleData(sb, facultyProfile?.id);
+  const { sessions, rateRules, programs, loading, reload } = useFacultyScheduleData(sb, facultyProfile?.id);
 
   if (loading) return <p style={{ fontFamily: lora, fontSize: 14, color: "#6B6459" }}>Loading…</p>;
 
@@ -17324,8 +17430,8 @@ function EventsSection({ facultyProfile, facultyRole }) {
         <p style={{ fontFamily: cg, fontSize: 16, color: "#6B6459", fontStyle: "italic" }}>No events scheduled yet.</p>
       ) : (
         <div style={{ border: "1px solid rgba(16,15,12,0.1)", borderRadius: 6, overflow: "hidden", boxShadow: "0 1px 4px rgba(16,15,12,0.06)" }}>
-          <div style={{ display: "grid", gridTemplateColumns: "110px 1fr 150px 90px 100px 100px", background: "#2F4858" }}>
-            {["Date", "Event", "Program", "Category", "Rate", "Pay"].map((label) => (
+          <div style={{ display: "grid", gridTemplateColumns: "110px 1fr 150px 90px 100px 100px 200px", background: "#2F4858" }}>
+            {["Date", "Event", "Program", "Category", "Rate", "Pay", "Attendance"].map((label) => (
               <div key={label} style={{ fontFamily: lora, fontSize: 10.5, letterSpacing: "0.1em", color: "#EEF3F5", textTransform: "uppercase", fontWeight: 600, padding: "14px 16px" }}>
                 {label}
               </div>
@@ -17337,7 +17443,7 @@ function EventsSection({ facultyProfile, facultyRole }) {
             const program = programById[s.program_id];
             return (
               <div key={s.id} style={{
-                display: "grid", gridTemplateColumns: "110px 1fr 150px 90px 100px 100px",
+                display: "grid", gridTemplateColumns: "110px 1fr 150px 90px 100px 100px 200px",
                 background: i % 2 === 0 ? "#FFFFFF" : "#EEF3F5",
                 borderTop: i === 0 ? "none" : "1px solid rgba(47,72,88,0.12)",
                 borderLeft: "3px solid #2F4858", alignItems: "center",
@@ -17362,6 +17468,9 @@ function EventsSection({ facultyProfile, facultyRole }) {
                   <p style={{ fontFamily: lora, fontSize: 13, color: calc.known ? "#100F0C" : "#B4433A", margin: 0, fontWeight: 700, fontStyle: calc.known ? "normal" : "italic" }}>
                     {calc.payLabel}
                   </p>
+                </div>
+                <div style={{ padding: 16 }}>
+                  <AttendanceControl session={s} sb={sb} mode="event" onUpdated={reload} compact />
                 </div>
               </div>
             );
