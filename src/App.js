@@ -6825,7 +6825,7 @@ function SummerDetailPage({ setPage, openInquiry }) {
           </div>
           <div style={{ display: "flex", justifyContent: "center", gap: 40, flexWrap: "wrap", marginBottom: 32 }}>
             <div>
-              <p style={{ fontFamily: sans, fontSize: 10, letterSpacing: "0.2em", color: gold, textTransform: "uppercase", fontWeight: 700, marginBottom: 8 }}>Early Bird</p>
+              <p style={{ fontFamily: sans, fontSize: 10, letterSpacing: "0.2em", color: gold, textTransform: "uppercase", fontWeight: 700, marginBottom: 8 }}>Early Bird — Apply by July 21</p>
               <p style={{ fontFamily: cg, fontSize: 40, color: parch, fontWeight: 400 }}>$350</p>
             </div>
             <div>
@@ -6884,14 +6884,24 @@ function SummerDetailPage({ setPage, openInquiry }) {
   );
 }
 
-// Founder's Day pricing — must mirror SESSION_PRICES_CENTS in
-// supabase/functions/create-checkout-session/index.ts. Used for on-screen
-// payment summaries only; the Edge Function is the source of truth for
-// what's actually charged.
-const SUMMER_SESSION_PRICES = {
-  "The Excalibur Founder's Day — July 28": 350,
-  "The Excalibur Founder's Day — August 11": 350,
-};
+// Founder\'s Day pricing — must mirror the Edge Function
+// (supabase/functions/create-checkout-session/index.ts): $350 Early Bird
+// through July 21, 2026 (end of day Pacific), $450 Regular after — one
+// shared cutoff applied uniformly to both Founder\'s Day dates (Jul 28 & Aug 11).
+// Computed live from today\'s date — never hardcoded — so it\'s automatically
+// correct as the deadline passes.
+// IMPORTANT: this must match the server-side calculation in the
+// create-checkout-session Edge Function exactly, since the actual charge is
+// (and must be) computed server-side, not trusted from the client.
+const FOUNDERS_DAY_SESSION_LABELS = [
+  "The Excalibur Founder's Day — July 28",
+  "The Excalibur Founder's Day — August 11",
+];
+const FOUNDERS_DAY_EARLY_BIRD_DEADLINE = new Date("2026-07-22T07:00:00Z"); // end of day July 21, 2026 Pacific (PDT, UTC-7)
+function getSummerSessionPrice(sessionLabel) {
+  if (!FOUNDERS_DAY_SESSION_LABELS.includes(sessionLabel)) return 350;
+  return new Date() <= FOUNDERS_DAY_EARLY_BIRD_DEADLINE ? 350 : 450;
+}
 
 
 // Academic-year tuition — must mirror TUITION_PRICES_CENTS in
@@ -8350,7 +8360,7 @@ function PortalPage({ setPage }) {
             <p style={{ fontFamily: sans, fontSize: 13, fontWeight: 700, color: m_ink, marginBottom: 8 }}>Which session would you like instead?</p>
             <select value={rescheduleTarget} onChange={e => setRescheduleTarget(e.target.value)} style={{ fontFamily: sans, fontSize: 13, padding: "10px 12px", borderRadius: 8, border: `1px solid ${m_line}`, width: "100%", marginBottom: 10, background: m_white, color: m_ink }}>
               <option value="">Select a session...</option>
-              {Object.keys(SUMMER_SESSION_PRICES).filter(s => !summerSessionsSelected.includes(s)).map(s => (
+              {FOUNDERS_DAY_SESSION_LABELS.filter(s => !summerSessionsSelected.includes(s)).map(s => (
                 <option key={s} value={s}>{s}</option>
               ))}
             </select>
@@ -8380,26 +8390,24 @@ function PortalPage({ setPage }) {
   }[key] || "dashboard");
 
   // ── Key dates, pulled directly from the Summer / Foundation / Venture pages ──
-  // The Founder's Day — Early Bird deadline is 1 week before each date,
-  // Regular deadline is 3 days before. Update SUMMER_LAB_SCHEDULE if dates change;
-  // deadlines recalculate automatically.
-  const daysBefore = (date, days) => { const d = new Date(date); d.setDate(d.getDate() - days); return d; };
+  // The Founder's Day Early Bird Deadline is a single shared cutoff — July 21,
+  // 2026 — applied uniformly to both dates, mirroring the global cutoff already
+  // live in the create-checkout-session Edge Function. Update
+  // SUMMER_LAB_SCHEDULE if the Founder's Day dates change.
   const SUMMER_LAB_SCHEDULE = [
     { label: "The Excalibur Founder's Day", date: new Date(2026, 6, 28) },
     { label: "The Excalibur Founder's Day", date: new Date(2026, 7, 11) },
   ];
   const summerLabEvents = SUMMER_LAB_SCHEDULE.flatMap(lab => [
-    { date: daysBefore(lab.date, 7), label: `Summer Masterseries — ${lab.label} (Early Bird Deadline)`, color: m_amber, program: "Summer Masterseries" },
-    { date: daysBefore(lab.date, 3), label: `Summer Masterseries — ${lab.label} (Regular Deadline)`, color: m_amber, program: "Summer Masterseries" },
+    { date: new Date(2026, 6, 21), label: `Summer Masterseries — ${lab.label} (Early Bird Deadline)`, color: m_amber, program: "Summer Masterseries" },
     { date: lab.date, label: `Summer Masterseries — ${lab.label}`, color: m_amber, program: "Summer Masterseries" },
   ]);
-  // One consolidated card per active lab (both deadlines together) for the Key Dates widget —
+  // One consolidated card per active lab for the Key Dates widget —
   // separate from the flood of individual events used by the full calendar view above.
   const summerLabKeyDates = SUMMER_LAB_SCHEDULE.map(lab => ({
     label: lab.label,
     labDate: lab.date,
-    earlyBirdDate: daysBefore(lab.date, 7),
-    regularDate: daysBefore(lab.date, 3),
+    earlyBirdDate: new Date(2026, 6, 21),
   }));
 
   const calendarEvents = [
@@ -8447,12 +8455,8 @@ function PortalPage({ setPage }) {
                   <p style={{ fontFamily: sans, fontSize: 13, fontWeight: 700, color: past ? "#FFFFFF" : m_ink, marginBottom: 3, lineHeight: 1.3 }}>{lab.label}</p>
                   <p style={{ fontFamily: sans, fontSize: 11, color: past ? "rgba(255,255,255,.55)" : m_gray, marginBottom: 12 }}>{fmt(lab.labDate)}, {lab.labDate.getFullYear()}</p>
                   <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", paddingTop: 8, borderTop: `1px solid ${past ? "rgba(255,255,255,.15)" : "rgba(0,0,0,.08)"}` }}>
-                    <span style={{ fontFamily: sans, fontSize: 10.5, color: past ? "rgba(255,255,255,.6)" : m_gray, textTransform: "uppercase", letterSpacing: "0.03em" }}>Early Bird</span>
+                    <span style={{ fontFamily: sans, fontSize: 10.5, color: past ? "rgba(255,255,255,.6)" : m_gray, textTransform: "uppercase", letterSpacing: "0.03em" }}>Early Bird Deadline</span>
                     <span style={{ fontFamily: sans, fontSize: 11.5, fontWeight: 700, color: past ? "#FFFFFF" : m_ink }}>{fmt(lab.earlyBirdDate)}</span>
-                  </div>
-                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", paddingTop: 6 }}>
-                    <span style={{ fontFamily: sans, fontSize: 10.5, color: past ? "rgba(255,255,255,.6)" : m_gray, textTransform: "uppercase", letterSpacing: "0.03em" }}>Regular</span>
-                    <span style={{ fontFamily: sans, fontSize: 11.5, fontWeight: 700, color: past ? "#FFFFFF" : m_ink }}>{fmt(lab.regularDate)}</span>
                   </div>
                 </div>
               );
@@ -8608,7 +8612,7 @@ function PortalPage({ setPage }) {
                 <p style={{ fontFamily: sans, fontSize: 13, color: m_gray, marginBottom: 8 }}>Founder's Day</p>
                 <p style={{ fontFamily: sans, fontWeight: 700, fontSize: isMobile ? 20 : 24, color: m_ink, marginBottom: 10, lineHeight: 1.3 }}>Your application is complete — payment is the last step to reserve your seat.</p>
                 <p style={{ fontFamily: sans, fontSize: 14, color: m_gray, marginBottom: 20, lineHeight: 1.7 }}>
-                  {summerSessionsSelected.join(", ")} — ${summerSessionsSelected.reduce((sum, s) => sum + (SUMMER_SESSION_PRICES[s] || 0), 0).toLocaleString()}. Pay in full by card, or choose Klarna or Affirm at checkout to split the cost into installments.
+                  {summerSessionsSelected.join(", ")} — ${summerSessionsSelected.reduce((sum, s) => sum + getSummerSessionPrice(s), 0).toLocaleString()}. Pay in full by card, or choose Klarna or Affirm at checkout to split the cost into installments.
                 </p>
                 {checkoutError && (
                   <p style={{ fontFamily: sans, fontSize: 13, color: "#8A4A1E", fontWeight: 600, marginBottom: 12 }}>Error: {checkoutError}</p>
@@ -8928,7 +8932,7 @@ function PortalPage({ setPage }) {
 
           if (isSubmitted) {
             const needsPayment = needsSummerPayment && !isSummerPaid;
-            const summerTotal = summerSessionsSelected.reduce((sum, s) => sum + (SUMMER_SESSION_PRICES[s] || 0), 0);
+            const summerTotal = summerSessionsSelected.reduce((sum, s) => sum + getSummerSessionPrice(s), 0);
             return (
               <PortalCard>
                 {needsPayment ? (
@@ -8946,7 +8950,7 @@ function PortalPage({ setPage }) {
                       {summerSessionsSelected.map((s, i) => (
                         <div key={i} style={{ display: "flex", justifyContent: "space-between", gap: 12, padding: "10px 0", borderBottom: `1px solid ${m_line}` }}>
                           <span style={{ fontFamily: sans, fontSize: 14, color: m_ink }}>{s}</span>
-                          <span style={{ fontFamily: sans, fontSize: 14, color: m_ink, fontWeight: 700, flexShrink: 0 }}>${SUMMER_SESSION_PRICES[s] || "—"}</span>
+                          <span style={{ fontFamily: sans, fontSize: 14, color: m_ink, fontWeight: 700, flexShrink: 0 }}>${getSummerSessionPrice(s)}</span>
                         </div>
                       ))}
                       <div style={{ display: "flex", justifyContent: "space-between", paddingTop: 14, marginTop: 4 }}>
@@ -15819,6 +15823,7 @@ const FACULTY_NAV_SECTIONS = [
   { key: "billing", label: "Billing & Invoices" },
   { key: "messages", label: "Messages" },
   { key: "meetings", label: "Meetings" },
+  { key: "book", label: "Book a Meeting" },
   { key: "documents", label: "Documents & Compliance" },
   { key: "guide", label: "Guide" },
   { key: "profile", label: "Profile & Settings" },
@@ -16406,6 +16411,8 @@ function FacultyPortalShell({ facultyProfile, facultyRole, onSignOut }) {
           <MessagesSection facultyProfile={facultyProfile} facultyRole={facultyRole} />
         ) : activeSection === "meetings" ? (
           <MeetingsSection facultyProfile={facultyProfile} facultyRole={facultyRole} />
+        ) : activeSection === "book" ? (
+          <BookMeetingSection facultyProfile={facultyProfile} facultyRole={facultyRole} />
         ) : activeSection === "documents" ? (
           <DocumentsComplianceSection facultyProfile={facultyProfile} facultyRole={facultyRole} />
         ) : activeSection === "guide" ? (
@@ -18503,6 +18510,33 @@ function MeetingsSection({ facultyProfile, facultyRole }) {
 }
 
 // ═══════════════════════════════════════════════════════════════════════
+// BOOK A MEETING — a direct self-service booking calendar, distinct from
+// the Meetings tab above. Meetings is a request-and-wait form for academy
+// business with Admin/Amina; this is instant self-service booking, reusing
+// the exact same Zcal widget the student portal uses for consultations.
+// ═══════════════════════════════════════════════════════════════════════
+
+function BookMeetingSection({ facultyProfile, facultyRole }) {
+  const lora = "'Lora', Georgia, serif";
+  const cg = "'Cormorant Garamond', Georgia, serif";
+  return (
+    <div>
+      <p style={{ fontFamily: lora, fontSize: 11, letterSpacing: "0.4em", color: "#A48D6E", fontWeight: 600, textTransform: "uppercase", marginBottom: 10 }}>
+        Faculty Portal
+      </p>
+      <h2 style={{ fontFamily: cg, fontSize: 30, color: "#100F0C", fontWeight: 600, margin: "0 0 6px" }}>Book a Meeting</h2>
+      <p style={{ fontFamily: lora, fontSize: 13.5, color: "#6B6459", margin: "0 0 24px", maxWidth: 640, lineHeight: 1.6 }}>
+        Pick an open time directly from the calendar below — in person or over Zoom, whichever the listing offers.
+        This books instantly; no need to wait on a confirmation the way a Meetings request does.
+      </p>
+      <div style={{ background: "#FFFFFF", border: "1px solid rgba(16,15,12,0.1)", borderRadius: 6, overflow: "hidden" }}>
+        <ZcalEmbed prefill={{ name: facultyProfile?.full_name || "", email: facultyProfile?.contact_email || "" }} />
+      </div>
+    </div>
+  );
+}
+
+// ═══════════════════════════════════════════════════════════════════════
 // DOCUMENTS & COMPLIANCE — 1099 Agreement, W9 & Direct Deposit,
 // Appendixes, Monthly Invoices. Stored in a PRIVATE storage bucket
 // (unlike lesson plan materials, these can contain SSNs and banking
@@ -18731,6 +18765,14 @@ const GUIDE_SECTIONS = [
     title: "Meetings",
     body: [
       "Need time with Admin or with Amina, our Director of Operations? Use \"+ Request a Meeting,\" choose in-person or Zoom, and give us your preferred dates and times. We'll follow up to confirm — you'll see the status of your request update right here, from \"Requested\" to \"Scheduled\" to \"Completed.\"",
+      "If you'd rather skip the back-and-forth and just grab an open slot yourself, that's what Book a Meeting is for — see below.",
+    ],
+  },
+  {
+    id: "book",
+    title: "Book a Meeting",
+    body: [
+      "A direct booking calendar — pick an open time and it's booked instantly, no waiting on a confirmation. Use this when you just need to get on the calendar quickly; use Meetings when you have specific date and time preferences you'd like us to work around.",
     ],
   },
   {
@@ -19112,9 +19154,9 @@ const STANDARD_RATE_CARD = [
   },
   {
     activity: "Parent Info Sessions",
-    rate: "Included",
-    type: "included",
-    note: "Your first four Parent Info Sessions each year (of an estimated 3–5, ~2 hrs each) are included in your rate. The fifth session and beyond are billed at $200/hr.",
+    rate: "$200",
+    type: "hourly",
+    note: "Billed the same as Events & Competitions — an estimated 3–5 sessions per year, ~2 hrs each.",
   },
   {
     activity: "Faculty Meetings (up to 2 per month)",
