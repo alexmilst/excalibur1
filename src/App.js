@@ -939,7 +939,7 @@ function PortfolioIndexWhite({ isMobile, setPage, images }) {
 // ── FOOTER ──
 function Footer({ setPage }) {
   const isMobile = useIsMobile();
-  const allLinks = [["HOME","home"],["THE ACADEMY","about"],["OUR PROGRAMS","programs"],["FACULTY","faculty"],["THE ARENA","beyond"],["ADMISSIONS","apply"],["CONTACT","contact"],["EVENTS","events"]];
+  const allLinks = [["HOME","home"],["THE ACADEMY","about"],["VIEW PROGRAMS","programs"],["THE EXCALIBUR SUMMIT","summit"],["FACULTY","faculty"],["ADMISSIONS","admissions"],["STUDENT PORTAL","portal"],["CONTACT","contact"]];
   return (
     <footer style={{ background: "#34150F", borderTop: "1px solid rgba(188,166,150,.12)" }}>
       {/* Brand + Nav */}
@@ -2008,7 +2008,7 @@ function IntensivePage({ setPage, openInquiry }) {
 
   return (
     <div style={{ background: "#010000" }}>
-      <Breadcrumb items={[{ label: "View Programs", page: "programs" }]} setPage={setPage} />
+      <Breadcrumb items={[]} setPage={setPage} />
 
       {/* EDITORIAL HEADER */}
       <div style={{ background: "#E4D5C1", padding: isMobile ? "60px 28px 52px" : "88px 80px 72px", textAlign: "center" }}>
@@ -2287,7 +2287,7 @@ function ProgramsPage({ setPage, openInquiry }) {
 
   return (
     <div style={{ background: dark, paddingTop: 0 }}>
-      <Breadcrumb items={[{ label: "View Programs", page: "programs" }]} setPage={setPage} />
+      <Breadcrumb items={[]} setPage={setPage} />
 
       {/* ── HERO ── */}
       <div style={{ background: dark, padding: isMobile ? "52px 28px 40px" : "88px 80px 72px", textAlign: "center", borderBottom: `1px solid rgba(164,141,110,.15)` }}>
@@ -2670,7 +2670,7 @@ function ApplyPage({ setPage, openInquiry }) {
               <p style={{ fontFamily: lora, fontSize: isMobile ? 15 : 17, color: "#100F0C", fontWeight: 400, lineHeight: 1.8, maxWidth: 540, marginBottom: 36 }}>
                 Excalibur Academy admits a limited number of students into each cohort to preserve the quality of instruction, discussion, mentorship, and feedback.
               </p>
-              <button onClick={() => openInquiry && openInquiry()} style={{ fontFamily: lora, padding: "16px 40px", background: "#100F0C", border: "none", color: parch, fontSize: isMobile ? 12 : 13, fontWeight: 700, letterSpacing: "0.16em", textTransform: "uppercase", cursor: "pointer", alignSelf: "flex-start" }}>Apply Now →</button>
+              <button onClick={() => setPage("portal")} style={{ fontFamily: lora, padding: "16px 40px", background: "#100F0C", border: "none", color: parch, fontSize: isMobile ? 12 : 13, fontWeight: 700, letterSpacing: "0.16em", textTransform: "uppercase", cursor: "pointer", alignSelf: "flex-start" }}>Apply Now →</button>
             </Fade>
           </div>
           <div style={{ position: "relative", minHeight: isMobile ? 280 : "auto", overflow: "hidden" }}>
@@ -2819,7 +2819,7 @@ function ApplyPage({ setPage, openInquiry }) {
                     </div>
 
                     <div style={{ display: "flex", gap: 12, flexWrap: "wrap", marginBottom: 32 }}>
-                      <button onClick={() => openInquiry && openInquiry(prog.applyKey)} style={{ fontFamily: lora, padding: "15px 32px", background: "#A48D6E", border: "none", color: "#100F0C", fontSize: isMobile ? 10 : 11, fontWeight: 700, letterSpacing: "0.16em", textTransform: "uppercase", cursor: "pointer" }}>{prog.applyLabel} →</button>
+                      <button onClick={() => setPage("portal")} style={{ fontFamily: lora, padding: "15px 32px", background: "#A48D6E", border: "none", color: "#100F0C", fontSize: isMobile ? 10 : 11, fontWeight: 700, letterSpacing: "0.16em", textTransform: "uppercase", cursor: "pointer" }}>{prog.applyLabel} →</button>
                       <button onClick={() => setPage(prog.detailPage)} style={{ fontFamily: lora, padding: "15px 28px", background: "transparent", border: "1px solid rgba(164,141,110,.4)", color: "#A48D6E", fontSize: isMobile ? 10 : 11, fontWeight: 600, letterSpacing: "0.14em", textTransform: "uppercase", cursor: "pointer" }}>Learn More</button>
                     </div>
 
@@ -2890,10 +2890,9 @@ function ApplyPage({ setPage, openInquiry }) {
           ))}
 
           <div style={{ borderTop: `1px solid rgba(164,141,110,.12)`, paddingTop: 32, display: "flex", gap: 12, flexWrap: "wrap" }}>
-            <button onClick={() => openInquiry && openInquiry("foundation")} style={{ fontFamily: lora, fontSize: 10, letterSpacing: "0.2em", padding: "15px 36px", background: gold, border: "none", color: dark, textTransform: "uppercase", cursor: "pointer", fontWeight: 600 }}>Apply to Foundation →</button>
-            <button onClick={() => openInquiry && openInquiry("venture")} style={{ fontFamily: lora, fontSize: 10, letterSpacing: "0.2em", padding: "15px 32px", background: "transparent", border: `1px solid rgba(164,141,110,.35)`, color: gold, textTransform: "uppercase", cursor: "pointer", fontWeight: 600 }}>Apply to Venture →</button>
-            <button onClick={() => openInquiry && openInquiry("full-year")} style={{ fontFamily: lora, fontSize: 10, letterSpacing: "0.2em", padding: "15px 32px", background: "transparent", border: `1px solid rgba(164,141,110,.35)`, color: gold, textTransform: "uppercase", cursor: "pointer", fontWeight: 600 }}>Apply — Full Year →</button>
-            <button onClick={() => openInquiry && openInquiry("summer")} style={{ fontFamily: lora, fontSize: 10, letterSpacing: "0.2em", padding: "15px 32px", background: "transparent", border: `1px solid rgba(164,141,110,.35)`, color: gold, textTransform: "uppercase", cursor: "pointer", fontWeight: 600 }}>Apply to Summer Intensive →</button>
+            <button onClick={() => setPage("foundation-detail")} style={{ fontFamily: lora, fontSize: 10, letterSpacing: "0.2em", padding: "15px 36px", background: gold, border: "none", color: dark, textTransform: "uppercase", cursor: "pointer", fontWeight: 600 }}>View Foundation →</button>
+            <button onClick={() => setPage("venture-detail")} style={{ fontFamily: lora, fontSize: 10, letterSpacing: "0.2em", padding: "15px 32px", background: "transparent", border: `1px solid rgba(164,141,110,.35)`, color: gold, textTransform: "uppercase", cursor: "pointer", fontWeight: 600 }}>View Venture →</button>
+            <button onClick={() => setPage("summer-detail")} style={{ fontFamily: lora, fontSize: 10, letterSpacing: "0.2em", padding: "15px 32px", background: "transparent", border: `1px solid rgba(164,141,110,.35)`, color: gold, textTransform: "uppercase", cursor: "pointer", fontWeight: 600 }}>View Summer Workshop →</button>
           </div>
         </div>
       </div>
@@ -3206,7 +3205,7 @@ function HomePage({ setPage, openInquiry }) {
                 A selective leadership and entrepreneurship academy for ambitious high-school students in Orange County, designed to develop judgment, communication, business fluency, and applied confidence.
               </p>
               <div style={{ display: "flex", gap: 10, flexDirection: "row", justifyContent: "center", width: "100%", marginBottom: 24 }}>
-                <button onClick={() => setPage("apply")} style={{ fontFamily: sans, padding: "14px 20px", background: "#A48D6E", border: "none", color: "#0F0F0F", fontSize: 10, fontWeight: 600, letterSpacing: "0.18em", textTransform: "uppercase", cursor: "pointer", flex: 1 }}>Apply →</button>
+                <button onClick={() => setPage("apply")} style={{ fontFamily: sans, padding: "14px 20px", background: "#A48D6E", border: "none", color: "#0F0F0F", fontSize: 10, fontWeight: 600, letterSpacing: "0.18em", textTransform: "uppercase", cursor: "pointer", flex: 1 }}>Apply Now →</button>
                 <button onClick={() => setPage("summer-detail")} style={{ fontFamily: sans, padding: "11px 16px", background: "transparent", border: "1px solid rgba(216,183,140,.25)", color: "#A48D6E", fontSize: 10, fontWeight: 550, letterSpacing: "0.13em", textTransform: "uppercase", cursor: "pointer", flex: 1 }}>Summer Workshop →</button>
               </div>
               <p style={{ fontFamily: "'adobe-garamond-pro', 'Garamond', serif", fontSize: 15, color: "#E4D5C1", letterSpacing: "0.18em", textTransform: "uppercase", textAlign: "center", lineHeight: 1.8 }}>Ages 14–18 &nbsp;·&nbsp; 20 Students Per Cohort<br/>Orange County, CA</p>
@@ -3240,7 +3239,7 @@ function HomePage({ setPage, openInquiry }) {
               </Fade>
               <Fade d={.32}>
                 <div style={{ display: "flex", gap: 10, marginTop: 12, marginBottom: 20, justifyContent: "center" }}>
-                  <button onClick={() => setPage("apply")} style={{ fontFamily: sans, background: "#A48D6E", color: "#0F0F0F", padding: "14px 28px", fontSize: 10, fontWeight: 600, letterSpacing: "0.2em", textTransform: "uppercase", border: "none", cursor: "pointer" }}>Apply</button>
+                  <button onClick={() => setPage("apply")} style={{ fontFamily: sans, background: "#A48D6E", color: "#0F0F0F", padding: "14px 28px", fontSize: 10, fontWeight: 600, letterSpacing: "0.2em", textTransform: "uppercase", border: "none", cursor: "pointer" }}>Apply Now</button>
                   <button onClick={() => setPage("summer-detail")} style={{ fontFamily: sans, background: "transparent", color: "#A48D6E", padding: "12px 24px", fontSize: 10, fontWeight: 500, letterSpacing: "0.16em", textTransform: "uppercase", border: "1px solid rgba(216,183,140,.25)", cursor: "pointer" }}>Summer Workshop</button>
                 </div>
               </Fade>
@@ -3621,17 +3620,17 @@ function HomePage({ setPage, openInquiry }) {
 
             <div style={{ marginTop: "auto" }}>
               <button
-                onClick={() => setPage("programs")}
+                onClick={() => setPage("about")}
                 style={{ fontFamily: sans, background: "rgba(16,15,12,1)", border: "1px solid rgba(164,141,110,1)", color:"rgba(164,141,110,1)", padding: "11px 26px", fontSize: 11, fontWeight: 400, letterSpacing: "0.15em", textTransform: "uppercase", cursor: "pointer" }}
               >
-                Explore Programs →
+                Learn More →
               </button>
             </div>
           </div>
         </div>
 
         {/* Quote  -  editorial pullquote */}
-        <div style={{ background: ox, padding: isMobile ? "64px 24px" : "88px 80px", position: "relative", overflow: "hidden" }}>
+        <div style={{ background: "#100F0C", padding: isMobile ? "64px 24px" : "88px 80px", position: "relative", overflow: "hidden" }}>
           {/* Decorative large quotation mark */}
           <div style={{ position: "absolute", top: isMobile ? -10 : -20, left: isMobile ? 20 : 60, fontFamily: serif, fontSize: isMobile ? 180 : 280, color: "rgba(216,183,140,0.06)", lineHeight: 1, pointerEvents: "none", userSelect: "none", fontWeight: 700 }}>&ldquo;</div>
           <div style={{ maxWidth: 860, margin: "0 auto", textAlign: "center", position: "relative", zIndex: 1 }}>
@@ -3804,7 +3803,6 @@ function HomePage({ setPage, openInquiry }) {
               {["The Flagship is the Academy's principal program — a semester-based formation for select ambitious high school students. Students may enroll in one semester or both. Each semester is designed to stand on its own; students may apply directly to Foundation, Venture, or the full academic-year pathway.","The Foundation Semester runs September through December. Core Business disciplines, a weekly War Room, and The Art of Class — Excalibur's most distinctive offering. It closes with The Excalibur Gala in December.","The Venture Semester runs January through May. Students choose one venture track at enrollment — Da Vinci (commercial market) or Medici (community-impact venture) — and build across sixteen weeks, pitching to invited investors, founders, executives, and practitioners at their Finale.","Both semesters run in two parallel tracks: Saturday and Weekday (Tuesday & Thursday). Both formats follow the same curriculum, and academic standard."].map((p,i) => (
                 <p key={i} style={{ fontFamily: "'Lora', Georgia, serif", fontSize:15, lineHeight:1.7, color:"#E4D5C1", fontWeight:400, textAlign:"justify", margin:0 }}>{p}</p>
               ))}
-              <button onClick={() => setPage("flagship2")} style={{ fontFamily: "'Lora', Georgia, serif", fontSize:11, letterSpacing:"0.15em", padding:"13px 24px", background:"#A48D6E", border:"none", color:"#100F0C", textTransform:"uppercase", cursor:"pointer", fontWeight:600, whiteSpace:"nowrap", transition:"all .2s", marginTop:14, alignSelf:"flex-start" }}>View Flagship Program →</button>
             </div>
           </div>
           <div style={{ background:"#E4D5C1", display:"grid", gridTemplateRows:isMobile?"300px auto":"480px auto" }}>
@@ -4249,11 +4247,6 @@ function HomePage({ setPage, openInquiry }) {
                   </div>
                 </div>
               ))}
-            </div>
-          </Fade>
-          <Fade d={.12}>
-            <div style={{ textAlign: "center", marginTop: 32 }}>
-              <button onClick={() => setPage("beyond")} style={{ fontFamily: sans, background: "#E4D5C1", border: "none", color: "#0F0F0F", padding: "11px 28px", fontSize: 10, fontWeight: 700, letterSpacing: "0.16em", textTransform: "uppercase", cursor: "pointer" }}>EXPLORE ALL EXPEDITIONS →</button>
             </div>
           </Fade>
         </div>
@@ -6666,7 +6659,7 @@ function SummerDetailPage({ setPage, openInquiry }) {
     <div style={{ background: dark, minHeight: "100vh" }}>
 
       {/* BREADCRUMB */}
-      <Breadcrumb items={[{ label: "View Programs", page: "programs" }, { label: "The Founder's Day", page: "summer-detail" }]} setPage={setPage} />
+      <Breadcrumb items={[{ label: "The Founder's Day", page: "summer-detail" }]} setPage={setPage} />
 
       {/* ── HERO ── */}
       <section style={{ background: dark, padding: 0, overflow: "hidden" }}>
@@ -11887,7 +11880,7 @@ function ExcaliburSummitPage({ setPage, openInquiry }) {
   const lora = "'Lora', Georgia, serif";
   return (
     <div>
-      <Breadcrumb items={[{label:"View Programs",page:"programs"},{label:"The Excalibur Summit",page:"summit"}]} setPage={setPage} />
+      <Breadcrumb items={[{label:"The Excalibur Summit",page:"summit"}]} setPage={setPage} />
       {/* ── SUMMIT ── */}
       <div id="f2-summit" style={{ background:"#E4D5C1", padding:0, overflow:"hidden" }}>
 
@@ -12015,7 +12008,7 @@ function ExcaliburEditionPage({ setPage, openInquiry }) {
   const lora = "'Lora', Georgia, serif";
   return (
     <div>
-      <Breadcrumb items={[{label:"View Programs",page:"programs"},{label:"Excalibur Édition",page:"edition"}]} setPage={setPage} />
+      <Breadcrumb items={[{label:"Excalibur Édition",page:"edition"}]} setPage={setPage} />
 {/* ── EXCALIBUR ÉDITION ── */}
       <div style={{ background:"#100F0C", borderTop:"1px solid rgba(164,141,110,.15)" }}>
 
@@ -12532,7 +12525,7 @@ function FoundationDetailPage({ setPage, openInquiry }) {
 
   return (
     <div style={{ background:"#100F0C", minHeight:"100vh" }}>
-      <Breadcrumb items={[{label:"View Programs",page:"programs"},{label:"Flagship Overview",page:"flagship2"},{label:"Foundation Semester",page:"foundation-detail"}]} setPage={setPage} />
+      <Breadcrumb items={[{label:"Foundation Semester",page:"foundation-detail"}]} setPage={setPage} />
       {/* ── HERO ── */}
       <section style={{ background:"#100F0C", padding:0, overflow:"hidden" }}>
         <div style={{ maxWidth:1400, margin:"0 auto", display:"grid", gridTemplateColumns:isMobile?"1fr":"1fr 1fr", minHeight:isMobile?"auto":620, alignItems:"stretch" }}>
@@ -14252,7 +14245,7 @@ function VentureDetailPage({ setPage, openInquiry }) {
 
   return (
     <div style={{ background:"#100F0C", minHeight:"100vh" }}>
-      <Breadcrumb items={[{label:"View Programs",page:"programs"},{label:"Flagship Overview",page:"flagship2"},{label:"Venture Semester",page:"venture-detail"}]} setPage={setPage} />
+      <Breadcrumb items={[{label:"Venture Semester",page:"venture-detail"}]} setPage={setPage} />
       {/* ── HERO ── */}
       <section style={{ background:"#100F0C", padding:0, overflow:"hidden" }}>
         <div style={{ maxWidth:1400, margin:"0 auto", display:"grid", gridTemplateColumns:isMobile?"1fr":"1fr 1fr", minHeight:isMobile?"auto":620, alignItems:"stretch" }}>
