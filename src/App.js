@@ -3034,14 +3034,11 @@ function ApplyPage({ setPage, openInquiry }) {
           ADMISSIONS BEGINS WITH A CONVERSATION
       ══════════════════════════════════════════════════════ */}
       <div style={{ background: dark, padding: isMobile ? "52px 28px" : "88px 80px", borderTop: `1px solid rgba(164,141,110,.15)`, textAlign: "center" }}>
-        <p style={{ fontFamily: lora, fontSize: 11, letterSpacing: "0.45em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 20 }}>Request Information</p>
-        <h2 style={{ fontFamily: cg, fontSize: isMobile ? "clamp(32px,8vw,48px)" : "3.6rem", fontWeight: 400, color: parch, lineHeight: 1.1, marginBottom: 12, letterSpacing: "0.01em" }}>Admissions begins with a conversation.</h2>
-        <p style={{ fontFamily: cg, fontSize: isMobile ? 15 : 18, color: gold, fontStyle: "italic", marginBottom: 40, lineHeight: 1.5 }}>A member of the admissions team will respond personally as soon as possible.</p>
+        <p style={{ fontFamily: lora, fontSize: 11, letterSpacing: "0.45em", color: gold, fontWeight: 600, textTransform: "uppercase", marginBottom: 20 }}>Apply Now</p>
+        <h2 style={{ fontFamily: cg, fontSize: isMobile ? "clamp(32px,8vw,48px)" : "3.6rem", fontWeight: 400, color: parch, lineHeight: 1.1, marginBottom: 12, letterSpacing: "0.01em" }}>Start Your Application</h2>
+        <p style={{ fontFamily: cg, fontSize: isMobile ? 15 : 18, color: gold, fontStyle: "italic", marginBottom: 40, lineHeight: 1.5 }}>Begin your application through Excalibur Online Student Portal.</p>
         <div style={{ display: "flex", gap: 14, justifyContent: "center", flexWrap: "wrap" }}>
-          <button onClick={() => openInquiry && openInquiry("foundation")} style={{ fontFamily: lora, padding: "14px 40px", background: gold, border: "none", color: dark, fontSize: 11, fontWeight: 700, letterSpacing: "0.2em", textTransform: "uppercase", cursor: "pointer" }}>Apply to Foundation →</button>
-          <button onClick={() => openInquiry && openInquiry("venture")} style={{ fontFamily: lora, padding: "14px 32px", background: "transparent", border: `1px solid rgba(164,141,110,.35)`, color: gold, fontSize: 11, fontWeight: 600, letterSpacing: "0.15em", textTransform: "uppercase", cursor: "pointer" }}>Apply to Venture →</button>
-          <button onClick={() => openInquiry && openInquiry("summer")} style={{ fontFamily: lora, padding: "14px 32px", background: "transparent", border: `1px solid rgba(164,141,110,.35)`, color: gold, fontSize: 11, fontWeight: 600, letterSpacing: "0.15em", textTransform: "uppercase", cursor: "pointer" }}>Apply for Summer →</button>
-          <button onClick={() => openInquiry && openInquiry()} style={{ fontFamily: lora, padding: "14px 32px", background: "transparent", border: `1px solid rgba(164,141,110,.2)`, color: parch, fontSize: 11, fontWeight: 400, letterSpacing: "0.15em", textTransform: "uppercase", cursor: "pointer" }}>Request Admissions Information →</button>
+          <button onClick={() => setPage("portal")} style={{ fontFamily: lora, padding: "14px 40px", background: gold, border: "none", color: dark, fontSize: 11, fontWeight: 700, letterSpacing: "0.2em", textTransform: "uppercase", cursor: "pointer" }}>Apply Now →</button>
         </div>
       </div>
 
@@ -3183,7 +3180,7 @@ function HomePage({ setPage, openInquiry }) {
       {/* FOUNDING BANNER */}
       <div style={{ background: "#34150F", padding: isMobile ? "10px 16px" : "10px 40px", textAlign: "center" }}>
         <p style={{ fontFamily: "'Lato', sans-serif", fontSize: isMobile ? 11 : 11, letterSpacing: isMobile ? "0.04em" : "0.22em", color:"#BCA696", fontWeight: 700, textTransform: "uppercase", lineHeight: 1.5, padding: isMobile ? "0 8px" : 0 }}>
-          Summer Intensive Waves &nbsp;·&nbsp; Closed · Cohorts Full &nbsp; ✦ &nbsp; The Founder's Day &nbsp;·&nbsp; <span style={{ cursor: "pointer", textDecoration: "underline", textUnderlineOffset: 3 }} onClick={() => setPage("summer-detail")}>Now Enrolling</span> &nbsp; ✦
+          Summer Founder's Day &nbsp;·&nbsp; <span style={{ cursor: "pointer", textDecoration: "underline", textUnderlineOffset: 3 }} onClick={() => setPage("summer-detail")}>Now Enrolling — July 28 & August 11</span>
         </p>
       </div>
 
@@ -3209,8 +3206,8 @@ function HomePage({ setPage, openInquiry }) {
                 A selective leadership and entrepreneurship academy for ambitious high-school students in Orange County, designed to develop judgment, communication, business fluency, and applied confidence.
               </p>
               <div style={{ display: "flex", gap: 10, flexDirection: "row", justifyContent: "center", width: "100%", marginBottom: 24 }}>
-                <button onClick={() => setPage("apply")} style={{ fontFamily: sans, padding: "14px 20px", background: "#A48D6E", border: "none", color: "#0F0F0F", fontSize: 10, fontWeight: 600, letterSpacing: "0.18em", textTransform: "uppercase", cursor: "pointer", flex: 1 }}>Apply Now →</button>
-                <button onClick={() => setPage("programs")} style={{ fontFamily: sans, padding: "11px 16px", background: "transparent", border: "1px solid rgba(216,183,140,.25)", color: "#A48D6E", fontSize: 10, fontWeight: 550, letterSpacing: "0.13em", textTransform: "uppercase", cursor: "pointer", flex: 1 }}>View Programs →</button>
+                <button onClick={() => setPage("apply")} style={{ fontFamily: sans, padding: "14px 20px", background: "#A48D6E", border: "none", color: "#0F0F0F", fontSize: 10, fontWeight: 600, letterSpacing: "0.18em", textTransform: "uppercase", cursor: "pointer", flex: 1 }}>Apply →</button>
+                <button onClick={() => setPage("summer-detail")} style={{ fontFamily: sans, padding: "11px 16px", background: "transparent", border: "1px solid rgba(216,183,140,.25)", color: "#A48D6E", fontSize: 10, fontWeight: 550, letterSpacing: "0.13em", textTransform: "uppercase", cursor: "pointer", flex: 1 }}>Summer Workshop →</button>
               </div>
               <p style={{ fontFamily: "'adobe-garamond-pro', 'Garamond', serif", fontSize: 15, color: "#E4D5C1", letterSpacing: "0.18em", textTransform: "uppercase", textAlign: "center", lineHeight: 1.8 }}>Ages 14–18 &nbsp;·&nbsp; 20 Students Per Cohort<br/>Orange County, CA</p>
             </div>
@@ -3243,8 +3240,8 @@ function HomePage({ setPage, openInquiry }) {
               </Fade>
               <Fade d={.32}>
                 <div style={{ display: "flex", gap: 10, marginTop: 12, marginBottom: 20, justifyContent: "center" }}>
-                  <button onClick={() => setPage("apply")} style={{ fontFamily: sans, background: "#A48D6E", color: "#0F0F0F", padding: "14px 28px", fontSize: 10, fontWeight: 600, letterSpacing: "0.2em", textTransform: "uppercase", border: "none", cursor: "pointer" }}>Join the Founding Cohort</button>
-                  <button onClick={() => setPage("programs")} style={{ fontFamily: sans, background: "transparent", color: "#A48D6E", padding: "12px 24px", fontSize: 10, fontWeight: 500, letterSpacing: "0.16em", textTransform: "uppercase", border: "1px solid rgba(216,183,140,.25)", cursor: "pointer" }}>View Programs</button>
+                  <button onClick={() => setPage("apply")} style={{ fontFamily: sans, background: "#A48D6E", color: "#0F0F0F", padding: "14px 28px", fontSize: 10, fontWeight: 600, letterSpacing: "0.2em", textTransform: "uppercase", border: "none", cursor: "pointer" }}>Apply</button>
+                  <button onClick={() => setPage("summer-detail")} style={{ fontFamily: sans, background: "transparent", color: "#A48D6E", padding: "12px 24px", fontSize: 10, fontWeight: 500, letterSpacing: "0.16em", textTransform: "uppercase", border: "1px solid rgba(216,183,140,.25)", cursor: "pointer" }}>Summer Workshop</button>
                 </div>
               </Fade>
               <Fade d={.38}>
@@ -3451,23 +3448,23 @@ function HomePage({ setPage, openInquiry }) {
             <h2 style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: isMobile ? "clamp(26px,5.5vw,34px)" : 34, fontWeight: 400, fontStyle: "italic", color: "#100F0C", marginBottom: 24, lineHeight: 1.15 }}>The Structure of the Day</h2>
             <div style={{ borderTop: "1px solid rgba(16,15,12,.12)" }}>
               {[
-                ["10:00 – 10:20", "Arrival, Orientation & Team Formation", "TAs & Coordinators", "Teams form and the day's agenda is set."],
-                ["10:20 – 11:05", "Public Speaking & Executive Presence", "Keree James", "The founder communication toolkit — clarity, presence, and persuasion."],
-                ["11:05 – 11:50", "Financial Literacy & Investor Thinking", "Faculty TBD", "How founders monetize and investors evaluate a venture."],
-                ["11:50 – 12:05", "Break", "—", "A short pause before the day's most hands-on stretch."],
-                ["12:05 – 12:50", "AI & the Future of Work", "Chip", "Using AI as a thinking partner, not a shortcut."],
-                ["12:50 – 1:25", "Lunch", "—", "A catered midday break with faculty and teammates."],
-                ["1:25 – 3:05", "The Venture Challenge", "Chip (Lead) · Erik", "Teams build a complete venture plan around a real problem."],
-                ["3:05 – 4:20", "Applied Capstone: Build Your Team Pitch", "Keree · Chris · Erik", "Teams rehearse a 60-second founder pitch with a support deck."],
-                ["4:20 – 4:50", "The Showcase", "Judging Panel", "Teams pitch live before faculty, founders, and investors."],
-                ["4:50 – 5:00", "Transition", "TAs", "Room reset for the Family Soirée."],
-                ["5:00 – 6:00", "The Family Soirée", "Academy Staff & Faculty", "A closing reception — parents join for the final hour."],
-              ].map(([time, name, who, desc], i) => (
+                ["10:00 – 10:20", "Arrival, Orientation & Team Formation", "Teams form and the day's agenda is set."],
+                ["10:20 – 11:05", "Public Speaking & Executive Presence", "The founder communication toolkit — clarity, presence, and persuasion."],
+                ["11:05 – 11:50", "Financial Literacy & Investor Thinking", "How founders monetize and investors evaluate a venture."],
+                ["11:50 – 12:05", "Break", "A short pause before the day's most hands-on stretch."],
+                ["12:05 – 12:50", "AI & the Future of Work", "Using AI as a thinking partner, not a shortcut."],
+                ["12:50 – 1:25", "Lunch", "A catered midday break with faculty and teammates."],
+                ["1:25 – 3:05", "The Venture Challenge", "Teams build a complete venture plan around a real problem."],
+                ["3:05 – 4:20", "Applied Capstone: Build Your Team Pitch", "Teams rehearse a 60-second founder pitch with a support deck."],
+                ["4:20 – 4:50", "The Showcase", "Teams pitch live before faculty, founders, and investors."],
+                ["4:50 – 5:00", "Transition", "Room reset for the Family Soirée."],
+                ["5:00 – 6:00", "The Family Soirée", "A closing reception — parents join for the final hour."],
+              ].map(([time, name, desc], i) => (
                 <div key={i} style={{ padding: "12px 0", borderBottom: "1px solid rgba(16,15,12,.12)", display: "flex", gap: 16 }}>
                   <span style={{ fontFamily: lora, fontSize: 11.5, color: "#A48D6E", width: 78, flexShrink: 0, paddingTop: 1 }}>{time}</span>
                   <div>
                     <p style={{ fontFamily: lora, fontSize: 13.5, color: "#100F0C", fontWeight: 700, margin: "0 0 2px" }}>
-                      {name} <span style={{ fontFamily: sans, fontSize: 10, color: "#8B7355", fontWeight: 400, textTransform: "uppercase", letterSpacing: "0.04em" }}> · {who}</span>
+                      {name}
                     </p>
                     <p style={{ fontFamily: lora, fontSize: 12.5, color: "#6B6459", margin: 0, lineHeight: 1.5 }}>{desc}</p>
                   </div>
@@ -3504,33 +3501,7 @@ function HomePage({ setPage, openInquiry }) {
         </div>
       </section>
 
-      {/* ── QUICK REFERENCE TABLE ── */}
-      <section style={{ background: "#D9C7A9", padding: isMobile ? "72px 24px" : "100px 80px" }}>
-        <div style={{ maxWidth: 1100, margin: "0 auto" }}>
-          <p style={{ fontFamily: sans, fontSize: 10, letterSpacing: "0.45em", color: "#34150F", fontWeight: 700, textTransform: "uppercase", marginBottom: 20 }}>Quick Reference</p>
-          <h2 style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: isMobile ? "clamp(28px,6vw,44px)" : "clamp(36px,4vw,52px)", fontWeight: 400, color: "#1A0A08", textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: 36 }}>This Summer's Dates</h2>
-          <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 16 }}>
-            {summerLabs.map((lab, i) => (
-              <div key={i} style={{ border: "1px solid rgba(52,21,15,.2)", padding: "24px 28px" }}>
-                <p style={{ fontFamily: sans, fontSize: 10, letterSpacing: "0.2em", color: "#6B5C40", textTransform: "uppercase", fontWeight: 700, marginBottom: 8 }}>{lab.label}</p>
-                <p style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: 26, color: "#1A0A08", fontWeight: 400, marginBottom: 6 }}>{lab.date}, 2026</p>
-                <p style={{ fontFamily: lora, fontSize: 13, color: "#3A2012", fontStyle: "italic", marginBottom: 14 }}>10:00 AM – 5:00 PM · Family Soirée 5:00 – 6:00 PM</p>
-                <div style={{ display: "flex", gap: 24 }}>
-                  <div>
-                    <p style={{ fontFamily: sans, fontSize: 9, letterSpacing: "0.15em", color: "#6B5C40", textTransform: "uppercase", marginBottom: 2 }}>Early Bird</p>
-                    <p style={{ fontFamily: lora, fontSize: 15, color: "#1A0A08", fontWeight: 600 }}>{lab.earlyBird}</p>
-                  </div>
-                  <div>
-                    <p style={{ fontFamily: sans, fontSize: 9, letterSpacing: "0.15em", color: "#6B5C40", textTransform: "uppercase", marginBottom: 2 }}>Regular</p>
-                    <p style={{ fontFamily: lora, fontSize: 15, color: "#1A0A08", fontWeight: 600 }}>{lab.regular}</p>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-          <p style={{ fontFamily: lora, fontSize: 13, color: "#3A2012", fontStyle: "italic", marginTop: 20 }}>Both dates offer the identical Founder's Day curriculum. Early enrollment is recommended, as places are confirmed on a first-come basis.</p>
-        </div>
-      </section>
+      {/* QUICK REFERENCE TABLE removed per request — dates already covered on the Founder's Day detail page */}
 
 
 
@@ -6710,7 +6681,7 @@ function SummerDetailPage({ setPage, openInquiry }) {
             <p style={{ fontFamily: lora, fontSize: isMobile ? 15 : 18, color: parch, fontWeight: 300, fontStyle: "italic", lineHeight: 1.7, maxWidth: 480, marginBottom: 32 }}>A single, immersive day for ambitious high school students — and the perfect introduction to Excalibur Academy.</p>
             <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
               <button onClick={() => { const el = document.getElementById("day-structure"); if (el) el.scrollIntoView({ behavior: "smooth" }); }} style={{ fontFamily: sans, fontSize: 10, letterSpacing: "0.2em", padding: "14px 32px", background: gold, border: "none", color: dark, textTransform: "uppercase", cursor: "pointer", fontWeight: 700 }}>View the Structure of the Day</button>
-              <button onClick={() => setPage("portal")} style={{ fontFamily: sans, fontSize: 10, letterSpacing: "0.2em", padding: "14px 28px", background: "transparent", border: `1px solid rgba(228,213,193,.4)`, color: parch, textTransform: "uppercase", cursor: "pointer", fontWeight: 600 }}>Apply Now →</button>
+              <button onClick={() => setPage("admissions")} style={{ fontFamily: sans, fontSize: 10, letterSpacing: "0.2em", padding: "14px 28px", background: "transparent", border: `1px solid rgba(228,213,193,.4)`, color: parch, textTransform: "uppercase", cursor: "pointer", fontWeight: 600 }}>Apply Now →</button>
             </div>
           </div>
 
@@ -6918,7 +6889,7 @@ function PortalPage({ setPage }) {
 
   const [loading, setLoading] = React.useState(true);
   const [session, setSession] = React.useState(null);
-  const [authMode, setAuthMode] = React.useState("login"); // login | signup
+  const [authMode, setAuthMode] = React.useState("signup"); // login | signup
   const [authForm, setAuthForm] = React.useState({ email: "", password: "", confirmPassword: "", firstName: "", lastName: "", phone: "", roleChoice: "student" });
   const [authError, setAuthError] = React.useState("");
   const [authBusy, setAuthBusy] = React.useState(false);
@@ -7727,9 +7698,23 @@ function PortalPage({ setPage }) {
 
           {/* RIGHT — white form panel, black accents */}
           <div style={{ padding: isMobile ? "40px 28px 48px" : "64px 56px", display: "flex", flexDirection: "column", justifyContent: "center" }}>
+            <div style={{ display: "flex", border: `1px solid ${t_line}`, borderRadius: 8, marginBottom: 28, overflow: "hidden" }}>
+              <button
+                onClick={() => { setAuthMode("login"); setAuthError(""); }}
+                style={{ flex: 1, padding: "12px 0", background: authMode === "login" ? t_black : t_white, border: "none", color: authMode === "login" ? t_white : t_gray, fontFamily: lora, fontSize: 12.5, fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", cursor: "pointer" }}
+              >
+                Log In
+              </button>
+              <button
+                onClick={() => { setAuthMode("signup"); setAuthError(""); }}
+                style={{ flex: 1, padding: "12px 0", background: authMode === "signup" ? t_black : t_white, border: "none", color: authMode === "signup" ? t_white : t_gray, fontFamily: lora, fontSize: 12.5, fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", cursor: "pointer" }}
+              >
+                Sign Up
+              </button>
+            </div>
             <p style={{ fontFamily: lora, fontSize: 14, letterSpacing: "0.26em", color: t_gray, fontWeight: 600, textTransform: "uppercase", marginBottom: 14 }}>{authMode === "login" ? "Welcome Back" : "Get Started"}</p>
-            <h1 style={{ fontFamily: cg, fontSize: isMobile ? 26 : 32, fontWeight: 700, color: t_black, lineHeight: 1.15, marginBottom: 8 }}>{authMode === "login" ? "Log in to your portal" : "Create your account"}</h1>
-            <p style={{ fontFamily: lora, fontSize: 15, color: t_gray, lineHeight: 1.7, marginBottom: 32 }}>{authMode === "login" ? "Access your application, consultations, and admissions messages. Access your application, track your status, schedule a consultation, review important deadlines, and stay connected with your dedicated Enrollment Coordinator." : "Access your application, enrollment status, consultations, upcoming deadlines, program materials, and documentation. Each applicant is assigned a dedicated Enrollment Coordinator to support them throughout the process."}</p>
+            <h1 style={{ fontFamily: cg, fontSize: isMobile ? 26 : 32, fontWeight: 700, color: t_black, lineHeight: 1.15, marginBottom: 8 }}>{authMode === "login" ? "Log in to your portal" : "Excalibur Journey Begins Here"}</h1>
+            <p style={{ fontFamily: lora, fontSize: 15, color: t_gray, lineHeight: 1.7, marginBottom: 32 }}>{authMode === "login" ? "Access your application, consultations, and admissions messages. Access your application, track your status, schedule a consultation, review important deadlines, and stay connected with your dedicated Enrollment Coordinator." : "Start application process, access enrollment status, consultations, upcoming deadlines, program materials, and documentation. Each applicant is assigned a dedicated Enrollment Coordinator to support them throughout the process."}</p>
 
             {authMode === "signup" && (
               <>
@@ -19565,13 +19550,13 @@ function materialField(session, materialType, field) {
   return session ? session[`${materialType}_${field}`] : undefined;
 }
 
-// ── Notify faculty + admin team by email whenever a lesson plan or presentation is uploaded ──
-async function notifyFacultyOfLessonPlanUpload(sessionId, materialType, uploaderType, uploaderName) {
+// ── Notify faculty + admin team by email whenever a lesson plan, presentation, or supplement is uploaded ──
+async function notifyFacultyOfLessonPlanUpload(sessionId, materialType, uploaderType, uploaderName, fileNameOverride) {
   try {
     await fetch(`${SUPABASE_URL}/functions/v1/notify-lesson-plan-upload`, {
       method: "POST",
       headers: { "Content-Type": "application/json", "Authorization": `Bearer ${SUPABASE_ANON_KEY}` },
-      body: JSON.stringify({ sessionId, materialType, uploaderType, uploaderName }),
+      body: JSON.stringify({ sessionId, materialType, uploaderType, uploaderName, fileNameOverride }),
     });
   } catch (err) {
     console.error("Lesson plan upload notification failed to send:", err);
@@ -19898,6 +19883,113 @@ function MaterialPanel({ session, materialType, label, facultyProfile, facultyRo
   );
 }
 
+// ── Supplements: a general "additional files" folder per session — unlike the
+// Lesson Plan Guide and Presentation, this supports any number of files added
+// over time (handouts, worksheets, reference material) rather than a single
+// current version that gets replaced. ──
+function SupplementsPanel({ session, facultyProfile, facultyRole }) {
+  const sb = getSupabase();
+  const lora = "'Lora', Georgia, serif";
+  const [files, setFiles] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [uploading, setUploading] = useState(false);
+  const fileInputRef = React.useRef(null);
+
+  const loadFiles = React.useCallback(async () => {
+    if (!sb) return;
+    setLoading(true);
+    const { data } = await sb.from("session_supplements").select("*")
+      .eq("session_id", session.id).order("created_at", { ascending: false });
+    setFiles(data || []);
+    setLoading(false);
+  }, [sb, session.id]);
+
+  useEffect(() => { loadFiles(); }, [loadFiles]);
+
+  const handleFilesSelected = async (e) => {
+    const selected = Array.from(e.target.files || []);
+    if (!selected.length || !sb) return;
+    setUploading(true);
+    try {
+      const uploaderType = facultyRole === "admin" ? "admin" : "faculty";
+      for (const file of selected) {
+        const safeName = file.name.replace(/[^a-zA-Z0-9._-]/g, "_");
+        const path = `${session.id}/supplements/${Date.now()}_${safeName}`;
+        const { error: uploadError } = await sb.storage.from("lesson-plans").upload(path, file, { upsert: false });
+        if (uploadError) throw uploadError;
+        const { data: urlData } = sb.storage.from("lesson-plans").getPublicUrl(path);
+
+        const { error: insertError } = await sb.from("session_supplements").insert({
+          session_id: session.id,
+          file_url: urlData.publicUrl,
+          file_name: file.name,
+          uploaded_by_type: uploaderType,
+          uploaded_by_id: facultyProfile.id,
+        });
+        if (insertError) throw insertError;
+
+        notifyFacultyOfLessonPlanUpload(session.id, "supplement", uploaderType, facultyProfile?.full_name, file.name);
+      }
+      loadFiles();
+    } catch (err) {
+      console.error("Supplement upload error:", err);
+      alert(`Upload failed: ${err?.message || "Unknown error"}`);
+    } finally {
+      setUploading(false);
+      if (fileInputRef.current) fileInputRef.current.value = "";
+    }
+  };
+
+  const handleDelete = async (id) => {
+    if (!sb) return;
+    if (!window.confirm("Remove this file?")) return;
+    const { error } = await sb.from("session_supplements").delete().eq("id", id);
+    if (error) { alert(`Could not remove: ${error.message}`); return; }
+    loadFiles();
+  };
+
+  return (
+    <div style={{ border: "1px solid rgba(16,15,12,0.1)", borderRadius: 6, padding: 20, background: "#FFFFFF" }}>
+      <p style={{ fontFamily: lora, fontSize: 15, color: "#100F0C", fontWeight: 700, margin: "0 0 6px" }}>Additional Files (Supplements)</p>
+      <p style={{ fontFamily: lora, fontSize: 12.5, color: "#6B6459", margin: "0 0 14px", lineHeight: 1.5 }}>
+        Handouts, worksheets, or any other reference material for this session. You can add as many files here as needed — nothing gets replaced.
+      </p>
+
+      {loading ? (
+        <p style={{ fontFamily: lora, fontSize: 12.5, color: "#8B7355", fontStyle: "italic" }}>Loading…</p>
+      ) : files.length === 0 ? (
+        <p style={{ fontFamily: lora, fontSize: 12.5, color: "#8B7355", fontStyle: "italic", marginBottom: 14 }}>No additional files yet.</p>
+      ) : (
+        <div style={{ marginBottom: 14 }}>
+          {files.map((f) => (
+            <div key={f.id} style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 10, padding: "8px 0", borderBottom: "1px solid rgba(16,15,12,0.08)" }}>
+              <div>
+                <p style={{ fontFamily: lora, fontSize: 13, color: "#100F0C", margin: 0 }}>{f.file_name}</p>
+                <p style={{ fontFamily: lora, fontSize: 11, color: "#8B7355", margin: 0 }}>
+                  {f.uploaded_by_type === "admin" ? "Admin" : "Faculty"} · {new Date(f.created_at).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })}
+                </p>
+              </div>
+              <div style={{ display: "flex", gap: 8, flexShrink: 0 }}>
+                <a href={f.file_url} download={f.file_name} target="_blank" rel="noreferrer" style={{ padding: "5px 12px", background: "#FAF7F2", border: "1px solid rgba(164,141,110,0.4)", borderRadius: 3, color: "#8B7355", fontFamily: lora, fontSize: 11.5, fontWeight: 600, textDecoration: "none" }}>⬇ Download</a>
+                <button onClick={() => handleDelete(f.id)} style={{ padding: "5px 12px", background: "transparent", border: "1px solid rgba(178,59,59,0.35)", borderRadius: 3, color: "#B23B3B", fontFamily: lora, fontSize: 11.5, cursor: "pointer" }}>Remove</button>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+
+      <button
+        onClick={() => fileInputRef.current?.click()}
+        disabled={uploading}
+        style={{ padding: "8px 16px", background: "transparent", border: "1px solid rgba(16,15,12,0.25)", borderRadius: 3, color: "#100F0C", fontFamily: lora, fontSize: 12.5, cursor: uploading ? "default" : "pointer", opacity: uploading ? 0.6 : 1 }}
+      >
+        {uploading ? "Uploading…" : "Add File(s)"}
+      </button>
+      <input ref={fileInputRef} type="file" multiple onChange={handleFilesSelected} style={{ display: "none" }} />
+    </div>
+  );
+}
+
 function SessionMaterialsView({ session, programName, facultyProfile, facultyRole, onBack, onUpdated }) {
   const lora = "'Lora', Georgia, serif";
   const cg = "'Cormorant Garamond', Georgia, serif";
@@ -19930,6 +20022,7 @@ function SessionMaterialsView({ session, programName, facultyProfile, facultyRol
             onUpdated={onUpdated}
           />
         ))}
+        <SupplementsPanel session={session} facultyProfile={facultyProfile} facultyRole={facultyRole} />
       </div>
     </div>
   );
@@ -20004,7 +20097,7 @@ function LessonPlansSection({ facultyProfile, facultyRole }) {
       {facultyRole === "faculty" && (
         <div style={{ marginBottom: 16, padding: "14px 18px", background: "#FBF7EE", border: "1px solid rgba(164,141,110,0.3)", borderRadius: 6 }}>
           <p style={{ fontFamily: lora, fontSize: 13, color: "#3A342B", lineHeight: 1.6, margin: 0 }}>
-            Please take a moment to review any Lesson Plan Guides uploaded to your sessions. You're welcome to download a copy, edit it, and upload your revised version — it will go back into review for final approval once you do. Presentations (PPTX) for each lesson are built after the Lesson Plan Guide is approved, so the deck reflects your final, approved content.
+            Please take a moment to review any Lesson Plan Guides uploaded to your sessions. You're welcome to download a copy, edit it, and upload your revised version — it will go back into review for final approval once you do. Presentations (PPTX) for each lesson are built after the Lesson Plan Guide is approved, so the deck reflects your final, approved content. Each session also has an Additional Files folder for any handouts, worksheets, or other supplementary material.
           </p>
         </div>
       )}
@@ -20300,7 +20393,7 @@ function ExcaliburApp() {
 
   const openInquiry = useCallback((program = "") => {
     setInquiryProgram(program);
-    setPageRaw("apply-now");
+    setPageRaw("admissions");
     window.scrollTo(0, 0);
   }, []);
 
@@ -20333,7 +20426,6 @@ function ExcaliburApp() {
   }, []);
 
   const setPage = useCallback((p) => {
-    if (p === "apply") { setPageRaw("apply-now"); window.scrollTo(0,0); document.documentElement.scrollTop = 0; document.body.scrollTop = 0; return; }
     setPageRaw(p);
     window.scrollTo(0, 0);
     document.documentElement.scrollTop = 0;
