@@ -939,7 +939,7 @@ function PortfolioIndexWhite({ isMobile, setPage, images }) {
 // ── FOOTER ──
 function Footer({ setPage }) {
   const isMobile = useIsMobile();
-  const allLinks = [["HOME","home"],["THE ACADEMY","about"],["VIEW PROGRAMS","programs"],["THE EXCALIBUR SUMMIT","summit"],["FACULTY","faculty"],["ADMISSIONS","admissions"],["STUDENT PORTAL","portal"],["CONTACT","contact"]];
+  const allLinks = [["HOME","home"],["THE ACADEMY","about"],["FOUNDATION SEMESTER","foundation-detail"],["VENTURE SEMESTER","venture-detail"],["THE EXCALIBUR SUMMIT","summit"],["FACULTY","faculty"],["ADMISSIONS","admissions"],["STUDENT PORTAL","portal"],["CONTACT","contact"]];
   return (
     <footer style={{ background: "#34150F", borderTop: "1px solid rgba(188,166,150,.12)" }}>
       {/* Brand + Nav */}
@@ -3179,7 +3179,7 @@ function HomePage({ setPage, openInquiry }) {
       {/* FOUNDING BANNER */}
       <div style={{ background: "#34150F", padding: isMobile ? "10px 16px" : "10px 40px", textAlign: "center" }}>
         <p style={{ fontFamily: "'Lato', sans-serif", fontSize: isMobile ? 11 : 11, letterSpacing: isMobile ? "0.04em" : "0.22em", color:"#BCA696", fontWeight: 700, textTransform: "uppercase", lineHeight: 1.5, padding: isMobile ? "0 8px" : 0 }}>
-          Summer Founder's Day &nbsp;·&nbsp; <span style={{ cursor: "pointer", textDecoration: "underline", textUnderlineOffset: 3 }} onClick={() => setPage("summer-detail")}>Now Enrolling — July 28 & August 11</span>
+          Summer Full Day Workshop &amp; Info Session &nbsp;·&nbsp; July 28 &amp; August 11 &nbsp;— <span style={{ cursor: "pointer", textDecoration: "underline", textUnderlineOffset: 3 }} onClick={() => setPage("admissions")}> Apply Now</span>
         </p>
       </div>
 
@@ -3505,7 +3505,7 @@ function HomePage({ setPage, openInquiry }) {
 
 
       {/* FOUNDER QUOTE */}
-      <section style={{ background: "#E4D5C1", borderTop: "none", borderBottom: "none", padding: isMobile ? "60px 24px" : "80px 40px" }}>
+      <section style={{ background: "#100F0C", borderTop: "none", borderBottom: "none", padding: isMobile ? "60px 24px" : "80px 40px" }}>
         <div style={{ maxWidth: 860, margin: "0 auto" }}>
           <Fade>
             <div style={{ display: "flex", gap: isMobile ? 24 : 48, alignItems: "flex-start", flexDirection: isMobile ? "column" : "row" }}>
@@ -3514,11 +3514,11 @@ function HomePage({ setPage, openInquiry }) {
                   <img src="https://i.imgur.com/F23ULHv.jpeg" alt="Alexander Milstein" style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center top" }} />
                 </div>
               </div>
-              <div style={{ borderLeft: `2px solid #34150F`, paddingLeft: isMobile ? 24 : 40, flex: 1 }}>
-                <p style={{ fontFamily: serif, fontSize: isMobile ? 20 : "clamp(18px,2.4vw,26px)", lineHeight: 1.7, color: "#0F0F0F", fontWeight: isMobile ? 700 : 400, fontStyle: "italic", marginBottom: 28 }}>
+              <div style={{ borderLeft: `2px solid #A48D6E`, paddingLeft: isMobile ? 24 : 40, flex: 1 }}>
+                <p style={{ fontFamily: serif, fontSize: isMobile ? 20 : "clamp(18px,2.4vw,26px)", lineHeight: 1.7, color: "#E4D5C1", fontWeight: isMobile ? 700 : 400, fontStyle: "italic", marginBottom: 28 }}>
                   "There are people who walk the path — and people who cut it. At Excalibur Academy, we forge the second kind. The leaders. The innovators. The architects. The warriors. The dreamers. The ones who defy gravity. We are not preparing students to follow the future. We are preparing them to lead it. What sets them apart will not be what they are taught — but what they come to believe about themselves. That is where everything begins."
                 </p>
-                <p style={{ fontFamily: "Garamond, serif", fontSize: 13, color: "#34150F", letterSpacing: "0.22em", textTransform: "uppercase", fontWeight: 400 }}>
+                <p style={{ fontFamily: "Garamond, serif", fontSize: 13, color: "#A48D6E", letterSpacing: "0.22em", textTransform: "uppercase", fontWeight: 400 }}>
                   Alexander Milstein &nbsp;·&nbsp; Founder, Excalibur Academy
                 </p>
               </div>
@@ -3630,7 +3630,7 @@ function HomePage({ setPage, openInquiry }) {
         </div>
 
         {/* Quote  -  editorial pullquote */}
-        <div style={{ background: "#100F0C", padding: isMobile ? "64px 24px" : "88px 80px", position: "relative", overflow: "hidden" }}>
+        <div style={{ background: ox, padding: isMobile ? "64px 24px" : "88px 80px", position: "relative", overflow: "hidden" }}>
           {/* Decorative large quotation mark */}
           <div style={{ position: "absolute", top: isMobile ? -10 : -20, left: isMobile ? 20 : 60, fontFamily: serif, fontSize: isMobile ? 180 : 280, color: "rgba(216,183,140,0.06)", lineHeight: 1, pointerEvents: "none", userSelect: "none", fontWeight: 700 }}>&ldquo;</div>
           <div style={{ maxWidth: 860, margin: "0 auto", textAlign: "center", position: "relative", zIndex: 1 }}>
@@ -16147,8 +16147,11 @@ function FacultyDashboardHome({ facultyProfile, facultyRole }) {
           />
         )}
         <div>
-          <h2 style={{ fontFamily: cg, fontSize: 30, color: "#100F0C", fontWeight: 600, margin: "0 0 6px" }}>
+          <h2 style={{ fontFamily: cg, fontSize: 30, color: "#100F0C", fontWeight: 600, margin: "0 0 6px", display: "flex", alignItems: "center", gap: 12 }}>
             Welcome, {facultyProfile?.full_name?.split(" ")[0] || "there"}
+            {facultyRole === "admin" && (
+              <span style={{ fontFamily: lora, fontSize: 11, letterSpacing: "0.12em", color: "#100F0C", background: "#A48D6E", padding: "4px 12px", borderRadius: 3, textTransform: "uppercase", fontWeight: 700 }}>Admin</span>
+            )}
           </h2>
           <p style={{ fontFamily: lora, fontSize: 14, color: "#6B6459", margin: 0 }}>
             {facultyProfile?.role_title || (facultyRole === "admin" ? "Administrator" : "")}
@@ -19044,6 +19047,7 @@ function humanizeActivityType(type) {
   const overrides = {
     teaching_single: "Teaching — Single Block",
     teaching_multi: "Teaching — Multi-Block (Hourly)",
+    admin_operations: "Operations & Administrative Work",
   };
   if (overrides[type]) return overrides[type];
   return type.split("_").map((w) => w.charAt(0).toUpperCase() + w.slice(1)).join(" ");
