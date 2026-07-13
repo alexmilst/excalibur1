@@ -18929,7 +18929,9 @@ const GUIDE_SECTIONS = [
     body: [
       "Every teaching session has two materials attached to it — a Lesson Plan Guide and a Presentation (PPTX) — and this tab is where you upload, review, or replace either one.",
       "A color key sits at the top of the page: red means nothing's been uploaded yet, yellow means something's uploaded and waiting on confirmation, and green means it's confirmed. You'll see this same color language throughout the tab, so once you know it here, you know it everywhere.",
-      "To upload, open any session and use the upload button under the material you're working on. You can leave a short note with your upload if there's context worth flagging. Once uploaded, an admin will review and confirm it — you'll see the color update once that happens.",
+      "To upload, open any session and use the upload button under the material you're working on. You can leave a short note with your upload if there's context worth flagging. Please review any Lesson Plan Guide uploaded to your sessions — you can download it, edit it, and upload your revised version, which goes back into review automatically.",
+      "Each material tracks its progress in four stages: Uploaded, In Review, Approved by You, and Approved by Admin. Faculty and admin approvals are independent of each other, and uploading a new version resets both, since a new file always deserves a fresh look from everyone.",
+      "Presentations (PPTX) for each lesson are built after the Lesson Plan Guide reaches final approval, so the deck always reflects your approved, final content.",
     ],
   },
   {
@@ -19563,11 +19565,71 @@ function materialField(session, materialType, field) {
   return session ? session[`${materialType}_${field}`] : undefined;
 }
 
+// ── Notify faculty + admin team by email whenever a lesson plan or presentation is uploaded ──
+async function notifyFacultyOfLessonPlanUpload(sessionId, materialType, uploaderType, uploaderName) {
+  try {
+    await fetch(`${SUPABASE_URL}/functions/v1/notify-lesson-plan-upload`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json", "Authorization": `Bearer ${SUPABASE_ANON_KEY}` },
+      body: JSON.stringify({ sessionId, materialType, uploaderType, uploaderName }),
+    });
+  } catch (err) {
+    console.error("Lesson plan upload notification failed to send:", err);
+  }
+}
+
+// ── 4-stage progress tracker: Uploaded → In Review → Approved by You → Approved by Admin ──
+// "You" is contextual: when a faculty member is viewing, stage 3 is theirs to
+// complete ("Approved by You") and stage 4 belongs to admin ("Approved by
+// Admin"). When an admin is viewing the same material, the labels flip so
+// stage 4 reads "Approved by You" and stage 3 reads "Approved by Faculty".
+function MaterialStageStepper({ fileUrl, approvedAt, confirmedAt, facultyRole }) {
+  const lora = "'Lora', Georgia, serif";
+  const uploaded = !!fileUrl;
+  const faculty_step_label = facultyRole === "admin" ? "Approved by Faculty" : "Approved by You";
+  const admin_step_label = facultyRole === "admin" ? "Approved by You" : "Approved by Admin";
+
+  const stages = [
+    { key: "uploaded", label: "Uploaded", done: uploaded },
+    { key: "in_review", label: "In Review", done: uploaded },
+    { key: "faculty_approved", label: faculty_step_label, done: !!approvedAt },
+    { key: "admin_approved", label: admin_step_label, done: !!confirmedAt },
+  ];
+
+  return (
+    <div style={{ display: "flex", alignItems: "center", marginBottom: 4 }}>
+      {stages.map((s, i) => (
+        <React.Fragment key={s.key}>
+          <div style={{ display: "flex", flexDirection: "column", alignItems: "center", minWidth: 66 }}>
+            <div
+              style={{
+                width: 16, height: 16, borderRadius: "50%",
+                background: s.done ? "#3D8B5F" : "#FFFFFF",
+                border: `2px solid ${s.done ? "#3D8B5F" : "rgba(16,15,12,0.25)"}`,
+                display: "flex", alignItems: "center", justifyContent: "center",
+              }}
+            >
+              {s.done && <span style={{ color: "#FFFFFF", fontSize: 10, fontWeight: 700, lineHeight: 1 }}>✓</span>}
+            </div>
+            <span style={{ fontFamily: lora, fontSize: 10, color: s.done ? "#3D8B5F" : "#8B8378", fontWeight: s.done ? 700 : 400, textAlign: "center", marginTop: 4, lineHeight: 1.25 }}>
+              {s.label}
+            </span>
+          </div>
+          {i < stages.length - 1 && (
+            <div style={{ flex: 1, height: 2, background: stages[i + 1].done || s.done ? "#3D8B5F" : "rgba(16,15,12,0.15)", marginBottom: 16, minWidth: 12 }} />
+          )}
+        </React.Fragment>
+      ))}
+    </div>
+  );
+}
+
 function MaterialPanel({ session, materialType, label, facultyProfile, facultyRole, onUpdated }) {
   const sb = getSupabase();
   const lora = "'Lora', Georgia, serif";
   const [uploading, setUploading] = useState(false);
   const [confirming, setConfirming] = useState(false);
+  const [approving, setApproving] = useState(false);
   const [addingNote, setAddingNote] = useState(false);
   const [note, setNote] = useState("");
   const [showHistory, setShowHistory] = useState(false);
@@ -19577,6 +19639,8 @@ function MaterialPanel({ session, materialType, label, facultyProfile, facultyRo
   const status = materialField(session, materialType, "status") || "missing";
   const fileUrl = materialField(session, materialType, "file_url");
   const fileName = materialField(session, materialType, "file_name");
+  const approvedAt = materialField(session, materialType, "approved_at");
+  const confirmedAt = materialField(session, materialType, "confirmed_at");
 
   const loadRevisions = React.useCallback(async () => {
     if (!sb) return;
@@ -19603,6 +19667,9 @@ function MaterialPanel({ session, materialType, label, facultyProfile, facultyRo
       const { data: urlData } = sb.storage.from("lesson-plans").getPublicUrl(path);
       const uploaderType = facultyRole === "admin" ? "admin" : "faculty";
 
+      // A new version always needs fresh eyes on both sides — clear any prior
+      // approvals so the stepper accurately reflects THIS version's review
+      // state rather than carrying over a stale approval from an old file.
       const { error: updateError } = await sb.from("faculty_sessions").update({
         [`${materialType}_file_url`]: urlData.publicUrl,
         [`${materialType}_file_name`]: file.name,
@@ -19610,6 +19677,10 @@ function MaterialPanel({ session, materialType, label, facultyProfile, facultyRo
         [`${materialType}_uploaded_by_id`]: facultyProfile.id,
         [`${materialType}_uploaded_at`]: new Date().toISOString(),
         [`${materialType}_status`]: "pending_review",
+        [`${materialType}_approved_by`]: null,
+        [`${materialType}_approved_at`]: null,
+        [`${materialType}_confirmed_by`]: null,
+        [`${materialType}_confirmed_at`]: null,
       }).eq("id", session.id);
       if (updateError) throw updateError;
 
@@ -19624,6 +19695,8 @@ function MaterialPanel({ session, materialType, label, facultyProfile, facultyRo
         note: note.trim() || (status === "missing" ? "Initial version uploaded." : "New version submitted for review."),
       });
       if (insertError) throw insertError;
+
+      notifyFacultyOfLessonPlanUpload(session.id, materialType, uploaderType, facultyProfile?.full_name);
 
       setNote("");
       onUpdated();
@@ -19661,6 +19734,42 @@ function MaterialPanel({ session, materialType, label, facultyProfile, facultyRo
     }
   };
 
+  // Faculty-side approval — "I've reviewed this and I'm satisfied with it."
+  // Independent of admin's final sign-off; does not change the overall status,
+  // so it still surfaces in the admin's Pending Your Review queue until admin
+  // also approves.
+  const handleFacultyApprove = async () => {
+    if (!sb) return;
+    setApproving(true);
+    try {
+      const { error: updateError } = await sb.from("faculty_sessions").update({
+        [`${materialType}_approved_by`]: facultyProfile.id,
+        [`${materialType}_approved_at`]: new Date().toISOString(),
+      }).eq("id", session.id);
+      if (updateError) throw updateError;
+
+      const { error: insertError } = await sb.from("lesson_plan_revisions").insert({
+        session_id: session.id,
+        material_type: materialType,
+        file_url: fileUrl,
+        file_name: fileName,
+        uploaded_by_type: "faculty",
+        uploaded_by_id: facultyProfile.id,
+        action: "approved_by_faculty",
+        note: "Approved by faculty.",
+      });
+      if (insertError) throw insertError;
+
+      onUpdated();
+      if (showHistory) loadRevisions();
+    } catch (err) {
+      console.error("Faculty approve error:", err);
+      alert(`Could not approve: ${err?.message || "Unknown error"}`);
+    } finally {
+      setApproving(false);
+    }
+  };
+
   const handleConfirm = async () => {
     if (!sb) return;
     setConfirming(true);
@@ -19694,30 +19803,48 @@ function MaterialPanel({ session, materialType, label, facultyProfile, facultyRo
     }
   };
 
+  const fileExt = (fileName || "").split(".").pop()?.toUpperCase();
+
   return (
     <div style={{ border: "1px solid rgba(16,15,12,0.1)", borderRadius: 6, padding: 20, background: "#FFFFFF" }}>
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", flexWrap: "wrap", gap: 10, marginBottom: 14 }}>
-        <div>
-          <p style={{ fontFamily: lora, fontSize: 15, color: "#100F0C", fontWeight: 700, margin: "0 0 6px" }}>{label}</p>
-          <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
-            <FolderIcon status={status} size={18} />
-            <FolderStatusLabel status={status} />
-          </div>
+        <p style={{ fontFamily: lora, fontSize: 15, color: "#100F0C", fontWeight: 700, margin: 0 }}>{label}</p>
+        <div style={{ display: "flex", gap: 8 }}>
+          {facultyRole === "faculty" && fileUrl && !approvedAt && (
+            <button
+              onClick={handleFacultyApprove} disabled={approving}
+              style={{ padding: "7px 16px", background: "#A48D6E", border: "none", borderRadius: 3, color: "#FFFFFF", fontFamily: lora, fontSize: 12.5, fontWeight: 600, cursor: approving ? "default" : "pointer", opacity: approving ? 0.6 : 1 }}
+            >
+              {approving ? "Approving…" : "I Approve This"}
+            </button>
+          )}
+          {facultyRole === "admin" && status === "pending_review" && (
+            <button
+              onClick={handleConfirm} disabled={confirming}
+              style={{ padding: "7px 16px", background: "#3D8B5F", border: "none", borderRadius: 3, color: "#FFFFFF", fontFamily: lora, fontSize: 12.5, fontWeight: 600, cursor: confirming ? "default" : "pointer", opacity: confirming ? 0.6 : 1 }}
+            >
+              {confirming ? "Approving…" : "Final Approve"}
+            </button>
+          )}
         </div>
-        {facultyRole === "admin" && status === "pending_review" && (
-          <button
-            onClick={handleConfirm} disabled={confirming}
-            style={{ padding: "7px 16px", background: "#3D8B5F", border: "none", borderRadius: 3, color: "#FFFFFF", fontFamily: lora, fontSize: 12.5, fontWeight: 600, cursor: confirming ? "default" : "pointer", opacity: confirming ? 0.6 : 1 }}
-          >
-            {confirming ? "Confirming…" : "Confirm"}
-          </button>
-        )}
       </div>
 
+      <MaterialStageStepper fileUrl={fileUrl} approvedAt={approvedAt} confirmedAt={confirmedAt} facultyRole={facultyRole} />
+
       {fileName && (
-        <p style={{ fontFamily: lora, fontSize: 12.5, color: "#6B6459", margin: "0 0 14px" }}>
-          Current file: <a href={fileUrl} target="_blank" rel="noreferrer" style={{ color: "#8B7355", textDecoration: "underline" }}>{fileName}</a>
-        </p>
+        <div style={{ display: "flex", alignItems: "center", gap: 10, margin: "10px 0 14px", flexWrap: "wrap" }}>
+          <span style={{ fontFamily: lora, fontSize: 12.5, color: "#6B6459" }}>Current file: {fileName}</span>
+          <a
+            href={fileUrl} download={fileName} target="_blank" rel="noreferrer"
+            style={{
+              display: "inline-flex", alignItems: "center", gap: 5, padding: "5px 12px",
+              background: "#FAF7F2", border: "1px solid rgba(164,141,110,0.4)", borderRadius: 3,
+              color: "#8B7355", fontFamily: lora, fontSize: 12, fontWeight: 600, textDecoration: "none",
+            }}
+          >
+            ⬇ Download{fileExt ? ` (${fileExt})` : ""}
+          </a>
+        </div>
       )}
 
       <div style={{ display: "flex", alignItems: "center", gap: 10, flexWrap: "wrap", marginBottom: 14 }}>
@@ -19726,7 +19853,7 @@ function MaterialPanel({ session, materialType, label, facultyProfile, facultyRo
           disabled={uploading}
           style={{ padding: "8px 16px", background: "transparent", border: "1px solid rgba(16,15,12,0.25)", borderRadius: 3, color: "#100F0C", fontFamily: lora, fontSize: 12.5, cursor: uploading ? "default" : "pointer", opacity: uploading ? 0.6 : 1 }}
         >
-          {uploading ? "Uploading…" : status === "missing" ? "Upload File" : "Upload New Version"}
+          {uploading ? "Uploading…" : status === "missing" ? "Upload File" : "Upload Edited Version"}
         </button>
         <input ref={fileInputRef} type="file" onChange={handleFileSelected} style={{ display: "none" }} />
       </div>
@@ -19758,7 +19885,7 @@ function MaterialPanel({ session, materialType, label, facultyProfile, facultyRo
             ) : revisions.map((r) => (
               <div key={r.id} style={{ marginBottom: 10 }}>
                 <p style={{ fontFamily: lora, fontSize: 11, color: "#8B7355", textTransform: "uppercase", letterSpacing: "0.05em", margin: "0 0 2px", fontWeight: 700 }}>
-                  {r.action === "uploaded" ? "Uploaded" : r.action === "confirmed" ? "Confirmed" : "Note"} · {r.uploaded_by_type === "admin" ? "Admin" : "Faculty"} · {new Date(r.created_at).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })}
+                  {r.action === "uploaded" ? "Uploaded" : r.action === "confirmed" ? "Approved (Admin)" : r.action === "approved_by_faculty" ? "Approved (Faculty)" : "Note"} · {r.uploaded_by_type === "admin" ? "Admin" : "Faculty"} · {new Date(r.created_at).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })}
                 </p>
                 {r.file_name && <p style={{ fontFamily: lora, fontSize: 12.5, color: "#100F0C", margin: "0 0 2px" }}>{r.file_name}</p>}
                 {r.note && <p style={{ fontFamily: lora, fontSize: 12.5, color: "#3A2F28", margin: 0 }}>{r.note}</p>}
@@ -19771,8 +19898,6 @@ function MaterialPanel({ session, materialType, label, facultyProfile, facultyRo
   );
 }
 
-// Full-page view (not a popup) opened by clicking a session's lesson-plan
-// folder from either My Schedule or Lesson Plans & Materials.
 function SessionMaterialsView({ session, programName, facultyProfile, facultyRole, onBack, onUpdated }) {
   const lora = "'Lora', Georgia, serif";
   const cg = "'Cormorant Garamond', Georgia, serif";
@@ -19876,6 +20001,14 @@ function LessonPlansSection({ facultyProfile, facultyRole }) {
 
   return (
     <div>
+      {facultyRole === "faculty" && (
+        <div style={{ marginBottom: 16, padding: "14px 18px", background: "#FBF7EE", border: "1px solid rgba(164,141,110,0.3)", borderRadius: 6 }}>
+          <p style={{ fontFamily: lora, fontSize: 13, color: "#3A342B", lineHeight: 1.6, margin: 0 }}>
+            Please take a moment to review any Lesson Plan Guides uploaded to your sessions. You're welcome to download a copy, edit it, and upload your revised version — it will go back into review for final approval once you do. Presentations (PPTX) for each lesson are built after the Lesson Plan Guide is approved, so the deck reflects your final, approved content.
+          </p>
+        </div>
+      )}
+
       {/* ── Always-visible legend — no need to open the guide to know what the colors mean ── */}
       <div style={{ display: "flex", gap: 20, flexWrap: "wrap", alignItems: "center", marginBottom: 16, padding: "12px 16px", background: "#FAF7F2", border: "1px solid rgba(16,15,12,0.1)", borderRadius: 6 }}>
         <div style={{ display: "flex", alignItems: "center", gap: 7 }}>
@@ -19914,7 +20047,7 @@ function LessonPlansSection({ facultyProfile, facultyRole }) {
             <FolderIcon status="approved" size={16} /><span style={{ fontFamily: lora, fontSize: 13, color: "#6B6459" }}>Green — confirmed.</span>
           </div>
           <p style={{ fontFamily: lora, fontSize: 13, color: "#6B6459", margin: 0 }}>
-            Anyone — faculty or admin — can upload a new version at any time; uploading always puts that material back in review. Notes can be left alongside any upload. An admin confirms each material independently once it's ready.
+            Anyone — faculty or admin — can upload a new version at any time; uploading always puts that material back in review and clears any prior approvals, since a new version deserves a fresh look. Notes can be left alongside any upload. Faculty can mark a lesson plan "Approved by You" once they're satisfied with it; an admin gives the final approval independently. Presentations are built once the Lesson Plan Guide reaches final approval, so the deck always reflects the approved content.
           </p>
         </div>
       )}
